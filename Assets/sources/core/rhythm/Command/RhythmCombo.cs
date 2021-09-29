@@ -17,20 +17,17 @@ namespace Core.Rhythm.Command
         /// </summary>
         private int _perfectDrumCount;
         /// <summary>
-        /// Invoked, when the first 'combo' is activated.
+        /// Invoked, when the 'combo' is activated. Bool represents "May enter fever", and <c>true</c> if it has chance to enter fever
         /// </summary>
-        public UnityEvent OnFirstCombo;
+        public UnityEvent<bool> OnCombo;
         /// <summary>
-        /// Invoked, when the combo has chance to enter fever. (Sound changes, combo worm bounces...)
+        /// Invoked, when the 'combo' is canceled.
         /// </summary>
-        public UnityEvent OnChanceFever;
-        /// <summary>
-        /// Invoked, when the chance to fever has been canceled (e.g. some drums may go bad...)
-        /// </summary>
-        public UnityEvent OnFeverChanceCanceled;
+        public UnityEvent OnComboCanceled;
 
         public RhythmFever FeverManager;
         private bool _hasFeverChance;
+        private bool _isCombo;
 
         internal void CountCombo(RhythmCommandModel inputs)
         {
@@ -40,16 +37,13 @@ namespace Core.Rhythm.Command
                 return;
             }
 
-            UnityEngine.Debug.Log("~~ " + _comboCount + " combo! ~~ ( O)( O)");
-            //first action
-            if (_comboCount == 0)
-            {
-                OnFirstCombo.Invoke();
-            }
+            _isCombo = true;
+            UnityEngine.Debug.Log("~~ " + (_comboCount + 1) + " combo! ~~ ( O)( O)");
             _comboCount++;
             if (_comboCount > 9)
             {
                 StartFever();
+                return;
             }
             var perfectDrums = inputs.PerfectCount;
             if (perfectDrums == 0 && IsBadDrum(inputs))
@@ -58,7 +52,6 @@ namespace Core.Rhythm.Command
                 {
                     _perfectDrumCount = 0;
                     _hasFeverChance = false;
-                    OnFeverChanceCanceled.Invoke(); //"cancel" invoke should called immediately
                 }
             }
             else
@@ -69,37 +62,42 @@ namespace Core.Rhythm.Command
                     if (_perfectDrumCount > 3)
                     {
                         StartFever();
+                        return;
                     }
                 }
                 else if (_comboCount > 1)
                 {
                     _hasFeverChance = true;
-                    RhythmTimer.InvokeNext(OnChanceFever);
                 }
             }
+            OnCombo.Invoke(_hasFeverChance);
         }
         internal void EndCombo()
         {
+            if (!_isCombo) return;
+            _isCombo = false;
             UnityEngine.Debug.Log("--------- Combo end! :( -----------");
-            _comboCount = 0;
-            _perfectDrumCount = 0;
-            _hasFeverChance = false;
-            OnFeverChanceCanceled.Invoke(); //"cancel" invoke should called immediately
+            ClearCombo();
+            OnComboCanceled.Invoke();
             FeverManager.EndFever();
         }
         internal void Destroy()
         {
             FeverManager.Destroy();
-            OnFirstCombo.RemoveAllListeners();
-            OnChanceFever.RemoveAllListeners();
-            OnFeverChanceCanceled.RemoveAllListeners();
+            OnCombo.RemoveAllListeners();
         }
         private void StartFever()
         {
+            ClearCombo();
             FeverManager.StartFever();
+        }
+        private void ClearCombo()
+        {
             _comboCount = 0;
             _perfectDrumCount = 0;
+            _hasFeverChance = false;
         }
+
         // PLEASE TELL US WHEN THE "MAY ENTER FEVER" CANCELED. EVEN WIKI DOESN'T TELL IT
         private bool IsBadDrum(RhythmCommandModel inputs) => inputs.BadCount > 1;
     }

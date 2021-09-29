@@ -87,6 +87,7 @@ namespace Core.Rhythm.Command
             {
                 rhythmInput.OnDrumHit.AddListener(AddDrumHit);
             }
+
         }
 
         private void AddDrumHit(RhythmInputModel inputModel)
@@ -104,7 +105,6 @@ namespace Core.Rhythm.Command
         }
         private void CheckCommand()
         {
-            Debug.Log("currentHits " + _currentHits.Count);
             //I don't know maybe there are better way...
             var drums = _currentHits.Select(hit => hit.Drum).ToArray();
 

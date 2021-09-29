@@ -43,7 +43,6 @@ namespace Core.Rhythm
                         RhythmTimer.Count
                         );
             }
-            Debug.Log(model.IfLater + " and " + model.Timing);
             OnDrumHit.Invoke(model);
             Disabled = true;
         }

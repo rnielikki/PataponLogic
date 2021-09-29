@@ -8,7 +8,7 @@ namespace Core.Rhythm.Command
     /// </summary>
     public static class TurnCounter
     {
-        private static int _count;
+        public static int TurnCount { get; private set; }
         /// <summary>
         /// Called ONCE when reaches the next turn
         /// </summary>
@@ -27,6 +27,7 @@ namespace Core.Rhythm.Command
         public static bool IsPlayerTurn { get; private set; } = true;
         internal static void Start()
         {
+            TurnCount = 0;
             IsOn = true;
             IsPlayerTurn = false;
             RhythmTimer.OnTime.AddListener(Count);
@@ -37,11 +38,10 @@ namespace Core.Rhythm.Command
             IsPlayerTurn = true;
             RhythmTimer.OnTime.RemoveListener(Count);
             OnNextTurn.RemoveAllListeners();
-            _count = 0;
         }
         private static void Count()
         {
-            switch (_count)
+            switch (TurnCount)
             {
                 case 0:
                     OnTurn.Invoke();
@@ -52,7 +52,7 @@ namespace Core.Rhythm.Command
                     RhythmTimer.OnNextHalfTime.AddListener(() => IsPlayerTurn = !IsPlayerTurn);
                     break;
             }
-            _count = (_count + 1) % 4;
+            TurnCount = (TurnCount + 1) % 4;
         }
     }
 }

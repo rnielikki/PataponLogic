@@ -37,7 +37,7 @@ namespace Core.Rhythm.Command
                 }
                 else
                 {
-                    OnFeverCanceled.Invoke();
+                    EndFever();
                 }
             }
             else _isWarned = false;

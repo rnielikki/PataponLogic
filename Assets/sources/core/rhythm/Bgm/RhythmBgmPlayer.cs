@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Core.Rhythm.Command;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core.Rhythm.Bgm
@@ -14,26 +16,42 @@ namespace Core.Rhythm.Bgm
      * fever.mp3 : music when on fever status
 
      * NOTE: BE PRECISE TO SOURCE, KEEP ALL THE MUSIC TO %2==0 SECONDS!
+     * Here is how to achieve it : https://manual.audacityteam.org/man/time_toolbar.html
     */
     /// <summary>
     /// Background music player. Also controls fever status music and Patapon sounds.
     /// </summary>
-    // for more tips about scheduled (seamless) play, see https://gamedevbeginner.com/ultimate-guide-to-playscheduled-in-unity/
     internal class RhythmBgmPlayer : MonoBehaviour
     {
         //Bgm name, Serialize Field
         [SerializeField]
         private string MusicTheme;
-        //Should be removed later
-        private AudioSource _audioSource;
+        private AudioSource _bgmShotSource; //for "Playing once"
+        private AudioSource _bgmSource;
+        private AudioSource _feverSource;
+
         //All music sources are pre-loaded and indexed. This helps fast search for corresponding status, in runtime.
         private Dictionary<RhythmBgmIndex, AudioClip> _audioClips;
+
+        private float _defaultVolume;
+        private bool _hadFeverChance = false; //for fever chance intro
+
         private void Awake()
         {
-            _audioSource = GetComponent<AudioSource>();
-            _audioSource.velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
+            var sources = GetComponents<AudioSource>();
+            _bgmShotSource = sources[0];
+            _bgmSource = sources[1];
+            _feverSource = sources[2];
+            _defaultVolume = _feverSource.volume;
+
+            //All sources should work on Fixed Update
+            foreach (var src in sources) src.velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
+
+            _bgmShotSource.loop = false;
+
             SetClips();
-            ChangeMusicWithIntro(RhythmBgmIndex.Intro, RhythmBgmIndex.Base);
+
+            ChangeMusicWithIntro(RhythmBgmIndex.Intro, RhythmBgmIndex.Base, _bgmSource);
         }
         private void SetClips()
         {
@@ -45,26 +63,61 @@ namespace Core.Rhythm.Bgm
                 { RhythmBgmIndex.BeforeFeverIntro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever-intro") as AudioClip },
                 { RhythmBgmIndex.BeforeFever, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever") as AudioClip },
                 { RhythmBgmIndex.FeverIntro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever-intro") as AudioClip },
-                { RhythmBgmIndex.Fever, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever") as AudioClip },
+                { RhythmBgmIndex.Fever, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever") as AudioClip }
             };
         }
-        private void ChangeMusicWithIntro(RhythmBgmIndex introMusicIndex, RhythmBgmIndex musicIndex)
+        private void ChangeMusicWithIntro(RhythmBgmIndex introMusicIndex, RhythmBgmIndex musicIndex, AudioSource source)
         {
+
             var introMusic = _audioClips[introMusicIndex];
             var music = _audioClips[musicIndex];
-            _audioSource.Stop();
-            _audioSource.clip = music;
-            _audioSource.PlayOneShot(introMusic);
-            _audioSource.PlayDelayed(introMusic.length);
+            source.clip = music;
+            _bgmShotSource.PlayOneShot(introMusic);
+            source.PlayDelayed(introMusic.length);
         }
         private void ChangeMusic(RhythmBgmIndex bgmType)
         {
-            _audioSource.clip = _audioClips[bgmType];
-            _audioSource.Play();
+            _bgmSource.clip = _audioClips[bgmType];
+            _bgmSource.Play();
         }
-        public void PlayCommandMusic() => ChangeMusic(RhythmBgmIndex.Command);
-        public void PlayBaseMusic() => ChangeMusic(RhythmBgmIndex.Base);
-        public void PlayBeforeFever() => ChangeMusicWithIntro(RhythmBgmIndex.BeforeFeverIntro, RhythmBgmIndex.BeforeFever);
-        public void PlayFever() => ChangeMusic(RhythmBgmIndex.Fever);
+        private void PlayOneShot(RhythmBgmIndex bgmType) => _bgmShotSource.PlayOneShot(_audioClips[bgmType]);
+
+        public void PlayComboMusic(bool feverChance)
+        {
+            if (feverChance && !_hadFeverChance)
+            {
+                ChangeMusicWithIntro(RhythmBgmIndex.BeforeFeverIntro, RhythmBgmIndex.BeforeFever, _bgmSource);
+            }
+            else if (!feverChance)
+            {
+                ChangeMusic(RhythmBgmIndex.Command);
+            }
+            _hadFeverChance = feverChance;
+        }
+        public void PlayBaseMusic() => RhythmTimer.OnNext.AddListener(() => ChangeMusic(RhythmBgmIndex.Base));
+        public void PlayFever()
+        {
+            _bgmSource.Stop();
+            _feverSource.volume = _defaultVolume;
+            ChangeMusicWithIntro(RhythmBgmIndex.FeverIntro, RhythmBgmIndex.Fever, _feverSource);
+        }
+        public void StopPlayingFever()
+        {
+            ChangeMusic(RhythmBgmIndex.Base);
+            StartCoroutine(FeverFadeOut());
+        }
+        private IEnumerator FeverFadeOut()
+        {
+            int countOffset = (RhythmTimer.Frequency - RhythmTimer.Count) + (TurnCounter.TurnCount + 4) * RhythmTimer.Frequency;
+
+            float fadeOutScale = _feverSource.volume / countOffset;
+
+            for (int i = 0; i < countOffset; i++)
+            {
+                _feverSource.volume -= fadeOutScale;
+                yield return new WaitForFixedUpdate();
+            }
+            _feverSource.Stop();
+        }
     }
 }
