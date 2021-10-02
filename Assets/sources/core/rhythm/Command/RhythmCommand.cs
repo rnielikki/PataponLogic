@@ -48,9 +48,14 @@ namespace Core.Rhythm.Command
             new DrumType[]{ DrumType.Pata, DrumType.Pon, DrumType.Don, DrumType.Chaka } ,//PATA PON DON CHAKA
         };
         private readonly Queue<RhythmInputModel> _currentHits = new Queue<RhythmInputModel>();
+
+        [SerializeField]
+        private MiracleListener _miracleListener;
         // Start is called before the first frame update
         private void Awake()
         {
+            _miracleListener.OnMiracle.AddListener(() => UnityEngine.Debug.Log("------------------- MIRACLE ---------------------"));
+
             OnCommandInput.AddListener(ComboManager.CountCombo);
             OnCommandCanceled.AddListener(ComboManager.EndCombo);
             OnCommandCanceled.AddListener(() =>
@@ -82,6 +87,7 @@ namespace Core.Rhythm.Command
             // --------------- Command sent check end
 
             OnCommandCanceled.AddListener(TurnCounter.Stop);
+            OnCommandCanceled.AddListener(_miracleListener.Reset);
 
             foreach (var rhythmInput in _rhythmInputs)
             {
@@ -92,18 +98,18 @@ namespace Core.Rhythm.Command
 
         private void AddDrumHit(RhythmInputModel inputModel)
         {
-            if (inputModel.Status != DrumHitStatus.Miss)
-            {
-                EnqueueInputModel(inputModel);
-                CheckCommand();
-            }
-            else
+            if (inputModel.Status == DrumHitStatus.Miss)
             {
                 ClearDrumHits();
                 OnCommandCanceled.Invoke();
             }
+            else
+            {
+                EnqueueInputModel(inputModel);
+                CheckCommand(inputModel);
+            }
         }
-        private void CheckCommand()
+        private void CheckCommand(RhythmInputModel inputModel)
         {
             //I don't know maybe there are better way...
             var drums = _currentHits.Select(hit => hit.Drum).ToArray();
@@ -111,6 +117,7 @@ namespace Core.Rhythm.Command
             if (CommandExists(drums))
             {
                 _gotAnyCommandInput = true;
+
                 if (_currentHits.Count == 4)
                 {
                     if (!TurnCounter.IsOn)
@@ -121,6 +128,21 @@ namespace Core.Rhythm.Command
                     {
                         OnCommandInput.Invoke(new RhythmCommandModel(_currentHits));
                         ClearDrumHits();
+                    });
+                }
+            }
+            else if (RhythmFever.IsFever && _miracleListener.HasMiracleChance(inputModel))
+            {
+                _gotAnyCommandInput = true;
+                if (_miracleListener.MiracleDrumCount == 5)
+                {
+                    _miracleListener.Reset();
+                    _miracleListener.OnMiracle.Invoke();
+                    TurnCounter.OnNextTurn.AddListener(() =>
+                    {
+                        ClearDrumHits();
+                        //Stop command listening, should pass to miracle status
+                        //simply disabling still hears events, so we need different way, like destroying and changing scene???
                     });
                 }
             }
@@ -162,6 +184,7 @@ namespace Core.Rhythm.Command
         {
             OnCommandInput.RemoveAllListeners();
             OnCommandCanceled.RemoveAllListeners();
+            _miracleListener.OnMiracle.RemoveAllListeners();
             ComboManager.Destroy();
         }
     }

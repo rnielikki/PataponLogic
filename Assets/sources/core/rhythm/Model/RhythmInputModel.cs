@@ -14,12 +14,11 @@
         /// </summary>
         public DrumType Drum { get; }
         /// <summary>
-        /// If <see cref="RhythmTimer.Count"/> was bigger than <see cref="RhythmTimer.HalfFrequency"/> when pressed, this is <code>true</code>.
-        /// <note>The primary purpose is checking when is the 'next timing after command', but can be used somewhere else</note>
+        /// Count value when the drum was hit. This kept for DON miracle hit.
         /// </summary>
-        public bool IfLater { get; }
+        public int Count { get; }
         /// <summary>
-        /// The timing for the drum; This is kept, especially for DON miracle hit
+        /// The timing for the drum;
         /// </summary>
         public int Timing { get; }
         /// <summary>
@@ -30,13 +29,23 @@
         internal RhythmInputModel(DrumType drum, int count)
         {
             Drum = drum;
+            Count = count;
             Timing = RhythmTimer.GetTiming(count);
             Status = GetHitStatus(Timing);
-            if (Status != DrumHitStatus.Miss)
-            {
-                IfLater = (count < RhythmTimer.HalfFrequency && count != 0);
-            }
         }
+        /// <summary>
+        /// Generates model with defined drum status.
+        /// </summary>
+        /// <param name="drum">The drum tpye.</param>
+        /// <param name="count">The <see cref="RhythmTimer.Count"/> value when pressed.</param>
+        internal RhythmInputModel(DrumType drum, int count, DrumHitStatus status)
+        {
+            Drum = drum;
+            Count = count;
+            Timing = RhythmTimer.GetTiming(count);
+            Status = status;
+        }
+
         /// <summary>
         /// For returning "Miss" status from <see cref="Miss(DrumType)"/> method.
         /// </summary>
@@ -44,7 +53,6 @@
         private RhythmInputModel(DrumType drum)
         {
             Drum = drum;
-            Timing = RhythmTimer.Count;
             Status = DrumHitStatus.Miss;
         }
         /// <summary>

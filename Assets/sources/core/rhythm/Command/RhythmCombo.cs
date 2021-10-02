@@ -31,7 +31,7 @@ namespace Core.Rhythm.Command
 
         internal void CountCombo(RhythmCommandModel inputs)
         {
-            if (FeverManager.IsFever)
+            if (RhythmFever.IsFever)
             {
                 FeverManager.CheckFeverStatus(inputs);
                 return;

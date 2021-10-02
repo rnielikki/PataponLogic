@@ -7,24 +7,19 @@ namespace Core.Rhythm
     /// <summary>
     /// Called in <see cref="RhythmInput"/> method. Always follows with the input. Don't make it as Monobehaviour.
     /// </summary>
-    internal class RhythmInputAudio
+    internal class RhythmInputAudio : MonoBehaviour
     {
-        private static AudioSource _audioSource;
+        [SerializeField]
+        private AudioSource _audioSource;
         //so long dictionary, but fast search is important
-        private readonly Dictionary<DrumHitStatus, AudioClip> Audio;
-        /// <summary>
-        /// Creates new audio player for the drum.
-        /// </summary>
-        /// <param name="drumType"></param>
-        /// <param name="sender">The Rhythm input.</param>
-        internal RhythmInputAudio(DrumType drumType, RhythmInput sender)
+        [SerializeField]
+        private RhythmInput _input;
+        private Dictionary<DrumHitStatus, AudioClip> Audio;
+        private void Awake()
         {
-            string drumName = drumType.ToString();
-            if (_audioSource == null)
-            {
-                _audioSource = GameObject.FindGameObjectWithTag("Sound").GetComponent<AudioSource>();
-                _audioSource.velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
-            }
+            _audioSource.velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
+            string drumName = _input.DrumType.ToString();
+
             Audio = new Dictionary<DrumHitStatus, AudioClip>()
                 {
                     { DrumHitStatus.Perfect, Resources.Load(RhythmEnvironment.DrumSoundPath + drumName + "-perfect") as AudioClip },
@@ -33,7 +28,7 @@ namespace Core.Rhythm
                     { DrumHitStatus.Miss, Resources.Load(RhythmEnvironment.DrumSoundPath + drumName +  "-miss") as AudioClip }
                 };
 
-            sender.OnDrumHit.AddListener(PlaySound);
+            _input.OnDrumHit.AddListener(PlaySound);
         }
 
         private void PlaySound(RhythmInputModel model)

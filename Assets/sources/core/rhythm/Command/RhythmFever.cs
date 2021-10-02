@@ -11,7 +11,7 @@ namespace Core.Rhythm.Command
     [System.Serializable]
     class RhythmFever
     {
-        internal bool IsFever { get; private set; }
+        public static bool IsFever { get; private set; }
         public UnityEvent OnFever;
         public UnityEvent OnFeverWarning;
         public UnityEvent OnFeverCanceled;

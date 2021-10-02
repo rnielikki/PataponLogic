@@ -14,21 +14,28 @@ namespace Core.Rhythm
         public readonly UnityEvent<RhythmInputModel> OnDrumHit = new UnityEvent<RhythmInputModel>();
         [SerializeField]
         private DrumType _drumType;
-        private InputAction _action;
-        private RhythmInputAudio _audio;
+        protected InputAction _action;
+        public DrumType DrumType => _drumType;
         /// <summary>
         /// Prevents from 'fast repeat hit'. Always miss if input interval is too fast.
         /// </summary>
-        internal static bool Disabled { get; private set; }
+        public static bool Disabled { get; protected set; }
         void Awake()
+        {
+            Init();
+        }
+        protected virtual void Init()
         {
             Disabled = false;
             var actions = EventSystem.current.gameObject.GetComponent<PlayerInput>().actions;
             _action = actions.FindAction("Drum/" + _drumType.ToString());
-            _audio = new RhythmInputAudio(_drumType, this);
-            RhythmTimer.OnHalfTime.AddListener(() => Disabled = false);
+            SetResetTimer();
         }
-        void DrumHit(InputAction.CallbackContext context)
+        protected virtual void SetResetTimer()
+        {
+            RhythmTimer.OnHalfTime.AddListener(SetEnable);
+        }
+        protected void DrumHit(InputAction.CallbackContext context)
         {
             RhythmInputModel model;
             if (Disabled || (Command.TurnCounter.IsOn && !Command.TurnCounter.IsPlayerTurn))
@@ -37,33 +44,38 @@ namespace Core.Rhythm
             }
             else
             {
-                model =
-                    new RhythmInputModel(
-                        _drumType,
-                        RhythmTimer.Count
-                        );
+                model = GetInputModel();
             }
             OnDrumHit.Invoke(model);
-            Disabled = true;
         }
-        private void OnEnable()
+        protected virtual RhythmInputModel GetInputModel()
+        {
+            Disabled = true;
+            return new RhythmInputModel(
+                            _drumType,
+                            RhythmTimer.Count
+                            );
+        }
+        private void OnEnable() => Enable();
+        private void OnDisable() => Disable();
+        private void OnDestroy() => Destroy();
+        protected void Enable()
         {
             RhythmTimer.OnHalfTime.AddListener(SetEnable);
             _action.started += DrumHit;
             _action.Enable();
         }
-        private void OnDisable()
+        protected void Disable()
         {
             RhythmTimer.OnHalfTime.RemoveListener(SetEnable);
             _action.started -= DrumHit;
             _action.Disable();
         }
-        private void OnDestroy()
+        protected void Destroy()
         {
             OnDisable();
             OnDrumHit.RemoveAllListeners();
         }
-        private void SetEnable() => Disabled = false;
-
+        protected void SetEnable() => Disabled = false;
     }
 }

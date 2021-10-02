@@ -100,5 +100,6 @@ namespace Core.Rhythm
             if (count < HalfFrequency) return count;
             else return Frequency - count;
         }
+        internal static int GetHalfTiming(int count) => Mathf.Abs(HalfFrequency - count);
     }
 }

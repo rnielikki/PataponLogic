@@ -401,6 +401,7 @@ GameObject:
   - component: {fileID: 961691992}
   - component: {fileID: 961691991}
   - component: {fileID: 961691994}
+  - component: {fileID: 961691995}
   m_Layer: 0
   m_Name: MusicSource
   m_TagString: Sound
@@ -547,7 +548,7 @@ MonoBehaviour:
   - {fileID: 1222950736}
   - {fileID: 1600271084}
   - {fileID: 1874593553}
-  - {fileID: 1784083196}
+  - {fileID: 1731768127}
   OnCommandInput:
     m_PersistentCalls:
       m_Calls: []
@@ -556,6 +557,7 @@ MonoBehaviour:
       m_Calls: []
   ComboManager:
     id: 0
+  _miracleListener: {fileID: 961691995}
   references:
     version: 1
     00000000:
@@ -625,6 +627,22 @@ MonoBehaviour:
                   m_StringArgument: 
                   m_BoolArgument: 0
                 m_CallState: 2
+--- !u!114 &961691995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961691990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9371e01dc72614b428838b4eb1815c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnMiracle:
+    m_PersistentCalls:
+      m_Calls: []
+  _miracleDrumInput: {fileID: 1731768127}
 --- !u!1 &995254097
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,8 +1046,8 @@ Canvas:
   m_GameObject: {fileID: 1016071387}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1270,10 +1288,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pata
       objectReference: {fileID: 0}
-    - target: {fileID: 1826765504865313593, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 9058974977361363525, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
+      propertyPath: _audioSource
+      value: 
+      objectReference: {fileID: 961691992}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
 --- !u!224 &1222950732 stripped
@@ -1281,36 +1299,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1826765504865313590, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
   m_PrefabInstance: {fileID: 1222950731}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1222950733 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1826765504865313591, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
-  m_PrefabInstance: {fileID: 1222950731}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1222950734
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1222950733}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 83c04aa5f78ff444aaad8ae783e0c3bc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1222950736 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7546167548598666912, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
   m_PrefabInstance: {fileID: 1222950731}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1222950733}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54d4eb48695c4b44faf728dcd6e7e724, type: 3}
@@ -1419,6 +1413,10 @@ PrefabInstance:
       propertyPath: _drumType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9058974977361363525, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
+      propertyPath: _audioSource
+      value: 
+      objectReference: {fileID: 961691992}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
 --- !u!224 &1600271080 stripped
@@ -1426,36 +1424,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1826765504865313590, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
   m_PrefabInstance: {fileID: 1600271079}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1600271081 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1826765504865313591, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
-  m_PrefabInstance: {fileID: 1600271079}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1600271082
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600271081}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 83c04aa5f78ff444aaad8ae783e0c3bc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1600271084 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7546167548598666912, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
   m_PrefabInstance: {fileID: 1600271079}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1600271081}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54d4eb48695c4b44faf728dcd6e7e724, type: 3}
@@ -1549,6 +1523,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1774de29a4540a342844bf24692681cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1731768126 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1826765504865313591, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
+  m_PrefabInstance: {fileID: 1784083191}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1731768127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1731768126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87f480eb05591ee489f244051c6d2929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _drumType: 2
+  _newPerfectRange: 0
+  _newGoodRange: 0
 --- !u!1001 &1784083191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1648,52 +1642,30 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 2a970d484a9e5b14185f5112f9c7e2f4, type: 3}
+    - target: {fileID: 3254368038321854233, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
+      propertyPath: sender
+      value: 
+      objectReference: {fileID: 1731768127}
     - target: {fileID: 7546167548598666912, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
       propertyPath: _drumType
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 9058974977361363525, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
+      propertyPath: _input
+      value: 
+      objectReference: {fileID: 1731768127}
+    - target: {fileID: 9058974977361363525, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
+      propertyPath: _audioSource
+      value: 
+      objectReference: {fileID: 961691992}
+    m_RemovedComponents:
+    - {fileID: 7546167548598666912, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
 --- !u!224 &1784083192 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1826765504865313590, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
   m_PrefabInstance: {fileID: 1784083191}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1784083193 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1826765504865313591, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
-  m_PrefabInstance: {fileID: 1784083191}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1784083194
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1784083193}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 83c04aa5f78ff444aaad8ae783e0c3bc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1784083196 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7546167548598666912, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
-  m_PrefabInstance: {fileID: 1784083191}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1784083193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d4eb48695c4b44faf728dcd6e7e724, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1874593548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1797,6 +1769,10 @@ PrefabInstance:
       propertyPath: _drumType
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 9058974977361363525, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
+      propertyPath: _audioSource
+      value: 
+      objectReference: {fileID: 961691992}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
 --- !u!224 &1874593549 stripped
@@ -1804,36 +1780,12 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1826765504865313590, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
   m_PrefabInstance: {fileID: 1874593548}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1874593550 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1826765504865313591, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
-  m_PrefabInstance: {fileID: 1874593548}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1874593551
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1874593550}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 83c04aa5f78ff444aaad8ae783e0c3bc, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &1874593553 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7546167548598666912, guid: 22924ff8fed99df49ba418c31eaae08a, type: 3}
   m_PrefabInstance: {fileID: 1874593548}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1874593550}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 54d4eb48695c4b44faf728dcd6e7e724, type: 3}
