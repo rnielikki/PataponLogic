@@ -72,13 +72,24 @@ namespace Core.Rhythm.Command
             }
             OnCombo.Invoke(_hasFeverChance);
         }
+        /// <summary>
+        /// Ends combo in normal status, like miss drum hit. Invokes <see cref="OnComboCanceled"/>.
+        /// </summary>
         internal void EndCombo()
         {
             if (!_isCombo) return;
+            UnityEngine.Debug.Log("--------- Combo end! :( -----------");
+            EndComboImmediately();
+            OnComboCanceled.Invoke();
+        }
+        /// <summary>
+        /// Ends combo due to specific reason e.g. miracle or mission success/fail. Doesn't invoke <see cref="OnComboCanceled"/>.
+        /// </summary>
+        internal void EndComboImmediately()
+        {
             _isCombo = false;
             UnityEngine.Debug.Log("--------- Combo end! :( -----------");
             ClearCombo();
-            OnComboCanceled.Invoke();
             FeverManager.EndFever();
         }
         internal void Destroy()

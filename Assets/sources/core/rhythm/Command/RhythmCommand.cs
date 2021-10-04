@@ -36,17 +36,8 @@ namespace Core.Rhythm.Command
         [SerializeReference]
         public RhythmCombo ComboManager = new RhythmCombo();
 
-        //Will loaded based on game progress
-        private readonly List<DrumType[]> _commands = new List<DrumType[]>
-        {
-            new DrumType[]{ DrumType.Pata, DrumType.Pata, DrumType.Pata, DrumType.Pon }, //PATA PATA PATA PON
-            new DrumType[]{ DrumType.Pon, DrumType.Pon, DrumType.Pata, DrumType.Pon }, //PON PON PATA PON
-            new DrumType[]{ DrumType.Chaka, DrumType.Chaka, DrumType.Pata, DrumType.Pon }, //CHAKA CHAKA PATA PON
-            new DrumType[]{ DrumType.Pon, DrumType.Pata, DrumType.Pon, DrumType.Pata } ,//PON PATA PON PATA
-            new DrumType[]{ DrumType.Pon, DrumType.Pon, DrumType.Chaka, DrumType.Chaka } ,//PON PON CHAKA CHAKA
-            new DrumType[]{ DrumType.Don, DrumType.Don, DrumType.Chaka, DrumType.Chaka } ,//DON DON CHAKA CHAKA
-            new DrumType[]{ DrumType.Pata, DrumType.Pon, DrumType.Don, DrumType.Chaka } ,//PATA PON DON CHAKA
-        };
+        private CommandListData _data;
+
         private readonly Queue<RhythmInputModel> _currentHits = new Queue<RhythmInputModel>();
 
         [SerializeField]
@@ -54,7 +45,7 @@ namespace Core.Rhythm.Command
         // Start is called before the first frame update
         private void Awake()
         {
-            _miracleListener.OnMiracle.AddListener(() => UnityEngine.Debug.Log("------------------- MIRACLE ---------------------"));
+            _miracleListener.OnMiracle.AddListener(() => Debug.Log("------------------- MIRACLE ---------------------"));
 
             OnCommandInput.AddListener(ComboManager.CountCombo);
             OnCommandCanceled.AddListener(ComboManager.EndCombo);
@@ -86,14 +77,20 @@ namespace Core.Rhythm.Command
 
             // --------------- Command sent check end
 
-            OnCommandCanceled.AddListener(TurnCounter.Stop);
-            OnCommandCanceled.AddListener(_miracleListener.Reset);
-
-            foreach (var rhythmInput in _rhythmInputs)
-            {
-                rhythmInput.OnDrumHit.AddListener(AddDrumHit);
-            }
-
+            //Initalizes drum beats
+            //Will loaded based on game progress
+            _data = new CommandListData(
+                new Dictionary<CommandSong, DrumType[]>()
+                {
+                    { CommandSong.Patapata, new DrumType[]{ DrumType.Pata, DrumType.Pata, DrumType.Pata, DrumType.Pon }}, //PATA PATA PATA PON
+                    { CommandSong.Ponpon, new DrumType[]{ DrumType.Pon, DrumType.Pon, DrumType.Pata, DrumType.Pon } }, //PON PON PATA PON
+                    { CommandSong.Chakachaka, new DrumType[]{ DrumType.Chaka, DrumType.Chaka, DrumType.Pata, DrumType.Pon } }, //CHAKA CHAKA PATA PON
+                    { CommandSong.Ponpata, new DrumType[]{ DrumType.Pon, DrumType.Pata, DrumType.Pon, DrumType.Pata } } ,//PON PATA PON PATA
+                    { CommandSong.Ponchaka, new DrumType[]{ DrumType.Pon, DrumType.Pon, DrumType.Chaka, DrumType.Chaka } } ,//PON PON CHAKA CHAKA
+                    { CommandSong.Dondon, new DrumType[]{ DrumType.Don, DrumType.Don, DrumType.Chaka, DrumType.Chaka } } ,//DON DON CHAKA CHAKA
+                    { CommandSong.Donchaka, new DrumType[]{ DrumType.Pata, DrumType.Pon, DrumType.Don, DrumType.Chaka } } ,//PATA PON DON CHAKA
+                    { CommandSong.Patachaka, new DrumType[]{ DrumType.Pata, DrumType.Chaka, DrumType.Pata, DrumType.Pon } } ,//PATA CHAKA PATA PON (NEW): *DOES NOTHING*
+                });
         }
 
         private void AddDrumHit(RhythmInputModel inputModel)
@@ -109,12 +106,33 @@ namespace Core.Rhythm.Command
                 CheckCommand(inputModel);
             }
         }
+        private void OnEnable()
+        {
+            OnCommandCanceled.AddListener(TurnCounter.Stop);
+            OnCommandCanceled.AddListener(_miracleListener.Reset);
+
+            foreach (var rhythmInput in _rhythmInputs)
+            {
+                rhythmInput.OnDrumHit.AddListener(AddDrumHit);
+            }
+        }
+        private void OnDisable()
+        {
+            ComboManager.EndComboImmediately();
+            OnCommandCanceled.RemoveListener(TurnCounter.Stop);
+            OnCommandCanceled.RemoveListener(_miracleListener.Reset);
+
+            foreach (var rhythmInput in _rhythmInputs)
+            {
+                rhythmInput.OnDrumHit.RemoveListener(AddDrumHit);
+            }
+        }
         private void CheckCommand(RhythmInputModel inputModel)
         {
             //I don't know maybe there are better way...
-            var drums = _currentHits.Select(hit => hit.Drum).ToArray();
+            var drums = _currentHits.Select(hit => hit.Drum);
 
-            if (CommandExists(drums))
+            if (CommandExists(drums, out CommandSong song))
             {
                 _gotAnyCommandInput = true;
 
@@ -126,7 +144,7 @@ namespace Core.Rhythm.Command
                     }
                     TurnCounter.OnNextTurn.AddListener(() =>
                     {
-                        OnCommandInput.Invoke(new RhythmCommandModel(_currentHits));
+                        OnCommandInput.Invoke(new RhythmCommandModel(_currentHits, song));
                         ClearDrumHits();
                     });
                 }
@@ -138,11 +156,12 @@ namespace Core.Rhythm.Command
                 {
                     _miracleListener.Reset();
                     _miracleListener.OnMiracle.Invoke();
-                    TurnCounter.OnNextTurn.AddListener(() =>
+                    TurnCounter.Stop();
+                    RhythmTimer.OnNext.AddListener(() =>
                     {
                         ClearDrumHits();
                         //Stop command listening, should pass to miracle status
-                        //simply disabling still hears events, so we need different way, like destroying and changing scene???
+                        enabled = false;
                     });
                 }
             }
@@ -152,28 +171,7 @@ namespace Core.Rhythm.Command
             }
         }
 
-        private bool CommandExists(DrumType[] drums)
-        {
-            foreach (var command in _commands)
-            {
-                if (CommandMatches(drums, command)) return true;
-            }
-            return false;
-        }
-        /// <summary>
-        /// Check if the command "starts with" the 'drums'. Can be used for both "all match" or "not all (contains and starts with) match".
-        /// </summary>
-        /// <param name="drums">The drums from compelete/incomplete command.</param>
-        /// <param name="command">One complete command to compare.</param>
-        /// <returns><c>true</c> if the command starts with (or same with) the drum, otherwise <c>false</c>.</returns>
-        private bool CommandMatches(DrumType[] drums, DrumType[] command)
-        {
-            for (int i = 0; i < _currentHits.Count; i++)
-            {
-                if (drums[i] != command[i]) return false;
-            }
-            return true;
-        }
+        private bool CommandExists(IEnumerable<DrumType> drums, out CommandSong song) => _data.TryGetCommand(drums, out song);
         private void ClearDrumHits() => _currentHits.Clear();
         private void EnqueueInputModel(RhythmInputModel model)
         {

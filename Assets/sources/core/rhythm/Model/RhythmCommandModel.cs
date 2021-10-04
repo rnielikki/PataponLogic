@@ -11,7 +11,7 @@ namespace Core.Rhythm.Model
         /// <summary>
         /// The 4-beat drum command., e.g. PATA PON DON CHAKA
         /// </summary>
-        public DrumType[] Command { get; }
+        public CommandSong Song { get; }
 
         /// <summary>
         /// How many drum hit was perfect inside the command.
@@ -28,9 +28,9 @@ namespace Core.Rhythm.Model
         public float Percentage { get; }
         private static float _minMax = (RhythmTimer.BadFrequency - RhythmTimer.PerfectFrequency) * 4;
 
-        internal RhythmCommandModel(IEnumerable<RhythmInputModel> inputs)
+        internal RhythmCommandModel(IEnumerable<RhythmInputModel> inputs, CommandSong song)
         {
-            Command = inputs.Select(hit => hit.Drum).ToArray();
+            Song = song;
             var statusCollection = inputs.Select(hit => hit.Status);
             PerfectCount = statusCollection.Count(status => status == DrumHitStatus.Perfect);
             BadCount = statusCollection.Count(status => status == DrumHitStatus.Bad);

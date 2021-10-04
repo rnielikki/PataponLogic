@@ -7,6 +7,7 @@ namespace Core.Rhythm.Bgm
 {
     /*
      * Each theme folder must include:
+     * song (directory), See details on "RhythmBgmSinging.cs"
      * intro.mp3 : first play when the game is loaded
      * base.mp3 : no command input
      * command.mp3 : command input, but not yet chance to enter fever
@@ -25,7 +26,8 @@ namespace Core.Rhythm.Bgm
     {
         //Bgm name, Serialize Field
         [SerializeField]
-        private string MusicTheme;
+        private string _musicTheme;
+        public string Musictheme => _musicTheme;
         private AudioSource _bgmShotSource; //for "Playing once"
         private AudioSource _bgmSource;
         private AudioSource _feverSource;
@@ -57,13 +59,13 @@ namespace Core.Rhythm.Bgm
         {
             _audioClips = new Dictionary<RhythmBgmIndex, AudioClip>()
             {
-                { RhythmBgmIndex.Intro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/intro") as AudioClip },
-                { RhythmBgmIndex.Base, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/base") as AudioClip },
-                { RhythmBgmIndex.Command, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/command") as AudioClip },
-                { RhythmBgmIndex.BeforeFeverIntro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever-intro") as AudioClip },
-                { RhythmBgmIndex.BeforeFever, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever") as AudioClip },
-                { RhythmBgmIndex.FeverIntro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever-intro") as AudioClip },
-                { RhythmBgmIndex.Fever, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever") as AudioClip }
+                { RhythmBgmIndex.Intro, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/intro") as AudioClip },
+                { RhythmBgmIndex.Base, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/base") as AudioClip },
+                { RhythmBgmIndex.Command, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/command") as AudioClip },
+                { RhythmBgmIndex.BeforeFeverIntro, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/before-fever-intro") as AudioClip },
+                { RhythmBgmIndex.BeforeFever, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/before-fever") as AudioClip },
+                { RhythmBgmIndex.FeverIntro, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/fever-intro") as AudioClip },
+                { RhythmBgmIndex.Fever, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/fever") as AudioClip }
             };
         }
         private void ChangeMusicWithIntro(RhythmBgmIndex introMusicIndex, RhythmBgmIndex musicIndex, AudioSource source)
