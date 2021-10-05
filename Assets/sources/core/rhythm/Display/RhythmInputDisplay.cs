@@ -1,5 +1,4 @@
-﻿using Core.Rhythm.Model;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core.Rhythm.Display
 {
@@ -22,7 +21,14 @@ namespace Core.Rhythm.Display
             _mainModule = _particle.main;
             _drumAnimationHash = Animator.StringToHash("DrumAnimation");
             _missAnimationHash = Animator.StringToHash("MissAnimation");
+        }
+        private void OnEnable()
+        {
             sender.OnDrumHit.AddListener(PlayAnimation);
+        }
+        private void OnDisable()
+        {
+            sender.OnDrumHit.RemoveListener(PlayAnimation);
         }
 
         private void PlayAnimation(RhythmInputModel model)

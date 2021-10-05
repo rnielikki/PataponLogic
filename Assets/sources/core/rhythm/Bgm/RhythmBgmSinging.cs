@@ -1,5 +1,4 @@
 using Core.Rhythm.Command;
-using Core.Rhythm.Model;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,9 +30,9 @@ namespace Core.Rhythm.Bgm
         private Dictionary<CommandSong, AudioClip> _audioClipsNoFever;
         private Dictionary<CommandSong, AudioClip> _audioClipsMayFever;
         private Dictionary<CommandSong, AudioClip[]> _audioClipsFever;
+        private AudioClip _feverShout;
 
         private int _offset; //on Fever, determines 1 (second music) is called first.
-        private bool _mayEnterFever;
 
         // Start is called before the first frame update
         void Awake()
@@ -47,49 +46,51 @@ namespace Core.Rhythm.Bgm
         public void Sing(RhythmCommandModel command)
         {
             AudioClip clip;
-            if (RhythmFever.IsFever)
+            switch (command.ComboType)
             {
-                _offset = (_offset + 1) % 2;
-                var commandClips = _audioClipsFever[command.Song];
-                if (commandClips.Length > 1)
-                {
-                    clip = commandClips[_offset];
-                }
-                else
-                {
-                    clip = commandClips[0];
-                }
-            }
-            else if (_mayEnterFever)
-            {
-                switch (command.Song)
-                {
-                    case CommandSong.Patapata:
-                    case CommandSong.Ponpon:
-                    case CommandSong.Chakachaka:
-                        clip = _audioClipsMayFever[command.Song];
-                        break;
-                    default:
-                        clip = _audioClipsNoFever[command.Song];
-                        break;
-                }
-            }
-            else
-            {
-                clip = _audioClipsNoFever[command.Song];
+                case ComboStatus.Fever:
+                    _offset = (_offset + 1) % 2;
+                    var commandClips = _audioClipsFever[command.Song];
+                    if (commandClips.Length > 1)
+                    {
+                        clip = commandClips[_offset];
+                    }
+                    else
+                    {
+                        clip = commandClips[0];
+                    }
+                    break;
+                case ComboStatus.MayFever:
+                    switch (command.Song)
+                    {
+                        case CommandSong.Patapata:
+                        case CommandSong.Ponpon:
+                        case CommandSong.Chakachaka:
+                            clip = _audioClipsMayFever[command.Song];
+                            break;
+                        default:
+                            clip = _audioClipsNoFever[command.Song];
+                            break;
+                    }
+                    break;
+                default:
+                    clip = _audioClipsNoFever[command.Song];
+                    break;
             }
             _audioSource.clip = clip;
             _audioSource.Play();
         }
-
-        public void SingBeforeFever(bool mayFever)
+        public void ShoutFever()
         {
-            _mayEnterFever = mayFever;
+            //A bit delay needed to add listener in right time
+            RhythmTimer.OnNextHalfTime.AddListener(() =>
+                TurnCounter.OnNextTurn.AddListener(() => _audioSource.PlayOneShot(_feverShout))
+            );
         }
+
         public void End()
         {
             _audioSource.Stop();
-            _mayEnterFever = false;
             _offset = 0;
         }
         private void InitAudioClips()
@@ -107,9 +108,9 @@ namespace Core.Rhythm.Bgm
             };
             _audioClipsMayFever = new Dictionary<CommandSong, AudioClip>()
             {
-                { CommandSong.Patapata, Resources.Load(RhythmEnvironment.ThemePath + "common/song/before_fever/patapata") as AudioClip },
-                { CommandSong.Ponpon, Resources.Load(RhythmEnvironment.ThemePath + "common/song/before_fever/ponpon") as AudioClip },
-                { CommandSong.Chakachaka, Resources.Load(RhythmEnvironment.ThemePath + "common/song/before_fever/chakachaka") as AudioClip },
+                { CommandSong.Patapata, Resources.Load(RhythmEnvironment.ThemePath + _themeName + "/song/before_fever/patapata") as AudioClip },
+                { CommandSong.Ponpon, Resources.Load(RhythmEnvironment.ThemePath + _themeName + "/song/before_fever/ponpon") as AudioClip },
+                { CommandSong.Chakachaka, Resources.Load(RhythmEnvironment.ThemePath + _themeName + "/song/before_fever/chakachaka") as AudioClip },
             };
             _audioClipsFever = new Dictionary<CommandSong, AudioClip[]>()
             {
@@ -138,6 +139,7 @@ namespace Core.Rhythm.Bgm
                 { CommandSong.Donchaka, new[]{ Resources.Load(RhythmEnvironment.ThemePath + "common/song/donchaka-fever") as AudioClip } },
                 { CommandSong.Patachaka, new[]{ Resources.Load(RhythmEnvironment.ThemePath + "common/song/patachaka-fever") as AudioClip } }
             };
+            _feverShout = Resources.Load(RhythmEnvironment.ThemePath + "common/fever") as AudioClip;
         }
     }
 }

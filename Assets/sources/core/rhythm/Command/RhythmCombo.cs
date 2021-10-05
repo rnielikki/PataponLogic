@@ -1,7 +1,4 @@
-﻿using Core.Rhythm.Model;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.Events;
+﻿using UnityEngine.Events;
 
 namespace Core.Rhythm.Command
 {
@@ -13,13 +10,13 @@ namespace Core.Rhythm.Command
         /// </summary>
         private int _comboCount;
         /// <summary>
-        /// Counts how many perfect drum in this combo
+        /// Counts how many sequence it has
         /// </summary>
-        private int _perfectDrumCount;
+        private int _comboSequenceCount;
         /// <summary>
         /// Invoked, when the 'combo' is activated. Bool represents "May enter fever", and <c>true</c> if it has chance to enter fever
         /// </summary>
-        public UnityEvent<bool> OnCombo;
+        public UnityEvent<(int comboCount, int sequenceCount)> OnCombo;
         /// <summary>
         /// Invoked, when the 'combo' is canceled.
         /// </summary>
@@ -34,43 +31,49 @@ namespace Core.Rhythm.Command
             if (RhythmFever.IsFever)
             {
                 FeverManager.CheckFeverStatus(inputs);
+                inputs.ComboType = ComboStatus.Fever;
                 return;
             }
 
             _isCombo = true;
-            UnityEngine.Debug.Log("~~ " + (_comboCount + 1) + " combo! ~~ ( O)( O)");
             _comboCount++;
             if (_comboCount > 9)
             {
-                StartFever();
+                StartFever(inputs);
                 return;
             }
             var perfectDrums = inputs.PerfectCount;
-            if (perfectDrums == 0 && IsBadDrum(inputs))
+            if (perfectDrums == 0)
             {
                 if (_hasFeverChance)
                 {
-                    _perfectDrumCount = 0;
+                    _comboSequenceCount = 0;
                     _hasFeverChance = false;
                 }
             }
             else
             {
-                if (_comboCount > 2)
+                if (_comboCount > 1)
                 {
-                    _perfectDrumCount += perfectDrums;
-                    if (_perfectDrumCount > 3)
+                    if (_comboCount > 2 && perfectDrums == 4)
                     {
-                        StartFever();
+                        StartFever(inputs);
                         return;
                     }
-                }
-                else if (_comboCount > 1)
-                {
-                    _hasFeverChance = true;
+                    _comboSequenceCount++;
+                    if (_comboSequenceCount > 3)
+                    {
+                        StartFever(inputs);
+                        return;
+                    }
+                    else
+                    {
+                        _hasFeverChance = true;
+                    }
                 }
             }
-            OnCombo.Invoke(_hasFeverChance);
+            inputs.ComboType = (_hasFeverChance) ? ComboStatus.MayFever : ComboStatus.NoFever;
+            OnCombo.Invoke((_comboCount, _comboSequenceCount));
         }
         /// <summary>
         /// Ends combo in normal status, like miss drum hit. Invokes <see cref="OnComboCanceled"/>.
@@ -88,7 +91,6 @@ namespace Core.Rhythm.Command
         internal void EndComboImmediately()
         {
             _isCombo = false;
-            UnityEngine.Debug.Log("--------- Combo end! :( -----------");
             ClearCombo();
             FeverManager.EndFever();
         }
@@ -97,15 +99,16 @@ namespace Core.Rhythm.Command
             FeverManager.Destroy();
             OnCombo.RemoveAllListeners();
         }
-        private void StartFever()
+        private void StartFever(RhythmCommandModel inputs)
         {
+            inputs.ComboType = ComboStatus.Fever;
             ClearCombo();
             FeverManager.StartFever();
         }
         private void ClearCombo()
         {
             _comboCount = 0;
-            _perfectDrumCount = 0;
+            _comboSequenceCount = 0;
             _hasFeverChance = false;
         }
 

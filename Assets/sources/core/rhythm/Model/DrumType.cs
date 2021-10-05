@@ -1,4 +1,4 @@
-﻿namespace Core.Rhythm.Model
+﻿namespace Core.Rhythm
 {
     //This is not a drum staff, a drum shoes or a drum javelin
     public enum DrumType

@@ -1,4 +1,4 @@
-﻿namespace Core.Rhythm.Model
+﻿namespace Core.Rhythm
 {
     /// <summary>
     /// Model for sending event in Rhythm drum hit event.

@@ -1,4 +1,4 @@
-﻿namespace Core.Rhythm.Model
+﻿namespace Core.Rhythm
 {
     /// <summary>
     /// Basic status of the drum hit.

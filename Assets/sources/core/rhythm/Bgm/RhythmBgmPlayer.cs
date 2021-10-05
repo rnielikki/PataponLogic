@@ -84,8 +84,10 @@ namespace Core.Rhythm.Bgm
         }
         private void PlayOneShot(RhythmBgmIndex bgmType) => _bgmShotSource.PlayOneShot(_audioClips[bgmType]);
 
-        public void PlayComboMusic(bool feverChance)
+        public void PlayComboMusic(System.ValueTuple<int, int> comboInfo)
         {
+            (_, int comboSequenceCount) = comboInfo;
+            bool feverChance = comboSequenceCount > 0;
             if (feverChance && !_hadFeverChance)
             {
                 ChangeMusicWithIntro(RhythmBgmIndex.BeforeFeverIntro, RhythmBgmIndex.BeforeFever, _bgmSource);
@@ -105,8 +107,17 @@ namespace Core.Rhythm.Bgm
         }
         public void StopPlayingFever()
         {
-            ChangeMusic(RhythmBgmIndex.Base);
-            StartCoroutine(FeverFadeOut());
+            if (_feverSource.isPlaying)
+            {
+                ChangeMusic(RhythmBgmIndex.Base);
+                StartCoroutine(FeverFadeOut());
+            }
+        }
+        public void EnterMiracle()
+        {
+            _bgmSource.Stop();
+            _feverSource.Stop();
+            //Play miracle music!
         }
         private IEnumerator FeverFadeOut()
         {

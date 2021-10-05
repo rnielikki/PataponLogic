@@ -1,14 +1,12 @@
 ﻿using Core.Rhythm.Command;
-using Core.Rhythm.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Core.Rhythm
 {
+    /// <summary>
+    /// Sends one drum signal, like <see cref="RhythmInput"/>, but also extended to manual miracle hearing.
+    /// </summary>
     internal class RhythmInputMiracle : RhythmInput
     {
         [SerializeField]

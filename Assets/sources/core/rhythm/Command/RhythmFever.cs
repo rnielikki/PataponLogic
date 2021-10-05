@@ -1,7 +1,4 @@
-﻿using Core.Rhythm.Model;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine.Events;
+﻿using UnityEngine.Events;
 
 namespace Core.Rhythm.Command
 {

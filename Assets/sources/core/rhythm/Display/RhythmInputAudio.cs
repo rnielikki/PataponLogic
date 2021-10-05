@@ -1,5 +1,4 @@
-﻿using Core.Rhythm.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core.Rhythm

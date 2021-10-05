@@ -1,5 +1,4 @@
-﻿using Core.Rhythm.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -47,7 +46,6 @@ namespace Core.Rhythm.Command
         {
             _miracleListener.OnMiracle.AddListener(() => Debug.Log("------------------- MIRACLE ---------------------"));
 
-            OnCommandInput.AddListener(ComboManager.CountCombo);
             OnCommandCanceled.AddListener(ComboManager.EndCombo);
             OnCommandCanceled.AddListener(() =>
             {
@@ -144,7 +142,9 @@ namespace Core.Rhythm.Command
                     }
                     TurnCounter.OnNextTurn.AddListener(() =>
                     {
-                        OnCommandInput.Invoke(new RhythmCommandModel(_currentHits, song));
+                        var model = new RhythmCommandModel(_currentHits, song);
+                        ComboManager.CountCombo(model);
+                        OnCommandInput.Invoke(model);
                         ClearDrumHits();
                     });
                 }

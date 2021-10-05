@@ -1,4 +1,4 @@
-﻿namespace Core.Rhythm.Model
+﻿namespace Core.Rhythm.Command
 {
     public enum CommandSong
     {
