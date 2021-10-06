@@ -84,10 +84,9 @@ namespace Core.Rhythm.Bgm
         }
         private void PlayOneShot(RhythmBgmIndex bgmType) => _bgmShotSource.PlayOneShot(_audioClips[bgmType]);
 
-        public void PlayComboMusic(System.ValueTuple<int, int> comboInfo)
+        public void PlayComboMusic(RhythmComboModel comboInfo)
         {
-            (_, int comboSequenceCount) = comboInfo;
-            bool feverChance = comboSequenceCount > 0;
+            bool feverChance = comboInfo.hasFeverChance;
             if (feverChance && !_hadFeverChance)
             {
                 ChangeMusicWithIntro(RhythmBgmIndex.BeforeFeverIntro, RhythmBgmIndex.BeforeFever, _bgmSource);

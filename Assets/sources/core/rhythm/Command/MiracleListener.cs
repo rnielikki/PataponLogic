@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Core.Rhythm.Command
@@ -14,9 +16,9 @@ namespace Core.Rhythm.Command
         [SerializeField]
         private RhythmInputMiracle _miracleDrumInput;
         public int MiracleDrumCount => _miracleDrumInput.MiracleDrumCount;
-        internal bool HasMiracleChance(RhythmInputModel input)
+        internal bool HasMiracleChance(IEnumerable<DrumType> currentCommands, RhythmInputModel input)
         {
-            if (_miracleDrumInput.EnteredMiracleHit && input.Drum != DrumType.Don)
+            if ((_miracleDrumInput.EnteredMiracleHit && input.Drum != DrumType.Don) || currentCommands.Any(drum => drum != DrumType.Don))
             {
                 Reset();
             }

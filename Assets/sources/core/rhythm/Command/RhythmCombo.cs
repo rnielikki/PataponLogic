@@ -2,6 +2,9 @@
 
 namespace Core.Rhythm.Command
 {
+    /// <summary>
+    /// Defines combo status.
+    /// </summary>
     [System.Serializable]
     internal class RhythmCombo
     {
@@ -15,8 +18,10 @@ namespace Core.Rhythm.Command
         private int _comboSequenceCount;
         /// <summary>
         /// Invoked, when the 'combo' is activated. Bool represents "May enter fever", and <c>true</c> if it has chance to enter fever
+        /// <note>This is separated from <see cref="RhythmCombo.OnCombo"/> - FEVER status WON'T call this event.</note>
         /// </summary>
-        public UnityEvent<(int comboCount, int sequenceCount)> OnCombo;
+        [UnityEngine.Header("Note: FEVER status WON'T call this event")]
+        public UnityEvent<RhythmComboModel> OnCombo;
         /// <summary>
         /// Invoked, when the 'combo' is canceled.
         /// </summary>
@@ -73,7 +78,7 @@ namespace Core.Rhythm.Command
                 }
             }
             inputs.ComboType = (_hasFeverChance) ? ComboStatus.MayFever : ComboStatus.NoFever;
-            OnCombo.Invoke((_comboCount, _comboSequenceCount));
+            OnCombo.Invoke(new RhythmComboModel(inputs, _comboCount, _comboSequenceCount));
         }
         /// <summary>
         /// Ends combo in normal status, like miss drum hit. Invokes <see cref="OnComboCanceled"/>.
@@ -81,7 +86,6 @@ namespace Core.Rhythm.Command
         internal void EndCombo()
         {
             if (!_isCombo) return;
-            UnityEngine.Debug.Log("--------- Combo end! :( -----------");
             EndComboImmediately();
             OnComboCanceled.Invoke();
         }

@@ -149,7 +149,7 @@ namespace Core.Rhythm.Command
                     });
                 }
             }
-            else if (RhythmFever.IsFever && _miracleListener.HasMiracleChance(inputModel))
+            else if (RhythmFever.IsFever && _miracleListener.HasMiracleChance(drums, inputModel))
             {
                 _gotAnyCommandInput = true;
                 if (_miracleListener.MiracleDrumCount == 5)

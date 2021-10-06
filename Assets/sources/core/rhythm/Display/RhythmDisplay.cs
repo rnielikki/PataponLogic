@@ -9,9 +9,18 @@ namespace Core.Rhythm.Display
     public class RhythmDisplay : MonoBehaviour
     {
         Image _image;
+        Image _hitImage;
         void Awake()
         {
             _image = GetComponent<Image>();
+            _hitImage = transform.Find("RhythmHitDisplay").GetComponent<Image>();
+            _hitImage.color = Color.clear;
+        }
+
+        public void ShowHit(RhythmInputModel model)
+        {
+            if (model.Status != DrumHitStatus.Miss) _hitImage.color = Color.white;
+            RhythmTimer.OnNextHalfTime.AddListener(() => _hitImage.color = Color.clear);
         }
 
         // Update is called once per frame
