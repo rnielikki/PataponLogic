@@ -15,8 +15,7 @@
         internal const float BadRange = 0.25f;
 
         //Command
-        internal const float Command = 4;
-        internal const float TurnSeconds = Command * InputInterval;
+        internal const float TurnSeconds = 4 * InputInterval;
 
         //Fever
         internal const int FeverPerfectRequirement = 4;

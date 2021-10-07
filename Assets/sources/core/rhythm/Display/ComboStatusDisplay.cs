@@ -4,6 +4,10 @@ using UnityEngine.UI;
 
 namespace Core.Rhythm.Display
 {
+    /// <summary>
+    /// Displays combo and fever status worm.
+    /// <note>If you want better effect like image or border, use material with shader.</note>
+    /// </summary>
     public class ComboStatusDisplay : MonoBehaviour
     {
         // Start is called before the first frame update
@@ -12,12 +16,25 @@ namespace Core.Rhythm.Display
         Sprite _eyesNoFever;
         [SerializeField]
         Sprite _eyesFever;
+        [SerializeField]
+        Color _startColorNoFever;
+        [SerializeField]
+        Color _endColorNoFever;
+        [SerializeField]
+        Color _startColorBeforeFever;
+        [SerializeField]
+        Color _endColorBeforeFever;
+        [SerializeField]
+        Color _startColorFever;
+        [SerializeField]
+        Color _endColorFever;
         RectTransform _eyesPos;
         Vector3 _eyesInitialPosition;
         Text _text;
         Text _number;
         ParticleSystem _particle;
         Animator _animator;
+        Color _currentStartColor, _currentEndColor;
 
         LineRenderer _wormBody;
         int _wormMaxLength;
@@ -26,10 +43,12 @@ namespace Core.Rhythm.Display
         /// </summary>
         const int animationParts = 16;
 
-        int _comboAnimHash, _feverAnimHash;
+        int _comboAnimHash, _idleAnimHash, _feverAnimHash, _feverAppearAnimHash;
         void Awake()
         {
             _wormBody = transform.Find("Image").GetComponent<LineRenderer>();
+            //Trick here: The thickness of line is world space, but position isn't!
+            _wormBody.useWorldSpace = false;
             _wormMaxLength = (int)transform.Find("Image").GetComponent<RectTransform>().rect.width;
 
             var eyes = transform.Find("Image/Face");
@@ -44,21 +63,25 @@ namespace Core.Rhythm.Display
 
             _comboAnimHash = Animator.StringToHash("Start-Combo");
             _feverAnimHash = Animator.StringToHash("Fever");
+            _feverAppearAnimHash = Animator.StringToHash("Fever-Appear");
+            _idleAnimHash = Animator.StringToHash("Idle");
             Hide();
         }
         public void Show(Command.RhythmComboModel comboInfo)
         {
             if (comboInfo.ComboCount < 2) return;
             if (!gameObject.activeSelf) SetComboText();
-            if (!enabled) enabled = true;
             if (comboInfo.hasFeverChance)
             {
                 _eyesImage.sprite = _eyesFever;
-                SetColor(Color.green, Color.blue);
+                _currentStartColor = _startColorBeforeFever;
+                _currentEndColor = _endColorBeforeFever;
                 SetBounceAnimation();
             }
             else
             {
+                _currentStartColor = _startColorNoFever;
+                _currentEndColor = _endColorNoFever;
                 _eyesImage.sprite = _eyesNoFever;
                 StopAllCoroutines();
                 ResetBounceAnimation();
@@ -69,12 +92,14 @@ namespace Core.Rhythm.Display
         }
         public void ShowFever()
         {
-            _eyesImage.sprite = _eyesFever;
+            _currentStartColor = _startColorFever;
+            _currentEndColor = _endColorFever;
             _number.enabled = false;
             _text.text = "FEVER!!";
             _animator.Play(_feverAnimHash);
-            SetColor(Color.red, Color.yellow);
-            SetBounceAnimation();
+
+            StopAllCoroutines();
+            StartCoroutine(PlayFeverEnterAnimation());
         }
         private void SetComboText()
         {
@@ -86,35 +111,93 @@ namespace Core.Rhythm.Display
         {
             StopAllCoroutines();
             _number.enabled = false;
-            _animator.StopPlayback();
+            _animator.Play(_idleAnimHash);
             ResetBounceAnimation();
             gameObject.SetActive(false);
         }
-        public void EffectOnPerfect(Command.RhythmCommandModel model)
+        public void DisplayCommandScore(Command.RhythmCommandModel model)
         {
-            if (model.PerfectCount == 4 && gameObject.activeSelf)
+            if (!gameObject.activeSelf) return;
+            if (model.PerfectCount == 4)
             {
                 _particle.Play();
             }
+            SetColor(_currentStartColor, _currentEndColor, model.Percentage);
         }
-        private void SetColor(Color startColor, Color endColor)
+        private void SetColor(Color startColor, Color endColor, float percentage) //percentage between bad-perfect, 0-1.
         {
-            _wormBody.startColor = startColor;
-            _wormBody.endColor = endColor;
+            var gradientColors = new GradientColorKey[4];
+            SetGradient(ref gradientColors[0], startColor, 0);
+            SetGradient(ref gradientColors[1], startColor, percentage);
+            SetGradient(ref gradientColors[2], endColor, percentage);
+            SetGradient(ref gradientColors[3], endColor, 1);
+            var gradient = new Gradient();
+            gradient.mode = GradientMode.Fixed;
+            gradient.SetKeys(gradientColors, new GradientAlphaKey[] { new GradientAlphaKey(1, 0), new GradientAlphaKey(1, 1) });
+            _wormBody.colorGradient = gradient;
+
+            void SetGradient(ref GradientColorKey key, Color color, float offset)
+            {
+                key.color = color;
+                key.time = offset;
+            }
         }
-        private void ResetBounceAnimation()
+        private void ResetBounceAnimation(bool resetColor = true)
         {
             _eyesPos.localPosition = _eyesInitialPosition;
             _wormBody.positionCount = 2;
-            SetColor(Color.black, Color.black);
+            if (resetColor) SetColor(Color.black, Color.black, 0);
             _wormBody.SetPosition(0, new Vector3(0, 0, 0));
             _wormBody.SetPosition(1, new Vector3(_wormMaxLength, 0, 0));
         }
 
         private void SetBounceAnimation()
         {
+            if (_wormBody.positionCount > 2) return; //already playing
             _wormBody.positionCount = animationParts;
             StartCoroutine(PlayBounceAnimation());
+        }
+        //I don't know math so if there's better way please fix this...
+        //https://www.codinblack.com/how-to-draw-lines-circles-or-anything-else-using-linerenderer/
+        private IEnumerator PlayFeverEnterAnimation()
+        {
+            _wormBody.positionCount = animationParts;
+            float startOffset = -1;
+            float endOffset = 1;
+            float interval = 0.001f;
+            int _savedFreq = 0;
+
+            while (gameObject.activeSelf && startOffset < endOffset)
+            {
+                var freq = RhythmTimer.Count;
+                startOffset += interval * (freq + RhythmTimer.Frequency - _savedFreq) % RhythmTimer.Frequency;
+                Draw(startOffset);
+                yield return new WaitForEndOfFrame();
+                _savedFreq = freq;
+            }
+            Command.TurnCounter.OnNextTurn.AddListener(() =>
+            {
+                ResetBounceAnimation(false);
+                _eyesImage.sprite = _eyesFever;
+                SetBounceAnimation();
+                _animator.Play(_feverAppearAnimHash);
+            });
+            void Draw(float startOffset)
+            {
+                const int wormHeight = 100;
+                float t = startOffset;
+                Vector3 point0 = Vector3.zero;
+                Vector3 point1 = new Vector3(_wormMaxLength, -wormHeight / 2, 0) + Vector3.zero;
+                Vector3 point2 = new Vector3(0, -wormHeight, 0);
+                Vector3 B = Vector3.zero;
+                for (int i = 0; i < animationParts; i++)
+                {
+                    B = (1 - t) * (1 - t) * point0 + 2 * (1 - t) * t * point1 + t * t * point2;
+                    _wormBody.SetPosition(i, B);
+                    t += (1 / (float)_wormBody.positionCount);
+                }
+                _eyesPos.localPosition = B;
+            }
         }
         private IEnumerator PlayBounceAnimation()
         {
@@ -123,7 +206,8 @@ namespace Core.Rhythm.Display
             float interval = 0.5f;
             bool rising = true;
             Vector3 vectorInterval = Vector3.up * interval * 0.5f;
-            while (true)
+            int _savedFreq = 0;
+            while (gameObject.activeSelf)
             {
                 for (int i = 0; i < animationParts; i++)
                 {
@@ -138,19 +222,21 @@ namespace Core.Rhythm.Display
                     rising = true;
                 }
 
+                var freq = RhythmTimer.Count;
+                var offset = (freq + RhythmTimer.Frequency - _savedFreq) % RhythmTimer.Frequency;
                 if (rising)
                 {
-                    yOffset += interval;
-                    _eyesPos.localPosition += vectorInterval;
+                    yOffset += interval * offset;
+                    _eyesPos.localPosition += vectorInterval * offset;
                 }
                 else
                 {
-                    yOffset -= interval;
-                    _eyesPos.localPosition -= vectorInterval;
+                    yOffset -= interval * offset;
+                    _eyesPos.localPosition -= vectorInterval * offset;
                 }
-                yield return new WaitForFixedUpdate();
+                _savedFreq = freq;
+                yield return new WaitForEndOfFrame();
             }
-
         }
     }
 }

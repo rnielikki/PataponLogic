@@ -1,5 +1,6 @@
 ﻿using Core.Rhythm.Command;
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Core.Rhythm
@@ -12,22 +13,33 @@ namespace Core.Rhythm
         [SerializeField]
         [Tooltip("If miracle hit is outside this range (as seconds), it's considered as miss in miracle hit.")]
         private float _newGoodRange;
-        private int _newGoodFrequency;
         /// <summary>
         /// Reperesents 'Should send miracle signal'. DOESN'T directly affect <see cref="MiracleDrumCount"/>.
         /// </summary>
         internal bool EnteredMiracleHit { get; private set; }
         internal int MiracleDrumCount { get; private set; }
-        private int _miracleCounter;
 
+        int[] _timerIndexes;
         private void Awake()
         {
-            _newGoodFrequency = (_newGoodRange == 0) ? (int)(RhythmTimer.GoodFrequency * 0.75) : (int)(_newGoodRange / Time.fixedDeltaTime);
+            int _newGoodFrequency = (_newGoodRange == 0) ? (int)(RhythmTimer.GoodFrequency * 0.75) : (int)(_newGoodRange / Time.fixedDeltaTime);
             if (DrumType != DrumType.Don)
             {
                 throw new ArgumentException("Only DON Miracle drum is supported");
             }
             TurnCounter.OnTurn.AddListener(() => { if (!TurnCounter.IsPlayerTurn) ResetCounter(); });
+            _timerIndexes = new int[]
+            {
+                RhythmTimer.HalfFrequency - RhythmTimer.GoodFrequency,
+                RhythmTimer.HalfFrequency + _newGoodFrequency,
+                RhythmTimer.Frequency - _newGoodFrequency,
+                RhythmTimer.Frequency + RhythmTimer.GoodFrequency,
+                RhythmTimer.Frequency * 2 - RhythmTimer.GoodFrequency,
+                RhythmTimer.Frequency * 2 + _newGoodFrequency,
+                RhythmTimer.Frequency * 2 + RhythmTimer.HalfFrequency - _newGoodFrequency,
+                RhythmTimer.Frequency * 2 + RhythmTimer.HalfFrequency + RhythmTimer.GoodFrequency
+            };
+
             Init();
         }
         protected override void SetResetTimer()
@@ -54,64 +66,41 @@ namespace Core.Rhythm
                 );
             }
         }
-
-        private void FixedUpdate()
+        private IEnumerator CountMiracle()
         {
-            if (RhythmFever.IsFever && TurnCounter.IsPlayerTurn)
+            if (MiracleDrumCount == 0)
             {
-                _miracleCounter++;
+                throw new InvalidOperationException("Miracle drum count cannot be zero when CountMiracle() is called!");
             }
-            if (EnteredMiracleHit)
+            Disabled = true;
+            while (EnteredMiracleHit && MiracleDrumCount <= 5)
             {
-                int min, max;
-                switch (MiracleDrumCount)
-                {
-                    case 1:
-                        min = RhythmTimer.HalfFrequency - RhythmTimer.GoodFrequency;
-                        max = RhythmTimer.HalfFrequency + _newGoodFrequency;
-                        break;
-                    case 2:
-                        min = RhythmTimer.Frequency - _newGoodFrequency;
-                        max = RhythmTimer.Frequency + RhythmTimer.GoodFrequency;
-                        break;
-                    case 3:
-                        min = RhythmTimer.Frequency * 2 - RhythmTimer.GoodFrequency;
-                        max = RhythmTimer.Frequency * 2 + _newGoodFrequency;
-                        break;
-                    case 4:
-                        min = RhythmTimer.Frequency * 2 + RhythmTimer.HalfFrequency - _newGoodFrequency;
-                        max = RhythmTimer.Frequency * 2 + RhythmTimer.HalfFrequency + RhythmTimer.GoodFrequency;
-                        break;
-                    default:
-                        throw new InvalidOperationException("Miracle Drum count isn't valid");
-                }
-                if (_miracleCounter == min)
-                {
-                    Disabled = false;
-                }
-                else if (_miracleCounter == max)
-                {
-                    Disabled = true;
-                }
+                var index = MiracleDrumCount * 2 + (!Disabled ? -2 : -1);
+                yield return new WaitForRhythmTime(_timerIndexes[index]);
+                Disabled = !Disabled;
             }
         }
+
         /// <summary>
         /// Start miracle counting.
         /// </summary>
         internal void StartCounter()
         {
+            if (EnteredMiracleHit) return;
             RhythmTimer.OnHalfTime.RemoveListener(SetEnable);
             EnteredMiracleHit = true;
+            StartCoroutine(CountMiracle());
         }
         /// <summary>
         /// Stop(reset) miracle counting.
         /// </summary>
         internal void ResetCounter()
         {
+            MiracleDrumCount = 0;
+            if (!EnteredMiracleHit) return;
             RhythmTimer.OnHalfTime.AddListener(SetEnable);
             EnteredMiracleHit = false;
-            _miracleCounter = 0;
-            MiracleDrumCount = 0;
+            StopAllCoroutines();
         }
 
         //------------- inherit

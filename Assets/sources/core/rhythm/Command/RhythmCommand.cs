@@ -107,7 +107,7 @@ namespace Core.Rhythm.Command
         private void OnEnable()
         {
             OnCommandCanceled.AddListener(TurnCounter.Stop);
-            OnCommandCanceled.AddListener(_miracleListener.Reset);
+            OnCommandCanceled.AddListener(_miracleListener.ResetMiracle);
 
             foreach (var rhythmInput in _rhythmInputs)
             {
@@ -118,7 +118,7 @@ namespace Core.Rhythm.Command
         {
             ComboManager.EndComboImmediately();
             OnCommandCanceled.RemoveListener(TurnCounter.Stop);
-            OnCommandCanceled.RemoveListener(_miracleListener.Reset);
+            OnCommandCanceled.RemoveListener(_miracleListener.ResetMiracle);
 
             foreach (var rhythmInput in _rhythmInputs)
             {
@@ -154,7 +154,7 @@ namespace Core.Rhythm.Command
                 _gotAnyCommandInput = true;
                 if (_miracleListener.MiracleDrumCount == 5)
                 {
-                    _miracleListener.Reset();
+                    _miracleListener.ResetMiracle();
                     _miracleListener.OnMiracle.Invoke();
                     TurnCounter.Stop();
                     RhythmTimer.OnNext.AddListener(() =>

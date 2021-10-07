@@ -29,8 +29,6 @@ namespace Core.Rhythm.Command
         /// </summary>
         public float Percentage { get; }
 
-        private readonly float _minMax; //Note: The environment (difficulty) can be changed; Don't set as static
-
         internal RhythmCommandModel(IEnumerable<RhythmInputModel> inputs, CommandSong song)
         {
             Song = song;
@@ -38,9 +36,7 @@ namespace Core.Rhythm.Command
             PerfectCount = statusCollection.Count(status => status == DrumHitStatus.Perfect);
             BadCount = statusCollection.Count(status => status == DrumHitStatus.Bad);
             Percentage = GetPercentage(inputs.Sum(input => input.Timing));
-
-            _minMax = (RhythmTimer.BadFrequency - RhythmTimer.PerfectFrequency) * 4;
         }
-        private float GetPercentage(int timingSum) => UnityEngine.Mathf.Clamp01((_minMax - timingSum) / _minMax);
+        private float GetPercentage(int timingSum) => 1 - UnityEngine.Mathf.InverseLerp(RhythmTimer.PerfectFrequency * 4, RhythmTimer.BadFrequency * 4, timingSum);
     }
 }

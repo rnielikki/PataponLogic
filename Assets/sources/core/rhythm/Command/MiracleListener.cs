@@ -20,18 +20,18 @@ namespace Core.Rhythm.Command
         {
             if ((_miracleDrumInput.EnteredMiracleHit && input.Drum != DrumType.Don) || currentCommands.Any(drum => drum != DrumType.Don))
             {
-                Reset();
+                ResetMiracle();
             }
             else if (!_miracleDrumInput.EnteredMiracleHit && input.Drum == DrumType.Don)
             {
-
                 _miracleDrumInput.StartCounter();
             }
             return _miracleDrumInput.EnteredMiracleHit;
         }
-        internal void Reset()
+        internal void ResetMiracle() => _miracleDrumInput.ResetCounter();
+        private void OnDestroy()
         {
-            _miracleDrumInput.ResetCounter();
+            OnMiracle.RemoveAllListeners();
         }
     }
 }
