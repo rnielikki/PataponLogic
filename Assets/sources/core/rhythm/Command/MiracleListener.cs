@@ -6,7 +6,7 @@ using UnityEngine.Events;
 namespace Core.Rhythm.Command
 {
     /// <summary>
-    /// Checks if input is miracle, and invokes Miracle event when Miracle is detected
+    /// Checks if input is miracle
     /// </summary>
     internal class MiracleListener : MonoBehaviour
     {
@@ -16,19 +16,29 @@ namespace Core.Rhythm.Command
         [SerializeField]
         private RhythmInputMiracle _miracleDrumInput;
         public int MiracleDrumCount => _miracleDrumInput.MiracleDrumCount;
-        internal bool HasMiracleChance(IEnumerable<DrumType> currentCommands, RhythmInputModel input)
+        internal bool HasMiracleChance(IEnumerable<DrumType> currentDrums, RhythmInputModel input)
         {
-            if ((_miracleDrumInput.EnteredMiracleHit && input.Drum != DrumType.Don) || currentCommands.Any(drum => drum != DrumType.Don))
+            var drum = input.Drum;
+            if (_miracleDrumInput.EnteredMiracleHit && !IsMiracleDrum(drum, currentDrums))
             {
                 ResetMiracle();
             }
-            else if (!_miracleDrumInput.EnteredMiracleHit && input.Drum == DrumType.Don)
+            else if (!_miracleDrumInput.EnteredMiracleHit && IsMiracleDrum(drum, currentDrums))
             {
                 _miracleDrumInput.StartCounter();
             }
             return _miracleDrumInput.EnteredMiracleHit;
         }
         internal void ResetMiracle() => _miracleDrumInput.ResetCounter();
+        private bool IsMiracleDrum(DrumType inputDrum, IEnumerable<DrumType> currentDrums)
+        {
+            if (inputDrum != DrumType.Don) return false;
+            foreach (var drum in currentDrums)
+            {
+                if (drum != DrumType.Don) return false;
+            }
+            return true;
+        }
         private void OnDestroy()
         {
             OnMiracle.RemoveAllListeners();

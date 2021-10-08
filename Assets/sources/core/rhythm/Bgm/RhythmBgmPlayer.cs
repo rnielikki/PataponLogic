@@ -8,16 +8,20 @@ namespace Core.Rhythm.Bgm
     /*
      * Each theme folder must include:
      * song (directory), See details on "RhythmBgmSinging.cs"
-     * intro.mp3 : first play when the game is loaded
-     * base.mp3 : no command input
-     * command.mp3 : command input, but not yet chance to enter fever
-     * combo-intro.mp3 : command input, first chance to enter fever
-     * combo.mp3 : command input, chance to enter fever
-     * fever-intro.mp3 : before shouting "Fever!"
-     * fever.mp3 : music when on fever status
+     * intro.ogg [4s] : first play when the game is loaded
+     * base.ogg : no command input
+     * command.ogg : command input, but not yet chance to enter fever
+     * before-fever-intro.ogg [4s] : command input, first chance to enter fever
+     * before-fever.ogg : command input, chance to enter fever
+     * fever-intro.ogg [4s] : before shouting "Fever!"
+     * fever.ogg : music when on fever status
 
-     * NOTE: BE PRECISE TO SOURCE, KEEP ALL THE MUSIC TO %2==0 SECONDS!
-     * Here is how to achieve it : https://manual.audacityteam.org/man/time_toolbar.html
+     * NOTE: BE PRECISE TO SOURCE, KEEP ALL THE MUSIC TO %2==0 SECONDS! (except intro - still remember that intro is around 4s)
+     * Note about fever music: use effect -> change speed to set speed, after cropping (because sample rate)!
+     * -> And hear random end part e.g. from 52:00s to 56:00s to make sure that the music is on time.
+     * 
+     * Here is about time toolbar : https://manual.audacityteam.org/man/time_toolbar.html
+     * You can also set exact time on "change speed" effect
     */
     /// <summary>
     /// Background music player. Also controls fever status music and Patapon sounds.
@@ -72,10 +76,9 @@ namespace Core.Rhythm.Bgm
         {
 
             var introMusic = _audioClips[introMusicIndex];
-            var music = _audioClips[musicIndex];
-            source.clip = music;
+            source.clip = _audioClips[musicIndex];
             _bgmShotSource.PlayOneShot(introMusic);
-            source.PlayDelayed(introMusic.length);
+            source.PlayDelayed(4);
         }
         private void ChangeMusic(RhythmBgmIndex bgmType)
         {

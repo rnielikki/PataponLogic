@@ -5,6 +5,7 @@ namespace Core.Rhythm
 {
     /// <summary>
     /// The core timer, using "frequency" system.
+    /// <remarks>This always starts (and should it be) priorior to other scripts.</remarks>
     /// </summary>
     public class RhythmTimer : MonoBehaviour
     {
@@ -86,14 +87,6 @@ namespace Core.Rhythm
             OnNextHalfTime.RemoveAllListeners();
         }
 
-        internal static void InvokeNext(UnityEvent unityEvent)
-        {
-            OnNext.AddListener(unityEvent.Invoke);
-        }
-        internal static void InvokeNext<T>(UnityEvent<T> unityEvent, T arg)
-        {
-            OnNext.AddListener(() => unityEvent.Invoke(arg));
-        }
         public static int GetTiming() => GetTiming(Count);
         internal static int GetTiming(int count)
         {

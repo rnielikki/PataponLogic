@@ -43,6 +43,11 @@ namespace Core.Rhythm.Display
         /// </summary>
         const int animationParts = 16;
 
+        //------------------------ for animation on fixed time!
+        //(because this is *special* animation with Line renderer --)
+        int _wormAnimationCounter;
+        bool _wormAnimationCounting;
+
         int _comboAnimHash, _idleAnimHash, _feverAnimHash, _feverAppearAnimHash;
         void Awake()
         {
@@ -114,6 +119,7 @@ namespace Core.Rhythm.Display
             _animator.Play(_idleAnimHash);
             ResetBounceAnimation();
             gameObject.SetActive(false);
+            StopAnimationCounter();
         }
         public void DisplayCommandScore(Command.RhythmCommandModel model)
         {
@@ -163,18 +169,19 @@ namespace Core.Rhythm.Display
         {
             _wormBody.positionCount = animationParts;
             float startOffset = -1;
-            float endOffset = 1;
-            float interval = 0.001f;
-            int _savedFreq = 0;
+            float endOffset = 1.25f;
 
+            StartAnimationCounter();
             while (gameObject.activeSelf && startOffset < endOffset)
             {
-                var freq = RhythmTimer.Count;
-                startOffset += interval * (freq + RhythmTimer.Frequency - _savedFreq) % RhythmTimer.Frequency;
+                //If you're here for this kind of logic, I'd say this won't work if there are too many delay on frame (small FPS).
+                //startOffset += interval * (freq + RhythmTimer.Frequency - _savedFreq) % RhythmTimer.Frequency
+                startOffset = 0.01f * _wormAnimationCounter;
+
                 Draw(startOffset);
                 yield return new WaitForEndOfFrame();
-                _savedFreq = freq;
             }
+            StopAnimationCounter();
             Command.TurnCounter.OnNextTurn.AddListener(() =>
             {
                 ResetBounceAnimation(false);
@@ -206,7 +213,7 @@ namespace Core.Rhythm.Display
             float interval = 0.5f;
             bool rising = true;
             Vector3 vectorInterval = Vector3.up * interval * 0.5f;
-            int _savedFreq = 0;
+            StartAnimationCounter();
             while (gameObject.activeSelf)
             {
                 for (int i = 0; i < animationParts; i++)
@@ -222,8 +229,7 @@ namespace Core.Rhythm.Display
                     rising = true;
                 }
 
-                var freq = RhythmTimer.Count;
-                var offset = (freq + RhythmTimer.Frequency - _savedFreq) % RhythmTimer.Frequency;
+                var offset = _wormAnimationCounter;
                 if (rising)
                 {
                     yOffset += interval * offset;
@@ -234,9 +240,32 @@ namespace Core.Rhythm.Display
                     yOffset -= interval * offset;
                     _eyesPos.localPosition -= vectorInterval * offset;
                 }
-                _savedFreq = freq;
+                _wormAnimationCounter = 0;
                 yield return new WaitForEndOfFrame();
             }
+            StopAnimationCounter();
+        }
+        private void StartAnimationCounter()
+        {
+            _wormAnimationCounting = true;
+            _wormAnimationCounter = 0;
+        }
+        //PLEASE CALL THIS IF YOU WANT TO FIX THE WORM BODY MOVING LOGIC...
+        private void StopAnimationCounter()
+        {
+            _wormAnimationCounting = false;
+            _wormAnimationCounter = 0;
+        }
+        private void FixedUpdate()
+        {
+            if (_wormAnimationCounting)
+            {
+                _wormAnimationCounter++;
+            }
+        }
+        private void OnDestroy()
+        {
+            Hide();
         }
     }
 }
