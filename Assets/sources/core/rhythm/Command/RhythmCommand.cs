@@ -49,6 +49,11 @@ namespace Core.Rhythm.Command
         [SerializeField]
         private MiracleListener _miracleListener;
 
+        /// <summary>
+        /// This also counts first command, before <see cref="TurnCounter.IsOn"/>
+        /// </summary>
+        private bool _started;
+
         // Start is called before the first frame update
         private void Awake()
         {
@@ -60,25 +65,17 @@ namespace Core.Rhythm.Command
                 RhythmTimer.OnNextHalfTime.RemoveListener(TurnCounter.Start);
             });
             // --------------- Command sent check start
-            OnCommandCanceled.AddListener(() => _gotAnyCommandInput = false);
-            TurnCounter.OnTurn.AddListener(() =>
+            OnCommandCanceled.AddListener(() =>
             {
-                if (TurnCounter.IsPlayerTurn)
-                {
-                    RhythmTimer.OnNextHalfTime.AddListener(() =>
-                        RhythmTimer.OnNext.AddListener(() =>
-                        {
-                            if (!_gotAnyCommandInput)
-                            {
-                                OnCommandCanceled.Invoke();
-                            }
-                        })
-                    );
-                }
-                else
-                {
-                    _gotAnyCommandInput = false;
-                }
+                ClearDrumHits();
+                _started = false;
+                _gotAnyCommandInput = false;
+            });
+            RhythmTimer.OnHalfTime.AddListener(() =>
+            {
+                if (!TurnCounter.IsPlayerTurn) return;
+                else if (_started && !_gotAnyCommandInput) OnCommandCanceled.Invoke();
+                _gotAnyCommandInput = false;
             });
 
             // --------------- Command sent check end
@@ -103,7 +100,6 @@ namespace Core.Rhythm.Command
         {
             if (inputModel.Status == DrumHitStatus.Miss)
             {
-                ClearDrumHits();
                 OnCommandCanceled.Invoke();
             }
             else
@@ -140,6 +136,7 @@ namespace Core.Rhythm.Command
 
             if (CommandExists(drums, out CommandSong song))
             {
+                _started = true;
                 _gotAnyCommandInput = true;
 
                 if (_currentHits.Count == 4)
@@ -163,6 +160,7 @@ namespace Core.Rhythm.Command
             }
             else if (RhythmFever.IsFever && _miracleListener.HasMiracleChance(drums, inputModel))
             {
+                _started = true;
                 _gotAnyCommandInput = true;
                 if (_miracleListener.MiracleDrumCount == 5)
                 {

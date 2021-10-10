@@ -20,6 +20,10 @@ We use **Frequency** System with FixedUpdate, since FixedUpdate isn't very clean
 
 We use events for ease of extending. You can add event on Unity Editor - see the *Canvas/MusicSource* game object.
 
+### Known issue
+
+The performance on fever is gradually down, and curiously, we found the reason is on **text animation**. There's nothing that makes such slow on rhythm base logic or worm movement.
+
 ### Guide
 
 * **DO use `RhythmTimer` and `TurnCounter` events** for right timing.

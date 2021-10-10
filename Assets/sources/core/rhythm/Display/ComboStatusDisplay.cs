@@ -100,6 +100,7 @@ namespace Core.Rhythm.Display
             _currentEndColor = _endColorFever;
             _number.enabled = false;
             _text.text = "FEVER!!";
+
             _animator.Play(_feverAnimHash);
 
             StopAllCoroutines();
