@@ -16,6 +16,13 @@ namespace Core.Rhythm.Command
         /// </summary>
         [SerializeField]
         private RhythmInput[] _rhythmInputs;
+
+        //Perfect sound should be played *right after* command is perfect!
+        [SerializeField]
+        private AudioClip _perfectSound;
+        [SerializeField]
+        private AudioSource _audioSource;
+
         /// <summary>
         /// Invokes when command is complete e.g. one "PATA PON DON CHAKA".
         /// </summary>
@@ -41,6 +48,7 @@ namespace Core.Rhythm.Command
 
         [SerializeField]
         private MiracleListener _miracleListener;
+
         // Start is called before the first frame update
         private void Awake()
         {
@@ -140,9 +148,13 @@ namespace Core.Rhythm.Command
                     {
                         RhythmTimer.OnNextHalfTime.AddListener(TurnCounter.Start);
                     }
+                    var model = new RhythmCommandModel(_currentHits, song);
+                    if (model.PerfectCount == 4)
+                    {
+                        _audioSource.PlayOneShot(_perfectSound);
+                    }
                     TurnCounter.OnNextTurn.AddListener(() =>
                     {
-                        var model = new RhythmCommandModel(_currentHits, song);
                         ComboManager.CountCombo(model);
                         OnCommandInput.Invoke(model);
                         ClearDrumHits();

@@ -28,11 +28,11 @@ namespace Core.Rhythm.Display
         Color _startColorFever;
         [SerializeField]
         Color _endColorFever;
+
         RectTransform _eyesPos;
         Vector3 _eyesInitialPosition;
         Text _text;
         Text _number;
-        ParticleSystem _particle;
         Animator _animator;
         Color _currentStartColor, _currentEndColor;
 
@@ -63,7 +63,6 @@ namespace Core.Rhythm.Display
 
             _text = transform.Find("Combo").GetComponent<Text>();
             _number = transform.Find("Combo/Number").GetComponent<Text>();
-            _particle = GetComponentInChildren<ParticleSystem>();
             _animator = GetComponent<Animator>();
 
             _comboAnimHash = Animator.StringToHash("Start-Combo");
@@ -124,10 +123,6 @@ namespace Core.Rhythm.Display
         public void DisplayCommandScore(Command.RhythmCommandModel model)
         {
             if (!gameObject.activeSelf) return;
-            if (model.PerfectCount == 4)
-            {
-                _particle.Play();
-            }
             SetColor(_currentStartColor, _currentEndColor, model.Percentage);
         }
         private void SetColor(Color startColor, Color endColor, float percentage) //percentage between bad-perfect, 0-1.

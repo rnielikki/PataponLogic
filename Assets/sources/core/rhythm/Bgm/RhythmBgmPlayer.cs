@@ -28,6 +28,8 @@ namespace Core.Rhythm.Bgm
     /// </summary>
     internal class RhythmBgmPlayer : MonoBehaviour
     {
+        [SerializeField]
+        AudioClip _feverEndSound;
         //Bgm name, Serialize Field
         [SerializeField]
         private string _musicTheme;
@@ -112,6 +114,7 @@ namespace Core.Rhythm.Bgm
             if (_feverSource.isPlaying)
             {
                 ChangeMusic(RhythmBgmIndex.Base);
+                _bgmShotSource.PlayOneShot(_feverEndSound);
                 StartCoroutine(FeverFadeOut());
             }
         }
