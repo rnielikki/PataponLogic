@@ -6,7 +6,10 @@ namespace Core.Rhythm.Display
 {
     /// <summary>
     /// Displays combo and fever status worm.
-    /// <note>If you want better effect like image or border, use material with shader.</note>
+    /// <note>
+    /// * If you want better effect like image or border, use material with shader.
+    /// * This uses IMAGES not texts, because texts with outline drops performance (enough to disturb playing).
+    /// </note>
     /// </summary>
     public class ComboStatusDisplay : MonoBehaviour
     {
@@ -31,10 +34,12 @@ namespace Core.Rhythm.Display
 
         RectTransform _eyesPos;
         Vector3 _eyesInitialPosition;
-        Text _text;
-        Text _number;
+        Image _number;
         Animator _animator;
         Color _currentStartColor, _currentEndColor;
+        Image _feverImage;
+        GameObject _combo;
+        System.Collections.Generic.Dictionary<int, Sprite> _comboImageIndex;
 
         LineRenderer _wormBody;
         int _wormMaxLength;
@@ -48,7 +53,7 @@ namespace Core.Rhythm.Display
         int _wormAnimationCounter;
         bool _wormAnimationCounting;
 
-        int _comboAnimHash, _idleAnimHash, _feverAnimHash, _feverAppearAnimHash;
+        int _comboAnimHash, _feverAnimHash;
         void Awake()
         {
             _wormBody = transform.Find("Image").GetComponent<LineRenderer>();
@@ -61,14 +66,19 @@ namespace Core.Rhythm.Display
             _eyesPos = eyes.GetComponent<RectTransform>();
             _eyesInitialPosition = _eyesPos.localPosition;
 
-            _text = transform.Find("Combo").GetComponent<Text>();
-            _number = transform.Find("Combo/Number").GetComponent<Text>();
+            _combo = transform.Find("Combo").gameObject;
+            _number = transform.Find("Combo/Number").GetComponent<Image>();
             _animator = GetComponent<Animator>();
+            _feverImage = transform.Find("TextFever").GetComponent<Image>();
+
+            _comboImageIndex = new System.Collections.Generic.Dictionary<int, Sprite>();
+            for (int i = 2; i < 10; i++)
+            {
+                _comboImageIndex.Add(i, Resources.Load<Sprite>($"Rhythm/Images/Fever/combo-{i}"));
+            }
 
             _comboAnimHash = Animator.StringToHash("Start-Combo");
-            _feverAnimHash = Animator.StringToHash("Fever");
-            _feverAppearAnimHash = Animator.StringToHash("Fever-Appear");
-            _idleAnimHash = Animator.StringToHash("Idle");
+            _feverAnimHash = Animator.StringToHash("Fever-Idle");
             Hide();
         }
         public void Show(Command.RhythmComboModel comboInfo)
@@ -91,34 +101,32 @@ namespace Core.Rhythm.Display
                 ResetBounceAnimation();
             }
 
-            _number.text = comboInfo.ComboCount.ToString();
-            _animator.Play(_comboAnimHash);
+            _number.sprite = _comboImageIndex[comboInfo.ComboCount];
+            _animator.Play(_comboAnimHash, -1, 0);
         }
         public void ShowFever()
         {
             _currentStartColor = _startColorFever;
             _currentEndColor = _endColorFever;
             _number.enabled = false;
-            _text.text = "FEVER!!";
-
-            _animator.Play(_feverAnimHash);
+            _combo.SetActive(false);
 
             StopAllCoroutines();
             StartCoroutine(PlayFeverEnterAnimation());
         }
         private void SetComboText()
         {
+            _combo.SetActive(true);
             _number.enabled = true;
-            _text.text = "  COMBO!";
             gameObject.SetActive(true);
         }
         public void Hide()
         {
             StopAllCoroutines();
             _number.enabled = false;
-            _animator.Play(_idleAnimHash);
             ResetBounceAnimation();
             gameObject.SetActive(false);
+            _feverImage.enabled = false;
             StopAnimationCounter();
         }
         public void DisplayCommandScore(Command.RhythmCommandModel model)
@@ -159,7 +167,7 @@ namespace Core.Rhythm.Display
             _wormBody.positionCount = animationParts;
             StartCoroutine(PlayBounceAnimation());
         }
-        //I don't know math so if there's better way please fix this...
+        //Well at least this parabola of hope working...
         //https://www.codinblack.com/how-to-draw-lines-circles-or-anything-else-using-linerenderer/
         private IEnumerator PlayFeverEnterAnimation()
         {
@@ -183,7 +191,8 @@ namespace Core.Rhythm.Display
                 ResetBounceAnimation(false);
                 _eyesImage.sprite = _eyesFever;
                 SetBounceAnimation();
-                _animator.Play(_feverAppearAnimHash);
+                _feverImage.enabled = true;
+                _animator.Play(_feverAnimHash, -1, 0);
             });
             void Draw(float startOffset)
             {
