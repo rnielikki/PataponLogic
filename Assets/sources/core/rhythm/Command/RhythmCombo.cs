@@ -35,8 +35,14 @@ namespace Core.Rhythm.Command
         {
             if (RhythmFever.IsFever)
             {
-                FeverManager.CheckFeverStatus(inputs);
-                inputs.ComboType = ComboStatus.Fever;
+                if (FeverManager.WillBeFeverStatus(inputs))
+                {
+                    inputs.ComboType = ComboStatus.Fever;
+                }
+                else
+                {
+                    inputs.ComboType = ComboStatus.NoFever;
+                }
                 return;
             }
 

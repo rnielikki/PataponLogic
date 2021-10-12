@@ -23,7 +23,7 @@ namespace Core.Rhythm.Command
         /// Checks if you can keep the fever.
         /// </summary>
         /// <param name="inputs">The drum inputs, to check the drum hit status.</param>
-        internal void CheckFeverStatus(RhythmCommandModel inputs)
+        internal bool WillBeFeverStatus(RhythmCommandModel inputs)
         {
             if (!CanKeepFever(inputs))
             {
@@ -35,9 +35,11 @@ namespace Core.Rhythm.Command
                 else
                 {
                     EndFever();
+                    return false;
                 }
             }
             else _isWarned = false;
+            return true;
         }
 
         internal void EndFever()

@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Core.Character.Patapon.Animation
 {
-    public class PataponAnimation : MonoBehaviour
+    public class PataponAnimator
     {
-        Animator _animator;
+        private readonly Animator _animator;
         private readonly Dictionary<CommandSong, string> _songAnimationMap =
             new Dictionary<CommandSong, string>()
             {
@@ -21,11 +21,10 @@ namespace Core.Character.Patapon.Animation
                 { CommandSong.None, "Idle" }
             };
 
-        void Awake()
+        internal PataponAnimator(Animator animator)
         {
-            _animator = GetComponent<Animator>();
+            _animator = animator;
         }
-
         public void Animate(string animationType)
         {
             _animator.Play(animationType, -1, 0f);
