@@ -1,5 +1,4 @@
-using Core.Rhythm.Command;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 namespace Core.Character.Patapon.Animation
@@ -7,39 +6,28 @@ namespace Core.Character.Patapon.Animation
     public class PataponAnimator
     {
         private readonly Animator _animator;
-        private readonly Dictionary<CommandSong, string> _songAnimationMap =
-            new Dictionary<CommandSong, string>()
-            {
-                { CommandSong.Patapata, "walk" },
-                { CommandSong.Ponpon, "attack" },
-                { CommandSong.Chakachaka, "defend" },
-                { CommandSong.Ponpata, "dodge" },
-                { CommandSong.Ponchaka, "charge" },
-                { CommandSong.Dondon, "jump" },
-                { CommandSong.Donchaka, "party" },
-                { CommandSong.Patachaka, "Idle" },
-                { CommandSong.None, "Idle" }
-            };
-
         internal PataponAnimator(Animator animator)
         {
             _animator = animator;
+        }
+        /// <summary>
+        /// Sets attack speed. Note that 1 is normal scale here.
+        /// </summary>
+        /// <param name="speed">Default is 1. The smaller the value is, the faster the attack animation is.</param>
+        internal void SetAttackSpeed(float speed)
+        {
+            _animator.SetFloat("AttackSpeedMultiplier", speed);
         }
         public void Animate(string animationType)
         {
             _animator.Play(animationType, -1, 0f);
         }
-        //We'll make this for each patapon units! :) Maybe something like GetAnimationBehaviour to patapon class?
-        public void AnimateCommand(RhythmCommandModel command)
+        public IEnumerator AnimateInTime(string animationType, float seconds)
         {
-            //Add PONCHAKA~PONPON STATUS!
-            if (command.ComboType == ComboStatus.Fever && command.Song == CommandSong.Ponpon)
+            for (int i = 0; i <= seconds + 0.01f; i++)
             {
-                _animator.Play("attack-fever");
-            }
-            else
-            {
-                _animator.Play(_songAnimationMap[command.Song]);
+                _animator.Play(animationType, -1, 0f);
+                yield return new WaitForSeconds(seconds);
             }
         }
     }

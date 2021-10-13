@@ -321,7 +321,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 725349570}
-  - {fileID: 1961605808}
   m_Father: {fileID: 1526698403}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -334,6 +333,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 132660474}
+  - component: {fileID: 132660476}
+  - component: {fileID: 132660475}
   m_Layer: 0
   m_Name: Patapon
   m_TagString: Untagged
@@ -352,10 +353,43 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1961605808}
+  - {fileID: 541114206}
   - {fileID: 1526698403}
   m_Father: {fileID: 378402620}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &132660475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132660473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 815b9f987be1af74cbec4ee4440482d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &132660476
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 132660473}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c0a114086b694014cad60c298e27904f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &142883029
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,7 +653,6 @@ Transform:
   m_Children:
   - {fileID: 1323043256}
   - {fileID: 460152577}
-  - {fileID: 541114206}
   m_Father: {fileID: 1526698403}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -854,8 +887,8 @@ MonoBehaviour:
   - {fileID: 1035831934}
   - {fileID: 510618607}
   m_Bounds:
-    m_Center: {x: -0.000000059604645, y: 0.001000002, z: 0}
-    m_Extent: {x: 0.355, y: 0.07897, z: 0}
+    m_Center: {x: -0.20806994, y: -0.24939534, z: 0}
+    m_Extent: {x: 0.16688596, y: 0.31469598, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -1038,8 +1071,8 @@ MonoBehaviour:
   - {fileID: 1070077391}
   - {fileID: 1399665783}
   m_Bounds:
-    m_Center: {x: 0.000000014901161, y: -0.00000020861626, z: 0}
-    m_Extent: {x: 0.15500003, y: 0.27999997, z: 0}
+    m_Center: {x: -0.0071070194, y: 0.042292356, z: 0}
+    m_Extent: {x: 0.16757071, y: 0.25422627, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -1166,8 +1199,9 @@ GameObject:
   m_Component:
   - component: {fileID: 541114206}
   - component: {fileID: 541114207}
+  - component: {fileID: 541114208}
   m_Layer: 0
-  m_Name: Spear
+  m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1184,8 +1218,8 @@ Transform:
   m_LocalPosition: {x: 1.073, y: 0.178, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 360430049}
-  m_RootOrder: 2
+  m_Father: {fileID: 132660474}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &541114207
 SpriteRenderer:
@@ -1239,6 +1273,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &541114208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 541114205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df95dad131d399c428239eebde0933c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &567943959
 GameObject:
   m_ObjectHideFlags: 0
@@ -2075,7 +2121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _feverEndSound: {fileID: 8300000, guid: 2724c8140a9ae4d4aa965fde528a1215, type: 3}
-  _musicTheme: pokkurimakka
+  _musicTheme: wuffunfa
 --- !u!82 &995254100
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8042,8 +8088,8 @@ MonoBehaviour:
   - {fileID: 910612716}
   - {fileID: 1752609505}
   m_Bounds:
-    m_Center: {x: 0.00015029311, y: 0.002281405, z: 0}
-    m_Extent: {x: 0.35515034, y: 0.07875033, z: 0}
+    m_Center: {x: -0.16376767, y: 0.26208705, z: 0}
+    m_Extent: {x: 0.14538482, y: 0.33093673, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 1
@@ -8355,8 +8401,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1526698403}
-  - component: {fileID: 1526698404}
-  - component: {fileID: 1526698405}
   m_Layer: 0
   m_Name: Patapon-body
   m_TagString: Untagged
@@ -8379,39 +8423,8 @@ Transform:
   - {fileID: 360430049}
   - {fileID: 728162809}
   m_Father: {fileID: 132660474}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1526698404
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526698402}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c0a114086b694014cad60c298e27904f, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1526698405
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526698402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 815b9f987be1af74cbec4ee4440482d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1600271079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8748,8 +8761,8 @@ MonoBehaviour:
   - {fileID: 294051189}
   - {fileID: 156559656}
   m_Bounds:
-    m_Center: {x: 0.0025496334, y: -0.0041282475, z: 0}
-    m_Extent: {x: 0.15754963, y: 0.284128, z: 0}
+    m_Center: {x: -0.060327128, y: 0.034765124, z: 0}
+    m_Extent: {x: 0.16185181, y: 0.2604136, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
@@ -9474,8 +9487,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 64345363}
-  m_RootOrder: 1
+  m_Father: {fileID: 132660474}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1961605809
 SpriteRenderer:

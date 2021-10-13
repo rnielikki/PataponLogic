@@ -67,14 +67,16 @@ namespace Core.Rhythm.Command
             // --------------- Command sent check start
             OnCommandCanceled.AddListener(() =>
             {
-                ClearDrumHits();
                 _started = false;
-                _gotAnyCommandInput = false;
             });
             RhythmTimer.OnHalfTime.AddListener(() =>
             {
                 if (!TurnCounter.IsPlayerTurn) return;
-                else if (_started && !_gotAnyCommandInput) OnCommandCanceled.Invoke();
+                else if (!_gotAnyCommandInput)
+                {
+                    if (_started) OnCommandCanceled.Invoke();
+                    ClearDrumHits();
+                }
                 _gotAnyCommandInput = false;
             });
 
@@ -101,6 +103,7 @@ namespace Core.Rhythm.Command
             if (inputModel.Status == DrumHitStatus.Miss)
             {
                 OnCommandCanceled.Invoke();
+                ClearDrumHits();
             }
             else
             {
@@ -133,11 +136,11 @@ namespace Core.Rhythm.Command
         {
             //I don't know maybe there are better way...
             var drums = _currentHits.Select(hit => hit.Drum);
+            _gotAnyCommandInput = true;
 
             if (CommandExists(drums, out CommandSong song))
             {
                 _started = true;
-                _gotAnyCommandInput = true;
 
                 if (_currentHits.Count == 4)
                 {
@@ -161,7 +164,6 @@ namespace Core.Rhythm.Command
             else if (RhythmFever.IsFever && _miracleListener.HasMiracleChance(drums, inputModel))
             {
                 _started = true;
-                _gotAnyCommandInput = true;
                 if (_miracleListener.MiracleDrumCount == 5)
                 {
                     _miracleListener.ResetMiracle();

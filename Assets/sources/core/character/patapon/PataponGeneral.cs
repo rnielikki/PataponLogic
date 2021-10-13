@@ -10,5 +10,7 @@ namespace Core.Character.Patapon
     {
         private GeneralMode _generalMode { get; }
         public PataponGroup Group { get; }
+
+        protected override Stat DefaultStat => throw new NotImplementedException();
     }
 }

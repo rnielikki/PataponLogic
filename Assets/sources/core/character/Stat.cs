@@ -18,6 +18,10 @@
         /// </summary>
         public int DamageMax { get; set; }
         /// <summary>
+        /// Second(s) for one attack. Default for ordinary pons are 2 seconds (Mahopon 3s).
+        /// </summary>
+        public float AttackSeconds { get; set; }
+        /// <summary>
         /// Chance to inflict critical damage. e.g. If critical chance is 100% it's 1 and if it's 150% this value is 1.5.
         /// </summary>
         public float Critical { get; set; }
@@ -75,6 +79,7 @@
                 HitPoint = stat1.HitPoint + stat2.HitPoint,
                 DamageMin = stat1.DamageMin + stat2.DamageMin,
                 DamageMax = stat1.DamageMax + stat2.DamageMax,
+                AttackSeconds = stat1.AttackSeconds + stat2.AttackSeconds,
                 Critical = stat1.Critical + stat2.Critical,
                 CriticalResistance = stat1.CriticalResistance + stat2.CriticalResistance,
                 Knockback = stat1.Knockback + stat2.Knockback,

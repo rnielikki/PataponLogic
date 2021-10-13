@@ -6,6 +6,10 @@
     public class Rarepon
     {
         /// <summary>
+        /// Name of the Rarepon - like Moriussoo, Normal, Wanda...
+        /// </summary>
+        public string Name { get; }
+        /// <summary>
         /// The stat that will give additionally to the Patapon.
         /// </summary>
         public Stat Stat { get; }
