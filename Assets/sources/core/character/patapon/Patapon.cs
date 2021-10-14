@@ -58,12 +58,6 @@ namespace Core.Character.Patapon
         protected PataponAnimator _animator { get; private set; }
 
         /// <summary>
-        /// This object represents weapon to throw. Will be changed to <see cref="IEquipment.Object"/> later.
-        /// </summary>
-        protected GameObject ___temp;
-
-
-        /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
         protected void Init()
@@ -71,8 +65,6 @@ namespace Core.Character.Patapon
             _animator = new PataponAnimator(GetComponent<Animator>());
             Stat = DefaultStat;
             Weapon = GetComponentInChildren<WeaponObject>();
-
-            ___temp = transform.Find("Weapon").gameObject;
         }
         public void MoveOnDrum(string drumName) => _animator.Animate(drumName);
         /// <summary>
@@ -81,6 +73,7 @@ namespace Core.Character.Patapon
         /// <param name="song">The command song, which determines what the patapon will act.</param>
         public virtual void Act(CommandSong song, bool isFever) //maybe will moved to something like PataponAction. Let me see.
         {
+            StopAllCoroutines();
             switch (song)
             {
                 case CommandSong.Patapata:
@@ -114,6 +107,7 @@ namespace Core.Character.Patapon
         public void PlayIdle()
         {
             _charged = false;
+            StopAllCoroutines();
             _animator.Animate("Idle");
         }
         /// <summary>
@@ -128,16 +122,14 @@ namespace Core.Character.Patapon
         /// </summary>
         protected virtual void Attack(bool isFever)
         {
-            _animator.SetAttackSpeed(2 / Stat.AttackSeconds);
-            StartCoroutine(_animator.AnimateInTime("attack", Stat.AttackSeconds));
+            AttackInTime("attack", 0.5f, isFever ? AttackType.FeverAttack : AttackType.Attack);
         }
         /// <summary>
         /// CHAKACHAKA Input
         /// </summary>
         protected virtual void Defend(bool isFever)
         {
-            _animator.SetAttackSpeed(2 / Stat.AttackSeconds);
-            StartCoroutine(_animator.AnimateInTime("defend", Stat.AttackSeconds));
+            _animator.Animate("defend");
         }
         /// <summary>
         /// PONPATA Input
@@ -168,6 +160,33 @@ namespace Core.Character.Patapon
         protected virtual void Party()
         {
             _animator.Animate("party");
+        }
+
+        /// <summary>
+        /// Attack in time
+        /// </summary>
+        /// <param name="animationType">animation name in animator.</param>
+        /// <param name="attackOffset">When appears attack status in the animation. This determines e.g. throwing. For example, if it's 0.5f, the attack starts in half of animation.</param>
+        /// <param name="attackType">Attack Type, which can determine what kind of attack can do, depends on the weapon.</param>
+        /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
+        protected void AttackInTime(string animationType, float attackOffset, AttackType attackType, float speed = 1)
+        {
+            StartCoroutine(AttackCoroutine());
+            System.Collections.IEnumerator AttackCoroutine()
+            {
+                var seconds = Stat.AttackSeconds / speed;
+                var beforeAttackTime = seconds * attackOffset;
+                var afterAttackTime = seconds * (1 - attackOffset);
+                _animator.SetAttackSpeed(2 / seconds);
+
+                for (float i = 0; i < Rhythm.RhythmEnvironment.TurnSeconds; i += seconds)
+                {
+                    _animator.Animate(animationType);
+                    yield return new WaitForSeconds(beforeAttackTime);
+                    Weapon.Attack(attackType);
+                    yield return new WaitForSeconds(afterAttackTime);
+                }
+            }
         }
     }
 }

@@ -10,8 +10,7 @@ namespace Core.Character.Equipment.Weapon
         /// <summary>
         /// Perform weapon specific attack.
         /// </summary>
-        /// <param name="times">How many times will do the attack. e.g. Yumipon 3 arrows in fever.</param>
-        public abstract void Attack(int times = 1);
+        public abstract void Attack(AttackType attackType);
         protected void Init()
         {
             _holder = GetComponentInParent<Patapon.Patapon>();

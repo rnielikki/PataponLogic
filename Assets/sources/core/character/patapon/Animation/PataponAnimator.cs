@@ -22,13 +22,5 @@ namespace Core.Character.Patapon.Animation
         {
             _animator.Play(animationType, -1, 0f);
         }
-        public IEnumerator AnimateInTime(string animationType, float seconds)
-        {
-            for (int i = 0; i <= seconds + 0.01f; i++)
-            {
-                _animator.Play(animationType, -1, 0f);
-                yield return new WaitForSeconds(seconds);
-            }
-        }
     }
 }

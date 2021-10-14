@@ -27,9 +27,10 @@ namespace Core.Character.Equipment.Weapon
         /// <summary>
         /// Start throwing this instance.
         /// </summary>
-        public void Throw()
+        /// <param name="forceMultiplier">With how much force will be thrown. 1 is normal force, 0 is no force.</param>
+        public void Throw(float forceMultiplier)
         {
-            _rigidbody.AddForce(transform.up);
+            _rigidbody.AddForce(transform.up * forceMultiplier);
         }
         private void Update()
         {

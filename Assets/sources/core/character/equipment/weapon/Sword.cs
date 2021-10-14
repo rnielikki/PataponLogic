@@ -2,7 +2,7 @@
 
 namespace Core.Character.Equipment.Weapon
 {
-    class Spear : WeaponObject
+    class Sword : WeaponObject
     {
         /// <summary>
         /// copied spear for throwing.
@@ -12,7 +12,7 @@ namespace Core.Character.Equipment.Weapon
         {
             Init();
             _copiedSpear = Resources.Load("Characters/Equipments/PrefabBase/WeaponInstance") as GameObject;
-            _copiedSpear.GetComponent<WeaponInstance>().SetSprite(GetComponent<SpriteRenderer>().sprite);
+            _copiedSpear.GetComponent<WeaponInstance>().SetSprite(GetComponentInChildren<SpriteRenderer>().sprite);
         }
         /// <summary>
         /// Throws spear, from CURRENT spear position and rotation FROM ANIMATION.
