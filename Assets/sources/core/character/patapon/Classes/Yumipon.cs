@@ -7,6 +7,7 @@
             get => new Stat
             {
                 HitPoint = 150,
+                Defence = 1,
                 DamageMin = 1,
                 DamageMax = 4,
                 AttackSeconds = 2,
@@ -15,6 +16,7 @@
                 Knockback = 0.1f,
                 KnockbackResistance = 0.1f,
                 Stagger = 0.1f,
+                StaggerResistance = 0.1f,
                 FireRate = 0.1f,
                 FireResistance = 0.1f,
                 IceRate = 0.1f,

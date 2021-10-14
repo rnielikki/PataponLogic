@@ -589,7 +589,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: {x: 0.68, y: 0.141, z: 0}
+        value: {x: 1.06, y: -0.624, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -598,7 +598,16 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.5
-        value: {x: 1.045, y: -0.107, z: 0}
+        value: {x: 1.461, y: -0.799, z: 0}
+        inSlope: {x: 0, y: -0.21999979, z: 0}
+        outSlope: {x: 0, y: -0.21999979, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 1
+        value: {x: 1.347, y: -0.854, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -606,26 +615,17 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 1
-        value: {x: 0.998, y: -0.046, z: 0}
-        inSlope: {x: 0, y: 0.119, z: 0}
-        outSlope: {x: 0, y: 0.119, z: 0}
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
-      - serializedVersion: 3
         time: 1.5
-        value: {x: 1.09, y: 0.012, z: 0}
-        inSlope: {x: 0.06799984, y: 0, z: 0}
-        outSlope: {x: 0.06799984, y: 0, z: 0}
+        value: {x: 1.59, y: -0.687, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 2
-        value: {x: 1.107, y: -0.099217415, z: 0}
+        value: {x: 1.468, y: -0.786, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -747,34 +747,6 @@ AnimationClip:
     attribute: m_IsActive
     path: Patapon-body/Face/eye0/eye1/eyelid
     classID: 1
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Enabled
-    path: Weapon/Sword
-    classID: 212
     script: {fileID: 0}
   m_PPtrCurves: []
   m_SampleRate: 60
@@ -901,13 +873,6 @@ AnimationClip:
       attribute: 2086281974
       script: {fileID: 0}
       typeID: 1
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 1703792215
-      attribute: 3305885265
-      script: {fileID: 0}
-      typeID: 212
       customType: 0
       isPPtrCurve: 0
     - serializedVersion: 2
@@ -2750,7 +2715,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.68
+        value: 1.06
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2759,7 +2724,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.5
-        value: 1.045
+        value: 1.461
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2768,7 +2733,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0.998
+        value: 1.347
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2777,16 +2742,16 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.5
-        value: 1.09
-        inSlope: 0.06799984
-        outSlope: 0.06799984
+        value: 1.59
+        inSlope: 0
+        outSlope: 0
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 2
-        value: 1.107
+        value: 1.468
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2805,7 +2770,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.141
+        value: -0.624
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2814,7 +2779,16 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.5
-        value: -0.107
+        value: -0.799
+        inSlope: -0.21999979
+        outSlope: -0.21999979
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: -0.854
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2822,17 +2796,8 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 1
-        value: -0.046
-        inSlope: 0.119
-        outSlope: 0.119
-        tangentMode: 136
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      - serializedVersion: 3
         time: 1.5
-        value: 0.012
+        value: -0.687
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -2841,7 +2806,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 2
-        value: -0.099217415
+        value: -0.786
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -3326,34 +3291,6 @@ AnimationClip:
     attribute: m_LocalPosition.z
     path: Patapon-body/Amrs/arm0/bone_1
     classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 2
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Enabled
-    path: Weapon/Sword
-    classID: 212
     script: {fileID: 0}
   m_EulerEditorCurves:
   - curve:

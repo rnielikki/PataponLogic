@@ -9,6 +9,15 @@
         /// "HP", A.k.a stamina.
         /// </summary>
         public int HitPoint { get; set; }
+        private float _defence;
+        /// <summary>
+        /// How much can resist attack. User gets 1/Defence of damage. Minimum is 0.01 (but nobody should have such bad defence). 1 gets exactly same as damage (without any bonus)
+        /// </summary>
+        public float Defence
+        {
+            get => _defence;
+            set => _defence = (value < 0.01f) ? 0.01f : value;
+        }
         /// <summary>
         /// Minimum damage value.
         /// </summary>
@@ -77,6 +86,7 @@
             return new Stat
             {
                 HitPoint = stat1.HitPoint + stat2.HitPoint,
+                Defence = stat1.Defence + stat2.Defence,
                 DamageMin = stat1.DamageMin + stat2.DamageMin,
                 DamageMax = stat1.DamageMax + stat2.DamageMax,
                 AttackSeconds = stat1.AttackSeconds + stat2.AttackSeconds,

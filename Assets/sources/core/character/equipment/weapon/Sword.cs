@@ -4,25 +4,15 @@ namespace Core.Character.Equipment.Weapon
 {
     class Sword : WeaponObject
     {
-        /// <summary>
-        /// copied spear for throwing.
-        /// </summary>
-        private GameObject _copiedSpear;
         private void Awake()
         {
             Init();
-            _copiedSpear = Resources.Load("Characters/Equipments/PrefabBase/WeaponInstance") as GameObject;
-            _copiedSpear.GetComponent<WeaponInstance>().SetSprite(GetComponentInChildren<SpriteRenderer>().sprite);
         }
         /// <summary>
         /// Throws spear, from CURRENT spear position and rotation FROM ANIMATION.
         /// </summary>
         public override void Attack(AttackType attackType)
         {
-            var spearForThrowing = Instantiate(_copiedSpear, transform.root.parent);
-            spearForThrowing.transform.position = transform.position;
-            spearForThrowing.transform.rotation = transform.rotation;
-            spearForThrowing.GetComponent<WeaponInstance>().Throw((attackType == AttackType.Defend) ? 0.5f : 0.75f);
         }
     }
 }

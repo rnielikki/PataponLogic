@@ -1,22 +1,22 @@
 ﻿namespace Core.Character.Patapon
 {
-    public class Yaripon : Patapon
+    public class Tatepon : Patapon
     {
         protected override Stat DefaultStat
         {
             get => new Stat
             {
-                HitPoint = 200,
-                Defence = 1,
-                DamageMin = 4,
-                DamageMax = 12,
+                HitPoint = 250,
+                Defence = 1.5f,
+                DamageMin = 6,
+                DamageMax = 8,
                 AttackSeconds = 2,
                 Critical = 0.1f,
-                CriticalResistance = 0.1f,
-                Knockback = 0.5f,
-                KnockbackResistance = 0.1f,
-                Stagger = 0.1f,
-                StaggerResistance = 0.1f,
+                CriticalResistance = 0.25f,
+                Knockback = 0.1f,
+                KnockbackResistance = 0.2f,
+                Stagger = 0.05f,
+                StaggerResistance = 0.2f,
                 FireRate = 0.1f,
                 FireResistance = 0.1f,
                 IceRate = 0.1f,
@@ -31,20 +31,17 @@
             Init();
             Class = ClassType.Yaripon;
         }
-        protected override void Attack(bool isFever)
+
+        protected override void Defend(bool isFever)
         {
             if (!isFever && !_charged)
             {
-                base.Attack(false);
+                base.Defend(false);
             }
             else
             {
-                AttackInTime("attack-fever", 0.5f, Equipment.Weapon.AttackType.FeverAttack);
+                _animator.Animate("defend-fever");
             }
-        }
-        protected override void Defend(bool isFever)
-        {
-            AttackInTime("defend", 0.625f, Equipment.Weapon.AttackType.Defend);
         }
     }
 }
