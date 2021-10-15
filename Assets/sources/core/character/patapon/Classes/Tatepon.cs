@@ -29,7 +29,12 @@
         private void Awake()
         {
             Init();
-            Class = ClassType.Yaripon;
+            Class = ClassType.Tatepon;
+        }
+        protected override void Attack(bool isFever)
+        {
+            if (_charged) _animator.Animate("attack-charge");
+            else base.Attack(isFever);
         }
 
         protected override void Defend(bool isFever)

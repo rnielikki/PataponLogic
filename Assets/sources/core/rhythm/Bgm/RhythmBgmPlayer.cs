@@ -61,10 +61,7 @@ namespace Core.Rhythm.Bgm
         }
         private void Start()
         {
-            //Some trick to set music on right time.
-            RhythmTimer.OnNextHalfTime.AddListener(() =>
-                RhythmTimer.OnNext.AddListener(() => ChangeMusicWithIntro(RhythmBgmIndex.Intro, RhythmBgmIndex.Base, _bgmSource))
-            );
+            RhythmTimer.OnStart.AddListener(() => ChangeMusicWithIntro(RhythmBgmIndex.Intro, RhythmBgmIndex.Base, _bgmSource));
         }
         private void SetClips()
         {

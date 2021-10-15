@@ -37,6 +37,6 @@ namespace Core.Rhythm.Command
             BadCount = statusCollection.Count(status => status == DrumHitStatus.Bad);
             Percentage = GetPercentage(inputs.Sum(input => input.Timing));
         }
-        private float GetPercentage(int timingSum) => 1 - UnityEngine.Mathf.InverseLerp(RhythmTimer.PerfectFrequency * 4, RhythmTimer.BadFrequency * 4, timingSum);
+        private float GetPercentage(int timingSum) => 1 - UnityEngine.Mathf.InverseLerp(RhythmTimer.PerfectFrequency * 4, RhythmTimer.GoodFrequency * 4, timingSum);
     }
 }

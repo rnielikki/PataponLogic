@@ -37,6 +37,10 @@ namespace Core.Rhythm
 
         //Events
         /// <summary>
+        /// When the timer service (the whole game with Rhythm) is actually started.
+        /// </summary>
+        public static UnityEvent OnStart { get; } = new UnityEvent();
+        /// <summary>
         /// Event, when rhythm reaches in just right time.
         /// </summary>
         public static UnityEvent OnTime { get; } = new UnityEvent();
@@ -60,6 +64,14 @@ namespace Core.Rhythm
             PerfectFrequency = (int)(RhythmEnvironment.PerfectRange / Time.fixedDeltaTime);
             GoodFrequency = (int)(RhythmEnvironment.GoodRange / Time.fixedDeltaTime);
             BadFrequency = (int)(RhythmEnvironment.BadRange / Time.fixedDeltaTime);
+        }
+        private void Start()
+        {
+            //A bit tricky way to start
+            OnNextHalfTime.AddListener(() =>
+            {
+                OnNext.AddListener(OnStart.Invoke);
+            });
         }
 
         private void FixedUpdate()

@@ -39,7 +39,6 @@ namespace Core.Rhythm
                 RhythmTimer.Frequency * 2 + RhythmTimer.HalfFrequency - _newGoodFrequency,
                 RhythmTimer.Frequency * 2 + RhythmTimer.HalfFrequency + RhythmTimer.GoodFrequency
             };
-
             Init();
         }
         protected override void SetResetTimer()

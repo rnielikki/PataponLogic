@@ -122,7 +122,7 @@ namespace Core.Character.Patapon
         /// </summary>
         protected virtual void Attack(bool isFever)
         {
-            AttackInTime("attack", 0.5f, isFever ? AttackType.FeverAttack : AttackType.Attack);
+            AttackInTime("attack", isFever ? AttackType.FeverAttack : AttackType.Attack);
         }
         /// <summary>
         /// CHAKACHAKA Input
@@ -161,6 +161,7 @@ namespace Core.Character.Patapon
         {
             _animator.Animate("party");
         }
+        public void WeaponAttack(AttackType type) => Weapon.Attack(type);
 
         /// <summary>
         /// Attack in time
@@ -169,22 +170,18 @@ namespace Core.Character.Patapon
         /// <param name="attackOffset">When appears attack status in the animation. This determines e.g. throwing. For example, if it's 0.5f, the attack starts in half of animation.</param>
         /// <param name="attackType">Attack Type, which can determine what kind of attack can do, depends on the weapon.</param>
         /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
-        protected void AttackInTime(string animationType, float attackOffset, AttackType attackType, float speed = 1)
+        protected void AttackInTime(string animationType, AttackType attackType, float speed = 1)
         {
             StartCoroutine(AttackCoroutine());
             System.Collections.IEnumerator AttackCoroutine()
             {
                 var seconds = Stat.AttackSeconds / speed;
-                var beforeAttackTime = seconds * attackOffset;
-                var afterAttackTime = seconds * (1 - attackOffset);
                 _animator.SetAttackSpeed(2 / seconds);
 
                 for (float i = 0; i < Rhythm.RhythmEnvironment.TurnSeconds; i += seconds)
                 {
                     _animator.Animate(animationType);
-                    yield return new WaitForSeconds(beforeAttackTime);
-                    Weapon.Attack(attackType);
-                    yield return new WaitForSeconds(afterAttackTime);
+                    yield return new WaitForSeconds(seconds);
                 }
             }
         }
