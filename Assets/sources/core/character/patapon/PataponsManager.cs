@@ -10,6 +10,7 @@ namespace Core.Character.Patapon
     class PataponsManager : MonoBehaviour
     {
         private Patapon[] _patapons;
+        private bool _isAlreadyIdle;
         private void Awake()
         {
             _patapons = GetComponentsInChildren<Patapon>();
@@ -20,7 +21,10 @@ namespace Core.Character.Patapon
         /// <param name="model"></param>
         public void SendDrumInput(RhythmInputModel model)
         {
-            if (model.Status == DrumHitStatus.Miss) return;
+            if (model.Status == DrumHitStatus.Miss)
+            {
+                return;
+            }
             var drumName = model.Drum.ToString();
             foreach (var pon in _patapons)
             {
@@ -33,6 +37,7 @@ namespace Core.Character.Patapon
         /// <param name="model"></param>
         public void SendAction(RhythmCommandModel model)
         {
+            _isAlreadyIdle = false;
             foreach (var pon in _patapons)
             {
                 pon.Act(model.Song, model.ComboType == ComboStatus.Fever);
@@ -43,6 +48,8 @@ namespace Core.Character.Patapon
         /// </summary>
         public void ResetAction()
         {
+            if (_isAlreadyIdle) return;
+            _isAlreadyIdle = true;
             foreach (var pon in _patapons)
             {
                 pon.PlayIdle();

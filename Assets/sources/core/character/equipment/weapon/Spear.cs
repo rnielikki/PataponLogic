@@ -12,6 +12,7 @@ namespace Core.Character.Equipment.Weapon
         {
             Init();
             _copiedSpear = Resources.Load("Characters/Equipments/PrefabBase/WeaponInstance") as GameObject;
+            _copiedSpear.layer = gameObject.layer;
             _copiedSpear.GetComponent<WeaponInstance>().SetSprite(GetComponent<SpriteRenderer>().sprite);
         }
         /// <summary>

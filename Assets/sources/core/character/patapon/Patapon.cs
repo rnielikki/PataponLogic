@@ -53,7 +53,7 @@ namespace Core.Character.Patapon
         protected bool _charged { get; private set; }
 
         /// <summary>
-        /// Animator (Can be replaced to Behaviour in future)
+        /// Simple animator that moves patapons.
         /// </summary>
         protected PataponAnimator _animator { get; private set; }
 
@@ -71,7 +71,7 @@ namespace Core.Character.Patapon
         /// Recieves command song and starts corresponding moving.
         /// </summary>
         /// <param name="song">The command song, which determines what the patapon will act.</param>
-        public virtual void Act(CommandSong song, bool isFever) //maybe will moved to something like PataponAction. Let me see.
+        public virtual void Act(CommandSong song, bool isFever)
         {
             StopAllCoroutines();
             switch (song)
@@ -102,9 +102,9 @@ namespace Core.Character.Patapon
         }
 
         /// <summary>
-        /// Going back to Idle status, also removes PONCHAKA <see cref="_charged"/> status.
+        /// Going back to Idle status. This also means ALL FEVER/COMMAND is CANCELED. also removes PONCHAKA <see cref="_charged"/> status.
         /// </summary>
-        public void PlayIdle()
+        public virtual void PlayIdle()
         {
             _charged = false;
             StopAllCoroutines();
@@ -122,14 +122,14 @@ namespace Core.Character.Patapon
         /// </summary>
         protected virtual void Attack(bool isFever)
         {
-            AttackInTime("attack", isFever ? AttackType.FeverAttack : AttackType.Attack);
+            AttackInTime("attack");
         }
         /// <summary>
         /// CHAKACHAKA Input
         /// </summary>
         protected virtual void Defend(bool isFever)
         {
-            _animator.Animate("defend");
+            AttackInTime("defend");
         }
         /// <summary>
         /// PONPATA Input
@@ -170,7 +170,7 @@ namespace Core.Character.Patapon
         /// <param name="attackOffset">When appears attack status in the animation. This determines e.g. throwing. For example, if it's 0.5f, the attack starts in half of animation.</param>
         /// <param name="attackType">Attack Type, which can determine what kind of attack can do, depends on the weapon.</param>
         /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
-        protected void AttackInTime(string animationType, AttackType attackType, float speed = 1)
+        protected void AttackInTime(string animationType, float speed = 1)
         {
             StartCoroutine(AttackCoroutine());
             System.Collections.IEnumerator AttackCoroutine()

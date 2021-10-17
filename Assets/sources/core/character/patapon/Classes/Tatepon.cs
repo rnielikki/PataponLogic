@@ -41,7 +41,7 @@
         {
             if (!isFever && !_charged)
             {
-                base.Defend(false);
+                _animator.Animate("defend");
             }
             else
             {

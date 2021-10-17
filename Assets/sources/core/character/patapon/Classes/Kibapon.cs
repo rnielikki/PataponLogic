@@ -39,12 +39,8 @@
             }
             else
             {
-                AttackInTime("attack-fever", Equipment.Weapon.AttackType.FeverAttack);
+                AttackInTime("attack-fever");
             }
-        }
-        protected override void Defend(bool isFever)
-        {
-            AttackInTime("defend", Equipment.Weapon.AttackType.Defend);
         }
     }
 }

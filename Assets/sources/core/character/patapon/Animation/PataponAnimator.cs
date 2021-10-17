@@ -22,5 +22,13 @@ namespace Core.Character.Patapon.Animation
         {
             _animator.Play(animationType, -1, 0f);
         }
+        /// <summary>
+        /// Animate with smooth transition.
+        /// </summary>
+        /// <param name="animationType">Type of animaion.</param>
+        public void AnimateFrom(string animationType)
+        {
+            _animator.CrossFade(animationType, 0.5f);
+        }
     }
 }

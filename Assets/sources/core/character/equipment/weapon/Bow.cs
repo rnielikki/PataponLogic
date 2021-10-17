@@ -18,6 +18,7 @@ namespace Core.Character.Equipment.Weapon
             Init();
             _arrowTransform = transform.Find("Arrow");
             _copiedArrow = Resources.Load("Characters/Equipments/PrefabBase/WeaponInstance") as GameObject;
+            _copiedArrow.layer = gameObject.layer;
             _arrowSprite = _arrowTransform.GetComponent<SpriteRenderer>().sprite;
         }
         /// <summary>

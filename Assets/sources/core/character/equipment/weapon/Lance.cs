@@ -1,6 +1,6 @@
 ﻿namespace Core.Character.Equipment.Weapon
 {
-    class Sword : WeaponObject
+    class Lance : WeaponObject
     {
         private void Awake()
         {
