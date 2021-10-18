@@ -12,6 +12,7 @@
         FeverAttack,
         Defend,
         FeverDefend,
-        ChargeDefend
+        ChargeDefend,
+        Charge
     }
 }

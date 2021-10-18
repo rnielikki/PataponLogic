@@ -167,8 +167,6 @@ namespace Core.Character.Patapon
         /// Attack in time
         /// </summary>
         /// <param name="animationType">animation name in animator.</param>
-        /// <param name="attackOffset">When appears attack status in the animation. This determines e.g. throwing. For example, if it's 0.5f, the attack starts in half of animation.</param>
-        /// <param name="attackType">Attack Type, which can determine what kind of attack can do, depends on the weapon.</param>
         /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
         protected void AttackInTime(string animationType, float speed = 1)
         {
