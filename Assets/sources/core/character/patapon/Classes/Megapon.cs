@@ -41,5 +41,9 @@
                 AttackInTime("attack-fever");
             }
         }
+        protected override void Defend(bool isFever)
+        {
+            AttackInTime(_charged ? "charge-defend" : "defend");
+        }
     }
 }

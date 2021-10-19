@@ -15,5 +15,16 @@ namespace Core.Character.Equipment.Weapon
         {
             _holder = GetComponentInParent<Patapon.Patapon>();
         }
+        /// <summary>
+        /// Load corresponding weapon instance resource from Resources/Characters/Equipments/PrefabBase.
+        /// </summary>
+        /// <param name="name">The name of instance (from the resource path).</param>
+        /// <returns>The loaded game object from resource.</returns>
+        protected GameObject GetWeaponInstance(string name = "WeaponInstance")
+        {
+            var obj = Resources.Load("Characters/Equipments/PrefabBase/" + name) as GameObject;
+            obj.layer = gameObject.layer;
+            return obj;
+        }
     }
 }

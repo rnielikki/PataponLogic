@@ -4,13 +4,17 @@ namespace Core.Character.Equipment.Weapon
 {
     class Horn : WeaponObject
     {
+        private Transform _targetTransform; //transform of the bullet object when fired
         private ParticleSystem _attackParticles;
-        private ParticleSystem _feverAttackParticles;
+        private GameObject _feverAttackObject;
+        private GameObject _chargeDefenceObject;
         private void Awake()
         {
             Init();
-            _attackParticles = transform.Find("Attack").GetComponent<ParticleSystem>();
-            _feverAttackParticles = transform.Find("FeverAttack").GetComponent<ParticleSystem>();
+            _targetTransform = transform.Find("Attack");
+            _attackParticles = _targetTransform.GetComponent<ParticleSystem>();
+            _feverAttackObject = GetWeaponInstance("Mega-FeverAttack");
+            _chargeDefenceObject = GetWeaponInstance("Mega-ChargeDefence");
         }
 
         public override void Attack(AttackType attackType)
@@ -36,13 +40,45 @@ namespace Core.Character.Equipment.Weapon
                     startSpeed = 2;
                     emitCount = 2;
                     break;
+                case AttackType.ChargeDefend:
+                    ChargeDefend();
+                    break;
             }
             main.startSpeed = startSpeed;
             _attackParticles.Emit(emitCount);
         }
         private void AttackFever()
         {
-            _feverAttackParticles.Play();
+            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround).AddForce(Vector2.right * 0.5f);
+        }
+        private void ChargeDefend()
+        {
+            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, true).AddForce(Vector2.right * 0.75f);
+        }
+        private Rigidbody2D CreateBulletInstance(GameObject targetObject, UnityEngine.Events.UnityAction<Collider2D> groundAction, bool fixedRotation = false)
+        {
+            var instance = Instantiate(targetObject, transform.root.parent);
+            instance.transform.position = _targetTransform.position;
+            if (!fixedRotation) instance.transform.rotation = _targetTransform.rotation;
+            instance.GetComponent<WeaponBullet>().GroundAction = groundAction;
+            instance.SetActive(true);
+            var rb = instance.GetComponent<Rigidbody2D>();
+            rb.mass = 0.001f;
+            return rb;
+        }
+        //Fever Attack bullet
+        private void MoveBulletOnGround(Collider2D self)
+        {
+            self.attachedRigidbody.gravityScale = 0;
+            self.attachedRigidbody.velocity = self.attachedRigidbody.velocity.x * Vector2.right;
+            self.transform.rotation = Quaternion.identity;
+            self.transform.Translate(transform.up * -0.5f);
+        }
+        //Charge Defence bullet
+        private void StopBulletOnGround(Collider2D self)
+        {
+            self.attachedRigidbody.gravityScale = 0;
+            self.attachedRigidbody.velocity = Vector3.zero;
         }
     }
 }

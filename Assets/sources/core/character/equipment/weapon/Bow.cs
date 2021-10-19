@@ -17,8 +17,7 @@ namespace Core.Character.Equipment.Weapon
         {
             Init();
             _arrowTransform = transform.Find("Arrow");
-            _copiedArrow = Resources.Load("Characters/Equipments/PrefabBase/WeaponInstance") as GameObject;
-            _copiedArrow.layer = gameObject.layer;
+            _copiedArrow = GetWeaponInstance();
             _arrowSprite = _arrowTransform.GetComponent<SpriteRenderer>().sprite;
         }
         /// <summary>
@@ -32,6 +31,5 @@ namespace Core.Character.Equipment.Weapon
             arrowForThrowing.transform.rotation = _arrowTransform.rotation;
             arrowForThrowing.GetComponent<WeaponInstance>().Throw((attackType == AttackType.Defend) ? 1 : 1.5f);
         }
-
     }
 }
