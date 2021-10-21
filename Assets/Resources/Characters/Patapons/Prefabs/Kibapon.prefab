@@ -149,6 +149,8 @@ GameObject:
   - component: {fileID: 5227443634511312290}
   - component: {fileID: 5227443634511312293}
   - component: {fileID: 5227443634511312292}
+  - component: {fileID: 3587879624609154931}
+  - component: {fileID: 9176607848591275325}
   m_Layer: 8
   m_Name: Horse-Head
   m_TagString: Untagged
@@ -274,6 +276,34 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
+--- !u!70 &3587879624609154931
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5227443634511312291}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.1}
+  m_Size: {x: 1.4, y: 1}
+  m_Direction: 1
+--- !u!114 &9176607848591275325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5227443634511312291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aba0e926af06674bbbcda0e25422b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5227443634552327667
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,6 +706,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5227443634913196900}
   - component: {fileID: 5227443634913196903}
+  - component: {fileID: 3836941763278890156}
+  - component: {fileID: 3397068157049876979}
   m_Layer: 8
   m_Name: Horse-Body
   m_TagString: Untagged
@@ -749,6 +781,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!70 &3836941763278890156
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5227443634913196901}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.1, y: 0.7}
+  m_Direction: 1
+--- !u!114 &3397068157049876979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5227443634913196901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aba0e926af06674bbbcda0e25422b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5227443635166061466
 GameObject:
   m_ObjectHideFlags: 0
@@ -1679,7 +1739,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5345355703809797643}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.1, y: -0.65, z: 0}
+  m_LocalPosition: {x: -0.1, y: -0.65, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children:
   - {fileID: 5345355705054930752}
@@ -2843,6 +2903,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5345355705500976117}
+  - component: {fileID: 3333416560271933020}
+  - component: {fileID: 4756765024036229057}
   m_Layer: 8
   m_Name: Face
   m_TagString: Untagged
@@ -2865,6 +2927,34 @@ Transform:
   m_Father: {fileID: 5345355704038590277}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &3333416560271933020
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345355705500976116}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.6
+--- !u!114 &4756765024036229057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345355705500976116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aba0e926af06674bbbcda0e25422b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5345355705564244511
 GameObject:
   m_ObjectHideFlags: 0
@@ -2876,6 +2966,7 @@ GameObject:
   - component: {fileID: 5345355705564244508}
   - component: {fileID: 5345355705564244506}
   - component: {fileID: 5345355705564244510}
+  - component: {fileID: 3807589336503954365}
   m_Layer: 8
   m_Name: Kibapon
   m_TagString: Untagged
@@ -2932,3 +3023,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16ca68d9e762fbf49b3a682959b0f9ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &3807589336503954365
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5345355705564244511}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

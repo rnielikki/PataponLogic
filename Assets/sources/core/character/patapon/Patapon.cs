@@ -58,6 +58,11 @@ namespace Core.Character.Patapon
         protected PataponAnimator _animator { get; private set; }
 
         /// <summary>
+        /// If it's on rightmost of the whole Patapon army. It DOESN'T represent the overall Patapon position.
+        /// </summary>
+        internal bool IsOnFirst { get; set; }
+
+        /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
         protected void Init()
@@ -182,6 +187,25 @@ namespace Core.Character.Patapon
                     yield return new WaitForSeconds(seconds);
                 }
             }
+        }
+
+        public void TakeDamage(int value)
+        {
+            CurrentHitPoint -= value;
+        }
+
+        /// <summary>
+        /// Child will call this method when collision is detected.
+        /// </summary>
+        /// <param name="other">The collision parameter from <see cref="UnityEngine.OnCollisionEnter2D"/></param>
+        public void TakeCollision(Collision2D other)
+        {
+            /*
+            if (IsOnFirst && other.gameObject.tag != "ground")
+            {
+                PataponsManager.IsMovingForward = false;
+            }
+            */
         }
     }
 }
