@@ -10,15 +10,9 @@ namespace Core.Character.Patapon
     class PataponsManager : MonoBehaviour
     {
         private Patapon[] _patapons;
-        private PataponGroup[] _groups;
+        private PataponGroup _firstGroup;
         //--- this should be general but temp value for position and patapata test
-        private Patapon _headPon;
         private bool _isAlreadyIdle;
-
-        [SerializeField]
-        [Tooltip("Defines walking steps for one PATAPATA song.")]
-        private float _walkingSteps;
-        private float _steps;
 
         /// <summary>
         /// If this is set to true, Patapons go forward, also whole Patapon position does. For PATAPATA song.
@@ -27,14 +21,12 @@ namespace Core.Character.Patapon
 
         private void Awake()
         {
-            _steps = _walkingSteps / RhythmEnvironment.TurnSeconds;
 
             _patapons = GetComponentsInChildren<Patapon>();
-            _groups = GetComponentsInChildren<PataponGroup>();
+            var groups = GetComponentsInChildren<PataponGroup>();
+            _firstGroup = groups[0];
 
-            _headPon = _patapons[0];
-            Camera.main.GetComponent<CameraController.CameraMover>().Target = _headPon;
-            _headPon.IsOnFirst = true;
+            Camera.main.GetComponent<CameraController.CameraMover>().Target = _firstGroup.gameObject;
             TurnCounter.OnTurn.AddListener(() => IsMovingForward = false);
         }
         /// <summary>
@@ -92,7 +84,7 @@ namespace Core.Character.Patapon
         }
         private void Update()
         {
-            if (IsMovingForward) transform.Translate(_steps * Time.deltaTime, 0, 0);
+            if (IsMovingForward && _firstGroup.CanGoForward()) transform.Translate(PataponEnvironment.Steps * Time.deltaTime, 0, 0);
         }
         private void OnDestroy()
         {

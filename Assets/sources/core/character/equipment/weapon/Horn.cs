@@ -17,30 +17,30 @@ namespace Core.Character.Equipment.Weapon
             _chargeDefenceObject = GetWeaponInstance("Mega-ChargeDefence");
         }
 
-        public override void Attack(AttackType attackType)
+        public override void Attack(AttackCommandType attackCommandType)
         {
             var main = _attackParticles.main;
             int startSpeed = 0;
             int emitCount = 0;
-            switch (attackType)
+            switch (attackCommandType)
             {
-                case AttackType.FeverAttack:
+                case AttackCommandType.FeverAttack:
                     AttackFever();
                     return;
-                case AttackType.Attack:
+                case AttackCommandType.Attack:
                     //Attack is called in two times in animation, so doesn't need so many emit count.
                     startSpeed = 6;
                     emitCount = 5;
                     break;
-                case AttackType.Defend:
+                case AttackCommandType.Defend:
                     startSpeed = 3;
                     emitCount = 5;
                     break;
-                case AttackType.Charge:
+                case AttackCommandType.Charge:
                     startSpeed = 2;
                     emitCount = 2;
                     break;
-                case AttackType.ChargeDefend:
+                case AttackCommandType.ChargeDefend:
                     ChargeDefend();
                     break;
             }

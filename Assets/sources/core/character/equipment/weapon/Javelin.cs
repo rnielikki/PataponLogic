@@ -18,19 +18,19 @@ namespace Core.Character.Equipment.Weapon
         /// <summary>
         /// Throws spear, from CURRENT spear position and rotation FROM ANIMATION.
         /// </summary>
-        public override void Attack(AttackType attackType)
+        public override void Attack(AttackCommandType attackCommandType)
         {
-            switch (attackType)
+            switch (attackCommandType)
             {
-                case AttackType.Attack:
+                case AttackCommandType.Attack:
                     ThrowWeaponInstance(0.75f);
                     break;
-                case AttackType.FeverAttack:
+                case AttackCommandType.FeverAttack:
                     ThrowWeaponInstance(0.7f, -15);
                     ThrowWeaponInstance(0.75f);
                     ThrowWeaponInstance(0.7f, 15);
                     break;
-                case AttackType.Defend:
+                case AttackCommandType.Defend:
                     ThrowWeaponInstance(0.5f);
                     break;
             }

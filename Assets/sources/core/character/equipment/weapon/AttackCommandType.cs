@@ -5,7 +5,7 @@
     /// <remarks>This is especially useful for special attack, e.g. Megapon, who has charge defense.</remarks>
     /// <note>Code of Conduct: If ChargeAttack and FeverAttack is same, use FeverAttack. Same for defend, FeverDefend comes first.</note>
     /// </summary>
-    public enum AttackType
+    public enum AttackCommandType
     {
         Attack,
         ChargeAttack,

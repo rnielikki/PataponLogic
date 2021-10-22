@@ -58,20 +58,19 @@ namespace Core.Character.Patapon
         protected PataponAnimator _animator { get; private set; }
 
         /// <summary>
-        /// If it's on rightmost of the whole Patapon army. It DOESN'T represent the overall Patapon position.
-        /// </summary>
-        internal bool IsOnFirst { get; set; }
-
-        /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
         protected void Init()
         {
+            _distanceCalculator = new DistanceCalculator(gameObject, PataponEnvironment.PataponSight, LayerMask.GetMask("structures", "enemies"));
             _animator = new PataponAnimator(GetComponent<Animator>());
             Stat = DefaultStat;
             Weapon = GetComponentInChildren<WeaponObject>();
         }
         public void MoveOnDrum(string drumName) => _animator.Animate(drumName);
+
+        private DistanceCalculator _distanceCalculator;
+
         /// <summary>
         /// Recieves command song and starts corresponding moving.
         /// </summary>
@@ -166,7 +165,7 @@ namespace Core.Character.Patapon
         {
             _animator.Animate("party");
         }
-        public void WeaponAttack(AttackType type) => Weapon.Attack(type);
+        public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 
         /// <summary>
         /// Attack in time
@@ -200,12 +199,6 @@ namespace Core.Character.Patapon
         /// <param name="other">The collision parameter from <see cref="UnityEngine.OnCollisionEnter2D"/></param>
         public void TakeCollision(Collision2D other)
         {
-            /*
-            if (IsOnFirst && other.gameObject.tag != "ground")
-            {
-                PataponsManager.IsMovingForward = false;
-            }
-            */
         }
     }
 }

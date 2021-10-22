@@ -14,9 +14,9 @@ namespace Core.Character.Equipment.Weapon
             _stoneTransform = transform.Find("Stone");
             _stoneSprite = _stoneTransform.GetComponent<SpriteRenderer>().sprite;
         }
-        public override void Attack(AttackType attackType)
+        public override void Attack(AttackCommandType attackCommandType)
         {
-            if (attackType == AttackType.ChargeAttack)
+            if (attackCommandType == AttackCommandType.ChargeAttack)
             {
                 var stoneForThrowing = Instantiate(_copiedStone, transform.root.parent);
                 stoneForThrowing.GetComponent<SpriteRenderer>().sprite = _stoneSprite;

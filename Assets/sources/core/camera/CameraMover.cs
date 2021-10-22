@@ -5,7 +5,7 @@ namespace Core.CameraController
 {
     public class CameraMover : MonoBehaviour
     {
-        public Patapon Target { get; set; }
+        public GameObject Target { get; set; }
         private Vector3 _pos;
 
         // Start is called before the first frame update

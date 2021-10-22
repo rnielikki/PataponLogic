@@ -17,12 +17,12 @@ namespace Core.Character.Equipment.Weapon
         /// <summary>
         /// Throws spear, from CURRENT spear position and rotation FROM ANIMATION.
         /// </summary>
-        public override void Attack(AttackType attackType)
+        public override void Attack(AttackCommandType attackType)
         {
             var spearForThrowing = Instantiate(_copiedSpear, transform.root.parent);
             spearForThrowing.transform.position = transform.position;
             spearForThrowing.transform.rotation = transform.rotation;
-            spearForThrowing.GetComponent<WeaponInstance>().Throw((attackType == AttackType.Defend) ? 0.5f : 0.75f);
+            spearForThrowing.GetComponent<WeaponInstance>().Throw((attackType == AttackCommandType.Defend) ? 0.5f : 0.75f);
         }
     }
 }

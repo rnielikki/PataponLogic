@@ -10,7 +10,7 @@ namespace Core.Character.Equipment.Weapon
         /// <summary>
         /// Perform weapon specific attack.
         /// </summary>
-        public abstract void Attack(AttackType attackType);
+        public abstract void Attack(AttackCommandType attackCommandType);
         protected void Init()
         {
             _holder = GetComponentInParent<Patapon.Patapon>();

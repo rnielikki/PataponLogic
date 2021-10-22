@@ -1,46 +1,48 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class WeaponBullet : MonoBehaviour
+namespace Core.Character.Equipment.Weapon
 {
-    Collider2D _collider;
-    [SerializeField]
-    [Tooltip("Defines when to destroy AFTER GROUNDED, as SECONDS. Zero will cause immediate destroy after grounding.")]
-    private float _destroyTime;
-    [SerializeField]
-    [Tooltip("Rotate object to the velocity direction before being grounded.")]
-    private bool _rotateOverTime;
-    private bool _grounded;
-    private Rigidbody2D _rigidbody;
-    /// <summary>
-    /// Defines behaviour when the bullet is grounded. Don't define any destroy instruction, it's on <see cref="_destroyTime"/>
-    /// </summary>
-    /// <remarks>Collider2D represents the bullet's own collider - ground collider shouldn't affect anything.</remarks>
-    public UnityAction<Collider2D> GroundAction { get; set; }
-    private void Awake()
+    public class WeaponBullet : MonoBehaviour
     {
-        _rigidbody = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<Collider2D>();
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Ground" && _collider.attachedRigidbody != null)
+        Collider2D _collider;
+        [SerializeField]
+        [Tooltip("Defines when to destroy AFTER GROUNDED, as SECONDS. Zero will cause immediate destroy after grounding.")]
+        private float _destroyTime;
+        [SerializeField]
+        [Tooltip("Rotate object to the velocity direction before being grounded.")]
+        private bool _rotateOverTime;
+        private bool _grounded;
+        private Rigidbody2D _rigidbody;
+        /// <summary>
+        /// Defines behaviour when the bullet is grounded. Don't define any destroy instruction, it's on <see cref="_destroyTime"/>
+        /// </summary>
+        /// <remarks>Collider2D represents the bullet's own collider - ground collider shouldn't affect anything.</remarks>
+        public UnityAction<Collider2D> GroundAction { get; set; }
+        private void Awake()
         {
-            _grounded = true;
-            GroundAction(_collider);
-            StartCoroutine(DestroyAfterTime());
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _collider = GetComponent<Collider2D>();
         }
-        System.Collections.IEnumerator DestroyAfterTime()
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            yield return new WaitForSeconds(_destroyTime);
-            Destroy(gameObject);
+            if (other.tag == "Ground" && _collider.attachedRigidbody != null)
+            {
+                _grounded = true;
+                GroundAction(_collider);
+                StartCoroutine(DestroyAfterTime());
+            }
+            System.Collections.IEnumerator DestroyAfterTime()
+            {
+                yield return new WaitForSeconds(_destroyTime);
+                Destroy(gameObject);
+            }
+        }
+        private void Update()
+        {
+            if (!_rotateOverTime || _grounded) return;
+            var velo = _rigidbody.velocity;
+            transform.eulerAngles = Vector3.back * Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg;
         }
     }
-    private void Update()
-    {
-        if (!_rotateOverTime || _grounded) return;
-        var velo = _rigidbody.velocity;
-        transform.eulerAngles = Vector3.back * Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg;
-    }
-
 }

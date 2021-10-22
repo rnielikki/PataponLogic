@@ -6,7 +6,7 @@
         {
             Init();
         }
-        public override void Attack(AttackType attackType)
+        public override void Attack(AttackCommandType attackCommandType)
         {
         }
     }

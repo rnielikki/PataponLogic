@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Core.Character.Patapon
+﻿namespace Core.Character.Patapon
 {
     /// <summary>
     /// Represents Patapon group.
@@ -9,13 +7,21 @@ namespace Core.Character.Patapon
     {
         public PataponGeneral General { get; private set; }
         public Patapon[] Patapons { get; private set; }
+        private DistanceCalculator _distanceCalculator;
+
+        //temporary serializefield until auto generated.
+        [UnityEngine.SerializeField]
+        private ClassType _classType;
+        private float _marchiDistance;
+
         //--- this should be general but temp value for position and patapata test
-        private Patapon _headPon;
         private void Awake()
         {
+            _distanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(gameObject);
+            _marchiDistance = PataponEnvironment.GetMarchDistance(_classType);
             General = GetComponentInChildren<PataponGeneral>();
             Patapons = GetComponentsInChildren<Patapon>();
-            _headPon = Patapons[0];
         }
+        public bool CanGoForward() => _distanceCalculator.GetClosest().distance > _marchiDistance;
     }
 }

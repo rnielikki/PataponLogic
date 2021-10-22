@@ -8,17 +8,17 @@
         public abstract void NormalAttack();
         public abstract void ChargeAttack();
         public abstract void Defend();
-        public override void Attack(AttackType type)
+        public override void Attack(AttackCommandType attackCommandType)
         {
-            switch (type)
+            switch (attackCommandType)
             {
-                case AttackType.Attack:
+                case AttackCommandType.Attack:
                     NormalAttack();
                     break;
-                case AttackType.ChargeAttack:
+                case AttackCommandType.ChargeAttack:
                     ChargeAttack();
                     break;
-                case AttackType.Defend:
+                case AttackCommandType.Defend:
                     Defend();
                     break;
             }
