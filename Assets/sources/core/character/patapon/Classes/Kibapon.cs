@@ -40,7 +40,20 @@
             else
             {
                 AttackInTime("attack-fever");
+                _pataponDistance.MoveRush(22);
             }
+        }
+        protected override void Defend(bool isFever)
+        {
+            if (!isFever && !_charged)
+            {
+                _animator.Animate("defend");
+            }
+            else
+            {
+                _animator.Animate("defend-fever");
+            }
+            _pataponDistance.MoveTo(-0.75f, 8);
         }
     }
 }

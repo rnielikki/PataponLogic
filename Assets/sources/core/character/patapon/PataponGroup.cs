@@ -8,6 +8,7 @@
         public PataponGeneral General { get; private set; }
         public Patapon[] Patapons { get; private set; }
         private DistanceCalculator _distanceCalculator;
+        public int Index { get; internal set; }
 
         //temporary serializefield until auto generated.
         [UnityEngine.SerializeField]
@@ -21,6 +22,11 @@
             _marchiDistance = PataponEnvironment.GetMarchDistance(_classType);
             General = GetComponentInChildren<PataponGeneral>();
             Patapons = GetComponentsInChildren<Patapon>();
+
+            for (int i = 0; i < Patapons.Length; i++)
+            {
+                Patapons[i].GroupIndex = i;
+            }
         }
         public bool CanGoForward() => _distanceCalculator.GetClosest().distance > _marchiDistance;
     }

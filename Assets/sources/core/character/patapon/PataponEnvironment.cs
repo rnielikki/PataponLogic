@@ -17,15 +17,22 @@ namespace Core.Character.Patapon
                 { ClassType.Tatepon, 0.1f},
                 { ClassType.Dekapon, 0.2f},
                 { ClassType.Robopon, 0.3f},
-                { ClassType.Kibapon, 0.5f},
+                { ClassType.Kibapon, 2f},
                 //--range (short)
-                { ClassType.Yaripon, 1},
-                { ClassType.Megapon, 1.5f},
-                { ClassType.Toripon, 2},
+                { ClassType.Yaripon, 3},
+                { ClassType.Megapon, 4},
+                { ClassType.Toripon, 4.5f},
                 //--range (long)
-                { ClassType.Yumipon, 3},
-                { ClassType.Mahopon, 3.5f},
+                { ClassType.Yumipon, 5},
+                { ClassType.Mahopon, 5.5f},
             };
         public static float GetMarchDistance(ClassType classType) => _marchDistance[classType];
+
+        //Distance info
+
+        /// <summary>
+        /// Distance between Patapons. This is used not only for generating Patapons but also keeping Patapon distance in animation.
+        /// </summary>
+        public const float PataponDistance = 0.5f;
     }
 }

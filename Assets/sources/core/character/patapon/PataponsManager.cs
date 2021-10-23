@@ -28,6 +28,15 @@ namespace Core.Character.Patapon
 
             Camera.main.GetComponent<CameraController.CameraMover>().Target = _firstGroup.gameObject;
             TurnCounter.OnTurn.AddListener(() => IsMovingForward = false);
+
+            for (int i = 0; i < _patapons.Length; i++)
+            {
+                _patapons[i].Index = i;
+            }
+            for (int i = 0; i < groups.Length; i++)
+            {
+                groups[i].Index = i;
+            }
         }
         /// <summary>
         /// Attach to <see cref="RhythmInput.OnDrumHit"/>.

@@ -58,18 +58,34 @@ namespace Core.Character.Patapon
         protected PataponAnimator _animator { get; private set; }
 
         /// <summary>
+        /// Sets Patapon distance.
+        /// </summary>
+        protected PataponDistance _pataponDistance { get; private set; }
+
+        /// <summary>
+        /// Current Patapon Index, from first of the line to the end of the line. Index starts from 0.
+        /// </summary>
+        public int Index { get; internal set; }
+        /// <summary>
+        /// Current Patapon Index IN <see cref="PataponGroup"/>, from first of the line to the end of the line. Index starts from 0.
+        /// </summary>
+        public int GroupIndex { get; internal set; }
+
+        /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
         protected void Init()
         {
-            _distanceCalculator = new DistanceCalculator(gameObject, PataponEnvironment.PataponSight, LayerMask.GetMask("structures", "enemies"));
+            _pataponDistance = GetComponent<PataponDistance>();
             _animator = new PataponAnimator(GetComponent<Animator>());
             Stat = DefaultStat;
             Weapon = GetComponentInChildren<WeaponObject>();
         }
-        public void MoveOnDrum(string drumName) => _animator.Animate(drumName);
-
-        private DistanceCalculator _distanceCalculator;
+        public void MoveOnDrum(string drumName)
+        {
+            _animator.Animate(drumName);
+            _pataponDistance.StopMoving();
+        }
 
         /// <summary>
         /// Recieves command song and starts corresponding moving.
@@ -113,6 +129,7 @@ namespace Core.Character.Patapon
             _charged = false;
             StopAllCoroutines();
             _animator.Animate("Idle");
+            _pataponDistance.MoveToInitialPlace();
         }
         /// <summary>
         /// PATAPATA Input
@@ -120,6 +137,7 @@ namespace Core.Character.Patapon
         void Walk()
         {
             _animator.Animate("walk");
+            _pataponDistance.MoveToInitialPlace();
         }
         /// <summary>
         /// PONPON Input
@@ -134,6 +152,7 @@ namespace Core.Character.Patapon
         protected virtual void Defend(bool isFever)
         {
             AttackInTime("defend");
+            _pataponDistance.MoveToInitialPlace();
         }
         /// <summary>
         /// PONPATA Input
@@ -141,6 +160,7 @@ namespace Core.Character.Patapon
         protected virtual void Dodge()
         {
             _animator.Animate("dodge");
+            _pataponDistance.MoveBack(8);
         }
         /// <summary>
         /// PONCHAKA Input
@@ -148,6 +168,7 @@ namespace Core.Character.Patapon
         protected virtual void Charge()
         {
             _animator.Animate("charge");
+            _pataponDistance.MoveToInitialPlace();
         }
 
         /// <summary>
@@ -156,6 +177,7 @@ namespace Core.Character.Patapon
         protected virtual void Jump()
         {
             _animator.Animate("jump");
+            _pataponDistance.StopMoving();
         }
 
         /// <summary>
@@ -164,6 +186,7 @@ namespace Core.Character.Patapon
         protected virtual void Party()
         {
             _animator.Animate("party");
+            _pataponDistance.MoveToInitialPlace();
         }
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 

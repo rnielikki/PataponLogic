@@ -33,7 +33,11 @@
         }
         protected override void Attack(bool isFever)
         {
-            if (_charged) _animator.Animate("attack-charge");
+            if (_charged)
+            {
+                _animator.Animate("attack-charge");
+                _pataponDistance.MoveRush(17);
+            }
             else base.Attack(isFever);
         }
 
@@ -47,6 +51,7 @@
             {
                 _animator.Animate("defend-fever");
             }
+            _pataponDistance.MoveZero(4);
         }
     }
 }
