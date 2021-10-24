@@ -26,12 +26,13 @@
             };
         }
 
-        protected override float _attackDistance { get; } = 0.5f;
-        protected override float _moveVelocity { get; } = 6;
+        protected override float _attackDistance { get; set; }
+        protected override float _moveVelocity { get; set; } = 6;
         private void Awake()
         {
             Init();
             Class = ClassType.Dekapon;
+            _attackDistance = transform.Find("Patapon-body/Face").GetComponent<UnityEngine.CircleCollider2D>().radius + 0.15f;
         }
         protected override void Attack(bool isFever)
         {

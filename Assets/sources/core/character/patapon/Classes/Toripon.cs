@@ -30,8 +30,8 @@
             };
         }
 
-        protected override float _attackDistance { get; } = 11.5f;
-        protected override float _moveVelocity { get; } = 9;
+        protected override float _attackDistance { get; set; } = 11.5f;
+        protected override float _moveVelocity { get; set; } = 9;
 
         public override void Act(Rhythm.Command.CommandSong song, bool isFever)
         {

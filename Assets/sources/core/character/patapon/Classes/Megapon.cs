@@ -25,8 +25,8 @@
                 SleepResistance = 0.1f
             };
         }
-        protected override float _attackDistance { get; } = 10;
-        protected override float _moveVelocity { get; } = 8;
+        protected override float _attackDistance { get; set; } = 10;
+        protected override float _moveVelocity { get; set; } = 8;
         private void Awake()
         {
             Init();

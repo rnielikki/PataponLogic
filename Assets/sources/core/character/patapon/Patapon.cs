@@ -72,8 +72,8 @@ namespace Core.Character.Patapon
         public int GroupIndex { get; internal set; }
 
         private CommandSong _lastSong;
-        protected virtual float _attackDistance { get; }
-        protected virtual float _moveVelocity { get; }
+        protected virtual float _attackDistance { get; set; }
+        protected virtual float _moveVelocity { get; set; }
 
         /// <summary>
         /// Remember call this on Awake() in inherited class
@@ -202,13 +202,14 @@ namespace Core.Character.Patapon
         /// </summary>
         /// <param name="animationType">Animation name in animator.</param>
         /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
-        protected void AttackInTime(string animationType, float speed = 1)
+        protected void AttackInTime(string animationType, float attackDistance = -1, float speed = 1)
         {
+            if (attackDistance < 0) attackDistance = _attackDistance;
             StartCoroutine(WalkAndAttack());
             System.Collections.IEnumerator WalkAndAttack()
             {
                 _animator.Animate("walk");
-                yield return _pataponDistance.MoveToAttack(_attackDistance, _moveVelocity);
+                yield return _pataponDistance.MoveToAttack(attackDistance, _moveVelocity);
                 yield return _animator.AnimateAttack(animationType, Stat.AttackSeconds, speed);
             }
         }

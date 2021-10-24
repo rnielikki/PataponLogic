@@ -7,7 +7,7 @@ namespace Core.Character.Patapon
     internal static class PataponEnvironment
     {
         //Marching info
-        public const float PataponSight = UnityEngine.Mathf.Infinity; //After certain distance, Patapon can't find where is the enemy!
+        public const float PataponSight = 50; //After certain distance, Patapon can't find where is the enemy!
         public const float WalkingSteps = 4; //defines walking steps for one PATAPATA song.
         public const float Steps = WalkingSteps / Rhythm.RhythmEnvironment.TurnSeconds;
         private readonly static System.Collections.Generic.Dictionary<ClassType, float> _marchDistance =

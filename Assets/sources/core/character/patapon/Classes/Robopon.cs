@@ -26,12 +26,13 @@
             };
         }
 
-        protected override float _attackDistance { get; } = 0.75f;
-        protected override float _moveVelocity { get; } = 8;
+        protected override float _attackDistance { get; set; }
+        protected override float _moveVelocity { get; set; } = 8;
         private void Awake()
         {
             Init();
             Class = ClassType.Robopon;
+            _attackDistance = transform.Find("Patapon-body/Face").GetComponent<UnityEngine.CircleCollider2D>().radius + 0.2f;
         }
         protected override void Attack(bool isFever)
         {
@@ -41,7 +42,7 @@
             }
             else
             {
-                AttackInTime("attack-charge");
+                AttackInTime("attack-charge", 3);
             }
         }
     }

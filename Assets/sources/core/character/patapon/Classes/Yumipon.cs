@@ -25,8 +25,8 @@
                 SleepResistance = 0.1f
             };
         }
-        protected override float _attackDistance { get; } = 20;
-        protected override float _moveVelocity { get; } = 8;
+        protected override float _attackDistance { get; set; } = 20;
+        protected override float _moveVelocity { get; set; } = 8;
 
         private void Awake()
         {
@@ -43,7 +43,7 @@
             else
             {
                 _pataponDistance.MoveToAttack(6, 4);
-                AttackInTime("attack", 3);
+                AttackInTime("attack", speed: 3);
             }
         }
     }
