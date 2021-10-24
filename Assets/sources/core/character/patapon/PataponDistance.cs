@@ -14,7 +14,7 @@ namespace Core.Character.Patapon
         public const int RushAttackDistance = 15;
         public const int DodgeDistance = 15;
 
-        private DistanceCalculator _calculator;
+        private DistanceCalculator _distanceCalculator;
         private Vector2 _defaultPosition;
         private float _movingVelocity; //"movement speed" per second
 
@@ -30,7 +30,7 @@ namespace Core.Character.Patapon
         private bool _isMovingAsOffset;
         private void Awake()
         {
-            _calculator = DistanceCalculator.GetPataponDistanceCalculator(gameObject);
+            _distanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(gameObject);
             _pataponsManagerTransform = GetComponentInParent<PataponsManager>().transform;
             _defaultPosition = transform.position - _pataponsManagerTransform.position;
 
@@ -60,14 +60,20 @@ namespace Core.Character.Patapon
         public void MoveZero(float velocity) => MoveTo(0, velocity);
 
         /// <summary>
+        /// Check if the Patapon has attack target on their sight.
+        /// </summary>
+        /// <returns><c>true</c> if Patapon finds obstacle (attack) target to Patapon sight, otherwise <c>false</c>.</returns>
+        public bool HasAttackTarget() => _distanceCalculator.GetClosest().collider != null;
+        /// <summary>
         /// Move (can go forth or back) for attacking, for melee and range units. 0 is expected for melee normal attacks.
         /// </summary>
         /// <param name="AttackDistance">Distance from the target to attack.</param>
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         /// <returns>Yield value, when moving is done.</returns>
+
         public System.Collections.IEnumerator MoveToAttack(float AttackDistance, float velocity)
         {
-            var posX = _calculator.GetClosest().point.x - AttackDistance;
+            var posX = _distanceCalculator.GetClosest().point.x - AttackDistance;
             MoveWithTargetPosition(posX, velocity);
             yield return new WaitUntil(() => transform.position.x == posX);
         }
@@ -79,10 +85,15 @@ namespace Core.Character.Patapon
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         public void MoveTo(float positionOffset, float velocity)
         {
-            var x = Mathf.Min(
-                _calculator.GetClosest().point.x,
-                _pataponsManagerTransform.position.x + positionOffset + _pataponGroupOffset
+            float x = _pataponsManagerTransform.position.x + positionOffset + _pataponGroupOffset;
+            var hit = _distanceCalculator.GetClosest();
+            if (hit.collider != null)
+            {
+                x = Mathf.Min(
+                    hit.point.x,
+                    x
                 );
+            }
             MoveWithTargetPosition(x, velocity);
         }
         /// <summary>

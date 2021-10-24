@@ -55,7 +55,7 @@ namespace Core.Character.Patapon.Animation
             _animator.CrossFade(animationType, 0.5f);
         }
         /// <summary>
-        /// Perform attack animation, in coroutine.
+        /// Perform attack animation, in coroutine. Use <see cref="Animate"/> instead for constant gesture attack (like tatepon ponchaka~ponpon).
         /// </summary>
         /// <param name="animationType">Animation name in animator.</param>
         /// <param name="attackSecondsStat">Attack seconds in stat.</param>

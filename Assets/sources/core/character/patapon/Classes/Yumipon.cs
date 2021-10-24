@@ -38,11 +38,9 @@
             if (!isFever && !_charged)
             {
                 base.Attack(false);
-                _pataponDistance.MoveToAttack(6, 4);
             }
             else
             {
-                _pataponDistance.MoveToAttack(6, 4);
                 AttackInTime("attack", speed: 3);
             }
         }

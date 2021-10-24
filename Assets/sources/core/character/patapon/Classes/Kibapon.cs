@@ -41,7 +41,7 @@
             }
             else
             {
-                AttackInTime("attack-fever");
+                _animator.Animate("attack-fever");
                 _pataponDistance.MoveRush(22);
             }
         }

@@ -28,6 +28,10 @@
                 Patapons[i].GroupIndex = i;
             }
         }
-        public bool CanGoForward() => _distanceCalculator.GetClosest().distance > _marchiDistance;
+        public bool CanGoForward()
+        {
+            var hit = _distanceCalculator.GetClosest();
+            return hit.collider == null || hit.distance > _marchiDistance;
+        }
     }
 }

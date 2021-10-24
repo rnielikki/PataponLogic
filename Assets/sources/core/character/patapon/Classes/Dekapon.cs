@@ -42,7 +42,7 @@
             }
             else
             {
-                AttackInTime("attack-charge");
+                _animator.Animate("attack-charge");
                 _pataponDistance.MoveZero(2.5f);
             }
         }

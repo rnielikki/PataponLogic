@@ -204,6 +204,7 @@ namespace Core.Character.Patapon
         /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
         protected void AttackInTime(string animationType, float attackDistance = -1, float speed = 1)
         {
+            if (!_pataponDistance.HasAttackTarget()) return;
             if (attackDistance < 0) attackDistance = _attackDistance;
             StartCoroutine(WalkAndAttack());
             System.Collections.IEnumerator WalkAndAttack()
