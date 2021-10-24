@@ -71,6 +71,10 @@ namespace Core.Character.Patapon
         /// </summary>
         public int GroupIndex { get; internal set; }
 
+        private CommandSong _lastSong;
+        protected virtual float _attackDistance { get; }
+        protected virtual float _moveVelocity { get; }
+
         /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
@@ -83,6 +87,7 @@ namespace Core.Character.Patapon
         }
         public void MoveOnDrum(string drumName)
         {
+            StopAllCoroutines();
             _animator.Animate(drumName);
             _pataponDistance.StopMoving();
         }
@@ -94,6 +99,8 @@ namespace Core.Character.Patapon
         public virtual void Act(CommandSong song, bool isFever)
         {
             StopAllCoroutines();
+            if (_lastSong != song) _animator.ClearLateAnimation();
+            _lastSong = song;
             switch (song)
             {
                 case CommandSong.Patapata:
@@ -191,23 +198,18 @@ namespace Core.Character.Patapon
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 
         /// <summary>
-        /// Attack in time
+        /// Performs attack animation, applying attack seconds in stat.
         /// </summary>
-        /// <param name="animationType">animation name in animator.</param>
+        /// <param name="animationType">Animation name in animator.</param>
         /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
         protected void AttackInTime(string animationType, float speed = 1)
         {
-            StartCoroutine(AttackCoroutine());
-            System.Collections.IEnumerator AttackCoroutine()
+            StartCoroutine(WalkAndAttack());
+            System.Collections.IEnumerator WalkAndAttack()
             {
-                var seconds = Stat.AttackSeconds / speed;
-                _animator.SetAttackSpeed(2 / seconds);
-
-                for (float i = 0; i < Rhythm.RhythmEnvironment.TurnSeconds; i += seconds)
-                {
-                    _animator.Animate(animationType);
-                    yield return new WaitForSeconds(seconds);
-                }
+                _animator.Animate("walk");
+                yield return _pataponDistance.MoveToAttack(_attackDistance, _moveVelocity);
+                yield return _animator.AnimateAttack(animationType, Stat.AttackSeconds, speed);
             }
         }
 

@@ -26,6 +26,8 @@
             };
         }
 
+        protected override float _attackDistance { get; } = 1;
+        protected override float _moveVelocity { get; } = 12;
         private void Awake()
         {
             Init();

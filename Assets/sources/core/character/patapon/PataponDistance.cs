@@ -42,28 +42,35 @@ namespace Core.Character.Patapon
         }
 
         /// <summary>
-        /// Moves Patapon forward to max default distance, in e.g. Tatepon charge attack.
-        /// </summary>
-        /// <param name="velocity">How fast it will rush (attack movement speed).</param>
-        public void MoveRush(float velocity) => MoveTo(RushAttackDistance, velocity);
-        /// <summary>
         /// Moves Patapon when got PONPATA song command.
         /// </summary>
         /// <param name="velocity">How fast will it run (movement speed).</param>
         public void MoveBack(float velocity) => MoveAsOffset(-DodgeDistance, velocity);
 
         /// <summary>
+        /// Moves Patapon forward to max default distance, in e.g. Tatepon charge attack.
+        /// </summary>
+        /// <param name="velocity">How fast it will rush (attack movement speed).</param>
+        public void MoveRush(float velocity) => MoveTo(RushAttackDistance, velocity);
+
+        /// <summary>
         /// Brings to first line of Patapons Manager position. For example, Chakachaka song of Tatepon and Kibapon will do this.
         /// </summary>
-        /// <param name="velocity"></param>
+        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         public void MoveZero(float velocity) => MoveTo(0, velocity);
 
         /// <summary>
-        /// <see cref="MoveTo"/> for Animation event. Int value is position, float value is velocity.
+        /// Move (can go forth or back) for attacking, for melee and range units. 0 is expected for melee normal attacks.
         /// </summary>
-        /// <param name="animationEvent">Animation event that provided from editor.</param>
-        public void MoveTo(AnimationEvent animationEvent) =>
-            MoveTo(animationEvent.intParameter, animationEvent.floatParameter);
+        /// <param name="AttackDistance">Distance from the target to attack.</param>
+        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
+        /// <returns>Yield value, when moving is done.</returns>
+        public System.Collections.IEnumerator MoveToAttack(float AttackDistance, float velocity)
+        {
+            var posX = _calculator.GetClosest().point.x - AttackDistance;
+            MoveWithTargetPosition(posX, velocity);
+            yield return new WaitUntil(() => transform.position.x == posX);
+        }
 
         /// <summary>
         /// Move to specific position (*RELATIVE TO WHOLE PATAPON MANAGER) with certain speed.
@@ -72,12 +79,24 @@ namespace Core.Character.Patapon
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         public void MoveTo(float positionOffset, float velocity)
         {
+            var x = Mathf.Min(
+                _calculator.GetClosest().point.x,
+                _pataponsManagerTransform.position.x + positionOffset + _pataponGroupOffset
+                );
+            MoveWithTargetPosition(x, velocity);
+        }
+        /// <summary>
+        /// Move to ABSOLUTE specific position with certain speed.
+        /// </summary>
+        /// <param name="targetX">The global target positoin to move.</param>
+        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
+        private void MoveWithTargetPosition(float targetX, float velocity)
+        {
             if (velocity <= 0)
             {
                 throw new System.ArgumentException("Velocity cannot be 0 or less.");
             }
-
-            _targetPosition = (Vector2)_pataponsManagerTransform.position + (positionOffset + _pataponGroupOffset) * Vector2.right;
+            _targetPosition = new Vector2(targetX, 0);
             _movingVelocity = velocity;
             _isMovingAsOffset = false;
             _isMoving = true;
@@ -104,6 +123,7 @@ namespace Core.Character.Patapon
                 MoveAsOffset(0, 4);
             }
         }
+
         /// <summary>
         /// Moves relative to Patapon default position.
         /// </summary>
@@ -128,13 +148,6 @@ namespace Core.Character.Patapon
                 else
                 {
                     transform.position = Vector2.MoveTowards(transform.position, _targetPosition, step);
-                }
-                //Don't go over enemy
-                var point = _calculator.GetClosest().point;
-                if (transform.position.x > point.x)
-                {
-                    transform.position = new Vector2(point.x - 0.5f, transform.position.y);
-                    _isMoving = false;
                 }
             }
         }

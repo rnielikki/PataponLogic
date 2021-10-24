@@ -25,6 +25,9 @@
                 SleepResistance = 0.1f
             };
         }
+        protected override float _attackDistance { get; } = 20;
+        protected override float _moveVelocity { get; } = 8;
+
         private void Awake()
         {
             Init();
@@ -35,9 +38,11 @@
             if (!isFever && !_charged)
             {
                 base.Attack(false);
+                _pataponDistance.MoveToAttack(6, 4);
             }
             else
             {
+                _pataponDistance.MoveToAttack(6, 4);
                 AttackInTime("attack", 3);
             }
         }
