@@ -64,16 +64,35 @@ namespace Core.Character.Patapon
         /// </summary>
         /// <returns><c>true</c> if Patapon finds obstacle (attack) target to Patapon sight, otherwise <c>false</c>.</returns>
         public bool HasAttackTarget() => _distanceCalculator.GetClosest().collider != null;
+
+        /// <summary>
+        /// Move (can go forth or back) for defending, for melee and range units. Unlike <see cref="MoveToAttack"/>, it doesn't go over <see cref="PataponsManager"/>.
+        /// </summary>
+        /// <param name="attackDistance">Distance from the target to attack.</param>
+        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
+        /// <returns>Yield value, when moving is done.</returns>
+        public System.Collections.IEnumerator MoveToDefend(float attackDistance, float velocity)
+        {
+            var posX = _distanceCalculator.GetClosest().point.x - attackDistance;
+            yield return MoveToDamage(
+                Mathf.Min(posX, _pataponsManagerTransform.position.x),
+                velocity);
+        }
+
         /// <summary>
         /// Move (can go forth or back) for attacking, for melee and range units. 0 is expected for melee normal attacks.
         /// </summary>
-        /// <param name="AttackDistance">Distance from the target to attack.</param>
+        /// <param name="attackDistance">Distance from the target to attack.</param>
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         /// <returns>Yield value, when moving is done.</returns>
-
-        public System.Collections.IEnumerator MoveToAttack(float AttackDistance, float velocity)
+        public System.Collections.IEnumerator MoveToAttack(float attackDistance, float velocity)
         {
-            var posX = _distanceCalculator.GetClosest().point.x - AttackDistance;
+            var posX = _distanceCalculator.GetClosest().point.x - attackDistance;
+            yield return MoveToDamage(posX, velocity);
+        }
+
+        private System.Collections.IEnumerator MoveToDamage(float posX, float velocity)
+        {
             MoveWithTargetPosition(posX, velocity);
             yield return new WaitUntil(() => transform.position.x == posX);
         }
@@ -123,7 +142,8 @@ namespace Core.Character.Patapon
         /// <summary>
         /// Move to initial position, for DONCHAKA song etc.
         /// </summary>
-        public void MoveToInitialPlace()
+        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
+        public void MoveToInitialPlace(float velocity)
         {
             if (transform.localPosition.x == _defaultPosition.x)
             {
@@ -131,7 +151,7 @@ namespace Core.Character.Patapon
             }
             else
             {
-                MoveAsOffset(0, 4);
+                MoveAsOffset(0, velocity);
             }
         }
 

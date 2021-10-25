@@ -15,6 +15,7 @@
                 DamageMin = 1,
                 DamageMax = 11,
                 AttackSeconds = 2,
+                MovementSpeed = 9,
                 Critical = 0.1f,
                 CriticalResistance = 0.1f,
                 Knockback = 0.35f,
@@ -31,7 +32,6 @@
         }
 
         protected override float _attackDistance { get; set; } = 11.5f;
-        protected override float _moveVelocity { get; set; } = 9;
 
         public override void Act(Rhythm.Command.CommandSong song, bool isFever)
         {

@@ -11,6 +11,7 @@
                 DamageMin = 2,
                 DamageMax = 14,
                 AttackSeconds = 3,
+                MovementSpeed = 7,
                 Critical = 0.1f,
                 CriticalResistance = 0.1f,
                 Knockback = 0,
@@ -26,7 +27,6 @@
             };
         }
         protected override float _attackDistance { get; set; } = 22;
-        protected override float _moveVelocity { get; set; } = 8;
         private void Awake()
         {
             Init();

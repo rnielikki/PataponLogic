@@ -11,6 +11,7 @@
                 DamageMin = 3,
                 DamageMax = 8,
                 AttackSeconds = 2,
+                MovementSpeed = 12,
                 Critical = 0.1f,
                 CriticalResistance = 0.1f,
                 Knockback = 0.1f,
@@ -26,12 +27,13 @@
             };
         }
 
-        protected override float _attackDistance { get; set; } = 1;
-        protected override float _moveVelocity { get; set; } = 12;
+        protected override float _attackDistance { get; set; }
         private void Awake()
         {
             Init();
             Class = ClassType.Kibapon;
+            var horseHead = transform.Find("Protector/Horse-Head");
+            _attackDistance = (horseHead.transform.position - transform.position).x + horseHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 0.2f;
         }
         protected override void Attack(bool isFever)
         {
@@ -42,7 +44,7 @@
             else
             {
                 _animator.Animate("attack-fever");
-                _pataponDistance.MoveRush(22);
+                _pataponDistance.MoveRush(Stat.MovementSpeed * 2);
             }
         }
         protected override void Defend(bool isFever)
@@ -55,7 +57,7 @@
             {
                 _animator.Animate("defend-fever");
             }
-            _pataponDistance.MoveTo(-0.75f, 8);
+            _pataponDistance.MoveTo(-0.75f, Stat.MovementSpeed);
         }
     }
 }

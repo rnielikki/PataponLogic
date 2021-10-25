@@ -11,6 +11,7 @@
                 DamageMin = 1,
                 DamageMax = 4,
                 AttackSeconds = 2,
+                MovementSpeed = 8,
                 Critical = 0.2f,
                 CriticalResistance = 0.1f,
                 Knockback = 0.1f,
@@ -26,7 +27,6 @@
             };
         }
         protected override float _attackDistance { get; set; } = 10;
-        protected override float _moveVelocity { get; set; } = 8;
         private void Awake()
         {
             Init();
@@ -45,7 +45,7 @@
         }
         protected override void Defend(bool isFever)
         {
-            AttackInTime(_charged ? "charge-defend" : "defend");
+            AttackInTime(_charged ? "charge-defend" : "defend", defend: true);
         }
     }
 }

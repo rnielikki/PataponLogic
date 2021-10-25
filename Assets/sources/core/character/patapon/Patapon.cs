@@ -73,7 +73,6 @@ namespace Core.Character.Patapon
 
         private CommandSong _lastSong;
         protected virtual float _attackDistance { get; set; }
-        protected virtual float _moveVelocity { get; set; }
 
         /// <summary>
         /// Remember call this on Awake() in inherited class
@@ -136,7 +135,7 @@ namespace Core.Character.Patapon
             _charged = false;
             StopAllCoroutines();
             _animator.Animate("Idle");
-            _pataponDistance.MoveToInitialPlace();
+            _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
         /// <summary>
         /// PATAPATA Input
@@ -144,7 +143,7 @@ namespace Core.Character.Patapon
         void Walk()
         {
             _animator.Animate("walk");
-            _pataponDistance.MoveToInitialPlace();
+            _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
         /// <summary>
         /// PONPON Input
@@ -158,8 +157,7 @@ namespace Core.Character.Patapon
         /// </summary>
         protected virtual void Defend(bool isFever)
         {
-            AttackInTime("defend");
-            _pataponDistance.MoveToInitialPlace();
+            AttackInTime("defend", defend: true);
         }
         /// <summary>
         /// PONPATA Input
@@ -167,7 +165,7 @@ namespace Core.Character.Patapon
         protected virtual void Dodge()
         {
             _animator.Animate("dodge");
-            _pataponDistance.MoveBack(8);
+            _pataponDistance.MoveBack(Stat.MovementSpeed * 1.5f);
         }
         /// <summary>
         /// PONCHAKA Input
@@ -175,7 +173,7 @@ namespace Core.Character.Patapon
         protected virtual void Charge()
         {
             _animator.Animate("charge");
-            _pataponDistance.MoveToInitialPlace();
+            _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
 
         /// <summary>
@@ -193,7 +191,7 @@ namespace Core.Character.Patapon
         protected virtual void Party()
         {
             _animator.Animate("party");
-            _pataponDistance.MoveToInitialPlace();
+            _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 
@@ -202,7 +200,7 @@ namespace Core.Character.Patapon
         /// </summary>
         /// <param name="animationType">Animation name in animator.</param>
         /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
-        protected void AttackInTime(string animationType, float attackDistance = -1, float speed = 1)
+        protected void AttackInTime(string animationType, float attackDistance = -1, float speed = 1, bool defend = false)
         {
             if (!_pataponDistance.HasAttackTarget()) return;
             if (attackDistance < 0) attackDistance = _attackDistance;
@@ -210,7 +208,14 @@ namespace Core.Character.Patapon
             System.Collections.IEnumerator WalkAndAttack()
             {
                 _animator.Animate("walk");
-                yield return _pataponDistance.MoveToAttack(attackDistance, _moveVelocity);
+                if (defend)
+                {
+                    yield return _pataponDistance.MoveToDefend(attackDistance, Stat.MovementSpeed);
+                }
+                else
+                {
+                    yield return _pataponDistance.MoveToAttack(attackDistance, Stat.MovementSpeed);
+                }
                 yield return _animator.AnimateAttack(animationType, Stat.AttackSeconds, speed);
             }
         }

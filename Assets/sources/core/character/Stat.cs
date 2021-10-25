@@ -31,6 +31,10 @@
         /// </summary>
         public float AttackSeconds { get; set; }
         /// <summary>
+        /// Movement speed (for attack, dodge etc) of a Patapon. Default for a normal patapon is usually expected as 8.
+        /// </summary>
+        public float MovementSpeed { get; set; }
+        /// <summary>
         /// Chance to inflict critical damage. e.g. If critical chance is 100% it's 1 and if it's 150% this value is 1.5.
         /// </summary>
         public float Critical { get; set; }
@@ -90,6 +94,7 @@
                 DamageMin = stat1.DamageMin + stat2.DamageMin,
                 DamageMax = stat1.DamageMax + stat2.DamageMax,
                 AttackSeconds = stat1.AttackSeconds + stat2.AttackSeconds,
+                MovementSpeed = stat1.MovementSpeed + stat2.MovementSpeed,
                 Critical = stat1.Critical + stat2.Critical,
                 CriticalResistance = stat1.CriticalResistance + stat2.CriticalResistance,
                 Knockback = stat1.Knockback + stat2.Knockback,
