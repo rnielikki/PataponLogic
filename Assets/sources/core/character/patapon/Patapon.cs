@@ -72,7 +72,7 @@ namespace Core.Character.Patapon
         public int GroupIndex { get; internal set; }
 
         private CommandSong _lastSong;
-        protected virtual float _attackDistance { get; set; }
+        protected float _attackDistance;
 
         /// <summary>
         /// Remember call this on Awake() in inherited class

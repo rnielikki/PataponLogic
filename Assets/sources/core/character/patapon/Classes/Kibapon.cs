@@ -27,11 +27,11 @@
             };
         }
 
-        protected override float _attackDistance { get; set; }
         private void Awake()
         {
             Init();
             Class = ClassType.Kibapon;
+            _attackDistance = 0;
             var horseHead = transform.Find("Protector/Horse-Head");
             _attackDistance = (horseHead.transform.position - transform.position).x + horseHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 0.2f;
         }

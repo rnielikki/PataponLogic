@@ -26,10 +26,10 @@
                 SleepResistance = 0.1f
             };
         }
-        protected override float _attackDistance { get; set; } = 10;
         private void Awake()
         {
             Init();
+            _attackDistance = 10;
             Class = ClassType.Megapon;
         }
         protected override void Attack(bool isFever)

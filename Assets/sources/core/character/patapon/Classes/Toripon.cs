@@ -31,7 +31,12 @@
             };
         }
 
-        protected override float _attackDistance { get; set; } = 11.5f;
+        private void Awake()
+        {
+            Init();
+            _attackDistance = 11.5f;
+            Class = ClassType.Toripon;
+        }
 
         public override void Act(Rhythm.Command.CommandSong song, bool isFever)
         {
@@ -53,11 +58,7 @@
                 FlyDown();
             }
         }
-        private void Awake()
-        {
-            Init();
-            Class = ClassType.Toripon;
-        }
+
         protected override void Attack(bool isFever)
         {
             if (!isFever && !_charged)

@@ -26,11 +26,11 @@
                 SleepResistance = 0.1f
             };
         }
-        protected override float _attackDistance { get; set; } = 20;
 
         private void Awake()
         {
             Init();
+            _attackDistance = 20;
             Class = ClassType.Yumipon;
         }
         protected override void Attack(bool isFever)

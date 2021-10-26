@@ -27,11 +27,10 @@
             };
         }
 
-        protected override float _attackDistance { get; set; } = 7.5f;
-
         private void Awake()
         {
             Init();
+            _attackDistance = 7.5f;
             Class = ClassType.Yaripon;
         }
         protected override void Attack(bool isFever)
