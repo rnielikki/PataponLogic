@@ -30,6 +30,7 @@ namespace Core.Character.Equipment.Weapon
             arrowForThrowing.transform.rotation = _arrowTransform.rotation;
 
             arrowForThrowing.GetComponent<WeaponInstance>()
+                .SetHolderStat(_holder.Stat)
                 .SetSprite(_arrowSprite)
                 .Throw((attackCommandType == AttackCommandType.Defend) ? 1 : 1.5f);
         }

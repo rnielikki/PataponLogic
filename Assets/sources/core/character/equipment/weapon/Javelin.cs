@@ -42,6 +42,7 @@ namespace Core.Character.Equipment.Weapon
                 instance.transform.rotation = transform.rotation;
                 if (angle != 0) instance.transform.Rotate(Vector3.forward * angle);
                 instance.GetComponent<WeaponInstance>()
+                    .SetHolderStat(_holder.Stat)
                     .SetSprite(_sprite)
                     .Throw(force);
             }

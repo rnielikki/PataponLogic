@@ -25,6 +25,7 @@ namespace Core.Character.Equipment.Weapon
             spearForThrowing.transform.rotation = transform.rotation;
 
             spearForThrowing.GetComponent<WeaponInstance>()
+                .SetHolderStat(_holder.Stat)
                 .SetSprite(_sprite)
                 .Throw((attackCommandType == AttackCommandType.Defend) ? 0.5f : 0.75f);
         }

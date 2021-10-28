@@ -37,7 +37,7 @@ namespace Core.Character.Patapon
         /// Current Hit point.
         /// <remarks>It shouldn't be bigger than <see cref="Stat.HitPoint"/> or smaller than 0. If this value is 0, it causes death.</remarks>
         /// </summary>
-        public int CurrentHitPoint { get; protected set; }
+        public int CurrentHitPoint { get; set; }
         /// <summary>
         /// Class (e.g. Yaripon, Tatepon, Yumipon...) of the Patapon.
         /// </summary>
@@ -138,6 +138,10 @@ namespace Core.Character.Patapon
                     break;
                 case CommandSong.Donchaka:
                     Party();
+                    break;
+                case CommandSong.Patachaka:
+                    _animator.Animate("walk");
+                    _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed * 2);
                     break;
             }
             _charged = song == CommandSong.Ponchaka; //Removes charged status if it isn't charging command

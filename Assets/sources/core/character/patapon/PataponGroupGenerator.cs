@@ -35,9 +35,9 @@ namespace Core.Character.Patapon
             groupScript.Init();
             groupScript.Index = _pataponGroupIndex;
 
+            group.transform.parent = target;
             group.transform.localPosition = Vector2.zero + _pataponGroupIndex * PataponEnvironment.GroupDistance * Vector2.left;
             _pataponGroupIndex++;
-            group.transform.parent = target;
         }
 
         private static void AddPataponsInstance(string className, Transform attachTarget)

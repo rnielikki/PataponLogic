@@ -9,13 +9,16 @@ namespace Core.Character.Equipment.Weapon
     internal class WeaponInstance : MonoBehaviour
     {
         Rigidbody2D _rigidbody;
-        /// <summary>
-        /// Yaripon throwing attack with physics.
-        /// </summary>
-        /// <param name="seconds">The delay as seconds before throwing.</param>
+        Stat _stat;
+
         private void Awake()
         {
             _rigidbody = gameObject.GetComponent<Rigidbody2D>();
+        }
+        public WeaponInstance SetHolderStat(Stat stat)
+        {
+            _stat = stat;
+            return this;
         }
         /// <summary>
         /// Set image sprite (how does it look).
@@ -43,6 +46,7 @@ namespace Core.Character.Equipment.Weapon
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            DamageCalculator.DealDamage(_stat, collision.gameObject, collision.ClosestPoint(transform.position));
             Destroy(gameObject);
         }
     }

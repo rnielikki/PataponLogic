@@ -53,7 +53,7 @@ namespace Core.Rhythm.Display
         int _wormAnimationCounter;
         bool _wormAnimationCounting;
 
-        int _comboAnimHash, _feverAnimHash;
+        int _comboAnimHash, _feverAnimHash, _enterAnimHash;
         void Awake()
         {
             _wormBody = transform.Find("Image").GetComponent<LineRenderer>();
@@ -79,6 +79,7 @@ namespace Core.Rhythm.Display
 
             _comboAnimHash = Animator.StringToHash("Start-Combo");
             _feverAnimHash = Animator.StringToHash("Fever-Idle");
+            _enterAnimHash = Animator.StringToHash("Worm-Enter");
             Hide();
         }
         public void Show(Command.RhythmComboModel comboInfo)
@@ -103,6 +104,7 @@ namespace Core.Rhythm.Display
 
             _number.sprite = _comboImageIndex[comboInfo.ComboCount];
             _animator.Play(_comboAnimHash, -1, 0);
+            _animator.Play(_enterAnimHash, -1, 0);
         }
         public void ShowFever()
         {
@@ -192,6 +194,7 @@ namespace Core.Rhythm.Display
                 _eyesImage.sprite = _eyesFever;
                 SetBounceAnimation();
                 _feverImage.enabled = true;
+                _animator.Play(_enterAnimHash, -1, 0);
                 _animator.Play(_feverAnimHash, -1, 0);
             });
             void Draw(float startOffset)

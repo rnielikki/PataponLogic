@@ -22,7 +22,9 @@ namespace Core.Character.Equipment.Weapon
                 stoneForThrowing.GetComponent<SpriteRenderer>().sprite = _stoneSprite;
                 stoneForThrowing.transform.position = _stoneTransform.position;
                 stoneForThrowing.transform.rotation = _stoneTransform.rotation;
-                stoneForThrowing.GetComponent<WeaponInstance>().Throw(0.75f);
+                stoneForThrowing.GetComponent<WeaponInstance>()
+                    .SetHolderStat(_holder.Stat)
+                    .Throw(0.75f);
             }
         }
     }
