@@ -10,7 +10,7 @@
                 Defence = 0.8f,
                 DamageMin = 2,
                 DamageMax = 14,
-                AttackSeconds = 3,
+                AttackSeconds = 2,
                 MovementSpeed = 7,
                 Critical = 0.1f,
                 CriticalResistance = 0.1f,
@@ -29,7 +29,7 @@
         private void Awake()
         {
             Init();
-            _attackDistance = 22;
+            InitDistanceFromHead(22);
             Class = ClassType.Mahopon;
         }
         protected override void Attack(bool isFever)

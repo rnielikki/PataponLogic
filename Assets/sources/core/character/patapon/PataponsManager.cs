@@ -19,24 +19,22 @@ namespace Core.Character.Patapon
         /// </summary>
         internal static bool IsMovingForward { get; set; }
 
+
+        //------------ Serialize field for auto generation, may be changed later.
+        [SerializeField]
+        private ClassType[] _pataponTypes;
+
         private void Awake()
         {
+            PataponGroupGenerator.Generate(_pataponTypes, transform);
 
             _patapons = GetComponentsInChildren<Patapon>();
             var groups = GetComponentsInChildren<PataponGroup>();
             _firstGroup = groups[0];
 
-            Camera.main.GetComponent<CameraController.CameraMover>().Target = _firstGroup.gameObject;
-            TurnCounter.OnTurn.AddListener(() => IsMovingForward = false);
+            Camera.main.GetComponent<CameraController.CameraMover>().Target = _firstGroup.Patapons[0].gameObject;
 
-            for (int i = 0; i < _patapons.Length; i++)
-            {
-                _patapons[i].Index = i;
-            }
-            for (int i = 0; i < groups.Length; i++)
-            {
-                groups[i].Index = i;
-            }
+            TurnCounter.OnTurn.AddListener(() => IsMovingForward = false);
         }
         /// <summary>
         /// Attach to <see cref="RhythmInput.OnDrumHit"/>.

@@ -8,12 +8,13 @@ namespace Core.Character.Equipment.Weapon
         /// copied spear for throwing.
         /// </summary>
         private GameObject _copiedJavelin;
+        private Sprite _sprite;
         private void Awake()
         {
             Init();
             _copiedJavelin = Resources.Load("Characters/Equipments/PrefabBase/WeaponInstance") as GameObject;
             _copiedJavelin.layer = gameObject.layer;
-            _copiedJavelin.GetComponent<WeaponInstance>().SetSprite(GetComponent<SpriteRenderer>().sprite);
+            _sprite = GetComponent<SpriteRenderer>().sprite;
         }
         /// <summary>
         /// Throws spear, from CURRENT spear position and rotation FROM ANIMATION.
@@ -40,7 +41,9 @@ namespace Core.Character.Equipment.Weapon
                 instance.transform.position = transform.position;
                 instance.transform.rotation = transform.rotation;
                 if (angle != 0) instance.transform.Rotate(Vector3.forward * angle);
-                instance.GetComponent<WeaponInstance>().Throw(force);
+                instance.GetComponent<WeaponInstance>()
+                    .SetSprite(_sprite)
+                    .Throw(force);
             }
         }
     }

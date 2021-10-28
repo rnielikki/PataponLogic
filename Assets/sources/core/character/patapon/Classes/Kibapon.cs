@@ -30,10 +30,12 @@
         private void Awake()
         {
             Init();
-            Class = ClassType.Kibapon;
-            _attackDistance = 0;
             var horseHead = transform.Find("Protector/Horse-Head");
-            _attackDistance = (horseHead.transform.position - transform.position).x + horseHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 0.2f;
+            _pataponDistance.InitDistance(
+                    0,
+                    (horseHead.transform.position - transform.position).x + horseHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 1
+                );
+            Class = ClassType.Kibapon;
         }
         protected override void Attack(bool isFever)
         {

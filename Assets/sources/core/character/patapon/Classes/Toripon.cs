@@ -34,7 +34,11 @@
         private void Awake()
         {
             Init();
-            _attackDistance = 11.5f;
+            var birdHead = transform.Find("Root/Protector/Bird-Head");
+            _pataponDistance.InitDistance(
+                0.25f,
+                (birdHead.transform.position - transform.position).x + birdHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 1
+                );
             Class = ClassType.Toripon;
         }
 

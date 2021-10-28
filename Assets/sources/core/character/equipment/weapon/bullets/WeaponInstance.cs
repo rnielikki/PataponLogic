@@ -21,8 +21,11 @@ namespace Core.Character.Equipment.Weapon
         /// Set image sprite (how does it look).
         /// </summary>
         /// <param name="sprite"></param>
-        public void SetSprite(Sprite sprite) =>
+        public WeaponInstance SetSprite(Sprite sprite)
+        {
             gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            return this;
+        }
 
         /// <summary>
         /// Start throwing this instance.

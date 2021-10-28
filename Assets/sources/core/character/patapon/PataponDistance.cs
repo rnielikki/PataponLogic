@@ -9,7 +9,7 @@ namespace Core.Character.Patapon
     public class PataponDistance : MonoBehaviour
     {
         /// <summary>
-        /// Like Tatepon Ponchaka~Ponpon. This is relative to the root Patapon position manager.
+        /// Like Tatepon Ponchaka~Ponpon. This position is relative to the root Patapon position manager.
         /// </summary>
         public const int RushAttackDistance = 15;
         public const int DodgeDistance = 15;
@@ -24,21 +24,30 @@ namespace Core.Character.Patapon
         private Transform _pataponsManagerTransform;
 
         private float _pataponOffset;
-        private float _pataponGroupOffset;
 
         private bool _isMoving;
         private bool _isMovingAsOffset;
-        private void Awake()
+
+        private float _attackDistance = -1;
+        public float AttackDistanceWithOffset => _attackDistance + _pataponOffset;
+
+        private void Start()
         {
             _distanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(gameObject);
             _pataponsManagerTransform = GetComponentInParent<PataponsManager>().transform;
             _defaultPosition = transform.position - _pataponsManagerTransform.position;
-
-            var pon = GetComponent<Patapon>();
-
-            _pataponOffset = pon.Index * PataponEnvironment.PataponDistance;
-            _pataponGroupOffset = pon.GroupIndex * PataponEnvironment.PataponDistance;
-
+            _pataponOffset = GetComponent<Patapon>().IndexInGroup * PataponEnvironment.AttackDistanceBetweenPatapons;
+        }
+        /// <summary>
+        /// Sets default distance.
+        /// </summary>
+        /// <param name="attackDistance">Patapon attack distance, without considering Patapon size.</param>
+        /// <param name="radiusOffset">Offset, as Patapon size. Default is expected to Patapon radius, but also can be from vehicle's head.</param>
+        internal void InitDistance(float attackDistance, float radiusOffset)
+        {
+            if (_attackDistance != -1) return;
+            _pataponOffset += radiusOffset;
+            _attackDistance = attackDistance;
         }
 
         /// <summary>
@@ -68,12 +77,11 @@ namespace Core.Character.Patapon
         /// <summary>
         /// Move (can go forth or back) for defending, for melee and range units. Unlike <see cref="MoveToAttack"/>, it doesn't go over <see cref="PataponsManager"/>.
         /// </summary>
-        /// <param name="attackDistance">Distance from the target to attack.</param>
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         /// <returns>Yield value, when moving is done.</returns>
-        public System.Collections.IEnumerator MoveToDefend(float attackDistance, float velocity)
+        public System.Collections.IEnumerator MoveToDefend(float velocity)
         {
-            var posX = _distanceCalculator.GetClosest().point.x - attackDistance;
+            var posX = _distanceCalculator.GetClosest().point.x - _attackDistance;
             yield return MoveToDamage(
                 Mathf.Min(posX, _pataponsManagerTransform.position.x),
                 velocity);
@@ -82,19 +90,18 @@ namespace Core.Character.Patapon
         /// <summary>
         /// Move (can go forth or back) for attacking, for melee and range units. 0 is expected for melee normal attacks.
         /// </summary>
-        /// <param name="attackDistance">Distance from the target to attack.</param>
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         /// <returns>Yield value, when moving is done.</returns>
-        public System.Collections.IEnumerator MoveToAttack(float attackDistance, float velocity)
+        public System.Collections.IEnumerator MoveToAttack(float velocity)
         {
-            var posX = _distanceCalculator.GetClosest().point.x - attackDistance;
+            var posX = _distanceCalculator.GetClosest().point.x - _attackDistance;
             yield return MoveToDamage(posX, velocity);
         }
 
         private System.Collections.IEnumerator MoveToDamage(float posX, float velocity)
         {
             MoveWithTargetPosition(posX, velocity);
-            yield return new WaitUntil(() => transform.position.x == posX);
+            yield return new WaitUntil(() => !_isMoving);
         }
 
         /// <summary>
@@ -104,7 +111,7 @@ namespace Core.Character.Patapon
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         public void MoveTo(float positionOffset, float velocity)
         {
-            float x = _pataponsManagerTransform.position.x + positionOffset + _pataponGroupOffset;
+            float x = _pataponsManagerTransform.position.x + positionOffset;
             var hit = _distanceCalculator.GetClosest();
             if (hit.collider != null)
             {
@@ -126,7 +133,12 @@ namespace Core.Character.Patapon
             {
                 throw new System.ArgumentException("Velocity cannot be 0 or less.");
             }
-            _targetPosition = new Vector2(targetX, 0);
+            else if (IsInTargetRange(targetX, velocity * Time.deltaTime))
+            {
+                _isMoving = false;
+                return;
+            }
+            _targetPosition = new Vector2(targetX - _pataponOffset, 0);
             _movingVelocity = velocity;
             _isMovingAsOffset = false;
             _isMoving = true;
@@ -145,7 +157,7 @@ namespace Core.Character.Patapon
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         public void MoveToInitialPlace(float velocity)
         {
-            if (transform.localPosition.x == _defaultPosition.x)
+            if (IsInTargetRange(transform.localPosition.x, _defaultPosition.x, velocity * Time.deltaTime))
             {
                 _isMoving = false;
             }
@@ -172,15 +184,22 @@ namespace Core.Character.Patapon
             if (_isMoving)
             {
                 var step = _movingVelocity * Time.deltaTime;
+                Vector2 target;
                 if (_isMovingAsOffset)
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, _targetPosition + (Vector2)_pataponsManagerTransform.position, step);
+                    target = _targetPosition + (Vector2)_pataponsManagerTransform.position;
                 }
                 else
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, _targetPosition, step);
+                    target = _targetPosition;
                 }
+
+                transform.position = Vector2.MoveTowards(transform.position, target, step);
+                _isMoving = !IsInTargetRange(target.x, step);
             }
         }
+        //OFFSET MUST BE +
+        private bool IsInTargetRange(float targetX, float offset) => IsInTargetRange(transform.position.x, targetX, offset);
+        private bool IsInTargetRange(float x, float targetX, float offset) => targetX - offset < x && x < targetX + offset;
     }
 }

@@ -30,7 +30,7 @@
         private void Awake()
         {
             Init();
-            _attackDistance = 20;
+            InitDistanceFromHead(20);
             Class = ClassType.Yumipon;
         }
         protected override void Attack(bool isFever)

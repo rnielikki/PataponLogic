@@ -26,10 +26,12 @@ namespace Core.Character.Equipment.Weapon
         public override void Attack(AttackCommandType attackCommandType)
         {
             var arrowForThrowing = Instantiate(_copiedArrow, transform.root.parent);
-            arrowForThrowing.GetComponent<SpriteRenderer>().sprite = _arrowSprite;
             arrowForThrowing.transform.position = _arrowTransform.position;
             arrowForThrowing.transform.rotation = _arrowTransform.rotation;
-            arrowForThrowing.GetComponent<WeaponInstance>().Throw((attackCommandType == AttackCommandType.Defend) ? 1 : 1.5f);
+
+            arrowForThrowing.GetComponent<WeaponInstance>()
+                .SetSprite(_arrowSprite)
+                .Throw((attackCommandType == AttackCommandType.Defend) ? 1 : 1.5f);
         }
     }
 }

@@ -69,10 +69,14 @@ namespace Core.Character.Patapon
         /// <summary>
         /// Current Patapon Index IN <see cref="PataponGroup"/>, from first of the line to the end of the line. Index starts from 0.
         /// </summary>
-        public int GroupIndex { get; internal set; }
+        public int IndexInGroup { get; internal set; }
 
         private CommandSong _lastSong;
-        protected float _attackDistance;
+
+        /// <summary>
+        /// Attack distance, INCLUDING the Patapon size (Patapon radius in most case, except vehicle).
+        /// </summary>
+        public float AttackDistanceWithOffset => _pataponDistance.AttackDistanceWithOffset;
 
         /// <summary>
         /// Remember call this on Awake() in inherited class
@@ -84,6 +88,18 @@ namespace Core.Character.Patapon
             Stat = DefaultStat;
             Weapon = GetComponentInChildren<WeaponObject>();
         }
+        /// <summary>
+        /// Sets distance from calculated Patapon head. Don't use this if the Patapon uses any vehicle.
+        /// </summary>
+        /// <param name="attackDistance">Attack distance, without considering head size.</param>
+        protected void InitDistanceFromHead(float attackDistance)
+        {
+            _pataponDistance.InitDistance(
+                attackDistance,
+                transform.Find("Patapon-body/Face").GetComponent<CircleCollider2D>().radius + 0.1f
+            );
+        }
+
         public void MoveOnDrum(string drumName)
         {
             StopAllCoroutines();
@@ -200,21 +216,20 @@ namespace Core.Character.Patapon
         /// </summary>
         /// <param name="animationType">Animation name in animator.</param>
         /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
-        protected void AttackInTime(string animationType, float attackDistance = -1, float speed = 1, bool defend = false)
+        protected void AttackInTime(string animationType, float speed = 1, bool defend = false)
         {
             if (!_pataponDistance.HasAttackTarget()) return;
-            if (attackDistance < 0) attackDistance = _attackDistance;
             StartCoroutine(WalkAndAttack());
             System.Collections.IEnumerator WalkAndAttack()
             {
                 _animator.Animate("walk");
                 if (defend)
                 {
-                    yield return _pataponDistance.MoveToDefend(attackDistance, Stat.MovementSpeed);
+                    yield return _pataponDistance.MoveToDefend(Stat.MovementSpeed);
                 }
                 else
                 {
-                    yield return _pataponDistance.MoveToAttack(attackDistance, Stat.MovementSpeed);
+                    yield return _pataponDistance.MoveToAttack(Stat.MovementSpeed);
                 }
                 yield return _animator.AnimateAttack(animationType, Stat.AttackSeconds, speed);
             }

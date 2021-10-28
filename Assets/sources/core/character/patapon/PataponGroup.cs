@@ -10,23 +10,16 @@
         private DistanceCalculator _distanceCalculator;
         public int Index { get; internal set; }
 
-        //temporary serializefield until auto generated.
-        [UnityEngine.SerializeField]
-        private ClassType _classType;
+        public ClassType ClassType { get; internal set; }
         private float _marchiDistance;
 
-        //--- this should be general but temp value for position and patapata test
-        private void Awake()
+        internal void Init()
         {
+            if (_distanceCalculator != null) return;
             _distanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(gameObject);
-            _marchiDistance = PataponEnvironment.GetMarchDistance(_classType);
             General = GetComponentInChildren<PataponGeneral>();
             Patapons = GetComponentsInChildren<Patapon>();
-
-            for (int i = 0; i < Patapons.Length; i++)
-            {
-                Patapons[i].GroupIndex = i;
-            }
+            _marchiDistance = Patapons[0].AttackDistanceWithOffset;
         }
         public bool CanGoForward()
         {

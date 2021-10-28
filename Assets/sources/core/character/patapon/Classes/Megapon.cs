@@ -29,7 +29,7 @@
         private void Awake()
         {
             Init();
-            _attackDistance = 10;
+            InitDistanceFromHead(10);
             Class = ClassType.Megapon;
         }
         protected override void Attack(bool isFever)
