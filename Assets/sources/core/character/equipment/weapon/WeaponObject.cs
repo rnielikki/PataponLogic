@@ -5,16 +5,29 @@ namespace Core.Character.Equipment.Weapon
     public abstract class WeaponObject : MonoBehaviour
     {
         public Weapon Data { get; protected set; }
-        protected Patapon.Patapon _holder;
+        public ICharacter Holder { get; protected set; }
+        /// <summary>
+        /// Sprite of THROWABLE object, like arrows or spears.
+        /// </summary>
+        public Sprite ThrowableWeaponSprite { get; protected set; }
 
+        protected virtual void Init()
+        {
+            Holder = GetComponentInParent<ICharacter>();
+            ThrowableWeaponSprite = GetThrowableWeaponSprite();
+        }
         /// <summary>
         /// Perform weapon specific attack.
         /// </summary>
         public abstract void Attack(AttackCommandType attackCommandType);
-        protected void Init()
-        {
-            _holder = GetComponentInParent<Patapon.Patapon>();
-        }
+        /// <summary>
+        /// Stops attacking. This is meaningful for melee units.
+        /// </summary>
+        public virtual void StopAttacking() { }
+        /// <summary>
+        /// Sets throwable object sprite, like arrows or spears.
+        /// </summary>
+        protected virtual Sprite GetThrowableWeaponSprite() => GetComponent<SpriteRenderer>().sprite;
         /// <summary>
         /// Load corresponding weapon instance resource from Resources/Characters/Equipments/PrefabBase.
         /// </summary>

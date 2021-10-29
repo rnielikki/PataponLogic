@@ -12,26 +12,22 @@ namespace Core.Character.Equipment.Weapon
         /// copied arrow for throwing.
         /// </summary>
         private GameObject _copiedArrow;
-        private Sprite _arrowSprite;
         private void Awake()
         {
-            Init();
             _arrowTransform = transform.Find("Arrow");
+            Init();
             _copiedArrow = GetWeaponInstance();
-            _arrowSprite = _arrowTransform.GetComponent<SpriteRenderer>().sprite;
         }
+        protected override Sprite GetThrowableWeaponSprite() => _arrowTransform.GetComponent<SpriteRenderer>().sprite;
         /// <summary>
         /// Throws spear, from CURRENT spear position and rotation FROM ANIMATION.
         /// </summary>
         public override void Attack(AttackCommandType attackCommandType)
         {
             var arrowForThrowing = Instantiate(_copiedArrow, transform.root.parent);
-            arrowForThrowing.transform.position = _arrowTransform.position;
-            arrowForThrowing.transform.rotation = _arrowTransform.rotation;
 
             arrowForThrowing.GetComponent<WeaponInstance>()
-                .SetHolderStat(_holder.Stat)
-                .SetSprite(_arrowSprite)
+                .Initialize(this, _arrowTransform)
                 .Throw((attackCommandType == AttackCommandType.Defend) ? 1 : 1.5f);
         }
     }

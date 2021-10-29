@@ -1,15 +1,20 @@
-﻿namespace Core.Character.Equipment
+﻿using UnityEngine;
+
+namespace Core.Character.Equipment.Logic
 {
-    static class DamageCalculator
+    internal static class DamageCalculator
     {
-        public static void DealDamage(Stat attackerStat, UnityEngine.GameObject target, UnityEngine.Vector2 point)
+        private static readonly DamageDisplay _damageDisplay = new DamageDisplay();
+        public static void DealDamage(ICharacter attacker, GameObject target, Vector2 point)
         {
             var component = target.GetComponent<IAttackable>();
             if (component == null) return;
-            component.CurrentHitPoint -= attackerStat.DamageMax;
-            if (component.CurrentHitPoint < 0)
+            var damage = attacker.GetCurrentDamage();
+            component.CurrentHitPoint -= damage;
+            _damageDisplay.DisplayDamage(damage, point);
+            if (component.CurrentHitPoint <= 0)
             {
-                UnityEngine.Object.Destroy(target);
+                Object.Destroy(target);
             }
         }
     }

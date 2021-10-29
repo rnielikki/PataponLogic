@@ -14,6 +14,7 @@ namespace Core.Character.Equipment.Weapon
         private bool _rotateOverTime;
         private bool _grounded;
         private Rigidbody2D _rigidbody;
+        public ICharacter Holder { get; set; }
         /// <summary>
         /// Defines behaviour when the bullet is grounded. Don't define any destroy instruction, it's on <see cref="_destroyTime"/>
         /// </summary>
@@ -26,11 +27,18 @@ namespace Core.Character.Equipment.Weapon
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.tag == "Ground" && _collider.attachedRigidbody != null)
+            if (_collider.attachedRigidbody != null)
             {
-                _grounded = true;
-                GroundAction(_collider);
-                StartCoroutine(DestroyAfterTime());
+                if (other.tag == "Ground")
+                {
+                    _grounded = true;
+                    GroundAction(_collider);
+                    StartCoroutine(DestroyAfterTime());
+                }
+                else
+                {
+                    Logic.DamageCalculator.DealDamage(Holder, other.gameObject, other.ClosestPoint(transform.position));
+                }
             }
             System.Collections.IEnumerator DestroyAfterTime()
             {

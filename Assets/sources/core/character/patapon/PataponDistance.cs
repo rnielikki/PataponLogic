@@ -92,9 +92,17 @@ namespace Core.Character.Patapon
         /// </summary>
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         /// <returns>Yield value, when moving is done.</returns>
-        public System.Collections.IEnumerator MoveToAttack(float velocity)
+        public System.Collections.IEnumerator MoveToAttack(float velocity) => MoveToAttack(velocity, _attackDistance);
+
+        /// <summary>
+        /// Move (can go forth or back) for attacking, for melee and range units. 0 is expected for melee normal attacks.
+        /// </summary>
+        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
+        /// <param name="attackDistance">Custom attack distance for special attack.</param>
+        /// <returns>Yield value, when moving is done.</returns>
+        public System.Collections.IEnumerator MoveToAttack(float velocity, float attackDistance)
         {
-            var posX = _distanceCalculator.GetClosest().point.x - _attackDistance;
+            var posX = _distanceCalculator.GetClosest().point.x - attackDistance;
             yield return MoveToDamage(posX, velocity);
         }
 

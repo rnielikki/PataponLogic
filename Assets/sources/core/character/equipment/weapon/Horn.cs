@@ -60,7 +60,9 @@ namespace Core.Character.Equipment.Weapon
             var instance = Instantiate(targetObject, transform.root.parent);
             instance.transform.position = _targetTransform.position;
             if (!fixedRotation) instance.transform.rotation = _targetTransform.rotation;
-            instance.GetComponent<WeaponBullet>().GroundAction = groundAction;
+            var bulletScript = instance.GetComponent<WeaponBullet>();
+            bulletScript.Holder = Holder;
+            bulletScript.GroundAction = groundAction;
             instance.SetActive(true);
             var rb = instance.GetComponent<Rigidbody2D>();
             rb.mass = 0.001f;

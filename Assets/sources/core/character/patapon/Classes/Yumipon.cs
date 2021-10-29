@@ -31,6 +31,7 @@
         {
             Init();
             InitDistanceFromHead(20);
+            AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Yumipon;
         }
         protected override void Attack(bool isFever)

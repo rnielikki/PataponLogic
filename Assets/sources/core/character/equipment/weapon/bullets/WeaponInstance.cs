@@ -9,24 +9,28 @@ namespace Core.Character.Equipment.Weapon
     internal class WeaponInstance : MonoBehaviour
     {
         Rigidbody2D _rigidbody;
-        Stat _stat;
+        ICharacter _holder;
 
         private void Awake()
         {
             _rigidbody = gameObject.GetComponent<Rigidbody2D>();
         }
-        public WeaponInstance SetHolderStat(Stat stat)
-        {
-            _stat = stat;
-            return this;
-        }
+
         /// <summary>
-        /// Set image sprite (how does it look).
+        /// Initialize values from WeaponObject.
         /// </summary>
-        /// <param name="sprite"></param>
-        public WeaponInstance SetSprite(Sprite sprite)
+        /// <param name="original">The original weapon object, which is copied from.</param>
+        /// <param name="transform">Transform of the object.</param>
+        /// <returns>Self.</returns>
+        public WeaponInstance Initialize(WeaponObject original, Transform transformOriginal = null)
         {
-            gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            if (transformOriginal == null) transformOriginal = original.transform;
+            _holder = original.Holder;
+            GetComponent<SpriteRenderer>().sprite = original.ThrowableWeaponSprite;
+
+            transform.position = transformOriginal.position;
+            transform.rotation = transformOriginal.rotation;
+
             return this;
         }
 
@@ -46,7 +50,7 @@ namespace Core.Character.Equipment.Weapon
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            DamageCalculator.DealDamage(_stat, collision.gameObject, collision.ClosestPoint(transform.position));
+            Logic.DamageCalculator.DealDamage(_holder, collision.gameObject, collision.ClosestPoint(transform.position));
             Destroy(gameObject);
         }
     }

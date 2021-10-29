@@ -31,6 +31,7 @@
         {
             Init();
             InitDistanceFromHead(0);
+            AttackType = Equipment.Weapon.AttackType.Crush;
             Class = ClassType.Robopon;
         }
         protected override void Attack(bool isFever)
@@ -41,7 +42,7 @@
             }
             else
             {
-                AttackInTime("attack-charge", 5);
+                AttackInTime("attack-charge", distance: 4.5f);
             }
         }
     }

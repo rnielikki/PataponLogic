@@ -30,6 +30,7 @@
         {
             Init();
             InitDistanceFromHead(22);
+            AttackType = Equipment.Weapon.AttackType.Magic;
             Class = ClassType.Mahopon;
         }
         protected override void Attack(bool isFever)
@@ -40,7 +41,7 @@
             }
             else
             {
-                AttackInTime("charge-attack");
+                AttackInTime("attack-charge");
             }
         }
     }

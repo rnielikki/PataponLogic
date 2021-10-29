@@ -15,10 +15,12 @@ namespace Core.Rhythm.Bgm
      * before-fever.ogg : command input, chance to enter fever
      * fever-intro.ogg [4s] : before shouting "Fever!"
      * fever.ogg : music when on fever status
+     * 
+     * DON'T USE MP3. MP3 FILE HAS REPEAT DELAY PROBLEM.
 
      * NOTE: BE PRECISE TO SOURCE, KEEP ALL THE MUSIC TO %2==0 SECONDS! (except intro - still remember that intro is around 4s)
-     * Note about fever music: use effect -> change speed to set speed, after cropping (because sample rate)!
-     * -> And hear random end part e.g. from 52:00s to 56:00s to make sure that the music is on time.
+     * The whole rhythm script logic is based on *hit with no delay* so keep it in mind!
+     * -> And hear start and end part e.g. for fever, 00:00 - 00:04:00, 01:00 - 01:04 to make sure that the music is on time.
      * 
      * Here is about time toolbar : https://manual.audacityteam.org/man/time_toolbar.html
      * You can also set exact time on "change speed" effect

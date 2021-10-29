@@ -30,6 +30,7 @@
         {
             Init();
             InitDistanceFromHead(10);
+            AttackType = Equipment.Weapon.AttackType.Sound;
             Class = ClassType.Megapon;
         }
         protected override void Attack(bool isFever)
@@ -45,7 +46,7 @@
         }
         protected override void Defend(bool isFever)
         {
-            AttackInTime(_charged ? "charge-defend" : "defend", defend: true);
+            AttackInTime(_charged ? "defend-charge" : "defend", defend: true);
         }
     }
 }

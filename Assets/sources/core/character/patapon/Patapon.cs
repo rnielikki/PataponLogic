@@ -72,11 +72,13 @@ namespace Core.Character.Patapon
         public int IndexInGroup { get; internal set; }
 
         private CommandSong _lastSong;
+        private float _lastPerfectionPercent;
 
         /// <summary>
         /// Attack distance, INCLUDING the Patapon size (Patapon radius in most case, except vehicle).
         /// </summary>
         public float AttackDistanceWithOffset => _pataponDistance.AttackDistanceWithOffset;
+        public AttackType AttackType { get; protected set; }
 
         /// <summary>
         /// Remember call this on Awake() in inherited class
@@ -103,6 +105,7 @@ namespace Core.Character.Patapon
         public void MoveOnDrum(string drumName)
         {
             StopAllCoroutines();
+            StopWeaponAttacking();
             _animator.Animate(drumName);
             _pataponDistance.StopMoving();
         }
@@ -111,11 +114,14 @@ namespace Core.Character.Patapon
         /// Recieves command song and starts corresponding moving.
         /// </summary>
         /// <param name="song">The command song, which determines what the patapon will act.</param>
-        public virtual void Act(CommandSong song, bool isFever)
+        public virtual void Act(RhythmCommandModel model)
         {
             StopAllCoroutines();
+            var song = model.Song;
+            var isFever = model.ComboType == ComboStatus.Fever;
             if (_lastSong != song) _animator.ClearLateAnimation();
             _lastSong = song;
+            _lastPerfectionPercent = model.Percentage;
             switch (song)
             {
                 case CommandSong.Patapata:
@@ -154,6 +160,7 @@ namespace Core.Character.Patapon
         {
             _charged = false;
             StopAllCoroutines();
+            StopWeaponAttacking();
             _animator.Animate("Idle");
             _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
@@ -214,13 +221,17 @@ namespace Core.Character.Patapon
             _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
+        protected virtual void StopWeaponAttacking() => Weapon.StopAttacking();
 
         /// <summary>
         /// Performs attack animation, applying attack seconds in stat.
         /// </summary>
         /// <param name="animationType">Animation name in animator.</param>
         /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
-        protected void AttackInTime(string animationType, float speed = 1, bool defend = false)
+        /// <param name="defend">Determines if it's defend attack. In defence mode, it moves less (zero position) before attacking.</param>
+        /// <param name="distance">Custom attack distance. If it's left as less than zero, it uses default attack distance.</param>
+        /// <note>If this doesn't attack when Patapon is too fast, check if *AttackMultiplyer* is applied to the *Animation* in Animator.</note>
+        protected void AttackInTime(string animationType, float speed = 1, bool defend = false, float distance = -1)
         {
             if (!_pataponDistance.HasAttackTarget()) return;
             StartCoroutine(WalkAndAttack());
@@ -233,7 +244,7 @@ namespace Core.Character.Patapon
                 }
                 else
                 {
-                    yield return _pataponDistance.MoveToAttack(Stat.MovementSpeed);
+                    yield return (distance < 0) ? _pataponDistance.MoveToAttack(Stat.MovementSpeed) : _pataponDistance.MoveToAttack(Stat.MovementSpeed, distance);
                 }
                 yield return _animator.AnimateAttack(animationType, Stat.AttackSeconds, speed);
             }
@@ -247,9 +258,14 @@ namespace Core.Character.Patapon
         /// <summary>
         /// Child will call this method when collision is detected.
         /// </summary>
-        /// <param name="other">The collision parameter from <see cref="UnityEngine.OnCollisionEnter2D"/></param>
-        public void TakeCollision(Collision2D other)
+        /// <param name="other">The collision parameter from <see cref="UnityEngine.OnTriggerEnter2D"/></param>
+        public void TakeDamage(Collider2D other)
         {
+        }
+
+        public int GetCurrentDamage()
+        {
+            return Mathf.RoundToInt(Mathf.Lerp(Stat.DamageMin, Stat.DamageMax, _lastPerfectionPercent));
         }
     }
 }

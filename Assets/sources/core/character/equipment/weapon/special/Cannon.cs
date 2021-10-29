@@ -17,7 +17,9 @@ namespace Core.Character.Equipment.Weapon
         {
             var bullet = Instantiate(_bullet, transform.root.parent);
             bullet.transform.position = _startTransform.position;
-            bullet.GetComponent<WeaponCannonBullet>().enabled = true;
+            var bulletScript = bullet.GetComponent<WeaponCannonBullet>();
+            bulletScript.Holder = Holder;
+            bulletScript.enabled = true;
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Core.Character.Equipment.Weapon
         private float _maxDistance;
         private float _bulletSpeed;
         private float _destroyDistance;
+        public ICharacter Holder { get; set; }
         // Start is called before the first frame update
         void Start()
         {
@@ -27,7 +28,10 @@ namespace Core.Character.Equipment.Weapon
             {
                 Destroy(gameObject);
             }
-            Debug.DrawLine(Vector3.zero, transform.position);
+        }
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Logic.DamageCalculator.DealDamage(Holder, collision.gameObject, collision.ClosestPoint(transform.position));
         }
     }
 }

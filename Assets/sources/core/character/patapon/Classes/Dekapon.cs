@@ -31,6 +31,7 @@
         {
             Init();
             Class = ClassType.Dekapon;
+            AttackType = Equipment.Weapon.AttackType.Crush;
             InitDistanceFromHead(0);
         }
         protected override void Attack(bool isFever)

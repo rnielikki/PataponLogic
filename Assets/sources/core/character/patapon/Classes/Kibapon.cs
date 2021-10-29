@@ -33,8 +33,9 @@
             var horseHead = transform.Find("Protector/Horse-Head");
             _pataponDistance.InitDistance(
                     0,
-                    (horseHead.transform.position - transform.position).x + horseHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 1
+                    (horseHead.transform.position - transform.position).x + horseHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 0.01f
                 );
+            AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Kibapon;
         }
         protected override void Attack(bool isFever)
@@ -59,7 +60,7 @@
             {
                 _animator.Animate("defend-fever");
             }
-            _pataponDistance.MoveTo(-0.75f, Stat.MovementSpeed);
+            _pataponDistance.MoveZero(Stat.MovementSpeed);
         }
     }
 }

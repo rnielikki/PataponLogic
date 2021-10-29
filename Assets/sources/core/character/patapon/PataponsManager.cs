@@ -61,7 +61,7 @@ namespace Core.Character.Patapon
             _isAlreadyIdle = false;
             foreach (var pon in _patapons)
             {
-                pon.Act(model.Song, model.ComboType == ComboStatus.Fever);
+                pon.Act(model);
             }
             Move(model.Song);
         }

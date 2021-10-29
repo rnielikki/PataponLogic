@@ -1259,7 +1259,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3928704230307706526}
   - component: {fileID: 3928704230307706527}
-  - component: {fileID: 3928704230307706498}
+  - component: {fileID: 3567284579856200334}
+  - component: {fileID: 8241082772982960624}
   m_Layer: 8
   m_Name: Weapon
   m_TagString: Untagged
@@ -1333,7 +1334,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3928704230307706498
+--- !u!70 &3567284579856200334
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3928704230307706525}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 1.33, y: 2.44}
+  m_Direction: 0
+--- !u!114 &8241082772982960624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1342,7 +1359,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3928704230307706525}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60f33bb8196f81b448fb25caa86d96cb, type: 3}
+  m_Script: {fileID: 11500000, guid: ecd70ad77be329f4ab4ccf6d78eeb96c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &3928704230751993975

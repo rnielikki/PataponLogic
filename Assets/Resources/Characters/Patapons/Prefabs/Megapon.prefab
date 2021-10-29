@@ -1502,6 +1502,7 @@ GameObject:
   - component: {fileID: 7092626073119863508}
   - component: {fileID: 7092626073119863510}
   - component: {fileID: 7092626073119863511}
+  - component: {fileID: 7233658178069219337}
   m_Layer: 8
   m_Name: Attack
   m_TagString: Untagged
@@ -2357,7 +2358,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 3
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -5279,7 +5280,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -6297,6 +6298,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &7233658178069219337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7092626073119863509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b031c31ce8610a43a0d38c533ee921e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7092626073260735864
 GameObject:
   m_ObjectHideFlags: 0

@@ -30,6 +30,7 @@
         {
             Init();
             Class = ClassType.Tatepon;
+            AttackType = Equipment.Weapon.AttackType.Slash;
             InitDistanceFromHead(0);
         }
         protected override void Attack(bool isFever)
@@ -52,7 +53,7 @@
             {
                 _animator.Animate("defend-fever");
             }
-            _pataponDistance.MoveZero(4);
+            _pataponDistance.MoveTo(0.75f, Stat.MovementSpeed);
         }
     }
 }

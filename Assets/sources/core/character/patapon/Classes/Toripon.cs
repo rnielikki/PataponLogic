@@ -39,12 +39,14 @@
                 0.25f,
                 (birdHead.transform.position - transform.position).x + birdHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 1
                 );
+            AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Toripon;
         }
 
-        public override void Act(Rhythm.Command.CommandSong song, bool isFever)
+        public override void Act(Rhythm.Command.RhythmCommandModel model)
         {
-            base.Act(song, isFever);
+            base.Act(model);
+            var isFever = model.ComboType == Rhythm.Command.ComboStatus.Fever;
             if (!_isFever && isFever)
             {
                 FlyUp();

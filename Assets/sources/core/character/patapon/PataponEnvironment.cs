@@ -8,7 +8,7 @@ namespace Core.Character.Patapon
     {
         //Marching info
         public const float PataponSight = 50; //After certain distance, Patapon can't find where is the enemy!
-        public const float WalkingSteps = 4; //defines walking steps for one PATAPATA song.
+        public const float WalkingSteps = 6; //defines walking steps for one PATAPATA song.
         public const float Steps = WalkingSteps / Rhythm.RhythmEnvironment.TurnSeconds;
 
         //Distance info

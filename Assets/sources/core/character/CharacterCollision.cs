@@ -12,9 +12,9 @@ namespace Core.Character.Patapon
         {
             _target = GetComponentInParent<ICharacter>();
         }
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            _target.TakeCollision(collision);
+            _target.TakeDamage(collision);
         }
     }
 }
