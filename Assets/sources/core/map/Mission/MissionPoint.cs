@@ -6,10 +6,10 @@ namespace Core.Map
     public class MissionPoint : MonoBehaviour
     {
         Animator _animator;
-        private Character.Patapon.PataponsManager _pataponsManager;
         // Start is called before the first frame update
         [SerializeField]
-        private UnityEvent OnMissionEnd;
+        [Tooltip("True if mission complete, otherwise False.")]
+        private UnityEvent<bool> OnMissionEnd = new UnityEvent<bool>();
         private AudioSource _soundSource;
         [SerializeField]
         private AudioClip _missionSuccessSound;
@@ -18,6 +18,8 @@ namespace Core.Map
         [SerializeField]
         [Tooltip("Mission complete condition, by default. Only true Misison Condition will call Mission Complete. Can be changed later in code.")]
         private bool _filledMissionCondition = true;
+
+        private const string _screenPath = "Map/Mission/Instruction/";
         /// <summary>
         /// Mission complete, only when this is true.
         /// </summary>
@@ -28,9 +30,8 @@ namespace Core.Map
         {
             Current = this;
             FilledMissionCondition = _filledMissionCondition;
-            _pataponsManager = GameObject.FindGameObjectWithTag("Player").GetComponent<Character.Patapon.PataponsManager>();
             _animator = GetComponent<Animator>();
-            _soundSource = GetComponent<AudioSource>();
+            _soundSource = GameObject.FindGameObjectWithTag("Sound").GetComponent<AudioSource>();
         }
         /// <summary>
         /// Ends mission. Mission complete if <see cref="FilledMissionCondition"/> is true, otherwise Mission failed.
@@ -46,21 +47,28 @@ namespace Core.Map
                 FailMission();
             }
         }
+
+        public void FailMission()
+        {
+            OnMissionEnd.Invoke(false);
+            AttachToScreen("MissionFailed");
+            _soundSource.PlayOneShot(_missionFailedSound);
+        }
         private void CompleteMission()
         {
-            OnMissionEnd.Invoke();
+            OnMissionEnd.Invoke(true);
             if (_animator != null)
             {
                 _animator.enabled = true;
                 _animator.Play("MissionComplete");
             }
-            _pataponsManager.DoMissionCompleteAction();
+            AttachToScreen("MissionComplete");
             _soundSource.PlayOneShot(_missionSuccessSound);
         }
-        public void FailMission()
-        {
-            OnMissionEnd.Invoke();
-            _soundSource.PlayOneShot(_missionFailedSound);
-        }
+        private void AttachToScreen(string prefabName) =>
+            Instantiate(
+                Resources.Load(_screenPath + prefabName),
+                GameObject.FindGameObjectWithTag("Screen").transform
+                );
     }
 }

@@ -95,12 +95,19 @@ namespace Core.Character.Patapon
                     break;
             }
         }
-        public void DoMissionCompleteAction()
+        public void DoMissionEndAction(bool complete)
         {
-            IsMovingForward = true;
-            foreach (var pon in _patapons)
+            if (!complete)
             {
-                pon.DoMisisonCompleteGesture();
+                IsMovingForward = false;
+            }
+            else
+            {
+                IsMovingForward = true;
+                foreach (var pon in _patapons)
+                {
+                    pon.DoMisisonCompleteGesture();
+                }
             }
         }
         private void Update()

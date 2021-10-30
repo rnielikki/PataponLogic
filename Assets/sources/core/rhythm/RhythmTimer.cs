@@ -88,6 +88,8 @@ namespace Core.Rhythm
                 OnNextHalfTime.Invoke();
                 OnNextHalfTime.RemoveAllListeners();
             }
+            //Note: If you got DividedByZero Exception in here on editor, just DON'T EDIT SCRIPT WHILE EXECUTING.
+            //It's very common to throw exception when script is modified on execution.
             Count = (Count + 1) % Frequency;
         }
 

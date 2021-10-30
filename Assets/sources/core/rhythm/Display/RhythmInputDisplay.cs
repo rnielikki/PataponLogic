@@ -14,11 +14,20 @@ namespace Core.Rhythm.Display
         ParticleSystem.MainModule _mainModule;
         private int _drumAnimationHash;
         private int _missAnimationHash;
+        private RectTransform _rect;
+
+        [SerializeField]
+        [Tooltip("Random X offset position range from center.")]
+        private float _xRange;
+        [SerializeField]
+        [Tooltip("Random Y offset position range from center.")]
+        private float _yRange;
         private void Awake()
         {
             _animator = GetComponent<Animator>();
             _particle = GetComponentInChildren<ParticleSystem>();
             _mainModule = _particle.main;
+            _rect = GetComponent<RectTransform>();
             _drumAnimationHash = Animator.StringToHash("DrumAnimation");
             _missAnimationHash = Animator.StringToHash("MissAnimation");
         }
@@ -33,6 +42,7 @@ namespace Core.Rhythm.Display
 
         private void PlayAnimation(RhythmInputModel model)
         {
+            _rect.anchoredPosition = new Vector2(Random.Range(-_xRange, _xRange), Random.Range(-_yRange, _yRange));
             if (model.Status == DrumHitStatus.Miss)
             {
                 _animator.Play(_missAnimationHash);
