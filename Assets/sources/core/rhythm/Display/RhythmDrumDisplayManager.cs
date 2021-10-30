@@ -10,8 +10,14 @@ namespace Core.Rhythm.Display
     {
         public UnityEvent<RhythmInputModel> OnAnyDrumInput;
         RhythmInputDisplay[] _displays;
-        public void ShowAll() => SetAllEnableState(true);
-        public void HideAll() => SetAllEnableState(false);
+        /// <summary>
+        /// Shows current *display* status
+        /// </summary>
+        public void ShowAll() => SetAllDisplayState(true);
+        /// <summary>
+        /// Hides current *display* status. DOESN'T STOP listening and sound playing.
+        /// </summary>
+        public void HideAll() => SetAllDisplayState(false);
         private void Awake()
         {
             _displays = GetComponentsInChildren<RhythmInputDisplay>();
@@ -22,10 +28,11 @@ namespace Core.Rhythm.Display
             }
         }
 
-        private void SetAllEnableState(bool state)
+        private void SetAllDisplayState(bool state)
         {
             foreach (var display in _displays) display.enabled = state;
         }
+        public void Deactive() => gameObject.SetActive(false);
         private void OnDestroy()
         {
             OnAnyDrumInput.RemoveAllListeners();

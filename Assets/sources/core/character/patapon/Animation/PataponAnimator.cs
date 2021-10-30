@@ -41,11 +41,10 @@ namespace Core.Character.Patapon.Animation
                 _lateAnimating = false;
             }
         }
-        public void AnimateInPlace(string animationType)
+        public void AnimateWithoutNormalizing(string animationType)
         {
-            _animator.Play(animationType, -1, 0f);
+            _animator.Play(animationType);
         }
-
         /// <summary>
         /// Animate with smooth transition.
         /// </summary>

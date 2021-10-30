@@ -124,9 +124,13 @@ namespace Core.Rhythm.Bgm
         }
         public void EnterMiracle()
         {
+            StopAllMusic();
+            //Play miracle music!
+        }
+        public void StopAllMusic()
+        {
             _bgmSource.Stop();
             _feverSource.Stop();
-            //Play miracle music!
         }
         private IEnumerator FeverFadeOut()
         {

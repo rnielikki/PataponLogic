@@ -152,6 +152,10 @@ namespace Core.Character.Patapon
             }
             _charged = song == CommandSong.Ponchaka; //Removes charged status if it isn't charging command
         }
+        public void DoMisisonCompleteGesture()
+        {
+            _animator.AnimateWithoutNormalizing("party");
+        }
 
         /// <summary>
         /// Going back to Idle status. This also means ALL FEVER/COMMAND is CANCELED. also removes PONCHAKA <see cref="_charged"/> status.

@@ -28,5 +28,7 @@ namespace Core.Rhythm.Display
         {
             _image.color = new Color(1, 1, 1, (float)RhythmTimer.GetTiming() / RhythmTimer.Frequency);
         }
+
+        public void Stop() => gameObject.SetActive(false);
     }
 }

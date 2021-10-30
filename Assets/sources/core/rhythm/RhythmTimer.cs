@@ -93,10 +93,7 @@ namespace Core.Rhythm
 
         private void OnDestroy()
         {
-            OnTime.RemoveAllListeners();
-            OnHalfTime.RemoveAllListeners();
-            OnNext.RemoveAllListeners();
-            OnNextHalfTime.RemoveAllListeners();
+            StopAndRemoveAllListeners();
         }
 
         public static int GetTiming() => GetTiming(Count);
@@ -106,5 +103,13 @@ namespace Core.Rhythm
             else return Frequency - count;
         }
         internal static int GetHalfTiming(int count) => Mathf.Abs(HalfFrequency - count);
+        public void StopAndRemoveAllListeners()
+        {
+            Command.TurnCounter.Stop();
+            OnTime.RemoveAllListeners();
+            OnHalfTime.RemoveAllListeners();
+            OnNext.RemoveAllListeners();
+            OnNextHalfTime.RemoveAllListeners();
+        }
     }
 }
