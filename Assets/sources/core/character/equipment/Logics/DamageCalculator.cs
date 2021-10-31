@@ -5,6 +5,12 @@ namespace Core.Character.Equipment.Logic
     internal static class DamageCalculator
     {
         private static readonly DamageDisplay _damageDisplay = new DamageDisplay();
+        /// <summary>
+        /// Calculates damage, while BEING ATTACKED. Doesn't calculate status effect damage (like fire).
+        /// </summary>
+        /// <param name="attacker">Who deals the damage.</param>
+        /// <param name="target">Who takes the damage.</param>
+        /// <param name="point">The point where the damage hit.</param>
         public static void DealDamage(ICharacter attacker, GameObject target, Vector2 point)
         {
             var component = target.GetComponent<IAttackable>();
@@ -14,7 +20,9 @@ namespace Core.Character.Equipment.Logic
             _damageDisplay.DisplayDamage(damage, point);
             if (component.CurrentHitPoint <= 0)
             {
-                Object.Destroy(target);
+                foreach (var collider in target.GetComponentsInChildren<Collider2D>()) collider.enabled = false;
+                //do destroy action.
+                component.Die();
             }
         }
     }

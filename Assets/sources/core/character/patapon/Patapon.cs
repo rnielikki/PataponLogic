@@ -71,7 +71,7 @@ namespace Core.Character.Patapon
         /// </summary>
         public int IndexInGroup { get; internal set; }
 
-        private CommandSong _lastSong;
+        protected CommandSong _lastSong;
         private float _lastPerfectionPercent;
 
         /// <summary>
@@ -270,6 +270,11 @@ namespace Core.Character.Patapon
         public int GetCurrentDamage()
         {
             return Mathf.RoundToInt(Mathf.Lerp(Stat.DamageMin, Stat.DamageMax, _lastPerfectionPercent));
+        }
+        public void Die()
+        {
+            Destroy(Weapon.gameObject);
+            Destroy(gameObject);
         }
     }
 }

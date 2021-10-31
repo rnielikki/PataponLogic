@@ -28,5 +28,9 @@ namespace Core.Character
             };
             CurrentHitPoint = _hitPoint;
         }
+        public void Die()
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace Core.Character.Equipment.Weapon
         }
         private System.Collections.IEnumerator DamageOnTime(Collider2D collision)
         {
-            while (true)
+            while (collision != null && collision.enabled)
             {
                 DealDamage(collision);
                 yield return new WaitForSeconds(_damageSeconds);

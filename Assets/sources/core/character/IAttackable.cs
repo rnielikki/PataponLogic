@@ -15,5 +15,9 @@
         /// <remarks>It shouldn't be bigger than <see cref="Stat.HitPoint"/> or smaller than 0. If this value is 0, it causes death.</remarks>
         /// </summary>
         public int CurrentHitPoint { get; set; }
+        /// <summary>
+        /// Calls when health is 0. This should contain destroying action; like destroying animation -> destroy
+        /// </summary>
+        public void Die();
     }
 }
