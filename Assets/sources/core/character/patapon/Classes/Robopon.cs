@@ -34,6 +34,16 @@
             AttackType = Equipment.Weapon.AttackType.Crush;
             Class = ClassType.Robopon;
         }
+        void Start()
+        {
+            AddDefaultModelsToAttackMoveController()
+                .AddModels(
+                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                {
+                    { "attack-charge", GetAttackMoveModel("attack-charge", attackDistance: 4.5f) },
+                }
+                );
+        }
         protected override void Attack(bool isFever)
         {
             if (!_charged)
@@ -42,7 +52,7 @@
             }
             else
             {
-                AttackInTime("attack-charge", distance: 4.5f);
+                StartAttack("attack-charge");
             }
         }
     }

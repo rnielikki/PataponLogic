@@ -33,12 +33,22 @@
             AttackType = Equipment.Weapon.AttackType.Slash;
             InitDistanceFromHead(0);
         }
+        void Start()
+        {
+            SetAttackMoveController()
+                .AddModels(
+                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                {
+                    { "attack", GetAttackMoveModel("attack") },
+                    { "attack-charge", GetAttackMoveModel("attack-charge", AttackMoveType.Rush, movingSpeed: 1.8f) },
+                }
+                );
+        }
         protected override void Attack(bool isFever)
         {
             if (_charged)
             {
-                _animator.Animate("attack-charge");
-                _pataponDistance.MoveRush(17);
+                StartAttack("attack-charge");
             }
             else base.Attack(isFever);
         }
@@ -47,13 +57,13 @@
         {
             if (!isFever && !_charged)
             {
-                _animator.Animate("defend");
+                PataponAnimator.Animate("defend");
             }
             else
             {
-                _animator.Animate("defend-fever");
+                PataponAnimator.Animate("defend-fever");
             }
-            _pataponDistance.MoveTo(0.75f, Stat.MovementSpeed);
+            PataponDistance.MoveTo(0.75f, Stat.MovementSpeed);
         }
     }
 }

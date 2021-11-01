@@ -34,6 +34,16 @@
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Yumipon;
         }
+        private void Start()
+        {
+            AddDefaultModelsToAttackMoveController()
+                .AddModels(
+                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                {
+                    { "attack-fever", GetAttackMoveModel("attack", attackSpeedMultiplier: 3) },
+                }
+                );
+        }
         protected override void Attack(bool isFever)
         {
             if (!isFever && !_charged)
@@ -42,7 +52,7 @@
             }
             else
             {
-                AttackInTime("attack", speed: 3);
+                StartAttack("attack-fever");
             }
         }
     }

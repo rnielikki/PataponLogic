@@ -34,6 +34,16 @@
             InitDistanceFromHead(7.5f);
             Class = ClassType.Yaripon;
         }
+        private void Start()
+        {
+            AddDefaultModelsToAttackMoveController()
+                .AddModels(
+                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                {
+                    { "attack-fever", GetAttackMoveModel("attack-fever") },
+                }
+                );
+        }
         protected override void Attack(bool isFever)
         {
             if (!isFever && !_charged)
@@ -42,7 +52,7 @@
             }
             else
             {
-                AttackInTime("attack-fever");
+                StartAttack("attack-fever");
             }
         }
     }

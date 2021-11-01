@@ -5,17 +5,14 @@ namespace Core.Character.Patapon
     /// <summary>
     /// Distance calculator for one Patapon. Without this, Patapon won't move when attack or defence etc. Attach same object as Patapon script component. USE WITH ANIMATION EVENT.
     /// </summary>
+    /// <remarks>This is NON-CONTINUOS MOVE in turn. When it arrives, it ends moving in same turn. for continuos move, see <see cref="AttackMoveController"/>.</remarks>
     /// <note>All values are relative to <see cref="PataponManager"/>Position, with own offset index.</note>
     public class PataponDistance : MonoBehaviour
     {
-        /// <summary>
-        /// Like Tatepon Ponchaka~Ponpon. This position is relative to the root Patapon position manager.
-        /// </summary>
-        public const int RushAttackDistance = 15;
-        public const int DodgeDistance = 15;
+        internal DistanceCalculator DistanceCalculator { get; private set; }
 
-        private DistanceCalculator _distanceCalculator;
-        private Vector2 _defaultPosition;
+        private Vector2 _defaultPosition; //relative to PATAPON MANAGER!
+        public float DefaultWorldPosition => _defaultPosition.x + _pataponsManagerTransform.position.x;
         private float _movingVelocity; //"movement speed" per second
 
         private Vector2 _targetPosition;
@@ -23,20 +20,28 @@ namespace Core.Character.Patapon
         //All are moved from this
         private Transform _pataponsManagerTransform;
 
-        private float _pataponOffset;
+        /// <summary>
+        /// Returns current x value of <see cref="PataponsManager"/>.
+        /// </summary>
+        public float Front => _pataponsManagerTransform.position.x;
+
+        public float PataponOffset { get; private set; }
 
         private bool _isMoving;
         private bool _isMovingAsOffset;
 
         private float _attackDistance = -1;
-        public float AttackDistanceWithOffset => _attackDistance + _pataponOffset;
+        public float AttackDistanceWithOffset => _attackDistance + PataponOffset;
+        private void Awake()
+        {
+            DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(gameObject);
+        }
 
         private void Start()
         {
-            _distanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(gameObject);
             _pataponsManagerTransform = GetComponentInParent<PataponsManager>().transform;
             _defaultPosition = transform.position - _pataponsManagerTransform.position;
-            _pataponOffset = GetComponent<Patapon>().IndexInGroup * PataponEnvironment.AttackDistanceBetweenPatapons;
+            PataponOffset = GetComponent<Patapon>().IndexInGroup * PataponEnvironment.AttackDistanceBetweenPatapons;
         }
         /// <summary>
         /// Sets default distance.
@@ -46,7 +51,7 @@ namespace Core.Character.Patapon
         internal void InitDistance(float attackDistance, float radiusOffset)
         {
             if (_attackDistance != -1) return;
-            _pataponOffset += radiusOffset;
+            PataponOffset += radiusOffset;
             _attackDistance = attackDistance;
         }
 
@@ -54,13 +59,7 @@ namespace Core.Character.Patapon
         /// Moves Patapon when got PONPATA song command.
         /// </summary>
         /// <param name="velocity">How fast will it run (movement speed).</param>
-        public void MoveBack(float velocity) => MoveAsOffset(-DodgeDistance, velocity);
-
-        /// <summary>
-        /// Moves Patapon forward to max default distance, in e.g. Tatepon charge attack.
-        /// </summary>
-        /// <param name="velocity">How fast it will rush (attack movement speed).</param>
-        public void MoveRush(float velocity) => MoveTo(RushAttackDistance, velocity);
+        public void MoveBack(float velocity) => MoveAsOffset(-PataponEnvironment.DodgeDistance, velocity);
 
         /// <summary>
         /// Brings to first line of Patapons Manager position. For example, Chakachaka song of Tatepon and Kibapon will do this.
@@ -72,45 +71,7 @@ namespace Core.Character.Patapon
         /// Check if the Patapon has attack target on their sight.
         /// </summary>
         /// <returns><c>true</c> if Patapon finds obstacle (attack) target to Patapon sight, otherwise <c>false</c>.</returns>
-        public bool HasAttackTarget() => _distanceCalculator.GetClosest().collider != null;
-
-        /// <summary>
-        /// Move (can go forth or back) for defending, for melee and range units. Unlike <see cref="MoveToAttack"/>, it doesn't go over <see cref="PataponsManager"/>.
-        /// </summary>
-        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
-        /// <returns>Yield value, when moving is done.</returns>
-        public System.Collections.IEnumerator MoveToDefend(float velocity)
-        {
-            var posX = _distanceCalculator.GetClosest().point.x - _attackDistance;
-            yield return MoveToDamage(
-                Mathf.Min(posX, _pataponsManagerTransform.position.x),
-                velocity);
-        }
-
-        /// <summary>
-        /// Move (can go forth or back) for attacking, for melee and range units. 0 is expected for melee normal attacks.
-        /// </summary>
-        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
-        /// <returns>Yield value, when moving is done.</returns>
-        public System.Collections.IEnumerator MoveToAttack(float velocity) => MoveToAttack(velocity, _attackDistance);
-
-        /// <summary>
-        /// Move (can go forth or back) for attacking, for melee and range units. 0 is expected for melee normal attacks.
-        /// </summary>
-        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
-        /// <param name="attackDistance">Custom attack distance for special attack.</param>
-        /// <returns>Yield value, when moving is done.</returns>
-        public System.Collections.IEnumerator MoveToAttack(float velocity, float attackDistance)
-        {
-            var posX = _distanceCalculator.GetClosest().point.x - attackDistance;
-            yield return MoveToDamage(posX, velocity);
-        }
-
-        private System.Collections.IEnumerator MoveToDamage(float posX, float velocity)
-        {
-            MoveWithTargetPosition(posX, velocity);
-            yield return new WaitUntil(() => !_isMoving);
-        }
+        public bool HasAttackTarget() => DistanceCalculator.GetClosest().collider != null;
 
         /// <summary>
         /// Move to specific position (*RELATIVE TO WHOLE PATAPON MANAGER) with certain speed.
@@ -120,7 +81,7 @@ namespace Core.Character.Patapon
         public void MoveTo(float positionOffset, float velocity)
         {
             float x = _pataponsManagerTransform.position.x + positionOffset;
-            var hit = _distanceCalculator.GetClosest();
+            var hit = DistanceCalculator.GetClosest();
             if (hit.collider != null)
             {
                 x = Mathf.Min(
@@ -146,7 +107,7 @@ namespace Core.Character.Patapon
                 _isMoving = false;
                 return;
             }
-            _targetPosition = new Vector2(targetX - _pataponOffset, 0);
+            _targetPosition = new Vector2(targetX - PataponOffset, 0);
             _movingVelocity = velocity;
             _isMovingAsOffset = false;
             _isMoving = true;
@@ -207,7 +168,7 @@ namespace Core.Character.Patapon
             }
         }
         //OFFSET MUST BE +
-        private bool IsInTargetRange(float targetX, float offset) => IsInTargetRange(transform.position.x, targetX, offset);
+        public bool IsInTargetRange(float targetX, float offset) => IsInTargetRange(transform.position.x, targetX, offset);
         private bool IsInTargetRange(float x, float targetX, float offset) => targetX - offset < x && x < targetX + offset;
     }
 }

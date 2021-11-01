@@ -7,7 +7,8 @@ namespace Core.Character.Patapon
     internal static class PataponEnvironment
     {
         //Marching info
-        public const float PataponSight = 50; //After certain distance, Patapon can't find where is the enemy!
+        //------- DO NOT SET SIGHT TO SHORTER THAN LONGEST RANGE (Mahopon) DISTANCE!
+        public const float PataponSight = 30; //After certain distance, Patapon can't find where is the enemy!
         public const float WalkingSteps = 6; //defines walking steps for one PATAPATA song.
         public const float Steps = WalkingSteps / Rhythm.RhythmEnvironment.TurnSeconds;
 
@@ -22,5 +23,12 @@ namespace Core.Character.Patapon
         /// </summary>
         public const float PataponIdleDistance = 1.5f;
         public const float GroupDistance = 6.5f;
+
+        /// <summary>
+        /// Like Tatepon Ponchaka~Ponpon. This position is relative to the root Patapon position manager.
+        /// </summary>
+        public const int RushAttackDistance = 15;
+        public const int DodgeDistance = 15;
+
     }
 }

@@ -35,12 +35,25 @@
         {
             Init();
             var birdHead = transform.Find("Root/Protector/Bird-Head");
-            _pataponDistance.InitDistance(
-                0.25f,
-                (birdHead.transform.position - transform.position).x + birdHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 1
+            PataponSize = (birdHead.transform.position - transform.position).x + birdHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 1;
+            AttackDistance = 0.1f;
+            PataponDistance.InitDistance(
+                0.1f,
+                PataponSize
                 );
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Toripon;
+
+        }
+        private void Start()
+        {
+            AddDefaultModelsToAttackMoveController()
+                .AddModels(
+                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                {
+                    { "attack-fever", GetAttackMoveModel("attack-fever") },
+                }
+                );
         }
 
         public override void Act(Rhythm.Command.RhythmCommandModel model)
@@ -73,17 +86,17 @@
             }
             else
             {
-                AttackInTime("attack-fever");
+                StartAttack("attack-fever");
             }
         }
         private void FlyUp()
         {
-            _animator.AnimateFrom("tori-fly-up");
+            PataponAnimator.AnimateFrom("tori-fly-up");
             _isFever = true;
         }
         private void FlyDown()
         {
-            _animator.AnimateFrom("tori-fly-down");
+            PataponAnimator.AnimateFrom("tori-fly-down");
             _isFever = false;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Core.Rhythm;
 using Core.Rhythm.Command;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Core.Character.Patapon
 {

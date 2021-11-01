@@ -31,12 +31,24 @@
         {
             Init();
             var horseHead = transform.Find("Protector/Horse-Head");
-            _pataponDistance.InitDistance(
+            PataponSize = (horseHead.transform.position - transform.position).x + horseHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 0.01f;
+            PataponDistance.InitDistance(
                     0,
-                    (horseHead.transform.position - transform.position).x + horseHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 0.01f
+                    PataponSize
                 );
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Kibapon;
+        }
+        void Start()
+        {
+            AddDefaultModelsToAttackMoveController()
+                .AddModels(
+                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                {
+                    { "attack-fever", GetAttackMoveModel("attack-fever", AttackMoveType.Rush, 2) },
+                    { "defend-fever", GetAttackMoveModel("defend-fever", AttackMoveType.Defend).SetAlwaysAnimate() },
+                }
+                );
         }
         protected override void Attack(bool isFever)
         {
@@ -46,21 +58,19 @@
             }
             else
             {
-                _animator.Animate("attack-fever");
-                _pataponDistance.MoveRush(Stat.MovementSpeed * 2);
+                StartAttack("attack-fever");
             }
         }
         protected override void Defend(bool isFever)
         {
             if (!isFever && !_charged)
             {
-                _animator.Animate("defend");
+                StartAttack("defend");
             }
             else
             {
-                _animator.Animate("defend-fever");
+                StartAttack("defend-fever");
             }
-            _pataponDistance.MoveZero(Stat.MovementSpeed);
         }
     }
 }

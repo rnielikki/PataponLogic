@@ -21,15 +21,15 @@ namespace Core.Character.Equipment.Weapon
             switch (attackCommandType)
             {
                 case AttackCommandType.Attack:
-                    ThrowWeaponInstance(0.75f);
+                    ThrowWeaponInstance(1.5f);
                     break;
                 case AttackCommandType.FeverAttack:
-                    ThrowWeaponInstance(0.7f, -15);
-                    ThrowWeaponInstance(0.75f);
-                    ThrowWeaponInstance(0.7f, 15);
+                    ThrowWeaponInstance(1.5f, -15);
+                    ThrowWeaponInstance(1.75f);
+                    ThrowWeaponInstance(1.5f, 15);
                     break;
                 case AttackCommandType.Defend:
-                    ThrowWeaponInstance(0.5f);
+                    ThrowWeaponInstance(1);
                     break;
             }
             void ThrowWeaponInstance(float force, int angle = 0)

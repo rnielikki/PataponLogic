@@ -33,6 +33,18 @@
             AttackType = Equipment.Weapon.AttackType.Sound;
             Class = ClassType.Megapon;
         }
+        void Start()
+        {
+            AddDefaultModelsToAttackMoveController()
+                .AddModels(
+                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                {
+                    { "attack-fever", GetAttackMoveModel("attack-fever") },
+                    { "defend-charge", GetAttackMoveModel("defend-charge", AttackMoveType.Defend) },
+                }
+                );
+
+        }
         protected override void Attack(bool isFever)
         {
             if (!isFever && !_charged)
@@ -41,12 +53,12 @@
             }
             else
             {
-                AttackInTime("attack-fever");
+                StartAttack("attack-fever");
             }
         }
         protected override void Defend(bool isFever)
         {
-            AttackInTime(_charged ? "defend-charge" : "defend", defend: true);
+            StartAttack(_charged ? "defend-charge" : "defend");
         }
     }
 }

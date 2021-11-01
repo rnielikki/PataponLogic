@@ -34,6 +34,10 @@
             AttackType = Equipment.Weapon.AttackType.Crush;
             InitDistanceFromHead(0);
         }
+        void Start()
+        {
+            AddDefaultModelsToAttackMoveController();
+        }
         protected override void Attack(bool isFever)
         {
             if (!_charged)
@@ -42,8 +46,8 @@
             }
             else
             {
-                _animator.Animate("attack-charge");
-                _pataponDistance.MoveZero(2.5f);
+                PataponAnimator.Animate("attack-charge");
+                PataponDistance.MoveZero(2.5f);
             }
         }
     }

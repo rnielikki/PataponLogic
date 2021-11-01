@@ -55,12 +55,12 @@ namespace Core.Character.Patapon
         /// <summary>
         /// Simple animator that moves patapons.
         /// </summary>
-        protected PataponAnimator _animator { get; private set; }
+        public PataponAnimator PataponAnimator { get; private set; }
 
         /// <summary>
         /// Sets Patapon distance.
         /// </summary>
-        protected PataponDistance _pataponDistance { get; private set; }
+        public PataponDistance PataponDistance { get; private set; }
 
         /// <summary>
         /// Current Patapon Index, from first of the line to the end of the line. Index starts from 0.
@@ -74,40 +74,66 @@ namespace Core.Character.Patapon
         protected CommandSong _lastSong;
         private float _lastPerfectionPercent;
 
-        /// <summary>
-        /// Attack distance, INCLUDING the Patapon size (Patapon radius in most case, except vehicle).
-        /// </summary>
-        public float AttackDistanceWithOffset => _pataponDistance.AttackDistanceWithOffset;
         public AttackType AttackType { get; protected set; }
+
+        /// <summary>
+        /// Attack distance WITHOUT head size. Zero for melee expected.
+        /// </summary>
+        public float AttackDistance { get; protected set; }
+        /// <summary>
+        /// Patapon size offest from center. Patapon head size, but if they have vehicle, it's depending on vehicle's head.
+        /// </summary>
+        public float PataponSize { get; protected set; }
+        protected AttackMoveController _attackController { get; private set; }
+        public float AttackDistanceWithOffset => AttackDistance + PataponSize;
 
         /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
         protected void Init()
         {
-            _pataponDistance = GetComponent<PataponDistance>();
-            _animator = new PataponAnimator(GetComponent<Animator>());
+            PataponDistance = GetComponent<PataponDistance>();
+            PataponAnimator = new PataponAnimator(GetComponent<Animator>());
             Stat = DefaultStat;
             Weapon = GetComponentInChildren<WeaponObject>();
         }
+        protected AttackMoveController SetAttackMoveController()
+        {
+            _attackController = gameObject.AddComponent<AttackMoveController>();
+
+            return _attackController;
+        }
+        protected AttackMoveController AddDefaultModelsToAttackMoveController()
+        {
+            if (_attackController == null) SetAttackMoveController();
+            _attackController
+                .AddModels(new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                {
+                    { "attack", GetAttackMoveModel("attack") },
+                    { "defend", GetAttackMoveModel("defend", AttackMoveType.Defend) },
+                });
+            return _attackController;
+        }
+
         /// <summary>
         /// Sets distance from calculated Patapon head. Don't use this if the Patapon uses any vehicle.
         /// </summary>
         /// <param name="attackDistance">Attack distance, without considering head size.</param>
         protected void InitDistanceFromHead(float attackDistance)
         {
-            _pataponDistance.InitDistance(
+            AttackDistance = attackDistance;
+            PataponSize = transform.Find("Patapon-body/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
+            PataponDistance.InitDistance(
                 attackDistance,
-                transform.Find("Patapon-body/Face").GetComponent<CircleCollider2D>().radius + 0.1f
+                PataponSize
             );
         }
 
         public void MoveOnDrum(string drumName)
         {
-            StopAllCoroutines();
-            StopWeaponAttacking();
-            _animator.Animate(drumName);
-            _pataponDistance.StopMoving();
+            StopAttacking();
+            PataponAnimator.Animate(drumName);
+            PataponDistance.StopMoving();
         }
 
         /// <summary>
@@ -116,10 +142,9 @@ namespace Core.Character.Patapon
         /// <param name="song">The command song, which determines what the patapon will act.</param>
         public virtual void Act(RhythmCommandModel model)
         {
-            StopAllCoroutines();
             var song = model.Song;
             var isFever = model.ComboType == ComboStatus.Fever;
-            if (_lastSong != song) _animator.ClearLateAnimation();
+            if (_lastSong != song) PataponAnimator.ClearLateAnimation();
             _lastSong = song;
             _lastPerfectionPercent = model.Percentage;
             switch (song)
@@ -146,15 +171,15 @@ namespace Core.Character.Patapon
                     Party();
                     break;
                 case CommandSong.Patachaka:
-                    _animator.Animate("walk");
-                    _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed * 2);
+                    PataponAnimator.Animate("walk");
+                    PataponDistance.MoveToInitialPlace(Stat.MovementSpeed * 2);
                     break;
             }
             _charged = song == CommandSong.Ponchaka; //Removes charged status if it isn't charging command
         }
         public void DoMisisonCompleteGesture()
         {
-            _animator.AnimateWithoutNormalizing("party");
+            PataponAnimator.AnimateWithoutNormalizing("party");
         }
 
         /// <summary>
@@ -163,48 +188,47 @@ namespace Core.Character.Patapon
         public virtual void PlayIdle()
         {
             _charged = false;
-            StopAllCoroutines();
-            StopWeaponAttacking();
-            _animator.Animate("Idle");
-            _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
+            StopAttacking();
+            PataponAnimator.Animate("Idle");
+            PataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
         /// <summary>
         /// PATAPATA Input
         /// </summary>
         void Walk()
         {
-            _animator.Animate("walk");
-            _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
+            PataponAnimator.Animate("walk");
+            PataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
         /// <summary>
         /// PONPON Input
         /// </summary>
         protected virtual void Attack(bool isFever)
         {
-            AttackInTime("attack");
+            StartAttack("attack");
         }
         /// <summary>
         /// CHAKACHAKA Input
         /// </summary>
         protected virtual void Defend(bool isFever)
         {
-            AttackInTime("defend", defend: true);
+            StartAttack("defend");
         }
         /// <summary>
         /// PONPATA Input
         /// </summary>
         protected virtual void Dodge()
         {
-            _animator.Animate("dodge");
-            _pataponDistance.MoveBack(Stat.MovementSpeed * 1.5f);
+            PataponAnimator.Animate("dodge");
+            PataponDistance.MoveBack(Stat.MovementSpeed * 1.5f);
         }
         /// <summary>
         /// PONCHAKA Input
         /// </summary>
         protected virtual void Charge()
         {
-            _animator.Animate("charge");
-            _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
+            PataponAnimator.Animate("charge");
+            PataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
 
         /// <summary>
@@ -212,8 +236,8 @@ namespace Core.Character.Patapon
         /// </summary>
         protected virtual void Jump()
         {
-            _animator.Animate("jump");
-            _pataponDistance.StopMoving();
+            PataponAnimator.Animate("jump");
+            PataponDistance.StopMoving();
         }
 
         /// <summary>
@@ -221,37 +245,48 @@ namespace Core.Character.Patapon
         /// </summary>
         protected virtual void Party()
         {
-            _animator.Animate("party");
-            _pataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
+            PataponAnimator.Animate("party");
+            PataponDistance.MoveToInitialPlace(Stat.MovementSpeed);
         }
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
+
+        protected virtual void StopAttacking()
+        {
+            StopWeaponAttacking();
+            _attackController.StopAttack();
+        }
         protected virtual void StopWeaponAttacking() => Weapon.StopAttacking();
 
         /// <summary>
         /// Performs attack animation, applying attack seconds in stat.
         /// </summary>
         /// <param name="animationType">Animation name in animator.</param>
-        /// <param name="speed">Speed multiplier. For example, Yumipon fever attack is 3 times faster than normal, so it can be 3.</param>
-        /// <param name="defend">Determines if it's defend attack. In defence mode, it moves less (zero position) before attacking.</param>
-        /// <param name="distance">Custom attack distance. If it's left as less than zero, it uses default attack distance.</param>
         /// <note>If this doesn't attack when Patapon is too fast, check if *AttackMultiplyer* is applied to the *Animation* in Animator.</note>
-        protected void AttackInTime(string animationType, float speed = 1, bool defend = false, float distance = -1)
+        protected void StartAttack(string animationType)
         {
-            if (!_pataponDistance.HasAttackTarget()) return;
-            StartCoroutine(WalkAndAttack());
-            System.Collections.IEnumerator WalkAndAttack()
-            {
-                _animator.Animate("walk");
-                if (defend)
-                {
-                    yield return _pataponDistance.MoveToDefend(Stat.MovementSpeed);
-                }
-                else
-                {
-                    yield return (distance < 0) ? _pataponDistance.MoveToAttack(Stat.MovementSpeed) : _pataponDistance.MoveToAttack(Stat.MovementSpeed, distance);
-                }
-                yield return _animator.AnimateAttack(animationType, Stat.AttackSeconds, speed);
-            }
+            _attackController.StartAttack(animationType);
+        }
+        /// <summary>
+        /// Get Attack move model based on Patapon default stats.
+        /// </summary>
+        /// <param name="animationType">Animation name in animator.</param>
+        /// <param name="type">Telling attack movement type, if it's attack, defend or rush.</param>
+        /// <param name="movingSpeed">Moving speed MULTIPLIER. It automatically multiplies to <see cref="Stat.MovementSpeed"/>.</param>
+        /// <param name="attackSpeedMultiplier">Attack speed multiplier, default is 1. Yumipon fever attack is expected to 3.</param>
+        /// <param name="attackDistance">Attack distance. default distance value is <see cref="AttackDistance"/>.</param>
+        /// <returns>Attack Move Model for <see cref="AttackMoveController"/>.</returns>
+        protected AttackMoveModel GetAttackMoveModel(string animationType, AttackMoveType type = AttackMoveType.Attack, float movingSpeed = 1, float attackSpeedMultiplier = 1, float attackDistance = -100)
+        {
+            if (attackDistance < -10) attackDistance = AttackDistance;
+            movingSpeed *= Stat.MovementSpeed;
+            return new AttackMoveModel(
+                this,
+                animationType,
+                type,
+                movingSpeed,
+                attackSpeedMultiplier,
+                attackDistance
+                );
         }
 
         public void TakeDamage(int value)

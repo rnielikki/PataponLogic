@@ -33,6 +33,16 @@
             AttackType = Equipment.Weapon.AttackType.Magic;
             Class = ClassType.Mahopon;
         }
+        void Start()
+        {
+            AddDefaultModelsToAttackMoveController()
+                .AddModels(
+                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                {
+                    { "attack-charge", GetAttackMoveModel("attack-charge") },
+                }
+                );
+        }
         protected override void Attack(bool isFever)
         {
             if (!_charged)
@@ -41,7 +51,7 @@
             }
             else
             {
-                AttackInTime("attack-charge");
+                StartAttack("attack-charge");
             }
         }
     }
