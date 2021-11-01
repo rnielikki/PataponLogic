@@ -28,7 +28,7 @@ namespace Core.Rhythm
         }
         protected virtual void Init()
         {
-            var actions = EventSystem.current.gameObject.GetComponent<PlayerInput>().actions;
+            var actions = GetComponentInParent<PlayerInput>().actions;
             _action = actions.FindAction("Drum/" + _drumType.ToString());
             SetResetTimer();
             RhythmTimer.OnStart.AddListener(() => Disabled = false);

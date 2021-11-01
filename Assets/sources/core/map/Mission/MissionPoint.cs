@@ -18,6 +18,7 @@ namespace Core.Map
         [SerializeField]
         [Tooltip("Mission complete condition, by default. Only true Misison Condition will call Mission Complete. Can be changed later in code.")]
         private bool _filledMissionCondition = true;
+        public static bool IsMissionEnd { get; private set; }
 
         private const string _screenPath = "Map/Mission/Instruction/";
         /// <summary>
@@ -28,6 +29,7 @@ namespace Core.Map
 
         void Awake()
         {
+            IsMissionEnd = false;
             Current = this;
             FilledMissionCondition = _filledMissionCondition;
             _animator = GetComponent<Animator>();
@@ -50,12 +52,14 @@ namespace Core.Map
 
         public void FailMission()
         {
+            IsMissionEnd = true;
             OnMissionEnd.Invoke(false);
             AttachToScreen("MissionFailed");
             _soundSource.PlayOneShot(_missionFailedSound);
         }
         private void CompleteMission()
         {
+            IsMissionEnd = true;
             OnMissionEnd.Invoke(true);
             if (_animator != null)
             {
