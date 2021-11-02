@@ -1,4 +1,6 @@
-﻿namespace Core.Character.Patapon
+﻿using UnityEngine;
+
+namespace Core.Character.Patapon
 {
     /// <summary>
     /// Represents Patapon group.
@@ -7,23 +9,23 @@
     {
         public PataponGeneral General { get; private set; }
         public Patapon[] Patapons { get; private set; }
-        private DistanceCalculator _distanceCalculator;
         public int Index { get; internal set; }
 
         public ClassType ClassType { get; internal set; }
         private float _marchiDistance;
+        private LayerMask _layerMask;
 
         internal void Init()
         {
-            if (_distanceCalculator != null) return;
-            _distanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(gameObject, 0);
+            if (Patapons != null) return;
             General = GetComponentInChildren<PataponGeneral>();
             Patapons = GetComponentsInChildren<Patapon>();
             _marchiDistance = Patapons[0].AttackDistanceWithOffset;
+            _layerMask = LayerMask.GetMask("structures", "enemies");
         }
         public bool CanGoForward()
         {
-            var hit = _distanceCalculator.GetClosest();
+            var hit = Physics2D.Raycast(transform.position, Vector2.right, PataponEnvironment.PataponSight, _layerMask);
             return (hit.collider == null || hit.distance > _marchiDistance) && Hazoron.Hazoron.GetClosestHazoronPosition() > transform.position.x;
         }
     }

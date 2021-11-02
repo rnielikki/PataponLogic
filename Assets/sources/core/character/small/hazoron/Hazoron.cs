@@ -14,7 +14,7 @@ namespace Core.Character.Hazoron
         /// </summary>
         protected void Init()
         {
-            DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(gameObject, _rangeForAttack);
+            DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this, _rangeForAttack);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
             Stat = DefaultStat;
             CurrentHitPoint = Stat.HitPoint;

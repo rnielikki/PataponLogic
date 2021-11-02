@@ -32,8 +32,7 @@ namespace Core.Character.Hazoron
         private void Awake()
         {
             Init();
-            var horseHead = transform.Find("Protector/Horse-Head");
-            CharacterSize = (horseHead.transform.position - transform.position).x + horseHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 0.01f;
+            InitDistanceFromHead(0);
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Kibapon;
         }

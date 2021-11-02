@@ -16,7 +16,7 @@ namespace Core.Character
         /// <summary>
         /// Gets proper distance of current attack type. returns Infinity if the attack type isn't rush and there is no enemy on sight.
         /// </summary>
-        public System.Func<float, float> GetDistanceFromData { get; private set; }
+        public System.Func<float, float> GeAttackPositioneFromData { get; private set; }
 
         /// <summary>
         /// Determines if it's attacking, defending or rushing.
@@ -52,9 +52,9 @@ namespace Core.Character
              _distanceCalculator.HasAttackTarget() && (Type == AttackMoveType.Attack && _data.IsAttackableRange());
         public bool IsInAttackDistance()
         {
-            return _distanceCalculator.IsInTargetRange(GetDistance(), MovingSpeed * Time.deltaTime);
+            return _distanceCalculator.IsInTargetRange(GetPosition(), MovingSpeed * Time.deltaTime);
         }
-        public float GetDistance() => GetDistanceFromData(_attackDistance);
+        public float GetPosition() => GeAttackPositioneFromData(_attackDistance);
         public AttackMoveModel SetAlwaysAnimate()
         {
             AlwaysAnimate = true;
@@ -66,13 +66,13 @@ namespace Core.Character
             switch (moveType)
             {
                 case AttackMoveType.Attack:
-                    GetDistanceFromData = _data.GetAttackPosition;
+                    GeAttackPositioneFromData = _data.GetAttackPosition;
                     break;
                 case AttackMoveType.Defend:
-                    GetDistanceFromData = _data.GetDefendingPosition;
+                    GeAttackPositioneFromData = _data.GetDefendingPosition;
                     break;
                 case AttackMoveType.Rush:
-                    GetDistanceFromData = (_) => _data.GetRushPosition();
+                    GeAttackPositioneFromData = (_) => _data.GetRushPosition();
                     AlwaysAnimate = true;
                     break;
             }

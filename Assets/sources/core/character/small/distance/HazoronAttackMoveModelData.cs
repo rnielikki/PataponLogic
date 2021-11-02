@@ -22,8 +22,8 @@ namespace Core.Character
         {
             if (customDistance < 0) customDistance = _hazoron.AttackDistance;
             var closest = _distanceCalculator.GetClosest();
-            if (closest.collider == null) return DefaultWorldPosition;
-            return Mathf.Max(_pataponTransform.position.x, closest.point.x + customDistance + _hazoron.CharacterSize);
+            if (closest == null) return DefaultWorldPosition;
+            return Mathf.Max(_pataponTransform.position.x, closest.Value + customDistance + _hazoron.CharacterSize);
         }
 
         public float GetDefendingPosition(float customDistance = -1)
@@ -34,8 +34,8 @@ namespace Core.Character
         public float GetRushPosition()
         {
             var closest = _distanceCalculator.GetClosest();
-            if (closest.collider == null) return MaxRushAttackPosition;
-            return Mathf.Max(closest.point.x + _hazoron.CharacterSize, MaxRushAttackPosition);
+            if (closest == null) return MaxRushAttackPosition;
+            return Mathf.Max(closest.Value + _hazoron.CharacterSize, MaxRushAttackPosition);
         }
 
         public bool IsAttackableRange() => GetAttackPosition() >= MaxRushAttackPosition;

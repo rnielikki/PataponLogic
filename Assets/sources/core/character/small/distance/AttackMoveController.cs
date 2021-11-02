@@ -75,7 +75,7 @@ namespace Core.Character
         public bool IsInAttackDistance()
         {
             if (_currentModel == null) return false;
-            return _distanceCalculator.HasAttackTarget() && _distanceCalculator.IsInTargetRange(_currentModel.GetDistance(), _movingSpeed * Time.deltaTime);
+            return _distanceCalculator.HasAttackTarget() && _distanceCalculator.IsInTargetRange(_currentModel.GetPosition(), _movingSpeed * Time.deltaTime);
         }
 
         private void AnimateAttack()
@@ -83,8 +83,10 @@ namespace Core.Character
             StartCoroutine(DoAnimatingCoroutine());
             System.Collections.IEnumerator DoAnimatingCoroutine()
             {
+                _attacking = true;
                 yield return _animator.AnimateAttack(_currentModel.AnimationType, _attackSeconds, _currentModel.AttackSpeedMultiplier);
                 _attacking = false;
+                _currentStatusFlag = 0;
             }
         }
         private void Update()
@@ -96,9 +98,11 @@ namespace Core.Character
             }
             else if (_currentModel.AlwaysAnimate)
             {
-                transform.position = Vector2.MoveTowards(transform.position, _currentModel.GetDistance() * Vector2.right, _currentModel.MovingSpeed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, _distanceCalculator.GetSafeForwardPosition(_currentModel.GetPosition()) * Vector2.right, _currentModel.MovingSpeed * Time.deltaTime);
                 return;
             }
+            else if (_attacking) return;
+
             bool isInDistance = _currentModel.IsInAttackDistance();
             bool hasTarget = _currentModel.HasTarget();
 
@@ -112,16 +116,13 @@ namespace Core.Character
                         if (_distanceCalculator.IsInTargetRange(_data.DefaultWorldPosition, _movingSpeed * Time.deltaTime))
                         {
                             _animator.Animate("Idle");
-                            _moving = false;
                         }
                     }
                     else
                     {
                         _moving = true;
-                        _animator.Animate("walk");
-                        StopAllCoroutines();
+                        _animator.Animate("party");
                     }
-                    _attacking = false;
                 }
                 if (_moving)
                 {
@@ -134,10 +135,9 @@ namespace Core.Character
                 {
                     _currentStatusFlag = 2;
                     _moving = true;
-                    _attacking = false;
                     _animator.Animate("walk");
                 }
-                transform.position = Vector2.MoveTowards(transform.position, _currentModel.GetDistance() * Vector2.right, _movingSpeed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(transform.position, _distanceCalculator.GetSafeForwardPosition(_currentModel.GetPosition()) * Vector2.right, _movingSpeed * Time.deltaTime);
             }
             else if (!_attacking && _currentStatusFlag != 3) //3. Finally, attacking.
             {
@@ -146,7 +146,6 @@ namespace Core.Character
                 {
                     AnimateAttack();
                 }
-                _attacking = true;
                 _moving = false;
             }
         }

@@ -63,10 +63,10 @@ namespace Core.Character.Patapon
         {
             float x = _pataponsManagerTransform.position.x + positionOffset;
             var hit = DistanceCalculator.GetClosest();
-            if (hit.collider != null)
+            if (hit != null)
             {
                 x = Mathf.Min(
-                    hit.point.x,
+                    hit.Value,
                     x
                 );
             }
