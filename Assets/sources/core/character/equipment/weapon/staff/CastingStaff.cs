@@ -14,6 +14,7 @@ namespace Core.Character.Equipment.Weapon
             Init();
             //Replace 0 to Data.Index for future implementation
             var instance = Instantiate(GetWeaponInstance("Staffs/0"), transform);
+            instance.layer = gameObject.layer;
             _particles = instance.GetComponent<ParticleSystem>();
         }
         public override void NormalAttack()

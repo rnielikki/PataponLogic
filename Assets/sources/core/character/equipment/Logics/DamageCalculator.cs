@@ -13,7 +13,7 @@ namespace Core.Character.Equipment.Logic
         /// <param name="point">The point where the damage hit.</param>
         public static void DealDamage(ICharacter attacker, GameObject target, Vector2 point)
         {
-            var component = target.GetComponent<IAttackable>();
+            var component = target.GetComponentInParent<IAttackable>();
             if (component == null) return;
             var damage = attacker.GetCurrentDamage();
             component.CurrentHitPoint -= damage;

@@ -59,6 +59,8 @@ namespace Core.Character.Equipment.Weapon
         {
             var instance = Instantiate(targetObject, transform.root.parent);
             instance.transform.position = _targetTransform.position;
+            instance.layer = gameObject.layer;
+
             if (!fixedRotation) instance.transform.rotation = _targetTransform.rotation;
             var bulletScript = instance.GetComponent<WeaponBullet>();
             bulletScript.Holder = Holder;

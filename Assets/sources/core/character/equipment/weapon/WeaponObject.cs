@@ -35,9 +35,7 @@ namespace Core.Character.Equipment.Weapon
         /// <returns>The loaded game object from resource.</returns>
         protected GameObject GetWeaponInstance(string name = "WeaponInstance")
         {
-            var obj = Resources.Load("Characters/Equipments/PrefabBase/" + name) as GameObject;
-            obj.layer = gameObject.layer;
-            return obj;
+            return Resources.Load("Characters/Equipments/PrefabBase/" + name) as GameObject;
         }
     }
 }

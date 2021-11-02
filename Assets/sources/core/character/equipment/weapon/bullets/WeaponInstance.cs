@@ -31,6 +31,8 @@ namespace Core.Character.Equipment.Weapon
             transform.position = transformOriginal.position;
             transform.rotation = transformOriginal.rotation;
 
+            gameObject.layer = original.gameObject.layer;
+
             return this;
         }
 

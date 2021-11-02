@@ -1,4 +1,3 @@
-using Core.Character.Patapon;
 using UnityEngine;
 
 namespace Core.CameraController
