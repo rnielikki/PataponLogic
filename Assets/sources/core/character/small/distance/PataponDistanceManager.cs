@@ -66,7 +66,7 @@ namespace Core.Character.Patapon
             if (hit != null)
             {
                 x = Mathf.Min(
-                    hit.Value,
+                    hit.Value.x,
                     x
                 );
             }

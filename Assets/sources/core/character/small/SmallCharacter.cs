@@ -54,7 +54,7 @@ namespace Core.Character
         /// <summary>
         /// Attack distance WITHOUT head size. Zero for melee expected. Some range units will add the distance by Tailwind.
         /// </summary>
-        public virtual float AttackDistance { get; protected set; }
+        public virtual float AttackDistance { get; set; }
         /// <summary>
         /// Character size offest from center. Patapon head size, but if they have vehicle, it's depending on vehicle's head.
         /// </summary>
@@ -65,10 +65,6 @@ namespace Core.Character
 
         protected AttackMoveController _attackController { get; private set; }
         public IAttackMoveData AttackMoveData { get; protected set; }
-        /// <summary>
-        /// Represents "allowed range" for range unit, preventing moving too many times while attacking.
-        /// </summary>
-        protected float _rangeForAttack;
 
         public void Die()
         {
@@ -134,5 +130,12 @@ namespace Core.Character
         }
 
         public abstract int GetCurrentDamage();
+
+        public void OnAttackHit(Vector2 point) => _attackController.WasHitLastTime = true;
+        public void OnAttackMiss(Vector2 point)
+        {
+            _attackController.LastHit = point;
+            _attackController.WasHitLastTime = false;
+        }
     }
 }

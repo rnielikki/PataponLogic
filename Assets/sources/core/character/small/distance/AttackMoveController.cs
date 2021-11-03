@@ -7,6 +7,11 @@ namespace Core.Character
 {
     public class AttackMoveController : MonoBehaviour
     {
+        /// <summary>
+        /// <c>true</c> if it's hit in last time. if it doesn't, it may stop animating and move.
+        /// </summary>
+        public bool WasHitLastTime { get; set; }
+
         private float _movingSpeed;
         private float _attackSeconds;
         private CharacterAnimator _animator;
@@ -22,6 +27,7 @@ namespace Core.Character
         private IAttackMoveData _data;
 
         private DistanceCalculator _distanceCalculator;
+        public Vector2 LastHit { get; set; }
 
         void Awake()
         {
@@ -84,7 +90,11 @@ namespace Core.Character
             System.Collections.IEnumerator DoAnimatingCoroutine()
             {
                 _attacking = true;
-                yield return _animator.AnimateAttack(_currentModel.AnimationType, _attackSeconds, _currentModel.AttackSpeedMultiplier);
+                WasHitLastTime = true;
+                do
+                {
+                    yield return _animator.AnimateAttack(_currentModel.AnimationType, _attackSeconds, _currentModel.AttackSpeedMultiplier);
+                } while (WasHitLastTime);
                 _attacking = false;
                 _currentStatusFlag = 0;
             }

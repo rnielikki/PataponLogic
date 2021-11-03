@@ -34,9 +34,8 @@
         private void Awake()
         {
             Init();
-            var birdHead = transform.Find("Root/Protector/Bird-Head");
-            CharacterSize = (birdHead.transform.position - transform.position).x + birdHead.GetComponent<UnityEngine.CapsuleCollider2D>().size.x + 1;
-            AttackDistance = 0.1f;
+            AttackDistance = 0.5f;
+            CharacterSize = transform.Find("Root/Patapon-body/Face").GetComponent<UnityEngine.CircleCollider2D>().radius + AttackDistance;
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Toripon;
 

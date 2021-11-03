@@ -22,7 +22,7 @@ namespace Core.Character.Equipment.Weapon
         {
             if (_colliderCoroutineMap.TryGetValue(collision, out Coroutine coroutine))
             {
-                StopCoroutine(coroutine);
+                if (coroutine != null) StopCoroutine(coroutine);
                 _colliderCoroutineMap.Remove(collision);
             }
         }

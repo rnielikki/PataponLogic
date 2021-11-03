@@ -12,7 +12,7 @@ namespace Core.Character.Hazoron
                 Defence = 1,
                 DamageMin = 1,
                 DamageMax = 4,
-                AttackSeconds = 2,
+                AttackSeconds = 1,
                 MovementSpeed = 8,
                 Critical = 0.1f,
                 CriticalResistance = 0.1f,
@@ -30,10 +30,9 @@ namespace Core.Character.Hazoron
         }
         private void Awake()
         {
-            _rangeForAttack = 1.5f;
             Init();
             AttackType = Equipment.Weapon.AttackType.Stab;
-            InitDistanceFromHead(7.5f);
+            InitDistanceFromHead(8.5f);
         }
         private void Start()
         {

@@ -10,5 +10,7 @@
         /// </summary>
         public int GetCurrentDamage();
         public Equipment.Weapon.AttackType AttackType { get; }
+        public void OnAttackHit(UnityEngine.Vector2 point);
+        public void OnAttackMiss(UnityEngine.Vector2 point);
     }
 }

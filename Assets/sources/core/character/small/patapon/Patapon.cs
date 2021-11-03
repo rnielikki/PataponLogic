@@ -45,7 +45,7 @@ namespace Core.Character.Patapon
         protected void Init()
         {
             DistanceManager = GetComponent<PataponDistanceManager>();
-            DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this, _rangeForAttack);
+            DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
             Stat = DefaultStat;
             CurrentHitPoint = Stat.HitPoint;

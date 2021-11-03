@@ -30,5 +30,6 @@ namespace Core.Character.Patapon
         public const int RushAttackDistance = 15;
         public const int DodgeDistance = 15;
 
+        public const float MaxYToScan = 6;
     }
 }

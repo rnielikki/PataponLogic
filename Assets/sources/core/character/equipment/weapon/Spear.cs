@@ -23,7 +23,7 @@ namespace Core.Character.Equipment.Weapon
 
             spearForThrowing.GetComponent<WeaponInstance>()
                 .Initialize(this)
-                .Throw((attackCommandType == AttackCommandType.Defend) ? 0.5f : 0.75f);
+                .Throw((attackCommandType == AttackCommandType.Defend) ? 0.75f : 1);
         }
     }
 }

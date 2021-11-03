@@ -11,10 +11,15 @@ namespace Core.Character.Equipment.Logic
         /// <param name="attacker">Who deals the damage.</param>
         /// <param name="target">Who takes the damage.</param>
         /// <param name="point">The point where the damage hit.</param>
+        /// <returns><c>true</c> if found target to deal damage, otherwise <c>false</c>.</returns>
         public static void DealDamage(ICharacter attacker, GameObject target, Vector2 point)
         {
             var component = target.GetComponentInParent<IAttackable>();
-            if (component == null) return;
+            if (component == null)
+            {
+                attacker.OnAttackMiss(point);
+                return;
+            }
             var damage = attacker.GetCurrentDamage();
             component.CurrentHitPoint -= damage;
             _damageDisplay.DisplayDamage(damage, point);
@@ -24,6 +29,7 @@ namespace Core.Character.Equipment.Logic
                 //do destroy action.
                 component.Die();
             }
+            attacker.OnAttackHit(point);
         }
     }
 }
