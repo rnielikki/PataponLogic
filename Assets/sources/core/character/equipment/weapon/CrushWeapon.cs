@@ -8,7 +8,7 @@ namespace Core.Character.Equipment.Weapon
     public class CrushWeapon : MeleeWeapon
     {
         private readonly System.Collections.Generic.List<Collider2D> _colliders = new System.Collections.Generic.List<Collider2D>();
-        private void Awake()
+        private void Start()
         {
             Init();
         }

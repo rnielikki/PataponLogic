@@ -9,7 +9,7 @@ namespace Core.Character.Equipment.Weapon
     {
         private readonly System.Collections.Generic.Dictionary<Collider2D, Coroutine> _colliderCoroutineMap = new System.Collections.Generic.Dictionary<Collider2D, Coroutine>();
         private float _damageSeconds;
-        private void Awake()
+        private void Start()
         {
             Init();
             _damageSeconds = Holder.Stat.AttackSeconds / 4;

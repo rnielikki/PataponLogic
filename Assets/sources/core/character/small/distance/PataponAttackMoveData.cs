@@ -19,6 +19,8 @@ namespace Core.Character
 
         private float _min => _pataponGroupTransform.position.x - PataponEnvironment.PataponSight;
         private float _max => _pataponManagerTransform.position.x + PataponEnvironment.RushAttackDistance;
+        public bool WasHitLastTime { get; set; }
+        public Vector2 LastHit { get; set; }
 
         public PataponAttackMoveData(Patapon.Patapon patapon)
         {
@@ -35,7 +37,7 @@ namespace Core.Character
             if (customDistance < 0) customDistance = _patapon.AttackDistance;
             var closest = _distanceCalculator.GetClosest();
             if (closest == null) return DefaultWorldPosition;
-            customDistance *= (1 - Mathf.InverseLerp(0, PataponEnvironment.MaxYToScan, closest.Value.y));
+            customDistance *= (1 - Mathf.InverseLerp(2, PataponEnvironment.MaxYToScan, closest.Value.y));
             return Clamp(closest.Value.x - customDistance - _patapon.CharacterSize) - _groupOffset;
         }
 
@@ -45,7 +47,7 @@ namespace Core.Character
             var closest = _distanceCalculator.GetClosest();
             var front = _distanceManager.Front;
             if (closest == null) return Clamp(front - _groupOffset);
-            customDistance *= (1 - Mathf.InverseLerp(0, PataponEnvironment.MaxYToScan, closest.Value.y));
+            customDistance *= (1 - Mathf.InverseLerp(2, PataponEnvironment.MaxYToScan, closest.Value.y));
             return Clamp(Mathf.Min(front, closest.Value.x - customDistance - _patapon.CharacterSize)) - _groupOffset;
         }
 

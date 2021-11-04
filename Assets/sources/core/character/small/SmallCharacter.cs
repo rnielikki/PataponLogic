@@ -66,10 +66,16 @@ namespace Core.Character
         protected AttackMoveController _attackController { get; private set; }
         public IAttackMoveData AttackMoveData { get; protected set; }
 
-        public void Die()
+        public virtual void Die()
         {
-            Destroy(Weapon.gameObject);
-            Destroy(gameObject);
+            StopAttacking();
+            StartCoroutine(WaitUntilDie());
+            System.Collections.IEnumerator WaitUntilDie()
+            {
+                CharAnimator.Animate("die");
+                yield return new WaitForSeconds(1);
+                Destroy(gameObject);
+            }
         }
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 
@@ -131,11 +137,11 @@ namespace Core.Character
 
         public abstract int GetCurrentDamage();
 
-        public void OnAttackHit(Vector2 point) => _attackController.WasHitLastTime = true;
+        public void OnAttackHit(Vector2 point) => AttackMoveData.WasHitLastTime = true;
         public void OnAttackMiss(Vector2 point)
         {
-            _attackController.LastHit = point;
-            _attackController.WasHitLastTime = false;
+            AttackMoveData.LastHit = point;
+            AttackMoveData.WasHitLastTime = false;
         }
     }
 }

@@ -63,7 +63,8 @@ namespace Core.Character
                 p = ReturnInRange(raycast);
                 if (p == null) return null;
             }
-            return new Vector2(p.Value, raycast.transform.position.y);
+            var bounds = raycast.collider.bounds;
+            return new Vector2(bounds.center.x + bounds.size.x * -_direction.x / 2, bounds.center.y - bounds.size.y / 2);
 
             float? ReturnInRange(RaycastHit2D hit)
             {

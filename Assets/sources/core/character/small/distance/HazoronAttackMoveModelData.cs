@@ -14,6 +14,8 @@ namespace Core.Character
 
         private float _min => DefaultWorldPosition - PataponEnvironment.RushAttackDistance;
         private float _max => DefaultWorldPosition + PataponEnvironment.RushAttackDistance;
+        public bool WasHitLastTime { get; set; }
+        public Vector2 LastHit { get; set; }
 
         public HazoronAttackMoveData(Hazoron.Hazoron hazoron)
         {
@@ -27,7 +29,7 @@ namespace Core.Character
             if (customDistance < 0) customDistance = _hazoron.AttackDistance;
             var closest = _distanceCalculator.GetClosest();
             if (closest == null) return DefaultWorldPosition;
-            customDistance *= (1 - Mathf.InverseLerp(0, Patapon.PataponEnvironment.MaxYToScan, closest.Value.y));
+            customDistance *= (1 - Mathf.InverseLerp(2, PataponEnvironment.MaxYToScan, closest.Value.y));
             return Clamp(
                 Mathf.Max(_pataponTransform.position.x + _hazoron.CharacterSize, closest.Value.x + customDistance + _hazoron.CharacterSize)
                 );

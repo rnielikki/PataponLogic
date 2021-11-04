@@ -7,7 +7,7 @@ namespace Core.Character.Equipment.Weapon
         private GameObject _copiedStone;
         private Transform _stoneTransform;
         private ArmTrigger[] _armTriggers;
-        private void Awake()
+        private void Start()
         {
             _stoneTransform = transform.Find("Stone");
             Init();

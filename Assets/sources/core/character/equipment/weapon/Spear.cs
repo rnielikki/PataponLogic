@@ -9,7 +9,7 @@ namespace Core.Character.Equipment.Weapon
         /// </summary>
         private GameObject _copiedSpear;
         private Sprite _sprite;
-        private void Awake()
+        private void Start()
         {
             Init();
             _copiedSpear = GetWeaponInstance();

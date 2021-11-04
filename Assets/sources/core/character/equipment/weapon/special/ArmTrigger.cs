@@ -9,7 +9,7 @@ namespace Core.Character.Equipment.Weapon
     {
         private Collider2D _collider;
         private ICharacter _holder;
-        private void Awake()
+        private void Start()
         {
             _collider = GetComponent<Collider2D>();
             _holder = GetComponentInParent<ICharacter>();

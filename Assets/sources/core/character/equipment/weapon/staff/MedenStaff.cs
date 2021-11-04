@@ -8,7 +8,7 @@ namespace Core.Character.Equipment.Weapon
     /// </summary>
     public class MedenStaff : Staff
     {
-        private void Awake()
+        private void Start()
         {
             Init();
         }

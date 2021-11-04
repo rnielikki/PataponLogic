@@ -6,7 +6,7 @@ namespace Core.Character.Equipment.Weapon
     {
         private GameObject _bullet;
         private Transform _startTransform;
-        private void Awake()
+        private void Start()
         {
             Init();
             _bullet = GetWeaponInstance("Suko-Bullet");

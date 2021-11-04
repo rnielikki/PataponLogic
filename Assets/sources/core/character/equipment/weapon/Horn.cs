@@ -8,7 +8,7 @@ namespace Core.Character.Equipment.Weapon
         private ParticleSystem _attackParticles;
         private GameObject _feverAttackObject;
         private GameObject _chargeDefenceObject;
-        private void Awake()
+        private void Start()
         {
             Init();
             _targetTransform = transform.Find("Attack");

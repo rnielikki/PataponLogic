@@ -10,7 +10,6 @@ namespace Core.Character
         /// <summary>
         /// <c>true</c> if it's hit in last time. if it doesn't, it may stop animating and move.
         /// </summary>
-        public bool WasHitLastTime { get; set; }
 
         private float _movingSpeed;
         private float _attackSeconds;
@@ -27,7 +26,7 @@ namespace Core.Character
         private IAttackMoveData _data;
 
         private DistanceCalculator _distanceCalculator;
-        public Vector2 LastHit { get; set; }
+        private bool _movingRight;
 
         void Awake()
         {
@@ -65,6 +64,10 @@ namespace Core.Character
             {
                 _animator.Animate(_currentModel.AnimationType);
             }
+            else if (_data.WasHitLastTime)
+            {
+                AnimateAttack();
+            }
             else
             {
                 _animator.Animate("Idle");
@@ -86,15 +89,18 @@ namespace Core.Character
 
         private void AnimateAttack()
         {
+            _currentStatusFlag = 3;
+            if (_currentModel.AlwaysAnimate) return;
             StartCoroutine(DoAnimatingCoroutine());
             System.Collections.IEnumerator DoAnimatingCoroutine()
             {
+                _moving = false;
                 _attacking = true;
-                WasHitLastTime = true;
+                _data.WasHitLastTime = true;
                 do
                 {
                     yield return _animator.AnimateAttack(_currentModel.AnimationType, _attackSeconds, _currentModel.AttackSpeedMultiplier);
-                } while (WasHitLastTime);
+                } while (_data.WasHitLastTime);
                 _attacking = false;
                 _currentStatusFlag = 0;
             }
@@ -131,12 +137,12 @@ namespace Core.Character
                     else
                     {
                         _moving = true;
-                        _animator.Animate("party");
+                        _animator.Animate("walk");
                     }
                 }
                 if (_moving)
                 {
-                    transform.position = Vector2.MoveTowards(transform.position, _data.DefaultWorldPosition * Vector2.right, _movingSpeed * Time.deltaTime);
+                    MoveTowards(_data.DefaultWorldPosition);
                 }
             }
             else if (!isInDistance) //2. Found target.
@@ -147,17 +153,22 @@ namespace Core.Character
                     _moving = true;
                     _animator.Animate("walk");
                 }
-                transform.position = Vector2.MoveTowards(transform.position, _distanceCalculator.GetSafeForwardPosition(_currentModel.GetPosition()) * Vector2.right, _movingSpeed * Time.deltaTime);
+                MoveTowards(_distanceCalculator.GetSafeForwardPosition(_currentModel.GetPosition()));
             }
             else if (!_attacking && _currentStatusFlag != 3) //3. Finally, attacking.
             {
-                _currentStatusFlag = 3;
-                if (!_currentModel.AlwaysAnimate)
-                {
-                    AnimateAttack();
-                }
-                _moving = false;
+                AnimateAttack();
             }
+        }
+        //Don't waste time for moving character, just attack!
+        private void MoveTowards(float pos)
+        {
+            var savedPosition = transform.position;
+            transform.position = Vector2.MoveTowards(transform.position, pos * Vector2.right, _movingSpeed * Time.deltaTime);
+            var movingRight = transform.position.x < savedPosition.x;
+
+            if (_movingRight != movingRight) AnimateAttack();
+            _movingRight = movingRight;
         }
     }
 }

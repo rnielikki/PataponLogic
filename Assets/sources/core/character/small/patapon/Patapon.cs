@@ -37,17 +37,24 @@ namespace Core.Character.Patapon
         /// Sets Patapon distance.
         /// </summary>
         public PataponDistanceManager DistanceManager { get; private set; }
+        protected PataponGroup _group { get; private set; }
 
 
+        public override void Die()
+        {
+            _group.RemovePon(this);
+            base.Die();
+        }
         /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
         protected void Init()
         {
+            Stat = DefaultStat;
+            _group = GetComponentInParent<PataponGroup>();
             DistanceManager = GetComponent<PataponDistanceManager>();
             DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
-            Stat = DefaultStat;
             CurrentHitPoint = Stat.HitPoint;
             Weapon = GetComponentInChildren<WeaponObject>();
         }
@@ -113,7 +120,19 @@ namespace Core.Character.Patapon
         }
         public void DoMisisonCompleteGesture()
         {
-            CharAnimator.AnimateWithoutNormalizing("party");
+            StartCoroutine(PartyOnComplete());
+            System.Collections.IEnumerator PartyOnComplete()
+            {
+                Walk();
+                yield return new WaitForSeconds(0.25f * IndexInGroup);
+                for (int i = 0; i < 3; i++)
+                {
+                    CharAnimator.AnimateFrom("party");
+                    yield return new WaitForSeconds(4);
+                    CharAnimator.AnimateFrom("walk");
+                    yield return new WaitForSeconds(2);
+                }
+            }
         }
 
         /// <summary>

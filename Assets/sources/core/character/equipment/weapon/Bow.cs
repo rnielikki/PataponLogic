@@ -12,7 +12,7 @@ namespace Core.Character.Equipment.Weapon
         /// copied arrow for throwing.
         /// </summary>
         private GameObject _copiedArrow;
-        private void Awake()
+        private void Start()
         {
             _arrowTransform = transform.Find("Arrow");
             Init();
@@ -28,7 +28,7 @@ namespace Core.Character.Equipment.Weapon
 
             arrowForThrowing.GetComponent<WeaponInstance>()
                 .Initialize(this, _arrowTransform)
-                .Throw((attackCommandType == AttackCommandType.Defend) ? 1 : 1.5f);
+                .Throw((attackCommandType == AttackCommandType.Defend) ? 1 : 2);
         }
     }
 }

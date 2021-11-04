@@ -9,7 +9,7 @@ namespace Core.Character.Equipment.Weapon
     public class CastingStaff : Staff
     {
         private ParticleSystem _particles;
-        private void Awake()
+        private void Start()
         {
             Init();
             //Replace 0 to Data.Index for future implementation

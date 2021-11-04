@@ -7,7 +7,7 @@ namespace Core.Character.Equipment.Weapon
     /// </summary>
     public class SlashWeapon : MeleeWeapon
     {
-        private void Awake()
+        private void Start()
         {
             Init();
         }

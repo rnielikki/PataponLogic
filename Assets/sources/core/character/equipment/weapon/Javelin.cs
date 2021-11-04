@@ -8,7 +8,7 @@ namespace Core.Character.Equipment.Weapon
         /// copied spear for throwing.
         /// </summary>
         private GameObject _copiedJavelin;
-        private void Awake()
+        private void Start()
         {
             Init();
             _copiedJavelin = GetWeaponInstance();

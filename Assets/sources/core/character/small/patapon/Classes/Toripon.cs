@@ -94,5 +94,10 @@
             CharAnimator.AnimateFrom("tori-fly-down");
             _isFever = false;
         }
+        public override void Die()
+        {
+            CharAnimator.AnimateFrom("tori-fly-stop");
+            base.Die();
+        }
     }
 }

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace Core.Character
@@ -40,10 +41,6 @@ namespace Core.Character
             {
                 _lateAnimating = false;
             }
-        }
-        public void AnimateWithoutNormalizing(string animationType)
-        {
-            _animator.Play(animationType);
         }
         /// <summary>
         /// Animate with smooth transition.

@@ -14,7 +14,13 @@ namespace Core.Map
         [SerializeField]
         private AudioClip _missionSuccessSound;
         [SerializeField]
-        private AudioClip _missionFailedSound;
+        private AudioClip _missionSuccessMusic;
+        [SerializeField]
+        private AudioClip _missionFailedMusic;
+
+        [SerializeField]
+        private AudioClip[] _ponsSpeakingWhenMissionComplete;
+
         [SerializeField]
         [Tooltip("Mission complete condition, by default. Only true Misison Condition will call Mission Complete. Can be changed later in code.")]
         private bool _filledMissionCondition = true;
@@ -52,22 +58,37 @@ namespace Core.Map
 
         public void FailMission()
         {
+            Camera.main.GetComponent<CameraController.CameraMover>().Moving = false;
             IsMissionEnd = true;
             OnMissionEnd.Invoke(false);
             AttachToScreen("MissionFailed");
-            _soundSource.PlayOneShot(_missionFailedSound);
+            _soundSource.PlayOneShot(_missionFailedMusic);
         }
         private void CompleteMission()
         {
             IsMissionEnd = true;
             OnMissionEnd.Invoke(true);
+
             if (_animator != null)
             {
                 _animator.enabled = true;
                 _animator.Play("MissionComplete");
             }
-            AttachToScreen("MissionComplete");
-            _soundSource.PlayOneShot(_missionSuccessSound);
+
+            StartCoroutine(DoMissionCompleteAction());
+            System.Collections.IEnumerator DoMissionCompleteAction()
+            {
+                _soundSource.PlayOneShot(_missionSuccessSound);
+                yield return new WaitForSeconds(2);
+                foreach (var sound in _ponsSpeakingWhenMissionComplete)
+                {
+                    _soundSource.PlayOneShot(sound);
+                    yield return new WaitForSeconds(2);
+                }
+                AttachToScreen("MissionComplete");
+                _soundSource.PlayOneShot(_missionSuccessMusic);
+                Camera.main.GetComponent<CameraController.CameraMover>().Moving = false;
+            }
         }
         private void AttachToScreen(string prefabName) =>
             Instantiate(
