@@ -11,8 +11,8 @@ namespace Core.Character.Hazoron
             {
                 HitPoint = 100,
                 Defence = 1,
-                DamageMin = 1,
-                DamageMax = 1,
+                DamageMin = 10,
+                DamageMax = 20,
                 AttackSeconds = 2,
                 MovementSpeed = 8,
                 Critical = 0.1f,

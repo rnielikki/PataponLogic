@@ -11,31 +11,32 @@ namespace Core.Character.Patapon
         const string _pataponGeneralPrefabPath = _pataponPrefabPath + "Generals/";
         private static int _pataponGroupIndex;
         private static int _sortingLayerIndex;
+
         /// <summary>
         /// Generates Patapons automatically..
         /// </summary>
         /// <param name="patapons">Array of Patapon types to create.</param>
-        /// <param name="target">Transform of target to attach, expected to <see cref="PataponManager"/> game object's transform.</param>
-        internal static void Generate(ClassType[] patapons, Transform target)
+        /// <param name="manager"><see cref="PataponManager"/> to reference. Also its transform is used to set as groups' parent.</param>
+        internal static void Generate(ClassType[] patapons, PataponsManager manager)
         {
             _pataponGroupIndex = 0;
             _sortingLayerIndex = 0;
             foreach (var patapon in patapons)
             {
-                AddPataponGroupInstance(patapon, target);
+                AddPataponGroupInstance(patapon, manager);
             }
         }
-        private static void AddPataponGroupInstance(ClassType classType, Transform target)
+        private static void AddPataponGroupInstance(ClassType classType, PataponsManager manager)
         {
             var group = new GameObject("PataponGroup");
             var groupScript = group.AddComponent<PataponGroup>();
             groupScript.ClassType = classType;
 
             AddPataponsInstance(classType.ToString(), group.transform);
-            groupScript.Init();
+            groupScript.Init(manager);
             groupScript.Index = _pataponGroupIndex;
 
-            group.transform.parent = target;
+            group.transform.parent = manager.transform;
             group.transform.localPosition = Vector2.zero + _pataponGroupIndex * PataponEnvironment.GroupDistance * Vector2.left;
             _pataponGroupIndex++;
         }

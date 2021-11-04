@@ -56,6 +56,20 @@ namespace Core.Map
             }
         }
 
+        /// <summary>
+        /// "Mission failed" After certain time.
+        /// </summary>
+        /// <param name="seconds"></param>
+        public void WaitAndFailMission(float seconds)
+        {
+            IsMissionEnd = true;
+            StartCoroutine(WaitAndFail());
+            System.Collections.IEnumerator WaitAndFail()
+            {
+                yield return new WaitForSeconds(seconds);
+                FailMission();
+            }
+        }
         public void FailMission()
         {
             Camera.main.GetComponent<CameraController.CameraMover>().Moving = false;

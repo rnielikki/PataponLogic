@@ -32,13 +32,14 @@ namespace Core.Character.Patapon
         private float _lastPerfectionPercent;
 
         public float AttackDistanceWithOffset => AttackDistance + CharacterSize;
+        public bool IsGeneral { get; private set; }
+        private PataponGeneral _general;
 
         /// <summary>
         /// Sets Patapon distance.
         /// </summary>
         public PataponDistanceManager DistanceManager { get; private set; }
         protected PataponGroup _group { get; private set; }
-
 
         public override void Die()
         {
@@ -57,6 +58,9 @@ namespace Core.Character.Patapon
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
             CurrentHitPoint = Stat.HitPoint;
             Weapon = GetComponentInChildren<WeaponObject>();
+
+            _general = GetComponent<PataponGeneral>();
+            if (_general != null) IsGeneral = true;
         }
 
 
@@ -80,7 +84,7 @@ namespace Core.Character.Patapon
         /// <summary>
         /// Recieves command song and starts corresponding moving.
         /// </summary>
-        /// <param name="song">The command song, which determines what the patapon will act.</param>
+        /// <param name="model">The command model, expected to be recieved from <see cref="PataponsManager"/>.</param>
         public virtual void Act(RhythmCommandModel model)
         {
             var song = model.Song;
@@ -208,9 +212,14 @@ namespace Core.Character.Patapon
             return base.SetAttackMoveController();
         }
 
-        public override int GetCurrentDamage()
+        public override int GetAttackDamage()
         {
             return Mathf.RoundToInt(Mathf.Lerp(Stat.DamageMin, Stat.DamageMax, _lastPerfectionPercent));
+        }
+        public override void TakeDamage(int damage)
+        {
+            base.TakeDamage(damage);
+            _group.UpdateHitPoint(this);
         }
     }
 }

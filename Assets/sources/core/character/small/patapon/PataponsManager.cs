@@ -1,5 +1,7 @@
 ﻿using Core.Rhythm;
 using Core.Rhythm.Command;
+using GameSound;
+using System.Linq;
 using UnityEngine;
 
 namespace Core.Character.Patapon
@@ -13,7 +15,6 @@ namespace Core.Character.Patapon
         private PataponGroup _firstGroup;
         //--- this should be general but temp value for position and patapata test
         private bool _isAlreadyIdle;
-        private AudioSource _pataponSpeakSource;
 
         /// <summary>
         /// If this is set to true, Patapons go forward, also whole Patapon position does. For PATAPATA song.
@@ -29,13 +30,17 @@ namespace Core.Character.Patapon
         [SerializeField]
         private ClassType[] _pataponTypes;
 
+        //------------------------------------- sounds of Patapon
         [SerializeField]
         private AudioClip[] _pataponSpeakingOnMiss;
         int _onMissSpeakingIndex;
 
+        [SerializeField]
+        private AudioClip _onPataponDeadSound;
+
         private void Awake()
         {
-            PataponGroupGenerator.Generate(_pataponTypes, transform);
+            PataponGroupGenerator.Generate(_pataponTypes, this);
 
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
             var groups = GetComponentsInChildren<PataponGroup>();
@@ -46,7 +51,6 @@ namespace Core.Character.Patapon
 
             TurnCounter.OnTurn.AddListener(() => IsMovingForward = false);
             _missionEndPosition = GameObject.FindGameObjectWithTag("Finish").transform.position.x;
-            _pataponSpeakSource = GetComponent<AudioSource>();
         }
         /// <summary>
         /// Attach to <see cref="RhythmInput.OnDrumHit"/>.
@@ -56,11 +60,7 @@ namespace Core.Character.Patapon
         {
             if (model.Status == DrumHitStatus.Miss)
             {
-                if (!_pataponSpeakSource.isPlaying)
-                {
-                    _pataponSpeakSource.clip = _pataponSpeakingOnMiss[_onMissSpeakingIndex];
-                    _pataponSpeakSource.Play();
-                }
+                SpeakManager.Current.Play(_pataponSpeakingOnMiss[_onMissSpeakingIndex]);
                 _onMissSpeakingIndex = (_onMissSpeakingIndex + 1) % _pataponSpeakingOnMiss.Length;
                 return;
             }
@@ -110,6 +110,11 @@ namespace Core.Character.Patapon
         public void RemovePon(Patapon patapon)
         {
             _patapons.Remove(patapon);
+            SpeakManager.Current.Play(_onPataponDeadSound);
+            if (!_patapons.Any(p => p.IsGeneral))
+            {
+                Map.MissionPoint.Current.WaitAndFailMission(4);
+            }
         }
         public void DoMissionEndAction(bool complete)
         {

@@ -8,7 +8,7 @@
         /// <summary>
         /// Get current damage that can inflict - for Patapon, "how perfect the drums are" affects.
         /// </summary>
-        public int GetCurrentDamage();
+        public int GetAttackDamage();
         public Equipment.Weapon.AttackType AttackType { get; }
         public void OnAttackHit(UnityEngine.Vector2 point);
         public void OnAttackMiss(UnityEngine.Vector2 point);

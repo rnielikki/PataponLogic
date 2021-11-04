@@ -134,11 +134,12 @@ namespace Core.Character
                             _animator.Animate("Idle");
                         }
                     }
-                    else
+                    else if (!_distanceCalculator.IsInTargetRange(_data.DefaultWorldPosition, _movingSpeed * Time.deltaTime))
                     {
                         _moving = true;
                         _animator.Animate("walk");
                     }
+                    else _animator.Animate("Idle");
                 }
                 if (_moving)
                 {

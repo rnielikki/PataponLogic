@@ -40,7 +40,7 @@ namespace Core.Character.Hazoron
             CharacterSize = transform.Find("Patapon-body/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
-        public override int GetCurrentDamage()
+        public override int GetAttackDamage()
         {
             return Random.Range(Stat.DamageMin, Stat.DamageMax);
         }

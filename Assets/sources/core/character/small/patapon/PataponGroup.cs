@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core.Character.Patapon
 {
@@ -9,24 +8,29 @@ namespace Core.Character.Patapon
     public class PataponGroup : MonoBehaviour
     {
         public PataponGeneral General { get; private set; }
-        public System.Collections.Generic.List<Patapon> Patapons { get; private set; }
+
+        private System.Collections.Generic.List<Patapon> _patapons;
         public int Index { get; internal set; }
 
+        private Display.PataponsHitPointDisplay _pataponsHitPointDisplay;
         public ClassType ClassType { get; internal set; }
         private float _marchiDistance;
         private LayerMask _layerMask;
 
         private PataponsManager _manager;
 
-        internal void Init()
+        internal void Init(PataponsManager manager)
         {
-            if (Patapons != null) return;
+            if (_patapons != null) return;
             General = GetComponentInChildren<PataponGeneral>();
-            Patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
-            _marchiDistance = Patapons[0].AttackDistanceWithOffset;
+            _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
+            _marchiDistance = _patapons[0].AttackDistanceWithOffset;
             _layerMask = LayerMask.GetMask("structures", "enemies");
 
-            _manager = GetComponentInParent<PataponsManager>();
+            _manager = manager;
+
+
+            _pataponsHitPointDisplay = Display.PataponsHitPointDisplay.Add(this);
         }
         public bool CanGoForward()
         {
@@ -36,10 +40,15 @@ namespace Core.Character.Patapon
 
         internal void RemovePon(Patapon patapon)
         {
-            if (Patapons.Remove(patapon))
+            if (_patapons.Remove(patapon))
             {
                 _manager.RemovePon(patapon);
+                if (!patapon.IsGeneral) _pataponsHitPointDisplay.Refresh(_patapons);
             }
+        }
+        public void UpdateHitPoint(Patapon patapon)
+        {
+            _pataponsHitPointDisplay.UpdateHitPoint(patapon);
         }
     }
 }

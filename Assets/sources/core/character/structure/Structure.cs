@@ -32,5 +32,10 @@ namespace Core.Character
         {
             Destroy(gameObject);
         }
+        public void TakeDamage(int damage)
+        {
+            //Can attach health status or change sprite etc.
+            CurrentHitPoint -= damage;
+        }
     }
 }

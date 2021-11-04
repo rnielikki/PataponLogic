@@ -20,8 +20,8 @@ namespace Core.Character.Equipment.Logic
                 attacker.OnAttackMiss(point);
                 return;
             }
-            var damage = attacker.GetCurrentDamage();
-            component.CurrentHitPoint -= damage;
+            var damage = attacker.GetAttackDamage();
+            component.TakeDamage(damage);
             _damageDisplay.DisplayDamage(damage, point);
             if (component.CurrentHitPoint <= 0)
             {

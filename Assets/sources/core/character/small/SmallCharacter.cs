@@ -37,7 +37,7 @@ namespace Core.Character
         /// <remarks>It shouldn't be bigger than <see cref="Stat.HitPoint"/> or smaller than 0. If this value is 0, it causes death.</remarks>
         /// </summary>
 
-        public int CurrentHitPoint { get; set; }
+        public int CurrentHitPoint { get; protected set; }
 
         /// <summary>
         /// Class (e.g. Yaripon, Tatepon, Yumipon...) of the Patapon.
@@ -135,7 +135,7 @@ namespace Core.Character
                 );
         }
 
-        public abstract int GetCurrentDamage();
+        public abstract int GetAttackDamage();
 
         public void OnAttackHit(Vector2 point) => AttackMoveData.WasHitLastTime = true;
         public void OnAttackMiss(Vector2 point)
@@ -143,5 +143,7 @@ namespace Core.Character
             AttackMoveData.LastHit = point;
             AttackMoveData.WasHitLastTime = false;
         }
+
+        public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
     }
 }
