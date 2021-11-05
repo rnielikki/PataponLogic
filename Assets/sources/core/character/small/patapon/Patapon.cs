@@ -33,13 +33,15 @@ namespace Core.Character.Patapon
 
         public float AttackDistanceWithOffset => AttackDistance + CharacterSize;
         public bool IsGeneral { get; private set; }
-        private PataponGeneral _general;
 
+        internal PataponRendererInfo RendererInfo { get; private set; }
         /// <summary>
         /// Sets Patapon distance.
         /// </summary>
         public PataponDistanceManager DistanceManager { get; private set; }
         protected PataponGroup _group { get; private set; }
+
+        protected string _bodyName = "Patapon-body";
 
         public override void Die()
         {
@@ -58,20 +60,21 @@ namespace Core.Character.Patapon
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
             CurrentHitPoint = Stat.HitPoint;
             Weapon = GetComponentInChildren<WeaponObject>();
+            InitDistanceFromHead();
 
-            _general = GetComponent<PataponGeneral>();
-            if (_general != null) IsGeneral = true;
+            RendererInfo = new PataponRendererInfo(this, _bodyName);
+
+            var general = GetComponent<PataponGeneral>();
+            if (general != null) IsGeneral = true;
         }
-
 
         /// <summary>
         /// Sets distance from calculated Patapon head. Don't use this if the Patapon uses any vehicle.
         /// </summary>
         /// <param name="attackDistance">Attack distance, without considering head size.</param>
-        protected void InitDistanceFromHead(float attackDistance)
+        protected void InitDistanceFromHead()
         {
-            AttackDistance = attackDistance;
-            CharacterSize = transform.Find("Patapon-body/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
+            CharacterSize = transform.Find(_bodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
         public void MoveOnDrum(string drumName)

@@ -62,6 +62,7 @@ namespace Core.Map
         /// <param name="seconds"></param>
         public void WaitAndFailMission(float seconds)
         {
+            if (IsMissionEnd) return;
             IsMissionEnd = true;
             StartCoroutine(WaitAndFail());
             System.Collections.IEnumerator WaitAndFail()
@@ -72,6 +73,7 @@ namespace Core.Map
         }
         public void FailMission()
         {
+            if (IsMissionEnd) return;
             Camera.main.GetComponent<CameraController.CameraMover>().Moving = false;
             IsMissionEnd = true;
             OnMissionEnd.Invoke(false);
@@ -80,6 +82,7 @@ namespace Core.Map
         }
         private void CompleteMission()
         {
+            if (IsMissionEnd) return;
             IsMissionEnd = true;
             OnMissionEnd.Invoke(true);
 

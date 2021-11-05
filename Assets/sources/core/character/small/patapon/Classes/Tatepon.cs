@@ -31,7 +31,6 @@
             Init();
             Class = ClassType.Tatepon;
             AttackType = Equipment.Weapon.AttackType.Slash;
-            InitDistanceFromHead(0);
         }
         void Start()
         {

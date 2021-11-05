@@ -1,6 +1,4 @@
-﻿using Core.Rhythm.Command;
-
-namespace Core.Character.Hazoron
+﻿namespace Core.Character.Hazoron
 {
     public class Yariron : Hazoron
     {
@@ -10,9 +8,9 @@ namespace Core.Character.Hazoron
             {
                 HitPoint = 200,
                 Defence = 1,
-                DamageMin = 1,
-                DamageMax = 4,
-                AttackSeconds = 1,
+                DamageMin = 4,
+                DamageMax = 10,
+                AttackSeconds = 2,
                 MovementSpeed = 8,
                 Critical = 0.1f,
                 CriticalResistance = 0.1f,
@@ -20,11 +18,11 @@ namespace Core.Character.Hazoron
                 KnockbackResistance = 0.1f,
                 Stagger = 0.1f,
                 StaggerResistance = 0.1f,
-                FireRate = 0.1f,
+                FireRate = 0.0f,
                 FireResistance = 0.1f,
-                IceRate = 0.1f,
+                IceRate = 0.0f,
                 IceResistance = 0.1f,
-                SleepRate = 0.1f,
+                SleepRate = 0.0f,
                 SleepResistance = 0.1f
             };
         }

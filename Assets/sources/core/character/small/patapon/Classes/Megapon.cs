@@ -28,8 +28,8 @@
         }
         private void Awake()
         {
+            AttackDistance = 10;
             Init();
-            InitDistanceFromHead(10);
             AttackType = Equipment.Weapon.AttackType.Sound;
             Class = ClassType.Megapon;
         }

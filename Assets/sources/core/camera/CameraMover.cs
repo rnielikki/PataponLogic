@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Core.CameraController
@@ -8,7 +9,6 @@ namespace Core.CameraController
         private Vector3 _pos;
         public bool Moving { get; set; } = true;
 
-        // Start is called before the first frame update
         void Awake()
         {
             _pos = transform.position;

@@ -30,7 +30,6 @@
         private void Awake()
         {
             Init();
-            InitDistanceFromHead(0);
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Kibapon;
         }

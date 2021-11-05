@@ -29,9 +29,9 @@
 
         private void Awake()
         {
+            AttackDistance = 8.5f;
             Init();
             AttackType = Equipment.Weapon.AttackType.Stab;
-            InitDistanceFromHead(8.5f);
             Class = ClassType.Yaripon;
         }
         private void Start()

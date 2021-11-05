@@ -29,7 +29,6 @@ namespace Core.Character.Patapon
 
             _manager = manager;
 
-
             _pataponsHitPointDisplay = Display.PataponsHitPointDisplay.Add(this);
         }
         public bool CanGoForward()
@@ -43,7 +42,7 @@ namespace Core.Character.Patapon
             if (_patapons.Remove(patapon))
             {
                 _manager.RemovePon(patapon);
-                if (!patapon.IsGeneral) _pataponsHitPointDisplay.Refresh(_patapons);
+                _pataponsHitPointDisplay.OnDead(patapon, _patapons);
             }
         }
         public void UpdateHitPoint(Patapon patapon)

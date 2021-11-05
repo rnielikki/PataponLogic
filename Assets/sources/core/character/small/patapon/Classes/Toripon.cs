@@ -33,12 +33,11 @@
 
         private void Awake()
         {
-            Init();
+            _bodyName = "Root/Patapon-body";
             AttackDistance = 0.5f;
-            CharacterSize = transform.Find("Root/Patapon-body/Face").GetComponent<UnityEngine.CircleCollider2D>().radius + AttackDistance;
+            Init();
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Toripon;
-
         }
         private void Start()
         {

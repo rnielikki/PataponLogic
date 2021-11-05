@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Core.Character.Patapon.Display
@@ -13,26 +13,43 @@ namespace Core.Character.Patapon.Display
         private static GameObject _displayTemplate;
         private static Transform _displayParent;
 
-        private Image _image;
-        private RectTransform _generalCurrent; //status bar of general
-        private RectTransform _armyMinCurrent; //status bar of army min value
+        private RawImage _image;
+        private RectTransform _generalCurrentBar; //status bar of general
+        private RectTransform _armyMinCurrentBar; //status bar of army min value
 
         private Image _generalImage;
         private Image _armyMinImage;
 
-        private static Color _colorFull = new Color(0.23f, 0.97f, 0);
-        private static Color _colorZero = new Color(0.98f, 0.19f, 0.19f);
+        [SerializeField]
+        private Color _bgOnGeneral;
+        [SerializeField]
+        private Color _bgOnNoGeneral;
+        [SerializeField]
+        private Gradient _colorOverHealth;
 
-        private float _currentMin = 1;
+        private Patapon _currentFocus;
+
+        private float _currentMinArmyHealth = 1;
+        private PataponStatusRenderer _renderer;
+
+        private bool _isGeneralAlive = true;
+        private Image _bg;
 
         void Awake()
         {
-            _image = transform.Find("Image").GetComponent<Image>();
-            _generalCurrent = transform.Find("General/GeneralCurrent").GetComponent<RectTransform>();
-            _armyMinCurrent = transform.Find("ArmyMin/ArmyMinCurrent").GetComponent<RectTransform>();
+            _bg = transform.Find("Image").GetComponent<Image>();
+            _bg.color = _bgOnGeneral;
 
-            _generalImage = _generalCurrent.GetComponent<Image>();
-            _armyMinImage = _armyMinCurrent.GetComponent<Image>();
+            _image = GetComponentInChildren<RawImage>();
+            _generalCurrentBar = transform.Find("General/GeneralCurrent").GetComponent<RectTransform>();
+            _armyMinCurrentBar = transform.Find("ArmyMin/ArmyMinCurrent").GetComponent<RectTransform>();
+
+            var colorFull = _colorOverHealth.Evaluate(1);
+            _generalCurrentBar.GetComponent<Image>().color = colorFull;
+            _armyMinCurrentBar.GetComponent<Image>().color = colorFull;
+
+            _generalImage = _generalCurrentBar.GetComponent<Image>();
+            _armyMinImage = _armyMinCurrentBar.GetComponent<Image>();
         }
         /// <summary>
         /// Adds hitpoint status to the display for one group.
@@ -46,7 +63,10 @@ namespace Core.Character.Patapon.Display
                 _displayParent = GameObject.FindGameObjectWithTag("Screen").transform.Find("PataponsStatus");
             }
             var instance = Instantiate(_displayTemplate, _displayParent).GetComponent<PataponsHitPointDisplay>();
-            instance.UpdateGeneralStatus(group.General.GetComponent<Patapon>());
+
+            instance._currentFocus = group.General.GetComponent<Patapon>();
+            instance.AddCamera(group);
+
             return instance;
         }
         public void UpdateHitPoint(Patapon patapon)
@@ -57,57 +77,108 @@ namespace Core.Character.Patapon.Display
             }
             else
             {
-                UpdateStatus(patapon);
+                UpdateArmyStatus(patapon);
             }
         }
         private void UpdateGeneralStatus(Patapon patapon)
         {
-            UpdateBar(GetCurrentHitPointPercent(patapon), true);
+            UpdateImageAndBar(patapon, true);
         }
-        private void UpdateStatus(Patapon patapon)
+        private void UpdateArmyStatus(Patapon patapon)
         {
             var current = GetCurrentHitPointPercent(patapon);
-            if (current < _currentMin)
+            if (current < _currentMinArmyHealth)
             {
-                UpdateBar(current);
-                _currentMin = current;
+                UpdateImageAndBar(patapon);
+                _currentMinArmyHealth = current;
             }
         }
         private float GetCurrentHitPointPercent(Patapon patapon) => Mathf.Clamp01((float)patapon.CurrentHitPoint / patapon.Stat.HitPoint);
-        private void UpdateBar(float percent, bool general = false)
+
+        private void UpdateImageAndBar(Patapon patapon, bool general = false)
         {
-            RectTransform bar;
-            Image image;
-            if (general)
+            if (patapon == null)
             {
-                bar = _generalCurrent;
-                image = _generalImage;
+                UpdateBar(0);
+                return;
             }
-            else
+            var per = GetCurrentHitPointPercent(patapon);
+
+            UpdateImage();
+            UpdateBar(per);
+
+            void UpdateImage()
             {
-                bar = _armyMinCurrent;
-                image = _armyMinImage;
+                if (!_isGeneralAlive && patapon != _currentFocus)
+                {
+                    _currentFocus = patapon;
+                    _renderer.SetTarget(patapon);
+                }
             }
-            bar.anchorMax = new Vector2(percent, 1);
-            image.color = Color.Lerp(_colorZero, _colorFull, percent);
+            void UpdateBar(float percent)
+            {
+                RectTransform bar;
+                Image image;
+                if (general)
+                {
+                    bar = _generalCurrentBar;
+                    image = _generalImage;
+                }
+                else
+                {
+                    bar = _armyMinCurrentBar;
+                    image = _armyMinImage;
+                }
+                bar.anchorMax = new Vector2(percent, 1);
+                image.color = _colorOverHealth.Evaluate(percent);
+            }
         }
+        public void OnDead(Patapon deadPon, System.Collections.Generic.IEnumerable<Patapon> patapons)
+        {
+            if (deadPon.IsGeneral)
+            {
+                _isGeneralAlive = false;
+                _bg.color = _bgOnNoGeneral;
+            }
+            Refresh(patapons);
+        }
+
         /// <summary>
         /// Refreshes non-general patapon health bar.
         /// </summary>
         /// <param name="patapons"></param>
-        public void Refresh(System.Collections.Generic.IEnumerable<Patapon> patapons)
+        private void Refresh(System.Collections.Generic.IEnumerable<Patapon> patapons)
         {
+            if (_renderer == null) return;
             var alivePataponArmy = patapons.Where(p => !p.IsGeneral && p.CurrentHitPoint > 0);
             if (!alivePataponArmy.Any())
             {
                 //update as "all dead" image
-                UpdateBar(0);
+                UpdateImageAndBar(null);
+                Destroy(_renderer.gameObject);
             }
             else
             {
-                UpdateBar(alivePataponArmy.Min(p => p.CurrentHitPoint / p.Stat.HitPoint));
+                if (_isGeneralAlive) UpdateGeneralStatus(patapons.First(p => p.IsGeneral));
+                //MinBy is .NET 6 RC 1... Which means far away from Unity :/
+                var targetPatapon = alivePataponArmy.Aggregate((p1, p2) =>
+                    (GetCurrentHitPointPercent(p1) < GetCurrentHitPointPercent(p2)) ? p1 : p2
+                    );
+                _currentMinArmyHealth = 1;
+                _currentFocus = null;
+                UpdateArmyStatus(targetPatapon);
             }
-            //group.Patapons.R
+        }
+
+        private void AddCamera(PataponGroup group)
+        {
+            var renderTexture = new RenderTexture(50, 50, 0);
+            _image.texture = renderTexture;
+
+            var camRes = Resources.Load<GameObject>("Characters/Patapons/Display/Camera");
+            var camObject = Instantiate(camRes, _currentFocus.transform.parent);
+            _renderer = camObject.GetComponent<PataponStatusRenderer>();
+            _renderer.Init(group, _currentFocus, renderTexture);
         }
     }
 }
