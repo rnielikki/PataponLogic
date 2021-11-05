@@ -10,7 +10,6 @@ namespace Core.Character.Patapon
         public PataponGeneral General { get; private set; }
 
         private System.Collections.Generic.List<Patapon> _patapons;
-        public int Index { get; internal set; }
 
         private Display.PataponsHitPointDisplay _pataponsHitPointDisplay;
         public ClassType ClassType { get; internal set; }
@@ -39,15 +38,49 @@ namespace Core.Character.Patapon
 
         internal void RemovePon(Patapon patapon)
         {
-            if (_patapons.Remove(patapon))
+            var index = _patapons.IndexOf(patapon);
+            if (index >= 0)
             {
+                for (int i = index + 1; i < _patapons.Count; i++)
+                {
+                    _patapons[i].IndexInGroup--;
+                    _patapons[i].DistanceManager.UpdateDefaultPosition();
+                }
+                _patapons.RemoveAt(index);
                 _manager.RemovePon(patapon);
                 _pataponsHitPointDisplay.OnDead(patapon, _patapons);
+            }
+            if (_patapons.Count == 0)
+            {
+                _manager.RemoveGroup(this);
             }
         }
         public void UpdateHitPoint(Patapon patapon)
         {
             _pataponsHitPointDisplay.UpdateHitPoint(patapon);
+        }
+        internal void MoveTo(int newIndex, bool smoothMove)
+        {
+            if (newIndex < 0) return;
+            if (smoothMove)
+            {
+                StopAllCoroutines();
+                StartCoroutine(MoveSmooth());
+            }
+            else
+            {
+                transform.localPosition = newIndex * PataponEnvironment.GroupDistance * Vector3.left;
+            }
+            System.Collections.IEnumerator MoveSmooth()
+            {
+                var targetX = newIndex * PataponEnvironment.GroupDistance;
+                var target = targetX * Vector2.left;
+                while (transform.localPosition.x != targetX)
+                {
+                    transform.localPosition = Vector2.MoveTowards(transform.localPosition, target, PataponEnvironment.Steps * Time.deltaTime);
+                    yield return new WaitForEndOfFrame();
+                }
+            }
         }
     }
 }

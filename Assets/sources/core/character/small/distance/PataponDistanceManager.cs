@@ -11,12 +11,13 @@ namespace Core.Character.Patapon
     {
         internal DistanceCalculator DistanceCalculator { get; set; }
 
-        private Vector2 _defaultPosition; //relative to PATAPON MANAGER!
-        public float DefaultWorldPosition => _defaultPosition.x + _pataponsManagerTransform.position.x;
+        private Vector2 _defaultPosition; //relative to PATAPON GROUP
+        public float DefaultWorldPosition => _defaultPosition.x + _pataponGroupTransform.position.x;
         private float _movingVelocity; //"movement speed" per second
 
         private Vector2 _targetPosition;
 
+        private Transform _pataponGroupTransform;
         //All are moved from this
         private Transform _pataponsManagerTransform;
 
@@ -38,7 +39,8 @@ namespace Core.Character.Patapon
         {
             _patapon = GetComponent<Patapon>();
             _pataponsManagerTransform = GetComponentInParent<PataponsManager>().transform;
-            _defaultPosition = transform.position - _pataponsManagerTransform.position;
+            _pataponGroupTransform = GetComponentInParent<PataponGroup>().transform;
+            _defaultPosition = transform.position - _pataponGroupTransform.position;
             PataponOffset = _patapon.IndexInGroup * PataponEnvironment.AttackDistanceBetweenPatapons;
         }
 
@@ -71,6 +73,13 @@ namespace Core.Character.Patapon
                 );
             }
             MoveWithTargetPosition(x, velocity);
+        }
+        /// <summary>
+        /// Changes DEFAULT POSITION to front, when other Patapon dies on the front in the same group.
+        /// </summary>
+        public void UpdateDefaultPosition()
+        {
+            _defaultPosition = _patapon.IndexInGroup * PataponEnvironment.PataponIdleDistance * Vector2.left;
         }
         /// <summary>
         /// Move to ABSOLUTE specific position with certain speed.
@@ -137,7 +146,7 @@ namespace Core.Character.Patapon
                 Vector2 target;
                 if (_isMovingAsOffset)
                 {
-                    target = _targetPosition + (Vector2)_pataponsManagerTransform.position;
+                    target = _targetPosition + (Vector2)_pataponGroupTransform.position;
                 }
                 else
                 {

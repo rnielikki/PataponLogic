@@ -12,7 +12,7 @@ namespace Core.Character.Patapon
     class PataponsManager : MonoBehaviour
     {
         private System.Collections.Generic.List<Patapon> _patapons;
-        private PataponGroup _firstGroup;
+        private System.Collections.Generic.List<PataponGroup> _groups;
         //--- this should be general but temp value for position and patapata test
         private bool _isAlreadyIdle;
 
@@ -43,11 +43,11 @@ namespace Core.Character.Patapon
             PataponGroupGenerator.Generate(_pataponTypes, this);
 
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
-            var groups = GetComponentsInChildren<PataponGroup>();
-            _firstGroup = groups[0];
+            _groups = GetComponentsInChildren<PataponGroup>().ToList();
 
             //Camera.main.GetComponent<CameraController.CameraMover>().Target = _firstGroup.Patapons[0].gameObject;
-            Camera.main.GetComponent<CameraController.CameraMover>().Target = gameObject;
+            //Camera.main.GetComponent<CameraController.CameraMover>().Target = gameObject;
+            Camera.main.GetComponent<CameraController.CameraMover>().Target = GameObject.FindGameObjectWithTag("Map");
 
             TurnCounter.OnTurn.AddListener(() => IsMovingForward = false);
             _missionEndPosition = GameObject.FindGameObjectWithTag("Finish").transform.position.x;
@@ -131,9 +131,26 @@ namespace Core.Character.Patapon
                 }
             }
         }
+        public void RemoveGroup(PataponGroup group)
+        {
+            var index = _groups.IndexOf(group);
+            if (index < 0) return;
+
+            if (index == 0)
+            {
+                transform.position = _groups[1].transform.position;
+            }
+            for (int i = index + 1; i < _groups.Count; i++)
+            {
+                _groups[i].MoveTo(i - 1, index > 0);
+            }
+
+            _groups.Remove(group);
+            Destroy(group.gameObject);
+        }
         private void Update()
         {
-            if (IsMovingForward && _firstGroup.CanGoForward())
+            if (IsMovingForward && _groups[0].CanGoForward())
             {
                 transform.Translate(PataponEnvironment.Steps * Time.deltaTime, 0, 0);
                 if (_useMissionTower && transform.position.x >= _missionEndPosition)

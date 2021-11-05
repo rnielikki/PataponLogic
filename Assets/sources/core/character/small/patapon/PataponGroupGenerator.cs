@@ -34,7 +34,6 @@ namespace Core.Character.Patapon
 
             AddPataponsInstance(classType.ToString(), group.transform);
             groupScript.Init(manager);
-            groupScript.Index = _pataponGroupIndex;
 
             group.transform.parent = manager.transform;
             group.transform.localPosition = Vector2.zero + _pataponGroupIndex * PataponEnvironment.GroupDistance * Vector2.left;
