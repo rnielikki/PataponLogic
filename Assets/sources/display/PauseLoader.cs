@@ -25,7 +25,7 @@ namespace PataRoad.GameDisplay
             if (Core.Map.MissionPoint.IsMissionEnd) return;
             if (_pauseMenu == null)
             {
-                _pauseMenu = Instantiate(Resources.Load<GameObject>("Display/Pause"), transform);
+                _pauseMenu = Instantiate(Resources.Load<GameObject>("Display/Pause"));
             }
             else
             {

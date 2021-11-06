@@ -1,4 +1,4 @@
-﻿namespace PataRoad.Core.Character.Patapon
+﻿namespace PataRoad.Core.Character.Patapons
 {
     public class Tatepon : Patapon
     {

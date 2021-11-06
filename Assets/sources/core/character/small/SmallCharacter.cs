@@ -1,6 +1,6 @@
 using PataRoad.Core.Character.Equipment;
 using PataRoad.Core.Character.Equipment.Weapon;
-using PataRoad.Core.Character.Patapon;
+using PataRoad.Core.Character.Patapons;
 using UnityEngine;
 
 namespace PataRoad.Core.Character
@@ -66,6 +66,7 @@ namespace PataRoad.Core.Character
         protected AttackMoveController _attackController { get; private set; }
         public IAttackMoveData AttackMoveData { get; protected set; }
 
+        protected string _bodyName = "Patapon-body";
         public virtual void Die()
         {
             BeforeDie();
@@ -82,6 +83,14 @@ namespace PataRoad.Core.Character
         protected virtual void BeforeDie() { }
         protected virtual void AfterDie() { }
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
+
+        protected virtual void Init()
+        {
+            //---------- USE WHEN WEAPON FEATURE IS ADDED!
+            //GetComponent<Rigidbody2D>().mass += Weapon.Data.Mass + Protector.Mass;
+            Stat = DefaultStat;
+            CurrentHitPoint = Stat.HitPoint;
+        }
 
         protected virtual void StopAttacking()
         {

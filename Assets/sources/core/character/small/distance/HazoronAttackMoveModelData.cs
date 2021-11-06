@@ -1,4 +1,4 @@
-﻿using PataRoad.Core.Character.Patapon;
+﻿using PataRoad.Core.Character.Patapons;
 using UnityEngine;
 
 namespace PataRoad.Core.Character
@@ -10,14 +10,14 @@ namespace PataRoad.Core.Character
         public float DefaultWorldPosition { get; }
         private readonly Transform _pataponTransform;
         private readonly DistanceCalculator _distanceCalculator;
-        private readonly Hazoron.Hazoron _hazoron;
+        private readonly Hazorons.Hazoron _hazoron;
 
         private float _min => DefaultWorldPosition - PataponEnvironment.RushAttackDistance;
         private float _max => DefaultWorldPosition + PataponEnvironment.RushAttackDistance;
         public bool WasHitLastTime { get; set; }
         public Vector2 LastHit { get; set; }
 
-        public HazoronAttackMoveData(Hazoron.Hazoron hazoron)
+        public HazoronAttackMoveData(Hazorons.Hazoron hazoron)
         {
             _hazoron = hazoron;
             _distanceCalculator = hazoron.DistanceCalculator;

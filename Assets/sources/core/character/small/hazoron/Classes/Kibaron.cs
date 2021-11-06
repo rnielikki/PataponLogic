@@ -1,7 +1,7 @@
-﻿using PataRoad.Core.Character.Patapon;
+﻿using PataRoad.Core.Character.Patapons;
 using PataRoad.Core.Rhythm.Command;
 
-namespace PataRoad.Core.Character.Hazoron
+namespace PataRoad.Core.Character.Hazorons
 {
     public class Kibaron : Hazoron
     {
@@ -32,7 +32,6 @@ namespace PataRoad.Core.Character.Hazoron
         private void Awake()
         {
             Init();
-            InitDistanceFromHead(0);
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Kibapon;
         }

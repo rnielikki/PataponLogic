@@ -22,7 +22,7 @@ namespace PataRoad.Core.Character.Equipment.Logic
             }
             var damage = attacker.GetAttackDamage();
             component.TakeDamage(damage);
-            _damageDisplay.DisplayDamage(damage, point);
+            _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
             if (component.CurrentHitPoint <= 0)
             {
                 foreach (var collider in target.GetComponentsInChildren<Collider2D>()) collider.enabled = false;

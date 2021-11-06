@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapons
 {
     /// <summary>
     /// Represents Patapon group.
@@ -33,7 +33,7 @@ namespace PataRoad.Core.Character.Patapon
         public bool CanGoForward()
         {
             var hit = Physics2D.Raycast(transform.position, Vector2.right, PataponEnvironment.PataponSight, _layerMask);
-            return (hit.collider == null || hit.distance > _marchiDistance) && Hazoron.Hazoron.GetClosestHazoronPosition() > transform.position.x;
+            return (hit.collider == null || hit.distance > _marchiDistance) && Hazorons.Hazoron.GetClosestHazoronPosition() > transform.position.x;
         }
 
         internal void RemovePon(Patapon patapon)

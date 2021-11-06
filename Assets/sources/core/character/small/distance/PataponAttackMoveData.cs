@@ -1,4 +1,4 @@
-﻿using PataRoad.Core.Character.Patapon;
+﻿using PataRoad.Core.Character.Patapons;
 using UnityEngine;
 
 namespace PataRoad.Core.Character
@@ -13,7 +13,7 @@ namespace PataRoad.Core.Character
 
         private readonly PataponDistanceManager _distanceManager;
         private readonly DistanceCalculator _distanceCalculator;
-        private readonly Patapon.Patapon _patapon;
+        private readonly Patapons.Patapon _patapon;
         private readonly Transform _pataponGroupTransform;
         private readonly Transform _pataponManagerTransform;
 
@@ -22,7 +22,7 @@ namespace PataRoad.Core.Character
         public bool WasHitLastTime { get; set; }
         public Vector2 LastHit { get; set; }
 
-        public PataponAttackMoveData(Patapon.Patapon patapon)
+        public PataponAttackMoveData(Patapons.Patapon patapon)
         {
             _patapon = patapon;
             _pataponManagerTransform = GameObject.FindGameObjectWithTag("Player").transform;

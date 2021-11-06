@@ -29,17 +29,17 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             float minForce, maxForce;
             if (attackCommandType == AttackCommandType.Defend)
             {
-                minForce = 1;
-                maxForce = 1.25f;
+                minForce = 5;
+                maxForce = 10;
             }
             else
             {
-                minForce = 2;
-                maxForce = 3;
+                minForce = 15;
+                maxForce = 20;
             }
 
             arrowForThrowing.GetComponent<WeaponInstance>()
-                .Initialize(this, _arrowTransform)
+                .Initialize(this, 0.01f, _arrowTransform)
                 .Throw(minForce, maxForce);
         }
     }

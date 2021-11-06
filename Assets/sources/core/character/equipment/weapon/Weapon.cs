@@ -12,5 +12,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         public Stat Stat { get; set; }
 
         public Sprite Image { get; set; }
+
+        public float Mass { get; set; }
     }
 }

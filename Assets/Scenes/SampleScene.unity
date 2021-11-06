@@ -1653,7 +1653,6 @@ GameObject:
   - component: {fileID: 1016071391}
   - component: {fileID: 1016071390}
   - component: {fileID: 1016071389}
-  - component: {fileID: 1016071388}
   - component: {fileID: 1016071392}
   - component: {fileID: 1016071393}
   m_Layer: 5
@@ -1663,23 +1662,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1016071388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1016071387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &1016071389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1692,9 +1674,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 2
+  m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
+  m_ScaleFactor: 1.25
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
@@ -6904,11 +6886,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126796, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126799, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126799, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8662,7 +8644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useMissionTower: 1
-  _pataponTypes: 010000000600000008000000
+  _pataponTypes: 070000000600000005000000
   _pataponSpeakingOnMiss:
   - {fileID: 8300000, guid: 8781d5d1c64277c4daa9ef42be3cc69f, type: 3}
   - {fileID: 8300000, guid: 23d900ac3f4831e459f0d128ea7aa3ba, type: 3}

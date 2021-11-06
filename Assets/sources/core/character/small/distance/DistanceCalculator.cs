@@ -31,19 +31,19 @@ namespace PataRoad.Core.Character
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         /// <param name="range">Allows to pass as "In range". This is important for range units.</param>
-        internal static DistanceCalculator GetPataponDistanceCalculator(Patapon.Patapon target) =>
-            new DistanceCalculator(target, Patapon.PataponEnvironment.PataponSight, LayerMask.GetMask("structures", "enemies"), Vector2.right);
+        internal static DistanceCalculator GetPataponDistanceCalculator(Patapons.Patapon target) =>
+            new DistanceCalculator(target, Patapons.PataponEnvironment.PataponSight, LayerMask.GetMask("structures", "enemies"), Vector2.right);
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Hazoron (also from right to left).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         /// <param name="range">Allows to pass as "In range". This is important for range units.</param>
-        internal static DistanceCalculator GetHazoronDistanceCalculator(Hazoron.Hazoron target) =>
-            new DistanceCalculator(target, Patapon.PataponEnvironment.PataponSight, LayerMask.GetMask("patapons"), Vector2.left);
+        internal static DistanceCalculator GetHazoronDistanceCalculator(Hazorons.Hazoron target) =>
+            new DistanceCalculator(target, Patapons.PataponEnvironment.PataponSight, LayerMask.GetMask("patapons"), Vector2.left);
 
 
         //boxcast data
-        private static Vector2 _boxSize = new Vector2(0.001f, Patapon.PataponEnvironment.MaxYToScan); //size for boxcasting. NOTE: boxcast doesn't catch from initial box position.
+        private static Vector2 _boxSize = new Vector2(0.001f, Patapons.PataponEnvironment.MaxYToScan); //size for boxcasting. NOTE: boxcast doesn't catch from initial box position.
         private static Vector2 _boxcastYOffset = (_boxSize.y / 2) * Vector2.up;
         private static float _boxcastXOffset = _boxSize.x * 0.6f;
 

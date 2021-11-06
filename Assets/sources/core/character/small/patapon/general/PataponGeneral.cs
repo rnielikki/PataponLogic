@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace PataRoad.Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapons
 {
     /// <summary>
     /// Attach this script to Patapon General prefabs

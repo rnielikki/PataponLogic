@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PataRoad.Core.Character.Patapon.Display
+namespace PataRoad.Core.Character.Patapons.Display
 {
     /// <summary>
     /// Updates Patapons' hit point status PER GROUP.
@@ -167,7 +167,7 @@ namespace PataRoad.Core.Character.Patapon.Display
                     var targetPatapon = alivePataponArmy.Aggregate((p1, p2) =>
                         (GetCurrentHitPointPercent(p1) < GetCurrentHitPointPercent(p2)) ? p1 : p2
                         );
-                    _currentMinArmyHealth = 1;
+                    _currentMinArmyHealth = 2;
                     _currentFocus = null;
                     UpdateArmyStatus(targetPatapon);
                 }

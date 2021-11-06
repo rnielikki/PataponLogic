@@ -1,4 +1,4 @@
-﻿using PataRoad.Core.Character.Patapon;
+﻿using PataRoad.Core.Character.Patapons;
 
 namespace PataRoad.Core.Character.Equipment
 {

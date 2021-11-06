@@ -19,11 +19,13 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// Initialize values from WeaponObject.
         /// </summary>
         /// <param name="original">The original weapon object, which is copied from.</param>
-        /// <param name="transform">Transform of the object.</param>
+        /// <param name="mass">Mass of the object. This will affect to Tailwind.</param>
+        /// <param name="transformOriginal">Transform of the object. If not set, default value is transform of <paramref name="original"/>.</param>
         /// <returns>Self.</returns>
-        public WeaponInstance Initialize(WeaponObject original, Transform transformOriginal = null)
+        public WeaponInstance Initialize(WeaponObject original, float mass = 0.1f, Transform transformOriginal = null)
         {
             if (transformOriginal == null) transformOriginal = original.transform;
+            _rigidbody.mass = mass;
             _holder = original.Holder;
             GetComponent<SpriteRenderer>().sprite = original.ThrowableWeaponSprite;
 

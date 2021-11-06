@@ -25,6 +25,7 @@ namespace PataRoad.Core.Map
         [Tooltip("Mission complete condition, by default. Only true Misison Condition will call Mission Complete. Can be changed later in code.")]
         private bool _filledMissionCondition = true;
         public static bool IsMissionEnd { get; private set; }
+        public static bool IsMissionSuccess { get; private set; }
 
         private const string _screenPath = "Map/Mission/Instruction/";
         /// <summary>
@@ -84,6 +85,7 @@ namespace PataRoad.Core.Map
         {
             if (IsMissionEnd) return;
             IsMissionEnd = true;
+            IsMissionSuccess = true;
             OnMissionEnd.Invoke(true);
 
             if (_animator != null)
@@ -108,9 +110,6 @@ namespace PataRoad.Core.Map
             }
         }
         private void AttachToScreen(string prefabName) =>
-            Instantiate(
-                Resources.Load(_screenPath + prefabName),
-                GameObject.FindGameObjectWithTag("Screen").transform
-                );
+            Instantiate(Resources.Load(_screenPath + prefabName));
     }
 }

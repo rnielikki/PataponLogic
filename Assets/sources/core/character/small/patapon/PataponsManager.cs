@@ -4,7 +4,7 @@ using PataRoad.GameSound;
 using System.Linq;
 using UnityEngine;
 
-namespace PataRoad.Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapons
 {
     /// <summary>
     /// Gets command and drum status and sends message to Patapons.

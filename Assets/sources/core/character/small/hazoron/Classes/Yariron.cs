@@ -1,4 +1,4 @@
-﻿namespace PataRoad.Core.Character.Hazoron
+﻿namespace PataRoad.Core.Character.Hazorons
 {
     public class Yariron : Hazoron
     {
@@ -28,9 +28,9 @@
         }
         private void Awake()
         {
+            AttackDistance = 8.5f;
             Init();
             AttackType = Equipment.Weapon.AttackType.Stab;
-            InitDistanceFromHead(8.5f);
         }
         private void Start()
         {

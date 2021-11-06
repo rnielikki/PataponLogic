@@ -2,7 +2,7 @@
 using PataRoad.Core.Rhythm.Command;
 using UnityEngine;
 
-namespace PataRoad.Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapons
 {
     /// <summary>
     /// Represents any one Patapon. Classes will inherited from this class.
@@ -41,8 +41,6 @@ namespace PataRoad.Core.Character.Patapon
         public PataponDistanceManager DistanceManager { get; private set; }
         protected PataponGroup _group { get; private set; }
 
-        protected string _bodyName = "Patapon-body";
-
         protected override void BeforeDie()
         {
             _group.RemovePon(this);
@@ -54,14 +52,13 @@ namespace PataRoad.Core.Character.Patapon
         /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
-        protected void Init()
+        protected override void Init()
         {
-            Stat = DefaultStat;
+            base.Init();
             _group = GetComponentInParent<PataponGroup>();
             DistanceManager = GetComponent<PataponDistanceManager>();
             DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
-            CurrentHitPoint = Stat.HitPoint;
             Weapon = GetComponentInChildren<WeaponObject>();
             InitDistanceFromHead();
 
@@ -95,7 +92,11 @@ namespace PataRoad.Core.Character.Patapon
         {
             var song = model.Song;
             var isFever = model.ComboType == ComboStatus.Fever;
-            if (_lastSong != song) CharAnimator.ClearLateAnimation();
+            if (_lastSong != song)
+            {
+                CharAnimator.ClearLateAnimation();
+                AttackMoveData.WasHitLastTime = false;
+            }
             _lastSong = song;
             _lastPerfectionPercent = model.Percentage;
             switch (song)

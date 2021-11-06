@@ -1,7 +1,6 @@
-﻿using PataRoad.Core.Character.Patapon;
-using PataRoad.Core.Rhythm.Command;
+﻿using PataRoad.Core.Character.Patapons;
 
-namespace PataRoad.Core.Character.Hazoron
+namespace PataRoad.Core.Character.Hazorons
 {
     public class Toriron : Hazoron
     {
@@ -31,8 +30,9 @@ namespace PataRoad.Core.Character.Hazoron
         }
         private void Awake()
         {
-            Init();
+            _bodyName = "Root/Patapon-body";
             AttackDistance = 0.5f;
+            Init();
             CharacterSize = transform.Find("Root/Patapon-body/Face").GetComponent<UnityEngine.CircleCollider2D>().radius + AttackDistance;
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Toripon;

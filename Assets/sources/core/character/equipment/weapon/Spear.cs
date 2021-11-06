@@ -23,13 +23,13 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             float minForce, maxForce;
             if (attackCommandType == AttackCommandType.Defend)
             {
-                minForce = 0.75f;
-                maxForce = 1;
+                minForce = 50;
+                maxForce = 75;
             }
             else
             {
-                minForce = 1;
-                maxForce = 1.25f;
+                minForce = 95;
+                maxForce = 102;
             }
 
             spearForThrowing.GetComponent<WeaponInstance>()

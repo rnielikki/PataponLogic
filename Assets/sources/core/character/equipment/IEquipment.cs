@@ -17,5 +17,11 @@
         /// Sprite image of the weapon.
         /// </summary>
         public UnityEngine.Sprite Image { get; }
+
+        /// <summary>
+        /// Mass of the weapon. The mass affects to the knockback distance.
+        /// </summary>
+        /// <note>This won't affect to the throwing distance.</note>
+        public float Mass { get; }
     }
 }

@@ -3,6 +3,7 @@
     /// <summary>
     /// Reperesents stats for every characters and equipments.
     /// </summary>
+    [System.Serializable]
     public class Stat
     {
         /// <summary>

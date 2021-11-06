@@ -2,7 +2,7 @@ using PataRoad.Core.Character.Equipment.Weapon;
 using UnityEngine;
 using System.Linq;
 
-namespace PataRoad.Core.Character.Hazoron
+namespace PataRoad.Core.Character.Hazorons
 {
     public abstract class Hazoron : SmallCharacter
     {
@@ -12,12 +12,11 @@ namespace PataRoad.Core.Character.Hazoron
         /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
-        protected void Init()
+        protected override void Init()
         {
-            Stat = DefaultStat;
+            base.Init();
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
-            CurrentHitPoint = Stat.HitPoint;
             Weapon = GetComponentInChildren<WeaponObject>();
             AttackMoveData = new HazoronAttackMoveData(this);
         }

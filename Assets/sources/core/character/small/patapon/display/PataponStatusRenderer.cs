@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PataRoad.Core.Character.Patapon.Display
+namespace PataRoad.Core.Character.Patapons.Display
 {
     public class PataponStatusRenderer : MonoBehaviour
     {

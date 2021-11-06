@@ -33,7 +33,7 @@ namespace PataRoad.Core.Character
         /// <param name="movingSpeed">The speed for moving character.</param>
         /// <param name="attackSpeed">The speed for animationg attack.</param>
         /// <param name="type">Attack movement type, which determines distance calculation logic.</param>
-        /// <param name="attackDistance">Distance from enemy while attacking. -1 is default, which will use calculated distance from <see cref="Patapon"/>.</param>
+        /// <param name="attackDistance">Distance from enemy while attacking. -1 is default, which will use calculated distance from <see cref="Patapons"/>.</param>
         internal AttackMoveModel(SmallCharacter character, string animationType, AttackMoveType type, float movingSpeed, float attackSpeed, float attackDistance = -1)
         {
             AnimationType = animationType;

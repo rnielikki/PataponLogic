@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapons
 {
     /// <summary>
     /// Generates All Patapons from class type, including generals and groups.

@@ -1,6 +1,8 @@
-﻿namespace PataRoad.Core.Character.Patapons
+﻿using PataRoad.Core.Character.Patapons;
+
+namespace PataRoad.Core.Character.Hazorons
 {
-    class Megapon : Patapon
+    class Megaron : Hazoron
     {
         protected override Stat DefaultStat
         {
@@ -9,7 +11,7 @@
                 HitPoint = 150,
                 Defence = 1,
                 DamageMin = 1,
-                DamageMax = 4,
+                DamageMax = 2,
                 AttackSeconds = 2,
                 MovementSpeed = 8,
                 Critical = 0.2f,
@@ -35,30 +37,14 @@
         }
         void Start()
         {
-            AddDefaultModelsToAttackMoveController()
+            SetAttackMoveController()
                 .AddModels(
                 new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
                 {
-                    { "attack-fever", GetAttackMoveModel("attack-fever") },
-                    { "defend-charge", GetAttackMoveModel("defend-charge", AttackMoveType.Defend) },
+                    { "attack", GetAttackMoveModel("attack") },
                 }
                 );
-
-        }
-        protected override void Attack(bool isFever)
-        {
-            if (!isFever && !_charged)
-            {
-                base.Attack(false);
-            }
-            else
-            {
-                StartAttack("attack-fever");
-            }
-        }
-        protected override void Defend(bool isFever)
-        {
-            StartAttack(_charged ? "defend-charge" : "defend");
+            StartAttack("attack");
         }
     }
 }

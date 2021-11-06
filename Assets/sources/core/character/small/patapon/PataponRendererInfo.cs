@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Linq;
 
-namespace PataRoad.Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapons
 {
     /// <summary>
     /// Provides data for <see cref="Display.PataponStatusRenderer"/>. <see cref="Patapon"/> generates and holds it.

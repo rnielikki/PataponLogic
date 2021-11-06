@@ -21,15 +21,15 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             switch (attackCommandType)
             {
                 case AttackCommandType.Attack:
-                    ThrowWeaponInstance(1.25f, 1.75f);
+                    ThrowWeaponInstance(125, 175);
                     break;
                 case AttackCommandType.FeverAttack:
-                    ThrowWeaponInstance(1.5f, 1.8f, -15);
-                    ThrowWeaponInstance(1.8f, 2);
-                    ThrowWeaponInstance(1.5f, 1.8f, 15);
+                    ThrowWeaponInstance(150, 180, -15);
+                    ThrowWeaponInstance(180, 200);
+                    ThrowWeaponInstance(150, 180, 15);
                     break;
                 case AttackCommandType.Defend:
-                    ThrowWeaponInstance(1, 1.1f);
+                    ThrowWeaponInstance(100, 110);
                     break;
             }
             void ThrowWeaponInstance(float minForce, float maxForce, int angle = 0)
@@ -37,7 +37,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
                 var instance = Instantiate(_copiedJavelin, transform.root.parent);
                 if (angle != 0) instance.transform.Rotate(Vector3.forward * angle);
                 instance.GetComponent<WeaponInstance>()
-                    .Initialize(this)
+                    .Initialize(this, 0.2f)
                     .Throw(minForce, maxForce);
             }
         }
