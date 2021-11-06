@@ -26,9 +26,21 @@ namespace Core.Character.Equipment.Weapon
         {
             var arrowForThrowing = Instantiate(_copiedArrow, transform.root.parent);
 
+            float minForce, maxForce;
+            if (attackCommandType == AttackCommandType.Defend)
+            {
+                minForce = 1;
+                maxForce = 1.25f;
+            }
+            else
+            {
+                minForce = 2;
+                maxForce = 3;
+            }
+
             arrowForThrowing.GetComponent<WeaponInstance>()
                 .Initialize(this, _arrowTransform)
-                .Throw((attackCommandType == AttackCommandType.Defend) ? 1 : 2);
+                .Throw(minForce, maxForce);
         }
     }
 }

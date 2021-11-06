@@ -21,24 +21,24 @@ namespace Core.Character.Equipment.Weapon
             switch (attackCommandType)
             {
                 case AttackCommandType.Attack:
-                    ThrowWeaponInstance(1.5f);
+                    ThrowWeaponInstance(1.25f, 1.75f);
                     break;
                 case AttackCommandType.FeverAttack:
-                    ThrowWeaponInstance(1.5f, -15);
-                    ThrowWeaponInstance(1.75f);
-                    ThrowWeaponInstance(1.5f, 15);
+                    ThrowWeaponInstance(1.5f, 1.8f, -15);
+                    ThrowWeaponInstance(1.8f, 2);
+                    ThrowWeaponInstance(1.5f, 1.8f, 15);
                     break;
                 case AttackCommandType.Defend:
-                    ThrowWeaponInstance(1);
+                    ThrowWeaponInstance(1, 1.1f);
                     break;
             }
-            void ThrowWeaponInstance(float force, int angle = 0)
+            void ThrowWeaponInstance(float minForce, float maxForce, int angle = 0)
             {
                 var instance = Instantiate(_copiedJavelin, transform.root.parent);
                 if (angle != 0) instance.transform.Rotate(Vector3.forward * angle);
                 instance.GetComponent<WeaponInstance>()
                     .Initialize(this)
-                    .Throw(force);
+                    .Throw(minForce, maxForce);
             }
         }
     }

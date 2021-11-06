@@ -39,19 +39,24 @@ namespace Core.Character.Patapon
         internal void RemovePon(Patapon patapon)
         {
             var index = _patapons.IndexOf(patapon);
-            if (index >= 0)
+            if (index < 0) return;
+            for (int i = index + 1; i < _patapons.Count; i++)
             {
-                for (int i = index + 1; i < _patapons.Count; i++)
-                {
-                    _patapons[i].IndexInGroup--;
-                    _patapons[i].DistanceManager.UpdateDefaultPosition();
-                }
-                _patapons.RemoveAt(index);
-                _manager.RemovePon(patapon);
-                _pataponsHitPointDisplay.OnDead(patapon, _patapons);
+                _patapons[i].IndexInGroup--;
+                _patapons[i].DistanceManager.UpdateDefaultPosition();
             }
+            _pataponsHitPointDisplay.OnDead(patapon, _patapons);
+            _patapons.RemoveAt(index);
+            _manager.RemovePon(patapon);
+        }
+        /// <summary>
+        /// Removes the *Whole group* if it's empty.
+        /// </summary>
+        public void RemoveIfEmpty()
+        {
             if (_patapons.Count == 0)
             {
+                StopAllCoroutines();
                 _manager.RemoveGroup(this);
             }
         }
@@ -69,7 +74,7 @@ namespace Core.Character.Patapon
             }
             else
             {
-                transform.localPosition = newIndex * PataponEnvironment.GroupDistance * Vector3.left;
+                transform.localPosition += PataponEnvironment.GroupDistance * Vector3.right;
             }
             System.Collections.IEnumerator MoveSmooth()
             {

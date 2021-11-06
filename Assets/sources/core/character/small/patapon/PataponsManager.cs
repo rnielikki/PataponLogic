@@ -38,6 +38,8 @@ namespace Core.Character.Patapon
         [SerializeField]
         private AudioClip _onPataponDeadSound;
 
+        private CameraController.CameraMover _cameraMover;
+
         private void Awake()
         {
             PataponGroupGenerator.Generate(_pataponTypes, this);
@@ -46,8 +48,8 @@ namespace Core.Character.Patapon
             _groups = GetComponentsInChildren<PataponGroup>().ToList();
 
             //Camera.main.GetComponent<CameraController.CameraMover>().Target = _firstGroup.Patapons[0].gameObject;
-            //Camera.main.GetComponent<CameraController.CameraMover>().Target = gameObject;
-            Camera.main.GetComponent<CameraController.CameraMover>().Target = GameObject.FindGameObjectWithTag("Map");
+            _cameraMover = Camera.main.GetComponent<CameraController.CameraMover>();
+            _cameraMover.Target = gameObject;
 
             TurnCounter.OnTurn.AddListener(() => IsMovingForward = false);
             _missionEndPosition = GameObject.FindGameObjectWithTag("Finish").transform.position.x;
@@ -139,6 +141,7 @@ namespace Core.Character.Patapon
             if (index == 0)
             {
                 transform.position = _groups[1].transform.position;
+                _cameraMover.SmoothMoving = true;
             }
             for (int i = index + 1; i < _groups.Count; i++)
             {

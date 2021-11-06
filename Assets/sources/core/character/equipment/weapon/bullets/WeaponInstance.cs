@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core.Character.Equipment.Weapon
 {
@@ -39,10 +38,11 @@ namespace Core.Character.Equipment.Weapon
         /// <summary>
         /// Start throwing this instance.
         /// </summary>
-        /// <param name="forceMultiplier">With how much force will be thrown. 1 is normal force, 0 is no force.</param>
-        public void Throw(float forceMultiplier)
+        /// <param name="forceMultiplierMin">Minimum value of force that will be thrown with. 1 is normal force, 0 is no force.</param>
+        /// <param name="forceMultiplierMax">Maximum value of force that will be thrown with. 1 is normal force, 0 is no force.</param>
+        public void Throw(float forceMultiplierMin, float forceMultiplierMax)
         {
-            _rigidbody.AddForce(transform.up * forceMultiplier);
+            _rigidbody.AddForce(transform.up * Random.Range(forceMultiplierMin, forceMultiplierMax));
         }
         private void Update()
         {

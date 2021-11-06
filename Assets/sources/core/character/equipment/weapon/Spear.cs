@@ -20,10 +20,21 @@ namespace Core.Character.Equipment.Weapon
         public override void Attack(AttackCommandType attackCommandType)
         {
             var spearForThrowing = Instantiate(_copiedSpear, transform.root.parent);
+            float minForce, maxForce;
+            if (attackCommandType == AttackCommandType.Defend)
+            {
+                minForce = 0.75f;
+                maxForce = 1;
+            }
+            else
+            {
+                minForce = 1;
+                maxForce = 1.25f;
+            }
 
             spearForThrowing.GetComponent<WeaponInstance>()
                 .Initialize(this)
-                .Throw((attackCommandType == AttackCommandType.Defend) ? 0.75f : 1);
+                .Throw(minForce, maxForce);
         }
     }
 }

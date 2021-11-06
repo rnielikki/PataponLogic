@@ -22,7 +22,7 @@ namespace Core.Character.Equipment.Weapon
                 var stoneForThrowing = Instantiate(_copiedStone, transform.root.parent);
                 stoneForThrowing.GetComponent<WeaponInstance>()
                     .Initialize(this, _stoneTransform)
-                    .Throw(1);
+                    .Throw(1, 1.5f);
             }
             else
             {

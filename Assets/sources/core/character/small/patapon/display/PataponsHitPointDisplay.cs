@@ -65,7 +65,7 @@ namespace Core.Character.Patapon.Display
             var instance = Instantiate(_displayTemplate, _displayParent).GetComponent<PataponsHitPointDisplay>();
 
             instance._currentFocus = group.General.GetComponent<Patapon>();
-            instance.AddCamera(group);
+            instance.AddCamera();
 
             return instance;
         }
@@ -151,7 +151,8 @@ namespace Core.Character.Patapon.Display
         {
             if (_renderer == null) return;
             var alivePataponArmy = patapons.Where(p => !p.IsGeneral && p.CurrentHitPoint > 0);
-            if (!alivePataponArmy.Any())
+            bool aliveAnyArmy = alivePataponArmy.Any();
+            if (!_isGeneralAlive && !aliveAnyArmy)
             {
                 //update as "all dead" image
                 UpdateImageAndBar(null);
@@ -160,17 +161,20 @@ namespace Core.Character.Patapon.Display
             else
             {
                 if (_isGeneralAlive) UpdateGeneralStatus(patapons.First(p => p.IsGeneral));
-                //MinBy is .NET 6 RC 1... Which means far away from Unity :/
-                var targetPatapon = alivePataponArmy.Aggregate((p1, p2) =>
-                    (GetCurrentHitPointPercent(p1) < GetCurrentHitPointPercent(p2)) ? p1 : p2
-                    );
-                _currentMinArmyHealth = 1;
-                _currentFocus = null;
-                UpdateArmyStatus(targetPatapon);
+                if (aliveAnyArmy)
+                {
+                    //MinBy is .NET 6 RC 1... Which means far away from Unity :/
+                    var targetPatapon = alivePataponArmy.Aggregate((p1, p2) =>
+                        (GetCurrentHitPointPercent(p1) < GetCurrentHitPointPercent(p2)) ? p1 : p2
+                        );
+                    _currentMinArmyHealth = 1;
+                    _currentFocus = null;
+                    UpdateArmyStatus(targetPatapon);
+                }
             }
         }
 
-        private void AddCamera(PataponGroup group)
+        private void AddCamera()
         {
             var renderTexture = new RenderTexture(50, 50, 0);
             _image.texture = renderTexture;
@@ -178,7 +182,7 @@ namespace Core.Character.Patapon.Display
             var camRes = Resources.Load<GameObject>("Characters/Patapons/Display/Camera");
             var camObject = Instantiate(camRes, _currentFocus.transform.parent);
             _renderer = camObject.GetComponent<PataponStatusRenderer>();
-            _renderer.Init(group, _currentFocus, renderTexture);
+            _renderer.Init(_currentFocus, renderTexture);
         }
     }
 }

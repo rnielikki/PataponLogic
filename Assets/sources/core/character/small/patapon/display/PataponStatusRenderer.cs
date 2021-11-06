@@ -30,7 +30,7 @@ namespace Core.Character.Patapon.Display
             pos.z = _zOffset;
             transform.position = pos;
         }
-        public void Init(PataponGroup group, Patapon patapon, RenderTexture renderTexture)
+        public void Init(Patapon patapon, RenderTexture renderTexture)
         {
             SetTarget(patapon);
             GetComponent<Camera>().targetTexture = renderTexture;

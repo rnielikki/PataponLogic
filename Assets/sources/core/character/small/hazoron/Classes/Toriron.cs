@@ -49,10 +49,9 @@ namespace Core.Character.Hazoron
             CharAnimator.AnimateFrom("tori-fly-up");
             StartAttack("attack-fever");
         }
-        public override void Die()
+        protected override void BeforeDie()
         {
             CharAnimator.AnimateFrom("tori-fly-stop");
-            base.Die();
         }
     }
 }

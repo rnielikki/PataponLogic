@@ -9,7 +9,7 @@ namespace Core.Character.Patapon
     /// </summary>
     internal class PataponRendererInfo
     {
-        private GameObject[] _rendererObjects;
+        private readonly GameObject[] _rendererObjects;
         public Transform BodyTransform { get; }
         public Vector2 BoundingOffset { get; private set; }
         public Vector2 Center => (Vector2)BodyTransform.position + BoundingOffset;
@@ -62,7 +62,7 @@ namespace Core.Character.Patapon
         {
             foreach (var renderer in _rendererObjects)
             {
-                renderer.gameObject.layer = layer;
+                renderer.layer = layer;
             }
         }
         public void EndRenderMode()

@@ -43,10 +43,13 @@ namespace Core.Character.Patapon
 
         protected string _bodyName = "Patapon-body";
 
-        public override void Die()
+        protected override void BeforeDie()
         {
             _group.RemovePon(this);
-            base.Die();
+        }
+        protected override void AfterDie()
+        {
+            _group.RemoveIfEmpty();
         }
         /// <summary>
         /// Remember call this on Awake() in inherited class

@@ -68,15 +68,19 @@ namespace Core.Character
 
         public virtual void Die()
         {
+            BeforeDie();
             StopAttacking();
             StartCoroutine(WaitUntilDie());
             System.Collections.IEnumerator WaitUntilDie()
             {
                 CharAnimator.Animate("die");
                 yield return new WaitForSeconds(1);
+                AfterDie();
                 Destroy(gameObject);
             }
         }
+        protected virtual void BeforeDie() { }
+        protected virtual void AfterDie() { }
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 
         protected virtual void StopAttacking()
