@@ -1,9 +1,9 @@
-using Core.Character.Equipment;
-using Core.Character.Equipment.Weapon;
-using Core.Character.Patapon;
+using PataRoad.Core.Character.Equipment;
+using PataRoad.Core.Character.Equipment.Weapon;
+using PataRoad.Core.Character.Patapon;
 using UnityEngine;
 
-namespace Core.Character
+namespace PataRoad.Core.Character
 {
     /// <summary>
     /// Represents small character, including Patapon and its enemy (Hazoron).

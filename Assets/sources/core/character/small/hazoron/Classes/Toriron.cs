@@ -1,7 +1,7 @@
-﻿using Core.Character.Patapon;
-using Core.Rhythm.Command;
+﻿using PataRoad.Core.Character.Patapon;
+using PataRoad.Core.Rhythm.Command;
 
-namespace Core.Character.Hazoron
+namespace PataRoad.Core.Character.Hazoron
 {
     public class Toriron : Hazoron
     {

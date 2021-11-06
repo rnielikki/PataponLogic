@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Character
+namespace PataRoad.Core.Character
 {
     public class Structure : MonoBehaviour, IAttackable
     {

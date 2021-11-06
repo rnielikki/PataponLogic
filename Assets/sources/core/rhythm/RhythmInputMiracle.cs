@@ -1,9 +1,9 @@
-﻿using Core.Rhythm.Command;
+﻿using PataRoad.Core.Rhythm.Command;
 using System;
 using System.Collections;
 using UnityEngine;
 
-namespace Core.Rhythm
+namespace PataRoad.Core.Rhythm
 {
     /// <summary>
     /// Sends one drum signal, like <see cref="RhythmInput"/>, but also extended to manual miracle hearing.

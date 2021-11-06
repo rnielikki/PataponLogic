@@ -4,7 +4,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Visualize the <see cref="RhythmTimer"/> on the screen, with opacity.
 /// </summary>
-namespace Core.Rhythm.Display
+namespace PataRoad.Core.Rhythm.Display
 {
     public class RhythmDisplay : MonoBehaviour
     {

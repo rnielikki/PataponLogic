@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Rhythm
+namespace PataRoad.Core.Rhythm
 {
     /// <summary>
     /// Wait for specific time frequency (<see cref="RhythmTimer.Count"/>) in coroutine.

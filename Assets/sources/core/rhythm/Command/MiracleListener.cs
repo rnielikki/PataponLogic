@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Rhythm.Command
+namespace PataRoad.Core.Rhythm.Command
 {
     /// <summary>
     /// Checks if input is miracle

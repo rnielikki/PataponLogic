@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameSound
+namespace PataRoad.GameSound
 {
     /// <summary>
     /// Plays all "speaking" sounds on action - when get item, on fire status effect, die etc.

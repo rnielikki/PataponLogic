@@ -1,5 +1,5 @@
 ﻿
-namespace Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapon
 {
     /// <summary>
     /// All Patapon-related environment, such as marching distance.

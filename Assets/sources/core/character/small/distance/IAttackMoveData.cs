@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Character
+namespace PataRoad.Core.Character
 {
     /// <summary>
     /// Attack move data, used for <see cref="AttackMoveModel"/> and <see cref="AttackMoveController"/>. Implements different logic to Patapon and Hazoron.

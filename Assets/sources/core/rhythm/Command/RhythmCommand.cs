@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Rhythm.Command
+namespace PataRoad.Core.Rhythm.Command
 {
     /// <summary>
     /// Reads command. This is separated, because some storyline (e.g. very first) requires just PON-PON-, fore example.

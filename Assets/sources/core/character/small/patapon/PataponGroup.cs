@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapon
 {
     /// <summary>
     /// Represents Patapon group.

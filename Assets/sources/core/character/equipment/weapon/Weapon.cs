@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipment.Weapon
 {
     /// <summary>
     /// Represents any weapon DATA. For game object, see <see cref="WeaponObject"/>.

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipment.Weapon
 {
     /// <summary>
     /// Stab: Deals damage when it's staying in trigger.

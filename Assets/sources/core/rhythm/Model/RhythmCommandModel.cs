@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Core.Rhythm.Command
+namespace PataRoad.Core.Rhythm.Command
 {
     public class RhythmCommandModel
     {

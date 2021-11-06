@@ -1,8 +1,8 @@
-using Core.Rhythm.Command;
+using PataRoad.Core.Rhythm.Command;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.Rhythm.Bgm
+namespace PataRoad.Core.Rhythm.Bgm
 {
     /*
      * (theme name)/song directory contains

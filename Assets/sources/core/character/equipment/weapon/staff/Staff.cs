@@ -1,4 +1,4 @@
-﻿namespace Core.Character.Equipment.Weapon
+﻿namespace PataRoad.Core.Character.Equipment.Weapon
 {
     /// <summary>
     /// Abstraction of some kind of staff behaviours.

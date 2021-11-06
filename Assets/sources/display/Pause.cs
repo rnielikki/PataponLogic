@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace GameDisplay
+namespace PataRoad.GameDisplay
 {
     public class Pause : MonoBehaviour
     {

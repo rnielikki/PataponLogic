@@ -1,8 +1,8 @@
-﻿using Core.Character.Equipment.Weapon;
-using Core.Rhythm.Command;
+﻿using PataRoad.Core.Character.Equipment.Weapon;
+using PataRoad.Core.Rhythm.Command;
 using UnityEngine;
 
-namespace Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapon
 {
     /// <summary>
     /// Represents any one Patapon. Classes will inherited from this class.

@@ -1,4 +1,4 @@
-﻿namespace Core.Character
+﻿namespace PataRoad.Core.Character
 {
     /// <summary>
     /// Represents any attackable object, including struct and any character.

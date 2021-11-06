@@ -2,7 +2,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Character.Patapon.Display
+namespace PataRoad.Core.Character.Patapon.Display
 {
     /// <summary>
     /// Updates Patapons' hit point status PER GROUP.

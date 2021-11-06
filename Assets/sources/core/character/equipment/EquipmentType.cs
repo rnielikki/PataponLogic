@@ -1,6 +1,6 @@
-﻿using Core.Character.Patapon;
+﻿using PataRoad.Core.Character.Patapon;
 
-namespace Core.Character.Equipment
+namespace PataRoad.Core.Character.Equipment
 {
     /// <summary>
     /// Type of equipments. This is combination of <see cref="ClassType"/> and <see cref="EquipmentStyle"/>.

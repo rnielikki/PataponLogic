@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapon
 {
     /// <summary>
     /// Distance manager for one Patapon. Without this, Patapon won't move when attack or defence etc. Attach same object as Patapon script component. USE WITH ANIMATION EVENT.

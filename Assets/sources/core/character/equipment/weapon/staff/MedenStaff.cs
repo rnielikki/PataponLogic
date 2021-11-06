@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 //Let me think how to create various staffs...
-namespace Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipment.Weapon
 {
     /// <summary>
     /// Meden herself doesn't attack, but boosts attack (damage)/defence (defence)/dodge (movement speed) command etc.

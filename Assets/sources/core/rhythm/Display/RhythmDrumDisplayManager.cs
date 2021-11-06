@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Rhythm.Display
+namespace PataRoad.Core.Rhythm.Display
 {
     /// <summary>
     /// This simple code is for managing multiple input display at once, e.g. Miracle event. It prevents adding 4 objects separately for event on Unity Editor.

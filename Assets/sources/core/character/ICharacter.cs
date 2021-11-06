@@ -1,4 +1,4 @@
-﻿namespace Core.Character
+﻿namespace PataRoad.Core.Character
 {
     /// <summary>
     /// Represents any basic charcter logic. It can be Patapon, enemy or boss. DOESN'T represent structures, though.

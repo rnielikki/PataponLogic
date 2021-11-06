@@ -1,4 +1,4 @@
-﻿namespace Core.Rhythm.Command
+﻿namespace PataRoad.Core.Rhythm.Command
 {
     /// <summary>
     /// Contains combo data.

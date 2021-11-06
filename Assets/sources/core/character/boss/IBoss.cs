@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.sources.character
+namespace PataRoad.Assets.sources.character
 {
     interface IBoss
     {

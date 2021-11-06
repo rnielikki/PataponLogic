@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Map
+namespace PataRoad.Core.Map
 {
     public class MissionPoint : MonoBehaviour
     {

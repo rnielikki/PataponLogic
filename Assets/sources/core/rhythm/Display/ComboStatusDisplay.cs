@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Core.Rhythm.Display
+namespace PataRoad.Core.Rhythm.Display
 {
     /// <summary>
     /// Displays combo and fever status worm.

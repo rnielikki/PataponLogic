@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Character.Equipment.Logic
+namespace PataRoad.Core.Character.Equipment.Logic
 {
     internal class DamageDisplay
     {

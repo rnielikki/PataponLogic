@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Core.CameraController
+namespace PataRoad.Core.CameraController
 {
     public class CameraMover : MonoBehaviour
     {

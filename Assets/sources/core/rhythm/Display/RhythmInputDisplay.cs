@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Rhythm.Display
+namespace PataRoad.Core.Rhythm.Display
 {
     /// <summary>
     /// Displays when the drum is hit. Attached to the graphic part with ANIMATOR.

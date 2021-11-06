@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Ensures that Patapon attacks in right distance.
 /// </summary>
-namespace Core.Character
+namespace PataRoad.Core.Character
 {
     public class AttackMoveController : MonoBehaviour
     {

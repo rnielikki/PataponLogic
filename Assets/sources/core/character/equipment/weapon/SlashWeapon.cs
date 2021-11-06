@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipment.Weapon
 {
     /// <summary>
     /// Slash: Each time it enters collision, it deals damage. Most simple type.

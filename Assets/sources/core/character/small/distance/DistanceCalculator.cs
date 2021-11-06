@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Character
+namespace PataRoad.Core.Character
 {
     /// <summary>
     /// Calculates distance and helps to move ANY characters.

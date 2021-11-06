@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipment.Weapon
 {
     /// <summary>
     /// Represents cannon bullet for sukopon weapon. Unlike <see cref="WeaponBullet"/>, it destroys self after certain distance from start.

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Common
+namespace PataRoad.Common
 {
     /// <summary>
     /// Any simple destroy script to attach. For example, this can be called end of animation as Animation Event.

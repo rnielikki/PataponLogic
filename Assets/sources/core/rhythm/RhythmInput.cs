@@ -3,7 +3,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-namespace Core.Rhythm
+namespace PataRoad.Core.Rhythm
 {
     /// <summary>
     /// Sends one drum input signal. <see cref="RhythmInputMiracle"/> inherits this.

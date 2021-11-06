@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace Core.Rhythm.Display
+namespace PataRoad.Core.Rhythm.Display
 {
     /// <summary>
     /// Shows if it's perfect or fever warning. The worm color change logic (how much perfect it is) is on <see cref="ComboStatusDisplay"/> because it controls all of LineRenderer logics.

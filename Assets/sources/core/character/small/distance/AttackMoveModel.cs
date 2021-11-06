@@ -2,7 +2,7 @@
 /// <summary>
 /// Contains parameters for movement and attack.
 /// </summary>
-namespace Core.Character
+namespace PataRoad.Core.Character
 {
     public class AttackMoveModel
     {

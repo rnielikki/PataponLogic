@@ -1,4 +1,4 @@
-﻿namespace Core.Character.Hazoron
+﻿namespace PataRoad.Core.Character.Hazoron
 {
     public class Yariron : Hazoron
     {

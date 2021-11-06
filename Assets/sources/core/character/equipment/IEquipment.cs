@@ -1,4 +1,4 @@
-﻿namespace Core.Character.Equipment
+﻿namespace PataRoad.Core.Character.Equipment
 {
     /// <summary>
     /// Represents any equipment DATA that Patapon (or enemy) use, like spear, shield, cape, helm...

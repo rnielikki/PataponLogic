@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Core.Rhythm.Command;
+using PataRoad.Core.Rhythm.Command;
 using System.Collections.Generic;
 
-namespace Core.Rhythm.Display
+namespace PataRoad.Core.Rhythm.Display
 {
     public class RhythmCommandVisualization : MonoBehaviour
     {

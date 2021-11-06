@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace Core.Rhythm
+namespace PataRoad.Core.Rhythm
 {
     /// <summary>
     /// The core timer, using "frequency" system.

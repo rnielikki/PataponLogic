@@ -1,7 +1,7 @@
-﻿using Core.Character.Patapon;
+﻿using PataRoad.Core.Character.Patapon;
 using UnityEngine;
 
-namespace Core.Character
+namespace PataRoad.Core.Character
 {
     class HazoronAttackMoveData : IAttackMoveData
     {

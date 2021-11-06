@@ -1,8 +1,8 @@
-using Core.Character.Equipment.Weapon;
+using PataRoad.Core.Character.Equipment.Weapon;
 using UnityEngine;
 using System.Linq;
 
-namespace Core.Character.Hazoron
+namespace PataRoad.Core.Character.Hazoron
 {
     public abstract class Hazoron : SmallCharacter
     {

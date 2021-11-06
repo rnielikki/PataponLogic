@@ -1,4 +1,4 @@
-﻿namespace Core.Rhythm.Bgm
+﻿namespace PataRoad.Core.Rhythm.Bgm
 {
     /*
      * --------------------------------------------------Each theme folder must include:

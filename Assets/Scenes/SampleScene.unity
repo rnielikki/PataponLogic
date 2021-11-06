@@ -1093,13 +1093,14 @@ MonoBehaviour:
   references:
     version: 1
     00000000:
-      type: {class: RhythmCombo, ns: Core.Rhythm.Command, asm: Assembly-CSharp}
+      type: {class: RhythmCombo, ns: PataRoad.Core.Rhythm.Command, asm: Assembly-CSharp}
       data:
         OnCombo:
           m_PersistentCalls:
             m_Calls:
             - m_Target: {fileID: 995254099}
-              m_TargetAssemblyTypeName: Core.Rhythm.Bgm.RhythmBgmPlayer, Assembly-CSharp
+              m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Bgm.RhythmBgmPlayer,
+                Assembly-CSharp
               m_MethodName: PlayComboMusic
               m_Mode: 0
               m_Arguments:
@@ -1111,7 +1112,8 @@ MonoBehaviour:
                 m_BoolArgument: 0
               m_CallState: 2
             - m_Target: {fileID: 1197778731}
-              m_TargetAssemblyTypeName: ComboStatusDisplay, Assembly-CSharp
+              m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Display.ComboStatusDisplay,
+                Assembly-CSharp
               m_MethodName: Show
               m_Mode: 0
               m_Arguments:
@@ -1126,7 +1128,8 @@ MonoBehaviour:
           m_PersistentCalls:
             m_Calls:
             - m_Target: {fileID: 995254099}
-              m_TargetAssemblyTypeName: Core.Rhythm.Bgm.RhythmBgmPlayer, Assembly-CSharp
+              m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Bgm.RhythmBgmPlayer,
+                Assembly-CSharp
               m_MethodName: PlayBaseMusic
               m_Mode: 1
               m_Arguments:
@@ -1138,7 +1141,8 @@ MonoBehaviour:
                 m_BoolArgument: 0
               m_CallState: 2
             - m_Target: {fileID: 1197778731}
-              m_TargetAssemblyTypeName: ComboStatusDisplay, Assembly-CSharp
+              m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Display.ComboStatusDisplay,
+                Assembly-CSharp
               m_MethodName: Hide
               m_Mode: 1
               m_Arguments:
@@ -1154,7 +1158,8 @@ MonoBehaviour:
             m_PersistentCalls:
               m_Calls:
               - m_Target: {fileID: 995254099}
-                m_TargetAssemblyTypeName: Core.Rhythm.Bgm.RhythmBgmPlayer, Assembly-CSharp
+                m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Bgm.RhythmBgmPlayer,
+                  Assembly-CSharp
                 m_MethodName: PlayFever
                 m_Mode: 1
                 m_Arguments:
@@ -1166,7 +1171,8 @@ MonoBehaviour:
                   m_BoolArgument: 0
                 m_CallState: 2
               - m_Target: {fileID: 1776924313}
-                m_TargetAssemblyTypeName: Core.Rhythm.Bgm.RhythmBgmSinging, Assembly-CSharp
+                m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Bgm.RhythmBgmSinging,
+                  Assembly-CSharp
                 m_MethodName: ShoutFever
                 m_Mode: 1
                 m_Arguments:
@@ -1178,7 +1184,8 @@ MonoBehaviour:
                   m_BoolArgument: 0
                 m_CallState: 2
               - m_Target: {fileID: 1197778731}
-                m_TargetAssemblyTypeName: ComboStatusDisplay, Assembly-CSharp
+                m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Display.ComboStatusDisplay,
+                  Assembly-CSharp
                 m_MethodName: ShowFever
                 m_Mode: 1
                 m_Arguments:
@@ -1193,7 +1200,7 @@ MonoBehaviour:
             m_PersistentCalls:
               m_Calls:
               - m_Target: {fileID: 1197778736}
-                m_TargetAssemblyTypeName: Core.Rhythm.Display.ScoreStatusDisplay,
+                m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Display.ScoreStatusDisplay,
                   Assembly-CSharp
                 m_MethodName: ShowFeverWarning
                 m_Mode: 1
@@ -1209,7 +1216,8 @@ MonoBehaviour:
             m_PersistentCalls:
               m_Calls:
               - m_Target: {fileID: 995254099}
-                m_TargetAssemblyTypeName: Core.Rhythm.Bgm.RhythmBgmPlayer, Assembly-CSharp
+                m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Bgm.RhythmBgmPlayer,
+                  Assembly-CSharp
                 m_MethodName: StopPlayingFever
                 m_Mode: 1
                 m_Arguments:
@@ -1221,7 +1229,7 @@ MonoBehaviour:
                   m_BoolArgument: 0
                 m_CallState: 2
               - m_Target: {fileID: 1197778731}
-                m_TargetAssemblyTypeName: Core.Rhythm.Display.ComboStatusDisplay,
+                m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Display.ComboStatusDisplay,
                   Assembly-CSharp
                 m_MethodName: Hide
                 m_Mode: 1

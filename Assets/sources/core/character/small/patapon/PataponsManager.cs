@@ -1,10 +1,10 @@
-﻿using Core.Rhythm;
-using Core.Rhythm.Command;
-using GameSound;
+﻿using PataRoad.Core.Rhythm;
+using PataRoad.Core.Rhythm.Command;
+using PataRoad.GameSound;
 using System.Linq;
 using UnityEngine;
 
-namespace Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapon
 {
     /// <summary>
     /// Gets command and drum status and sends message to Patapons.

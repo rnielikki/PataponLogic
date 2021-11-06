@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Core.Rhythm
+namespace PataRoad.Core.Rhythm
 {
     /// <summary>
     /// Called in <see cref="RhythmInput"/> method. Always follows with the input. Don't make it as Monobehaviour.

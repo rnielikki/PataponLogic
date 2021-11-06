@@ -1,4 +1,4 @@
-﻿namespace Core.Character
+﻿namespace PataRoad.Core.Character
 {
     /// <summary>
     /// This determines attack distance for <see cref="AttackMoveController"/>.

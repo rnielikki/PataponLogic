@@ -1,4 +1,4 @@
-﻿namespace Core.Rhythm
+﻿namespace PataRoad.Core.Rhythm
 {
     internal static class RhythmEnvironment
     {

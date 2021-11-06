@@ -1,4 +1,4 @@
-﻿namespace Core.Character
+﻿namespace PataRoad.Core.Character
 {
     /// <summary>
     /// Reperesents stats for every characters and equipments.

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Character.Patapon
+namespace PataRoad.Core.Character.Patapon
 {
     public class GeneralMode
     {

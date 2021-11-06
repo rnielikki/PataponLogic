@@ -1,4 +1,4 @@
-﻿namespace Core.Rhythm
+﻿namespace PataRoad.Core.Rhythm
 {
     /// <summary>
     /// Basic status of the drum hit.

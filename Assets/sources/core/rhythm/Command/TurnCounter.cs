@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Events;
 
-namespace Core.Rhythm.Command
+namespace PataRoad.Core.Rhythm.Command
 {
     /// <summary>
     /// Counts turn. Separated from timer, because "turn" can be activated or deactivated, depends on the input/command/combo state.

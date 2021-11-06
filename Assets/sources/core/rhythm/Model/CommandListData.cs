@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Core.Rhythm.Command
+namespace PataRoad.Core.Rhythm.Command
 {
     /// <summary>
     /// Contains command list, connected with <see cref="CommandTree"/>.

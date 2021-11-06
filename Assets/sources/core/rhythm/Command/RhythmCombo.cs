@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Events;
 
-namespace Core.Rhythm.Command
+namespace PataRoad.Core.Rhythm.Command
 {
     /// <summary>
     /// Defines combo status.

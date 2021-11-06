@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-namespace Core.Character
+namespace PataRoad.Core.Character
 {
     public class CharacterAnimator
     {
