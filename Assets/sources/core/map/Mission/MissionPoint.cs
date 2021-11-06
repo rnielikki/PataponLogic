@@ -74,7 +74,7 @@ namespace Core.Map
         public void FailMission()
         {
             if (IsMissionEnd) return;
-            Camera.main.GetComponent<CameraController.CameraMover>().Moving = false;
+            Camera.main.GetComponent<CameraController.CameraMover>().StopMoving();
             IsMissionEnd = true;
             OnMissionEnd.Invoke(false);
             AttachToScreen("MissionFailed");
@@ -104,7 +104,7 @@ namespace Core.Map
                 }
                 AttachToScreen("MissionComplete");
                 _soundSource.PlayOneShot(_missionSuccessMusic);
-                Camera.main.GetComponent<CameraController.CameraMover>().Moving = false;
+                Camera.main.GetComponent<CameraController.CameraMover>().StopMoving();
             }
         }
         private void AttachToScreen(string prefabName) =>
