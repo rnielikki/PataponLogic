@@ -66,6 +66,8 @@ namespace PataRoad.Core.Character
         protected AttackMoveController _attackController { get; private set; }
         public IAttackMoveData AttackMoveData { get; protected set; }
 
+        public virtual Vector2 MovingDirection { get; }
+
         protected string _bodyName = "Patapon-body";
         public virtual void Die()
         {

@@ -12,7 +12,8 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// copied arrow for throwing.
         /// </summary>
         private GameObject _copiedArrow;
-        private static readonly Vector3 _throwAdditionalForce = Vector3.up * 0.75f;
+        private static readonly Vector3 _throwAdditionalForce = Vector3.up;
+        public override float Mass { get; } = 0.2f;
         /// <summary>
         /// Minimal attack ditance, when is 100% headwind.
         /// </summary>
@@ -35,17 +36,17 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             float minForce, maxForce;
             if (attackCommandType == AttackCommandType.Defend)
             {
-                minForce = 5;
-                maxForce = 8;
+                minForce = 50;
+                maxForce = 80;
             }
             else
             {
-                minForce = 14;
-                maxForce = 17.5f;
+                minForce = 140;
+                maxForce = 170;
             }
 
             arrowForThrowing.GetComponent<WeaponInstance>()
-                .Initialize(this, 0.02f, _arrowTransform)
+                .Initialize(this, transformOriginal: _arrowTransform)
                 .Throw(minForce, maxForce, _throwAdditionalForce);
         }
     }

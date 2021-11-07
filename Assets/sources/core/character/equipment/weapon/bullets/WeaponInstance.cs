@@ -22,10 +22,10 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// <param name="mass">Mass of the object. This will affect to Tailwind.</param>
         /// <param name="transformOriginal">Transform of the object. If not set, default value is transform of <paramref name="original"/>.</param>
         /// <returns>Self.</returns>
-        public WeaponInstance Initialize(WeaponObject original, float mass = 0.1f, Transform transformOriginal = null)
+        public WeaponInstance Initialize(WeaponObject original, float mass = -1, Transform transformOriginal = null)
         {
             if (transformOriginal == null) transformOriginal = original.transform;
-            _rigidbody.mass = mass;
+            _rigidbody.mass = (mass < 0) ? original.Mass : mass;
             _holder = original.Holder;
             GetComponent<SpriteRenderer>().sprite = original.ThrowableWeaponSprite;
 
@@ -43,7 +43,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// <param name="forceMultiplierMin">Minimum value of force that will be thrown with. 1 is normal force, 0 is no force.</param>
         /// <param name="forceMultiplierMax">Maximum value of force that will be thrown with. 1 is normal force, 0 is no force.</param>
         /// <param name="additionalDir">Additional force to specific direction. Will need for Yaripon and Yumipon attack.</param>
-        public void Throw(float forceMultiplierMin, float forceMultiplierMax, Vector3 additionalDir)
+        public void Throw(float forceMultiplierMin, float forceMultiplierMax, Vector3 additionalDir = default)
         {
             var force = Random.Range(forceMultiplierMin, forceMultiplierMax);
             _rigidbody.AddForce((transform.up + additionalDir) * force);

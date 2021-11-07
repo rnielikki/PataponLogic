@@ -19,11 +19,11 @@ namespace PataRoad.Core.Character
         /// <param name="sight">Maximum sight of the target. This is equivalent to raycast distance.</param>
         /// <param name="layerMask">Masks of layers to detect. ("to") Get this value using <see cref="LayerMask"/>.</param>
         /// <param name="allowedRange">Allows to pass as "In range". This is important for range units.</param>
-        internal DistanceCalculator(SmallCharacter target, float sight, int layerMask, Vector2 direction)
+        internal DistanceCalculator(SmallCharacter target, float sight, int layerMask)
         {
             _target = target;
             _sight = sight;
-            _direction = direction.normalized;
+            _direction = target.MovingDirection;
             _layerMask = layerMask;
         }
         /// <summary>
@@ -32,14 +32,14 @@ namespace PataRoad.Core.Character
         /// <param name="target">The target game object. ("from")</param>
         /// <param name="range">Allows to pass as "In range". This is important for range units.</param>
         internal static DistanceCalculator GetPataponDistanceCalculator(Patapons.Patapon target) =>
-            new DistanceCalculator(target, Patapons.PataponEnvironment.PataponSight, LayerMask.GetMask("structures", "enemies"), Vector2.right);
+            new DistanceCalculator(target, Patapons.PataponEnvironment.PataponSight, LayerMask.GetMask("structures", "enemies"));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Hazoron (also from right to left).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         /// <param name="range">Allows to pass as "In range". This is important for range units.</param>
         internal static DistanceCalculator GetHazoronDistanceCalculator(Hazorons.Hazoron target) =>
-            new DistanceCalculator(target, Patapons.PataponEnvironment.PataponSight, LayerMask.GetMask("patapons"), Vector2.left);
+            new DistanceCalculator(target, Patapons.PataponEnvironment.PataponSight, LayerMask.GetMask("patapons"));
 
 
         //boxcast data

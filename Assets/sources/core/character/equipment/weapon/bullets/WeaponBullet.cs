@@ -14,7 +14,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         private bool _rotateOverTime;
         private bool _grounded;
         private Rigidbody2D _rigidbody;
-        public ICharacter Holder { get; set; }
+        public SmallCharacter Holder { get; set; }
         /// <summary>
         /// Defines behaviour when the bullet is grounded. Don't define any destroy instruction, it's on <see cref="_destroyTime"/>
         /// </summary>
@@ -25,6 +25,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             _rigidbody = GetComponent<Rigidbody2D>();
             _collider = GetComponent<Collider2D>();
         }
+
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (_collider.attachedRigidbody != null)

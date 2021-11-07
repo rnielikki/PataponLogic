@@ -9,11 +9,13 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         private GameObject _feverAttackObject;
         private GameObject _chargeDefenceObject;
         public override float MinAttackDistance { get; } = 10;
-        public override float WindAttackDistanceOffset { get; } = 8;
+        public override float WindAttackDistanceOffset { get; } = 5;
+        private Vector2 _direction;
 
         private void Start()
         {
             Init();
+            _direction = (Holder is Patapons.Patapon) ? Vector2.right : Vector2.left;
             _targetTransform = transform.Find("Attack");
             _attackParticles = _targetTransform.GetComponent<ParticleSystem>();
             _feverAttackObject = GetWeaponInstance("Mega-FeverAttack");
@@ -52,11 +54,11 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         }
         private void AttackFever()
         {
-            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround).AddForce(Vector2.right * 0.5f);
+            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround).AddForce(Holder.MovingDirection * 5);
         }
         private void ChargeDefend()
         {
-            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, true).AddForce(Vector2.right * 0.75f);
+            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, true).AddForce(Holder.MovingDirection * 1000);
         }
         private Rigidbody2D CreateBulletInstance(GameObject targetObject, UnityEngine.Events.UnityAction<Collider2D> groundAction, bool fixedRotation = false)
         {
@@ -69,15 +71,14 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             bulletScript.Holder = Holder;
             bulletScript.GroundAction = groundAction;
             instance.SetActive(true);
-            var rb = instance.GetComponent<Rigidbody2D>();
-            rb.mass = 0.001f;
-            return rb;
+            return instance.GetComponent<Rigidbody2D>();
         }
         //Fever Attack bullet
         private void MoveBulletOnGround(Collider2D self)
         {
+            self.attachedRigidbody.AddForce(Holder.MovingDirection * 200);
+            self.attachedRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
             self.attachedRigidbody.gravityScale = 0;
-            self.attachedRigidbody.velocity = self.attachedRigidbody.velocity.x * Vector2.right;
             self.transform.rotation = Quaternion.identity;
             self.transform.Translate(transform.up * -0.5f);
         }
@@ -85,7 +86,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         private void StopBulletOnGround(Collider2D self)
         {
             self.attachedRigidbody.gravityScale = 0;
-            self.attachedRigidbody.velocity = Vector3.zero;
+            self.attachedRigidbody.Sleep();
         }
     }
 }

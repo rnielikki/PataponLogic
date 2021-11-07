@@ -5,7 +5,12 @@ namespace PataRoad.Core.Character.Equipment.Weapon
     public abstract class WeaponObject : MonoBehaviour
     {
         public Weapon Data { get; protected set; }
-        public ICharacter Holder { get; protected set; }
+        public SmallCharacter Holder { get; protected set; }
+
+        /// <summary>
+        /// Mass of the object or throwing target. This affects when throwing weapon.
+        /// </summary>
+        public virtual float Mass { get; }
 
         public virtual float MinAttackDistance { get; }
 
@@ -20,7 +25,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
 
         protected virtual void Init()
         {
-            Holder = GetComponentInParent<ICharacter>();
+            Holder = GetComponentInParent<SmallCharacter>();
             ThrowableWeaponSprite = GetThrowableWeaponSprite();
         }
         /// <summary>

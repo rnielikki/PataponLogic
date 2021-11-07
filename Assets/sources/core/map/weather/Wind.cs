@@ -9,7 +9,11 @@ namespace PataRoad.Core.Map.Weather
         /// <summary>
         /// 0-1 range of wind magnitude. 0 is maximum headwind, 1 is maximum tailwind.
         /// </summary>
-        public float Magnitude => Mathf.InverseLerp(-_windRange, _windRange, _zone.windMain);
+        public float Magnitude => _zone.windMain;
+        /// <summary>
+        /// Determines range unit attack distance on wind. Returns 0-1 value.
+        /// </summary>
+        public float AttackOffsetOnWind => Mathf.InverseLerp(-_windRange, _windRange, _zone.windMain);
         // Start is called before the first frame update
         void Awake()
         {

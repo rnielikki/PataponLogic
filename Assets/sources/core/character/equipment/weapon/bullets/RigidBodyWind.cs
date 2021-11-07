@@ -10,7 +10,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
     {
         Rigidbody2D _rigidbody;
         private Wind _wind;
-        private static readonly Vector2 _velocityMultiplier = Vector2.right * 0.001f;
+        private static readonly Vector2 _velocityMultiplier = Vector2.right * 0.002f;
         void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
