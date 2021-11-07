@@ -34,7 +34,6 @@
         private void Awake()
         {
             _bodyName = "Root/Patapon-body";
-            AttackDistance = 0.5f;
             Init();
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Toripon;

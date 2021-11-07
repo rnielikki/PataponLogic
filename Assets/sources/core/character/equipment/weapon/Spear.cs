@@ -9,6 +9,9 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// </summary>
         private GameObject _copiedSpear;
         private Sprite _sprite;
+        private static readonly Vector3 _throwAdditionalForce = Vector3.up * 0.1f;
+        public override float AttackDistanceOffset => 5 * Map.Weather.WeatherInfo.Wind?.Magnitude ?? 0;
+
         private void Start()
         {
             Init();
@@ -23,18 +26,18 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             float minForce, maxForce;
             if (attackCommandType == AttackCommandType.Defend)
             {
-                minForce = 50;
-                maxForce = 75;
+                minForce = 30;
+                maxForce = 60;
             }
             else
             {
-                minForce = 95;
-                maxForce = 102;
+                minForce = 80;
+                maxForce = 95;
             }
 
             spearForThrowing.GetComponent<WeaponInstance>()
                 .Initialize(this)
-                .Throw(minForce, maxForce);
+                .Throw(minForce, maxForce, _throwAdditionalForce);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace PataRoad.Core.Character.Patapons
     {
         //Marching info
         //------- DO NOT SET SIGHT TO SHORTER THAN LONGEST RANGE (Mahopon) DISTANCE!
-        public const float PataponSight = 30; //After certain distance, Patapon can't find where is the enemy!
+        public const float PataponSight = 40; //After certain distance, Patapon can't find where is the enemy!
         public const float WalkingSteps = 6; //defines walking steps for one PATAPATA song.
         public const float Steps = WalkingSteps / Rhythm.RhythmEnvironment.TurnSeconds;
 

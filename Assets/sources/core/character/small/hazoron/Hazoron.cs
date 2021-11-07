@@ -17,7 +17,6 @@ namespace PataRoad.Core.Character.Hazorons
             base.Init();
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
-            Weapon = GetComponentInChildren<WeaponObject>();
             AttackMoveData = new HazoronAttackMoveData(this);
         }
 
@@ -33,10 +32,9 @@ namespace PataRoad.Core.Character.Hazorons
             return _hazorons.Min(h => h.AttackMoveData.DefaultWorldPosition);
         }
 
-        protected void InitDistanceFromHead(float attackDistance)
+        protected void InitDistanceFromHead()
         {
-            AttackDistance = attackDistance;
-            CharacterSize = transform.Find("Patapon-body/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
+            CharacterSize = transform.Find(_bodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
         public override int GetAttackDamage()

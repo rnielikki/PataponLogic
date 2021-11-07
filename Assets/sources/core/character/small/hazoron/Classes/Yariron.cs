@@ -28,7 +28,6 @@
         }
         private void Awake()
         {
-            AttackDistance = 8.5f;
             Init();
             AttackType = Equipment.Weapon.AttackType.Stab;
         }

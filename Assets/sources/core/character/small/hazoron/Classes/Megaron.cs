@@ -30,7 +30,6 @@ namespace PataRoad.Core.Character.Hazorons
         }
         private void Awake()
         {
-            AttackDistance = 10;
             Init();
             AttackType = Equipment.Weapon.AttackType.Sound;
             Class = ClassType.Megapon;

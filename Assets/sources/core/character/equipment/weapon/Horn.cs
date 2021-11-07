@@ -8,6 +8,9 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         private ParticleSystem _attackParticles;
         private GameObject _feverAttackObject;
         private GameObject _chargeDefenceObject;
+        protected override float _minAttackDistance { get; set; } = 10;
+        public override float AttackDistanceOffset => 10 * Map.Weather.WeatherInfo.Wind?.Magnitude ?? 0;
+
         private void Start()
         {
             Init();
@@ -30,11 +33,11 @@ namespace PataRoad.Core.Character.Equipment.Weapon
                 case AttackCommandType.Attack:
                     //Attack is called in two times in animation, so doesn't need so many emit count.
                     startSpeed = 6;
-                    emitCount = 5;
+                    emitCount = 4;
                     break;
                 case AttackCommandType.Defend:
                     startSpeed = 3;
-                    emitCount = 5;
+                    emitCount = 3;
                     break;
                 case AttackCommandType.Charge:
                     startSpeed = 2;

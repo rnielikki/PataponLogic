@@ -29,7 +29,6 @@
 
         private void Awake()
         {
-            AttackDistance = 20;
             Init();
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Yumipon;

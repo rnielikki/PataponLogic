@@ -59,7 +59,6 @@ namespace PataRoad.Core.Character.Patapons
             DistanceManager = GetComponent<PataponDistanceManager>();
             DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
-            Weapon = GetComponentInChildren<WeaponObject>();
             InitDistanceFromHead();
 
             RendererInfo = new PataponRendererInfo(this, _bodyName);

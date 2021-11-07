@@ -31,7 +31,6 @@ namespace PataRoad.Core.Character.Hazorons
         private void Awake()
         {
             _bodyName = "Root/Patapon-body";
-            AttackDistance = 0.5f;
             Init();
             CharacterSize = transform.Find("Root/Patapon-body/Face").GetComponent<UnityEngine.CircleCollider2D>().radius + AttackDistance;
             AttackType = Equipment.Weapon.AttackType.Stab;

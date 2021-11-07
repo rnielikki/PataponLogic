@@ -28,7 +28,6 @@
         }
         private void Awake()
         {
-            AttackDistance = 22;
             Init();
             AttackType = Equipment.Weapon.AttackType.Magic;
             Class = ClassType.Mahopon;
