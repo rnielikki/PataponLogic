@@ -57,6 +57,9 @@ namespace PataRoad.Core.Rhythm
         /// </summary>
         public static UnityEvent OnNextHalfTime { get; } = new UnityEvent();
 
+        [SerializeField]
+        private bool AutoStart = true;
+
         private void Awake()
         {
             Frequency = (int)(RhythmEnvironment.InputInterval / Time.fixedDeltaTime);
@@ -67,11 +70,16 @@ namespace PataRoad.Core.Rhythm
         }
         private void Start()
         {
-            //A bit tricky way to start
-            OnNextHalfTime.AddListener(() =>
+            if (AutoStart)
             {
-                OnNext.AddListener(OnStart.Invoke);
-            });
+                //A bit tricky way to start. Will be changed later.
+                OnNextHalfTime.AddListener(StartTimer);
+            }
+        }
+
+        public static void StartTimer()
+        {
+            OnNext.AddListener(OnStart.Invoke);
         }
 
         private void FixedUpdate()

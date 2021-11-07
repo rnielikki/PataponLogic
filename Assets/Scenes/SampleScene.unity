@@ -915,6 +915,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c43d2a570015df46b9b4e0e454744fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AutoStart: 1
 --- !u!82 &961691992
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2146,6 +2147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc8a90dbaa7b7b49b3ccef4cd592417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _windStayTime: 12
+  _windChangeInterval: 10
+  _windChangeTime: 4
+  _maxMiracleTime: 100
 --- !u!4 &1089099520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1290418071052663260, guid: b0c933dcf8bd2564d816b40ef4b515a0, type: 3}
@@ -6990,8 +6995,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1109103990}
   - {fileID: 1993247305}
+  - {fileID: 1109103990}
   - {fileID: 612824564}
   m_Father: {fileID: 0}
   m_RootOrder: 5
