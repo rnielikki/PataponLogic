@@ -8,8 +8,8 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         private ParticleSystem _attackParticles;
         private GameObject _feverAttackObject;
         private GameObject _chargeDefenceObject;
-        protected override float _minAttackDistance { get; set; } = 10;
-        public override float AttackDistanceOffset => 10 * Map.Weather.WeatherInfo.Wind?.Magnitude ?? 0;
+        public override float MinAttackDistance { get; } = 10;
+        public override float WindAttackDistanceOffset { get; } = 8;
 
         private void Start()
         {

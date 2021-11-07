@@ -13,11 +13,13 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// </summary>
         private GameObject _copiedArrow;
         private static readonly Vector3 _throwAdditionalForce = Vector3.up * 0.75f;
-        public override float AttackDistanceOffset => 10 * Map.Weather.WeatherInfo.Wind?.Magnitude ?? 0;
+        /// <summary>
+        /// Minimal attack ditance, when is 100% headwind.
+        /// </summary>
+        public override float MinAttackDistance { get; } = 20;
+        public override float WindAttackDistanceOffset { get; } = 10;
         private void Start()
         {
-            _minAttackDistance = 20;
-            AttackDistanceOffset = 18 * Map.Weather.WeatherInfo.Wind.Magnitude;
             _arrowTransform = transform.Find("Arrow");
             Init();
             _copiedArrow = GetWeaponInstance();

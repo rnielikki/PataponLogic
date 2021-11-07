@@ -40,6 +40,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         public PataponDistanceManager DistanceManager { get; private set; }
         protected PataponGroup _group { get; private set; }
+        public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * Map.Weather.WeatherInfo.Wind?.Magnitude ?? 0.5f;
 
         protected override void BeforeDie()
         {

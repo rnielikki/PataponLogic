@@ -8,9 +8,9 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// copied spear for throwing.
         /// </summary>
         private GameObject _copiedSpear;
-        private Sprite _sprite;
         private static readonly Vector3 _throwAdditionalForce = Vector3.up * 0.1f;
-        public override float AttackDistanceOffset => 5 * Map.Weather.WeatherInfo.Wind?.Magnitude ?? 0;
+        public override float MinAttackDistance { get; } = 8.5f;
+        public override float WindAttackDistanceOffset { get; } = 5;
 
         private void Start()
         {

@@ -7,15 +7,12 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         public Weapon Data { get; protected set; }
         public ICharacter Holder { get; protected set; }
 
-        protected virtual float _minAttackDistance { get; set; }
+        public virtual float MinAttackDistance { get; }
+
         /// <summary>
-        /// Attack distance of the wepaon.
+        /// Additional force from environment from WIND.
         /// </summary>
-        public virtual float AttackDistance => _minAttackDistance + AttackDistanceOffset;
-        /// <summary>
-        /// Additional force from environment, like wind.
-        /// </summary>
-        public virtual float AttackDistanceOffset { get; protected set; }
+        public virtual float WindAttackDistanceOffset { get; }
         /// <summary>
         /// Sprite of THROWABLE object, like arrows or spears.
         /// </summary>

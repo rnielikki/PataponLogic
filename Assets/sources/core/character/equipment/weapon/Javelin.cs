@@ -8,8 +8,8 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// copied spear for throwing.
         /// </summary>
         private GameObject _copiedJavelin;
-        protected override float _minAttackDistance { get; set; } = 0.5f;
-        public override float AttackDistanceOffset => Map.Weather.WeatherInfo.Wind?.Magnitude ?? 0;
+        public override float MinAttackDistance { get; } = 0.5f;
+        public override float WindAttackDistanceOffset { get; } = 1;
 
         private void Start()
         {

@@ -8,6 +8,7 @@ namespace PataRoad.Core.Character.Hazorons
     {
         //Boss doesn't have default position. Small enemy does.
         private readonly static System.Collections.Generic.List<Hazoron> _hazorons = new System.Collections.Generic.List<Hazoron>();
+        public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (1 - Map.Weather.WeatherInfo.Wind?.Magnitude ?? 0.5f);
 
         /// <summary>
         /// Remember call this on Awake() in inherited class

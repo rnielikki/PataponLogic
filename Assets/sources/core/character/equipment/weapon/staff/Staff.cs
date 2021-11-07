@@ -8,8 +8,8 @@
         public abstract void NormalAttack();
         public abstract void ChargeAttack();
         public abstract void Defend();
-        protected override float _minAttackDistance { get; set; } = 22;
-        public override float AttackDistanceOffset => 4 * Map.Weather.WeatherInfo.Wind?.Magnitude ?? 0;
+        public override float MinAttackDistance { get; } = 22;
+        public override float WindAttackDistanceOffset { get; } = 4;
         public override void Attack(AttackCommandType attackCommandType)
         {
             switch (attackCommandType)

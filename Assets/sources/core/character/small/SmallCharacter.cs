@@ -54,7 +54,7 @@ namespace PataRoad.Core.Character
         /// <summary>
         /// Attack distance WITHOUT head size. Zero for melee expected. Some range units will add the distance by Tailwind.
         /// </summary>
-        public virtual float AttackDistance => Weapon.AttackDistance;
+        public virtual float AttackDistance { get; }
         /// <summary>
         /// Character size offest from center. Patapon head size, but if they have vehicle, it's depending on vehicle's head.
         /// </summary>
