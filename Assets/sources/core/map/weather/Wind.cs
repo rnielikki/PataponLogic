@@ -39,11 +39,16 @@ namespace PataRoad.Core.Map.Weather
 
         [SerializeField]
         private int _maxMiracleTime;
+
+        [SerializeField]
+        private WindImage _image;
+
         void Awake()
         {
             _zone = GetComponent<WindZone>();
             _windChangeWaitTime = _windChangeTime / _windChangeInterval;
             _windChangeSize = _windRange / _windChangeInterval;
+            _image.Init();
             ChangeWindDirection();
         }
         public void StartChangingWind()
@@ -63,39 +68,39 @@ namespace PataRoad.Core.Map.Weather
         /// <returns>yield seconds, for waiting.</returns>
         System.Collections.IEnumerator ChangeWindDirectionCoroutine()
         {
-            _zone.windMain = 0;
+            UpdateWind(0);
             while (true)
             {
                 while (_zone.windMain > -_windRange)
                 {
                     yield return new WaitForSeconds(_windChangeWaitTime);
-                    _zone.windMain -= _windChangeSize;
+                    UpdateWind(_zone.windMain - _windChangeSize);
                 }
-                _zone.windMain = -_windRange;
+                UpdateWind(-_windRange);
                 yield return new WaitForSeconds(_windStayTime);
 
                 while (_zone.windMain < 0)
                 {
-                    _zone.windMain += _windChangeSize;
                     yield return new WaitForSeconds(_windChangeWaitTime);
+                    UpdateWind(_zone.windMain + _windChangeSize);
                 }
-                _zone.windMain = 0;
+                UpdateWind(0);
                 yield return new WaitForSeconds(_windStayTime);
 
                 while (_zone.windMain < _windRange)
                 {
                     yield return new WaitForSeconds(_windChangeWaitTime);
-                    _zone.windMain += _windChangeSize;
+                    UpdateWind(_zone.windMain + _windChangeSize);
                 }
-                _zone.windMain = _windRange;
+                UpdateWind(_windRange);
                 yield return new WaitForSeconds(_windStayTime);
 
                 while (_zone.windMain > 0)
                 {
                     yield return new WaitForSeconds(_windChangeWaitTime);
-                    _zone.windMain -= _windChangeSize;
+                    UpdateWind(_zone.windMain - _windChangeSize);
                 }
-                _zone.windMain = 0;
+                UpdateWind(0);
                 yield return new WaitForSeconds(_windStayTime);
             }
         }
@@ -112,7 +117,7 @@ namespace PataRoad.Core.Map.Weather
         }
         public System.Collections.IEnumerator StartTailwindCoroutine()
         {
-            _zone.windMain = _windRange;
+            UpdateWind(_windRange);
             while (_miracleSeconds > 0)
             {
                 yield return new WaitForSeconds(1);
@@ -123,8 +128,14 @@ namespace PataRoad.Core.Map.Weather
         }
         public void StartHeadWind()
         {
-            _zone.windMain = -_windRange;
+            UpdateWind(-_windRange);
             _onFixedWindDirection = true;
+        }
+        private void UpdateWind(float value)
+        {
+            value = Mathf.Clamp(-_windRange, value, _windRange);
+            _zone.windMain = value;
+            _image.Visualise(value, value / _windRange);
         }
     }
 }
