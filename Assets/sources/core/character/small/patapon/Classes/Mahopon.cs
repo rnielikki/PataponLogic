@@ -42,11 +42,11 @@
                 }
                 );
         }
-        protected override void Attack(bool isFever)
+        protected override void Attack()
         {
-            if (!_charged)
+            if (!Charged)
             {
-                base.Attack(false);
+                base.Attack();
             }
             else
             {

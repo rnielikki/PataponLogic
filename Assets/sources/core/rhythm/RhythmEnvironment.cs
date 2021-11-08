@@ -10,8 +10,8 @@
         public const float UpdateSecond = 0.01f; //"Fixed update" second
         public const float InputInterval = 0.5f; //Can be changed for 1/8 beat minigame
         public const float HalfInputInterval = InputInterval / 2;
-        public const float PerfectRange = 0.02f; //Was 0.05f
-        public const float GoodRange = 0.1f; //Was 0.1f
+        public const float PerfectRange = 0.23f; //Was 0.05f
+        public const float GoodRange = 0.24f; //Was 0.1f
         public const float BadRange = 0.25f;
 
         //Command

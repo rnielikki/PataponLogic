@@ -6,8 +6,9 @@
     public interface IAttackable
     {
         /// <summary>
-        /// Stat data. Even if the object is not attacking, this is necessary for defense.
+        /// Calculated *final* Stat data. If you use pipeline, hide real stat to private.
         /// </summary>
+        /// <note>Even if the object is not attacking, this is necessary for defense.</note>
         public Stat Stat { get; }
 
         /// <summary>

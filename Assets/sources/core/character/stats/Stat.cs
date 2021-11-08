@@ -110,5 +110,6 @@
                 SleepResistance = stat1.SleepResistance + stat2.SleepResistance
             };
         }
+        public Stat Copy() => (Stat)MemberwiseClone();
     }
 }

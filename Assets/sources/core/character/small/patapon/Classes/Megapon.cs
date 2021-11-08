@@ -44,20 +44,20 @@
                 );
 
         }
-        protected override void Attack(bool isFever)
+        protected override void Attack()
         {
-            if (!isFever && !_charged)
+            if (!OnFever && !Charged)
             {
-                base.Attack(false);
+                base.Attack();
             }
             else
             {
                 StartAttack("attack-fever");
             }
         }
-        protected override void Defend(bool isFever)
+        protected override void Defend()
         {
-            StartAttack(_charged ? "defend-charge" : "defend");
+            StartAttack(Charged ? "defend-charge" : "defend");
         }
     }
 }

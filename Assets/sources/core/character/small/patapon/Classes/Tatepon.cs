@@ -43,18 +43,18 @@
                 }
                 );
         }
-        protected override void Attack(bool isFever)
+        protected override void Attack()
         {
-            if (_charged)
+            if (Charged)
             {
                 StartAttack("attack-charge");
             }
-            else base.Attack(isFever);
+            else base.Attack();
         }
 
-        protected override void Defend(bool isFever)
+        protected override void Defend()
         {
-            if (!isFever && !_charged)
+            if (!OnFever && !Charged)
             {
                 CharAnimator.Animate("defend");
             }

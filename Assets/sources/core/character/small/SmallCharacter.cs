@@ -25,9 +25,9 @@ namespace PataRoad.Core.Character
         /// </summary>
         public IEquipment Protector { get; protected set; }
         /// <summary>
-        /// Current Stat that a Patapon has. Any effect can modify it.
+        /// Current Stat.
         /// </summary>
-        public Stat Stat { get; protected set; }
+        public virtual Stat Stat { get; protected set; }
         /// <summary>
         /// Default stat that a bit varies for each class.
         /// </summary>

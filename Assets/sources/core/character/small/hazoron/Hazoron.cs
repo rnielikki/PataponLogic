@@ -10,6 +10,8 @@ namespace PataRoad.Core.Character.Hazorons
         public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (1 - Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f);
 
         public override Vector2 MovingDirection => Vector2.left;
+        protected Stat _stat;
+        public override Stat Stat => _stat;
 
         /// <summary>
         /// Remember call this on Awake() in inherited class

@@ -1,5 +1,4 @@
-﻿using PataRoad.Core.Character.Equipment.Weapon;
-using PataRoad.Core.Rhythm.Command;
+﻿using PataRoad.Core.Rhythm.Command;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Patapons
@@ -17,7 +16,7 @@ namespace PataRoad.Core.Character.Patapons
         /// <summary>
         /// Represents if PONCHAKA song is used before command (and in a row). This can be used for PONCHAKA~PONPON or PONCHAKA~CHAKACHAKA command.
         /// </summary>
-        protected bool _charged { get; private set; }
+        public bool Charged { get; private set; }
 
         /// <summary>
         /// Current Patapon Index, from first of the line to the end of the line. Index starts from 0.
@@ -28,7 +27,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         public int IndexInGroup { get; internal set; }
 
-        protected CommandSong _lastSong;
+        public CommandSong LastSong { get; protected set; }
         private float _lastPerfectionPercent;
 
         public float AttackDistanceWithOffset => AttackDistance + CharacterSize;
@@ -43,6 +42,14 @@ namespace PataRoad.Core.Character.Patapons
         public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f;
         public override Vector2 MovingDirection => Vector2.right;
 
+        public bool OnFever { get; private set; }
+
+        /// <summary>
+        /// Stat before going through pipeline.
+        /// </summary>
+        protected Stat _realStat;
+        protected StatOperator _statOperator;
+
         protected override void BeforeDie()
         {
             _group.RemovePon(this);
@@ -56,6 +63,12 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         protected override void Init()
         {
+            //--- initialise sats.
+            _realStat = DefaultStat;
+            _statOperator = new StatOperator(_realStat);
+            _statOperator.Add(new PataponStatOperation(this));
+
+            //--- init
             base.Init();
             _group = GetComponentInParent<PataponGroup>();
             DistanceManager = GetComponent<PataponDistanceManager>();
@@ -92,24 +105,25 @@ namespace PataRoad.Core.Character.Patapons
         public virtual void Act(RhythmCommandModel model)
         {
             var song = model.Song;
-            var isFever = model.ComboType == ComboStatus.Fever;
-            if (_lastSong != song)
+            OnFever = model.ComboType == ComboStatus.Fever;
+            if (LastSong != song)
             {
                 CharAnimator.ClearLateAnimation();
                 AttackMoveData.WasHitLastTime = false;
             }
-            _lastSong = song;
+            LastSong = song;
             _lastPerfectionPercent = model.Percentage;
+            Stat = _statOperator.GetFinalStat();
             switch (song)
             {
                 case CommandSong.Patapata:
                     Walk();
                     break;
                 case CommandSong.Ponpon:
-                    Attack(isFever);
+                    Attack();
                     break;
                 case CommandSong.Chakachaka:
-                    Defend(isFever);
+                    Defend();
                     break;
                 case CommandSong.Ponpata:
                     Dodge();
@@ -128,7 +142,7 @@ namespace PataRoad.Core.Character.Patapons
                     DistanceManager.MoveToInitialPlace(Stat.MovementSpeed * 2);
                     break;
             }
-            _charged = song == CommandSong.Ponchaka; //Removes charged status if it isn't charging command
+            Charged = song == CommandSong.Ponchaka; //Removes charged status if it isn't charging command
         }
         public void DoMisisonCompleteGesture()
         {
@@ -148,11 +162,13 @@ namespace PataRoad.Core.Character.Patapons
         }
 
         /// <summary>
-        /// Going back to Idle status. This also means ALL FEVER/COMMAND is CANCELED. also removes PONCHAKA <see cref="_charged"/> status.
+        /// Going back to Idle status. This also means ALL FEVER/COMMAND is CANCELED. also removes PONCHAKA <see cref="Charged"/> status.
         /// </summary>
         public virtual void PlayIdle()
         {
-            _charged = false;
+            Stat = _realStat;
+            OnFever = false;
+            Charged = false;
             StopAttacking();
             CharAnimator.Animate("Idle");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
@@ -168,14 +184,14 @@ namespace PataRoad.Core.Character.Patapons
         /// <summary>
         /// PONPON Input
         /// </summary>
-        protected virtual void Attack(bool isFever)
+        protected virtual void Attack()
         {
             StartAttack("attack");
         }
         /// <summary>
         /// CHAKACHAKA Input
         /// </summary>
-        protected virtual void Defend(bool isFever)
+        protected virtual void Defend()
         {
             StartAttack("defend");
         }
