@@ -87,7 +87,6 @@ namespace PataRoad.Core.Rhythm.Command
                 }
                 _gotAnyCommandInput = false;
             });
-
             // --------------- Command sent check end
 
             //Initalizes drum beats
@@ -157,13 +156,13 @@ namespace PataRoad.Core.Rhythm.Command
                         RhythmTimer.OnNextHalfTime.AddListener(TurnCounter.Start);
                     }
                     var model = new RhythmCommandModel(_currentHits, song);
+                    model.ComboType = ComboManager.CountCombo(model);
                     if (model.PerfectCount == 4)
                     {
                         _onPerfectEnd.Invoke(model);
                     }
                     TurnCounter.OnNextTurn.AddListener(() =>
                     {
-                        ComboManager.CountCombo(model);
                         OnCommandInput.Invoke(model);
                         ClearDrumHits();
                     });

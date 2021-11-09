@@ -13,6 +13,7 @@ namespace PataRoad.Core.Character.Patapons
     {
         private System.Collections.Generic.List<Patapon> _patapons;
         private System.Collections.Generic.List<PataponGroup> _groups;
+        public System.Collections.Generic.IEnumerable<PataponGroup> Groups => _groups;
         //--- this should be general but temp value for position and patapata test
         private bool _isAlreadyIdle;
 
@@ -52,6 +53,10 @@ namespace PataRoad.Core.Character.Patapons
             _cameraMover.Target = gameObject;
 
             TurnCounter.OnTurn.AddListener(() => IsMovingForward = false);
+            TurnCounter.OnTurn.AddListener(() =>
+            {
+                if (!TurnCounter.IsPlayerTurn) General.PataponGeneral.ShoutedOnThisTurn = false;
+            });
             _missionEndPosition = GameObject.FindGameObjectWithTag("Finish").transform.position.x;
         }
         /// <summary>
@@ -74,6 +79,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         public void SendGeneralMode(RhythmCommandModel model)
         {
+            if (model.ComboType != ComboStatus.Fever) return;
             foreach (var group in _groups)
             {
                 group.General?.ActivateGeneralMode(model.Song);

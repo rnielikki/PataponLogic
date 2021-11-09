@@ -31,27 +31,26 @@ namespace PataRoad.Core.Rhythm.Command
         private bool _hasFeverChance;
         private bool _isCombo;
 
-        internal void CountCombo(RhythmCommandModel inputs)
+        internal ComboStatus CountCombo(RhythmCommandModel inputs)
         {
             if (RhythmFever.IsFever)
             {
                 if (FeverManager.WillBeFeverStatus(inputs))
                 {
-                    inputs.ComboType = ComboStatus.Fever;
+                    return ComboStatus.Fever;
                 }
                 else
                 {
-                    inputs.ComboType = ComboStatus.NoFever;
+                    return ComboStatus.NoFever;
                 }
-                return;
             }
 
             _isCombo = true;
             _comboCount++;
             if (_comboCount > 9)
             {
-                StartFever(inputs);
-                return;
+                StartFever();
+                return ComboStatus.Fever;
             }
             var perfectDrums = inputs.PerfectCount;
             if (perfectDrums == 0)
@@ -68,14 +67,14 @@ namespace PataRoad.Core.Rhythm.Command
                 {
                     if (_comboCount > 2 && perfectDrums == 4)
                     {
-                        StartFever(inputs);
-                        return;
+                        StartFever();
+                        return ComboStatus.Fever;
                     }
                     _comboSequenceCount++;
                     if (_comboSequenceCount > 3)
                     {
-                        StartFever(inputs);
-                        return;
+                        StartFever();
+                        return ComboStatus.Fever;
                     }
                     else
                     {
@@ -83,8 +82,8 @@ namespace PataRoad.Core.Rhythm.Command
                     }
                 }
             }
-            inputs.ComboType = (_hasFeverChance) ? ComboStatus.MayFever : ComboStatus.NoFever;
-            OnCombo.Invoke(new RhythmComboModel(inputs, _comboCount, _comboSequenceCount));
+            TurnCounter.OnNextTurn.AddListener(() => OnCombo.Invoke(new RhythmComboModel(inputs, _comboCount, _comboSequenceCount)));
+            return (_hasFeverChance) ? ComboStatus.MayFever : ComboStatus.NoFever;
         }
         /// <summary>
         /// Ends combo in normal status, like miss drum hit. Invokes <see cref="OnComboCanceled"/>.
@@ -109,11 +108,10 @@ namespace PataRoad.Core.Rhythm.Command
             FeverManager.Destroy();
             OnCombo.RemoveAllListeners();
         }
-        private void StartFever(RhythmCommandModel inputs)
+        private void StartFever()
         {
-            inputs.ComboType = ComboStatus.Fever;
             ClearCombo();
-            FeverManager.StartFever();
+            TurnCounter.OnNextTurn.AddListener(FeverManager.StartFever);
         }
         private void ClearCombo()
         {
@@ -121,8 +119,5 @@ namespace PataRoad.Core.Rhythm.Command
             _comboSequenceCount = 0;
             _hasFeverChance = false;
         }
-
-        // PLEASE TELL US WHEN THE "MAY ENTER FEVER" CANCELED. EVEN WIKI DOESN'T TELL IT
-        private bool IsBadDrum(RhythmCommandModel inputs) => inputs.BadCount > 1;
     }
 }

@@ -11,7 +11,7 @@ namespace PataRoad.Core.Character.Patapons
 
         private System.Collections.Generic.List<Patapon> _patapons;
 
-        public Patapon[] Patapons => _patapons.ToArray();
+        public System.Collections.Generic.IEnumerable<Patapon> Patapons => _patapons;
 
         private Display.PataponsHitPointDisplay _pataponsHitPointDisplay;
         public ClassType ClassType { get; internal set; }

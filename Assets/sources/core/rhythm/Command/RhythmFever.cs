@@ -29,12 +29,12 @@ namespace PataRoad.Core.Rhythm.Command
             {
                 if (!_isWarned)
                 {
-                    OnFeverWarning.Invoke();
+                    TurnCounter.OnNextTurn.AddListener(OnFeverWarning.Invoke);
                     _isWarned = true;
                 }
                 else
                 {
-                    EndFever();
+                    TurnCounter.OnNextTurn.AddListener(EndFever);
                     return false;
                 }
             }

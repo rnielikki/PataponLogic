@@ -2,7 +2,7 @@
 {
     internal class GeneralModeStatOperation : IStatOperation
     {
-        private StatChangingGeneralMode _mode;
+        private readonly StatChangingGeneralMode _mode;
         internal GeneralModeStatOperation(StatChangingGeneralMode mode)
         {
             _mode = mode;

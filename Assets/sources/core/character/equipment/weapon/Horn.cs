@@ -65,6 +65,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             if (!fixedRotation) instance.transform.rotation = _targetTransform.rotation;
             var bulletScript = instance.GetComponent<WeaponBullet>();
             bulletScript.Holder = Holder;
+            bulletScript.Stat = Holder.Stat;
             bulletScript.GroundAction = groundAction;
             instance.SetActive(true);
             return instance.GetComponent<Rigidbody2D>();

@@ -11,29 +11,53 @@ namespace PataRoad.Core.Character.Patapons.General
         private GeneralModeActivator _generalModeActivator;
         private ParticleSystem _effect;
         public PataponGroup Group { get; private set; }
+        private PataponsManager _pataponsManager;
+
+        public static bool ShoutedOnThisTurn { get; set; }
 
         [SerializeField]
-        private IGeneralMode _generalMode;
+        private AudioClip _generalModeSound;
+
+        //-------------------------------------------[testing]
+        private static int _counter;
+        private static IGeneralMode[] _modes = new IGeneralMode[]
+        {
+            new AttackGeneralMode(),
+            new HealingGeneralMode(),
+            new DefenceGeneralMode()
+        };
+        //-----------------------------------
 
         private void Awake()
         {
             Group = GetComponentInParent<PataponGroup>();
 
-            //_generalMode = new HealingGeneralMode();
-            _generalMode = new AttackGeneralMode();
+            //-------------------------------------------[testing]
+            IGeneralMode gen;
+            if (_counter < _modes.Length) gen = _modes[_counter];
+            else gen = null;
+            if (gen != null) _generalModeActivator = new GeneralModeActivator(gen, Group);
+            _counter++;
+            //-----------------------------------
 
-            if (_generalMode != null) _generalModeActivator = new GeneralModeActivator(_generalMode, Group);
             _effect = transform.Find(GetComponent<Patapon>().RootName + "Effect").GetComponent<ParticleSystem>();
         }
+
         public void ActivateGeneralMode(CommandSong song)
         {
+            if (_pataponsManager == null) _pataponsManager = GetComponentInParent<PataponsManager>();
             if (song == _generalModeActivator?.GeneralModeSong)
             {
                 _effect.Play();
-                _generalModeActivator.Activate();
+                if (!_generalModeActivator.OnGeneralModeCombo && !ShoutedOnThisTurn)
+                {
+                    TurnCounter.OnNextTurn.AddListener(() => GameSound.SpeakManager.Current.Play(_generalModeSound));
+                    ShoutedOnThisTurn = true;
+                }
+                _generalModeActivator.Activate(_pataponsManager.Groups);
             }
         }
-        public void CancelGeneralMode() => _generalMode?.CancelGeneralMode();
+        public void CancelGeneralMode() => _generalModeActivator?.Cancel();
         private void OnDestroy()
         {
             CancelGeneralMode();

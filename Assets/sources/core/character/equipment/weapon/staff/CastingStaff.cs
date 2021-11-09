@@ -8,22 +8,22 @@ namespace PataRoad.Core.Character.Equipment.Weapon
     /// </summary>
     public class CastingStaff : Staff
     {
-        private ParticleSystem _particles;
+        private ParticleDamaging _particles;
         private void Start()
         {
             Init();
             //Replace 0 to Data.Index for future implementation
             var instance = Instantiate(GetWeaponInstance("Staffs/0"), transform);
             instance.layer = gameObject.layer;
-            _particles = instance.GetComponent<ParticleSystem>();
+            _particles = instance.GetComponent<ParticleDamaging>();
         }
         public override void NormalAttack()
         {
-            _particles.Emit(1);
+            _particles.Emit(1, 15);
         }
         public override void ChargeAttack()
         {
-            _particles.Emit(3);
+            _particles.Emit(3, 20);
         }
 
         public override void Defend()

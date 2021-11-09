@@ -6,7 +6,7 @@ namespace PataRoad.Core.Character.Patapons.General
     {
         public abstract CommandSong ActivationCommand { get; }
         protected IStatOperation _operation;
-        private PataponGroup _group;
+        private readonly System.Collections.Generic.List<PataponGroup> _groups = new System.Collections.Generic.List<PataponGroup>();
         private readonly int _activeTurn;
         private int _leftActiveTurnCount;
 
@@ -18,17 +18,21 @@ namespace PataRoad.Core.Character.Patapons.General
 
         public void Activate(PataponGroup group)
         {
-            if (_leftActiveTurnCount > 0)
-            {
-                _leftActiveTurnCount++;
-                return;
-            }
-            _group = group;
+            if (_groups.Contains(group)) return;
+
+            _groups.Add(group);
             foreach (var patapon in group.Patapons)
             {
                 patapon.StatOperator.Add(_operation);
             }
-            DeactivateAfterTurns();
+            if (_leftActiveTurnCount > 0)
+            {
+                _leftActiveTurnCount++;
+            }
+            else
+            {
+                DeactivateAfterTurns();
+            }
         }
 
         private void DeactivateAfterTurns()
@@ -50,17 +54,20 @@ namespace PataRoad.Core.Character.Patapons.General
 
         private void Deactivate()
         {
-            foreach (var patapon in _group.Patapons)
+            foreach (var group in _groups)
             {
-                patapon.StatOperator.Remove(_operation);
+                foreach (var patapon in group.Patapons)
+                {
+                    patapon.StatOperator.Remove(_operation);
+                }
             }
+            _groups.Clear();
         }
         public abstract Stat CalculateStat(Stat stat);
 
         public void CancelGeneralMode()
         {
             _leftActiveTurnCount = 0;
-            if (_group == null) return;
             Deactivate();
             TurnCounter.OnTurn.RemoveListener(CountUntilDeactive);
         }

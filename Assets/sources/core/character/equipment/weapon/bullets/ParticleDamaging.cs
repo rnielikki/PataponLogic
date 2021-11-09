@@ -11,7 +11,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
     /// </note>
     public class ParticleDamaging : MonoBehaviour
     {
-        private ICharacter _holder;
+        private SmallCharacter _holder;
         private ParticleSystem _particleSystem;
         private Stat _stat;
         private System.Collections.Generic.List<ParticleCollisionEvent> _collisionEvents;
@@ -20,7 +20,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         {
             _collisionEvents = new System.Collections.Generic.List<ParticleCollisionEvent>();
             _particleSystem = GetComponent<ParticleSystem>();
-            _holder = GetComponentInParent<ICharacter>();
+            _holder = GetComponentInParent<SmallCharacter>();
         }
         public void Emit(int count, int startSpeed)
         {
