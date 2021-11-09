@@ -13,7 +13,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// </summary>
         private GameObject _copiedArrow;
         private static readonly Vector3 _throwAdditionalForce = Vector3.up;
-        public override float Mass { get; } = 0.2f;
+        public override float Mass { get; } = 0.175f;
         /// <summary>
         /// Minimal attack ditance, when is 100% headwind.
         /// </summary>

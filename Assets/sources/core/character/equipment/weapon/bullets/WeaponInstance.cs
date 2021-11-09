@@ -9,6 +9,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
     {
         Rigidbody2D _rigidbody;
         ICharacter _holder;
+        Stat _stat;
 
         private void Awake()
         {
@@ -45,6 +46,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// <param name="additionalDir">Additional force to specific direction. Will need for Yaripon and Yumipon attack.</param>
         public void Throw(float forceMultiplierMin, float forceMultiplierMax, Vector3 additionalDir = default)
         {
+            _stat = _holder.Stat;
             var force = Random.Range(forceMultiplierMin, forceMultiplierMax);
             _rigidbody.AddForce((transform.up + additionalDir) * force);
         }
@@ -56,7 +58,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Logic.DamageCalculator.DealDamage(_holder, collision.gameObject, collision.ClosestPoint(transform.position));
+            Logic.DamageCalculator.DealDamage(_holder, _stat, collision.gameObject, collision.ClosestPoint(transform.position));
             Destroy(gameObject);
         }
     }

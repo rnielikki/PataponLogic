@@ -24,6 +24,13 @@ namespace PataRoad.Core.Rhythm.Command
         private AudioSource _audioSource;
 
         /// <summary>
+        /// Invokes RIGHT AFTER the perfect command input.
+        /// </summary>
+        [SerializeField]
+        [Header("RIGHT AFTER getting the perfect command, without delay.")]
+        private UnityEvent<RhythmCommandModel> _onPerfectEnd;
+
+        /// <summary>
         /// Invokes when command is complete e.g. one "PATA PON DON CHAKA".
         /// </summary>
         [Header("Command Events")]
@@ -59,6 +66,7 @@ namespace PataRoad.Core.Rhythm.Command
         {
             _miracleListener.OnMiracle.AddListener(() => Debug.Log("------------------- MIRACLE ---------------------"));
 
+            _onPerfectEnd.AddListener((_) => _audioSource.PlayOneShot(_perfectSound));
             OnCommandCanceled.AddListener(ComboManager.EndCombo);
             OnCommandCanceled.AddListener(() =>
             {
@@ -151,7 +159,7 @@ namespace PataRoad.Core.Rhythm.Command
                     var model = new RhythmCommandModel(_currentHits, song);
                     if (model.PerfectCount == 4)
                     {
-                        _audioSource.PlayOneShot(_perfectSound);
+                        _onPerfectEnd.Invoke(model);
                     }
                     TurnCounter.OnNextTurn.AddListener(() =>
                     {
@@ -192,6 +200,7 @@ namespace PataRoad.Core.Rhythm.Command
         }
         private void OnDestroy()
         {
+            _onPerfectEnd.RemoveAllListeners();
             OnCommandInput.RemoveAllListeners();
             OnCommandCanceled.RemoveAllListeners();
             _miracleListener.OnMiracle.RemoveAllListeners();

@@ -85,6 +85,28 @@
         /// How much can resist from sleep status effect. Counterpart of enemy's <see cref="SleepRate"/>.
         /// </summary>
         public float SleepResistance { get; set; }
+        public void AddDamage(int amount)
+        {
+            DamageMin += amount;
+            DamageMax += amount;
+        }
+
+        public void AddDamage(float amount)
+        {
+            DamageMin += (int)amount;
+            DamageMax += (int)amount;
+        }
+
+        public void MultipleDamage(int amount)
+        {
+            DamageMin *= amount;
+            DamageMax *= amount;
+        }
+        public void MultipleDamage(float amount)
+        {
+            DamageMin = (int)(DamageMin * amount);
+            DamageMax = (int)(DamageMax * amount);
+        }
 
         public static Stat operator +(Stat stat1, Stat stat2)
         {

@@ -36,7 +36,6 @@ namespace PataRoad.Core.Character
         /// Current Hit point.
         /// <remarks>It shouldn't be bigger than <see cref="Stat.HitPoint"/> or smaller than 0. If this value is 0, it causes death.</remarks>
         /// </summary>
-
         public int CurrentHitPoint { get; protected set; }
 
         /// <summary>
@@ -68,7 +67,12 @@ namespace PataRoad.Core.Character
 
         public virtual Vector2 MovingDirection { get; }
 
-        protected string _bodyName = "Patapon-body";
+        /// <summary>
+        /// Root, which is parent of Patapon body. Default is empty, but Toripon has different root. Must add slash to end if it's not empty.
+        /// </summary>
+        public string RootName { get; protected set; } = "";
+
+        protected string _bodyName => RootName + "Patapon-body";
         public virtual void Die()
         {
             BeforeDie();
@@ -151,7 +155,7 @@ namespace PataRoad.Core.Character
                 );
         }
 
-        public abstract int GetAttackDamage();
+        public abstract int GetAttackDamage(Stat stat);
 
         public void OnAttackHit(Vector2 point) => AttackMoveData.WasHitLastTime = true;
         public void OnAttackMiss(Vector2 point)

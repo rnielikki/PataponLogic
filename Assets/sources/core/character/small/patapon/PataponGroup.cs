@@ -7,9 +7,11 @@ namespace PataRoad.Core.Character.Patapons
     /// </summary>
     public class PataponGroup : MonoBehaviour
     {
-        public PataponGeneral General { get; private set; }
+        public General.PataponGeneral General { get; private set; }
 
         private System.Collections.Generic.List<Patapon> _patapons;
+
+        public Patapon[] Patapons => _patapons.ToArray();
 
         private Display.PataponsHitPointDisplay _pataponsHitPointDisplay;
         public ClassType ClassType { get; internal set; }
@@ -21,7 +23,7 @@ namespace PataRoad.Core.Character.Patapons
         internal void Init(PataponsManager manager)
         {
             if (_patapons != null) return;
-            General = GetComponentInChildren<PataponGeneral>();
+            General = GetComponentInChildren<General.PataponGeneral>();
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
             _marchiDistance = _patapons[0].AttackDistanceWithOffset;
             _layerMask = LayerMask.GetMask("structures", "enemies");
@@ -46,6 +48,7 @@ namespace PataRoad.Core.Character.Patapons
                 _patapons[i].DistanceManager.UpdateDefaultPosition();
             }
             _pataponsHitPointDisplay.OnDead(patapon, _patapons);
+            if (patapon.IsGeneral) General = null;
             _patapons.RemoveAt(index);
             _manager.RemovePon(patapon);
         }
@@ -63,6 +66,14 @@ namespace PataRoad.Core.Character.Patapons
         public void UpdateHitPoint(Patapon patapon)
         {
             _pataponsHitPointDisplay.UpdateHitPoint(patapon);
+        }
+        public void HealAllInGroup(int amount)
+        {
+            foreach (var patapon in _patapons)
+            {
+                patapon.Heal(this, amount);
+            }
+            _pataponsHitPointDisplay.Refresh(_patapons);
         }
         internal void MoveTo(int newIndex, bool smoothMove)
         {

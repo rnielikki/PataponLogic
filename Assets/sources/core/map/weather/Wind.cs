@@ -49,7 +49,8 @@ namespace PataRoad.Core.Map.Weather
             _windChangeWaitTime = _windChangeTime / _windChangeInterval;
             _windChangeSize = _windRange / _windChangeInterval;
             _image.Init();
-            ChangeWindDirection();
+            //ChangeWindDirection();
+            StartTailwind(999);
         }
         public void StartChangingWind()
         {

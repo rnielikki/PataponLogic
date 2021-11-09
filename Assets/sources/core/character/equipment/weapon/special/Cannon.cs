@@ -6,6 +6,9 @@ namespace PataRoad.Core.Character.Equipment.Weapon
     {
         private GameObject _bullet;
         private Transform _startTransform;
+
+        public override float MinAttackDistance { get; } = 20;
+        public override float WindAttackDistanceOffset { get; } = 10;
         private void Start()
         {
             Init();

@@ -46,7 +46,7 @@
             else
             {
                 CharAnimator.Animate("attack-charge");
-                DistanceManager.MoveZero(2.5f);
+                DistanceManager.MoveZero(1.6f);
             }
         }
     }

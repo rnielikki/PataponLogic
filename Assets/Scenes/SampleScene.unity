@@ -1051,6 +1051,22 @@ MonoBehaviour:
   - {fileID: 1731768127}
   _perfectSound: {fileID: 8300000, guid: 661ecd2b172ebb2468958be9e9de1af8, type: 3}
   _audioSource: {fileID: 961691992}
+  _onPerfectEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1891515404}
+        m_TargetAssemblyTypeName: PataRoad.Core.Character.Patapons.PataponsManager,
+          Assembly-CSharp
+        m_MethodName: SendGeneralMode
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnCommandInput:
     m_PersistentCalls:
       m_Calls:
@@ -7900,7 +7916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6045221097597436734, guid: 78dc4cb9f8138bb45b0926cb7ea330e2, type: 3}
       propertyPath: _hitPoint
-      value: 9999
+      value: 9999999
       objectReference: {fileID: 0}
     - target: {fileID: 6045221098767716262, guid: 78dc4cb9f8138bb45b0926cb7ea330e2, type: 3}
       propertyPath: m_SortingLayer
@@ -9233,7 +9249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useMissionTower: 1
-  _pataponTypes: 06000000
+  _pataponTypes: 02000000
   _pataponSpeakingOnMiss:
   - {fileID: 8300000, guid: 8781d5d1c64277c4daa9ef42be3cc69f, type: 3}
   - {fileID: 8300000, guid: 23d900ac3f4831e459f0d128ea7aa3ba, type: 3}
@@ -9840,6 +9856,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MissionPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 1290418071052662819, guid: b0c933dcf8bd2564d816b40ef4b515a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1290418071052663260, guid: b0c933dcf8bd2564d816b40ef4b515a0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -9908,6 +9928,10 @@ PrefabInstance:
       propertyPath: OnMissionEnd.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
       objectReference: {fileID: 1891515404}
+    - target: {fileID: 1290418071052663261, guid: b0c933dcf8bd2564d816b40ef4b515a0, type: 3}
+      propertyPath: OnMissionEnd.m_PersistentCalls.m_Calls.Array.data[6].m_Target
+      value: 
+      objectReference: {fileID: 1776924313}
     - target: {fileID: 1290418072247043976, guid: b0c933dcf8bd2564d816b40ef4b515a0, type: 3}
       propertyPath: m_SortingLayer
       value: 1
@@ -9920,6 +9944,5 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: -1908906587
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1290418071052663263, guid: b0c933dcf8bd2564d816b40ef4b515a0, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0c933dcf8bd2564d816b40ef4b515a0, type: 3}

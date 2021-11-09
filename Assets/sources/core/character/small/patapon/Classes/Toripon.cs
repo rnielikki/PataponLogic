@@ -33,7 +33,7 @@
 
         private void Awake()
         {
-            _bodyName = "Root/Patapon-body";
+            RootName = "Root/";
             Init();
             AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Toripon;
@@ -82,6 +82,7 @@
                 StartAttack("attack-fever");
             }
         }
+
         private void FlyUp()
         {
             CharAnimator.AnimateFrom("tori-fly-up");

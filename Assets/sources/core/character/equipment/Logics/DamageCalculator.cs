@@ -9,10 +9,11 @@ namespace PataRoad.Core.Character.Equipment.Logic
         /// Calculates damage, while BEING ATTACKED. Doesn't calculate status effect damage (like fire).
         /// </summary>
         /// <param name="attacker">Who deals the damage.</param>
+        /// <param name="stat">Stat when the weapon is fired. This is necessary, especially for range attack.</param>
         /// <param name="target">Who takes the damage.</param>
         /// <param name="point">The point where the damage hit.</param>
         /// <returns><c>true</c> if found target to deal damage, otherwise <c>false</c>.</returns>
-        public static void DealDamage(ICharacter attacker, GameObject target, Vector2 point)
+        public static void DealDamage(ICharacter attacker, Stat stat, GameObject target, Vector2 point)
         {
             var component = target.GetComponentInParent<IAttackable>();
             if (component == null)
@@ -20,7 +21,7 @@ namespace PataRoad.Core.Character.Equipment.Logic
                 attacker.OnAttackMiss(point);
                 return;
             }
-            var damage = attacker.GetAttackDamage();
+            var damage = attacker.GetAttackDamage(stat);
             component.TakeDamage(damage);
             _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
             if (component.CurrentHitPoint <= 0)

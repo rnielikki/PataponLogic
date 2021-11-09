@@ -33,6 +33,7 @@ namespace PataRoad.Core.Rhythm.Bgm
         private AudioClip _feverShout;
 
         private int _offset; //on Fever, determines 1 (second music) is called first.
+        private bool _canSing = true;
 
         // Start is called before the first frame update
         void Awake()
@@ -42,9 +43,10 @@ namespace PataRoad.Core.Rhythm.Bgm
             _audioSource.velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
             InitAudioClips();
         }
-
+        public void StopSinging() => _canSing = false;
         public void Sing(RhythmCommandModel command)
         {
+            if (!_canSing) return;
             AudioClip clip;
             switch (command.ComboType)
             {

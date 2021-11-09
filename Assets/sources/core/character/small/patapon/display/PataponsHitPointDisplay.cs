@@ -144,10 +144,10 @@ namespace PataRoad.Core.Character.Patapons.Display
         }
 
         /// <summary>
-        /// Refreshes non-general patapon health bar.
+        /// Refreshes patapon health bar. This can be called when any Patapon is healed.
         /// </summary>
         /// <param name="patapons"></param>
-        private void Refresh(System.Collections.Generic.IEnumerable<Patapon> patapons)
+        public void Refresh(System.Collections.Generic.IEnumerable<Patapon> patapons)
         {
             if (_renderer == null) return;
             var alivePataponArmy = patapons.Where(p => !p.IsGeneral && p.CurrentHitPoint > 0);

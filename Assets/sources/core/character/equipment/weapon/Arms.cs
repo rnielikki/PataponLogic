@@ -28,7 +28,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             {
                 foreach (var arm in _armTriggers)
                 {
-                    arm.EnableCollider();
+                    arm.EnableAttacking(Holder.Stat);
                 }
             }
         }
@@ -36,13 +36,14 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         {
             foreach (var arm in _armTriggers)
             {
-                arm.DisableCollider();
+                arm.DisableAttacking();
             }
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Logic.DamageCalculator.DealDamage(
                 Holder,
+                Holder.Stat,
                 collision.gameObject,
                 collision.ClosestPoint(transform.position)
                 );

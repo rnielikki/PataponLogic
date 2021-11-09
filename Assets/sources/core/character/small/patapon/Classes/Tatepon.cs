@@ -39,7 +39,7 @@
                 new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
                 {
                     { "attack", GetAttackMoveModel("attack") },
-                    { "attack-charge", GetAttackMoveModel("attack-charge", AttackMoveType.Rush, movingSpeed: 1.8f) },
+                    { "attack-charge", GetAttackMoveModel("attack-charge", AttackMoveType.Rush, movingSpeed: 1.2f) },
                 }
                 );
         }
@@ -63,6 +63,11 @@
                 CharAnimator.Animate("defend-fever");
             }
             DistanceManager.MoveTo(0.75f, Stat.MovementSpeed);
+        }
+        protected override void Charge()
+        {
+            base.Charge();
+            DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }
     }
 }

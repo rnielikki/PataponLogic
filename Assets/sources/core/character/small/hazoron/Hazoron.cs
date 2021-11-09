@@ -18,6 +18,7 @@ namespace PataRoad.Core.Character.Hazorons
         /// </summary>
         protected override void Init()
         {
+            _stat = DefaultStat;
             base.Init();
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
@@ -41,7 +42,7 @@ namespace PataRoad.Core.Character.Hazorons
             CharacterSize = transform.Find(_bodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
-        public override int GetAttackDamage()
+        public override int GetAttackDamage(Stat stat)
         {
             return Random.Range(Stat.DamageMin, Stat.DamageMax);
         }

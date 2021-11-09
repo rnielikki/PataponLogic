@@ -5,26 +5,23 @@ namespace PataRoad.Core.Character.Equipment.Weapon
     class Horn : WeaponObject
     {
         private Transform _targetTransform; //transform of the bullet object when fired
-        private ParticleSystem _attackParticles;
+        private ParticleDamaging _attackParticles;
         private GameObject _feverAttackObject;
         private GameObject _chargeDefenceObject;
         public override float MinAttackDistance { get; } = 10;
         public override float WindAttackDistanceOffset { get; } = 5;
-        private Vector2 _direction;
 
         private void Start()
         {
             Init();
-            _direction = (Holder is Patapons.Patapon) ? Vector2.right : Vector2.left;
             _targetTransform = transform.Find("Attack");
-            _attackParticles = _targetTransform.GetComponent<ParticleSystem>();
+            _attackParticles = _targetTransform.GetComponent<ParticleDamaging>();
             _feverAttackObject = GetWeaponInstance("Mega-FeverAttack");
             _chargeDefenceObject = GetWeaponInstance("Mega-ChargeDefence");
         }
 
         public override void Attack(AttackCommandType attackCommandType)
         {
-            var main = _attackParticles.main;
             int startSpeed = 0;
             int emitCount = 0;
             switch (attackCommandType)
@@ -49,8 +46,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
                     ChargeDefend();
                     break;
             }
-            main.startSpeed = startSpeed;
-            _attackParticles.Emit(emitCount);
+            _attackParticles.Emit(emitCount, startSpeed);
         }
         private void AttackFever()
         {

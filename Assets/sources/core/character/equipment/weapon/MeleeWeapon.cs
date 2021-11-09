@@ -30,7 +30,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// </summary>
         /// <param name="collision">the collider from e.g. <see cref="OnTriggerEnter2D"/>.</param>
         protected void DealDamage(Collider2D collision) =>
-            Logic.DamageCalculator.DealDamage(Holder, collision.gameObject, collision.ClosestPoint(transform.position));
+            Logic.DamageCalculator.DealDamage(Holder, Holder.Stat, collision.gameObject, collision.ClosestPoint(transform.position));
 
     }
 }

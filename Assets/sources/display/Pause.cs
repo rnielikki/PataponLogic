@@ -25,7 +25,7 @@ namespace PataRoad.GameDisplay
         {
             GameObject.FindGameObjectWithTag("Finish")
             .GetComponent<Core.Map.MissionPoint>()
-            .FailMission();
+            .FailMissionNow();
             Destroy();
         }
     }

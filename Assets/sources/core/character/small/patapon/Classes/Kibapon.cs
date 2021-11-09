@@ -66,5 +66,10 @@
                 StartAttack("defend-fever");
             }
         }
+        protected override void Charge()
+        {
+            base.Charge();
+            DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
+        }
     }
 }

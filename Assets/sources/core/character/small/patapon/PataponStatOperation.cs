@@ -13,8 +13,7 @@ namespace PataRoad.Core.Character.Patapons
                 case CommandSong.Ponpon:
                     if (_patapon.Charged)
                     {
-                        input.DamageMin *= 3;
-                        input.DamageMax *= 3;
+                        input.MultipleDamage(3);
                     }
                     break;
                 case CommandSong.Chakachaka:
@@ -29,11 +28,16 @@ namespace PataRoad.Core.Character.Patapons
                     input.DamageMin /= 5;
                     input.DamageMax /= 4;
                     break;
+                default:
+                    return input;
             }
             if (_patapon.OnFever)
             {
-                input.DamageMin = (int)(input.DamageMin * 1.5f);
-                input.DamageMax = (int)(input.DamageMax * 1.5f);
+                input.MultipleDamage(1.5f);
+            }
+            if (_patapon.Charged)
+            {
+                input.MovementSpeed *= 1.5f;
             }
             return input;
         }

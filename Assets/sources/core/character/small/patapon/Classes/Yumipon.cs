@@ -54,5 +54,6 @@
                 StartAttack("attack-fever");
             }
         }
+        protected override void Charge() => ChargeWithoutMoving();
     }
 }

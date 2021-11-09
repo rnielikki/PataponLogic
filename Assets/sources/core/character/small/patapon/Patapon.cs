@@ -44,11 +44,12 @@ namespace PataRoad.Core.Character.Patapons
 
         public bool OnFever { get; private set; }
 
+
         /// <summary>
         /// Stat before going through pipeline.
         /// </summary>
         protected Stat _realStat;
-        protected StatOperator _statOperator;
+        public StatOperator StatOperator { get; private set; }
 
         protected override void BeforeDie()
         {
@@ -65,8 +66,8 @@ namespace PataRoad.Core.Character.Patapons
         {
             //--- initialise sats.
             _realStat = DefaultStat;
-            _statOperator = new StatOperator(_realStat);
-            _statOperator.Add(new PataponStatOperation(this));
+            StatOperator = new StatOperator(_realStat);
+            StatOperator.Add(new PataponStatOperation(this));
 
             //--- init
             base.Init();
@@ -78,14 +79,13 @@ namespace PataRoad.Core.Character.Patapons
 
             RendererInfo = new PataponRendererInfo(this, _bodyName);
 
-            var general = GetComponent<PataponGeneral>();
+            var general = GetComponent<General.PataponGeneral>();
             if (general != null) IsGeneral = true;
         }
 
         /// <summary>
         /// Sets distance from calculated Patapon head. Don't use this if the Patapon uses any vehicle.
         /// </summary>
-        /// <param name="attackDistance">Attack distance, without considering head size.</param>
         protected void InitDistanceFromHead()
         {
             CharacterSize = transform.Find(_bodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
@@ -113,7 +113,8 @@ namespace PataRoad.Core.Character.Patapons
             }
             LastSong = song;
             _lastPerfectionPercent = model.Percentage;
-            Stat = _statOperator.GetFinalStat();
+
+            Stat = StatOperator.GetFinalStat();
             switch (song)
             {
                 case CommandSong.Patapata:
@@ -213,6 +214,17 @@ namespace PataRoad.Core.Character.Patapons
         }
 
         /// <summary>
+        /// Some range attack (like Mahopon or Yumipon) will use it. This prevents unnecessary moving while use many PONCHAKA~PONPON.
+        /// </summary>
+        /// <note>NOT all range unit use this.</note>
+        protected void ChargeWithoutMoving()
+        {
+            CharAnimator.Animate("charge");
+            DistanceManager.StopMoving();
+        }
+
+
+        /// <summary>
         /// DONDON Input
         /// </summary>
         protected virtual void Jump()
@@ -236,14 +248,22 @@ namespace PataRoad.Core.Character.Patapons
             return base.SetAttackMoveController();
         }
 
-        public override int GetAttackDamage()
+        public override int GetAttackDamage(Stat stat)
         {
-            return Mathf.RoundToInt(Mathf.Lerp(Stat.DamageMin, Stat.DamageMax, _lastPerfectionPercent));
+            return Mathf.RoundToInt(Mathf.Lerp(stat.DamageMin, stat.DamageMax, _lastPerfectionPercent));
         }
         public override void TakeDamage(int damage)
         {
             base.TakeDamage(damage);
             _group.UpdateHitPoint(this);
+        }
+        /// <summary>
+        /// DON'T CALL THIS METHOD SEPARATELY. CALL ONLY IN <see cref="PataponGroup"/>. Otherwise heal status won't displayed!
+        /// </summary>
+        internal void Heal(PataponGroup sender, int amount)
+        {
+            if (sender != _group) return;
+            CurrentHitPoint = Mathf.Clamp(amount, CurrentHitPoint + amount, Stat.HitPoint);
         }
     }
 }

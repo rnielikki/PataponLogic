@@ -54,5 +54,6 @@
                 StartAttack("attack-charge");
             }
         }
+        protected override void Charge() => ChargeWithoutMoving();
     }
 }

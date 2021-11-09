@@ -13,11 +13,13 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         private float _bulletSpeed;
         private float _destroyDistance;
         public ICharacter Holder { get; set; }
+        private Stat _stat;
         // Start is called before the first frame update
         void Start()
         {
             _bulletSpeed = _maxDistance / Rhythm.RhythmEnvironment.TurnSeconds;
             _destroyDistance = transform.position.x + _maxDistance;
+            _stat = Holder.Stat;
         }
 
         // Update is called once per frame
@@ -31,7 +33,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Logic.DamageCalculator.DealDamage(Holder, collision.gameObject, collision.ClosestPoint(transform.position));
+            Logic.DamageCalculator.DealDamage(Holder, _stat, collision.gameObject, collision.ClosestPoint(transform.position));
         }
     }
 }

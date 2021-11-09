@@ -72,6 +72,13 @@ namespace PataRoad.Core.Character.Patapons
                 pon.MoveOnDrum(drumName);
             }
         }
+        public void SendGeneralMode(RhythmCommandModel model)
+        {
+            foreach (var group in _groups)
+            {
+                group.General?.ActivateGeneralMode(model.Song);
+            }
+        }
         /// <summary>
         /// Attach to <see cref="RhythmCommand.OnCommandInput"/>.
         /// </summary>
@@ -79,6 +86,7 @@ namespace PataRoad.Core.Character.Patapons
         public void SendAction(RhythmCommandModel model)
         {
             _isAlreadyIdle = false;
+
             foreach (var pon in _patapons)
             {
                 pon.Act(model);
@@ -96,6 +104,10 @@ namespace PataRoad.Core.Character.Patapons
             foreach (var pon in _patapons)
             {
                 pon.PlayIdle();
+            }
+            foreach (var group in _groups)
+            {
+                group.General?.CancelGeneralMode();
             }
         }
         public void Move(CommandSong song)
@@ -135,17 +147,21 @@ namespace PataRoad.Core.Character.Patapons
         }
         public void RemoveGroup(PataponGroup group)
         {
+
             var index = _groups.IndexOf(group);
             if (index < 0) return;
 
-            if (index == 0)
+            if (_groups.Count > 1)
             {
-                transform.position = _groups[1].transform.position;
-                _cameraMover.SmoothMoving = true;
-            }
-            for (int i = index + 1; i < _groups.Count; i++)
-            {
-                _groups[i].MoveTo(i - 1, index > 0);
+                if (index == 0)
+                {
+                    transform.position = _groups[1].transform.position;
+                    _cameraMover.SmoothMoving = true;
+                }
+                for (int i = index + 1; i < _groups.Count; i++)
+                {
+                    _groups[i].MoveTo(i - 1, index > 0);
+                }
             }
 
             _groups.Remove(group);
