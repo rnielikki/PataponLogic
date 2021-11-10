@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
     /// <summary>
     /// Attach this to <see cref="ParticleSystem"/> to attack, like Megapon non-fever attack.

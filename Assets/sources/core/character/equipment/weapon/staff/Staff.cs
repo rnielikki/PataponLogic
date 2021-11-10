@@ -1,9 +1,9 @@
-﻿namespace PataRoad.Core.Character.Equipment.Weapon
+﻿namespace PataRoad.Core.Character.Equipments.Weapons
 {
     /// <summary>
     /// Abstraction of some kind of staff behaviours.
     /// </summary>
-    public abstract class Staff : WeaponObject
+    public abstract class Staff : Weapon
     {
         public abstract void NormalAttack();
         public abstract void ChargeAttack();

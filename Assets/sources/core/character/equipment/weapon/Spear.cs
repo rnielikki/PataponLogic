@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    class Spear : WeaponObject
+    class Spear : Weapon
     {
         /// <summary>
         /// copied spear for throwing.
         /// </summary>
         private GameObject _copiedSpear;
-        public override float Mass { get; } = 1;
         public override float MinAttackDistance { get; } = 8.5f;
         public override float WindAttackDistanceOffset { get; } = 2;
 

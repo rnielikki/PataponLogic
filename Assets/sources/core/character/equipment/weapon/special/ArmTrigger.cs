@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
     /// <summary>
-    /// Sends arm trigger attack event to <see cref="WeaponObject"/>.
+    /// Sends arm trigger attack event to <see cref="Weapon"/>.
     /// </summary>
     internal class ArmTrigger : MonoBehaviour
     {

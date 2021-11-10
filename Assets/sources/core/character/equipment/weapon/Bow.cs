@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    class Bow : WeaponObject
+    class Bow : Weapon
     {
         /// <summary>
         /// An arrow "transform" with animation, before shooting.
@@ -13,12 +13,19 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// </summary>
         private GameObject _copiedArrow;
         private static readonly Vector3 _throwAdditionalForce = Vector3.up;
-        public override float Mass { get; } = 0.175f;
         /// <summary>
         /// Minimal attack ditance, when is 100% headwind.
         /// </summary>
         public override float MinAttackDistance { get; } = 20;
         public override float WindAttackDistanceOffset { get; } = 10;
+
+        private SpriteRenderer _bowRenderer;
+        private SpriteRenderer _arrowRenderer;
+        private void Awake()
+        {
+            LoadRenderersAndImage();
+        }
+
         private void Start()
         {
             _arrowTransform = transform.Find("Arrow");
@@ -36,18 +43,28 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             float minForce, maxForce;
             if (attackCommandType == AttackCommandType.Defend)
             {
-                minForce = 50;
-                maxForce = 80;
+                minForce = 300;
+                maxForce = 480;
             }
             else
             {
-                minForce = 140;
-                maxForce = 170;
+                minForce = 840;
+                maxForce = 1020;
             }
 
             arrowForThrowing.GetComponent<WeaponInstance>()
-                .Initialize(this, transformOriginal: _arrowTransform)
+                .Initialize(this, 0.175f, transformOriginal: _arrowTransform)
                 .Throw(minForce, maxForce, _throwAdditionalForce);
+        }
+        protected override void LoadRenderersAndImage()
+        {
+            _bowRenderer = transform.Find("Bow").GetComponent<SpriteRenderer>();
+            _arrowRenderer = transform.Find("Arrow").GetComponent<SpriteRenderer>();
+        }
+        protected override void ReplaceImage(EquipmentData equipmentData)
+        {
+            _bowRenderer.sprite = equipmentData.Image;
+            _arrowRenderer.sprite = equipmentData.FindSprite("Arrow");
         }
     }
 }

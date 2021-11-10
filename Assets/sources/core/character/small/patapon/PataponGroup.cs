@@ -15,7 +15,7 @@ namespace PataRoad.Core.Character.Patapons
 
         private Display.PataponsHitPointDisplay _pataponsHitPointDisplay;
         public ClassType ClassType { get; internal set; }
-        private float _marchiDistance;
+        private float _marchDistance;
         private LayerMask _layerMask;
 
         private PataponsManager _manager;
@@ -25,7 +25,7 @@ namespace PataRoad.Core.Character.Patapons
             if (_patapons != null) return;
             General = GetComponentInChildren<General.PataponGeneral>();
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
-            _marchiDistance = _patapons[0].AttackDistanceWithOffset;
+            _marchDistance = _patapons[0].AttackDistanceWithOffset;
             _layerMask = LayerMask.GetMask("structures", "enemies");
 
             _manager = manager;
@@ -35,7 +35,7 @@ namespace PataRoad.Core.Character.Patapons
         public bool CanGoForward()
         {
             var hit = Physics2D.Raycast(transform.position, Vector2.right, PataponEnvironment.PataponSight, _layerMask);
-            return (hit.collider == null || hit.distance > _marchiDistance) && Hazorons.Hazoron.GetClosestHazoronPosition() > transform.position.x;
+            return (hit.collider == null || hit.distance > _marchDistance) && Hazorons.Hazoron.GetClosestHazoronPosition() > transform.position.x;
         }
 
         internal void RemovePon(Patapon patapon)

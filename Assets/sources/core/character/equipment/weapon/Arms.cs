@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    class Arms : WeaponObject
+    class Arms : Weapon
     {
         private GameObject _copiedStone;
         private Transform _stoneTransform;

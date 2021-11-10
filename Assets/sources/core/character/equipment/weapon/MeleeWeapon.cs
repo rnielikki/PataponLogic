@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
     /// <summary>
     /// Represents any type of melee weapons.
     /// </summary>
     /// <remarks>Melee weapons do Slash, Stab or Crush, depends on weapon or user selection.</remarks>
-    public abstract class MeleeWeapon : WeaponObject
+    public abstract class MeleeWeapon : Weapon
     {
         protected Collider2D _collider { get; private set; }
         protected override void Init()

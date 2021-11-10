@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    class Cannon : WeaponObject
+    class Cannon : Weapon
     {
         private GameObject _bullet;
         private Transform _startTransform;

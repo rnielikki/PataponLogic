@@ -1,7 +1,7 @@
 using UnityEngine;
 using PataRoad.Core.Map.Weather;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
     /// <summary>
     /// Set direction of instantiated object.

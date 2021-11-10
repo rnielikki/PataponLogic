@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    class Horn : WeaponObject
+    class Horn : Weapon
     {
         private Transform _targetTransform; //transform of the bullet object when fired
         private ParticleDamaging _attackParticles;

@@ -11,7 +11,6 @@ namespace PataRoad.Core.Character
         /// </summary>
         public int GetAttackDamage(Stat stat);
         public UnityEngine.Vector2 MovingDirection { get; }
-        public Equipment.Weapon.AttackType AttackType { get; }
         public void OnAttackHit(UnityEngine.Vector2 point);
         public void OnAttackMiss(UnityEngine.Vector2 point);
     }

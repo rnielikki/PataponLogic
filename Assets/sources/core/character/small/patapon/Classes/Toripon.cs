@@ -6,36 +6,11 @@
         /// Determines if it needs to fly high.
         /// </summary>
         private bool _isFever;
-        protected override Stat DefaultStat
-        {
-            get => new Stat
-            {
-                HitPoint = 200,
-                Defence = 1.2f,
-                DamageMin = 1,
-                DamageMax = 11,
-                AttackSeconds = 2,
-                MovementSpeed = 9,
-                Critical = 0.1f,
-                CriticalResistance = 0.1f,
-                Knockback = 0.35f,
-                KnockbackResistance = 0.2f,
-                Stagger = 0.15f,
-                StaggerResistance = 0.1f,
-                FireRate = 0.1f,
-                FireResistance = 0.1f,
-                IceRate = 0.1f,
-                IceResistance = 0.1f,
-                SleepRate = 0.1f,
-                SleepResistance = 0.1f
-            };
-        }
 
         private void Awake()
         {
             RootName = "Root/";
             Init();
-            AttackType = Equipment.Weapon.AttackType.Stab;
             Class = ClassType.Toripon;
         }
         private void Start()
@@ -47,6 +22,7 @@
                     { "attack-fever", GetAttackMoveModel("attack-fever") },
                 }
                 );
+            WeaponLoadTest("Weapons/Bird/1");
         }
 
         public override void Act(Rhythm.Command.RhythmCommandModel model)

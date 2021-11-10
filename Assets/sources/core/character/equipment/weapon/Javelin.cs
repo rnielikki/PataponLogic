@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    class Javelin : WeaponObject
+    class Javelin : Weapon
     {
         /// <summary>
         /// copied spear for throwing.
         /// </summary>
         private GameObject _copiedJavelin;
-        public override float Mass { get; } = 2;
         public override float MinAttackDistance { get; } = 0.5f;
         public override float WindAttackDistanceOffset { get; } = 1;
 
@@ -25,15 +24,15 @@ namespace PataRoad.Core.Character.Equipment.Weapon
             switch (attackCommandType)
             {
                 case AttackCommandType.Attack:
-                    ThrowWeaponInstance(1250, 1750);
+                    ThrowWeaponInstance(625, 875);
                     break;
                 case AttackCommandType.FeverAttack:
-                    ThrowWeaponInstance(1500, 1800, -15);
-                    ThrowWeaponInstance(1800, 2000);
-                    ThrowWeaponInstance(1500, 1800, 15);
+                    ThrowWeaponInstance(750, 900, -15);
+                    ThrowWeaponInstance(900, 1000);
+                    ThrowWeaponInstance(750, 900, 15);
                     break;
                 case AttackCommandType.Defend:
-                    ThrowWeaponInstance(1000, 1100);
+                    ThrowWeaponInstance(500, 550);
                     break;
             }
             void ThrowWeaponInstance(float minForce, float maxForce, int angle = 0)

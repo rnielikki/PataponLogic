@@ -18,7 +18,7 @@ namespace PataRoad.Core.Character.Hazorons
         /// </summary>
         protected override void Init()
         {
-            _stat = DefaultStat;
+            _stat = _defaultStat;
             base.Init();
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());

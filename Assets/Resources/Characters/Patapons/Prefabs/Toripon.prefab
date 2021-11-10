@@ -459,6 +459,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1848b00e0d8bee246a9a409bc0625bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defaultStat:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _hitPoint: 170
+        _defence: 4
+        _damageMin: 1
+        _damageMax: 4
+        _attackSeconds: 2
+        _movementSpeed: 8
+        _critical: 0.1
+        _stagger: 0
+        _knockback: 0.25
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
+        _fireRate: 0
+        _iceRate: 0
+        _sleepRate: 0
+        _fireResistance: 0.1
+        _iceResistance: 0.1
+        _sleepResistance: 0.1
 --- !u!50 &6686111299779610682
 Rigidbody2D:
   serializedVersion: 4
@@ -873,6 +898,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252087eb366b41e449dd92a9000af50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: 
+  _stat:
+    id: 0
+  _mass: 2
+  _type: 0
+  _attackType: 3
+  references:
+    version: 1
+    00000000:
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _hitPoint: 0
+        _defence: 0
+        _damageMin: 0
+        _damageMax: 0
+        _attackSeconds: 0
+        _movementSpeed: 0
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
+        _fireRate: 0
+        _iceRate: 0
+        _sleepRate: 0
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!1 &917716602434545235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1308,6 +1362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 917716603080785179}
   - component: {fileID: 917716603080785178}
+  - component: {fileID: 4827895571290427649}
   m_Layer: 8
   m_Name: Helm
   m_TagString: Untagged
@@ -1381,6 +1436,46 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4827895571290427649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917716603080785156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7d42ec7b5de3a146b0212de2c7d9807, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: 
+  _stat:
+    id: 0
+  _mass: 0
+  _type: 2
+  references:
+    version: 1
+    00000000:
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _hitPoint: 0
+        _defence: 0
+        _damageMin: 0
+        _damageMax: 0
+        _attackSeconds: 0
+        _movementSpeed: 0
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
+        _fireRate: 0
+        _iceRate: 0
+        _sleepRate: 0
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!1 &917716603557557579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2043,6 +2138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1015977985425284578}
+  - component: {fileID: 4391585710626436070}
   m_Layer: 8
   m_Name: Protector
   m_TagString: Untagged
@@ -2070,6 +2166,46 @@ Transform:
   m_Father: {fileID: 1383949667135379750}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 16.047}
+--- !u!114 &4391585710626436070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1015977985425284577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99c3a0707f0014241a5815574f9e86b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: 
+  _stat:
+    id: 0
+  _mass: 0
+  _type: 1
+  references:
+    version: 1
+    00000000:
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _hitPoint: 0
+        _defence: 0
+        _damageMin: 0
+        _damageMax: 0
+        _attackSeconds: 0
+        _movementSpeed: 0
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
+        _fireRate: 0
+        _iceRate: 0
+        _sleepRate: 0
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!1 &1015977985435583286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2413,7 +2549,7 @@ GameObject:
   - component: {fileID: 1015977986252858607}
   - component: {fileID: 1015977986252858600}
   m_Layer: 8
-  m_Name: Bird-Head
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

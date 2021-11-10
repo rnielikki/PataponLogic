@@ -1,5 +1,5 @@
-using PataRoad.Core.Character.Equipment;
-using PataRoad.Core.Character.Equipment.Weapon;
+using PataRoad.Core.Character.Equipments;
+using PataRoad.Core.Character.Equipments.Weapons;
 using PataRoad.Core.Character.Patapons;
 using UnityEngine;
 
@@ -11,27 +11,16 @@ namespace PataRoad.Core.Character
     public abstract class SmallCharacter : MonoBehaviour, ICharacter
     {
         /// <summary>
-        /// Helm that the character is currently using.
-        /// <note>This will do nothing unless if <see cref="Rarepon"/> is set to normal.</note>
-        /// </summary>
-        public IEquipment Helm { get; protected set; }
-        /// <summary>
-        /// Weapon (e.g. spear, swrod...) that the character uses.
-        /// </summary>
-        public WeaponObject Weapon { get; protected set; }
-        /// <summary>
-        /// Protector (e.g. horse, shoes, shield, shoulder...) that Patapon uses.
-        /// <note>This is useless for specific classes, like Yaripon or Yumipon.</note>
-        /// </summary>
-        public IEquipment Protector { get; protected set; }
-        /// <summary>
         /// Current Stat.
         /// </summary>
         public virtual Stat Stat { get; protected set; }
+
         /// <summary>
         /// Default stat that a bit varies for each class.
         /// </summary>
-        protected abstract Stat DefaultStat { get; }
+        [SerializeReference]
+        protected Stat _defaultStat = new Stat();
+
         /// <summary>
         /// Current Hit point.
         /// <remarks>It shouldn't be bigger than <see cref="Stat.HitPoint"/> or smaller than 0. If this value is 0, it causes death.</remarks>
@@ -60,8 +49,6 @@ namespace PataRoad.Core.Character
 
         public float CharacterSize { get; protected set; }
 
-        public AttackType AttackType { get; protected set; }
-
         protected AttackMoveController _attackController { get; private set; }
         public IAttackMoveData AttackMoveData { get; protected set; }
 
@@ -73,6 +60,9 @@ namespace PataRoad.Core.Character
         public string RootName { get; protected set; } = "";
 
         protected string _bodyName => RootName + "Patapon-body";
+
+        protected EquipmentManager _equipmentManager { get; private set; }
+        public Weapon Weapon => _equipmentManager.Weapon;
         public virtual void Die()
         {
             BeforeDie();
@@ -93,10 +83,10 @@ namespace PataRoad.Core.Character
         protected virtual void Init()
         {
             //---------- USE WHEN WEAPON FEATURE IS ADDED!
-            //GetComponent<Rigidbody2D>().mass += Weapon.Data.Mass + Protector.Mass;
-            Stat = DefaultStat;
+            Stat = _defaultStat;
             CurrentHitPoint = Stat.HitPoint;
-            Weapon = GetComponentInChildren<WeaponObject>();
+            _equipmentManager = new EquipmentManager(gameObject);
+            GetComponent<Rigidbody2D>().mass += _equipmentManager.Weapon.Mass + _equipmentManager.Protector?.Mass ?? 0;
         }
 
         protected virtual void StopAttacking()

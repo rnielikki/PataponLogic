@@ -35,7 +35,7 @@ namespace PataRoad.Core.Character.Patapons
 
         public float AttackDistanceWithOffset => _patapon.AttackDistance + PataponOffset;
 
-        private void Start()
+        internal void Start()
         {
             _patapon = GetComponent<Patapon>();
             _pataponsManagerTransform = GetComponentInParent<PataponsManager>().transform;

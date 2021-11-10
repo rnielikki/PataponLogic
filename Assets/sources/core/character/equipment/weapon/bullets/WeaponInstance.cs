@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
     /// <summary>
     /// Instantiable weapon for calculating force, like Yaripon spear or Yumipon arrow.
@@ -23,7 +23,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         /// <param name="mass">Mass of the object. This will affect to Tailwind.</param>
         /// <param name="transformOriginal">Transform of the object. If not set, default value is transform of <paramref name="original"/>.</param>
         /// <returns>Self.</returns>
-        public WeaponInstance Initialize(WeaponObject original, float mass = -1, Transform transformOriginal = null)
+        public WeaponInstance Initialize(Weapon original, float mass = -1, Transform transformOriginal = null)
         {
             if (transformOriginal == null) transformOriginal = original.transform;
             _rigidbody.mass = (mass < 0) ? original.Mass : mass;
@@ -48,7 +48,7 @@ namespace PataRoad.Core.Character.Equipment.Weapon
         {
             _stat = _holder.Stat;
             var force = Random.Range(forceMultiplierMin, forceMultiplierMax);
-            _rigidbody.AddForce((transform.up + additionalDir) * force);
+            _rigidbody.AddForce((transform.up + additionalDir) * force * _rigidbody.mass);
         }
         private void Update()
         {

@@ -1,4 +1,4 @@
-﻿namespace PataRoad.Core.Character.Equipment.Weapon
+﻿namespace PataRoad.Core.Character.Equipments.Weapons
 {
     /// <summary>
     /// Defines what kind of damage will dealt. This affects damage amount, depends on the target.

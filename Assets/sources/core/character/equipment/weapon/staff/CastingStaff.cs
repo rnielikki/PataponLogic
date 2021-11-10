@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 //Let me think how to create various staffs...
-namespace PataRoad.Core.Character.Equipment.Weapon
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
     /// <summary>
     /// Represents staff that casting magic, e.g. throwing fireball.

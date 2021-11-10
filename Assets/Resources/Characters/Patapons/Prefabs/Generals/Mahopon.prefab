@@ -358,6 +358,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740278b4165a2984e9ad7ad4c71a77c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _name: 
+  _stat:
+    id: 0
+  _mass: 1
+  _type: 0
+  _attackType: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _hitPoint: 0
+        _defence: 0
+        _damageMin: 0
+        _damageMax: 0
+        _attackSeconds: 0
+        _movementSpeed: 0
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
+        _fireRate: 0
+        _iceRate: 0
+        _sleepRate: 0
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!1 &4432989598937142085
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,6 +901,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fab2def929a86d34ab78b07ae7eeebcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defaultStat:
+    id: 0
+  references:
+    version: 1
+    00000000:
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _hitPoint: 180
+        _defence: 10
+        _damageMin: 0
+        _damageMax: 0
+        _attackSeconds: 2
+        _movementSpeed: 8
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0.2
+        _staggerResistance: 0.2
+        _knockbackResistance: 0.2
+        _fireRate: 0
+        _iceRate: 0
+        _sleepRate: 0
+        _fireResistance: 0.3
+        _iceResistance: 0.3
+        _sleepResistance: 0.3
 --- !u!50 &521961560426869716
 Rigidbody2D:
   serializedVersion: 4

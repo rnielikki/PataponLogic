@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         public PataponDistanceManager DistanceManager { get; private set; }
         protected PataponGroup _group { get; private set; }
-        public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f;
+        public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f);
         public override Vector2 MovingDirection => Vector2.right;
 
         public bool OnFever { get; private set; }
@@ -65,7 +65,7 @@ namespace PataRoad.Core.Character.Patapons
         protected override void Init()
         {
             //--- initialise sats.
-            _realStat = DefaultStat;
+            _realStat = _defaultStat;
             StatOperator = new StatOperator(_realStat);
             StatOperator.Add(new PataponStatOperation(this));
 
@@ -264,6 +264,16 @@ namespace PataRoad.Core.Character.Patapons
         {
             if (sender != _group) return;
             CurrentHitPoint = Mathf.Clamp(amount, CurrentHitPoint + amount, Stat.HitPoint);
+        }
+        //------------------
+        protected void WeaponLoadTest(string path)
+        {
+            if (!IsGeneral)
+            {
+                var obj = (Resources.Load("Characters/Equipments/" + path) as GameObject).GetComponent<Equipments.EquipmentData>();
+                obj.LoadImage();
+                _realStat = _equipmentManager.Equip(obj, _realStat);
+            }
         }
     }
 }
