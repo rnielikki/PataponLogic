@@ -10,7 +10,7 @@ namespace PataRoad.Core.Character.Equipments
         /// Helm that the character is currently using.
         /// <note>This will do nothing unless if <see cref="Rarepon"/> is set to normal.</note>
         /// </summary>
-        public Equipment Helm { get; private set; }
+        public Helm Helm { get; private set; }
         /// <summary>
         /// Weapon (e.g. spear, swrod...) that the character uses.
         /// </summary>
@@ -20,6 +20,7 @@ namespace PataRoad.Core.Character.Equipments
         /// <note>This is useless for specific classes, like Yaripon or Yumipon.</note>
         /// </summary>
         public Equipment Protector { get; private set; }
+        public Rarepon Rarepon { get; private set; }
 
         private readonly Dictionary<EquipmentType, Equipment> _equipments = new Dictionary<EquipmentType, Equipment>();
 
@@ -30,7 +31,10 @@ namespace PataRoad.Core.Character.Equipments
                 if (_equipments.ContainsKey(equipment.Type)) throw new System.ArgumentException("A target cannot contain more than one identical type of equipment. Duplication found: " + equipment.Type + ", from " + equipment.name);
                 _equipments.Add(equipment.Type, equipment);
             }
-            Weapon = (Weapon)_equipments[EquipmentType.Weapon];
+            Helm = (Helm)TryGetEquipment(EquipmentType.Helm);
+            Weapon = (Weapon)TryGetEquipment(EquipmentType.Weapon);
+            Protector = TryGetEquipment(EquipmentType.Protector);
+            Rarepon = (Rarepon)TryGetEquipment(EquipmentType.Rarepon);
         }
         public Stat Equip(EquipmentData equipmentData, Stat stat)
         {
@@ -39,6 +43,11 @@ namespace PataRoad.Core.Character.Equipments
                 eq.ReplaceEqupiment(equipmentData, stat);
             }
             return stat;
+        }
+        private Equipment TryGetEquipment(EquipmentType type)
+        {
+            if (_equipments.TryGetValue(type, out Equipment equipment)) return equipment;
+            else return null;
         }
     }
 }

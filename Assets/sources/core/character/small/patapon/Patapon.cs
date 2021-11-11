@@ -9,11 +9,6 @@ namespace PataRoad.Core.Character.Patapons
     public abstract class Patapon : SmallCharacter
     {
         /// <summary>
-        /// Rarepon type of this Patapon.
-        /// </summary>
-        public Rarepon Rarepon { get; protected set; }
-
-        /// <summary>
         /// Represents if PONCHAKA song is used before command (and in a row). This can be used for PONCHAKA~PONPON or PONCHAKA~CHAKACHAKA command.
         /// </summary>
         public bool Charged { get; private set; }
@@ -272,7 +267,7 @@ namespace PataRoad.Core.Character.Patapons
             {
                 var obj = (Resources.Load("Characters/Equipments/" + path) as GameObject).GetComponent<Equipments.EquipmentData>();
                 obj.LoadImage();
-                _equipmentManager.Equip(obj, _realStat);
+                EquipmentManager.Equip(obj, _realStat);
             }
         }
     }

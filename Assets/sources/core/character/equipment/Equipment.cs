@@ -25,7 +25,7 @@ namespace PataRoad.Core.Character.Equipments
         public SmallCharacter Holder { get; protected set; }
         protected SpriteRenderer[] _spriteRenderers;
 
-        private EquipmentData _currentData;
+        protected EquipmentData _currentData;
 
         [SerializeField]
         protected EquipmentType _type;
@@ -46,20 +46,22 @@ namespace PataRoad.Core.Character.Equipments
             if (Holder == null) Holder = GetComponentInParent<SmallCharacter>();
 
             if (Type != equipmentData.Type) return;
-            if (_currentData != null) Disarm(stat);
+            RemoveDataFromStat(stat);
             ReplaceImage(equipmentData);
 
             _stat = equipmentData.Stat;
             _mass = equipmentData.Mass;
             _currentData = equipmentData;
-            Arm(stat);
+            AddDataToStat(stat);
         }
-        void Disarm(Stat stat)
+        protected void RemoveDataFromStat(Stat stat)
         {
+            if (_currentData == null) return;
             stat.Subtract(_stat);
             Holder.AddMass(-_mass);
+            _currentData = null;
         }
-        void Arm(Stat stat)
+        protected void AddDataToStat(Stat stat)
         {
             stat.Add(_stat);
             Holder.AddMass(_mass);
@@ -74,7 +76,7 @@ namespace PataRoad.Core.Character.Equipments
             if (_spriteRenderers == null) LoadRenderersAndImage();
             foreach (var renderer in _spriteRenderers)
             {
-                renderer.sprite = equipmentData.Image;
+                renderer.sprite = equipmentData?.Image;
             }
         }
     }

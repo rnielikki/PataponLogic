@@ -24,6 +24,11 @@
                 );
             WeaponLoadTest("Weapons/Bird/1");
             WeaponLoadTest("Rarepons/Gekolo");
+            EquipmentManager.Rarepon.SetToNormal(_realStat);
+            EquipmentManager.Rarepon.SetToNormal(_realStat);
+            EquipmentManager.Rarepon.SetToNormal(_realStat);
+            WeaponLoadTest("Rarepons/Gekolo");
+            WeaponLoadTest("Rarepons/Gekolo");
         }
 
         public override void Act(Rhythm.Command.RhythmCommandModel model)

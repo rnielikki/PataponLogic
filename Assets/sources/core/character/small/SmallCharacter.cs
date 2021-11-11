@@ -61,8 +61,8 @@ namespace PataRoad.Core.Character
 
         protected string _bodyName => RootName + "Patapon-body";
 
-        protected EquipmentManager _equipmentManager { get; private set; }
-        public Weapon Weapon => _equipmentManager.Weapon;
+        internal EquipmentManager EquipmentManager { get; private set; }
+        public Weapon Weapon => EquipmentManager.Weapon;
         private Rigidbody2D _rigidbody;
         public virtual void Die()
         {
@@ -85,7 +85,7 @@ namespace PataRoad.Core.Character
         {
             Stat = _defaultStat;
             CurrentHitPoint = Stat.HitPoint;
-            _equipmentManager = new EquipmentManager(gameObject);
+            EquipmentManager = new EquipmentManager(gameObject);
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
