@@ -6,22 +6,20 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     /// <summary>
     /// Meden herself doesn't attack, but boosts attack (damage)/defence (defence)/dodge (movement speed) command etc.
     /// </summary>
-    public class MedenStaff : Staff
+    public class MedenStaff : MonoBehaviour, IStaffData
+
     {
-        private void Start()
-        {
-            Init();
-        }
-        public override void NormalAttack()
+        public void Initialize(SmallCharacter holder)
         {
         }
-        public override void ChargeAttack()
+        public void NormalAttack()
         {
         }
-
-        public override void Defend()
+        public void ChargeAttack()
         {
         }
-
+        public void Defend()
+        {
+        }
     }
 }

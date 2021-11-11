@@ -3,9 +3,9 @@
 namespace PataRoad.Core.Character.Equipments
 {
     /// <summary>
-    /// Represents any equipment DATA that Patapon (or enemy) use, like spear, shield, cape, helm...
+    /// Represents any equipment DATA that Patapon (or enemy) use, like spear, shield, cape, helm. Attached to every equipment prefab.
     /// </summary>
-    public class EquipmentData : MonoBehaviour
+    public class EquipmentData : MonoBehaviour, Items.IItem
     {
         ///<summary>
         /// Name of the equipment, e.g. "Wooden Shield", "Divine Sword"

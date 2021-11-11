@@ -1,28 +1,56 @@
-﻿namespace PataRoad.Core.Character.Equipments.Weapons
+﻿using UnityEngine;
+
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
     /// <summary>
-    /// Abstraction of some kind of staff behaviours.
+    /// Abstraction of some kind of staff behaviours. Add Monobehaviour that uses <see cref="IStaffData"/> to CHILD.
     /// </summary>
-    public abstract class Staff : Weapon
+    public class Staff : Weapon
     {
-        public abstract void NormalAttack();
-        public abstract void ChargeAttack();
-        public abstract void Defend();
         public override float MinAttackDistance { get; } = 22;
         public override float WindAttackDistanceOffset { get; } = 4;
+        private IStaffData _staffData;
+        private void Start()
+        {
+            Init();
+            if (_staffData == null)
+            {
+                _staffData = GetComponentInChildren<IStaffData>();
+            }
+            _staffData.Initialize(Holder);
+        }
         public override void Attack(AttackCommandType attackCommandType)
         {
             switch (attackCommandType)
             {
                 case AttackCommandType.Attack:
-                    NormalAttack();
+                    _staffData.NormalAttack();
                     break;
                 case AttackCommandType.ChargeAttack:
-                    ChargeAttack();
+                    _staffData.ChargeAttack();
                     break;
                 case AttackCommandType.Defend:
-                    Defend();
+                    _staffData.Defend();
                     break;
+            }
+        }
+
+        //be careful, don't change but just copy from equipmentData!
+        internal override void ReplaceEqupiment(EquipmentData equipmentData)
+        {
+            base.ReplaceEqupiment(equipmentData);
+            foreach (Transform child in transform)
+            {
+                Destroy(child.gameObject);
+            }
+            _staffData = null;
+
+            foreach (Transform child in equipmentData.transform)
+            {
+                var ins = Instantiate(child.gameObject, transform);
+                var staffData = ins.GetComponent<IStaffData>();
+                //GetComponentInChldren<> doesn't work in some reason...
+                if (staffData != null) _staffData = staffData;
             }
         }
     }

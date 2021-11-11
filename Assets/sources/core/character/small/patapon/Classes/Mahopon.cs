@@ -16,6 +16,7 @@
                     { "attack-charge", GetAttackMoveModel("attack-charge") },
                 }
                 );
+            WeaponLoadTest("Weapons/Staff/1");
         }
         protected override void Attack()
         {

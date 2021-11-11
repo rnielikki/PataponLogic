@@ -16,6 +16,7 @@
                     { "attack-charge", GetAttackMoveModel("attack-charge", attackDistance: 4.5f) },
                 }
                 );
+            WeaponLoadTest("Helm/1");
         }
         protected override void Attack()
         {

@@ -6,27 +6,23 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     /// <summary>
     /// Represents staff that casting magic, e.g. throwing fireball.
     /// </summary>
-    public class CastingStaff : Staff
+    public class CastingStaff : MonoBehaviour, IStaffData
     {
         private ParticleDamaging _particles;
-        private void Start()
+        public void Initialize(SmallCharacter holder)
         {
-            Init();
-            //Replace 0 to Data.Index for future implementation
-            var instance = Instantiate(GetWeaponInstance("Staffs/0"), transform);
-            instance.layer = gameObject.layer;
-            _particles = instance.GetComponent<ParticleDamaging>();
+            _particles = GetComponent<ParticleDamaging>();
         }
-        public override void NormalAttack()
+        public void NormalAttack()
         {
             _particles.Emit(1, 15);
         }
-        public override void ChargeAttack()
+        public void ChargeAttack()
         {
             _particles.Emit(3, 20);
         }
 
-        public override void Defend()
+        public void Defend()
         {
         }
 
