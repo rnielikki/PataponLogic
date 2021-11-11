@@ -27,7 +27,7 @@ namespace PataRoad.Core.Character.Equipments
         {
             foreach (var equipment in target.GetComponentsInChildren<Equipment>())
             {
-                if (_equipments.ContainsKey(equipment.Type)) throw new System.ArgumentException("A target cannot contain more than one identical type of equipment. Duplication found: " + equipment.Type);
+                if (_equipments.ContainsKey(equipment.Type)) throw new System.ArgumentException("A target cannot contain more than one identical type of equipment. Duplication found: " + equipment.Type + ", from " + equipment.name);
                 _equipments.Add(equipment.Type, equipment);
             }
             Weapon = (Weapon)_equipments[EquipmentType.Weapon];
@@ -36,9 +36,9 @@ namespace PataRoad.Core.Character.Equipments
         {
             if (_equipments.TryGetValue(equipmentData.Type, out Equipment eq))
             {
-                eq.ReplaceEqupiment(equipmentData);
+                eq.ReplaceEqupiment(equipmentData, stat);
             }
-            return stat.Add(equipmentData.Stat);
+            return stat;
         }
     }
 }

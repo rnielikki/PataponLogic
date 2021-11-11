@@ -265,6 +265,34 @@
             SleepResistance += other.SleepResistance;
             return this;
         }
+        /// <summary>
+        /// Subtracts stat. This CHANGES value.
+        /// </summary>
+        /// <param name="other">Other stat to add. Also this won't be changed.</param>
+        /// <returns>Self, after operation.</returns>
+        public Stat Subtract(Stat other)
+        {
+            HitPoint -= other.HitPoint;
+            Defence -= other.Defence;
+            DamageMin -= other.DamageMin;
+            DamageMax -= other.DamageMax;
+            AttackSeconds -= other.AttackSeconds;
+            MovementSpeed -= other.MovementSpeed;
+            Critical -= other.Critical;
+            CriticalResistance -= other.CriticalResistance;
+            Knockback -= other.Knockback;
+            KnockbackResistance -= other.KnockbackResistance;
+            Stagger -= other.Stagger;
+            StaggerResistance -= other.StaggerResistance;
+            FireRate -= other.FireRate;
+            FireResistance -= other.FireResistance;
+            IceRate -= other.IceResistance;
+            IceResistance -= other.IceResistance;
+            SleepRate -= other.SleepRate;
+            SleepResistance -= other.SleepResistance;
+            return this;
+        }
+
         public Stat Copy() => (Stat)MemberwiseClone();
     }
 }

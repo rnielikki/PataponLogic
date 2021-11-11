@@ -272,7 +272,7 @@ namespace PataRoad.Core.Character.Patapons
             {
                 var obj = (Resources.Load("Characters/Equipments/" + path) as GameObject).GetComponent<Equipments.EquipmentData>();
                 obj.LoadImage();
-                _realStat = _equipmentManager.Equip(obj, _realStat);
+                _equipmentManager.Equip(obj, _realStat);
             }
         }
     }

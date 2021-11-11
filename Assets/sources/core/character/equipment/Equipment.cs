@@ -14,8 +14,6 @@ namespace PataRoad.Core.Character.Equipments
         protected Stat _stat = new Stat();
         public Stat Stat => _stat;
 
-
-
         /// <summary>
         /// Mass of the weapon. The mass affects to the knockback distance. Also it affects to the wind effect.
         /// </summary>
@@ -26,6 +24,8 @@ namespace PataRoad.Core.Character.Equipments
 
         public SmallCharacter Holder { get; protected set; }
         protected SpriteRenderer[] _spriteRenderers;
+
+        private EquipmentData _currentData;
 
         [SerializeField]
         protected EquipmentType _type;
@@ -40,12 +40,29 @@ namespace PataRoad.Core.Character.Equipments
             LoadRenderersAndImage();
             Holder = GetComponentInParent<SmallCharacter>();
         }
-        internal virtual void ReplaceEqupiment(EquipmentData equipmentData)
+        internal virtual void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
+            //Sometimes null but why
+            if (Holder == null) Holder = GetComponentInParent<SmallCharacter>();
+
             if (Type != equipmentData.Type) return;
+            if (_currentData != null) Disarm(stat);
             ReplaceImage(equipmentData);
+
             _stat = equipmentData.Stat;
             _mass = equipmentData.Mass;
+            _currentData = equipmentData;
+            Arm(stat);
+        }
+        void Disarm(Stat stat)
+        {
+            stat.Subtract(_stat);
+            Holder.AddMass(-_mass);
+        }
+        void Arm(Stat stat)
+        {
+            stat.Add(_stat);
+            Holder.AddMass(_mass);
         }
         protected virtual void LoadRenderersAndImage()
         {

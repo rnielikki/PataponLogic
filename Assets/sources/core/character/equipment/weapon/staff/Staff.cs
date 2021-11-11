@@ -36,9 +36,9 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
 
         //be careful, don't change but just copy from equipmentData!
-        internal override void ReplaceEqupiment(EquipmentData equipmentData)
+        internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
-            base.ReplaceEqupiment(equipmentData);
+            base.ReplaceEqupiment(equipmentData, stat);
             foreach (Transform child in transform)
             {
                 Destroy(child.gameObject);

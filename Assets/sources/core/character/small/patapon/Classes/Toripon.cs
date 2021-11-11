@@ -23,6 +23,7 @@
                 }
                 );
             WeaponLoadTest("Weapons/Bird/1");
+            WeaponLoadTest("Rarepons/Gekolo");
         }
 
         public override void Act(Rhythm.Command.RhythmCommandModel model)

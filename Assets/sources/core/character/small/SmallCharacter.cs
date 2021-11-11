@@ -63,6 +63,7 @@ namespace PataRoad.Core.Character
 
         protected EquipmentManager _equipmentManager { get; private set; }
         public Weapon Weapon => _equipmentManager.Weapon;
+        private Rigidbody2D _rigidbody;
         public virtual void Die()
         {
             BeforeDie();
@@ -82,11 +83,10 @@ namespace PataRoad.Core.Character
 
         protected virtual void Init()
         {
-            //---------- USE WHEN WEAPON FEATURE IS ADDED!
             Stat = _defaultStat;
             CurrentHitPoint = Stat.HitPoint;
             _equipmentManager = new EquipmentManager(gameObject);
-            GetComponent<Rigidbody2D>().mass += _equipmentManager.Weapon.Mass + _equipmentManager.Protector?.Mass ?? 0;
+            _rigidbody = GetComponent<Rigidbody2D>();
         }
 
         protected virtual void StopAttacking()
@@ -155,5 +155,6 @@ namespace PataRoad.Core.Character
         }
 
         public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
+        public void AddMass(float mass) => _rigidbody.mass += mass;
     }
 }

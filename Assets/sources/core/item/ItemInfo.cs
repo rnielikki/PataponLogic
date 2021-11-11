@@ -3,6 +3,7 @@
     class ItemInfo
     {
         public IItem Item { get; }
+
         public int Amount { get; }
     }
 }
