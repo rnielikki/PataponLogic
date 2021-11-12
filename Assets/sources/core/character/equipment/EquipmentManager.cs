@@ -19,7 +19,7 @@ namespace PataRoad.Core.Character.Equipments
         /// Protector (e.g. horse, shoes, shield, shoulder...) that Patapon uses.
         /// <note>This is useless for specific classes, like Yaripon or Yumipon.</note>
         /// </summary>
-        public Equipment Protector { get; private set; }
+        public Protector Protector { get; private set; }
         public Rarepon Rarepon { get; private set; }
         private Dictionary<EquipmentType, Equipment> _map;
 
@@ -27,7 +27,7 @@ namespace PataRoad.Core.Character.Equipments
         {
             Helm = target.GetComponentInChildren<Helm>();
             Weapon = target.GetComponentInChildren<Weapon>();
-            Protector = target.GetComponentInChildren<Equipment>();
+            Protector = target.GetComponentInChildren<Protector>();
             Rarepon = target.GetComponentInChildren<Rarepon>();
             _map = new Dictionary<EquipmentType, Equipment>()
             {

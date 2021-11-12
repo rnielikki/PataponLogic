@@ -18,8 +18,6 @@ namespace PataRoad.Core.Character.Patapons
                     { "attack-fever", GetAttackMoveModel("attack-fever") },
                 }
                 );
-
-            WeaponLoadTest("Weapons/Spear/1");
         }
         protected override void Attack()
         {

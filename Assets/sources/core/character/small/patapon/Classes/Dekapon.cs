@@ -10,8 +10,6 @@
         void Start()
         {
             AddDefaultModelsToAttackMoveController();
-            WeaponLoadTest("Rarepons/Funmyaga");
-            WeaponLoadTest("Rarepons/Gekolo");
         }
         protected override void Attack()
         {

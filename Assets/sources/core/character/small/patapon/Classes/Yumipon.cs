@@ -19,7 +19,6 @@ namespace PataRoad.Core.Character.Patapons
                 }
                 );
 
-            WeaponLoadTest("Weapons/Bow/1");
         }
         protected override void Attack()
         {

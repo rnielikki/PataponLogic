@@ -2,35 +2,32 @@
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    /// <summary>
-    /// Abstraction of some kind of staff behaviours. Add Monobehaviour that uses <see cref="IStaffData"/> to CHILD.
-    /// </summary>
     public class Staff : Weapon
     {
         public override float MinAttackDistance { get; } = 22;
         public override float WindAttackDistanceOffset { get; } = 4;
-        private IStaffData _staffData;
+        private IStaffActions _staffAction;
         private void Start()
         {
             Init();
-            if (_staffData == null)
+            if (_staffAction == null)
             {
-                _staffData = GetComponentInChildren<IStaffData>();
+                _staffAction = GetComponentInChildren<IStaffActions>();
             }
-            _staffData.Initialize(Holder);
+            _staffAction.Initialize(Holder);
         }
         public override void Attack(AttackCommandType attackCommandType)
         {
             switch (attackCommandType)
             {
                 case AttackCommandType.Attack:
-                    _staffData.NormalAttack();
+                    _staffAction.NormalAttack();
                     break;
                 case AttackCommandType.ChargeAttack:
-                    _staffData.ChargeAttack();
+                    _staffAction.ChargeAttack();
                     break;
                 case AttackCommandType.Defend:
-                    _staffData.Defend();
+                    _staffAction.Defend();
                     break;
             }
         }
@@ -43,14 +40,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 Destroy(child.gameObject);
             }
-            _staffData = null;
+            _staffAction = null;
 
-            foreach (Transform child in equipmentData.transform)
+            foreach (var gameObj in (equipmentData as StaffData).AdditionalPrefabs)
             {
-                var ins = Instantiate(child.gameObject, transform);
-                var staffData = ins.GetComponent<IStaffData>();
+                var ins = Instantiate(gameObj, transform);
+                var staffData = ins.GetComponent<IStaffActions>();
                 //GetComponentInChldren<> doesn't work in some reason...
-                if (staffData != null) _staffData = staffData;
+                if (staffData != null) _staffAction = staffData;
             }
         }
     }

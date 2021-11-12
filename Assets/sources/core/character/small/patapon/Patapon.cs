@@ -165,6 +165,7 @@ namespace PataRoad.Core.Character.Patapons
             OnFever = false;
             Charged = false;
             StopAttacking();
+            CharAnimator.Animate("Idle");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }
         /// <summary>
@@ -259,14 +260,13 @@ namespace PataRoad.Core.Character.Patapons
             CurrentHitPoint = Mathf.Clamp(amount, CurrentHitPoint + amount, Stat.HitPoint);
         }
         //------------------
-        protected void WeaponLoadTest(string path)
+        protected void WeaponLoadTest(string path, int index)
         {
             if (!IsGeneral)
             {
-                var obj = (Resources.Load("Characters/Equipments/" + path) as GameObject).GetComponent<Equipments.EquipmentData>();
-                obj.LoadImage();
-                Debug.Log(obj.GetInstanceID());
-                EquipmentManager.Equip(obj, _realStat);
+                var data = Items.EquipmentDataLoader.GetEquipment(path, index);
+                if (data != null) EquipmentManager.Equip(data, _realStat);
+                else Debug.Log("data is null :(");
             }
         }
     }

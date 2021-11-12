@@ -4,6 +4,7 @@ namespace PataRoad.Core.Items
 {
     public class ItemDrop : MonoBehaviour
     {
+        private static AudioClip _sound;
         private IItem _item;
         private static GameObject _template;
         private float _timeToExist;
@@ -27,6 +28,7 @@ namespace PataRoad.Core.Items
 
         public static void DropItem(IItem item, Vector2 position, float timeToExist)
         {
+            if (_sound == null) _sound = Resources.Load<AudioClip>("Items/Sounds/item-obtain");
             if (_template == null) _template = Resources.Load<GameObject>("Map/Items/ItemDrop");
             var itemInstance = Instantiate(_template);
             itemInstance.transform.position = position;
@@ -40,6 +42,7 @@ namespace PataRoad.Core.Items
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            GameSound.SpeakManager.Current.Play(_sound);
             Destroy(gameObject);
         }
     }

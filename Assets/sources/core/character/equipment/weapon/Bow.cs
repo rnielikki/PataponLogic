@@ -64,7 +64,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         protected override void ReplaceImage(EquipmentData equipmentData)
         {
             _bowRenderer.sprite = equipmentData.Image;
-            _arrowRenderer.sprite = equipmentData.FindSprite("Arrow");
+            _arrowRenderer.sprite = (equipmentData as BowData).ArrowImage;
         }
     }
 }

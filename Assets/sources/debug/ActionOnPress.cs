@@ -1,3 +1,5 @@
+using PataRoad.Core.Items;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -26,16 +28,15 @@ namespace PataRoad.AppDebug
         private void PerformAction(CallbackContext _context) => _action.Invoke();
         public void KillFirst()
         {
-            var loaded = Resources.Load<GameObject>("Characters/Equipments/Weapons/Bird/1");
-            var res = loaded.GetComponent<Core.Character.Equipments.EquipmentData>();
-            res.LoadImage();
-            Core.Items.ItemDrop.DropItem(res, Vector2.zero, 9999999);
+            GetComponent<Core.Character.Patapons.PataponsManager>().Groups.First().Patapons.First().Die();
+        }
+        public void DropItem()
+        {
+            IItem item1 = ItemLoader.Load(ItemType.Equipment, "Bird", 1);
+            IItem item2 = ItemLoader.Load(ItemType.Equipment, "Helm", 1);
 
-            loaded = Resources.Load<GameObject>("Characters/Equipments/Helm/1");
-            res = loaded.GetComponent<Core.Character.Equipments.EquipmentData>();
-            res.LoadImage();
-            Core.Items.ItemDrop.DropItem(res, Vector2.right, 9999999);
-            //GetComponent<Core.Character.Patapons.PataponsManager>().Groups.First().Patapons.First().Die();
+            ItemDrop.DropItem(item1, Vector2.zero, 9999999);
+            ItemDrop.DropItem(item2, Vector2.right, 9999999);
         }
     }
 }

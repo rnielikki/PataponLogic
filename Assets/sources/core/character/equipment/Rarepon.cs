@@ -25,13 +25,13 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 }
             }
             base.ReplaceEqupiment(equipmentData, stat);
+            IsNormal = false;
         }
 
         protected override void ReplaceImage(EquipmentData equipmentData)
         {
             base.ReplaceImage(equipmentData);
-            var color = equipmentData.GetComponent<SpriteRenderer>().color;
-            IsNormal = false;
+            var color = (equipmentData as RareponData).Color;
 
             Changecolor(color);
 
@@ -52,6 +52,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 helm.ShowEqupiment();
             }
+            IsNormal = true;
             base.ReplaceImage(null);
             RemoveDataFromStat(stat);
         }

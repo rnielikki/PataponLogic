@@ -10,6 +10,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             Load();
             _defaultImage = _spriteRenderers[0].sprite;
         }
+        internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
+        {
+            if (!Holder.EquipmentManager.Rarepon.IsNormal) return;
+            base.ReplaceEqupiment(equipmentData, stat);
+        }
         internal void HideEqupiment(Stat stat)
         {
             ReplaceImage(null);

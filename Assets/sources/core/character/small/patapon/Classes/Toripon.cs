@@ -22,9 +22,9 @@
                     { "attack-fever", GetAttackMoveModel("attack-fever") },
                 }
                 );
-            //WeaponLoadTest("Weapons/Bird/1");
-            WeaponLoadTest("Rarepons/Funmyaga");
-            WeaponLoadTest("Rarepons/Funmyaga");
+            WeaponLoadTest("Bird", 1);
+            WeaponLoadTest("Rarepons", 1);
+            WeaponLoadTest("Helm", 1);
         }
 
         public override void Act(Rhythm.Command.RhythmCommandModel model)

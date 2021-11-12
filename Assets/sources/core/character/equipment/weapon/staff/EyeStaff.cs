@@ -2,7 +2,7 @@
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    public class EyeStaff : MonoBehaviour, IStaffData
+    public class EyeStaff : MonoBehaviour, IStaffActions
     {
         private SmallCharacter _holder;
         private EyeStaffDamaging _damaging;
