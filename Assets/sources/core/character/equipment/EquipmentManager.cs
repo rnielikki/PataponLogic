@@ -21,33 +21,29 @@ namespace PataRoad.Core.Character.Equipments
         /// </summary>
         public Equipment Protector { get; private set; }
         public Rarepon Rarepon { get; private set; }
-
-        private readonly Dictionary<EquipmentType, Equipment> _equipments = new Dictionary<EquipmentType, Equipment>();
+        private Dictionary<EquipmentType, Equipment> _map;
 
         public EquipmentManager(GameObject target)
         {
-            foreach (var equipment in target.GetComponentsInChildren<Equipment>())
+            Helm = target.GetComponentInChildren<Helm>();
+            Weapon = target.GetComponentInChildren<Weapon>();
+            Protector = target.GetComponentInChildren<Equipment>();
+            Rarepon = target.GetComponentInChildren<Rarepon>();
+            _map = new Dictionary<EquipmentType, Equipment>()
             {
-                if (_equipments.ContainsKey(equipment.Type)) throw new System.ArgumentException("A target cannot contain more than one identical type of equipment. Duplication found: " + equipment.Type + ", from " + equipment.name);
-                _equipments.Add(equipment.Type, equipment);
-            }
-            Helm = (Helm)TryGetEquipment(EquipmentType.Helm);
-            Weapon = (Weapon)TryGetEquipment(EquipmentType.Weapon);
-            Protector = TryGetEquipment(EquipmentType.Protector);
-            Rarepon = (Rarepon)TryGetEquipment(EquipmentType.Rarepon);
+                { EquipmentType.Helm, Helm},
+                { EquipmentType.Weapon, Weapon},
+                { EquipmentType.Protector, Protector},
+                { EquipmentType.Rarepon, Rarepon}
+            };
         }
         public Stat Equip(EquipmentData equipmentData, Stat stat)
         {
-            if (_equipments.TryGetValue(equipmentData.Type, out Equipment eq))
+            if (_map.TryGetValue(equipmentData.Type, out Equipment eq))
             {
                 eq.ReplaceEqupiment(equipmentData, stat);
             }
             return stat;
-        }
-        private Equipment TryGetEquipment(EquipmentType type)
-        {
-            if (_equipments.TryGetValue(type, out Equipment equipment)) return equipment;
-            else return null;
         }
     }
 }

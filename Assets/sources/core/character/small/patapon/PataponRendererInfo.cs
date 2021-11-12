@@ -44,19 +44,23 @@ namespace PataRoad.Core.Character.Patapons
             if (_weaponRendererObjects.Length != 0) _weaponRendererLayerId = _weaponRendererObjects[0].layer;
 
             BodyTransform = patapon.transform.Find(rootName);
-            SetBoundingBoxSize(renderers);
+            SetBoundingBoxSize(patapon);
         }
 
-        private void SetBoundingBoxSize(Renderer[] renderers)
+        private void SetBoundingBoxSize(Patapon patapon)
         {
-            Vector2 min = new Vector2(Mathf.Infinity, Mathf.Infinity);
-            Vector2 max = new Vector2(Mathf.NegativeInfinity, Mathf.NegativeInfinity);
-            foreach (var renderer in renderers)
+            var pos = patapon.transform.Find(patapon.RootName + "_CameraPos");
+            Vector2 posData;
+            if (pos == null)
             {
-                min = Vector2.Min(min, renderer.bounds.min);
-                max = Vector2.Max(max, renderer.bounds.max);
+                posData = patapon.transform.Find(patapon.BodyName + "/Face/eye0").position;
+                posData.y += 0.2f;
             }
-            BoundingOffset = new Vector2((min.x + max.x) / 2, (min.y + max.y) / 2) - (Vector2)BodyTransform.position;
+            else
+            {
+                posData = pos.position;
+            }
+            BoundingOffset = posData;
         }
         public void StartRenderMode(int layer)
         {

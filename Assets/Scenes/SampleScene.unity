@@ -288,7 +288,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -824033901
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 530bd5c4dc9063e489118dc27ee621e6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1935,7 +1935,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -824033901
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -2255,7 +2255,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 964304869
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 1
   m_RenderMode: 0
   m_SortMode: 0
@@ -7037,6 +7037,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _defaultStat._damageMax
+      value: 9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _defaultStat._damageMin
+      value: 9999
+      objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126799, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -9214,6 +9222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1891515403}
   - component: {fileID: 1891515404}
+  - component: {fileID: 1891515405}
   m_Layer: 0
   m_Name: Patapons
   m_TagString: Player
@@ -9249,11 +9258,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useMissionTower: 1
-  _pataponTypes: 0100000006000000
+  _pataponTypes: 06000000
   _pataponSpeakingOnMiss:
   - {fileID: 8300000, guid: 8781d5d1c64277c4daa9ef42be3cc69f, type: 3}
   - {fileID: 8300000, guid: 23d900ac3f4831e459f0d128ea7aa3ba, type: 3}
   _onPataponDeadSound: {fileID: 8300000, guid: d862cca47a4803a47840087011622d19, type: 3}
+--- !u!114 &1891515405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891515402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f83958cf6d945dd42a51a5286b64decd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _input:
+    m_Name: Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 826a03af-23cb-4077-84b6-9dc4162d37c3
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 980c52ab-72f4-4219-a60d-e8d6bd6cb955
+      m_Path: <Keyboard>/x
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input
+      m_Flags: 0
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1891515405}
+        m_TargetAssemblyTypeName: PataRoad.Debug.ActionOnPress, Assembly-CSharp
+        m_MethodName: KillFirst
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1954277370
 GameObject:
   m_ObjectHideFlags: 0

@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ec09e91c81900f14ab00d44638a664f7, type: 3}
   m_Color: {r: 0.9137255, g: 0.827451, b: 0.5568628, a: 1}
@@ -96,8 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07630dd1bfb8cc54280660ce4f2f085b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _description: 
+  _path: Characters/Equipments/Rarepons/Funmyaga
+  _test: 0
+  _name: Meow
+  _description: Meow meow meow? meow meow!
   _stat:
     id: 0
   _mass: 0
@@ -107,11 +109,11 @@ MonoBehaviour:
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _hitPoint: 100
+        _hitPoint: 0
         _defence: 0
         _damageMin: 0
         _damageMax: 0
-        _attackSeconds: -0.5
+        _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0
         _stagger: 0

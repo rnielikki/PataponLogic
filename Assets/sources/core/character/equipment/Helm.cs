@@ -8,7 +8,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void Awake()
         {
             Load();
-            _type = EquipmentType.Helm;
             _defaultImage = _spriteRenderers[0].sprite;
         }
         internal void HideEqupiment(Stat stat)

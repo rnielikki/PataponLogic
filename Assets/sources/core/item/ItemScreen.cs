@@ -1,18 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemScreen : MonoBehaviour
+namespace PataRoad.Core.Items
 {
-    // Start is called before the first frame update
-    void Start()
+    internal class ItemScreen : MonoBehaviour
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //Dictionary<IItem, int> _itemMap = 
+        internal static void AddToScreen(IItem item)
+        {
+        }
     }
 }

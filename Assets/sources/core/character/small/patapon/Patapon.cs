@@ -72,7 +72,7 @@ namespace PataRoad.Core.Character.Patapons
             CharAnimator = new CharacterAnimator(GetComponent<Animator>());
             InitDistanceFromHead();
 
-            RendererInfo = new PataponRendererInfo(this, _bodyName);
+            RendererInfo = new PataponRendererInfo(this, BodyName);
 
             var general = GetComponent<General.PataponGeneral>();
             if (general != null) IsGeneral = true;
@@ -83,14 +83,13 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         protected void InitDistanceFromHead()
         {
-            CharacterSize = transform.Find(_bodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
+            CharacterSize = transform.Find(BodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
         public void MoveOnDrum(string drumName)
         {
             StopAttacking();
             CharAnimator.Animate(drumName);
-            DistanceManager.StopMoving();
         }
 
         /// <summary>
@@ -166,7 +165,6 @@ namespace PataRoad.Core.Character.Patapons
             OnFever = false;
             Charged = false;
             StopAttacking();
-            CharAnimator.Animate("Idle");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }
         /// <summary>
@@ -267,6 +265,7 @@ namespace PataRoad.Core.Character.Patapons
             {
                 var obj = (Resources.Load("Characters/Equipments/" + path) as GameObject).GetComponent<Equipments.EquipmentData>();
                 obj.LoadImage();
+                Debug.Log(obj.GetInstanceID());
                 EquipmentManager.Equip(obj, _realStat);
             }
         }

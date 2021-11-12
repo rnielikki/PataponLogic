@@ -96,11 +96,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07630dd1bfb8cc54280660ce4f2f085b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
-  _description: 
+  _path: Characters/Equipments/Weapons/Spear/1
+  _test: 0
+  _name: Wing Spear
+  _description: This contains Toripons' will, but sitll can't fly.
   _stat:
     id: 0
-  _mass: 1
+  _mass: 0.5
   _type: 0
   references:
     version: 1
@@ -109,8 +111,8 @@ MonoBehaviour:
       data:
         _hitPoint: 0
         _defence: 0
-        _damageMin: 0
-        _damageMax: 0
+        _damageMin: 5
+        _damageMax: 15
         _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0

@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character.Hazorons
 
         protected void InitDistanceFromHead()
         {
-            CharacterSize = transform.Find(_bodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
+            CharacterSize = transform.Find(BodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
         public override int GetAttackDamage(Stat stat)

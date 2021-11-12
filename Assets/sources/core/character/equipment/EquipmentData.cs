@@ -1,12 +1,16 @@
-﻿using UnityEngine;
+﻿using PataRoad.Core.Items;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments
 {
     /// <summary>
     /// Represents any equipment DATA that Patapon (or enemy) use, like spear, shield, cape, helm. Attached to every equipment prefab.
     /// </summary>
-    public class EquipmentData : MonoBehaviour, Items.IItem
+    public class EquipmentData : MonoBehaviour, IItem
     {
+        [SerializeField]
+        private string _path;
+        public string Path => _path;
         ///<summary>
         /// Name of the equipment, e.g. "Wooden Shield", "Divine Sword"
         /// </summary>
@@ -41,6 +45,8 @@ namespace PataRoad.Core.Character.Equipments
         protected EquipmentType _type;
         public EquipmentType Type => _type;
 
+        public ItemType ItemType => ItemType.Equipment;
+
         public void LoadImage()
         {
             if (Image != null) return;
@@ -52,5 +58,10 @@ namespace PataRoad.Core.Character.Equipments
             Image = transform.Find(transformName).GetComponent<SpriteRenderer>().sprite;
         }
         public Sprite FindSprite(string transformName) => transform.Find(transformName).GetComponent<SpriteRenderer>().sprite;
+        /// <summary>
+        /// Add this value to the sprite position, to put it center.
+        /// </summary>
+        /// <returns>Pivot offset from center.</returns>
+        public Vector2 GetPivotOffset() => new Vector2(Image.pivot.x / Image.rect.width - 0.5f, Image.pivot.y / Image.rect.height - 0.5f);
     }
 }

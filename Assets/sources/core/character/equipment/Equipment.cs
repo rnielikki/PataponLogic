@@ -27,10 +27,6 @@ namespace PataRoad.Core.Character.Equipments
 
         protected EquipmentData _currentData;
 
-        [SerializeField]
-        protected EquipmentType _type;
-        public EquipmentType Type => _type;
-
         private void Awake()
         {
             Load();
@@ -45,7 +41,6 @@ namespace PataRoad.Core.Character.Equipments
             //Sometimes null but why
             if (Holder == null) Holder = GetComponentInParent<SmallCharacter>();
 
-            if (Type != equipmentData.Type) return;
             RemoveDataFromStat(stat);
             ReplaceImage(equipmentData);
 

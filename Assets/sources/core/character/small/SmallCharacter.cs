@@ -59,7 +59,7 @@ namespace PataRoad.Core.Character
         /// </summary>
         public string RootName { get; protected set; } = "";
 
-        protected string _bodyName => RootName + "Patapon-body";
+        internal string BodyName => RootName + "Patapon-body";
 
         internal EquipmentManager EquipmentManager { get; private set; }
         public Weapon Weapon => EquipmentManager.Weapon;

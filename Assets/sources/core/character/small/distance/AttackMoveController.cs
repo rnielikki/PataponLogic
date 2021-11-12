@@ -11,8 +11,9 @@ namespace PataRoad.Core.Character
         /// <c>true</c> if it's hit in last time. if it doesn't, it may stop animating and move.
         /// </summary>
 
-        private float _movingSpeed;
-        private float _attackSeconds;
+        private SmallCharacter _character;
+        private float _movingSpeed => _character.Stat.MovementSpeed;
+        private float _attackSeconds => _character.Stat.AttackSeconds;
         private CharacterAnimator _animator;
 
         private AttackMoveModel _currentModel;
@@ -30,12 +31,10 @@ namespace PataRoad.Core.Character
 
         void Awake()
         {
-            var character = GetComponent<SmallCharacter>();
-            _data = character.AttackMoveData;
-            _movingSpeed = character.Stat.MovementSpeed;
-            _attackSeconds = character.Stat.AttackSeconds;
-            _animator = character.CharAnimator;
-            _distanceCalculator = character.DistanceCalculator;
+            _character = GetComponent<SmallCharacter>();
+            _data = _character.AttackMoveData;
+            _animator = _character.CharAnimator;
+            _distanceCalculator = _character.DistanceCalculator;
         }
         /// <summary>
         /// Adds model instructions for any type of future attacking command.

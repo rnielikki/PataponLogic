@@ -22,13 +22,9 @@
                     { "attack-fever", GetAttackMoveModel("attack-fever") },
                 }
                 );
-            WeaponLoadTest("Weapons/Bird/1");
-            WeaponLoadTest("Rarepons/Gekolo");
-            EquipmentManager.Rarepon.SetToNormal(_realStat);
-            EquipmentManager.Rarepon.SetToNormal(_realStat);
-            EquipmentManager.Rarepon.SetToNormal(_realStat);
-            WeaponLoadTest("Rarepons/Gekolo");
-            WeaponLoadTest("Rarepons/Gekolo");
+            //WeaponLoadTest("Weapons/Bird/1");
+            WeaponLoadTest("Rarepons/Funmyaga");
+            WeaponLoadTest("Rarepons/Funmyaga");
         }
 
         public override void Act(Rhythm.Command.RhythmCommandModel model)

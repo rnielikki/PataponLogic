@@ -13,7 +13,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void Awake()
         {
             Load();
-            _type = EquipmentType.Rarepon;
         }
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
