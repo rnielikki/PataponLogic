@@ -15,6 +15,10 @@ namespace PataRoad.GameSound
             _audioSource = GetComponent<AudioSource>();
             Current = this;
         }
+        private void OnDestroy()
+        {
+            Current = null;
+        }
         public void Play(AudioClip clip) =>
             _audioSource.PlayOneShot(clip);
     }

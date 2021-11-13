@@ -64,6 +64,8 @@ namespace PataRoad.Core.Character
         internal EquipmentManager EquipmentManager { get; private set; }
         public Weapon Weapon => EquipmentManager.Weapon;
         private Rigidbody2D _rigidbody;
+        [SerializeField]
+        private UnityEngine.Events.UnityEvent _onAfterDeath;
         public virtual void Die()
         {
             BeforeDie();
@@ -74,6 +76,7 @@ namespace PataRoad.Core.Character
                 CharAnimator.Animate("die");
                 yield return new WaitForSeconds(1);
                 AfterDie();
+                _onAfterDeath.Invoke();
                 Destroy(gameObject);
             }
         }

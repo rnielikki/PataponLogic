@@ -696,6 +696,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1107452048}
     m_Modifications:
+    - target: {fileID: 8625201061726857681, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625201061726857681, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625201061726857681, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625201061726857681, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625201061726857681, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625201061726857681, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8625201061726857681, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8625201061726857685, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -765,6 +793,8 @@ GameObject:
   m_Component:
   - component: {fileID: 808337594}
   - component: {fileID: 808337596}
+  - component: {fileID: 808337595}
+  - component: {fileID: 808337597}
   m_Layer: 5
   m_Name: ItemsStatus
   m_TagString: Untagged
@@ -791,6 +821,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 1, y: 1}
+--- !u!114 &808337595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808337593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce0158eaae5e29c48b7e5b07c6074504, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _obtainingSound: {fileID: 8300000, guid: 40e4540ed88d00d42a2b09cde56dee97, type: 3}
+  _itemDropTemplate: {fileID: 1874491526598655898, guid: 33e6cfc01ff32bb4089fe265c0ed7a0a, type: 3}
+  _itemInScreenTemplate: {fileID: 8452127470488151790, guid: dd6a1537dadd0ce46a3426fa38a2a9e0, type: 3}
 --- !u!222 &808337596
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -799,6 +844,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 808337593}
   m_CullTransparentMesh: 1
+--- !u!114 &808337597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808337593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 2
+  m_StartCorner: 1
+  m_StartAxis: 1
+  m_CellSize: {x: 65, y: 65}
+  m_Spacing: {x: 5, y: 5}
+  m_Constraint: 1
+  m_ConstraintCount: 8
 --- !u!1 &810315055
 GameObject:
   m_ObjectHideFlags: 0
@@ -7035,15 +7104,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126796, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _defaultStat._damageMax
-      value: 9999
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _defaultStat._damageMin
-      value: 9999
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1998209853}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126799, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: m_RootOrder
@@ -9258,7 +9355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _useMissionTower: 1
-  _pataponTypes: 08000000
+  _pataponTypes: 0300000008000000
   _pataponSpeakingOnMiss:
   - {fileID: 8300000, guid: 8781d5d1c64277c4daa9ef42be3cc69f, type: 3}
   - {fileID: 8300000, guid: 23d900ac3f4831e459f0d128ea7aa3ba, type: 3}
@@ -9461,6 +9558,35 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6647991443700256609, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
   m_PrefabInstance: {fileID: 1993247304}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1998209852 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7869386983148126796, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+  m_PrefabInstance: {fileID: 1109103989}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1998209853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998209852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemInfo:
+    id: 0
+  _timeToExist: 15
+  _chanceToDrop: 1
+  references:
+    version: 1
+    00000000:
+      type: {class: ItemMetadata, ns: PataRoad.Core.Items, asm: Assembly-CSharp}
+      data:
+        _type: 0
+        _group: Arms
+        _index: 1
 --- !u!1 &2025613691
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,21 +17,21 @@ namespace PataRoad.Core.Items
         /// <param name="name">Name of the data.</param>
         /// <param name="index">Unique index for the data.</param>
         /// <returns>Equipment data.</returns>
-        public static EquipmentData GetEquipment(string name, int index)
+        public static EquipmentData GetEquipment(ItemMetadata metaData)
         {
-            if (!_loadedData.TryGetValue(name, out Dictionary<int, EquipmentData> dataSet))
+            if (!_loadedData.TryGetValue(metaData.Group, out Dictionary<int, EquipmentData> dataSet))
             {
-                _loadedData.Add(name, new Dictionary<int, EquipmentData>());
+                _loadedData.Add(metaData.Group, new Dictionary<int, EquipmentData>());
             }
-            else if (dataSet.TryGetValue(index, out EquipmentData data))
+            else if (dataSet.TryGetValue(metaData.Index, out EquipmentData data))
             {
                 return data;
             }
 
-            var loadedResource = Resources.Load<EquipmentData>($"Items/Equipments/{name}/{index}");
+            var loadedResource = Resources.Load<EquipmentData>($"Items/Equipments/{metaData.Group}/{metaData.Index}");
             if (loadedResource == null) return null;
 
-            _loadedData[name].Add(index, loadedResource);
+            _loadedData[metaData.Group].Add(metaData.Index, loadedResource);
             loadedResource.Id = System.Guid.NewGuid();
             return loadedResource;
         }

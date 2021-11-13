@@ -32,11 +32,6 @@ namespace PataRoad.AppDebug
         }
         public void DropItem()
         {
-            IItem item1 = ItemLoader.Load(ItemType.Equipment, "Bird", 1);
-            IItem item2 = ItemLoader.Load(ItemType.Equipment, "Helm", 1);
-
-            ItemDrop.DropItem(item1, Vector2.zero, 9999999);
-            ItemDrop.DropItem(item2, Vector2.right, 9999999);
         }
     }
 }
