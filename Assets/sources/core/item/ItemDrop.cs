@@ -12,37 +12,64 @@ namespace PataRoad.Core.Items
         private bool _moving;
         private bool _obtained;
 
+        private AudioClip _sound;
+        private UnityEngine.Events.UnityAction _action;
+
         // Start is called before the first frame update
-        private void SetItem(IItem item, float time)
+        private void SetItem(IItem item, float time, UnityEngine.Events.UnityAction action, AudioClip sound)
         {
+            Init(time, action, sound);
+
             _item = item;
-            _backgroundRenderer = GetComponent<SpriteRenderer>();
-            _renderer = transform.Find("Item").GetComponent<SpriteRenderer>();
             _renderer.sprite = item.Image;
 
             if (item is Character.Equipments.EquipmentData eq)
             {
                 _renderer.transform.position += (Vector3)eq.GetPivotOffset();
             }
+        }
+        private void SetItem(Sprite image, float time, UnityEngine.Events.UnityAction action, AudioClip sound)
+        {
+            Init(time, action, sound);
+            _renderer.sprite = image;
+        }
+        private void Init(float time, UnityEngine.Events.UnityAction action, AudioClip sound)
+        {
+            _sound = sound ?? ItemManager.Current.ObtainingSound;
+            _action = action ?? AddToScreen;
+            _backgroundRenderer = GetComponent<SpriteRenderer>();
+            _renderer = transform.Find("Item").GetComponent<SpriteRenderer>();
 
             _timeToExist = time;
             _fullTimeToExist = time;
         }
 
-        public static void DropItemOnRandom(ItemMetadata data, Vector2 position, float timeToExist, float chance)
+        public static void DropItemOnRandom(Sprite image, Vector2 position, float timeToExist, float chance, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
         {
-            DropItem(data, position, timeToExist);
+            DropItem(image, position, timeToExist, action, sound);
         }
-        public static void DropItem(ItemMetadata data, Vector2 position, float timeToExist)
+        public static void DropItemOnRandom(ItemMetadata data, Vector2 position, float timeToExist, float chance, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
+        {
+            if (Random.Range(0, 1) < Mathf.Clamp01(chance)) DropItem(data, position, timeToExist, action, sound);
+        }
+        public static void DropItem(ItemMetadata data, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
         {
             IItem item = ItemLoader.Load(data);
             if (item == null)
             {
                 throw new System.ArgumentException($"No item matches for {data.Type}/{data.Group}/{data.Index}");
             }
+            GetItemDropGameObject(position).GetComponent<ItemDrop>().SetItem(item, timeToExist, action, sound);
+        }
+        public static void DropItem(Sprite image, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
+        {
+            GetItemDropGameObject(position).GetComponent<ItemDrop>().SetItem(image, timeToExist, action, sound);
+        }
+        private static GameObject GetItemDropGameObject(Vector2 position)
+        {
             var itemInstance = Instantiate(ItemManager.Current.ItemDropTemplate);
             itemInstance.transform.position = position;
-            itemInstance.GetComponent<ItemDrop>().SetItem(item, timeToExist);
+            return itemInstance;
         }
         private void Update()
         {
@@ -65,17 +92,20 @@ namespace PataRoad.Core.Items
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (_obtained) return;
-            GameSound.SpeakManager.Current.Play(ItemManager.Current.ObtainingSound);
-
-            GetComponent<Collider2D>().enabled = false;
             _obtained = true;
 
+            GetComponent<Collider2D>().enabled = false;
             _backgroundRenderer.enabled = false;
-            ItemManager.AddToScreen(_item);
+
+            //----------------------
+            GameSound.SpeakManager.Current.Play(_sound);
+            _action();
+            //----------------------
 
             _renderer.color = Color.white;
             _fullTimeToExist = _timeToExist = 0.5f;
             _moving = true;
         }
+        private void AddToScreen() => ItemManager.AddToScreen(_item);
     }
 }

@@ -9549,7 +9549,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6647991443700256610, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256611, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256611, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256611, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1993247307}
+    - target: {fileID: 6647991443700256611, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256611, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256611, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256611, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
@@ -9558,6 +9586,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6647991443700256609, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
   m_PrefabInstance: {fileID: 1993247304}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1993247306 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6647991443700256610, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
+  m_PrefabInstance: {fileID: 1993247304}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1993247307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993247306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeToExist: 15
+  _chanceToDrop: 1
+  _itemInfo:
+    id: 0
+  _useImageInsteadOfItem: 1
+  _image: {fileID: 21300000, guid: a5e3cd7277bdbbc4bab9e8d207493b27, type: 3}
+  _events:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1891515404}
+        m_TargetAssemblyTypeName: PataRoad.Core.Character.Patapons.PataponsManager,
+          Assembly-CSharp
+        m_MethodName: HealAll
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 200
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _sound: {fileID: 8300000, guid: 6e83eb49cbb5ebf4cb0831bf574d8629, type: 3}
+  references:
+    version: 1
+    00000000:
+      type: {class: ItemMetadata, ns: PataRoad.Core.Items, asm: Assembly-CSharp}
+      data:
+        _type: 0
+        _group: Arms
+        _index: 1
 --- !u!1 &1998209852 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7869386983148126796, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
@@ -9575,10 +9651,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemInfo:
-    id: 0
   _timeToExist: 15
   _chanceToDrop: 1
+  _itemInfo:
+    id: 0
+  _useImageInsteadOfItem: 0
+  _image: {fileID: 0}
+  _events:
+    m_PersistentCalls:
+      m_Calls: []
+  _sound: {fileID: 0}
   references:
     version: 1
     00000000:

@@ -185,6 +185,13 @@ namespace PataRoad.Core.Character.Patapons
                 }
             }
         }
+        public void HealAll(int amount)
+        {
+            foreach (var group in _groups)
+            {
+                group.HealAllInGroup(amount);
+            }
+        }
         private void OnDestroy()
         {
             IsMovingForward = false;
