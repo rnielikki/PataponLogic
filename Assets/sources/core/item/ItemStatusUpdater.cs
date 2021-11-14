@@ -6,29 +6,29 @@ namespace PataRoad.Core.Items
     public class ItemStatusUpdater : MonoBehaviour
     {
         Text _text;
-        int _amount;
+        public int Amount { get; private set; }
         private GameObject _textContainer;
-        private IItem _item;
+        public IItem Item { get; private set; }
         // Start is called before the first frame update
         void Awake()
         {
             _text = GetComponentInChildren<Text>(true);
             _textContainer = _text.transform.parent.gameObject;
-            _amount = 1;
+            Amount = 1;
         }
         public void SetItem(IItem item)
         {
-            _item = item;
+            Item = item;
             transform.Find("Image").GetComponent<Image>().sprite = item.Image;
         }
         public void IncreaseCount()
         {
-            if (_amount < 2)
+            if (Amount < 2)
             {
                 _textContainer.SetActive(true);
             }
-            _amount++;
-            _text.text = _amount.ToString();
+            Amount++;
+            _text.text = Amount.ToString();
         }
     }
 }

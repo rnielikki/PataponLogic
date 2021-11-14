@@ -35,7 +35,10 @@ namespace PataRoad.Core.Items
         }
         private void Init(float time, UnityEngine.Events.UnityAction action, AudioClip sound)
         {
-            _sound = sound ?? ItemManager.Current.ObtainingSound;
+            //Should do same thing but simply doesn't work. Weird.
+            //_sound = sound ?? ItemManager.Current.ObtainingSound
+            if (sound == null) _sound = ItemManager.Current.ObtainingSound;
+            else _sound = sound;
             _action = action ?? AddToScreen;
             _backgroundRenderer = GetComponent<SpriteRenderer>();
             _renderer = transform.Find("Item").GetComponent<SpriteRenderer>();
@@ -44,25 +47,41 @@ namespace PataRoad.Core.Items
             _fullTimeToExist = time;
         }
 
-        public static void DropItemOnRandom(Sprite image, Vector2 position, float timeToExist, float chance, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
+        /// <summary>
+        /// Drops item by item data.
+        /// </summary>
+        /// <param name="item">Item, from <see cref="ItemLoader.GetItem(ItemType, string, int)"/> or <see cref="ItemLoader.GetRandomItem(ItemType, int, int)"/>.</param>
+        /// <param name="position">position to drop.</param>
+        /// <param name="timeToExist">After this time, item will be disappear.</param>
+        /// <param name="action">Action to perform when get item. If <c>null</c>, player "obtains" the item.</param>
+        /// <param name="sound">Sound to play when get item. If <c>null</c>, default Patapon item obtaining sound will be played.</param>
+        /// <returns><c>true</c> if item is successfully dropped, otherwise <c>false</c>.</returns>
+        /// <note>Hint: The return value can be used for unique item drop sequence.</note>
+        public static bool DropItem(IItem item, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
         {
-            DropItem(image, position, timeToExist, action, sound);
-        }
-        public static void DropItemOnRandom(IItem item, Vector2 position, float timeToExist, float chance, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
-        {
-            if (Random.Range(0, 1) < Mathf.Clamp01(chance)) DropItem(item, position, timeToExist, action, sound);
-        }
-        public static void DropItem(IItem item, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
-        {
+            if (item == null) return false;
             GetItemDropGameObject(position).GetComponent<ItemDrop>().SetItem(item, timeToExist, action, sound);
+            return true;
         }
-        public static void DropItem(Sprite image, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
+
+        /// <summary>
+        /// Drops item by image and action.
+        /// </summary>
+        /// <param name="image">The image to show on item.</param>
+        /// <param name="position">Item position to drop.</param>
+        /// <param name="timeToExist">After this time, item will be disappear.</param>
+        /// <param name="action">Action to perform when get item. If <c>null</c>, the item drop ALWAYS FAILS.</param>
+        /// <param name="sound">Sound to play when get item. If <c>null</c>, default Patapon item obtaining sound will be played.</param>
+        /// <returns><c>true</c> if item is successfully dropped, otherwise <c>false</c>.</returns>
+        public static bool DropItem(Sprite image, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
         {
+            if (image == null || action == null) return false;
             GetItemDropGameObject(position).GetComponent<ItemDrop>().SetItem(image, timeToExist, action, sound);
+            return true;
         }
         private static GameObject GetItemDropGameObject(Vector2 position)
         {
-            var itemInstance = Instantiate(ItemManager.Current.ItemDropTemplate);
+            var itemInstance = Instantiate(ItemManager.Current.ItemDropTemplate, ItemManager.Current.ItemDropPoint);
             itemInstance.transform.position = position;
             return itemInstance;
         }

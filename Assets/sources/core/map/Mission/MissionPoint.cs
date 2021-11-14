@@ -28,6 +28,8 @@ namespace PataRoad.Core.Map
         public static bool IsMissionSuccess { get; private set; }
 
         private const string _screenPath = "Map/Mission/Instruction/";
+
+        public static int MissionCompleteTime { get; private set; }
         /// <summary>
         /// Mission complete, only when this is true.
         /// </summary>
@@ -89,6 +91,7 @@ namespace PataRoad.Core.Map
         }
         private void CompleteMission()
         {
+            MissionCompleteTime = (int)Time.timeSinceLevelLoad;
             IsMissionSuccess = true;
             OnMissionEnd.Invoke(true);
 

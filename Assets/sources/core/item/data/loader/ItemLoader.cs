@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// Manages all item informations. Also can pass to the other data loader like <see cref="EquipmentDataLoader"/>.
@@ -9,7 +10,7 @@ namespace PataRoad.Core.Items
     {
         //"Loading everything on memory at first time will be better"
         private static readonly Dictionary<ItemType, Dictionary<string, Dictionary<int, IItem>>> _data = new Dictionary<ItemType, Dictionary<string, Dictionary<int, IItem>>>();
-
+        private static readonly Dictionary<ItemType, string[]> _groupIndexes = new Dictionary<ItemType, string[]>();
         public static void LoadAll()
         {
             LoadAll(ItemType.Equipment);
@@ -53,39 +54,43 @@ namespace PataRoad.Core.Items
                     throw new System.NotSupportedException($"The item type *{type}* doesn't exist");
             }
             var result = new Dictionary<string, Dictionary<int, IItem>>();
+            var groupIndexes = new List<string>();
             foreach (var data in Resources.LoadAll<EquipmentData>($"Items/{dir}"))
             {
                 if (!result.ContainsKey(data.Group))
                 {
                     result.Add(data.Group, new Dictionary<int, IItem>());
+                    groupIndexes.Add(data.Group);
                 }
                 if (int.TryParse(data.name, out int index))
                 {
                     result[data.Group].Add(index, data);
-                    data.Id = System.Guid.NewGuid();
+                    data.Id = Guid.NewGuid();
                 }
             }
             _data.Add(type, result);
+            _groupIndexes.Add(type, groupIndexes.ToArray());
         }
 
         /// <summary>
-        /// Loads equpment data and also saves data if not loaded.
+        /// Get Random item.
         /// </summary>
-        /// <param name="metaData">The metadata of item, which includes basic info, including name and id etc.</param>
-        /// <returns>Equipment data.</returns>
-        /*
-        public static EquipmentData GetEquipment(ItemMetadata metaData)
+        /// <param name="itemType">Type of the item, like equipment or material.</param>
+        /// <param name="indexMin">Minimum index value.</param>
+        /// <param name="indexMax">Maximum index value.</param>
+        /// <returns>Item in specific item, in random group. If the "random group" doesn't have corresponding index, returns <c>null</c></returns>
+        /// <note>This DOESN't check do index exist, and can return <c>null</c> when any item has corresponding index.</note>
+        internal static IItem GetRandomItem(ItemType itemType, int indexMin, int indexMax)
         {
-            if (!_equipmentData.TryGetValue(metaData.Group, out Dictionary<int, EquipmentData> dataSet))
-            {
-                return null;
-            }
-            else if (dataSet.TryGetValue(metaData.Index, out EquipmentData data))
-            {
-                return data;
-            }
-            return null;
+            if (indexMin < 0) return null;
+            var groupIndexData = _groupIndexes[itemType];
+            var groupData = _data[itemType];
+            var groupRandom = UnityEngine.Random.Range(0, groupIndexData.Length - 1);
+            var itemData = groupData[groupIndexData[groupRandom]];
+
+            var random = UnityEngine.Random.Range(indexMin, indexMax);
+            if (itemData.TryGetValue(random, out IItem item)) return item;
+            else return null;
         }
-        */
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.Core.Items
@@ -19,6 +20,11 @@ namespace PataRoad.Core.Items
 
         [SerializeField]
         private GameObject _itemInScreenTemplate;
+
+        [SerializeField]
+        [Tooltip("Parent of every dropped item.")]
+        private Transform _itemDropPoint;
+        public Transform ItemDropPoint => _itemDropPoint;
 
         private void Awake()
         {
@@ -45,5 +51,6 @@ namespace PataRoad.Core.Items
                 updater.IncreaseCount();
             }
         }
+        public IEnumerable<ItemStatusUpdater> LoadItemStatus() => _itemMap.Values;
     }
 }

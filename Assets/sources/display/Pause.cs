@@ -11,8 +11,10 @@ namespace PataRoad.GameDisplay
             Time.timeScale = 0;
             AudioListener.pause = true;
             InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
-            transform.Find("Resume").GetComponent<Button>().onClick.AddListener(Destroy);
+            var resumeButton = transform.Find("Resume").GetComponent<Button>();
+            resumeButton.onClick.AddListener(Destroy);
             transform.Find("End").GetComponent<Button>().onClick.AddListener(EndMission);
+            resumeButton.Select();
         }
         private void OnDestroy()
         {
