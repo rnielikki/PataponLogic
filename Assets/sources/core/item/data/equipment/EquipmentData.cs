@@ -1,7 +1,8 @@
-﻿using PataRoad.Core.Items;
+﻿using PataRoad.Core.Character;
+using PataRoad.Core.Character.Equipments;
 using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipments
+namespace PataRoad.Core.Items
 {
     /// <summary>
     /// Represents any equipment DATA that Patapon (or enemy) use, like spear, shield, cape, helm. Attached to every equipment prefab.
@@ -10,6 +11,16 @@ namespace PataRoad.Core.Character.Equipments
     public class EquipmentData : ScriptableObject, IItem
     {
         public System.Guid Id { get; internal set; }
+
+        [SerializeField]
+        private bool _isUniqueItem;
+        public bool IsUniqueItem => _isUniqueItem;
+        /// <summary>
+        /// The group of the equipment. - like "Bird", "Spear", "Sword" ...
+        /// </summary>
+        [SerializeField]
+        private string _group;
+        public string Group => _group;
         ///<summary>
         /// Name of the equipment, e.g. "Wooden Shield", "Divine Sword"
         /// </summary>

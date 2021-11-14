@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PataRoad.Core.Items;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments
 {

@@ -17,7 +17,11 @@ namespace PataRoad.Core.Items
 
         // ------- by item
         [SerializeReference]
-        ItemMetadata _itemInfo = new ItemMetadata();
+        ItemType _itemType;
+        [SerializeReference]
+        string _itemGroup;
+        [SerializeReference]
+        int _itemIndex;
 
         // ----------- by image
 
@@ -34,20 +38,25 @@ namespace PataRoad.Core.Items
         [SerializeField]
         AudioClip _sound;
 
+        private UnityEngine.Events.UnityAction _action;
+        private IItem _item;
+
+        private void Awake()
+        {
+            if (_events.GetPersistentEventCount() == 0) _action = null;
+            else _action = _events.Invoke;
+            _item = ItemLoader.GetItem(_itemType, _itemGroup, _itemIndex);
+        }
+
         public void Drop()
         {
-            if (!_useImageInsteadOfItem) ItemDrop.DropItem(_itemInfo, transform.position, _timeToExist, GetActionTarget(), _sound);
-            else ItemDrop.DropItem(_image, transform.position, _timeToExist, GetActionTarget(), _sound);
+            if (!_useImageInsteadOfItem) ItemDrop.DropItem(_item, transform.position, _timeToExist, _action, _sound);
+            else ItemDrop.DropItem(_image, transform.position, _timeToExist, _action, _sound);
         }
         public void DropRandom()
         {
-            if (!_useImageInsteadOfItem) ItemDrop.DropItemOnRandom(_itemInfo, transform.position, _timeToExist, _chanceToDrop, GetActionTarget(), _sound);
-            else ItemDrop.DropItemOnRandom(_image, transform.position, _timeToExist, _chanceToDrop, GetActionTarget(), _sound);
-        }
-        private UnityEngine.Events.UnityAction GetActionTarget()
-        {
-            if (_events.GetPersistentEventCount() == 0) return null;
-            else return _events.Invoke;
+            if (!_useImageInsteadOfItem) ItemDrop.DropItemOnRandom(_item, transform.position, _timeToExist, _chanceToDrop, _action, _sound);
+            else ItemDrop.DropItemOnRandom(_image, transform.position, _timeToExist, _chanceToDrop, _action, _sound);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using PataRoad.Core.Character.Equipments.Weapons;
+using PataRoad.Core.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +22,7 @@ namespace PataRoad.Core.Character.Equipments
         /// </summary>
         public Protector Protector { get; private set; }
         public Rarepon Rarepon { get; private set; }
-        private Dictionary<EquipmentType, Equipment> _map;
+        private readonly Dictionary<EquipmentType, Equipment> _map;
 
         public EquipmentManager(GameObject target)
         {

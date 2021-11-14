@@ -25,5 +25,9 @@
         /// Item type, like weapon or material.
         /// </summary>
         public ItemType ItemType { get; }
+        /// <summary>
+        /// <c>true</c> if item can be obtained only once in the game. Default is <c>false</c>.
+        /// </summary>
+        public bool IsUniqueItem { get; }
     }
 }

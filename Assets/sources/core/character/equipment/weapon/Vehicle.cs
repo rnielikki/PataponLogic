@@ -1,4 +1,6 @@
-﻿namespace PataRoad.Core.Character.Equipments.Weapons
+﻿using PataRoad.Core.Items;
+
+namespace PataRoad.Core.Character.Equipments.Weapons
 {
     class Vehicle : Protector
     {

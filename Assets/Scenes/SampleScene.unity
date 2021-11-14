@@ -7711,6 +7711,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1343179125}
   m_CullTransparentMesh: 1
+--- !u!1 &1374520146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1374520148}
+  - component: {fileID: 1374520147}
+  m_Layer: 0
+  m_Name: GlobalStaticData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1374520147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374520146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d1cad76cd0dfa4487422f7b04b1c30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1374520148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374520146}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.268365, y: 0.52804285, z: -58.116024}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1470666156
 GameObject:
   m_ObjectHideFlags: 0
@@ -9605,8 +9648,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeToExist: 15
   _chanceToDrop: 1
-  _itemInfo:
-    id: 0
+  _itemType: 0
+  _itemGroup: 
+  _itemIndex: 0
   _useImageInsteadOfItem: 1
   _image: {fileID: 21300000, guid: a5e3cd7277bdbbc4bab9e8d207493b27, type: 3}
   _events:
@@ -9626,14 +9670,6 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _sound: {fileID: 8300000, guid: 6e83eb49cbb5ebf4cb0831bf574d8629, type: 3}
-  references:
-    version: 1
-    00000000:
-      type: {class: ItemMetadata, ns: PataRoad.Core.Items, asm: Assembly-CSharp}
-      data:
-        _type: 0
-        _group: Arms
-        _index: 1
 --- !u!1 &1998209852 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7869386983148126796, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
@@ -9653,22 +9689,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _timeToExist: 15
   _chanceToDrop: 1
-  _itemInfo:
-    id: 0
+  _itemType: 0
+  _itemGroup: Bird
+  _itemIndex: 1
   _useImageInsteadOfItem: 0
   _image: {fileID: 0}
   _events:
     m_PersistentCalls:
       m_Calls: []
   _sound: {fileID: 0}
-  references:
-    version: 1
-    00000000:
-      type: {class: ItemMetadata, ns: PataRoad.Core.Items, asm: Assembly-CSharp}
-      data:
-        _type: 0
-        _group: Arms
-        _index: 1
 --- !u!1 &2025613691
 GameObject:
   m_ObjectHideFlags: 0

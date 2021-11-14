@@ -264,13 +264,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             if (!IsGeneral)
             {
-                var meta = new Items.ItemMetadata()
-                {
-                    Type = Items.ItemType.Equipment,
-                    Group = path,
-                    Index = index
-                };
-                var data = Items.EquipmentDataLoader.GetEquipment(meta);
+                var data = Items.ItemLoader.GetItem(Items.ItemType.Equipment, path, index) as Items.EquipmentData;
                 if (data != null) EquipmentManager.Equip(data, _realStat);
                 else Debug.Log("data is null :(");
             }

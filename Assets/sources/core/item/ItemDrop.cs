@@ -23,7 +23,7 @@ namespace PataRoad.Core.Items
             _item = item;
             _renderer.sprite = item.Image;
 
-            if (item is Character.Equipments.EquipmentData eq)
+            if (item is EquipmentData eq)
             {
                 _renderer.transform.position += (Vector3)eq.GetPivotOffset();
             }
@@ -48,17 +48,12 @@ namespace PataRoad.Core.Items
         {
             DropItem(image, position, timeToExist, action, sound);
         }
-        public static void DropItemOnRandom(ItemMetadata data, Vector2 position, float timeToExist, float chance, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
+        public static void DropItemOnRandom(IItem item, Vector2 position, float timeToExist, float chance, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
         {
-            if (Random.Range(0, 1) < Mathf.Clamp01(chance)) DropItem(data, position, timeToExist, action, sound);
+            if (Random.Range(0, 1) < Mathf.Clamp01(chance)) DropItem(item, position, timeToExist, action, sound);
         }
-        public static void DropItem(ItemMetadata data, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
+        public static void DropItem(IItem item, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
         {
-            IItem item = ItemLoader.Load(data);
-            if (item == null)
-            {
-                throw new System.ArgumentException($"No item matches for {data.Type}/{data.Group}/{data.Index}");
-            }
             GetItemDropGameObject(position).GetComponent<ItemDrop>().SetItem(item, timeToExist, action, sound);
         }
         public static void DropItem(Sprite image, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
