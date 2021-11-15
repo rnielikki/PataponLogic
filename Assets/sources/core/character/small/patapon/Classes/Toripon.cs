@@ -10,6 +10,7 @@
         private void Awake()
         {
             RootName = "Root/";
+            IsFlyingUnit = true;
             Init();
             Class = ClassType.Toripon;
         }
@@ -23,7 +24,7 @@
                 }
                 );
             WeaponLoadTest("Bird", 1);
-            WeaponLoadTest("Rarepons", 1);
+            WeaponLoadTest("Rarepon", 1);
             WeaponLoadTest("Helm", 1);
         }
 

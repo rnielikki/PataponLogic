@@ -48,7 +48,7 @@ namespace PataRoad.Core.Character.Patapons
         /// Moves Patapon when got PONPATA song command.
         /// </summary>
         /// <param name="velocity">How fast will it run (movement speed).</param>
-        public void MoveBack(float velocity) => MoveAsOffset(-PataponEnvironment.DodgeDistance, velocity);
+        public void MoveBack(float velocity) => MoveAsOffset(-CharacterEnvironment.DodgeDistance, velocity);
 
         /// <summary>
         /// Brings to first line of Patapons Manager position. For example, Chakachaka song of Tatepon and Kibapon will do this.

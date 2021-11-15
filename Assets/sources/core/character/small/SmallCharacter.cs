@@ -61,11 +61,34 @@ namespace PataRoad.Core.Character
 
         internal string BodyName => RootName + "Patapon-body";
 
+        public bool IsFlyingUnit { get; protected set; }
+
         internal EquipmentManager EquipmentManager { get; private set; }
+        public StatusEffectManager StatusEffectManager { get; private set; }
         public Weapon Weapon => EquipmentManager.Weapon;
         private Rigidbody2D _rigidbody;
         [SerializeField]
         private UnityEngine.Events.UnityEvent _onAfterDeath;
+        public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
+
+        public virtual CharacterSoundsCollection Sounds { get; protected set; }
+
+        protected virtual void Init()
+        {
+            Stat = _defaultStat;
+            CurrentHitPoint = Stat.HitPoint;
+            EquipmentManager = new EquipmentManager(gameObject);
+            _rigidbody = GetComponent<Rigidbody2D>();
+            CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
+            StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
+        }
+
+        public virtual void StopAttacking()
+        {
+            StopWeaponAttacking();
+            _attackController.StopAttack();
+        }
+
         public virtual void Die()
         {
             BeforeDie();
@@ -73,7 +96,7 @@ namespace PataRoad.Core.Character
             StartCoroutine(WaitUntilDie());
             System.Collections.IEnumerator WaitUntilDie()
             {
-                CharAnimator.Animate("die");
+                CharAnimator.PlayDyingAnimation();
                 yield return new WaitForSeconds(1);
                 AfterDie();
                 _onAfterDeath.Invoke();
@@ -82,21 +105,6 @@ namespace PataRoad.Core.Character
         }
         protected virtual void BeforeDie() { }
         protected virtual void AfterDie() { }
-        public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
-
-        protected virtual void Init()
-        {
-            Stat = _defaultStat;
-            CurrentHitPoint = Stat.HitPoint;
-            EquipmentManager = new EquipmentManager(gameObject);
-            _rigidbody = GetComponent<Rigidbody2D>();
-        }
-
-        protected virtual void StopAttacking()
-        {
-            StopWeaponAttacking();
-            _attackController.StopAttack();
-        }
 
         /// <summary>
         /// Performs attack animation, applying attack seconds in stat.
@@ -159,5 +167,9 @@ namespace PataRoad.Core.Character
 
         public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
         public void AddMass(float mass) => _rigidbody.mass += mass;
+        public void TakeKnockback()
+        {
+            _rigidbody.AddForce(500 * new Vector2(-1, 1));
+        }
     }
 }

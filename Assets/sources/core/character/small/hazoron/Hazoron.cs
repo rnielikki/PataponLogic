@@ -13,6 +13,8 @@ namespace PataRoad.Core.Character.Hazorons
         protected Stat _stat;
         public override Stat Stat => _stat;
 
+        public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
+
         /// <summary>
         /// Remember call this on Awake() in inherited class
         /// </summary>
@@ -21,7 +23,6 @@ namespace PataRoad.Core.Character.Hazorons
             _stat = _defaultStat;
             base.Init();
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
-            CharAnimator = new CharacterAnimator(GetComponent<Animator>());
             AttackMoveData = new HazoronAttackMoveData(this);
         }
 
@@ -49,6 +50,10 @@ namespace PataRoad.Core.Character.Hazorons
         private void OnDestroy()
         {
             _hazorons.Remove(this);
+        }
+        protected override void BeforeDie()
+        {
+            GameSound.SpeakManager.Current.Play(CharacterSoundLoader.Current.HazoronSounds.OnDead);
         }
     }
 }

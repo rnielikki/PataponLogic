@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character
 {
     class PataponAttackMoveData : IAttackMoveData
     {
-        public float MaxRushAttackPosition => _distanceManager.Front + PataponEnvironment.RushAttackDistance;
+        public float MaxRushAttackPosition => _distanceManager.Front + CharacterEnvironment.RushAttackDistance;
 
         private readonly float _groupOffset;
 
@@ -17,8 +17,8 @@ namespace PataRoad.Core.Character
         private readonly Transform _pataponGroupTransform;
         private readonly Transform _pataponManagerTransform;
 
-        private float _min => _pataponGroupTransform.position.x - PataponEnvironment.RushAttackDistance;
-        private float _max => _pataponManagerTransform.position.x + PataponEnvironment.RushAttackDistance;
+        private float _min => _pataponGroupTransform.position.x - CharacterEnvironment.RushAttackDistance;
+        private float _max => _pataponManagerTransform.position.x + CharacterEnvironment.RushAttackDistance;
         public bool WasHitLastTime { get; set; }
         public Vector2 LastHit { get; set; }
 
@@ -37,7 +37,7 @@ namespace PataRoad.Core.Character
             if (customDistance < 0) customDistance = _patapon.AttackDistance;
             var closest = _distanceCalculator.GetClosest();
             if (closest == null) return DefaultWorldPosition;
-            customDistance *= (1 - Mathf.InverseLerp(2, PataponEnvironment.MaxYToScan, closest.Value.y));
+            customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
             return Clamp(closest.Value.x - customDistance - _patapon.CharacterSize) - _groupOffset;
         }
 
@@ -47,7 +47,7 @@ namespace PataRoad.Core.Character
             var closest = _distanceCalculator.GetClosest();
             var front = _distanceManager.Front;
             if (closest == null) return Clamp(front - _groupOffset);
-            customDistance *= (1 - Mathf.InverseLerp(2, PataponEnvironment.MaxYToScan, closest.Value.y));
+            customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
             return Clamp(Mathf.Min(front, closest.Value.x - customDistance - _patapon.CharacterSize)) - _groupOffset;
         }
 

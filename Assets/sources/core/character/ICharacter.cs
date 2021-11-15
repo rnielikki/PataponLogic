@@ -13,5 +13,9 @@ namespace PataRoad.Core.Character
         public UnityEngine.Vector2 MovingDirection { get; }
         public void OnAttackHit(UnityEngine.Vector2 point);
         public void OnAttackMiss(UnityEngine.Vector2 point);
+        public void TakeKnockback();
+        public void StopAttacking();
+        public CharacterAnimator CharAnimator { get; }
+        public bool IsFlyingUnit { get; }
     }
 }

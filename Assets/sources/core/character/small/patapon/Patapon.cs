@@ -38,6 +38,7 @@ namespace PataRoad.Core.Character.Patapons
         public override Vector2 MovingDirection => Vector2.right;
 
         public bool OnFever { get; private set; }
+        public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.PataponSounds;
 
 
         /// <summary>
@@ -69,7 +70,6 @@ namespace PataRoad.Core.Character.Patapons
             _group = GetComponentInParent<PataponGroup>();
             DistanceManager = GetComponent<PataponDistanceManager>();
             DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
-            CharAnimator = new CharacterAnimator(GetComponent<Animator>());
             InitDistanceFromHead();
 
             RendererInfo = new PataponRendererInfo(this, BodyName);
@@ -109,35 +109,40 @@ namespace PataRoad.Core.Character.Patapons
             _lastPerfectionPercent = model.Percentage;
 
             Stat = StatOperator.GetFinalStat();
-            switch (song)
+            if (!StatusEffectManager.OnStatusEffect || LastSong == CommandSong.Donchaka)
             {
-                case CommandSong.Patapata:
-                    Walk();
-                    break;
-                case CommandSong.Ponpon:
-                    Attack();
-                    break;
-                case CommandSong.Chakachaka:
-                    Defend();
-                    break;
-                case CommandSong.Ponpata:
-                    Dodge();
-                    break;
-                case CommandSong.Ponchaka:
-                    Charge();
-                    break;
-                case CommandSong.Dondon:
-                    Jump();
-                    break;
-                case CommandSong.Donchaka:
-                    Party();
-                    break;
-                case CommandSong.Patachaka:
-                    CharAnimator.Animate("walk");
-                    DistanceManager.MoveToInitialPlace(Stat.MovementSpeed * 2);
-                    break;
+                switch (song)
+                {
+                    case CommandSong.Patapata:
+                        Walk();
+                        break;
+                    case CommandSong.Ponpon:
+                        Attack();
+                        break;
+                    case CommandSong.Chakachaka:
+                        Defend();
+                        break;
+                    case CommandSong.Ponpata:
+                        Dodge();
+                        break;
+                    case CommandSong.Ponchaka:
+                        Charge();
+                        break;
+                    case CommandSong.Dondon:
+                        Jump();
+                        break;
+                    case CommandSong.Donchaka:
+                        Party();
+                        break;
+                    case CommandSong.Patachaka:
+                        CharAnimator.Animate("walk");
+                        DistanceManager.MoveToInitialPlace(Stat.MovementSpeed * 2);
+                        break;
+                }
             }
+            //Should be executed AFTER command execusion, for avoiding command bug
             Charged = song == CommandSong.Ponchaka; //Removes charged status if it isn't charging command
+            StatusEffectManager.IgnoreStatusEffect = song == CommandSong.Donchaka;
         }
         public void DoMisisonCompleteGesture()
         {
@@ -164,9 +169,15 @@ namespace PataRoad.Core.Character.Patapons
             Stat = _realStat;
             OnFever = false;
             Charged = false;
+            StatusEffectManager.IgnoreStatusEffect = false;
             StopAttacking();
             CharAnimator.Animate("Idle");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
+        }
+        public override void StopAttacking()
+        {
+            base.StopAttacking();
+            DistanceManager.StopMoving();
         }
         /// <summary>
         /// PATAPATA Input
@@ -232,6 +243,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         protected virtual void Party()
         {
+            StatusEffectManager.Recover();
             CharAnimator.Animate("party");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }

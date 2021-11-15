@@ -24,13 +24,26 @@ namespace PataRoad.Core.Character.Equipments.Logic
             var damage = attacker.GetAttackDamage(stat);
             component.TakeDamage(damage);
             _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
-            if (component.CurrentHitPoint <= 0)
-            {
-                foreach (var collider in target.GetComponentsInChildren<Collider2D>()) collider.enabled = false;
-                //do destroy action.
-                component.Die();
-            }
+            CheckIfDie(component, target);
+
             attacker.OnAttackHit(point);
+        }
+        public static void DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform)
+        {
+            //--- add fire resistance to fire damage taking!
+            var damage = 10;
+            attackable.TakeDamage(damage);
+            _damageDisplay.DisplayDamage(damage, objectTransform.position, false);
+            CheckIfDie(attackable, targetObject);
+        }
+        private static void CheckIfDie(IAttackable target, GameObject targetObject)
+        {
+            if (target.CurrentHitPoint <= 0)
+            {
+                foreach (var collider in targetObject.GetComponentsInChildren<Collider2D>()) collider.enabled = false;
+                //do destroy action.
+                target.Die();
+            }
         }
     }
 }

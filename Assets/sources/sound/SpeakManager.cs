@@ -19,7 +19,9 @@ namespace PataRoad.GameSound
         {
             Current = null;
         }
-        public void Play(AudioClip clip) =>
-            _audioSource.PlayOneShot(clip);
+        public void Play(AudioClip clip)
+        {
+            if (clip != null) _audioSource.PlayOneShot(clip);
+        }
     }
 }

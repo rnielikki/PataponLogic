@@ -7,6 +7,7 @@ namespace PataRoad.Core.Character.Hazorons
         private void Awake()
         {
             RootName = "Root/";
+            IsFlyingUnit = true;
             Init();
             CharacterSize = transform.Find("Root/Patapon-body/Face").GetComponent<UnityEngine.CircleCollider2D>().radius + AttackDistance;
             Class = ClassType.Toripon;

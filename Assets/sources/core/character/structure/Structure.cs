@@ -7,6 +7,7 @@ namespace PataRoad.Core.Character
         public Stat Stat { get; private set; }
 
         public int CurrentHitPoint { get; set; }
+        public StatusEffectManager StatusEffectManager { get; private set; }
 
         [SerializeField]
         private int _hitPoint;

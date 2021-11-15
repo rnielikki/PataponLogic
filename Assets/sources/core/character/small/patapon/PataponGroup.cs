@@ -34,7 +34,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         public bool CanGoForward()
         {
-            var hit = Physics2D.Raycast(transform.position, Vector2.right, PataponEnvironment.PataponSight, _layerMask);
+            var hit = Physics2D.Raycast(transform.position, Vector2.right, CharacterEnvironment.Sight, _layerMask);
             return (hit.collider == null || hit.distance > _marchDistance) && Hazorons.Hazoron.GetClosestHazoronPosition() > transform.position.x;
         }
 

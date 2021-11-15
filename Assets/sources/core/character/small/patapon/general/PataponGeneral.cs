@@ -17,6 +17,7 @@ namespace PataRoad.Core.Character.Patapons.General
 
         [SerializeField]
         private AudioClip _generalModeSound;
+        private Patapon _selfPatapon;
 
         //-------------------------------------------[testing]
         private static int _counter;
@@ -31,6 +32,7 @@ namespace PataRoad.Core.Character.Patapons.General
         private void Awake()
         {
             Group = GetComponentInParent<PataponGroup>();
+            _selfPatapon = GetComponent<Patapon>();
 
             //-------------------------------------------[testing]
             IGeneralMode gen;
@@ -45,6 +47,7 @@ namespace PataRoad.Core.Character.Patapons.General
 
         public void ActivateGeneralMode(CommandSong song)
         {
+            if (_selfPatapon.StatusEffectManager.OnStatusEffect) return;
             if (_pataponsManager == null) _pataponsManager = GetComponentInParent<PataponsManager>();
             if (song == _generalModeActivator?.GeneralModeSong)
             {

@@ -36,9 +36,6 @@ namespace PataRoad.Core.Character.Patapons
         private AudioClip[] _pataponSpeakingOnMiss;
         int _onMissSpeakingIndex;
 
-        [SerializeField]
-        private AudioClip _onPataponDeadSound;
-
         private CameraController.CameraMover _cameraMover;
 
         private void Awake()
@@ -130,7 +127,7 @@ namespace PataRoad.Core.Character.Patapons
         public void RemovePon(Patapon patapon)
         {
             _patapons.Remove(patapon);
-            SpeakManager.Current.Play(_onPataponDeadSound);
+            SpeakManager.Current.Play(CharacterSoundLoader.Current.PataponSounds.OnDead);
             if (!_patapons.Any(p => p.IsGeneral))
             {
                 Map.MissionPoint.Current.WaitAndFailMission(4);

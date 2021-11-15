@@ -13,6 +13,7 @@ namespace PataRoad.AppDebug
         private InputAction _input;
         [SerializeField]
         private UnityEvent _action;
+        private Core.Character.Patapons.Patapon FirstPon => GetComponent<Core.Character.Patapons.PataponsManager>().Groups.First().Patapons.First();
         // Start is called before the first frame update
         void Awake()
         {
@@ -28,8 +29,17 @@ namespace PataRoad.AppDebug
         private void PerformAction(CallbackContext _context) => _action.Invoke();
         public void KillFirst()
         {
-            GetComponent<Core.Character.Patapons.PataponsManager>().Groups.First().Patapons.First().Die();
+            FirstPon.Die();
         }
+        public void SetFire()
+        {
+            FirstPon.StatusEffectManager.SetFire(10);
+        }
+        public void SetSleep()
+        {
+            FirstPon.StatusEffectManager.SetSleep(10);
+        }
+
         public void DropItem()
         {
             ItemDrop.DropItem(ItemLoader.GetItem(ItemType.Equipment, "Staff", 0), Vector2.zero, 999);

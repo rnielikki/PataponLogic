@@ -12,9 +12,11 @@ namespace PataRoad.Core.Character
         private bool _lateAnimating;
         private float _attackSeconds;
         private float _idleTime;
-        internal CharacterAnimator(Animator animator)
+        private readonly ICharacter _target;
+        internal CharacterAnimator(Animator animator, ICharacter target)
         {
             _animator = animator;
+            _target = target;
         }
         /// <summary>
         /// Sets attack speed. Note that 1 is normal scale here.
@@ -30,8 +32,22 @@ namespace PataRoad.Core.Character
         /// <param name="animationType">The animation name from animator.</param>
         public void Animate(string animationType)
         {
-            _animator.Play(animationType, -1, 0f);
+            if (!_target.StatusEffectManager.OnStatusEffect)
+                _animator.Play(animationType, -1, 0f);
         }
+        /// <summary>
+        /// Play dying animation, with no dependency of status effect.
+        /// </summary>
+        public void PlayDyingAnimation()
+        {
+            Resume();
+            _animator.Play("die", -1, 0f);
+        }
+        /// <summary>
+        /// Freezes the current animation.
+        /// </summary>
+        public void Stop() => _animator.speed = 0;
+        public void Resume() => _animator.speed = 1;
         /// <summary>
         /// Set late animation status to zero.
         /// </summary>
