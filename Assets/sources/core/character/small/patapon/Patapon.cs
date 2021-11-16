@@ -71,6 +71,11 @@ namespace PataRoad.Core.Character.Patapons
             DistanceManager = GetComponent<PataponDistanceManager>();
             DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
             InitDistanceFromHead();
+            StatusEffectManager.SetRecoverAction(() =>
+            {
+                if (!TurnCounter.IsPlayerTurn) PerformCommandAction(LastSong);
+                else if (!TurnCounter.IsOn) DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
+            });
 
             RendererInfo = new PataponRendererInfo(this, BodyName);
 
@@ -111,34 +116,7 @@ namespace PataRoad.Core.Character.Patapons
             Stat = StatOperator.GetFinalStat();
             if (!StatusEffectManager.OnStatusEffect || LastSong == CommandSong.Donchaka)
             {
-                switch (song)
-                {
-                    case CommandSong.Patapata:
-                        Walk();
-                        break;
-                    case CommandSong.Ponpon:
-                        Attack();
-                        break;
-                    case CommandSong.Chakachaka:
-                        Defend();
-                        break;
-                    case CommandSong.Ponpata:
-                        Dodge();
-                        break;
-                    case CommandSong.Ponchaka:
-                        Charge();
-                        break;
-                    case CommandSong.Dondon:
-                        Jump();
-                        break;
-                    case CommandSong.Donchaka:
-                        Party();
-                        break;
-                    case CommandSong.Patachaka:
-                        CharAnimator.Animate("walk");
-                        DistanceManager.MoveToInitialPlace(Stat.MovementSpeed * 2);
-                        break;
-                }
+                PerformCommandAction(song);
             }
             //Should be executed AFTER command execusion, for avoiding command bug
             Charged = song == CommandSong.Ponchaka; //Removes charged status if it isn't charging command
@@ -178,6 +156,37 @@ namespace PataRoad.Core.Character.Patapons
         {
             base.StopAttacking();
             DistanceManager.StopMoving();
+        }
+        private void PerformCommandAction(CommandSong song)
+        {
+            switch (song)
+            {
+                case CommandSong.Patapata:
+                    Walk();
+                    break;
+                case CommandSong.Ponpon:
+                    Attack();
+                    break;
+                case CommandSong.Chakachaka:
+                    Defend();
+                    break;
+                case CommandSong.Ponpata:
+                    Dodge();
+                    break;
+                case CommandSong.Ponchaka:
+                    Charge();
+                    break;
+                case CommandSong.Dondon:
+                    Jump();
+                    break;
+                case CommandSong.Donchaka:
+                    Party();
+                    break;
+                case CommandSong.Patachaka:
+                    CharAnimator.Animate("walk");
+                    DistanceManager.MoveToInitialPlace(Stat.MovementSpeed * 2);
+                    break;
+            }
         }
         /// <summary>
         /// PATAPATA Input

@@ -142,6 +142,11 @@ namespace PataRoad.Core.Character.Patapons
         {
             if (_isMoving)
             {
+                if (_patapon.StatusEffectManager.OnStatusEffect)
+                {
+                    _isMoving = false;
+                    return;
+                }
                 var step = _movingVelocity * Time.deltaTime;
                 Vector2 target;
                 if (_isMovingAsOffset)

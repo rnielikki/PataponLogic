@@ -24,6 +24,8 @@ namespace PataRoad.Core.Character.Hazorons
             base.Init();
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
             AttackMoveData = new HazoronAttackMoveData(this);
+            //Save. this can be changed later.
+            StatusEffectManager.SetRecoverAction(() => StartAttack("attack-fever"));
         }
 
         protected override AttackMoveController SetAttackMoveController()

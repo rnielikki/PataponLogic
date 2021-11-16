@@ -28,6 +28,7 @@ namespace PataRoad.Core.Character
                 SleepResistance = Mathf.Infinity
             };
             CurrentHitPoint = _hitPoint;
+            StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
         }
         public void Die()
         {

@@ -80,7 +80,7 @@ namespace PataRoad.Core.Character
             EquipmentManager = new EquipmentManager(gameObject);
             _rigidbody = GetComponent<Rigidbody2D>();
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
-            StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
+            StatusEffectManager = gameObject.AddComponent<SmallCharacterStatusEffectManager>();
         }
 
         public virtual void StopAttacking()
@@ -167,9 +167,5 @@ namespace PataRoad.Core.Character
 
         public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
         public void AddMass(float mass) => _rigidbody.mass += mass;
-        public void TakeKnockback()
-        {
-            _rigidbody.AddForce(500 * new Vector2(-1, 1));
-        }
     }
 }

@@ -33,11 +33,23 @@ namespace PataRoad.AppDebug
         }
         public void SetFire()
         {
-            FirstPon.StatusEffectManager.SetFire(10);
+            FirstPon.StatusEffectManager.SetFire(4);
+        }
+        public void SetIce()
+        {
+            FirstPon.StatusEffectManager.SetIce(4);
         }
         public void SetSleep()
         {
-            FirstPon.StatusEffectManager.SetSleep(10);
+            FirstPon.StatusEffectManager.SetSleep(4);
+        }
+        public void SetStagger()
+        {
+            FirstPon.StatusEffectManager.SetStagger();
+        }
+        public void SetKnockback()
+        {
+            FirstPon.StatusEffectManager.SetKnockback();
         }
 
         public void DropItem()

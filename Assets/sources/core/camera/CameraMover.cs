@@ -47,7 +47,7 @@ namespace PataRoad.Core.CameraController
             _action.Enable();
         }
 
-        void Update()
+        void LateUpdate()
         {
             if (!_moving) return;
 
