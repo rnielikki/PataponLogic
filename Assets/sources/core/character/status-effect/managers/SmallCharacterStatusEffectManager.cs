@@ -14,6 +14,7 @@ namespace PataRoad.Core.Character
         private Rigidbody2D _rigidbody;
         private bool _onKnockback;
         private float _xDirection;
+        private bool _isRigidbodyActive;
         private void Awake()
         {
             Init();
@@ -64,13 +65,17 @@ namespace PataRoad.Core.Character
             if (OnStatusEffect || IgnoreStatusEffect) return;
             StartStatusEffect();
             _smallCharacter.CharAnimator.Animate("Sleep");
-            Rhythm.Command.TurnCounter.OnNextTurn.AddListener(Recover);
-
+            ActivateRigidbody();
+            transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 1.2f, transform.position.z);
+            _rigidbody.AddForce(1000 * Vector2.up);
             OnStatusEffect = true;
+
+            StartCoroutine(WaitForRecovery(2));
         }
         protected override void OnRecover()
         {
             base.OnRecover();
+            _onKnockback = false;
             if (_isPatapon && _smallCharacter.IsFlyingUnit)
             {
                 if (((Patapons.Patapon)_smallCharacter).OnFever)
@@ -86,16 +91,22 @@ namespace PataRoad.Core.Character
         protected override void OnKnockback()
         {
             _smallCharacter.CharAnimator.Animate("walk");
-            _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-            _rigidbody.gravityScale = 1;
+            ActivateRigidbody();
             transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 1.2f, transform.position.z);
-            _rigidbody.AddForce(1000 * new Vector2(-_xDirection, 2));
+            _rigidbody.AddForce(new Vector2(-_xDirection * 2000, 2400));
             _onKnockback = true;
         }
         protected override void StartStatusEffect()
         {
             base.StartStatusEffect();
             _positionOnStatusEffect = transform.position;
+        }
+
+        private void ActivateRigidbody()
+        {
+            _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+            _rigidbody.gravityScale = 1;
+            _isRigidbodyActive = true;
         }
         private void Update()
         {
@@ -117,7 +128,7 @@ namespace PataRoad.Core.Character
                         transform.position = pos;
                     }
                 }
-                else if (!_onKnockback)
+                else if (!_isRigidbodyActive)
                 {
                     transform.position = _positionOnStatusEffect;
                 }
@@ -125,25 +136,16 @@ namespace PataRoad.Core.Character
         }
         private void LateUpdate()
         {
-            if (_onKnockback)
+            if (_isRigidbodyActive && transform.position.y <= 0)
             {
-                var defaultWorldPosition = _smallCharacter.AttackMoveData.DefaultWorldPosition;
                 var pos = transform.position;
-                if (_xDirection > 0)
+                pos.y = 0;
+                _rigidbody.velocity = Vector2.zero;
+                _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+                _rigidbody.gravityScale = 0;
+                _isRigidbodyActive = false;
+                if (_onKnockback)
                 {
-                    pos.x = Mathf.Clamp(transform.position.x, defaultWorldPosition - CharacterEnvironment.DodgeDistance, defaultWorldPosition);
-                }
-                else if (_xDirection < 0)
-                {
-                    pos.x = Mathf.Clamp(transform.position.x, defaultWorldPosition, defaultWorldPosition + CharacterEnvironment.DodgeDistance);
-                }
-                if (transform.position.y <= 0)
-                {
-                    pos.y = 0;
-                    _rigidbody.velocity = Vector2.zero;
-                    _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-                    _rigidbody.gravityScale = 0;
-                    _onKnockback = false;
                     Recover();
                 }
                 transform.position = pos;

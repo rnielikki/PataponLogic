@@ -15,10 +15,10 @@ namespace PataRoad.Core.Character.Hazorons
                 .AddModels(
                 new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
                 {
-                    { "attack", GetAttackMoveModel("attack") },
+                    { "attack-fever", GetAttackMoveModel("attack-fever") },
                 }
                 );
-            StartAttack("attack");
+            StartAttack("attack-fever");
         }
     }
 }

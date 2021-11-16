@@ -61,6 +61,8 @@ namespace PataRoad.Core.Character
         public virtual void SetStagger() { }
         public virtual void SetKnockback() { }
         public virtual void Tumble() { }
+        public virtual void TumbleAttack() { }
+
         public void Recover()
         {
             if (!OnStatusEffect || IgnoreStatusEffect) return;
@@ -75,6 +77,7 @@ namespace PataRoad.Core.Character
 
             if (_onRecover != null) _onRecover();
         }
+
         protected virtual void OnRecover() { }
         protected void LoadEffectObject(StatusEffectType type)
         {

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace PataRoad.Core.Character
 {
@@ -7,7 +9,8 @@ namespace PataRoad.Core.Character
     /// </summary>
     public class DistanceCalculator
     {
-        private readonly SmallCharacter _target;
+        private readonly ICharacter _character;
+        private readonly GameObject _target;
         private readonly float _sight;
         private readonly int _layerMask;
         private readonly Vector2 _direction;
@@ -19,11 +22,12 @@ namespace PataRoad.Core.Character
         /// <param name="sight">Maximum sight of the target. This is equivalent to raycast distance.</param>
         /// <param name="layerMask">Masks of layers to detect. ("to") Get this value using <see cref="LayerMask"/>.</param>
         /// <param name="allowedRange">Allows to pass as "In range". This is important for range units.</param>
-        internal DistanceCalculator(SmallCharacter target, float sight, int layerMask)
+        internal DistanceCalculator(ICharacter character, float sight, int layerMask)
         {
-            _target = target;
+            _character = character;
+            _target = (character as MonoBehaviour)?.gameObject;
             _sight = sight;
-            _direction = target.MovingDirection;
+            _direction = _character.MovingDirection;
             _layerMask = layerMask;
         }
         /// <summary>
@@ -51,15 +55,15 @@ namespace PataRoad.Core.Character
         /// Shoots RayCast to closest structure or enemy and returns the raycast hit if found.
         /// </summary>
         /// <returns>X position as collider hit, Y position as collided game object position.</returns>
-        public Vector2? GetClosest() => GetClosest((Vector2)_target.transform.position + _target.AttackDistance * _direction);
+        public Vector2? GetClosest() => GetClosest((Vector2)_target.transform.position + _character.AttackDistance * _direction);
 
         private Vector2? GetClosest(Vector2 castPoint)//bidirectional
         {
-            var raycast = Physics2D.BoxCast(castPoint + _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, -_direction, _target.AttackDistance, _layerMask);
+            var raycast = Physics2D.BoxCast(castPoint + _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, -_direction, _character.AttackDistance, _layerMask);
             var p = ReturnInRange(raycast);
             if (p == null)
             {
-                raycast = Physics2D.BoxCast(castPoint - _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, _direction, _sight - _target.AttackDistance, _layerMask);
+                raycast = Physics2D.BoxCast(castPoint - _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, _direction, _sight - _character.AttackDistance, _layerMask);
                 p = ReturnInRange(raycast);
                 if (p == null) return null;
             }
@@ -96,6 +100,11 @@ namespace PataRoad.Core.Character
             }
         }
 
+        public IEnumerable<IAttackable> GetAllGroundedTargets()
+        {
+            var all = Physics2D.BoxCastAll((Vector2)_target.transform.position - _sight * Vector2.right, new Vector2(0.1f, 1), 0, Vector2.right, _sight * 2, _layerMask);
+            return all.Select(res => res.collider.GetComponentInParent<IAttackable>()).Where(value => value != null);
+        }
         public bool IsInTargetRange(float targetX, float offset) => IsInTargetRange(_target.transform.position.x, targetX, offset);
         public bool IsInTargetRange(float x, float targetX, float offset) => targetX - offset < x && x < targetX + offset;
         /// <summary>

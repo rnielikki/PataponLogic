@@ -23,5 +23,6 @@
                 DistanceManager.MoveZero(1.6f);
             }
         }
+        public void TumbleAttack() => StatusEffectManager.TumbleAttack();
     }
 }

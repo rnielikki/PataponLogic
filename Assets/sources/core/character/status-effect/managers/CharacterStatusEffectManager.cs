@@ -73,6 +73,13 @@ namespace PataRoad.Core.Character
             _character.CharAnimator.Resume();
             _character.CharAnimator.Animate("Idle");
         }
+        public override void TumbleAttack()
+        {
+            foreach (var target in _character.DistanceCalculator.GetAllGroundedTargets())
+            {
+                target.StatusEffectManager.Tumble();
+            }
+        }
         private bool IsValidForStatusEffect(int time) => !IgnoreStatusEffect && !OnStatusEffect && time > 0;
     }
 }
