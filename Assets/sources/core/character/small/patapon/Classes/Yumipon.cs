@@ -32,5 +32,6 @@ namespace PataRoad.Core.Character.Patapons
             }
         }
         protected override void Charge() => ChargeWithoutMoving();
+        public override General.IGeneralEffect GetGeneralEffect() => new General.SukoponEffect();
     }
 }

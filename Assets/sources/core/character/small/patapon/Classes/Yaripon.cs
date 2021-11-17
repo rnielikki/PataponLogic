@@ -30,5 +30,6 @@ namespace PataRoad.Core.Character.Patapons
                 StartAttack("attack-fever");
             }
         }
+        public override General.IGeneralEffect GetGeneralEffect() => new General.PrincessEffect();
     }
 }

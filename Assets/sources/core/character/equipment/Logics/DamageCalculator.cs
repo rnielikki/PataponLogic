@@ -22,7 +22,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             }
             else if (target.tag == "Grass")
             {
-                if (stat.FireRate > 0)
+                if (Common.Utils.RandomByProbability(stat.FireRate))
                 {
                     component.StatusEffectManager.SetFire(10);
                     int damage = (int)(attacker.GetAttackDamage(stat) * stat.FireRate);

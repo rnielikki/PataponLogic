@@ -30,5 +30,6 @@
             }
         }
         protected override void Charge() => ChargeWithoutMoving();
+        public override General.IGeneralEffect GetGeneralEffect() => new General.MedenEffect();
     }
 }

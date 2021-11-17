@@ -77,5 +77,6 @@
             base.BeforeDie();
             CharAnimator.AnimateFrom("tori-fly-stop");
         }
+        public override General.IGeneralEffect GetGeneralEffect() => new General.HataponToriEffect();
     }
 }

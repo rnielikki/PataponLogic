@@ -24,5 +24,7 @@
             }
         }
         public void TumbleAttack() => StatusEffectManager.TumbleAttack();
+
+        public override General.IGeneralEffect GetGeneralEffect() => new General.TonKamponEffect();
     }
 }

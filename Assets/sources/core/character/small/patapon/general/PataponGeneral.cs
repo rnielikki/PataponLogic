@@ -14,6 +14,7 @@ namespace PataRoad.Core.Character.Patapons.General
         private PataponsManager _pataponsManager;
 
         public static bool ShoutedOnThisTurn { get; set; }
+        private IGeneralEffect _generalEffect;
 
         [SerializeField]
         private AudioClip _generalModeSound;
@@ -33,6 +34,7 @@ namespace PataRoad.Core.Character.Patapons.General
         {
             Group = GetComponentInParent<PataponGroup>();
             _selfPatapon = GetComponent<Patapon>();
+            _generalEffect = _selfPatapon.GetGeneralEffect();
 
             //-------------------------------------------[testing]
             IGeneralMode gen;
@@ -61,6 +63,7 @@ namespace PataRoad.Core.Character.Patapons.General
             }
         }
         public void CancelGeneralMode() => _generalModeActivator?.Cancel();
+
         private void OnDestroy()
         {
             CancelGeneralMode();

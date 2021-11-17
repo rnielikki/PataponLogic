@@ -47,6 +47,8 @@ namespace PataRoad.Core.Character.Patapons
         protected Stat _realStat;
         public StatOperator StatOperator { get; private set; }
 
+        public abstract General.IGeneralEffect GetGeneralEffect();
+
         protected override void BeforeDie()
         {
             _group.RemovePon(this);

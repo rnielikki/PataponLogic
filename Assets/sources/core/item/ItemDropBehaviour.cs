@@ -63,15 +63,9 @@ namespace PataRoad.Core.Items
         /// <summary>
         /// Drops random item with *predefined item index*. Especially works with equipment.
         /// </summary>
-        /// <param name="rangeToAdd">Additional value that determines range additional to <see cref="_itemIndex"/>. 0 will return item only in <see cref="_itemIndex"/>.</param>
-        public void DropRandomItem(int rangeToAdd)
-        {
-            if (_useImageInsteadOfItem) return;
-            ;
-        }
         public void DropRandom()
         {
-            if (Random.Range(0, 1) < Mathf.Clamp01(_chanceToDrop))
+            if (Common.Utils.RandomByProbability(_chanceToDrop))
             {
                 if (!_useImageInsteadOfItem) ItemDrop.DropItem(_item, transform.position, _timeToExist, _action, _sound);
                 else ItemDrop.DropItem(_image, transform.position, _timeToExist, _action, _sound);

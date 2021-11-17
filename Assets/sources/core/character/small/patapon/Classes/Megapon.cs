@@ -34,5 +34,6 @@
         {
             StartAttack(Charged ? "defend-charge" : "defend");
         }
+        public override General.IGeneralEffect GetGeneralEffect() => new General.PanPakaponEffect();
     }
 }
