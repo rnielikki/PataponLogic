@@ -72,6 +72,7 @@ namespace PataRoad.Core.Character
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 
         public virtual CharacterSoundsCollection Sounds { get; protected set; }
+        public bool IsDead { get; private set; }
 
         protected virtual void Init()
         {
@@ -91,6 +92,7 @@ namespace PataRoad.Core.Character
 
         public virtual void Die()
         {
+            IsDead = true;
             BeforeDie();
             StopAttacking();
             StartCoroutine(WaitUntilDie());

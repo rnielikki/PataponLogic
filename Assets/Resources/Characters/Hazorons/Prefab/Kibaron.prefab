@@ -182,7 +182,6 @@ MonoBehaviour:
   _stat:
     id: 0
   _mass: 0
-  _type: 2
   references:
     version: 1
     00000000:
@@ -791,7 +790,7 @@ GameObject:
   - component: {fileID: 1893702619056042285}
   m_Layer: 11
   m_Name: Weapon
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -877,7 +876,6 @@ MonoBehaviour:
   _stat:
     id: 0
   _mass: 1
-  _type: 0
   _attackType: 3
   references:
     version: 1
@@ -1528,6 +1526,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultStat:
     id: 0
+  _onAfterDeath:
+    m_PersistentCalls:
+      m_Calls: []
   references:
     version: 1
     00000000:
@@ -2336,7 +2337,6 @@ MonoBehaviour:
   _stat:
     id: 0
   _mass: 0
-  _type: 1
   references:
     version: 1
     00000000:

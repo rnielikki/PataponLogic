@@ -34,15 +34,10 @@ namespace PataRoad.Core.Character
         {
             _smallCharacter.CharAnimator.Animate("Fire");
             _movingDirectionOnFire = -_smallCharacter.MovingDirection;
-            StartCoroutine(SpeakOnFire());
-            IEnumerator SpeakOnFire()
-            {
-                while (OnStatusEffect)
-                {
-                    GameSound.SpeakManager.Current.Play(_soundCollection.OnFire);
-                    yield return new WaitForSeconds(1);
-                }
-            }
+        }
+        protected override void OnFireInterval()
+        {
+            GameSound.SpeakManager.Current.Play(_soundCollection.OnFire);
         }
         protected override void OnIce()
         {

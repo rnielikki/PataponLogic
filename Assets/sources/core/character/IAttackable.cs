@@ -26,5 +26,6 @@
         /// </summary>
         public void TakeDamage(int damage);
         public StatusEffectManager StatusEffectManager { get; }
+        public bool IsDead { get; }
     }
 }

@@ -9,6 +9,8 @@ namespace PataRoad.Core.Character
         public int CurrentHitPoint { get; set; }
         public StatusEffectManager StatusEffectManager { get; private set; }
 
+        public bool IsDead { get; private set; }
+
         [SerializeField]
         private int _hitPoint;
         [SerializeField]
@@ -32,6 +34,7 @@ namespace PataRoad.Core.Character
         }
         public void Die()
         {
+            IsDead = true;
             Destroy(gameObject);
         }
         public void TakeDamage(int damage)

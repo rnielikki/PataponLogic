@@ -29,7 +29,7 @@ namespace PataRoad.Core.Character
             _transform = transform;
         }
         public void SetRecoverAction(UnityEngine.Events.UnityAction action) => _onRecover = action;
-        public void SetFire(int time)
+        public virtual void SetFire(int time)
         {
             if (OnStatusEffect || time < 1 || IgnoreStatusEffect) return;
             StartStatusEffect();
@@ -43,17 +43,26 @@ namespace PataRoad.Core.Character
 
             IEnumerator FireDamage()
             {
-                int timeSum = 0;
-                while (timeSum < time)
+                while (time > 0)
                 {
-                    DamageCalculator.DealDamageFromFireEffect(_target, gameObject, _transform);
+                    OnFireInterval();
                     yield return new WaitForSeconds(1);
-                    timeSum++;
+                    time--;
                 }
                 Recover();
             }
         }
+        /// <summary>
+        /// Called when fire effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
+        /// </summary>
         protected virtual void OnFire() { }
+        /// <summary>
+        /// Every time on fire interval. Usually it's "when damage taken from fire" (which is impelemented in base)
+        /// </summary>
+        protected virtual void OnFireInterval()
+        {
+            DamageCalculator.DealDamageFromFireEffect(_target, gameObject, _transform);
+        }
         public virtual void SetIce(int time) { }
         public virtual void SetSleep(int time)
         {
@@ -78,6 +87,9 @@ namespace PataRoad.Core.Character
             if (_onRecover != null) _onRecover();
         }
 
+        /// <summary>
+        /// Called when being recovered, before setting <see cref="OnStatusEffect"/> to <c>false</c>.
+        /// </summary>
         protected virtual void OnRecover() { }
         protected void LoadEffectObject(StatusEffectType type)
         {

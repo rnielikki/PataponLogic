@@ -16,24 +16,51 @@ namespace PataRoad.Core.Character.Equipments.Logic
         public static void DealDamage(ICharacter attacker, Stat stat, GameObject target, Vector2 point)
         {
             var component = target.GetComponentInParent<IAttackable>();
-            if (component == null || component.CurrentHitPoint <= 0)
+            if (component == null || component.CurrentHitPoint <= 0 || component.IsDead)
             {
                 attacker.OnAttackMiss(point);
-                return;
             }
-            var damage = attacker.GetAttackDamage(stat);
-            component.TakeDamage(damage);
-            _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
-            CheckIfDie(component, target);
+            else if (target.tag == "Grass")
+            {
+                if (stat.FireRate > 0)
+                {
+                    component.StatusEffectManager.SetFire(10);
+                    int damage = (int)(attacker.GetAttackDamage(stat) * stat.FireRate);
+                    if (damage != 0)
+                    {
+                        _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
+                        component.TakeDamage((int)(damage * 0.1f));
+                    }
+                }
+            }
+            else
+            {
+                var damage = attacker.GetAttackDamage(stat);
+                component.TakeDamage(damage);
+                _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
+                CheckIfDie(component, target);
+                attacker.OnAttackHit(point);
+            }
 
-            attacker.OnAttackHit(point);
         }
-        public static void DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform)
+        /// <summary>
+        /// Gets fire duration based on attacker stats and reciever stats.
+        /// </summary>
+        /// <param name="senderStat">Stat of attacker.</param>
+        /// <param name="recieverStat">Stat of damage taker.</param>
+        /// <param name="time">Initial time, before calculated.</param>
+        /// <returns>Calculated final time of fire effect duration.</returns>
+        public static int GetFireDuration(Stat senderStat, Stat recieverStat, int time)
+        {
+            //will be implemented later!
+            return (int)(time * 0.75f);
+        }
+        public static void DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform, bool displayDamage = true)
         {
             //--- add fire resistance to fire damage taking!
-            var damage = 10;
+            var damage = Mathf.Max(1, (int)(attackable.Stat.HitPoint * 0.05f));
             attackable.TakeDamage(damage);
-            _damageDisplay.DisplayDamage(damage, objectTransform.position, false);
+            if (displayDamage) _damageDisplay.DisplayDamage(damage, objectTransform.position, false);
             CheckIfDie(attackable, targetObject);
         }
         private static void CheckIfDie(IAttackable target, GameObject targetObject)

@@ -25,8 +25,9 @@ namespace PataRoad.Core.Character.Patapons
             if (_patapons != null) return;
             General = GetComponentInChildren<General.PataponGeneral>();
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
-            _marchDistance = _patapons[0].AttackDistanceWithOffset;
-            _layerMask = LayerMask.GetMask("structures", "enemies");
+            var sample = _patapons[0];
+            _marchDistance = sample.AttackDistanceWithOffset;
+            _layerMask = sample.DistanceCalculator.LayerMask;
 
             _manager = manager;
 

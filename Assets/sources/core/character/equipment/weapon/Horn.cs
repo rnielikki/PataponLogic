@@ -50,13 +50,17 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         private void AttackFever()
         {
-            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround).AddForce(Holder.MovingDirection * 5);
+            var newStat = Holder.Stat.Copy();
+            newStat.FireRate += 0.5f;
+            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, newStat).AddForce(Holder.MovingDirection * 5);
         }
         private void ChargeDefend()
         {
-            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, true).AddForce(Holder.MovingDirection * 1000);
+            var newStat = Holder.Stat.Copy();
+            newStat.Knockback += 2;
+            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, newStat).AddForce(Holder.MovingDirection * 1000);
         }
-        private Rigidbody2D CreateBulletInstance(GameObject targetObject, UnityEngine.Events.UnityAction<Collider2D> groundAction, bool fixedRotation = false)
+        private Rigidbody2D CreateBulletInstance(GameObject targetObject, UnityEngine.Events.UnityAction<Collider2D> groundAction, Stat stat, bool fixedRotation = false)
         {
             var instance = Instantiate(targetObject, transform.root.parent);
             instance.transform.position = _targetTransform.position;
@@ -65,7 +69,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (!fixedRotation) instance.transform.rotation = _targetTransform.rotation;
             var bulletScript = instance.GetComponent<WeaponBullet>();
             bulletScript.Holder = Holder;
-            bulletScript.Stat = Holder.Stat;
+            bulletScript.Stat = stat;
             bulletScript.GroundAction = groundAction;
             instance.SetActive(true);
             return instance.GetComponent<Rigidbody2D>();

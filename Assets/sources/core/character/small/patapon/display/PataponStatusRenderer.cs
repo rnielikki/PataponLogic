@@ -8,6 +8,7 @@ namespace PataRoad.Core.Character.Patapons.Display
 
         private PataponRendererInfo _rendererInfo;
         private float _zOffset;
+        private Patapon _pon; //should check if pon is dead because of coroutine death and will be updated later
 
         private void Awake()
         {
@@ -17,15 +18,16 @@ namespace PataRoad.Core.Character.Patapons.Display
 
         void OnPreCull()
         {
-            _rendererInfo.StartRenderMode(_renderingLayer);
+            if (!_pon.IsDead) _rendererInfo.StartRenderMode(_renderingLayer);
         }
 
         void OnPostRender()
         {
-            _rendererInfo.EndRenderMode();
+            if (!_pon.IsDead) _rendererInfo.EndRenderMode();
         }
         private void Update()
         {
+            if (_pon.IsDead) return;
             Vector3 pos = _rendererInfo.Center;
             pos.z = _zOffset;
             transform.position = pos;
@@ -38,6 +40,7 @@ namespace PataRoad.Core.Character.Patapons.Display
 
         internal void SetTarget(Patapon patapon)
         {
+            _pon = patapon;
             _rendererInfo = patapon.RendererInfo;
         }
     }

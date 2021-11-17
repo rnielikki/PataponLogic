@@ -31,6 +31,9 @@ namespace PataRoad.Core.Character
             StartCoroutine(WaitForRecovery(time));
             OnStatusEffect = true;
         }
+        /// <summary>
+        /// Called when ice effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
+        /// </summary>
         protected virtual void OnIce() { }
 
         public override void SetSleep(int time)
@@ -48,6 +51,9 @@ namespace PataRoad.Core.Character
 
             OnStatusEffect = true;
         }
+        /// <summary>
+        /// Called when sleep effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
+        /// </summary>
         protected virtual void OnSleep() { }
         public override void SetStagger()
         {
@@ -67,6 +73,9 @@ namespace PataRoad.Core.Character
 
             OnStatusEffect = true;
         }
+        /// <summary>
+        /// Called when knockback effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
+        /// </summary>
         protected virtual void OnKnockback() { }
         protected override void OnRecover()
         {

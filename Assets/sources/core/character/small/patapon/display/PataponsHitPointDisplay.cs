@@ -19,6 +19,7 @@ namespace PataRoad.Core.Character.Patapons.Display
 
         private Image _generalImage;
         private Image _armyMinImage;
+        private PataponGroup _group;
 
         [SerializeField]
         private Color _bgOnGeneral;
@@ -65,6 +66,7 @@ namespace PataRoad.Core.Character.Patapons.Display
             var instance = Instantiate(_displayTemplate, _displayParent).GetComponent<PataponsHitPointDisplay>();
 
             instance._currentFocus = group.General.GetComponent<Patapon>();
+            instance._group = group;
             instance.AddCamera();
 
             return instance;
@@ -89,10 +91,15 @@ namespace PataRoad.Core.Character.Patapons.Display
             var current = GetCurrentHitPointPercent(patapon);
             if (current < _currentMinArmyHealth)
             {
-                UpdateImageAndBar(patapon);
-                _currentMinArmyHealth = current;
+                RefreshArmyStatus(patapon, current);
             }
         }
+        private void RefreshArmyStatus(Patapon patapon, float percent)
+        {
+            UpdateImageAndBar(patapon);
+            _currentMinArmyHealth = percent;
+        }
+
         private float GetCurrentHitPointPercent(Patapon patapon) => Mathf.Clamp01((float)patapon.CurrentHitPoint / patapon.Stat.HitPoint);
 
         private void UpdateImageAndBar(Patapon patapon, bool general = false)
@@ -167,9 +174,7 @@ namespace PataRoad.Core.Character.Patapons.Display
                     var targetPatapon = alivePataponArmy.Aggregate((p1, p2) =>
                         (GetCurrentHitPointPercent(p1) < GetCurrentHitPointPercent(p2)) ? p1 : p2
                         );
-                    _currentMinArmyHealth = 2;
-                    _currentFocus = null;
-                    UpdateArmyStatus(targetPatapon);
+                    RefreshArmyStatus(targetPatapon, GetCurrentHitPointPercent(targetPatapon));
                 }
             }
         }
@@ -183,6 +188,13 @@ namespace PataRoad.Core.Character.Patapons.Display
             var camObject = Instantiate(camRes, _currentFocus.transform.parent);
             _renderer = camObject.GetComponent<PataponStatusRenderer>();
             _renderer.Init(_currentFocus, renderTexture);
+        }
+        private void Update()
+        {
+            if (_currentFocus.IsDead && _group != null)
+            {
+                Refresh(_group.Patapons);
+            }
         }
     }
 }

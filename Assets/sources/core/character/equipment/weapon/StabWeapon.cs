@@ -16,7 +16,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            _colliderCoroutineMap.Add(collision, StartCoroutine(DamageOnTime(collision)));
+            if (!_colliderCoroutineMap.ContainsKey(collision)) _colliderCoroutineMap.Add(collision, StartCoroutine(DamageOnTime(collision)));
         }
         private void OnTriggerExit2D(Collider2D collision)
         {
