@@ -11,12 +11,35 @@ namespace PataRoad.Core.Items
         //"Loading everything on memory at first time will be better"
         private static readonly Dictionary<ItemType, Dictionary<string, Dictionary<int, IItem>>> _data = new Dictionary<ItemType, Dictionary<string, Dictionary<int, IItem>>>();
         private static readonly Dictionary<ItemType, string[]> _groupIndexes = new Dictionary<ItemType, string[]>();
+
         public static void LoadAll()
         {
-            LoadAll(ItemType.Equipment);
-            LoadAll(ItemType.Material);
-            LoadAll(ItemType.Key);
+            Load<EquipmentData>(ItemType.Equipment, "Equipments");
+            Load<KeyItemData>(ItemType.Key, "Keys");
+            Load<MaterialData>(ItemType.Material, "Materials");
         }
+        private static void Load<T>(ItemType type, string path) where T : ScriptableObject, IItem
+        {
+            var result = new Dictionary<string, Dictionary<int, IItem>>();
+            var groupIndexes = new List<string>();
+            foreach (var data in Resources.LoadAll<T>($"Items/{path}"))
+            {
+                if (!result.ContainsKey(data.Group))
+                {
+                    result.Add(data.Group, new Dictionary<int, IItem>());
+                    groupIndexes.Add(data.Group);
+                }
+                if (int.TryParse(data.name, out int index))
+                {
+                    result[data.Group].Add(index, data);
+                    data.Id = Guid.NewGuid();
+                    data.Index = index;
+                }
+            }
+            _groupIndexes.Add(type, groupIndexes.ToArray());
+            _data.Add(type, result);
+        }
+
         /// <summary>
         /// Get Item
         /// </summary>
@@ -33,43 +56,6 @@ namespace PataRoad.Core.Items
                 return data;
             }
             else return null;
-        }
-
-
-        private static void LoadAll(ItemType type)
-        {
-            string dir;
-            switch (type)
-            {
-                case ItemType.Equipment:
-                    dir = "Equipments";
-                    break;
-                case ItemType.Key:
-                    dir = "Keys";
-                    break;
-                case ItemType.Material:
-                    dir = "Materials";
-                    break;
-                default:
-                    throw new System.NotSupportedException($"The item type *{type}* doesn't exist");
-            }
-            var result = new Dictionary<string, Dictionary<int, IItem>>();
-            var groupIndexes = new List<string>();
-            foreach (var data in Resources.LoadAll<EquipmentData>($"Items/{dir}"))
-            {
-                if (!result.ContainsKey(data.Group))
-                {
-                    result.Add(data.Group, new Dictionary<int, IItem>());
-                    groupIndexes.Add(data.Group);
-                }
-                if (int.TryParse(data.name, out int index))
-                {
-                    result[data.Group].Add(index, data);
-                    data.Id = Guid.NewGuid();
-                }
-            }
-            _data.Add(type, result);
-            _groupIndexes.Add(type, groupIndexes.ToArray());
         }
 
         /// <summary>

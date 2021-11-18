@@ -2,17 +2,20 @@
 
 namespace PataRoad.Core.Character.Patapons.General
 {
-    class HealingGeneralMode : IGeneralMode
+    class HealingGeneralMode : GeneralMode
     {
-        public CommandSong ActivationCommand => CommandSong.Ponpon;
-
-        public void Activate(PataponGroup group)
+        public override CommandSong ActivationCommand => CommandSong.Donchaka;
+        public override void Init()
+        {
+            //Simple healing. Nothing to initialise.
+        }
+        public override void Activate(PataponGroup group)
         {
             group.HealAllInGroup(50);
         }
-
-        public void CancelGeneralMode()
+        public override void CancelGeneralMode()
         {
+            //It's just healing, nothing to cancel!
         }
     }
 }

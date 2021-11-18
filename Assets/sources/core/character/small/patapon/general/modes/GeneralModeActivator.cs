@@ -4,14 +4,15 @@ namespace PataRoad.Core.Character.Patapons.General
 {
     internal class GeneralModeActivator
     {
-        private readonly IGeneralMode _generalMode;
+        private readonly GeneralMode _generalMode;
         public CommandSong GeneralModeSong { get; }
         private readonly PataponGroup _group;
         internal bool OnGeneralModeCombo { get; private set; }
 
-        internal GeneralModeActivator(IGeneralMode generalMode, PataponGroup group)
+        internal GeneralModeActivator(GeneralMode generalMode, PataponGroup group)
         {
             _generalMode = generalMode;
+            _generalMode.Init();
             GeneralModeSong = generalMode.ActivationCommand;
             _group = group;
             TurnCounter.OnTurn.AddListener(() =>

@@ -1,5 +1,6 @@
 ﻿using PataRoad.Core.Rhythm.Command;
 using UnityEngine;
+using UnityEngine.Scripting;
 
 namespace PataRoad.Core.Character.Patapons.General
 {
@@ -20,15 +21,8 @@ namespace PataRoad.Core.Character.Patapons.General
         private AudioClip _generalModeSound;
         private Patapon _selfPatapon;
 
-        //-------------------------------------------[testing]
-        private static int _counter;
-        private static IGeneralMode[] _modes = new IGeneralMode[]
-        {
-            new AttackGeneralMode(),
-            new HealingGeneralMode(),
-            new DefenceGeneralMode()
-        };
-        //-----------------------------------
+        [SerializeField]
+        Items.GeneralModeData _generalModeData;
 
         private void Awake()
         {
@@ -36,15 +30,8 @@ namespace PataRoad.Core.Character.Patapons.General
             _selfPatapon = GetComponent<Patapon>();
             _generalEffect = _selfPatapon.GetGeneralEffect();
 
-            //-------------------------------------------[testing]
-            IGeneralMode gen;
-            if (_counter < _modes.Length) gen = _modes[_counter];
-            else gen = null;
-            if (gen != null) _generalModeActivator = new GeneralModeActivator(gen, Group);
-            _counter++;
-            //-----------------------------------
+            EquipGeneralMode(_generalModeData);
 
-            _effect = transform.Find(GetComponent<Patapon>().RootName + "Effect").GetComponent<ParticleSystem>();
         }
 
         public void ActivateGeneralMode(CommandSong song)
@@ -61,6 +48,14 @@ namespace PataRoad.Core.Character.Patapons.General
                 }
                 _generalModeActivator.Activate(_pataponsManager.Groups);
             }
+        }
+        public void EquipGeneralMode(Items.GeneralModeData data)
+        {
+            if (data == null) return;
+            var effectObject = Instantiate(data.EffectObject, transform.Find(GetComponent<Patapon>().RootName));
+            _effect = effectObject.GetComponent<ParticleSystem>();
+            var mode = effectObject.GetComponent<GeneralMode>();
+            if (mode != null) _generalModeActivator = new GeneralModeActivator(mode, Group);
         }
         public void CancelGeneralMode() => _generalModeActivator?.Cancel();
 

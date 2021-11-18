@@ -62,14 +62,14 @@ namespace PataRoad.Core.Character.Patapons
             }
             BoundingOffset = posData;
         }
-        public void StartRenderMode(int layer)
+        internal void StartRenderMode(int layer)
         {
             foreach (var renderer in _rendererObjects)
             {
                 renderer.layer = layer;
             }
         }
-        public void EndRenderMode()
+        internal void EndRenderMode()
         {
             foreach (var rendererObj in _nonWeaponRendererObjects) rendererObj.layer = _nonWeaponRendererLayerId;
             foreach (var rendererObj in _weaponRendererObjects) rendererObj.layer = _weaponRendererLayerId;

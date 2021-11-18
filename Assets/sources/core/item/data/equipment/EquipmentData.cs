@@ -10,7 +10,7 @@ namespace PataRoad.Core.Items
     [CreateAssetMenu(fileName = "equipment-data-as-number", menuName = "EquipmentData/EquipmentData")]
     public class EquipmentData : ScriptableObject, IItem
     {
-        public System.Guid Id { get; internal set; }
+        public System.Guid Id { get; set; }
 
         [SerializeField]
         private bool _isUniqueItem;
@@ -21,6 +21,7 @@ namespace PataRoad.Core.Items
         [SerializeField]
         private string _group;
         public string Group => _group;
+        public int Index { get; set; }
         ///<summary>
         /// Name of the equipment, e.g. "Wooden Shield", "Divine Sword"
         /// </summary>

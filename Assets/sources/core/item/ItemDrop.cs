@@ -23,7 +23,7 @@ namespace PataRoad.Core.Items
             _item = item;
             _renderer.sprite = item.Image;
 
-            if (item is EquipmentData eq)
+            if (item.ItemType == ItemType.Equipment && item is EquipmentData eq)
             {
                 _renderer.transform.position += (Vector3)eq.GetPivotOffset();
             }
