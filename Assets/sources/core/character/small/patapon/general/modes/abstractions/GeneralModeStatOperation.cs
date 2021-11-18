@@ -7,6 +7,6 @@
         {
             _mode = mode;
         }
-        public Stat Calculate(Stat input) => _mode.CalculateStat(input);
+        public Stat Calculate(Rhythm.Command.CommandSong song, bool charged, Stat input) => _mode.CalculateStat(input);
     }
 }

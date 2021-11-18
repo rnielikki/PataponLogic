@@ -6,18 +6,18 @@ namespace PataRoad.Core.Character.Patapons
     {
         private readonly Patapon _patapon;
         internal PataponStatOperation(Patapon patapon) => _patapon = patapon;
-        public Stat Calculate(Stat input)
+        public Stat Calculate(CommandSong song, bool charged, Stat input)
         {
-            switch (_patapon.LastSong)
+            switch (song)
             {
                 case CommandSong.Ponpon:
-                    if (_patapon.Charged)
+                    if (charged)
                     {
                         input.MultipleDamage(3);
                     }
                     break;
                 case CommandSong.Chakachaka:
-                    if (_patapon.Charged)
+                    if (charged)
                     {
                         input.Defence *= 6;
                     }
@@ -35,7 +35,7 @@ namespace PataRoad.Core.Character.Patapons
             {
                 input.MultipleDamage(1.5f);
             }
-            if (_patapon.Charged)
+            if (charged)
             {
                 input.MovementSpeed *= 1.5f;
             }

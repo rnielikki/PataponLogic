@@ -212,7 +212,6 @@
             DamageMin = (int)(DamageMin * amount);
             DamageMax = (int)(DamageMax * amount);
         }
-
         public static Stat operator +(Stat stat1, Stat stat2)
         {
             return new Stat
@@ -292,7 +291,6 @@
             SleepResistance -= other.SleepResistance;
             return this;
         }
-
         public Stat Copy() => (Stat)MemberwiseClone();
     }
 }

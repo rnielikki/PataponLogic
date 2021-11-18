@@ -45,6 +45,6 @@
             base.Charge();
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }
-        public override General.IGeneralEffect GetGeneralEffect() => new General.HataponKibaEffect();
+        public override General.IGeneralEffect GetGeneralEffect() => new General.HataponEffect();
     }
 }

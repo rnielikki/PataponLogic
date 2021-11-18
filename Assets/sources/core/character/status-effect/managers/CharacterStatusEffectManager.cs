@@ -5,6 +5,7 @@ namespace PataRoad.Core.Character
     public class CharacterStatusEffectManager : StatusEffectManager
     {
         protected ICharacter _character;
+
         private void Awake()
         {
             Init();

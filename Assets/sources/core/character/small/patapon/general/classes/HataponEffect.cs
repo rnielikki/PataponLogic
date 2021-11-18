@@ -1,11 +1,11 @@
 ﻿namespace PataRoad.Core.Character.Patapons.General
 {
-    class PrincessEffect : IGeneralEffect
+    class HataponEffect : IGeneralEffect
     {
-        private readonly PrincessGroupStatOperation _operation = new PrincessGroupStatOperation();
+        readonly HataponGroupStatOperation _operation = new HataponGroupStatOperation();
         public void StartSelfEffect(Patapon patapon)
         {
-            patapon.StatOperator.Add(new PrincessSelfStatOperation());
+            patapon.StatOperator.Add(new HataponSelfStatOperation());
         }
         public void StartGroupEffect(System.Collections.Generic.IEnumerable<Patapon> patapons)
         {
@@ -15,22 +15,26 @@
         {
             foreach (var patapon in patapons) patapon.StatOperator.Remove(_operation);
         }
-        private class PrincessSelfStatOperation : IStatOperation
+        private class HataponSelfStatOperation : IStatOperation
         {
             public Stat Calculate(Rhythm.Command.CommandSong song, bool charged, Stat input)
             {
-                input.IceRate += 0.2f;
+                input.FireResistance = UnityEngine.Mathf.Infinity;
                 input.IceResistance = UnityEngine.Mathf.Infinity;
+                input.SleepResistance = UnityEngine.Mathf.Infinity;
                 return input;
             }
         }
-        private class PrincessGroupStatOperation : IStatOperation
+        private class HataponGroupStatOperation : IStatOperation
         {
             public Stat Calculate(Rhythm.Command.CommandSong song, bool charged, Stat input)
             {
-                input.Critical += 0.5f;
+                input.FireResistance = HalfOrDouble(input.FireResistance);
+                input.IceResistance = HalfOrDouble(input.IceResistance);
+                input.SleepResistance = HalfOrDouble(input.SleepResistance);
                 return input;
             }
+            private float HalfOrDouble(float rate) => rate < 0 ? rate / 1.5f : rate * 1.5f;
         }
     }
 }

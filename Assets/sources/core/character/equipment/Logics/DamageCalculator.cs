@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 component.TakeDamage(damage);
                 _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
                 CheckIfDie(component, target);
-                attacker.OnAttackHit(point);
+                attacker.OnAttackHit(point, damage);
             }
 
         }

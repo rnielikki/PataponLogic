@@ -22,7 +22,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _particleSystem = GetComponent<ParticleSystem>();
             _holder = GetComponentInParent<SmallCharacter>();
         }
-        public void Emit(int count, int startSpeed)
+        public void Emit(int count, float startSpeed)
         {
             var main = _particleSystem.main;
             main.startSpeed = startSpeed;

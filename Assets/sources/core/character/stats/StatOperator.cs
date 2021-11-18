@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 /// <summary>
 /// Represents RUN-TIME change pipeline of stat calculation.
 /// </summary>
@@ -7,20 +6,20 @@ namespace PataRoad.Core.Character
 {
     public class StatOperator
     {
-        private Stat _stat;
-        private List<IStatOperation> _pipelines = new List<IStatOperation>();
+        private readonly Stat _stat;
+        private readonly List<IStatOperation> _pipelines = new List<IStatOperation>();
 
         internal StatOperator(Stat realStat)
         {
             _stat = realStat;
         }
 
-        public Stat GetFinalStat()
+        public Stat GetFinalStat(Rhythm.Command.CommandSong song, bool charged)
         {
             Stat stat = _stat.Copy();
             foreach (var pipeline in _pipelines)
             {
-                pipeline.Calculate(stat);
+                pipeline.Calculate(song, charged, stat);
             }
             return stat;
         }

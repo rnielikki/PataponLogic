@@ -1,4 +1,6 @@
-﻿namespace PataRoad.Core.Character.Patapons
+﻿using UnityEngine;
+
+namespace PataRoad.Core.Character.Patapons
 {
     public class Tatepon : Patapon
     {
@@ -45,5 +47,15 @@
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }
         public override General.IGeneralEffect GetGeneralEffect() => new General.RahGashaponEffect();
+
+        public override void OnAttackHit(Vector2 point, int damage)
+        {
+            base.OnAttackHit(point, damage);
+            //General group effect
+            if (IsGeneral && LastSong == Rhythm.Command.CommandSong.Ponpon && Charged)
+            {
+                _group.HealAllInGroup((int)(damage * 0.1f));
+            }
+        }
     }
 }

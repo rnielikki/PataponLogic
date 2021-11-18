@@ -2,7 +2,7 @@
 {
     class SukoponEffect : IGeneralEffect
     {
-        public void SelfEffect(Patapon patapon)
+        public void StartSelfEffect(Patapon patapon)
         {
         }
         public void StartGroupEffect(System.Collections.Generic.IEnumerable<Patapon> patapons)

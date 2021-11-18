@@ -146,7 +146,7 @@ namespace PataRoad.Core.Map.Weather
         /// Activate or disactivate wind.
         /// </summary>
         /// <param name="on"><c>true</c> if turning on, otherwise <c>false</c>.</param>
-        public void ActivateWind(bool on)
+        private void ActivateWind(bool on)
         {
             foreach (Transform children in transform)
             {
@@ -154,7 +154,7 @@ namespace PataRoad.Core.Map.Weather
             }
             _isActive = on;
         }
-        private void StartNoWind() => ActivateWind(false);
+        public void StartNoWind() => ActivateWind(false);
         private void StartChangingWind()
         {
             if (_onFixedWindDirection) return;

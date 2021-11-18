@@ -10,6 +10,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private GameObject _chargeDefenceObject;
         public override float MinAttackDistance { get; } = 10;
         public override float WindAttackDistanceOffset { get; } = 5;
+        protected float _forceMultiplier = 1;
+        protected float _feverPonponForceMultiplier = 1;
 
         private void Start()
         {
@@ -22,7 +24,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
         public override void Attack(AttackCommandType attackCommandType)
         {
-            int startSpeed = 0;
+            float startSpeed = 0;
             int emitCount = 0;
             switch (attackCommandType)
             {
@@ -31,15 +33,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                     return;
                 case AttackCommandType.Attack:
                     //Attack is called in two times in animation, so doesn't need so many emit count.
-                    startSpeed = 6;
+                    startSpeed = 6 * _forceMultiplier;
                     emitCount = 4;
                     break;
                 case AttackCommandType.Defend:
-                    startSpeed = 3;
+                    startSpeed = 3 * _forceMultiplier;
                     emitCount = 3;
                     break;
                 case AttackCommandType.Charge:
-                    startSpeed = 2;
+                    startSpeed = 2 * _forceMultiplier;
                     emitCount = 2;
                     break;
                 case AttackCommandType.ChargeDefend:
@@ -54,13 +56,13 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             newStat.FireRate += 0.9f;
             newStat.DamageMin *= 3;
             newStat.DamageMax *= 3;
-            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, newStat).AddForce(Holder.MovingDirection * 5);
+            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, newStat).AddForce(Holder.MovingDirection * 5 * _feverPonponForceMultiplier);
         }
         private void ChargeDefend()
         {
             var newStat = Holder.Stat.Copy();
             newStat.Knockback += 2;
-            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, newStat).AddForce(Holder.MovingDirection * 1000);
+            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, newStat).AddForce(Holder.MovingDirection * 1000 * _forceMultiplier);
         }
         private Rigidbody2D CreateBulletInstance(GameObject targetObject, UnityEngine.Events.UnityAction<Collider2D> groundAction, Stat stat, bool fixedRotation = false)
         {

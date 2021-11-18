@@ -5,6 +5,6 @@
     /// </summary>
     public interface IStatOperation
     {
-        public Stat Calculate(Stat input);
+        public Stat Calculate(Rhythm.Command.CommandSong song, bool charged, Stat input);
     }
 }

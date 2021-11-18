@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2781808014339553126}
   - component: {fileID: 2781808014339553127}
-  - component: {fileID: 2781808014339553144}
+  - component: {fileID: 9062088367388295135}
   m_Layer: 10
   m_Name: Weapon
   m_TagString: Untagged
@@ -116,7 +116,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2781808014339553144
+--- !u!114 &9062088367388295135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,13 +125,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2781808014339553125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecc3a81eb594af3488801ff9e9553761, type: 3}
+  m_Script: {fileID: 11500000, guid: b616bc0d6f043104cb95006758a3ccb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _stat:
     id: 0
-  _mass: 1
-  _attackType: 0
+  _mass: 0
+  _attackType: 5
   references:
     version: 1
     00000000:
@@ -492,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _generalModeSound: {fileID: 8300000, guid: 0e07673960ea4ca429efb8d50bd5f61d, type: 3}
-  _generalMode: {fileID: 0}
+  _generalModeData: {fileID: 0}
 --- !u!1 &2781808015023517933
 GameObject:
   m_ObjectHideFlags: 0

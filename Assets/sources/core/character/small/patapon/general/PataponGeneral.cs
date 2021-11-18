@@ -33,6 +33,11 @@ namespace PataRoad.Core.Character.Patapons.General
             EquipGeneralMode(_generalModeData);
 
         }
+        private void Start()
+        {
+            _generalEffect.StartSelfEffect(_selfPatapon);
+            _generalEffect.StartGroupEffect(Group.Patapons);
+        }
 
         public void ActivateGeneralMode(CommandSong song)
         {
@@ -62,6 +67,7 @@ namespace PataRoad.Core.Character.Patapons.General
         private void OnDestroy()
         {
             CancelGeneralMode();
+            _generalEffect.EndGroupEffect(Group.Patapons);
         }
     }
 }

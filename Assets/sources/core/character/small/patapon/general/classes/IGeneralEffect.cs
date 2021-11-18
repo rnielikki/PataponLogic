@@ -6,9 +6,9 @@
     public interface IGeneralEffect
     {
         /// <summary>
-        /// Adds additional effect to self.
+        /// Adds additional effect to self. Also can be used for group effect initialisation.
         /// </summary>
-        public void SelfEffect(Patapon patapon);
+        public void StartSelfEffect(Patapon patapon);
         /// <summary>
         /// The effect that supports the general's group, while general is alive.
         /// </summary>
