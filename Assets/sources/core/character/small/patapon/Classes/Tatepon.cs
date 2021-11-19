@@ -54,7 +54,7 @@ namespace PataRoad.Core.Character.Patapons
             //General group effect
             if (IsGeneral && LastSong == Rhythm.Command.CommandSong.Ponpon && Charged)
             {
-                _group.HealAllInGroup((int)(damage * 0.1f));
+                Group.HealAllInGroup((int)(damage * 0.1f));
             }
         }
     }

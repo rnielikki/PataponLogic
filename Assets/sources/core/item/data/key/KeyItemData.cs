@@ -1,12 +1,11 @@
-﻿using PataRoad.Core.Character;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PataRoad.Core.Items
 {
     /// <summary>
     /// Represents any equipment DATA that Patapon (or enemy) use, like spear, shield, cape, helm. Attached to every equipment prefab.
     /// </summary>
-    [CreateAssetMenu(fileName = "general-mode-by-number", menuName = "KeyItemData/GeneralModeData")]
+    [CreateAssetMenu(fileName = "key-data", menuName = "KeyItemData/KeyItemData")]
     public class KeyItemData : ScriptableObject, IItem
     {
         public System.Guid Id { get; set; }

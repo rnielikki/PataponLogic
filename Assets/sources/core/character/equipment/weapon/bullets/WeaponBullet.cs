@@ -21,6 +21,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// </summary>
         /// <remarks>Collider2D represents the bullet's own collider - ground collider shouldn't affect anything.</remarks>
         public UnityAction<Collider2D> GroundAction { get; set; }
+        public UnityAction<Collider2D> CollidingAction { get; internal set; }
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -39,6 +41,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 }
                 else
                 {
+                    if (CollidingAction != null) CollidingAction(other);
                     Logic.DamageCalculator.DealDamage(Holder, Stat, other.gameObject, other.ClosestPoint(transform.position));
                 }
             }

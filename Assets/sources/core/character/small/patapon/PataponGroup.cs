@@ -68,6 +68,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             _pataponsHitPointDisplay.UpdateHitPoint(patapon);
         }
+        public void RefreshDisplay() => _pataponsHitPointDisplay.Refresh(_patapons);
         public void HealAllInGroup(int amount)
         {
             foreach (var patapon in _patapons)

@@ -6,12 +6,14 @@ namespace PataRoad.Core.Rhythm.Command
     /// Controls fever status.
     /// </summary>
     [System.Serializable]
-    class RhythmFever
+    public class RhythmFever
     {
+#pragma warning disable S1104 // Fields should not have public accessibility
         public static bool IsFever { get; private set; }
         public UnityEvent OnFever;
         public UnityEvent OnFeverWarning;
         public UnityEvent OnFeverCanceled;
+#pragma warning restore S1104 // Fields should not have public accessibility - refactoring this will cause event listener reset on editor.
 
         private bool _isWarned;
         internal void StartFever()

@@ -33,7 +33,7 @@ namespace PataRoad.Core.Character.Patapons
         /// Sets Patapon distance.
         /// </summary>
         public PataponDistanceManager DistanceManager { get; private set; }
-        protected PataponGroup _group { get; private set; }
+        public PataponGroup Group { get; private set; }
         public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f);
         public override Vector2 MovingDirection => Vector2.right;
 
@@ -51,11 +51,12 @@ namespace PataRoad.Core.Character.Patapons
 
         protected override void BeforeDie()
         {
-            _group.RemovePon(this);
+            Group.RemovePon(this);
         }
         protected override void AfterDie()
         {
-            _group.RemoveIfEmpty();
+            Group.RemoveIfEmpty();
+            Items.DeadPataponItemDrop.Create(transform.position, IsGeneral);
         }
         /// <summary>
         /// Remember call this on Awake() in inherited class
@@ -69,7 +70,7 @@ namespace PataRoad.Core.Character.Patapons
 
             //--- init
             base.Init();
-            _group = GetComponentInParent<PataponGroup>();
+            Group = GetComponentInParent<PataponGroup>();
             DistanceManager = GetComponent<PataponDistanceManager>();
             DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
             InitDistanceFromHead();
@@ -272,16 +273,22 @@ namespace PataRoad.Core.Character.Patapons
         public override void TakeDamage(int damage)
         {
             base.TakeDamage(damage);
-            _group.UpdateHitPoint(this);
+            Group.UpdateHitPoint(this);
         }
         /// <summary>
-        /// DON'T CALL THIS METHOD SEPARATELY. CALL ONLY IN <see cref="PataponGroup"/>. Otherwise heal status won't displayed!
+        /// DON'T CALL THIS METHOD SEPARATELY WITHOUT <see cref="Display.PataponsHitPointDisplay.Refresh"/>. CALL ONLY IN <see cref="PataponGroup"/>. Otherwise heal status won't displayed!
         /// </summary>
         internal void Heal(PataponGroup sender, int amount)
         {
-            if (sender != _group) return;
+            if (sender != Group) return;
             CurrentHitPoint = Mathf.Clamp(amount, CurrentHitPoint + amount, Stat.HitPoint);
         }
+        public void HealAlone(int amount)
+        {
+            CurrentHitPoint = Mathf.Clamp(amount, CurrentHitPoint + amount, Stat.HitPoint);
+            Group.RefreshDisplay();
+        }
+
         //------------------
         protected void WeaponLoadTest(string path, int index)
         {

@@ -8,85 +8,73 @@ namespace PataRoad.Core.Items
         private float _timeToExist;
         private float _fullTimeToExist;
         private SpriteRenderer _backgroundRenderer;
-        private SpriteRenderer _renderer;
+        protected SpriteRenderer _renderer;
         private bool _moving;
         private bool _obtained;
+        private bool _doNotDestroy;
 
         private AudioClip _sound;
-        private UnityEngine.Events.UnityAction _action;
+        protected UnityEngine.Events.UnityEvent _events;
 
-        // Start is called before the first frame update
-        private void SetItem(IItem item, float time, UnityEngine.Events.UnityAction action, AudioClip sound)
+        protected void SetItem(ObtainableItemDropData data)
         {
-            Init(time, action, sound);
+            Init(data, true);
 
-            _item = item;
-            _renderer.sprite = item.Image;
+            _item = data.Item;
+            _renderer.sprite = data.Item.Image;
 
-            if (item.ItemType == ItemType.Equipment && item is EquipmentData eq)
+            if (_item.ItemType == ItemType.Equipment && _item is EquipmentData eq)
             {
                 _renderer.transform.position += (Vector3)eq.GetPivotOffset();
             }
         }
-        private void SetItem(Sprite image, float time, UnityEngine.Events.UnityAction action, AudioClip sound)
+        protected void SetItem(EventItemDropData data)
         {
-            Init(time, action, sound);
-            _renderer.sprite = image;
+            Init(data, false);
+            _renderer.sprite = data.Image;
         }
-        private void Init(float time, UnityEngine.Events.UnityAction action, AudioClip sound)
+        private void Init(ItemDropData data, bool obtainable)
         {
             //Should do same thing but simply doesn't work. Weird.
             //_sound = sound ?? ItemManager.Current.ObtainingSound
-            if (sound == null) _sound = ItemManager.Current.ObtainingSound;
-            else _sound = sound;
-            _action = action ?? AddToScreen;
+            if (data.Sound == null) _sound = ItemManager.Current.ObtainingSound;
+            else _sound = data.Sound;
+
+            _events = data.Events;
+            if (obtainable) _events.AddListener(AddToScreen);
+
             _backgroundRenderer = GetComponent<SpriteRenderer>();
             _renderer = transform.Find("Item").GetComponent<SpriteRenderer>();
+            _doNotDestroy = data.DoNotDestroy;
 
-            _timeToExist = time;
-            _fullTimeToExist = time;
+            _fullTimeToExist = _timeToExist = data.TimeToExist;
+        }
+        public static bool DropItem(ItemDropData data, Vector2 position, bool noDestroy = false)
+        {
+            switch (data)
+            {
+                case ObtainableItemDropData obtainableItemData:
+                    if (obtainableItemData.Item == null) return false;
+                    GetItemDropGameObject(ItemManager.Current.ItemDropTemplate, position).GetComponent<ItemDrop>().SetItem(obtainableItemData);
+                    return true;
+                case EventItemDropData eventItemData:
+                    if (eventItemData.Image == null) return false;
+                    GetItemDropGameObject(ItemManager.Current.ItemDropTemplate, position).GetComponent<ItemDrop>().SetItem(eventItemData);
+                    return true;
+                default:
+                    return false;
+            }
         }
 
-        /// <summary>
-        /// Drops item by item data.
-        /// </summary>
-        /// <param name="item">Item, from <see cref="ItemLoader.GetItem(ItemType, string, int)"/> or <see cref="ItemLoader.GetRandomItem(ItemType, int, int)"/>.</param>
-        /// <param name="position">position to drop.</param>
-        /// <param name="timeToExist">After this time, item will be disappear.</param>
-        /// <param name="action">Action to perform when get item. If <c>null</c>, player "obtains" the item.</param>
-        /// <param name="sound">Sound to play when get item. If <c>null</c>, default Patapon item obtaining sound will be played.</param>
-        /// <returns><c>true</c> if item is successfully dropped, otherwise <c>false</c>.</returns>
-        /// <note>Hint: The return value can be used for unique item drop sequence.</note>
-        public static bool DropItem(IItem item, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
+        protected static GameObject GetItemDropGameObject(GameObject template, Vector2 position)
         {
-            if (item == null) return false;
-            GetItemDropGameObject(position).GetComponent<ItemDrop>().SetItem(item, timeToExist, action, sound);
-            return true;
-        }
-
-        /// <summary>
-        /// Drops item by image and action.
-        /// </summary>
-        /// <param name="image">The image to show on item.</param>
-        /// <param name="position">Item position to drop.</param>
-        /// <param name="timeToExist">After this time, item will be disappear.</param>
-        /// <param name="action">Action to perform when get item. If <c>null</c>, the item drop ALWAYS FAILS.</param>
-        /// <param name="sound">Sound to play when get item. If <c>null</c>, default Patapon item obtaining sound will be played.</param>
-        /// <returns><c>true</c> if item is successfully dropped, otherwise <c>false</c>.</returns>
-        public static bool DropItem(Sprite image, Vector2 position, float timeToExist, UnityEngine.Events.UnityAction action = null, AudioClip sound = null)
-        {
-            if (image == null || action == null) return false;
-            GetItemDropGameObject(position).GetComponent<ItemDrop>().SetItem(image, timeToExist, action, sound);
-            return true;
-        }
-        private static GameObject GetItemDropGameObject(Vector2 position)
-        {
-            var itemInstance = Instantiate(ItemManager.Current.ItemDropTemplate, ItemManager.Current.ItemDropPoint);
+            var itemInstance = Instantiate(template, ItemManager.Current.ItemDropPoint);
             itemInstance.transform.position = position;
             return itemInstance;
         }
         private void Update()
         {
+            if (_doNotDestroy) return;
             _timeToExist -= Time.deltaTime;
             var color = new Color(1, 1, 1, _timeToExist / _fullTimeToExist);
             if (_timeToExist <= 0)
@@ -113,13 +101,15 @@ namespace PataRoad.Core.Items
 
             //----------------------
             GameSound.SpeakManager.Current.Play(_sound);
-            _action();
+            DoAction(collision);
             //----------------------
 
             _renderer.color = Color.white;
             _fullTimeToExist = _timeToExist = 0.5f;
             _moving = true;
+            _doNotDestroy = false;
         }
+        protected virtual void DoAction(Collider2D collision) => _events.Invoke();
         private void AddToScreen() => ItemManager.AddToScreen(_item);
     }
 }

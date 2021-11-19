@@ -6,8 +6,9 @@ namespace PataRoad.Core.Rhythm.Command
     /// Defines combo status.
     /// </summary>
     [System.Serializable]
-    internal class RhythmCombo
+    public class RhythmCombo
     {
+#pragma warning disable S1104 // Fields should not have public accessibility
         /// <summary>
         /// Counts how many combo currently is.
         /// </summary>
@@ -31,6 +32,7 @@ namespace PataRoad.Core.Rhythm.Command
         private bool _hasFeverChance;
         private bool _isCombo;
 
+#pragma warning restore S1104 // Fields should not have public accessibility - refactoring this will cause event listener reset on editor.
         internal ComboStatus CountCombo(RhythmCommandModel inputs)
         {
             if (RhythmFever.IsFever)

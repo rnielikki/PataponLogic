@@ -14,7 +14,7 @@
                 new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
                 {
                     { "attack-fever", GetAttackMoveModel("attack-fever") },
-                    { "defend-charge", GetAttackMoveModel("defend-charge", AttackMoveType.Defend) },
+                    { "defend-charge", GetAttackMoveModel("defend-charge", AttackMoveType.Defend, attackDistance: 5) },
                 }
                 );
 

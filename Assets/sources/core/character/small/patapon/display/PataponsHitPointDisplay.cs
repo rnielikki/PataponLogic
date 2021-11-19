@@ -36,6 +36,8 @@ namespace PataRoad.Core.Character.Patapons.Display
         private bool _isGeneralAlive = true;
         private Image _bg;
 
+        private Text _text;
+
         void Awake()
         {
             _bg = transform.Find("Image").GetComponent<Image>();
@@ -51,6 +53,7 @@ namespace PataRoad.Core.Character.Patapons.Display
 
             _generalImage = _generalCurrentBar.GetComponent<Image>();
             _armyMinImage = _armyMinCurrentBar.GetComponent<Image>();
+            _text = GetComponentInChildren<Text>();
         }
         /// <summary>
         /// Adds hitpoint status to the display for one group.
@@ -68,6 +71,7 @@ namespace PataRoad.Core.Character.Patapons.Display
             instance._currentFocus = group.General.GetComponent<Patapon>();
             instance._group = group;
             instance.AddCamera();
+            instance.UpdateText();
 
             return instance;
         }
@@ -148,6 +152,7 @@ namespace PataRoad.Core.Character.Patapons.Display
                 _bg.color = _bgOnNoGeneral;
             }
             Refresh(patapons);
+            UpdateText();
         }
 
         /// <summary>
@@ -189,11 +194,14 @@ namespace PataRoad.Core.Character.Patapons.Display
             _renderer = camObject.GetComponent<PataponStatusRenderer>();
             _renderer.Init(_currentFocus, renderTexture);
         }
+        //Make sure to set always right value, even in Coroutine. Patapons in group are max 4 so it shouldn't take long
+        private void UpdateText() => _text.text = _group.Patapons.Count(pon => !pon.IsDead).ToString();
         private void Update()
         {
             if (_currentFocus.IsDead && _group != null)
             {
                 Refresh(_group.Patapons);
+                UpdateText();
             }
         }
     }

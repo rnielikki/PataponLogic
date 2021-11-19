@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.Core.Items
@@ -19,12 +18,17 @@ namespace PataRoad.Core.Items
         public GameObject ItemDropTemplate => _itemDropTemplate;
 
         [SerializeField]
+        private GameObject _daedPonDropTemplate;
+        public GameObject DeadPonDropTemplate => _daedPonDropTemplate;
+
+        [SerializeField]
         private GameObject _itemInScreenTemplate;
 
         [SerializeField]
         [Tooltip("Parent of every dropped item.")]
         private Transform _itemDropPoint;
         public Transform ItemDropPoint => _itemDropPoint;
+
 
         private void Awake()
         {

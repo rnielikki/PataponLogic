@@ -9,7 +9,7 @@ namespace PataRoad.Core.Rhythm.Command
     /// Reads command. This is separated, because some storyline (e.g. very first) requires just PON-PON-, fore example.
     /// Attach with <see cref="RhythmTimer"/>.
     /// </summary>
-    internal class RhythmCommand : MonoBehaviour
+    public class RhythmCommand : MonoBehaviour
     {
         /// <summary>
         /// This is "input references" added from Unity Editor - It DOESN'T contain how accurate the drum was, what kind of drum was etc.
@@ -92,17 +92,11 @@ namespace PataRoad.Core.Rhythm.Command
             //Initalizes drum beats
             //Will loaded based on game progress
             _data = new CommandListData(
-                new Dictionary<CommandSong, DrumType[]>()
+                new CommandSong[]
                 {
-                    { CommandSong.Patapata, new DrumType[]{ DrumType.Pata, DrumType.Pata, DrumType.Pata, DrumType.Pon }}, //PATA PATA PATA PON
-                    { CommandSong.Ponpon, new DrumType[]{ DrumType.Pon, DrumType.Pon, DrumType.Pata, DrumType.Pon } }, //PON PON PATA PON
-                    { CommandSong.Chakachaka, new DrumType[]{ DrumType.Chaka, DrumType.Chaka, DrumType.Pata, DrumType.Pon } }, //CHAKA CHAKA PATA PON
-                    { CommandSong.Ponpata, new DrumType[]{ DrumType.Pon, DrumType.Pata, DrumType.Pon, DrumType.Pata } } ,//PON PATA PON PATA
-                    { CommandSong.Ponchaka, new DrumType[]{ DrumType.Pon, DrumType.Pon, DrumType.Chaka, DrumType.Chaka } } ,//PON PON CHAKA CHAKA
-                    { CommandSong.Dondon, new DrumType[]{ DrumType.Don, DrumType.Don, DrumType.Chaka, DrumType.Chaka } } ,//DON DON CHAKA CHAKA
-                    { CommandSong.Donchaka, new DrumType[]{ DrumType.Pata, DrumType.Pon, DrumType.Don, DrumType.Chaka } } ,//PATA PON DON CHAKA
-                    { CommandSong.Patachaka, new DrumType[]{ DrumType.Pata, DrumType.Chaka, DrumType.Pata, DrumType.Pon } } ,//PATA CHAKA PATA PON (NEW): *DOES NOTHING*
-                });
+                    CommandSong.Patapata,CommandSong.Ponpon, CommandSong.Chakachaka
+                }
+                );
         }
 
         private void AddDrumHit(RhythmInputModel inputModel)
@@ -189,6 +183,14 @@ namespace PataRoad.Core.Rhythm.Command
                 OnCommandCanceled.Invoke();
             }
         }
+        public PracticingCommandListData ToPracticeMode(CommandSong song)
+        {
+            OnCommandCanceled?.Invoke();
+            var data = new PracticingCommandListData(this, _data, song);
+            _data = data;
+            return data;
+        }
+        internal void SetCommandListData(CommandListData data) => _data = data;
 
         private bool CommandExists(IEnumerable<DrumType> drums, out CommandSong song) => _data.TryGetCommand(drums, out song);
         private void ClearDrumHits() => _currentHits.Clear();

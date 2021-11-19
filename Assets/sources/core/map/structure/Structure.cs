@@ -12,6 +12,9 @@ namespace PataRoad.Core.Character
         public bool IsDead { get; private set; }
 
         [SerializeField]
+        private UnityEngine.Events.UnityEvent _onDestroy;
+
+        [SerializeField]
         private int _hitPoint;
         [SerializeField]
         private float _defence;
@@ -35,6 +38,7 @@ namespace PataRoad.Core.Character
         public void Die()
         {
             IsDead = true;
+            _onDestroy.Invoke();
             Destroy(gameObject);
         }
         public void TakeDamage(int damage)

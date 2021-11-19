@@ -8,67 +8,34 @@ namespace PataRoad.Core.Items
     /// </summary>
     public class ItemDropBehaviour : MonoBehaviour
     {
-
+        private const float _gap = 0.75f;
         [SerializeField]
-        int _timeToExist;
-        [SerializeField]
-        [Tooltip("0-1 probability value. only works with DropRandom()")]
-        float _chanceToDrop;
+        ItemDropData[] _dropData;
 
-        // ------- by item
-        [Header("Item Info")]
-        [SerializeField]
-        private bool _dropRandomItem;
-        [SerializeReference]
-        ItemType _itemType;
-        [SerializeReference]
-        string _itemGroup;
-        [SerializeReference]
-        int _itemIndex;
-        [SerializeReference]
-        [Tooltip("This is only meaningful when item drop is random.")]
-        int _maxItemIndex;
-
-        // ----------- by image
-
-        [SerializeField]
-        private bool _useImageInsteadOfItem;
-
-        [Header("Image Info")]
-        [SerializeField]
-        private Sprite _image;
-
-        // -------- action
-        [SerializeField]
-        UnityEngine.Events.UnityEvent _events;
-
-        [SerializeField]
-        AudioClip _sound;
-
-        private UnityEngine.Events.UnityAction _action;
-        private IItem _item;
-
-        private void Awake()
+        public void Drop() => DropItem(false);
+        public void DropRandom() => DropItem(true);
+        private void DropItem(bool random)
         {
-            if (_events.GetPersistentEventCount() == 0) _action = null;
-            else _action = _events.Invoke;
-            _item = (_dropRandomItem) ? ItemLoader.GetRandomItem(_itemType, _itemIndex, _maxItemIndex) : ItemLoader.GetItem(_itemType, _itemGroup, _itemIndex);
-        }
-
-        public void Drop()
-        {
-            if (!_useImageInsteadOfItem) ItemDrop.DropItem(_item, transform.position, _timeToExist, _action, _sound);
-            else ItemDrop.DropItem(_image, transform.position, _timeToExist, _action, _sound);
-        }
-        /// <summary>
-        /// Drops random item with *predefined item index*. Especially works with equipment.
-        /// </summary>
-        public void DropRandom()
-        {
-            if (Common.Utils.RandomByProbability(_chanceToDrop))
+            var startPoint = transform.position;
+            startPoint.x -= _dropData.Length * _gap * 0.5f;
+            if (random)
             {
-                if (!_useImageInsteadOfItem) ItemDrop.DropItem(_item, transform.position, _timeToExist, _action, _sound);
-                else ItemDrop.DropItem(_image, transform.position, _timeToExist, _action, _sound);
+                foreach (var data in _dropData)
+                {
+                    if (Common.Utils.RandomByProbability(data.ChanceToDrop))
+                    {
+                        ItemDrop.DropItem(data, startPoint, data.DoNotDestroy);
+                    }
+                    startPoint.x += _gap;
+                }
+            }
+            else
+            {
+                foreach (var data in _dropData)
+                {
+                    ItemDrop.DropItem(data, startPoint, data.DoNotDestroy);
+                    startPoint.x += _gap;
+                }
             }
         }
     }

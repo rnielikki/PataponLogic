@@ -56,15 +56,18 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             newStat.FireRate += 0.9f;
             newStat.DamageMin *= 3;
             newStat.DamageMax *= 3;
-            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, newStat).AddForce(Holder.MovingDirection * 5 * _feverPonponForceMultiplier);
+            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, null, newStat).AddForce(Holder.MovingDirection * 5 * _feverPonponForceMultiplier);
         }
         private void ChargeDefend()
         {
             var newStat = Holder.Stat.Copy();
-            newStat.Knockback += 2;
-            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, newStat).AddForce(Holder.MovingDirection * 1000 * _forceMultiplier);
+            newStat.Knockback = 0; //Knockback independent.
+            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, PushBack, newStat).AddForce(Holder.MovingDirection * 1000 * _forceMultiplier);
         }
-        private Rigidbody2D CreateBulletInstance(GameObject targetObject, UnityEngine.Events.UnityAction<Collider2D> groundAction, Stat stat, bool fixedRotation = false)
+        private Rigidbody2D CreateBulletInstance(GameObject targetObject,
+            UnityEngine.Events.UnityAction<Collider2D> groundAction,
+            UnityEngine.Events.UnityAction<Collider2D> collidingAction,
+            Stat stat, bool fixedRotation = false)
         {
             var instance = Instantiate(targetObject, transform.root.parent);
             instance.transform.position = _targetTransform.position;
@@ -74,6 +77,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             var bulletScript = instance.GetComponent<WeaponBullet>();
             bulletScript.Holder = Holder;
             bulletScript.Stat = stat;
+            bulletScript.CollidingAction = collidingAction;
             bulletScript.GroundAction = groundAction;
             instance.SetActive(true);
             return instance.GetComponent<Rigidbody2D>();
@@ -92,6 +96,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             self.attachedRigidbody.gravityScale = 0;
             self.attachedRigidbody.Sleep();
+        }
+        private void PushBack(Collider2D other)
+        {
+            other.GetComponentInParent<SmallCharacter>()?.StatusEffectManager?.SetKnockback();
         }
     }
 }
