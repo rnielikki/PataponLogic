@@ -12,10 +12,13 @@ namespace PataRoad.Core.Items
         string _startMessage;
         public string StartMessage => _startMessage;
         [SerializeField]
-        string _processingMessage;
-        public string ProcessingMessage => _processingMessage;
+        string[] _processingMessage = new string[Rhythm.Command.PracticingCommandListData.FullPracticeCount];
+        public string[] ProcessingMessage => _processingMessage;
         [SerializeField]
         string _endMessage;
+        [SerializeField]
+        AudioClip _teachingSound;
+        public AudioClip TeachingSound => _teachingSound;
         public string EndMessage => _endMessage;
         private Rhythm.Command.CommandSong _song;
         public override UnityEngine.Events.UnityEvent Events
@@ -36,6 +39,13 @@ namespace PataRoad.Core.Items
         {
             var screen = Instantiate(_tutorialScreen).GetComponent<GameDisplay.SongTutorial>();
             screen.Init(_song, this);
+        }
+        void OnValidate()
+        {
+            if (_processingMessage.Length != Rhythm.Command.PracticingCommandListData.FullPracticeCount)
+            {
+                Debug.LogError($"[SongItemDropData {name}] Set the processing message length to {Rhythm.Command.PracticingCommandListData.FullPracticeCount}, but it's {_processingMessage.Length}");
+            }
         }
     }
 }

@@ -7,7 +7,9 @@ namespace PataRoad.Core.Rhythm.Command
     {
         private readonly CommandListData _oldData;
         private readonly CommandSong _song;
-        public string FullSong { get; }
+        public string FullSongName { get; }
+        public DrumType[] FullSong { get; }
+
         public const int FullPracticeCount = 4;
 
         private int _practiceCount;
@@ -22,7 +24,8 @@ namespace PataRoad.Core.Rhythm.Command
                 EndPractice(false);
                 return;
             }
-            FullSong = string.Join(" ", _fullMap[song]).ToUpper();
+            FullSong = _fullMap[song];
+            FullSongName = string.Join(" ", FullSong).ToUpper();
             _oldData = oldData;
             _song = song;
             _sender = sender;
@@ -33,21 +36,20 @@ namespace PataRoad.Core.Rhythm.Command
             var gotCommand = base.TryGetCommand(drums, out song);
             if (gotCommand)
             {
-                if (drums.Count() == 4)
+                var count = drums.Count();
+                OnHit.Invoke(drums, count);
+
+                if (count == 4)
                 {
+                    _practiceCount++;
                     if (_practiceCount < FullPracticeCount)
                     {
-                        OnCommand.Invoke(drums, _practiceCount);
-                        _practiceCount++;
+                        TurnCounter.OnNextTurn.AddListener(() => OnCommand.Invoke(drums, _practiceCount));
                     }
                     else
                     {
-                        EndPractice();
+                        TurnCounter.OnNextTurn.AddListener(() => EndPractice());
                     }
-                }
-                else
-                {
-                    OnHit.Invoke(drums, _practiceCount);
                 }
             }
             else

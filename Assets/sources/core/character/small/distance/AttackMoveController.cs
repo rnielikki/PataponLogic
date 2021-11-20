@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-/// <summary>
-/// Ensures that Patapon attacks in right distance.
-/// </summary>
 namespace PataRoad.Core.Character
 {
+    /// <summary>
+    /// Ensures that Patapon attacks in right distance. Works with black magic.
+    /// </summary>
     public class AttackMoveController : MonoBehaviour
     {
         /// <summary>
@@ -63,7 +63,7 @@ namespace PataRoad.Core.Character
             {
                 _animator.Animate(_currentModel.AnimationType);
             }
-            else if (_data.WasHitLastTime)
+            else if (_data.WasHitLastTime && _currentModel.HasTarget())
             {
                 AnimateAttack();
             }
@@ -139,6 +139,7 @@ namespace PataRoad.Core.Character
                         _animator.Animate("walk");
                     }
                     else _animator.Animate("Idle");
+                    _data.WasHitLastTime = false;
                 }
                 if (_moving)
                 {

@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace PataRoad.Core.Character
 {
+    /// <summary>
+    /// Includes odd attacking black magic logic.
+    /// </summary>
     public class CharacterAnimator
     {
         private readonly Animator _animator;
