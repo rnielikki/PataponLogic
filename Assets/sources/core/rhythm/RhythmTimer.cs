@@ -35,6 +35,10 @@ namespace PataRoad.Core.Rhythm
         /// </summary>
         public static int BadFrequency { get; private set; }
 
+        /// <summary>
+        /// 1/4 of the <see cref="Frequency"/> value.
+        /// </summary>
+        public static int QuarterFrequency { get; private set; }
         //Events
         /// <summary>
         /// When the timer service (the whole game with Rhythm) is actually started.
@@ -48,6 +52,10 @@ namespace PataRoad.Core.Rhythm
         /// Event, when rhythm reaches in half of right time (half of frequency).
         /// </summary>
         public static UnityEvent OnHalfTime { get; } = new UnityEvent();
+        /// <summary>
+        /// Event, which is called in next quarter time for miracle.
+        /// </summary>
+        public static UnityEvent OnNextQuarterTime { get; } = new UnityEvent();
         /// <summary>
         /// This is called ONLY ONCE when reaches in right time (0 frequency count).
         /// </summary>
@@ -64,6 +72,7 @@ namespace PataRoad.Core.Rhythm
         {
             Frequency = (int)(RhythmEnvironment.InputInterval / Time.fixedDeltaTime);
             HalfFrequency = Frequency / 2;
+            QuarterFrequency = Frequency / 4;
             PerfectFrequency = (int)(RhythmEnvironment.PerfectRange / Time.fixedDeltaTime);
             GoodFrequency = (int)(RhythmEnvironment.GoodRange / Time.fixedDeltaTime);
             BadFrequency = (int)(RhythmEnvironment.BadRange / Time.fixedDeltaTime);
@@ -95,6 +104,11 @@ namespace PataRoad.Core.Rhythm
                 OnHalfTime.Invoke();
                 OnNextHalfTime.Invoke();
                 OnNextHalfTime.RemoveAllListeners();
+            }
+            else if (Count == QuarterFrequency - 1 || Count == 3 * QuarterFrequency - 1)
+            {
+                OnNextQuarterTime.Invoke();
+                OnNextQuarterTime.RemoveAllListeners();
             }
             //Note: If you got DividedByZero Exception in here on editor, just DON'T EDIT SCRIPT WHILE EXECUTING.
             //It's very common to throw exception when script is modified on execution.

@@ -51,11 +51,6 @@ namespace PataRoad.GameDisplay
         }
         private void UpdateInstruction(System.Collections.Generic.IEnumerable<DrumType> drums, int count)
         {
-            var str = new StringBuilder();
-            foreach (var d in drums)
-            {
-                str.Append(d.ToString());
-            }
             _command.PlayOnIndex(count - 1);
         }
         private void UpdateInstructionOnCommand(System.Collections.Generic.IEnumerable<DrumType> drums, int count)

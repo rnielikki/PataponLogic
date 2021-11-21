@@ -64,8 +64,6 @@ namespace PataRoad.Core.Rhythm.Command
         // Start is called before the first frame update
         private void Awake()
         {
-            _miracleListener.OnMiracle.AddListener(() => Debug.Log("------------------- MIRACLE ---------------------"));
-
             _onPerfectEnd.AddListener((_) => _audioSource.PlayOneShot(_perfectSound));
             OnCommandCanceled.AddListener(ComboManager.EndCombo);
             OnCommandCanceled.AddListener(() =>
@@ -162,23 +160,20 @@ namespace PataRoad.Core.Rhythm.Command
                     });
                 }
             }
-            else if (RhythmFever.IsFever && _miracleListener.HasMiracleChance(drums, inputModel))
+            if (_miracleListener.HasMiracleChance(drums, inputModel))
             {
                 _started = true;
                 if (_miracleListener.MiracleDrumCount == 5)
                 {
-                    _miracleListener.ResetMiracle();
-                    _miracleListener.OnMiracle.Invoke();
-                    TurnCounter.Stop();
-                    RhythmTimer.OnNext.AddListener(() =>
+                    TurnCounter.OnNextTurn.AddListener(() =>
                     {
+                        _miracleListener.ResetMiracle();
+                        _miracleListener.OnMiracle.Invoke();
                         ClearDrumHits();
-                        //Stop command listening, should pass to miracle status
-                        enabled = false;
                     });
                 }
             }
-            else
+            if (!_started)
             {
                 OnCommandCanceled.Invoke();
             }
@@ -191,6 +186,20 @@ namespace PataRoad.Core.Rhythm.Command
             return data;
         }
         internal void SetCommandListData(CommandListData data) => _data = data;
+        public PracticingMiracleListener ToMiraclePracticeMode()
+        {
+            var practicingMiracleListener = _miracleListener.gameObject
+                .AddComponent<PracticingMiracleListener>()
+                .LoadFromMiracleListener(this, _miracleListener);
+            _miracleListener = practicingMiracleListener;
+            return practicingMiracleListener;
+        }
+        internal void SetMiracleListener(MiracleListener listener)
+        {
+            _miracleListener.enabled = false;
+            listener.enabled = true;
+            _miracleListener = listener;
+        }
 
         private bool CommandExists(IEnumerable<DrumType> drums, out CommandSong song) => _data.TryGetCommand(drums, out song);
         private void ClearDrumHits() => _currentHits.Clear();

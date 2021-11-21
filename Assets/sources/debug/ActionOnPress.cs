@@ -19,6 +19,8 @@ namespace PataRoad.AppDebug
         {
             _input.performed += PerformAction;
             _input.Enable();
+            FindObjectOfType<Core.Rhythm.Command.MiracleListener>().OnMiracle.AddListener(() => Debug.Log("------------------- MIRACLE ---------------------"));
+
         }
         private void OnDestroy()
         {

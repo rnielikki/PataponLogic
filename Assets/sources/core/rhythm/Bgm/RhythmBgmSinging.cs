@@ -24,6 +24,8 @@ namespace PataRoad.Core.Rhythm.Bgm
     {
         [SerializeField]
         RhythmBgmPlayer _player;
+        [SerializeField]
+        AudioClip _singingMiracle;
         private string _themeName;
         AudioSource _audioSource;
 
@@ -82,6 +84,7 @@ namespace PataRoad.Core.Rhythm.Bgm
             _audioSource.clip = clip;
             _audioSource.Play();
         }
+        public void SingMiracle() => _audioSource.PlayOneShot(_singingMiracle);
         public void ShoutFever()
         {
             //A bit delay needed to add listener in right time

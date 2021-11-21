@@ -19,25 +19,34 @@ namespace PataRoad.Core.Rhythm
         internal bool EnteredMiracleHit { get; private set; }
         internal int MiracleDrumCount { get; private set; }
 
-        int[] _timerIndexes;
+        int[] _minTimerIndexes;
+        int[] _maxTimerIndexes;
         private void Awake()
         {
-            int _newGoodFrequency = (_newGoodRange == 0) ? (int)(RhythmTimer.GoodFrequency * 0.75) : (int)(_newGoodRange / Time.fixedDeltaTime);
+            if (_newGoodRange > RhythmEnvironment.InputInterval / 4)
+            {
+                throw new ArgumentException("The good range cannot be more than " + RhythmEnvironment.InputInterval / 4);
+            }
+            int newHalfGoodFrequency = (_newGoodRange == 0) ? (int)(RhythmTimer.GoodFrequency * 0.5) : (int)(_newGoodRange / Time.fixedDeltaTime);
+            int newGoodFrequency = newHalfGoodFrequency * 2;
             if (DrumType != DrumType.Don)
             {
                 throw new ArgumentException("Only DON Miracle drum is supported");
             }
             TurnCounter.OnTurn.AddListener(() => { if (!TurnCounter.IsPlayerTurn) ResetCounter(); });
-            _timerIndexes = new int[]
+            _minTimerIndexes = new int[]
             {
-                RhythmTimer.HalfFrequency - RhythmTimer.GoodFrequency,
-                RhythmTimer.HalfFrequency + _newGoodFrequency,
-                RhythmTimer.Frequency - _newGoodFrequency,
-                RhythmTimer.Frequency + RhythmTimer.GoodFrequency,
-                RhythmTimer.Frequency * 2 - RhythmTimer.GoodFrequency,
-                RhythmTimer.Frequency * 2 + _newGoodFrequency,
-                RhythmTimer.Frequency * 2 + RhythmTimer.HalfFrequency - _newGoodFrequency,
-                RhythmTimer.Frequency * 2 + RhythmTimer.HalfFrequency + RhythmTimer.GoodFrequency
+                RhythmTimer.HalfFrequency - newGoodFrequency, //2
+                RhythmTimer.HalfFrequency - newHalfGoodFrequency, //3
+                RhythmTimer.HalfFrequency - newGoodFrequency, //4
+                RhythmTimer.HalfFrequency - newHalfGoodFrequency //5
+            };
+            _maxTimerIndexes = new int[]
+            {
+                RhythmTimer.HalfFrequency + newHalfGoodFrequency, //2
+                RhythmTimer.HalfFrequency + newGoodFrequency, //3
+                RhythmTimer.HalfFrequency + newHalfGoodFrequency, //4
+                RhythmTimer.HalfFrequency + newGoodFrequency //5
             };
             Init();
         }
@@ -47,48 +56,68 @@ namespace PataRoad.Core.Rhythm
         }
         protected override RhythmInputModel GetInputModel()
         {
-            if (RhythmFever.IsFever && TurnCounter.IsPlayerTurn)
-            {
-                MiracleDrumCount++;
-            }
             if (!EnteredMiracleHit)
             {
                 return base.GetInputModel();
             }
             else
             {
-                //When the drum hti is miracle, it doesn't matter how perfect it is, really
-                return new RhythmInputModel(
-                    DrumType.Don,
-                    RhythmTimer.Count,
-                    DrumHitStatus.Perfect
-                );
+                if (Disabled) return RhythmInputModel.Miss(DrumType.Don);
+                int current;
+                switch (MiracleDrumCount)
+                {
+                    case 1: //this is 2nd
+                    case 4: //this is 5th
+                        current = Mathf.Abs((RhythmTimer.HalfFrequency - RhythmTimer.Count) % RhythmTimer.Frequency);
+                        break;
+                    case 2:
+                    case 3:
+                        current = RhythmTimer.Count;
+                        break;
+                    default:
+                        throw new InvalidOperationException($"The {MiracleDrumCount}th miracle drum count isn't valid");
+                }
+                if (MiracleDrumCount % 2 == 1)
+                {
+                    RhythmTimer.OnNextQuarterTime.AddListener(() => Disabled = false);
+                }
+                else
+                {
+                    RhythmTimer.OnNextHalfTime.AddListener(() => Disabled = false);
+                }
+                Disabled = true;
+                Debug.Log($"{current} on {_minTimerIndexes[MiracleDrumCount - 1]} and {_maxTimerIndexes[MiracleDrumCount - 1]}");
+                if (current >= _minTimerIndexes[MiracleDrumCount - 1] && current <= _maxTimerIndexes[MiracleDrumCount - 1])
+                {
+                    //When the drum hit is miracle, it doesn't matter how perfect it is, really
+                    return new RhythmInputModel(
+                        DrumType.Don,
+                        RhythmTimer.Count,
+                        DrumHitStatus.Perfect
+                    );
+                }
+                else
+                {
+                    ResetCounter();
+                    return RhythmInputModel.Miss(DrumType.Don);
+                }
             }
         }
-        private IEnumerator CountMiracle()
-        {
-            if (MiracleDrumCount == 0)
-            {
-                throw new InvalidOperationException("Miracle drum count cannot be zero when CountMiracle() is called!");
-            }
-            Disabled = true;
-            while (EnteredMiracleHit && MiracleDrumCount <= 5)
-            {
-                var index = MiracleDrumCount * 2 + (!Disabled ? -2 : -1);
-                yield return new WaitForRhythmTime(_timerIndexes[index]);
-                Disabled = !Disabled;
-            }
-        }
-
         /// <summary>
         /// Start miracle counting.
         /// </summary>
-        internal void StartCounter()
+        internal void StartCounter(int count)
         {
-            if (EnteredMiracleHit) return;
-            RhythmTimer.OnHalfTime.RemoveListener(SetEnable);
-            EnteredMiracleHit = true;
-            StartCoroutine(CountMiracle());
+            if (TurnCounter.IsOn && !EnteredMiracleHit)
+            {
+                EnteredMiracleHit = true;
+                RhythmTimer.OnHalfTime.RemoveListener(SetEnable);
+                MiracleDrumCount = count;
+            }
+            else
+            {
+                MiracleDrumCount++;
+            }
         }
         /// <summary>
         /// Stop(reset) miracle counting.
@@ -106,5 +135,12 @@ namespace PataRoad.Core.Rhythm
         private void OnEnable() => Enable();
         private void OnDisable() => Disable();
         private void OnDestroy() => Destroy();
+        private void OnValidate()
+        {
+            if (_newGoodRange > RhythmEnvironment.InputInterval / 4)
+            {
+                throw new ArgumentException("The good range cannot be more than " + RhythmEnvironment.InputInterval / 4);
+            }
+        }
     }
 }

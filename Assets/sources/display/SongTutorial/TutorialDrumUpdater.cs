@@ -1,6 +1,9 @@
+using PataRoad.Core.Rhythm;
+using PataRoad.Core.Rhythm.Command;
+using System.Linq;
 using UnityEngine;
 
-namespace PataRoad.Core.Rhythm.Command
+namespace PataRoad.GameDisplay
 {
     public class TutorialDrumUpdater : MonoBehaviour
     {
@@ -12,14 +15,25 @@ namespace PataRoad.Core.Rhythm.Command
         private GameObject _chaka;
         [SerializeField]
         private GameObject _don;
+        private int _maxLength;
+        private int _maxIndex => _maxLength - 1;
 
         private Animator[] _animators;
 
         internal void Load(PracticingCommandListData commandListData)
         {
-            _animators = new Animator[4];
+            LoadDrums(commandListData.FullSong);
+        }
+        internal void LoadForMiracle()
+        {
+            LoadDrums(new[] { DrumType.Don, DrumType.Don, DrumType.Don, DrumType.Don, DrumType.Don });
+        }
+        private void LoadDrums(System.Collections.Generic.IEnumerable<DrumType> drums)
+        {
+            _maxLength = drums.Count();
+            _animators = new Animator[_maxLength];
             int i = 0;
-            foreach (var drum in commandListData.FullSong)
+            foreach (var drum in drums)
             {
                 GameObject drumToInstantiate;
                 switch (drum)
@@ -46,9 +60,9 @@ namespace PataRoad.Core.Rhythm.Command
         }
         internal void PlayOnIndex(int index)
         {
-            if (index == 3)
+            if (index == _maxIndex)
             {
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < _maxIndex; i++)
                 {
                     PlayOnIndex(i);
                 }
@@ -57,7 +71,7 @@ namespace PataRoad.Core.Rhythm.Command
         }
         internal void ResetHit()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < _maxLength; i++)
             {
                 _animators[i].Play("Idle");
             }
