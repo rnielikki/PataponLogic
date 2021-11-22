@@ -25,6 +25,7 @@
         /// The DIRECT damage the object will get. Expected to be calculated through <see cref="Equipment.Logic.DamageCalculator"/>.
         /// </summary>
         public void TakeDamage(int damage);
+        public float GetDefenceValueOffset();
         public StatusEffectManager StatusEffectManager { get; }
         public bool IsDead { get; }
     }

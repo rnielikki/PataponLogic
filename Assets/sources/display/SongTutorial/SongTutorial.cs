@@ -2,7 +2,6 @@ using UnityEngine;
 using PataRoad.Core.Rhythm.Command;
 using TMPro;
 using PataRoad.Core.Rhythm;
-using System.Text;
 
 namespace PataRoad.GameDisplay
 {
@@ -95,10 +94,10 @@ namespace PataRoad.GameDisplay
         private void RemoveListeners()
         {
             StopAllCoroutines();
-            _commandListData.OnHit.RemoveAllListeners();
-            _commandListData.OnCommand.RemoveAllListeners();
-            _commandListData.OnPracticeEnd.RemoveAllListeners();
-            _rhythmCommand.OnCommandCanceled.RemoveListener(UpdateInstructionOnMiss);
+            _commandListData?.OnHit.RemoveAllListeners();
+            _commandListData?.OnCommand.RemoveAllListeners();
+            _commandListData?.OnPracticeEnd.RemoveAllListeners();
+            _rhythmCommand?.OnCommandCanceled.RemoveListener(UpdateInstructionOnMiss);
         }
         private void SpeakTeaching() => GameSound.SpeakManager.Current.Play(_data.TeachingSound);
         private void OnDestroy()

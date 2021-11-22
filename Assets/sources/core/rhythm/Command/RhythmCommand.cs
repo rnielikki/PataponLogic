@@ -92,7 +92,7 @@ namespace PataRoad.Core.Rhythm.Command
             _data = new CommandListData(
                 new CommandSong[]
                 {
-                    CommandSong.Patapata,CommandSong.Ponpon, CommandSong.Chakachaka
+                    CommandSong.Patapata,CommandSong.Ponpon, CommandSong.Chakachaka, CommandSong.Dondon
                 }
                 );
         }
@@ -136,10 +136,12 @@ namespace PataRoad.Core.Rhythm.Command
             //I don't know maybe there are better way...
             var drums = _currentHits.Select(hit => hit.Drum);
             _gotAnyCommandInput = true;
+            bool acceptedAsCommand = false;
 
             if (CommandExists(drums, out CommandSong song))
             {
                 _started = true;
+                acceptedAsCommand = true;
 
                 if (_currentHits.Count == 4)
                 {
@@ -163,6 +165,8 @@ namespace PataRoad.Core.Rhythm.Command
             if (_miracleListener.HasMiracleChance(drums, inputModel))
             {
                 _started = true;
+                acceptedAsCommand = true;
+
                 if (_miracleListener.MiracleDrumCount == 5)
                 {
                     TurnCounter.OnNextTurn.AddListener(() =>
@@ -173,7 +177,7 @@ namespace PataRoad.Core.Rhythm.Command
                     });
                 }
             }
-            if (!_started)
+            if (!acceptedAsCommand)
             {
                 OnCommandCanceled.Invoke();
             }

@@ -57,5 +57,7 @@ namespace PataRoad.Core.Character
                 );
             }
         }
+
+        public float GetDefenceValueOffset() => 1;
     }
 }

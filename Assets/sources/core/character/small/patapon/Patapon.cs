@@ -266,7 +266,11 @@ namespace PataRoad.Core.Character.Patapons
             return base.SetAttackMoveController();
         }
 
-        public override float GetValueOffset()
+        public override float GetAttackValueOffset()
+        {
+            return _lastPerfectionPercent;
+        }
+        public override float GetDefenceValueOffset()
         {
             return _lastPerfectionPercent;
         }

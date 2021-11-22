@@ -21,7 +21,7 @@ namespace PataRoad.Core.Character
         /// <param name="character">The target character. ("from")</param>
         /// <param name="sight">Maximum sight of the target. This is equivalent to raycast distance.</param>
         /// <param name="layerMask">Masks of layers to detect. ("to") Get this value using <see cref="UnityEngine.LayerMask"/>.</param>
-        internal DistanceCalculator(ICharacter character, float sight, int layerMask)
+        private DistanceCalculator(ICharacter character, float sight, int layerMask)
         {
             _character = character;
             _target = (character as MonoBehaviour)?.gameObject;
@@ -33,7 +33,7 @@ namespace PataRoad.Core.Character
         /// <see cref="DistanceCalculator"/> for Patapon (also from left to right).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
-        internal static DistanceCalculator GetPataponDistanceCalculator(Patapons.Patapon target) =>
+        internal static DistanceCalculator GetPataponDistanceCalculator(ICharacter target) =>
             new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Hazoron (also from right to left).
@@ -41,12 +41,14 @@ namespace PataRoad.Core.Character
         /// <param name="target">The target game object. ("from")</param>
         internal static DistanceCalculator GetHazoronDistanceCalculator(Hazorons.Hazoron target) =>
             new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("patapons", "bosses"));
-
+        internal static DistanceCalculator GetBossDistanceCalculator(ICharacter target) =>
+            new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("patapons", "hazorons"));
 
         //boxcast data
         private static Vector2 _boxSize = new Vector2(0.001f, CharacterEnvironment.MaxYToScan); //size for boxcasting. NOTE: boxcast doesn't catch from initial box position.
         private static Vector2 _boxcastYOffset = (_boxSize.y / 2) * Vector2.up;
         private static float _boxcastXOffset = _boxSize.x * 0.6f;
+        internal static object TurnCounter;
 
         /// <summary>
         /// Shoots RayCast to closest structure or enemy and returns the raycast hit if found.

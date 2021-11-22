@@ -73,8 +73,8 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 target.Die();
             }
         }
-        private static int GetAttackDamage(Stat stat, ICharacter character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetValueOffset());
-        private static int GetDefence(Stat stat, ICharacter character) => GetFinalValue(stat.DefenceMin, stat.DefenceMax, character.GetValueOffset());
+        private static int GetAttackDamage(Stat stat, ICharacter character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());
+        private static int GetDefence(Stat stat, ICharacter character) => GetFinalValue(stat.DefenceMin, stat.DefenceMax, character.GetDefenceValueOffset());
         private static int GetFinalValue(int min, int max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
         private static int GetFinalValue(float min, float max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
     }

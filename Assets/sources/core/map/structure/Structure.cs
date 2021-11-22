@@ -47,5 +47,7 @@ namespace PataRoad.Core.Character
             //Can attach health status or change sprite etc.
             CurrentHitPoint -= damage;
         }
+
+        public float GetDefenceValueOffset() => 1;
     }
 }
