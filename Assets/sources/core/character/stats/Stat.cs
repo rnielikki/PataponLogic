@@ -19,14 +19,24 @@
             set => _hitPoint = value;
         }
         /// <summary>
-        /// How much can resist attack. User gets 1/Defence of damage. Minimum is 0.01 (but nobody should have such bad defence). 1 gets exactly same as damage (without any bonus)
+        /// How much can resist attack, in minimum value.
         /// </summary>
         [UnityEngine.SerializeField]
-        private float _defence;
-        public float Defence
+        private float _defenceMin;
+        public float DefenceMin
         {
-            get => _defence;
-            set => _defence = value;
+            get => _defenceMin;
+            set => _defenceMin = value;
+        }
+        /// <summary>
+        /// How much can resist attack, in maximum value.
+        /// </summary>
+        [UnityEngine.SerializeField]
+        private float _defenceMax;
+        public float DefenceMax
+        {
+            get => _defenceMax;
+            set => _defenceMax = value;
         }
         /// <summary>
         /// Minimum damage value.
@@ -217,7 +227,8 @@
             return new Stat
             {
                 HitPoint = stat1.HitPoint + stat2.HitPoint,
-                Defence = stat1.Defence + stat2.Defence,
+                DefenceMin = stat1.DefenceMin + stat2.DefenceMin,
+                DefenceMax = stat1.DefenceMax + stat2.DefenceMax,
                 DamageMin = stat1.DamageMin + stat2.DamageMin,
                 DamageMax = stat1.DamageMax + stat2.DamageMax,
                 AttackSeconds = stat1.AttackSeconds + stat2.AttackSeconds,
@@ -245,7 +256,8 @@
         public Stat Add(Stat other)
         {
             HitPoint += other.HitPoint;
-            Defence += other.Defence;
+            DefenceMin += other.DefenceMin;
+            DefenceMax += other.DefenceMax;
             DamageMin += other.DamageMin;
             DamageMax += other.DamageMax;
             AttackSeconds += other.AttackSeconds;
@@ -272,7 +284,8 @@
         public Stat Subtract(Stat other)
         {
             HitPoint -= other.HitPoint;
-            Defence -= other.Defence;
+            DefenceMin -= other.DefenceMin;
+            DefenceMax -= other.DefenceMax;
             DamageMin -= other.DamageMin;
             DamageMax -= other.DamageMax;
             AttackSeconds -= other.AttackSeconds;

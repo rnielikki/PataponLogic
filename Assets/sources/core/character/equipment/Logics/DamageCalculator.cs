@@ -25,7 +25,8 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 if (Common.Utils.RandomByProbability(stat.FireRate))
                 {
                     component.StatusEffectManager.SetFire(10);
-                    int damage = (int)(attacker.GetAttackDamage(stat) * stat.FireRate);
+
+                    int damage = (int)(GetAttackDamage(stat, attacker) * stat.FireRate);
                     if (damage != 0)
                     {
                         _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
@@ -35,7 +36,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             }
             else
             {
-                var damage = attacker.GetAttackDamage(stat);
+                var damage = GetAttackDamage(stat, attacker);
                 component.TakeDamage(damage);
                 _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
                 CheckIfDie(component, target);
@@ -72,5 +73,9 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 target.Die();
             }
         }
+        private static int GetAttackDamage(Stat stat, ICharacter character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetValueOffset());
+        private static int GetDefence(Stat stat, ICharacter character) => GetFinalValue(stat.DefenceMin, stat.DefenceMax, character.GetValueOffset());
+        private static int GetFinalValue(int min, int max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
+        private static int GetFinalValue(float min, float max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
     }
 }

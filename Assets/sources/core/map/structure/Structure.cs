@@ -24,7 +24,8 @@ namespace PataRoad.Core.Character
             Stat = new Stat
             {
                 HitPoint = _hitPoint,
-                Defence = _defence,
+                DefenceMin = _defence,
+                DefenceMax = _defence,
                 CriticalResistance = Mathf.Infinity,
                 StaggerResistance = Mathf.Infinity,
                 KnockbackResistance = Mathf.Infinity,

@@ -266,9 +266,9 @@ namespace PataRoad.Core.Character.Patapons
             return base.SetAttackMoveController();
         }
 
-        public override int GetAttackDamage(Stat stat)
+        public override float GetValueOffset()
         {
-            return Mathf.RoundToInt(Mathf.Lerp(stat.DamageMin, stat.DamageMax, _lastPerfectionPercent));
+            return _lastPerfectionPercent;
         }
         public override void TakeDamage(int damage)
         {

@@ -39,6 +39,11 @@ namespace PataRoad.Core.Rhythm.Command
             RhythmTimer.OnTime.RemoveListener(Count);
             OnNextTurn.RemoveAllListeners();
         }
+        internal static void Destroy()
+        {
+            Stop();
+            OnTurn.RemoveAllListeners();
+        }
         private static void Count()
         {
             switch (TurnCount)

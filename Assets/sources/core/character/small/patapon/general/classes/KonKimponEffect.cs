@@ -20,7 +20,8 @@
             public Stat Calculate(Rhythm.Command.CommandSong song, bool charged, Stat input)
             {
                 input.CriticalResistance *= 2;
-                input.Defence *= 1.2f;
+                input.DefenceMin *= 1.2f;
+                input.DefenceMax *= 1.5f;
                 return input;
             }
         }

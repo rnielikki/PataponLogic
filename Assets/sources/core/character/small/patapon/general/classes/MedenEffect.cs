@@ -30,7 +30,8 @@
                         input.MultipleDamage(charged ? 1.5f : 1.2f);
                         break;
                     case Rhythm.Command.CommandSong.Chakachaka:
-                        input.Defence *= charged ? 2.5f : 2;
+                        input.DefenceMin *= charged ? 2.5f : 2;
+                        input.DefenceMax *= charged ? 2.5f : 2;
                         break;
                 }
                 return input;

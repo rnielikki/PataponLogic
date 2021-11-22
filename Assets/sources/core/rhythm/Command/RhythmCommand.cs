@@ -214,6 +214,7 @@ namespace PataRoad.Core.Rhythm.Command
             OnCommandInput.RemoveAllListeners();
             OnCommandCanceled.RemoveAllListeners();
             _miracleListener.OnMiracle.RemoveAllListeners();
+            TurnCounter.Destroy();
             ComboManager.Destroy();
         }
     }

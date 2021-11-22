@@ -7,10 +7,11 @@ namespace PataRoad.Core.Rhythm.Command
     {
         private MiracleListener _original;
         private RhythmCommand _command;
-        public int PracticingCount { get; private set; }
+        private int _practicingCount;
         public const int FullPracticingCount = 1;
 
         public UnityEngine.Events.UnityEvent<int> OnMiracleDrumHit { get; } = new UnityEngine.Events.UnityEvent<int>();
+        public UnityEngine.Events.UnityEvent<int> OnMiraclePerformed { get; } = new UnityEngine.Events.UnityEvent<int>();
         public UnityEngine.Events.UnityEvent OnMiracleDrumMiss { get; } = new UnityEngine.Events.UnityEvent();
         public UnityEngine.Events.UnityEvent OnMiraclePracticingEnd { get; } = new UnityEngine.Events.UnityEvent();
 
@@ -42,12 +43,16 @@ namespace PataRoad.Core.Rhythm.Command
         private void CountMiracle()
         {
             ResetMiracle();
-            PracticingCount++;
-            if (PracticingCount > FullPracticingCount)
+            _practicingCount++;
+            if (_practicingCount > FullPracticingCount)
             {
                 OnMiraclePracticingEnd.Invoke();
                 CleanListeners();
                 StopMiraclePracticing();
+            }
+            else
+            {
+                OnMiraclePerformed.Invoke(_practicingCount);
             }
         }
         private void StopMiraclePracticing()
@@ -65,6 +70,7 @@ namespace PataRoad.Core.Rhythm.Command
         {
             OnMiracleDrumHit.RemoveAllListeners();
             OnMiracleDrumMiss.RemoveAllListeners();
+            OnMiraclePerformed.RemoveAllListeners();
             OnMiracle.RemoveAllListeners();
             _command.OnCommandCanceled.RemoveListener(ResetMiracleCount);
             OnMiraclePracticingEnd.RemoveAllListeners();

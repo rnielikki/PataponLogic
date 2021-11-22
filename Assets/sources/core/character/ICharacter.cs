@@ -7,9 +7,9 @@ namespace PataRoad.Core.Character
     public interface ICharacter : IAttackable
     {
         /// <summary>
-        /// Get current damage that can inflict - for Patapon, "how perfect the drums are" affects.
+        /// This is for calculating damage/defence *between min-max value*. Returns [0-1]. The bigger the value is, the attack/defence is more. - for Patapon, "how perfect the drums are" affects.
         /// </summary>
-        public int GetAttackDamage(Stat stat);
+        public float GetValueOffset();
         public UnityEngine.Vector2 MovingDirection { get; }
         public void OnAttackHit(UnityEngine.Vector2 point, int damage);
         public void OnAttackMiss(UnityEngine.Vector2 point);

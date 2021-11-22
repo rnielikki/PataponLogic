@@ -158,7 +158,7 @@ namespace PataRoad.Core.Character
                 );
         }
 
-        public abstract int GetAttackDamage(Stat stat);
+        public abstract float GetValueOffset();
 
         public virtual void OnAttackHit(Vector2 point, int damage) => AttackMoveData.WasHitLastTime = true;
         public void OnAttackMiss(Vector2 point)

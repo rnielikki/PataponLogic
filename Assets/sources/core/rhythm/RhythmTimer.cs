@@ -134,6 +134,7 @@ namespace PataRoad.Core.Rhythm
             OnHalfTime.RemoveAllListeners();
             OnNext.RemoveAllListeners();
             OnNextHalfTime.RemoveAllListeners();
+            OnNextQuarterTime.RemoveAllListeners();
         }
     }
 }

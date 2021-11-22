@@ -19,11 +19,13 @@ namespace PataRoad.Core.Character.Patapons
                 case CommandSong.Chakachaka:
                     if (charged)
                     {
-                        input.Defence *= 6;
+                        input.DefenceMin *= 6;
+                        input.DefenceMax *= 6.5f;
                     }
                     else
                     {
-                        input.Defence *= 3;
+                        input.DefenceMin *= 2.7f;
+                        input.DefenceMax *= 3;
                     }
                     input.DamageMin /= 5;
                     input.DamageMax /= 4;

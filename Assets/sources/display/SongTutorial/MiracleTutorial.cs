@@ -54,7 +54,7 @@ namespace PataRoad.GameDisplay
             GameSound.SpeakManager.Current.Play(_miracleTeachingSound);
             _miracleListener.OnMiracleDrumHit.AddListener(UpdateDrumStatus);
             _miracleListener.OnMiracleDrumMiss.AddListener(ShowMissInstruction);
-            _miracleListener.OnMiracle.AddListener(UpdateInstruction);
+            _miracleListener.OnMiraclePerformed.AddListener(UpdateInstruction);
             _miracleListener.OnMiraclePracticingEnd.AddListener(EndInstruction);
 
             TurnCounter.OnTurn.RemoveListener(StartPracticing);
@@ -63,9 +63,9 @@ namespace PataRoad.GameDisplay
         {
             _command.PlayOnIndex(count - 1);
         }
-        private void UpdateInstruction()
+        private void UpdateInstruction(int practicingCount)
         {
-            _instruction.text = $"{_processingMessage} ({PracticingMiracleListener.FullPracticingCount - _miracleListener.PracticingCount} time(s) left)";
+            _instruction.text = $"{_processingMessage} ({PracticingMiracleListener.FullPracticingCount - practicingCount} time(s) left)";
             _command.ResetHit();
         }
 

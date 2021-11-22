@@ -24,7 +24,8 @@
                         if (!charged) input.AttackSeconds /= 2;
                         break;
                     case Rhythm.Command.CommandSong.Chakachaka:
-                        input.Defence *= 2;
+                        input.DefenceMin *= 2;
+                        input.DefenceMax *= 2;
                         break;
                 }
                 return input;

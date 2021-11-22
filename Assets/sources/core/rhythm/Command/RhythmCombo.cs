@@ -109,6 +109,7 @@ namespace PataRoad.Core.Rhythm.Command
         {
             FeverManager.Destroy();
             OnCombo.RemoveAllListeners();
+            OnComboCanceled.RemoveAllListeners();
         }
         private void StartFever()
         {

@@ -45,9 +45,9 @@ namespace PataRoad.Core.Character.Hazorons
             CharacterSize = transform.Find(BodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
-        public override int GetAttackDamage(Stat stat)
+        public override float GetValueOffset()
         {
-            return Random.Range(Stat.DamageMin, Stat.DamageMax);
+            return Random.Range(0, 1f);
         }
         private void OnDestroy()
         {
