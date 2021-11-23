@@ -83,6 +83,63 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1893464167499306864
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6790365475275210097}
+  - component: {fileID: 7911735089921768059}
+  m_Layer: 16
+  m_Name: ForwardCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6790365475275210097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893464167499306864}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.36, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7651449554564006095}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &7911735089921768059
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893464167499306864}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.37744462, y: 0.40179574}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.31337, y: 3.31337}
+  m_EdgeRadius: 0
 --- !u!1 &1922682132329042878
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,6 +172,7 @@ Transform:
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children:
   - {fileID: 294416754236516958}
+  - {fileID: 6790365475275210097}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -173,7 +231,9 @@ MonoBehaviour:
   _name: Dodonga
   _stat:
     id: 0
-  Fire: {fileID: 6868564560119394942}
+  Fire: {fileID: 3618771868197904909}
+  Headbutt: {fileID: 7022250740197461398}
+  EatingMouth: {fileID: 2150409896095738561}
   references:
     version: 1
     00000000:
@@ -182,10 +242,10 @@ MonoBehaviour:
         _hitPoint: 200
         _defenceMin: 10
         _defenceMax: 10
-        _damageMin: 10
-        _damageMax: 18
+        _damageMin: 0
+        _damageMax: 10
         _attackSeconds: 2
-        _movementSpeed: 0
+        _movementSpeed: 4
         _critical: 0
         _stagger: 0
         _knockback: 0
@@ -210,6 +270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b67fa23633e1f4ea9aacbfcf850e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _level: 1
 --- !u!1 &2035742127555425651
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,70 +664,6 @@ PolygonCollider2D:
       - {x: 1.013292, y: 0.7371133}
       - {x: -0.18337345, y: 0.21609956}
       - {x: -0.17426944, y: -0.07022551}
---- !u!1 &3046280897309543472
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2056320295620243459}
-  - component: {fileID: 7062783234547534738}
-  m_Layer: 16
-  m_Name: attack
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2056320295620243459
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3046280897309543472}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 701755469810581542}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &7062783234547534738
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3046280897309543472}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.0059409067, y: 0.34403455}
-    oldSize: {x: 7.54, y: 8.82}
-    newSize: {x: 7.54, y: 8.82}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 4.089622, y: 3.5365171}
-      - {x: 7.1189184, y: 5.105853}
-      - {x: 2.7740386, y: 0.6671686}
-      - {x: 1.0025363, y: 3.154316}
-      - {x: 2.3613644, y: 2.1699038}
-      - {x: 2.2342024, y: 5.3524456}
-      - {x: 2.8967147, y: 3.1715336}
-      - {x: 4.4220595, y: 5.8846264}
 --- !u!1 &3238012441534478737
 GameObject:
   m_ObjectHideFlags: 0
@@ -897,7 +894,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 2
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -2145,7 +2142,7 @@ ParticleSystem:
   UVModule:
     serializedVersion: 2
     enabled: 0
-    mode: 0
+    mode: 1
     timeMode: 0
     fps: 30
     frameOverTime:
@@ -2271,7 +2268,7 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2324,7 +2321,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 3
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2969,7 +2966,7 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 5
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4393,9 +4390,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 1
+    type: 0
     collisionMode: 1
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -4570,7 +4567,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 1
+    collisionMessages: 0
     collidesWithDynamic: 0
     interiorCollisions: 0
   TriggerModule:
@@ -4957,7 +4954,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
   CustomDataModule:
     enabled: 0
-    mode0: 0
+    mode0: 1
     vectorComponentCount0: 4
     color0:
       serializedVersion: 2
@@ -6311,6 +6308,8 @@ GameObject:
   - component: {fileID: 701755469810581542}
   - component: {fileID: 2039708863196489703}
   - component: {fileID: 8210657680808211289}
+  - component: {fileID: 7022250740197461398}
+  - component: {fileID: 4850269597082295279}
   m_Layer: 16
   m_Name: head
   m_TagString: Untagged
@@ -6332,7 +6331,6 @@ Transform:
   - {fileID: 6299419155679731971}
   - {fileID: 3443063698421516913}
   - {fileID: 1323264127508785183}
-  - {fileID: 2056320295620243459}
   m_Father: {fileID: 294416754236516958}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6420,6 +6418,73 @@ PolygonCollider2D:
       - {x: 1.4681284, y: -2.8636255}
       - {x: -0.054461002, y: -0.074617386}
       - {x: 1.0364685, y: 1.2965469}
+--- !u!114 &7022250740197461398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8650196513363990745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ae4c383e5c5f74e9f5ed83614e449f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _additionalStat:
+    _hitPoint: 0
+    _defenceMin: 0
+    _defenceMax: 0
+    _damageMin: 10
+    _damageMax: 12
+    _attackSeconds: 0
+    _movementSpeed: 0
+    _critical: 0.2
+    _stagger: 0
+    _knockback: 1
+    _criticalResistance: 0
+    _staggerResistance: 0
+    _knockbackResistance: 0
+    _fireRate: 0
+    _iceRate: 0
+    _sleepRate: 0
+    _fireResistance: 0
+    _iceResistance: 0
+    _sleepResistance: 0
+  _damageOffsetMin: 0.8
+  _damageOffsetMax: 1
+--- !u!60 &4850269597082295279
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8650196513363990745}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.0059409067, y: 0.34403455}
+    oldSize: {x: 7.54, y: 8.82}
+    newSize: {x: 7.54, y: 8.82}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 4.089622, y: 3.5365171}
+      - {x: 7.1189184, y: 5.105853}
+      - {x: 2.7740386, y: 0.6671686}
+      - {x: 1.0025363, y: 3.154316}
+      - {x: 2.3613644, y: 2.1699038}
+      - {x: 2.2342024, y: 5.3524456}
+      - {x: 2.8967147, y: 3.1715336}
+      - {x: 4.4220595, y: 5.8846264}
 --- !u!1 &8703617668425244109
 GameObject:
   m_ObjectHideFlags: 0
@@ -6634,6 +6699,7 @@ GameObject:
   - component: {fileID: 3443063698421516913}
   - component: {fileID: 6327868520506776931}
   - component: {fileID: 7443993834971100618}
+  - component: {fileID: 2150409896095738561}
   m_Layer: 16
   m_Name: chin
   m_TagString: Untagged
@@ -6740,3 +6806,38 @@ PolygonCollider2D:
       - {x: -1.1114154, y: -2.2426407}
       - {x: 1.2296672, y: -3.2981052}
       - {x: 3.0091245, y: -3.0506232}
+--- !u!114 &2150409896095738561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8914023969899057950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d5c0934495c81a48b1843178cdd230e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _additionalStat:
+    _hitPoint: 0
+    _defenceMin: 0
+    _defenceMax: 0
+    _damageMin: 0
+    _damageMax: 0
+    _attackSeconds: 0
+    _movementSpeed: 0
+    _critical: 0
+    _stagger: 0
+    _knockback: 0
+    _criticalResistance: 0
+    _staggerResistance: 0
+    _knockbackResistance: 0
+    _fireRate: 0
+    _iceRate: 0
+    _sleepRate: 0
+    _fireResistance: 0
+    _iceResistance: 0
+    _sleepResistance: 0
+  _damageOffsetMin: 0
+  _damageOffsetMax: 0
+  OnPataponEaten: {fileID: 8300000, guid: 1967b8f12d935cc48abbb0a4e66908fa, type: 3}

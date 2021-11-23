@@ -4,6 +4,7 @@
     {
         private void Awake()
         {
+            IsMeleeUnit = true;
             Init();
             Class = ClassType.Kibapon;
         }

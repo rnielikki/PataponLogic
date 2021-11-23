@@ -92,7 +92,7 @@ namespace PataRoad.Core.Rhythm.Command
             _data = new CommandListData(
                 new CommandSong[]
                 {
-                    CommandSong.Patapata,CommandSong.Ponpon, CommandSong.Chakachaka, CommandSong.Dondon
+                    CommandSong.Patapata,CommandSong.Ponpon, CommandSong.Chakachaka, CommandSong.Dondon, CommandSong.Ponchaka, CommandSong.Ponpata
                 }
                 );
         }

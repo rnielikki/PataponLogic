@@ -6,6 +6,7 @@ namespace PataRoad.Core.Character.Patapons
     {
         private void Awake()
         {
+            IsMeleeUnit = true;
             Init();
             Class = ClassType.Robopon;
         }

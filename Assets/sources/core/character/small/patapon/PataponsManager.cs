@@ -9,13 +9,16 @@ namespace PataRoad.Core.Character.Patapons
     /// <summary>
     /// Gets command and drum status and sends message to Patapons.
     /// </summary>
-    class PataponsManager : MonoBehaviour
+    public class PataponsManager : MonoBehaviour
     {
         private System.Collections.Generic.List<Patapon> _patapons;
         private System.Collections.Generic.List<PataponGroup> _groups;
         public System.Collections.Generic.IEnumerable<PataponGroup> Groups => _groups;
         //--- this should be general but temp value for position and patapata test
         private bool _isAlreadyIdle;
+        public int PataponCount => _patapons.Count;
+        public int PataponGroupCount => _groups.Count;
+        public Patapon FirstPatapon => _patapons.Count > 0 ? _patapons[0] : null;
 
         /// <summary>
         /// If this is set to true, Patapons go forward, also whole Patapon position does. For PATAPATA song.
@@ -127,7 +130,7 @@ namespace PataRoad.Core.Character.Patapons
         public void RemovePon(Patapon patapon)
         {
             _patapons.Remove(patapon);
-            SpeakManager.Current.Play(CharacterSoundLoader.Current.PataponSounds.OnDead);
+            if (!patapon.Eaten) SpeakManager.Current.Play(CharacterSoundLoader.Current.PataponSounds.OnDead);
             if (!_patapons.Any(p => p.IsGeneral))
             {
                 Map.MissionPoint.Current.WaitAndFailMission(4);
@@ -144,7 +147,7 @@ namespace PataRoad.Core.Character.Patapons
                 IsMovingForward = true;
                 foreach (var pon in _patapons)
                 {
-                    pon.DoMisisonCompleteGesture();
+                    pon.DoMissionCompleteGesture();
                 }
             }
         }

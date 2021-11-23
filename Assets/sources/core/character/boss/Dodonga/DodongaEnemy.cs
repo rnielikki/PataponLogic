@@ -1,28 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Linq;
 
 namespace PataRoad.Core.Character.Bosses
 {
     public class DodongaEnemy : EnemyBoss
     {
         private DodongaAttack _attack;
-        DistanceCalculator _distanceCalculator;
         private void Awake()
         {
             Init(GetComponent<DodongaAttack>());
             _attack = BossAttackData as DodongaAttack;
-            Rhythm.Command.TurnCounter.OnTurn.AddListener(Fire);
+            AttackDistance = 10;
         }
-        void Fire()
+        protected override void CalculateAttack()
         {
-            if (Rhythm.Command.TurnCounter.IsPlayerTurn)
+            BossTurnManager
+                .SetOneAction(GetNextBehaviour())
+                ?.StartAttack();
+
+        }
+        //Example
+        private UnityEngine.Events.UnityAction GetNextBehaviour()
+        {
+            var firstPon = _pataponsManager.FirstPatapon;
+            if (firstPon?.IsMeleeUnit == true || firstPon?.Class == Patapons.ClassType.Toripon)
             {
-                _attack.AnimateFire();
+                if (Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 20))
+                {
+                    if (Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 18))
+                    {
+                        return _attack.AnimateEat;
+                    }
+                    else
+                    {
+                        return _attack.AnimateHeadbutt;
+                    }
+                }
+                else
+                {
+                    return _attack.AnimateFire;
+                }
             }
-        }
-        public override void Die()
-        {
-            Rhythm.Command.TurnCounter.OnTurn.RemoveListener(Fire);
-            base.Die();
+            else return _attack.AnimateFire;
         }
     }
 }

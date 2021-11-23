@@ -9,7 +9,7 @@ namespace PataRoad.Core.Character.Bosses
         protected override void Init(BossAttackData data)
         {
             base.Init(data);
-            DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
+            DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
         }
     }
 }

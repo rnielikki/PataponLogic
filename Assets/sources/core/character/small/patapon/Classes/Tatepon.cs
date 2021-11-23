@@ -4,8 +4,11 @@ namespace PataRoad.Core.Character.Patapons
 {
     public class Tatepon : Patapon
     {
+        [SerializeField]
+        GameObject _shield;
         private void Awake()
         {
+            IsMeleeUnit = true;
             Init();
             Class = ClassType.Tatepon;
         }
@@ -39,7 +42,13 @@ namespace PataRoad.Core.Character.Patapons
             {
                 CharAnimator.Animate("defend-fever");
             }
+            _shield.SetActive(true);
             DistanceManager.MoveTo(0.75f, Stat.MovementSpeed);
+        }
+        public override void StopAttacking()
+        {
+            base.StopAttacking();
+            _shield.SetActive(false);
         }
         protected override void Charge()
         {

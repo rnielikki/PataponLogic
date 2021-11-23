@@ -7,6 +7,7 @@ namespace PataRoad.Core.Character.Hazorons
     {
         private void Awake()
         {
+            IsMeleeUnit = true;
             Init();
             Class = ClassType.Kibapon;
         }

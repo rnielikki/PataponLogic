@@ -27,7 +27,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             MinLastDamageOffset = component.DamageOffsetMin;
             MaxLastDamageOffset = component.DamageOffsetMax;
-            Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat, target, position);
+            Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat + component.AdditionalStat, target, position);
         }
     }
 }

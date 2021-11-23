@@ -25,5 +25,6 @@ namespace PataRoad.Core.Character.Bosses
         {
             _boss = GetComponentInParent<BossAttackData>();
         }
+        public virtual void StopAttacking() { }
     }
 }

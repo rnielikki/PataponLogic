@@ -38,6 +38,7 @@ namespace PataRoad.Core.Character.Patapons
         public override Vector2 MovingDirection => Vector2.right;
 
         public bool OnFever { get; private set; }
+        public bool Eaten { get; private set; }
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.PataponSounds;
 
 
@@ -49,6 +50,12 @@ namespace PataRoad.Core.Character.Patapons
 
         public abstract General.IGeneralEffect GetGeneralEffect();
 
+        public void BeEaten()
+        {
+            Eaten = true;
+            Die();
+        }
+
         protected override void BeforeDie()
         {
             Group.RemovePon(this);
@@ -56,7 +63,7 @@ namespace PataRoad.Core.Character.Patapons
         protected override void AfterDie()
         {
             Group.RemoveIfEmpty();
-            Items.DeadPataponItemDrop.Create(transform.position, IsGeneral);
+            if (!Eaten) Items.DeadPataponItemDrop.Create(transform.position, IsGeneral);
         }
         /// <summary>
         /// Remember call this on Awake() in inherited class
@@ -125,8 +132,9 @@ namespace PataRoad.Core.Character.Patapons
             Charged = song == CommandSong.Ponchaka; //Removes charged status if it isn't charging command
             StatusEffectManager.IgnoreStatusEffect = song == CommandSong.Donchaka;
         }
-        public void DoMisisonCompleteGesture()
+        public void DoMissionCompleteGesture()
         {
+            StopAttacking();
             StartCoroutine(PartyOnComplete());
             System.Collections.IEnumerator PartyOnComplete()
             {

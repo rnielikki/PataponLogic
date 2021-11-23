@@ -8,8 +8,8 @@ namespace PataRoad.Core.Character.Bosses
         private ParticleSystem _particleSystem;
         private ParticleSystem.Particle[] _particles;
         private LayerMask _layermask;
-        private HashSet<Collider2D> _collided;
         private ParticleSystem.TriggerModule _trigger;
+        private DistanceCalculator _distanceCalculator;
 
         private void Awake()
         {
@@ -17,70 +17,43 @@ namespace PataRoad.Core.Character.Bosses
             _particleSystem = GetComponent<ParticleSystem>();
             var main = _particleSystem.main;
             _particles = new ParticleSystem.Particle[main.maxParticles];
-            _collided = new HashSet<Collider2D>();
             _trigger = _particleSystem.trigger;
+            _particleSystem.collision.AddPlane(GameObject.FindGameObjectWithTag("Ground").transform);
         }
         private void Start()
         {
-            _layermask = GetComponentInParent<ICharacter>().DistanceCalculator.LayerMask;
+            _distanceCalculator = GetComponentInParent<ICharacter>().DistanceCalculator;
+            _layermask = _distanceCalculator.LayerMask;
         }
-        /*
-        private void Update()
+        public void Attack()
         {
-            if (_particleSystem.particleCount != 0)
+            for (int i = 0; i < _trigger.colliderCount; i++)
             {
-                var allParticles = _particleSystem.GetParticles(_particles);
-                for (int i = 0; i < allParticles; i++)
-                {
-                    ParticleSystem.Particle.compa
-                    var p0 = _particles[i];
-                    var pos = p0.position;
-                    var size = p0.GetCurrentSize(_particleSystem);
-                    foreach (var hit in Physics2D.OverlapCircleAll(pos, size, _layermask))
-                    {
-                        if (hit.gameObject == null) continue;
-                        if (!_particleMap.ContainsKey(hit.gameObject))
-                        {
-                            _particleMap.Add(hit.gameObject, new List<ParticleSystem.Particle>());
-                        }
-                        if (_particleMap[hit.gameObject].Contains(p0)) continue;
-
-                        _particleMap[hit.gameObject].Add(p0);
-                        ParticleSystem.Particle p = _particles[i];
-                        _boss.Attack(this, hit.gameObject, hit.ClosestPoint(transform.position));
-                    }
-                }
+                _trigger.RemoveCollider(0);
             }
+            foreach (var hit in _distanceCalculator.GetAllTargetsOnFront())
+            {
+                _trigger.AddCollider(hit);
+            }
+            _particleSystem.Play();
         }
-        */
+
         private void OnParticleTrigger()
         {
-            var allParticles = _particleSystem.GetParticles(_particles);
-            for (int i = 0; i < allParticles; i++)
-            {
-                var p0 = _particles[i];
-                var pos = p0.position;
-                var size = p0.GetCurrentSize(_particleSystem);
-                foreach (var hit in Physics2D.OverlapCircleAll(pos, size, _layermask))
-                {
-                    if (hit.gameObject == null) continue;
-                    if (!_collided.Contains(hit))
-                    {
-                        _collided.Add(hit);
-                        _trigger.AddCollider(hit);
-                    }
-                }
-            }
-
             List<ParticleSystem.Particle> enteredParticles = new List<ParticleSystem.Particle>();
-            _particleSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enteredParticles);
+            var particlesCount = _particleSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enteredParticles);
 
-            foreach (ParticleSystem.Particle particle in enteredParticles)
+            for (int i = 0; i < particlesCount; i++)
             {
-                for (int i = 0; i < _trigger.colliderCount; i++)
+                ParticleSystem.Particle particle = enteredParticles[i];
+                for (int j = 0; j < _trigger.colliderCount; j++)
                 {
-                    var collider = _trigger.GetCollider(i)?.GetComponent<Collider2D>();
-                    if (collider?.gameObject != null) _boss.Attack(this, collider.gameObject, collider.ClosestPoint(particle.position));
+                    var collider = _trigger.GetCollider(j)?.GetComponent<Collider2D>();
+                    if (collider?.gameObject != null)
+                    {
+                        if (collider.gameObject.tag == "Shield") particle.remainingLifetime = 0;
+                        else _boss.Attack(this, collider.gameObject, collider.ClosestPoint(particle.position));
+                    }
                 }
             }
         }

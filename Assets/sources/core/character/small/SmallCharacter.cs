@@ -73,6 +73,7 @@ namespace PataRoad.Core.Character
 
         public virtual CharacterSoundsCollection Sounds { get; protected set; }
         public bool IsDead { get; private set; }
+        public bool IsMeleeUnit { get; protected set; }
 
         protected virtual void Init()
         {
