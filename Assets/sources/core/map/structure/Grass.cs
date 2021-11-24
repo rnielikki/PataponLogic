@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PataRoad.Core.Character
 {
@@ -20,6 +21,8 @@ namespace PataRoad.Core.Character
         public Collider2D Collider { get; private set; }
 
         public bool IsDead { get; private set; }
+
+        public UnityEvent<float> OnDamageTaken => null;
 
         void Awake()
         {

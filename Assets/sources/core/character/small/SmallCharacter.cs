@@ -2,6 +2,7 @@ using PataRoad.Core.Character.Equipments;
 using PataRoad.Core.Character.Equipments.Weapons;
 using PataRoad.Core.Character.Patapons;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PataRoad.Core.Character
 {
@@ -75,6 +76,8 @@ namespace PataRoad.Core.Character
         public bool IsDead { get; private set; }
         public bool IsMeleeUnit { get; protected set; }
 
+        public UnityEvent<float> OnDamageTaken => null;
+
         protected virtual void Init()
         {
             Stat = _defaultStat;
@@ -93,9 +96,7 @@ namespace PataRoad.Core.Character
 
         public virtual void Die()
         {
-            IsDead = true;
-            BeforeDie();
-            StopAttacking();
+            MarkAsDead();
             StartCoroutine(WaitUntilDie());
             System.Collections.IEnumerator WaitUntilDie()
             {
@@ -108,6 +109,13 @@ namespace PataRoad.Core.Character
         }
         protected virtual void BeforeDie() { }
         protected virtual void AfterDie() { }
+        protected void MarkAsDead()
+        {
+            IsDead = true;
+            CurrentHitPoint = 0;
+            BeforeDie();
+            StopAttacking();
+        }
 
         /// <summary>
         /// Performs attack animation, applying attack seconds in stat.

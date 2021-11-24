@@ -56,6 +56,14 @@ namespace PataRoad.Core.Character.Patapons
             Die();
         }
 
+        public void BeTaken()
+        {
+            Eaten = true;
+            MarkAsDead();
+            Die();
+            Group.RemoveIfEmpty();
+        }
+
         protected override void BeforeDie()
         {
             Group.RemovePon(this);
@@ -104,6 +112,7 @@ namespace PataRoad.Core.Character.Patapons
         public void MoveOnDrum(string drumName)
         {
             StopAttacking();
+            if (!AttackMoveData.WasHitLastTime) DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
             CharAnimator.Animate(drumName);
         }
 
@@ -284,6 +293,10 @@ namespace PataRoad.Core.Character.Patapons
         }
         public override void TakeDamage(int damage)
         {
+            if (damage < 0)
+            {
+                throw new System.ArgumentException("Damage cannot be less than zero for Patapons. Use Group.HealAllINGroup() or HealAlone() to heal.");
+            }
             base.TakeDamage(damage);
             Group.UpdateHitPoint(this);
         }

@@ -1,5 +1,7 @@
 ﻿
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace PataRoad.Core.Character.Bosses
 {
@@ -22,8 +24,19 @@ namespace PataRoad.Core.Character.Bosses
         public CharacterAnimator CharAnimator { get; private set; }
         public BossAttackData BossAttackData { get; private set; }
 
+        private readonly Dictionary<GameObject, BreakablePart> _breakableParts = new Dictionary<GameObject, BreakablePart>();
+
+        [SerializeField]
+        private UnityEvent<float> _onDamageTaken;
+        public UnityEvent<float> OnDamageTaken => _onDamageTaken;
+
         protected virtual void Init(BossAttackData data)
         {
+            foreach (var part in GetComponentsInChildren<BreakablePart>())
+            {
+                _breakableParts.Add(part.gameObject, part);
+            }
+
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
 
             BossAttackData = data;
@@ -62,9 +75,17 @@ namespace PataRoad.Core.Character.Bosses
             CharAnimator.Animate("Idle");
         }
 
-        public void TakeDamage(int damage)
+        public virtual void TakeDamage(int damage)
         {
             CurrentHitPoint -= damage;
+        }
+        public float GetBrokenPartMultiplier(GameObject part, int damage)
+        {
+            if (_breakableParts.TryGetValue(part, out BreakablePart breakable))
+            {
+                return breakable.TakeDamage(damage);
+            }
+            else return 1;
         }
     }
 }

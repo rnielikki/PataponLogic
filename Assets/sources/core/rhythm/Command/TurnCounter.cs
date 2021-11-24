@@ -45,8 +45,6 @@ namespace PataRoad.Core.Rhythm.Command
             if (IsOn)
             {
                 OnNextTurn.RemoveAllListeners();
-                OnNextPlayerTurn.RemoveAllListeners();
-                OnNextNonPlayerTurn.RemoveAllListeners();
             }
             IsOn = false;
             IsPlayerTurn = true;
@@ -55,6 +53,8 @@ namespace PataRoad.Core.Rhythm.Command
         internal static void Destroy()
         {
             Stop();
+            OnNextPlayerTurn.RemoveAllListeners();
+            OnNextNonPlayerTurn.RemoveAllListeners();
             OnTurn.RemoveAllListeners();
         }
         private static void Count()

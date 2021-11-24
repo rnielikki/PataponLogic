@@ -7,26 +7,23 @@ namespace PataRoad.Core.Character.Patapons.Display
     /// <summary>
     /// Updates Patapons' hit point status PER GROUP.
     /// </summary>
-    /// <note>This currently DOESN'T update HEAL status.</note>
     public class PataponsHitPointDisplay : MonoBehaviour
     {
         private static GameObject _displayTemplate;
         private static Transform _displayParent;
 
         private RawImage _image;
-        private RectTransform _generalCurrentBar; //status bar of general
-        private RectTransform _armyMinCurrentBar; //status bar of army min value
+        [SerializeField]
+        private HealthDisplay _generalCurrentBar; //status bar of general
+        [SerializeField]
+        private HealthDisplay _armyMinCurrentBar; //status bar of army min value
 
-        private Image _generalImage;
-        private Image _armyMinImage;
         private PataponGroup _group;
 
         [SerializeField]
         private Color _bgOnGeneral;
         [SerializeField]
         private Color _bgOnNoGeneral;
-        [SerializeField]
-        private Gradient _colorOverHealth;
 
         private Patapon _currentFocus;
 
@@ -44,15 +41,7 @@ namespace PataRoad.Core.Character.Patapons.Display
             _bg.color = _bgOnGeneral;
 
             _image = GetComponentInChildren<RawImage>();
-            _generalCurrentBar = transform.Find("General/GeneralCurrent").GetComponent<RectTransform>();
-            _armyMinCurrentBar = transform.Find("ArmyMin/ArmyMinCurrent").GetComponent<RectTransform>();
 
-            var colorFull = _colorOverHealth.Evaluate(1);
-            _generalCurrentBar.GetComponent<Image>().color = colorFull;
-            _armyMinCurrentBar.GetComponent<Image>().color = colorFull;
-
-            _generalImage = _generalCurrentBar.GetComponent<Image>();
-            _armyMinImage = _armyMinCurrentBar.GetComponent<Image>();
             _text = GetComponentInChildren<Text>();
         }
         /// <summary>
@@ -98,10 +87,10 @@ namespace PataRoad.Core.Character.Patapons.Display
                 RefreshArmyStatus(patapon, current);
             }
         }
-        private void RefreshArmyStatus(Patapon patapon, float percent)
+        private void RefreshArmyStatus(Patapon patapon, float ratio)
         {
             UpdateImageAndBar(patapon);
-            _currentMinArmyHealth = percent;
+            _currentMinArmyHealth = ratio;
         }
 
         private float GetCurrentHitPointPercent(Patapon patapon) => Mathf.Clamp01((float)patapon.CurrentHitPoint / patapon.Stat.HitPoint);
@@ -126,22 +115,16 @@ namespace PataRoad.Core.Character.Patapons.Display
                     _renderer.SetTarget(patapon);
                 }
             }
-            void UpdateBar(float percent)
+            void UpdateBar(float ratio)
             {
-                RectTransform bar;
-                Image image;
                 if (general)
                 {
-                    bar = _generalCurrentBar;
-                    image = _generalImage;
+                    _generalCurrentBar.UpdateBar(ratio);
                 }
                 else
                 {
-                    bar = _armyMinCurrentBar;
-                    image = _armyMinImage;
+                    _armyMinCurrentBar.UpdateBar(ratio);
                 }
-                bar.anchorMax = new Vector2(percent, 1);
-                image.color = _colorOverHealth.Evaluate(percent);
             }
         }
         public void OnDead(Patapon deadPon, System.Collections.Generic.IEnumerable<Patapon> patapons)
@@ -150,6 +133,7 @@ namespace PataRoad.Core.Character.Patapons.Display
             {
                 _isGeneralAlive = false;
                 _bg.color = _bgOnNoGeneral;
+                _generalCurrentBar.UpdateBar(0);
             }
             Refresh(patapons);
             UpdateText();

@@ -12,6 +12,8 @@ namespace PataRoad.Core.Character.Bosses
         private readonly Queue<UnityEngine.Events.UnityAction> _actionQueue = new Queue<UnityEngine.Events.UnityAction>();
         private int _turnCount;
         public bool Attacking { get; private set; }
+        public bool IsEmpty => _actionQueue.Count == 0;
+        public UnityEngine.Events.UnityEvent OnAttackEnd { get; } = new UnityEngine.Events.UnityEvent();
         internal BossTurnManager()
         {
         }
@@ -55,11 +57,18 @@ namespace PataRoad.Core.Character.Bosses
                     else
                     {
                         Attacking = false;
+                        OnAttackEnd.Invoke();
+                        OnAttackEnd.RemoveAllListeners();
                         RhythmTimer.OnTime.RemoveListener(CountTurn);
                     }
                     break;
             }
             _turnCount = (_turnCount + 1) % 8;
+        }
+        public void Destroy()
+        {
+            End();
+            OnAttackEnd.RemoveAllListeners();
         }
     }
 }

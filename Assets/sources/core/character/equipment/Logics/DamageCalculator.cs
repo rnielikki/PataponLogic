@@ -31,13 +31,20 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     {
                         _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
                         component.TakeDamage((int)(damage * 0.1f));
+                        component.OnDamageTaken?.Invoke((float)component.CurrentHitPoint / component.Stat.HitPoint);
                     }
                 }
             }
             else
             {
                 var damage = GetAttackDamage(stat, attacker);
+                if (component is Bosses.Boss boss)
+                {
+                    damage = (int)(damage * boss.GetBrokenPartMultiplier(target, damage));
+                }
+
                 component.TakeDamage(damage);
+                component.OnDamageTaken?.Invoke((float)component.CurrentHitPoint / component.Stat.HitPoint);
                 _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
                 CheckIfDie(component, target);
                 attacker.OnAttackHit(point, damage);

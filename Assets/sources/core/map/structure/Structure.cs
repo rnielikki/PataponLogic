@@ -18,6 +18,9 @@ namespace PataRoad.Core.Character
         private int _hitPoint;
         [SerializeField]
         private float _defence;
+        [SerializeField]
+        private UnityEngine.Events.UnityEvent<float> _onDamageTaken;
+        public UnityEngine.Events.UnityEvent<float> OnDamageTaken => _onDamageTaken;
 
         private void Awake()
         {

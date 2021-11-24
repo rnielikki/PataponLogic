@@ -8,9 +8,17 @@ namespace PataRoad.Core.Character.Bosses
         public BossTurnManager BossTurnManager { get; } = new BossTurnManager();
         protected Patapons.PataponsManager _pataponsManager { get; set; }
         protected bool _noTarget = true;
+        private bool _sleeping = true;
+
         private bool _moving;
+        private bool _movingBack;
+        private bool _movingBackQueued;
+
+        private Vector3 _targetPosition;
         [SerializeField]
         protected int _level;
+        [SerializeField]
+        protected bool _useWalkWhenMovingBack;
 
         protected override void Init(BossAttackData data)
         {
@@ -21,7 +29,7 @@ namespace PataRoad.Core.Character.Bosses
         public override void Die()
         {
             base.Die();
-            BossTurnManager.End();
+            BossTurnManager.Destroy();
             StartCoroutine(WaitAndCelebrate());
             System.Collections.IEnumerator WaitAndCelebrate()
             {
@@ -30,6 +38,26 @@ namespace PataRoad.Core.Character.Bosses
                 Map.MissionPoint.Current.EndMission();
             }
         }
+        public override void TakeDamage(int damage)
+        {
+            var before = (float)CurrentHitPoint / Stat.HitPoint;
+            base.TakeDamage(damage);
+            if (!_movingBackQueued)
+            {
+                float current = (float)CurrentHitPoint / Stat.HitPoint;
+                if (before > 0.66f && current < 0.66f || before > 0.33f && current < 0.33f)
+                {
+                    _movingBackQueued = true;
+                    BossTurnManager.OnAttackEnd.AddListener(StartMovingBack);
+                }
+            }
+        }
+        private void StartMovingBack()
+        {
+            _targetPosition = transform.position + Vector3.right * 50;
+            _movingBack = true;
+            CharAnimator.Animate(_useWalkWhenMovingBack ? "walk" : "nothing");
+        }
         //When staggered or got knockback.
         public override void StopAttacking()
         {
@@ -37,31 +65,58 @@ namespace PataRoad.Core.Character.Bosses
             base.StopAttacking();
         }
 
-        protected abstract void CalculateAttack();
+        protected abstract float CalculateAttack();
         private void Update()
         {
+            //phase 0: attacking or dead
             if (BossTurnManager.Attacking || IsDead) return;
-            var closest = DistanceCalculator.GetClosest();
-            if (closest != null)
+
+            if (_movingBack)
             {
-                var targetPos = new Vector2(Mathf.Max(_pataponsManager.transform.position.x, closest.Value.x), 0);
-                var offset = Stat.MovementSpeed * Time.deltaTime;
-                if (transform.position.x - targetPos.x > AttackDistance - offset)
+                var backOffset = Stat.MovementSpeed * 3 * Time.deltaTime;
+                transform.position = Vector2.MoveTowards(transform.position, _targetPosition, backOffset);
+                if (transform.position.x >= _targetPosition.x - backOffset)
                 {
-                    targetPos.x += AttackDistance;
-                    if (!_moving)
-                    {
-                        CharAnimator.Animate("walk");
-                        _moving = true;
-                    }
-                    transform.position = Vector2.MoveTowards(transform.position, targetPos, offset);
+                    _movingBack = false;
+                    _sleeping = true;
+                    CharAnimator.Animate("sleep");
+                    _movingBackQueued = false;
                 }
-                else
-                {
-                    _moving = false;
-                    CalculateAttack();
-                }
+                return;
             }
+
+            //phase 1: sleeping and found in sight
+            if (_sleeping && DistanceCalculator.HasAttackTarget())
+            {
+                _sleeping = false;
+                AttackDistance = CalculateAttack();
+            }
+            //phase 2: go forward
+            var closest = DistanceCalculator.GetClosest() ?? _pataponsManager.transform.position;
+            var targetPos = new Vector2(Mathf.Max(_pataponsManager.transform.position.x, closest.x), 0);
+            var offset = Stat.MovementSpeed * Time.deltaTime;
+
+            if (transform.position.x - targetPos.x > AttackDistance + offset)
+            {
+                targetPos.x += AttackDistance;
+                if (!_moving)
+                {
+                    _moving = true;
+                    CharAnimator.Animate("walk");
+                }
+                transform.position = Vector2.MoveTowards(transform.position, targetPos, offset);
+            }
+            else //phase 3: now enemy's on forward.
+            {
+                _moving = false;
+                CharAnimator.Animate("Idle");
+                if (BossTurnManager.IsEmpty) CalculateAttack();
+                BossTurnManager.StartAttack();
+            }
+        }
+        private void OnDestroy()
+        {
+            BossTurnManager.Destroy();
         }
     }
 }

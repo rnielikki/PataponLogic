@@ -173,6 +173,7 @@ Transform:
   m_Children:
   - {fileID: 294416754236516958}
   - {fileID: 6790365475275210097}
+  - {fileID: 8648382288677823416}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -270,7 +271,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b67fa23633e1f4ea9aacbfcf850e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onDamageTaken:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8199498655679539110}
+        m_TargetAssemblyTypeName: PataRoad.Core.Character.HealthDisplay, Assembly-CSharp
+        m_MethodName: UpdateBar
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _level: 1
+  _useWalkWhenMovingBack: 0
 --- !u!1 &2035742127555425651
 GameObject:
   m_ObjectHideFlags: 0
@@ -819,7 +836,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3618788895267188093}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 0.75
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -894,7 +911,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.75
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1446,7 +1463,7 @@ ParticleSystem:
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 0, z: -60}
+    m_Rotation: {x: 0, y: 0, z: -75}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -1526,7 +1543,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 0.5
+      value: 1
       mode: 0
       spread: 0
       speed:
@@ -6700,6 +6717,7 @@ GameObject:
   - component: {fileID: 6327868520506776931}
   - component: {fileID: 7443993834971100618}
   - component: {fileID: 2150409896095738561}
+  - component: {fileID: 8142234962195461621}
   m_Layer: 16
   m_Name: chin
   m_TagString: Untagged
@@ -6841,3 +6859,91 @@ MonoBehaviour:
   _damageOffsetMin: 0
   _damageOffsetMax: 0
   OnPataponEaten: {fileID: 8300000, guid: 1967b8f12d935cc48abbb0a4e66908fa, type: 3}
+--- !u!114 &8142234962195461621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8914023969899057950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc4a660e4f5d776409936adaa2f29eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _imageOnBroken: {fileID: 21300000, guid: bae401e4cc617734b9e878e04c451d24, type: 3}
+  _health: 100
+  _damageMultiplierOnBroken: 10
+--- !u!1001 &3045172330884229764
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7651449554564006095}
+    m_Modifications:
+    - target: {fileID: 2795884547363434738, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_Name
+      value: HealthStatus
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+--- !u!4 &8648382288677823416 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5928876514439858492, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+  m_PrefabInstance: {fileID: 3045172330884229764}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8199498655679539110 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6595759752005913890, guid: d35c96971f701b847abe64551013b6f3, type: 3}
+  m_PrefabInstance: {fileID: 3045172330884229764}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 368e387a0d67b0b4fb1c8ce7a7d28db8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
