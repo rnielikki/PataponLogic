@@ -14,13 +14,9 @@ namespace PataRoad.Core.Rhythm.Command
         /// </summary>
         public static UnityEvent OnNextTurn { get; } = new UnityEvent();
         /// <summary>
-        /// Called ONCE when reaches the next turn AND player turn
+        /// Called ONCE when reaches the next turn AND BOSS turn. It's half of non-player turn.
         /// </summary>
-        public static UnityEvent OnNextPlayerTurn { get; } = new UnityEvent();
-        /// <summary>
-        /// Called ONCE when reaches the next turn AND NOT player turn
-        /// </summary>
-        public static UnityEvent OnNextNonPlayerTurn { get; } = new UnityEvent();
+        public static UnityEvent OnNextBossTurn { get; } = new UnityEvent();
         /// <summary>
         /// Called EVERY TIME when reaches the next turn
         /// </summary>
@@ -53,8 +49,7 @@ namespace PataRoad.Core.Rhythm.Command
         internal static void Destroy()
         {
             Stop();
-            OnNextPlayerTurn.RemoveAllListeners();
-            OnNextNonPlayerTurn.RemoveAllListeners();
+            OnNextBossTurn.RemoveAllListeners();
             OnTurn.RemoveAllListeners();
         }
         private static void Count()
@@ -64,17 +59,14 @@ namespace PataRoad.Core.Rhythm.Command
                 case 0:
                     OnTurn.Invoke();
                     OnNextTurn.Invoke();
-                    if (IsPlayerTurn)
-                    {
-                        OnNextPlayerTurn.Invoke();
-                        OnNextPlayerTurn.RemoveAllListeners();
-                    }
-                    else
-                    {
-                        OnNextNonPlayerTurn.Invoke();
-                        OnNextNonPlayerTurn.RemoveAllListeners();
-                    }
                     OnNextTurn.RemoveAllListeners();
+                    break;
+                case 2:
+                    if (!IsPlayerTurn)
+                    {
+                        OnNextBossTurn.Invoke();
+                        OnNextBossTurn.RemoveAllListeners();
+                    }
                     break;
                 case 3:
                     RhythmTimer.OnNextHalfTime.AddListener(() => IsPlayerTurn = !IsPlayerTurn);

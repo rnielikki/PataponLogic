@@ -17,29 +17,30 @@
             return distance;
         }
         //Example
-        private (UnityEngine.Events.UnityAction action, int distance) GetNextBehaviour()
+        private (string action, int distance) GetNextBehaviour()
         {
             var firstPon = _pataponsManager.FirstPatapon;
-            if (firstPon.transform.position.x < _pataponsManager.transform.position.x) return (_attack.AnimateFire, 20);
+            if (firstPon?.Class != Patapons.ClassType.Toripon &&
+                firstPon?.transform.position.x < _pataponsManager.transform.position.x) return ("fire", 20);
             if (firstPon?.IsMeleeUnit == true || firstPon?.Class == Patapons.ClassType.Toripon)
             {
                 if (Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 20))
                 {
                     if (Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 18))
                     {
-                        return (_attack.AnimateEat, 10);
+                        return ("eat", 10);
                     }
                     else
                     {
-                        return (_attack.AnimateHeadbutt, 10);
+                        return ("headbutt", 10);
                     }
                 }
                 else
                 {
-                    return (_attack.AnimateFire, 10);
+                    return ("fire", 10);
                 }
             }
-            else return (_attack.AnimateFire, 15);
+            else return ("fire", 15);
         }
     }
 }

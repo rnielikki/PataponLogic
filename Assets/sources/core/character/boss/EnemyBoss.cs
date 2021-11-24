@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character.Bosses
     public abstract class EnemyBoss : Boss
     {
         public override Vector2 MovingDirection { get; } = Vector2.left;
-        public BossTurnManager BossTurnManager { get; } = new BossTurnManager();
+        public BossTurnManager BossTurnManager { get; private set; }
         protected Patapons.PataponsManager _pataponsManager { get; set; }
         protected bool _noTarget = true;
         private bool _sleeping = true;
@@ -23,6 +23,7 @@ namespace PataRoad.Core.Character.Bosses
         protected override void Init(BossAttackData data)
         {
             base.Init(data);
+            BossTurnManager = new BossTurnManager(CharAnimator);
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
             _pataponsManager = FindObjectOfType<Patapons.PataponsManager>();
         }

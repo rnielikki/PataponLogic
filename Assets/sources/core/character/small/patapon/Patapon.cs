@@ -112,7 +112,7 @@ namespace PataRoad.Core.Character.Patapons
         public void MoveOnDrum(string drumName)
         {
             StopAttacking();
-            if (!AttackMoveData.WasHitLastTime) DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
+            if (LastSong != CommandSong.Ponpon && LastSong != CommandSong.Chakachaka) DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
             CharAnimator.Animate(drumName);
         }
 
