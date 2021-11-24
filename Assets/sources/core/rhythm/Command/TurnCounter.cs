@@ -14,9 +14,14 @@ namespace PataRoad.Core.Rhythm.Command
         /// </summary>
         public static UnityEvent OnNextTurn { get; } = new UnityEvent();
         /// <summary>
-        /// Called ONCE when reaches the next turn AND BOSS turn. It's half of non-player turn.
+        /// Called ONCE when reaches the next turn AND PLAYER turn.
         /// </summary>
-        public static UnityEvent OnNextBossTurn { get; } = new UnityEvent();
+        public static UnityEvent OnPlayerTurn { get; } = new UnityEvent();
+
+        /// <summary>
+        /// Called ONCE when reaches the next turn AND NON-PLAYER turn.
+        /// </summary>
+        public static UnityEvent OnNonPlayerTurn { get; } = new UnityEvent();
         /// <summary>
         /// Called EVERY TIME when reaches the next turn
         /// </summary>
@@ -49,7 +54,8 @@ namespace PataRoad.Core.Rhythm.Command
         internal static void Destroy()
         {
             Stop();
-            OnNextBossTurn.RemoveAllListeners();
+            OnPlayerTurn.RemoveAllListeners();
+            OnNonPlayerTurn.RemoveAllListeners();
             OnTurn.RemoveAllListeners();
         }
         private static void Count()
@@ -60,12 +66,15 @@ namespace PataRoad.Core.Rhythm.Command
                     OnTurn.Invoke();
                     OnNextTurn.Invoke();
                     OnNextTurn.RemoveAllListeners();
-                    break;
-                case 2:
-                    if (!IsPlayerTurn)
+                    if (IsPlayerTurn)
                     {
-                        OnNextBossTurn.Invoke();
-                        OnNextBossTurn.RemoveAllListeners();
+                        OnPlayerTurn.Invoke();
+                        OnPlayerTurn.RemoveAllListeners();
+                    }
+                    else
+                    {
+                        OnNonPlayerTurn.Invoke();
+                        OnNonPlayerTurn.RemoveAllListeners();
                     }
                     break;
                 case 3:

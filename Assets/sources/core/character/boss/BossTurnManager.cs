@@ -17,9 +17,11 @@ namespace PataRoad.Core.Character.Bosses
         private readonly CharacterAnimator _charAnimator;
         private string _current;
         private bool _willAttackEnd;
-        internal BossTurnManager(CharacterAnimator charAnimator)
+        private readonly BossAttackData _data;
+        internal BossTurnManager(BossAttackData data)
         {
-            _charAnimator = charAnimator;
+            _data = data;
+            _charAnimator = data.CharAnimator;
         }
         //-- start and end
         /// <summary>
@@ -30,12 +32,21 @@ namespace PataRoad.Core.Character.Bosses
             if (Attacking) return;
             Attacking = true;
             _turnCount = 0;
-            Rhythm.Command.TurnCounter.OnNextBossTurn.AddListener(() => RhythmTimer.OnTime.AddListener(CountTurn));
+            if (_actionQueue.Count > 1)
+            {
+                Rhythm.Command.TurnCounter.OnNonPlayerTurn.AddListener(WillStartComboAttack);
+            }
+            else
+            {
+                Rhythm.Command.TurnCounter.OnNonPlayerTurn.AddListener(CountSingleAttack);
+            }
         }
         public void End()
         {
             _actionQueue.Clear();
-            RhythmTimer.OnTime.RemoveListener(CountTurn);
+            RhythmTimer.OnTime.RemoveListener(CountSingleTurn);
+            RhythmTimer.OnTime.RemoveListener(CountComboTurn);
+            Rhythm.Command.TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
             Attacking = false;
         }
         // -- normal actions
@@ -50,33 +61,62 @@ namespace PataRoad.Core.Character.Bosses
             if (Attacking) return;
             foreach (var action in actions) _actionQueue.Enqueue(action);
         }
+        private void WillStartComboAttack()
+        {
+            RhythmTimer.OnNext.AddListener(() => RhythmTimer.OnTime.AddListener(CountComboTurn));
+        }
 
-        private void CountTurn()
+        private void CountSingleAttack()
+        {
+            _current = _actionQueue.Dequeue();
+            _charAnimator.Animate(_current + "-before");
+            RhythmTimer.OnTime.AddListener(CountSingleTurn);
+            _turnCount++;
+        }
+        private void CountSingleTurn()
         {
             switch (_turnCount)
             {
-                case 0:
+                case 8:
+                    _charAnimator.Animate(_current);
+                    break;
+                case 12:
+                    EndAttack();
+                    _data.StopAllAttacking();
+                    RhythmTimer.OnTime.RemoveListener(CountSingleTurn);
+                    break;
+            }
+            _turnCount++;
+        }
+        /// <summary>
+        /// Combo - 3s attack, 1s damage. Also smooth end included.
+        /// </summary>
+        private void CountComboTurn()
+        {
+            switch (_turnCount)
+            {
+                case 1:
                     if (_actionQueue.Count != 0)
                     {
                         _current = _actionQueue.Dequeue();
                         _charAnimator.Animate(_current + "-before");
+                        _data.StopAllAttacking();
                     }
                     else
                     {
                         _willAttackEnd = true;
                     }
                     break;
-                case 2:
+                case 3:
                     if (_willAttackEnd)
                     {
-                        Attacking = false;
-                        OnAttackEnd.Invoke();
-                        OnAttackEnd.RemoveAllListeners();
-                        RhythmTimer.OnTime.RemoveListener(CountTurn);
+                        EndAttack();
+                        _data.StopAllAttacking();
+                        RhythmTimer.OnTime.RemoveListener(CountComboTurn);
                         _willAttackEnd = false;
                     }
                     break;
-                case 6:
+                case 7:
                     _charAnimator.Animate(_current);
                     break;
             }
@@ -85,6 +125,12 @@ namespace PataRoad.Core.Character.Bosses
         public void Destroy()
         {
             End();
+            OnAttackEnd.RemoveAllListeners();
+        }
+        private void EndAttack()
+        {
+            Attacking = false;
+            OnAttackEnd.Invoke();
             OnAttackEnd.RemoveAllListeners();
         }
     }

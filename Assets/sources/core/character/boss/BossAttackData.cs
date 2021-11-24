@@ -2,7 +2,7 @@
 
 namespace PataRoad.Core.Character.Bosses
 {
-    public class BossAttackData : MonoBehaviour
+    public abstract class BossAttackData : MonoBehaviour
     {
         [SerializeField]
         private string _name;
@@ -23,6 +23,10 @@ namespace PataRoad.Core.Character.Bosses
             _boss = GetComponent<Boss>();
         }
 
+        /// <summary>
+        /// Clear all collider or trigger of the body in here.
+        /// </summary>
+        public abstract void StopAllAttacking();
         public void Attack(BossAttackComponent component, GameObject target, Vector2 position)
         {
             MinLastDamageOffset = component.DamageOffsetMin;

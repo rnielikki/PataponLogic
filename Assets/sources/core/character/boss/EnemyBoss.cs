@@ -23,7 +23,7 @@ namespace PataRoad.Core.Character.Bosses
         protected override void Init(BossAttackData data)
         {
             base.Init(data);
-            BossTurnManager = new BossTurnManager(CharAnimator);
+            BossTurnManager = new BossTurnManager(data);
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
             _pataponsManager = FindObjectOfType<Patapons.PataponsManager>();
         }
