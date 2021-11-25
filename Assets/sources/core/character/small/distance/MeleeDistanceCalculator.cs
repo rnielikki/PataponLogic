@@ -8,7 +8,7 @@ namespace PataRoad.Core.Character
         {
         }
 
-        protected override Vector2? GetClosest(Vector2 castPoint)//bidirectional
+        protected override Vector2? GetClosest(Vector2 castPoint)
         {
             var raycast = Physics2D.Raycast(castPoint, _direction, _sight, LayerMask);
             if (raycast.collider == null) return null;

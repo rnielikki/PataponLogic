@@ -34,7 +34,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: stagger
+  m_Name: Stagger
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -191,7 +191,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: knockback
+  m_Name: Knockback
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -248,19 +248,19 @@ AnimatorStateMachine:
     m_Position: {x: 510, y: 220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6056116284118233942}
-    m_Position: {x: -220, y: 50, z: 0}
+    m_Position: {x: -220, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -7171954288267970671}
-    m_Position: {x: -220, y: -120, z: 0}
+    m_Position: {x: -220, y: -220, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7504072094041341933}
-    m_Position: {x: -220, y: -30, z: 0}
+    m_Position: {x: -220, y: -130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2787888456603644605}
-    m_Position: {x: -220, y: 140, z: 0}
+    m_Position: {x: -220, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3855955640862992122}
-    m_Position: {x: -220, y: 300, z: 0}
+    m_Position: {x: -220, y: 290, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8615857706501276094}
     m_Position: {x: -220, y: 220, z: 0}
@@ -288,7 +288,7 @@ AnimatorController:
     m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -383,7 +383,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: sleep
+  m_Name: Sleep
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []

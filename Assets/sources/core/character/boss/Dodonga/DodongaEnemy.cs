@@ -2,11 +2,9 @@
 {
     public class DodongaEnemy : EnemyBoss
     {
-        private DodongaAttack _attack;
         private void Awake()
         {
             Init(GetComponent<DodongaAttack>());
-            _attack = BossAttackData as DodongaAttack;
             AttackDistance = 10;
         }
         protected override float CalculateAttack()
@@ -31,11 +29,11 @@
             //Tada. depends on level, it does nothing!
             if (Common.Utils.RandomByProbability(1f / (_level + 2)))
             {
-                return ("jump", 10);
+                return ("nothing", 10);
             }
             if (Common.Utils.RandomByProbability(1f / (_level + 5)))
             {
-                return ("idle", 10);
+                return ("Idle", 10);
             }
             var firstPon = _pataponsManager.FirstPatapon;
             if (firstPon?.Class != Patapons.ClassType.Toripon &&

@@ -9,11 +9,9 @@ namespace PataRoad.Core.Character
 
         private readonly float _groupOffset;
 
-        public float DefaultWorldPosition => _distanceManager.DefaultWorldPosition;
-
         private readonly PataponDistanceManager _distanceManager;
         private readonly DistanceCalculator _distanceCalculator;
-        private readonly Patapons.Patapon _patapon;
+        private readonly Patapon _patapon;
         private readonly Transform _pataponGroupTransform;
         private readonly Transform _pataponManagerTransform;
 
@@ -22,7 +20,7 @@ namespace PataRoad.Core.Character
         public bool WasHitLastTime { get; set; }
         public Vector2 LastHit { get; set; }
 
-        public PataponAttackMoveData(Patapons.Patapon patapon)
+        public PataponAttackMoveData(Patapon patapon)
         {
             _patapon = patapon;
             _pataponManagerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -36,7 +34,7 @@ namespace PataRoad.Core.Character
         {
             if (customDistance < 0) customDistance = _patapon.AttackDistance;
             var closest = _distanceCalculator.GetClosest();
-            if (closest == null) return DefaultWorldPosition;
+            if (closest == null) return _patapon.DefaultWorldPosition;
             customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
             return Clamp(closest.Value.x - customDistance - _patapon.CharacterSize) - _groupOffset;
         }

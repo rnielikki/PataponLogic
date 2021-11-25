@@ -34,6 +34,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         public PataponDistanceManager DistanceManager { get; private set; }
         public PataponGroup Group { get; private set; }
+        public override float DefaultWorldPosition => DistanceManager.DefaultWorldPosition;
         public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f);
         public override Vector2 MovingDirection => Vector2.right;
 
@@ -89,6 +90,7 @@ namespace PataRoad.Core.Character.Patapons
             DistanceManager = GetComponent<PataponDistanceManager>();
             DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
             InitDistanceFromHead();
+
             StatusEffectManager.SetRecoverAction(() =>
             {
                 if (!TurnCounter.IsPlayerTurn) PerformCommandAction(LastSong);

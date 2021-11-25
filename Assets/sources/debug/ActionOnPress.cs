@@ -1,4 +1,3 @@
-using PataRoad.Core.Items;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -14,11 +13,13 @@ namespace PataRoad.AppDebug
         [SerializeField]
         private UnityEvent _action;
         private Core.Character.Patapons.Patapon FirstPon => GetComponent<Core.Character.Patapons.PataponsManager>().Groups.First().Patapons.First();
+        private Core.Character.Bosses.EnemyBoss Boss;
         // Start is called before the first frame update
         void Awake()
         {
             _input.performed += PerformAction;
             _input.Enable();
+            Boss = FindObjectOfType<Core.Character.Bosses.EnemyBoss>();
             FindObjectOfType<Core.Rhythm.Command.MiracleListener>().OnMiracle.AddListener(() => Debug.Log("------------------- MIRACLE ---------------------"));
 
         }
@@ -35,27 +36,23 @@ namespace PataRoad.AppDebug
         }
         public void SetFire()
         {
-            FirstPon.StatusEffectManager.SetFire(4);
+            Boss.StatusEffectManager.SetFire(4);
         }
         public void SetIce()
         {
-            FirstPon.StatusEffectManager.SetIce(4);
+            Boss.StatusEffectManager.SetIce(4);
         }
         public void SetSleep()
         {
-            FirstPon.StatusEffectManager.SetSleep(4);
+            Boss.StatusEffectManager.SetSleep(4);
         }
         public void SetStagger()
         {
-            FirstPon.StatusEffectManager.SetStagger();
+            Boss.StatusEffectManager.SetStagger();
         }
         public void SetKnockback()
         {
-            FirstPon.StatusEffectManager.SetKnockback();
-        }
-
-        public void DropItem()
-        {
+            Boss.StatusEffectManager.SetKnockback();
         }
     }
 }

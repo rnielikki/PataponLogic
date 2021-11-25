@@ -59,7 +59,7 @@ namespace PataRoad.Core.Character.Bosses
         public override void StopAllAttacking()
         {
             Headbutt.StopAttacking();
-            EatingMouth.Attack();
+            EatingMouth.StopAttacking();
         }
     }
 }

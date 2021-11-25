@@ -34,8 +34,10 @@ namespace PataRoad.Core.Character
         /// <param name="animationType">The animation name from animator.</param>
         public void Animate(string animationType)
         {
-            if (!_target.StatusEffectManager.OnStatusEffect)
+            if (_target.StatusEffectManager.CanContinue)
+            {
                 _animator.Play(animationType, -1, 0f);
+            }
         }
         /// <summary>
         /// Play dying animation, with no dependency of status effect.
@@ -66,7 +68,10 @@ namespace PataRoad.Core.Character
         /// <param name="animationType">Type of animaion.</param>
         public void AnimateFrom(string animationType)
         {
-            _animator.CrossFade(animationType, 0.5f);
+            if (_target.StatusEffectManager.CanContinue)
+            {
+                _animator.CrossFade(animationType, 0.5f);
+            }
         }
         /// <summary>
         /// Perform attack animation, in coroutine. Use <see cref="Animate"/> instead for constant gesture attack (like tatepon ponchaka~ponpon).

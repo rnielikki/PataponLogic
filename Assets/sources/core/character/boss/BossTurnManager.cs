@@ -69,7 +69,7 @@ namespace PataRoad.Core.Character.Bosses
         private void CountSingleAttack()
         {
             _current = _actionQueue.Dequeue();
-            _charAnimator.Animate(_current + "-before");
+            if (_current != "nothing" && _current != "Idle") _charAnimator.Animate(_current + "-before");
             RhythmTimer.OnTime.AddListener(CountSingleTurn);
             _turnCount++;
         }
@@ -99,7 +99,7 @@ namespace PataRoad.Core.Character.Bosses
                     if (_actionQueue.Count != 0)
                     {
                         _current = _actionQueue.Dequeue();
-                        _charAnimator.Animate(_current + "-before");
+                        if (_current != "nothing" && _current != "Idle") _charAnimator.Animate(_current + "-before");
                         _data.StopAllAttacking();
                     }
                     else

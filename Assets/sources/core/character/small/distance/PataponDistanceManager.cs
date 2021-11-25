@@ -161,6 +161,10 @@ namespace PataRoad.Core.Character.Patapons
                 transform.position = Vector2.MoveTowards(transform.position, target, step);
                 _isMoving = !DistanceCalculator.IsInTargetRange(target.x, step);
             }
+            else
+            {
+                transform.position = new Vector2(DistanceCalculator.GetSafeForwardPosition(transform.position.x), 0);
+            }
         }
     }
 }

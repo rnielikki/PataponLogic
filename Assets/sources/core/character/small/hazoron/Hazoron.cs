@@ -22,6 +22,7 @@ namespace PataRoad.Core.Character.Hazorons
         {
             _stat = _defaultStat;
             base.Init();
+            DefaultWorldPosition = transform.position.x;
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
             AttackMoveData = new HazoronAttackMoveData(this);
             //Save. this can be changed later.
@@ -37,7 +38,7 @@ namespace PataRoad.Core.Character.Hazorons
         public static float GetClosestHazoronPosition()
         {
             if (_hazorons.Count == 0) return Mathf.Infinity;
-            return _hazorons.Min(h => h.AttackMoveData.DefaultWorldPosition);
+            return _hazorons.Min(h => h.DefaultWorldPosition);
         }
 
         protected void InitDistanceFromHead()

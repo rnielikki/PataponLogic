@@ -1,12 +1,31 @@
 ﻿namespace PataRoad.Core.Character
 {
-    class BossStatusEffectManager : CharacterStatusEffectManager
+    public class BossStatusEffectManager : CharacterStatusEffectManager
     {
-        void Awake() { Init(); }
-        public override void SetKnockback()
+        public override bool CanContinue => base.CanContinue || _onFire;
+        void Awake()
         {
-            _character.CharAnimator.Animate("knockback");
-            //status effects for seconds....
+            Init();
+        }
+        protected override void StartStatusEffect()
+        {
+            if (!_onFire)
+            {
+                _character.StopAttacking();
+            }
+        }
+
+        protected override void OnKnockback()
+        {
+            StartStatusEffect();
+            _character.CharAnimator.Animate("Knockback");
+            StartCoroutine(WaitForRecovery(8));
+        }
+
+        protected override void OnRecover()
+        {
+            _character.CharAnimator.Resume();
+            if (!_character.IsDead) _character.CharAnimator.AnimateFrom("Idle");
         }
     }
 }

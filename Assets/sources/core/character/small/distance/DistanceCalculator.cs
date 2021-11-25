@@ -14,6 +14,7 @@ namespace PataRoad.Core.Character
         protected readonly float _sight;
         public int LayerMask { get; }
         protected readonly Vector2 _direction;
+        protected readonly float _xDirection;
 
         /// <summary>
         /// Constructor for getting distances from target game object, like Patapon-Enemy, Enemy-Patapon, Patapon-Structure etc.
@@ -27,6 +28,7 @@ namespace PataRoad.Core.Character
             _target = (character as MonoBehaviour)?.gameObject;
             _sight = sight;
             _direction = _character.MovingDirection;
+            _xDirection = _direction.x;
             LayerMask = layerMask;
         }
         /// <summary>
@@ -63,12 +65,24 @@ namespace PataRoad.Core.Character
         private static Vector2 _boxSize = new Vector2(0.001f, CharacterEnvironment.MaxYToScan); //size for boxcasting. NOTE: boxcast doesn't catch from initial box position.
         private static Vector2 _boxcastYOffset = (_boxSize.y / 2) * Vector2.up;
         private static float _boxcastXOffset = _boxSize.x * 0.6f;
+        protected float MaxEnemyDistanceInSight => _character.DefaultWorldPosition + _sight + _character.AttackDistance;
 
         /// <summary>
         /// Shoots RayCast to closest structure or enemy and returns the raycast hit if found.
         /// </summary>
         /// <returns>X position as collider hit, Y position as collided game object position.</returns>
-        public Vector2? GetClosest() => GetClosest((Vector2)_target.transform.position + _character.AttackDistance * _direction);
+        public Vector2? GetClosest()
+        {
+            var closest = GetClosest((Vector2)_target.transform.position + _character.AttackDistance * _direction);
+            if (closest != null && _xDirection * closest.Value.x > _xDirection * MaxEnemyDistanceInSight)
+            {
+                return null;
+            }
+            else
+            {
+                return closest;
+            }
+        }
 
         protected virtual Vector2? GetClosest(Vector2 castPoint)//bidirectional
         {
@@ -81,7 +95,7 @@ namespace PataRoad.Core.Character
                 if (p == null) return null;
             }
             var bounds = raycast.collider.bounds;
-            return new Vector2(bounds.center.x + bounds.size.x * -_direction.x / 2, bounds.center.y - bounds.size.y / 2);
+            return new Vector2(bounds.center.x + bounds.size.x * -_xDirection / 2, bounds.center.y - bounds.size.y / 2);
 
             float? ReturnInRange(RaycastHit2D hit)
             {
@@ -97,8 +111,7 @@ namespace PataRoad.Core.Character
             {
                 return input;
             }
-            var xDir = _direction.x;
-            if (xDir < 0)
+            if (_xDirection < 0)
             {
                 return Mathf.Max(raycast.point.x, input);
             }

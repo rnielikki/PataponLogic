@@ -128,12 +128,12 @@ namespace PataRoad.Core.Character
                     _currentStatusFlag = 1;
                     if (_moving)
                     {
-                        if (_distanceCalculator.IsInTargetRange(_data.DefaultWorldPosition, _movingSpeed * Time.deltaTime))
+                        if (_distanceCalculator.IsInTargetRange(_character.DefaultWorldPosition, _movingSpeed * Time.deltaTime))
                         {
                             _animator.Animate("Idle");
                         }
                     }
-                    else if (!_distanceCalculator.IsInTargetRange(_data.DefaultWorldPosition, _movingSpeed * Time.deltaTime))
+                    else if (!_distanceCalculator.IsInTargetRange(_character.DefaultWorldPosition, _movingSpeed * Time.deltaTime))
                     {
                         _moving = true;
                         _animator.Animate("walk");
@@ -143,7 +143,7 @@ namespace PataRoad.Core.Character
                 }
                 if (_moving)
                 {
-                    MoveTowards(_data.DefaultWorldPosition);
+                    MoveTowards(_character.DefaultWorldPosition);
                 }
             }
             else if (!isInDistance) //2. Found target.

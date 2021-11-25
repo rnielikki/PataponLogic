@@ -13,17 +13,21 @@ namespace PataRoad.Core.Character.Bosses
         private bool _moving;
         private bool _movingBack;
         private bool _movingBackQueued;
+        private const int _movingBackPosition = 50;
+        private int _phase;
 
         private Vector3 _targetPosition;
         [SerializeField]
         protected int _level;
         [SerializeField]
         protected bool _useWalkWhenMovingBack;
+        private bool _movingBackAnimating;
 
         protected override void Init(BossAttackData data)
         {
             base.Init(data);
             BossTurnManager = new BossTurnManager(data);
+            DefaultWorldPosition = transform.position.x;
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
             _pataponsManager = FindObjectOfType<Patapons.PataponsManager>();
         }
@@ -41,23 +45,40 @@ namespace PataRoad.Core.Character.Bosses
         }
         public override void TakeDamage(int damage)
         {
-            var before = (float)CurrentHitPoint / Stat.HitPoint;
             base.TakeDamage(damage);
             if (!_movingBackQueued)
             {
                 float current = (float)CurrentHitPoint / Stat.HitPoint;
-                if (before > 0.66f && current < 0.66f || before > 0.33f && current < 0.33f)
+                if (changedPhase(current))
                 {
                     _movingBackQueued = true;
+                    _movingBackAnimating = false;
                     BossTurnManager.OnAttackEnd.AddListener(StartMovingBack);
                 }
+            }
+            bool changedPhase(float hp)
+            {
+                int phase = _phase;
+                if (hp > 0.66f)
+                {
+                    _phase = 0;
+                }
+                else if (hp > 0.33f)
+                {
+                    _phase = 1;
+                }
+                else
+                {
+                    _phase = 2;
+                }
+                return phase != _phase;
             }
         }
         private void StartMovingBack()
         {
-            _targetPosition = transform.position + Vector3.right * 50;
+            _targetPosition = Vector3.right * (DefaultWorldPosition + _movingBackPosition);
+            DefaultWorldPosition = _targetPosition.x;
             _movingBack = true;
-            CharAnimator.Animate(_useWalkWhenMovingBack ? "walk" : "nothing");
         }
         //When staggered or got knockback.
         public override void StopAttacking()
@@ -70,18 +91,25 @@ namespace PataRoad.Core.Character.Bosses
         private void Update()
         {
             //phase 0: attacking or dead
-            if (BossTurnManager.Attacking || IsDead) return;
+            if (BossTurnManager.Attacking || IsDead || !StatusEffectManager.CanContinue) return;
 
+            //phase n: moving back.
             if (_movingBack)
             {
                 var backOffset = Stat.MovementSpeed * 3 * Time.deltaTime;
                 transform.position = Vector2.MoveTowards(transform.position, _targetPosition, backOffset);
+                if (!_movingBackAnimating)
+                {
+                    CharAnimator.Animate(_useWalkWhenMovingBack ? "walk" : "nothing");
+                    _movingBackAnimating = true;
+                }
                 if (transform.position.x >= _targetPosition.x - backOffset)
                 {
                     _movingBack = false;
                     _sleeping = true;
-                    CharAnimator.Animate("sleep");
+                    CharAnimator.Animate("Sleep");
                     _movingBackQueued = false;
+                    _movingBackAnimating = false;
                 }
                 return;
             }

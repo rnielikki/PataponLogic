@@ -29,9 +29,8 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     int damage = (int)(GetAttackDamage(stat, attacker) * stat.FireRate);
                     if (damage != 0)
                     {
+                        SendDamage(component, damage);
                         _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
-                        component.TakeDamage((int)(damage * 0.1f));
-                        component.OnDamageTaken?.Invoke((float)component.CurrentHitPoint / component.Stat.HitPoint);
                     }
                 }
             }
@@ -43,8 +42,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     damage = (int)(damage * boss.GetBrokenPartMultiplier(target, damage));
                 }
 
-                component.TakeDamage(damage);
-                component.OnDamageTaken?.Invoke((float)component.CurrentHitPoint / component.Stat.HitPoint);
+                SendDamage(component, damage);
                 _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
                 CheckIfDie(component, target);
                 attacker.OnAttackHit(point, damage);
@@ -67,7 +65,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
         {
             //--- add fire resistance to fire damage taking!
             var damage = Mathf.Max(1, (int)(attackable.Stat.HitPoint * 0.05f));
-            attackable.TakeDamage(damage);
+            SendDamage(attackable, damage);
             if (displayDamage) _damageDisplay.DisplayDamage(damage, objectTransform.position, false);
             CheckIfDie(attackable, targetObject);
         }
@@ -79,6 +77,11 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 //do destroy action.
                 target.Die();
             }
+        }
+        private static void SendDamage(IAttackable target, int damage)
+        {
+            target.TakeDamage(damage);
+            target.OnDamageTaken?.Invoke((float)target.CurrentHitPoint / target.Stat.HitPoint);
         }
         private static int GetAttackDamage(Stat stat, ICharacter character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());
         private static int GetDefence(Stat stat, ICharacter character) => GetFinalValue(stat.DefenceMin, stat.DefenceMax, character.GetDefenceValueOffset());

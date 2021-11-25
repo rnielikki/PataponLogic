@@ -39,6 +39,7 @@ namespace PataRoad.Core.Character
         public CharacterAnimator CharAnimator { get; protected set; }
 
         public DistanceCalculator DistanceCalculator { get; protected set; }
+        public virtual float DefaultWorldPosition { get; protected set; }
 
         /// <summary>
         /// Attack distance WITHOUT head size. Zero for melee expected. Some range units will add the distance by Tailwind.

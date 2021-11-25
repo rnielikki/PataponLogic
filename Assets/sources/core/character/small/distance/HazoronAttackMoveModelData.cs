@@ -4,15 +4,14 @@ namespace PataRoad.Core.Character
 {
     class HazoronAttackMoveData : IAttackMoveData
     {
-        public float MaxRushAttackPosition => DefaultWorldPosition - CharacterEnvironment.RushAttackDistance;
+        public float MaxRushAttackPosition => _hazoron.DefaultWorldPosition - CharacterEnvironment.RushAttackDistance;
 
-        public float DefaultWorldPosition { get; }
         private readonly Transform _pataponTransform;
         private readonly DistanceCalculator _distanceCalculator;
         private readonly Hazorons.Hazoron _hazoron;
 
-        private float _min => DefaultWorldPosition - CharacterEnvironment.RushAttackDistance;
-        private float _max => DefaultWorldPosition + CharacterEnvironment.RushAttackDistance;
+        private float _min => _hazoron.DefaultWorldPosition - CharacterEnvironment.RushAttackDistance;
+        private float _max => _hazoron.DefaultWorldPosition + CharacterEnvironment.RushAttackDistance;
         public bool WasHitLastTime { get; set; }
         public Vector2 LastHit { get; set; }
 
@@ -21,13 +20,12 @@ namespace PataRoad.Core.Character
             _hazoron = hazoron;
             _distanceCalculator = hazoron.DistanceCalculator;
             _pataponTransform = GameObject.FindGameObjectWithTag("Player").transform;
-            DefaultWorldPosition = hazoron.transform.position.x;
         }
         public float GetAttackPosition(float customDistance = -1)
         {
             if (customDistance < 0) customDistance = _hazoron.AttackDistance;
             var closest = _distanceCalculator.GetClosest();
-            if (closest == null) return DefaultWorldPosition;
+            if (closest == null) return _hazoron.DefaultWorldPosition;
             customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
             return Clamp(
                 Mathf.Max(_pataponTransform.position.x + _hazoron.CharacterSize, closest.Value.x + customDistance + _hazoron.CharacterSize)
@@ -36,7 +34,7 @@ namespace PataRoad.Core.Character
 
         public float GetDefendingPosition(float customDistance = -1)
         {
-            return DefaultWorldPosition;
+            return _hazoron.DefaultWorldPosition;
         }
 
         public float GetRushPosition()

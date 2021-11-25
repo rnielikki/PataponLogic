@@ -6,6 +6,7 @@ namespace PataRoad.Core.Character
     /// </summary>
     public interface ICharacter : IAttackable
     {
+        public float DefaultWorldPosition { get; }
         /// <summary>
         /// This is for calculating damage/defence *between min-max value*. Returns [0-1]. The bigger the value is, the attack/defence is more. - for Patapon, "how perfect the drums are" affects.
         /// </summary>

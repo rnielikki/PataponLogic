@@ -67,7 +67,7 @@ namespace PataRoad.Core.Character
         }
         public override void SetKnockback()
         {
-            if (IgnoreStatusEffect || OnStatusEffect) return;
+            if (IgnoreStatusEffect || OnStatusEffect || _character.IsDead) return;
             _character.StopAttacking();
             (_character as MonoBehaviour)?.StopAllCoroutines();
             OnKnockback();
@@ -81,7 +81,7 @@ namespace PataRoad.Core.Character
         protected override void OnRecover()
         {
             _character.CharAnimator.Resume();
-            _character.CharAnimator.Animate("Idle");
+            if (!_character.IsDead) _character.CharAnimator.Animate("Idle");
         }
         public override void TumbleAttack()
         {
@@ -90,6 +90,6 @@ namespace PataRoad.Core.Character
                 target.StatusEffectManager.Tumble();
             }
         }
-        private bool IsValidForStatusEffect(int time) => !IgnoreStatusEffect && !OnStatusEffect && time > 0;
+        private bool IsValidForStatusEffect(int time) => !_character.IsDead && !IgnoreStatusEffect && !OnStatusEffect && time > 0;
     }
 }

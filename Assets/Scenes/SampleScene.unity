@@ -5494,7 +5494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8625201061726857686, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
@@ -11956,7 +11956,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1107452048
 Transform:
   m_ObjectHideFlags: 0
@@ -11987,7 +11987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126796, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _defaultStat._damageMax
@@ -12055,7 +12055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126799, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 20.38
+      value: 49.07
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126799, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13110,6 +13110,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 323782639902048187, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 323782639902048187, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 701755469810581542, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.29
@@ -13434,13 +13442,21 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[8].y
       value: -3.0506232
       objectReference: {fileID: 0}
+    - target: {fileID: 7540208000617571742, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7540208000617571742, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7651449554564006095, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7651449554564006095, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 94.2
+      value: 42.5
       objectReference: {fileID: 0}
     - target: {fileID: 7651449554564006095, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -19895,7 +19911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6647991443700256610, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6647991443700256611, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
       propertyPath: _defaultStat._hitPoint
@@ -20546,6 +20562,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5238186235997975600, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
+      propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetKnockback
+      objectReference: {fileID: 0}
     - target: {fileID: 5238186235997975602, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
       propertyPath: _useMissionTower
       value: 0
@@ -20565,6 +20585,10 @@ PrefabInstance:
     - target: {fileID: 5238186235997975602, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
       propertyPath: _pataponTypes.Array.data[2]
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5238186235997975603, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
+      propertyPath: _action.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetStagger
       objectReference: {fileID: 0}
     - target: {fileID: 5238186235997975604, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
       propertyPath: m_Name

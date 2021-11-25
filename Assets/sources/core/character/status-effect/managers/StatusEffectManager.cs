@@ -15,6 +15,7 @@ namespace PataRoad.Core.Character
 
         private GameObject _effectObject;
         private StatusEffectData _effectInstantiator;
+        public virtual bool CanContinue => !OnStatusEffect && !_target.IsDead;
 
         private UnityEngine.Events.UnityAction _onRecover;
 
@@ -32,8 +33,8 @@ namespace PataRoad.Core.Character
         public virtual void SetFire(int time)
         {
             if (OnStatusEffect || time < 1 || IgnoreStatusEffect) return;
-            StartStatusEffect();
             _onFire = true;
+            StartStatusEffect();
 
             StartCoroutine(FireDamage());
             OnFire();

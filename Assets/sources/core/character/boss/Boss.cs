@@ -10,6 +10,7 @@ namespace PataRoad.Core.Character.Bosses
         public abstract Vector2 MovingDirection { get; }
 
         public DistanceCalculator DistanceCalculator { get; protected set; }
+        public virtual float DefaultWorldPosition { get; protected set; }
 
         public float AttackDistance { get; protected set; }
 
@@ -18,7 +19,6 @@ namespace PataRoad.Core.Character.Bosses
         public int CurrentHitPoint { get; private set; }
 
         public StatusEffectManager StatusEffectManager { get; private set; }
-
         public bool IsDead { get; private set; }
 
         public CharacterAnimator CharAnimator { get; private set; }
@@ -42,7 +42,7 @@ namespace PataRoad.Core.Character.Bosses
             BossAttackData = data;
             data.CharAnimator = CharAnimator;
             CurrentHitPoint = Stat.HitPoint;
-            StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
+            StatusEffectManager = gameObject.AddComponent<BossStatusEffectManager>();
 
             CharAnimator.Animate("Idle");
         }
@@ -72,6 +72,7 @@ namespace PataRoad.Core.Character.Bosses
 
         public virtual void StopAttacking()
         {
+            BossAttackData.StopAllAttacking();
             CharAnimator.Animate("Idle");
         }
 

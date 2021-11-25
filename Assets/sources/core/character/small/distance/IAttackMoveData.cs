@@ -8,7 +8,6 @@ namespace PataRoad.Core.Character
     public interface IAttackMoveData
     {
         public float MaxRushAttackPosition { get; }
-        public float DefaultWorldPosition { get; }
         public float GetAttackPosition(float customDistance = -1);
         public float GetDefendingPosition(float customDistance = -1);
         public bool IsAttackableRange();
