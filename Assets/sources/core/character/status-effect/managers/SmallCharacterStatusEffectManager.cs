@@ -18,6 +18,7 @@ namespace PataRoad.Core.Character
         private void Awake()
         {
             Init();
+            _isBigTarget = false;
         }
         protected override void Init()
         {

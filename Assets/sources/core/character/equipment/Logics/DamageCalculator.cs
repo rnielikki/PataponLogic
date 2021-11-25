@@ -15,7 +15,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
         /// <returns><c>true</c> if found target to deal damage, otherwise <c>false</c>.</returns>
         public static void DealDamage(ICharacter attacker, Stat stat, GameObject target, Vector2 point)
         {
-            var component = target.GetComponentInParent<IAttackable>();
+            var component = target.GetComponentInParent<IAttackable>(false);
             if (component == null || component.CurrentHitPoint <= 0 || component.IsDead)
             {
                 attacker.OnAttackMiss(point);

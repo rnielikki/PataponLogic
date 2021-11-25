@@ -23,7 +23,7 @@ namespace PataRoad.Core.Character.Patapons
         public int IndexInGroup { get; internal set; }
 
         public CommandSong LastSong { get; protected set; }
-        private float _lastPerfectionPercent;
+        private float _lastPerfectionRate;
 
         public float AttackDistanceWithOffset => AttackDistance + CharacterSize;
         public bool IsGeneral { get; private set; }
@@ -132,7 +132,7 @@ namespace PataRoad.Core.Character.Patapons
                 AttackMoveData.WasHitLastTime = false;
             }
             LastSong = song;
-            _lastPerfectionPercent = model.Percentage;
+            _lastPerfectionRate = model.AccuracyRate;
 
             Stat = StatOperator.GetFinalStat(song, Charged);
             if (!StatusEffectManager.OnStatusEffect || LastSong == CommandSong.Donchaka)
@@ -287,11 +287,11 @@ namespace PataRoad.Core.Character.Patapons
 
         public override float GetAttackValueOffset()
         {
-            return _lastPerfectionPercent;
+            return _lastPerfectionRate;
         }
         public override float GetDefenceValueOffset()
         {
-            return _lastPerfectionPercent;
+            return _lastPerfectionRate;
         }
         public override void TakeDamage(int damage)
         {

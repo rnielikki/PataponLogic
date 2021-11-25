@@ -27,7 +27,7 @@ namespace PataRoad.Core.Rhythm.Command
         /// <summary>
         /// The accuracy percentage. Will affect min-max damage/defence and more.
         /// </summary>
-        public float Percentage { get; }
+        public float AccuracyRate { get; }
 
         internal RhythmCommandModel(IEnumerable<RhythmInputModel> inputs, CommandSong song)
         {
@@ -35,7 +35,7 @@ namespace PataRoad.Core.Rhythm.Command
             var statusCollection = inputs.Select(hit => hit.Status);
             PerfectCount = statusCollection.Count(status => status == DrumHitStatus.Perfect);
             BadCount = statusCollection.Count(status => status == DrumHitStatus.Bad);
-            Percentage = GetPercentage(inputs.Sum(input => input.Timing));
+            AccuracyRate = GetPercentage(inputs.Sum(input => input.Timing));
         }
         private float GetPercentage(int timingSum) => UnityEngine.Mathf.InverseLerp(RhythmTimer.GoodFrequency * 4, RhythmTimer.PerfectFrequency * 4, timingSum);
     }

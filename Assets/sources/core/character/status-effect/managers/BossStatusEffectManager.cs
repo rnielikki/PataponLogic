@@ -6,6 +6,7 @@
         void Awake()
         {
             Init();
+            _isBigTarget = true;
         }
         protected override void StartStatusEffect()
         {

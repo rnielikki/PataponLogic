@@ -91,7 +91,6 @@ namespace PataRoad.Core.Rhythm.Bgm
             _bgmSource.clip = _audioClips[bgmType];
             _bgmSource.Play();
         }
-        private void PlayOneShot(RhythmBgmIndex bgmType) => _bgmShotSource.PlayOneShot(_audioClips[bgmType]);
 
         public void PlayComboMusic(RhythmComboModel comboInfo)
         {
@@ -121,11 +120,6 @@ namespace PataRoad.Core.Rhythm.Bgm
                 _bgmShotSource.PlayOneShot(_feverEndSound);
                 StartCoroutine(FeverFadeOut());
             }
-        }
-        public void EnterMiracle()
-        {
-            StopAllMusic();
-            //Play miracle music!
         }
         public void StopAllMusic()
         {

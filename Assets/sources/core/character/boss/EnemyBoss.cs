@@ -17,11 +17,10 @@ namespace PataRoad.Core.Character.Bosses
         private int _phase;
 
         private Vector3 _targetPosition;
-        [SerializeField]
-        protected int _level;
-        [SerializeField]
         protected bool _useWalkWhenMovingBack;
         private bool _movingBackAnimating;
+
+        protected int _level = 1; //should be loaded later!
 
         protected override void Init(BossAttackData data)
         {

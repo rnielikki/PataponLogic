@@ -15,6 +15,13 @@ namespace PataRoad.Core.Character
         public int LayerMask { get; }
         protected readonly Vector2 _direction;
         protected readonly float _xDirection;
+        private readonly float _size;
+
+        //boxcast data
+        protected Vector2 _boxSize; //size for boxcasting. NOTE: boxcast doesn't catch from initial box position.
+        protected Vector2 _boxcastYOffset;
+        protected float _boxcastXOffset;
+        protected float MaxEnemyDistanceInSight => _character.DefaultWorldPosition * _xDirection + _sight + _character.AttackDistance;
 
         /// <summary>
         /// Constructor for getting distances from target game object, like Patapon-Enemy, Enemy-Patapon, Patapon-Structure etc.
@@ -25,27 +32,28 @@ namespace PataRoad.Core.Character
         internal DistanceCalculator(ICharacter character, float sight, int layerMask)
         {
             _character = character;
+            _size = (character as SmallCharacter)?.CharacterSize ?? 0;
             _target = (character as MonoBehaviour)?.gameObject;
             _sight = sight;
             _direction = _character.MovingDirection;
             _xDirection = _direction.x;
             LayerMask = layerMask;
+
+            _boxSize = new Vector2(0.001f, CharacterEnvironment.MaxYToScan);
+            _boxcastYOffset = (_boxSize.y / 2) * Vector2.up;
+            _boxcastXOffset = _boxSize.x * 0.6f;
         }
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Patapon (also from left to right).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         internal static DistanceCalculator GetPataponDistanceCalculator(Patapons.Patapon target) =>
-            target.IsMeleeUnit ?
-            new MeleeDistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses")) :
             new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Hazoron (also from right to left).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         internal static DistanceCalculator GetHazoronDistanceCalculator(Hazorons.Hazoron target) =>
-            target.IsMeleeUnit ?
-            new MeleeDistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("patapons", "bosses")) :
             new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("patapons", "bosses"));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for enemy boss (from right to left). Enemy boss represents boss in normal boss killing mission.
@@ -60,13 +68,6 @@ namespace PataRoad.Core.Character
         internal static DistanceCalculator GetBossDistanceCalculator(Bosses.SummonedBoss target) =>
             new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
 
-
-        //boxcast data
-        private static Vector2 _boxSize = new Vector2(0.001f, CharacterEnvironment.MaxYToScan); //size for boxcasting. NOTE: boxcast doesn't catch from initial box position.
-        private static Vector2 _boxcastYOffset = (_boxSize.y / 2) * Vector2.up;
-        private static float _boxcastXOffset = _boxSize.x * 0.6f;
-        protected float MaxEnemyDistanceInSight => _character.DefaultWorldPosition + _sight + _character.AttackDistance;
-
         /// <summary>
         /// Shoots RayCast to closest structure or enemy and returns the raycast hit if found.
         /// </summary>
@@ -74,7 +75,7 @@ namespace PataRoad.Core.Character
         public Vector2? GetClosest()
         {
             var closest = GetClosest((Vector2)_target.transform.position + _character.AttackDistance * _direction);
-            if (closest != null && _xDirection * closest.Value.x > _xDirection * MaxEnemyDistanceInSight)
+            if (closest != null && closest.Value.x * _xDirection > MaxEnemyDistanceInSight)
             {
                 return null;
             }
@@ -107,17 +108,18 @@ namespace PataRoad.Core.Character
         public virtual float GetSafeForwardPosition(float input)
         {
             var raycast = Physics2D.BoxCast((Vector2)_target.transform.position - _boxSize.x * _direction + _boxcastYOffset, _boxSize, 0, _direction, _sight, LayerMask);
+
             if (raycast.collider == null)
             {
                 return input;
             }
             if (_xDirection < 0)
             {
-                return Mathf.Max(raycast.point.x, input);
+                return Mathf.Max(raycast.transform.position.x + (raycast.collider.bounds.size.x * 0.5f) + _size, input);
             }
             else
             {
-                return Mathf.Min(raycast.point.x, input);
+                return Mathf.Min(raycast.transform.position.x - (raycast.collider.bounds.size.x * 0.5f) - _size, input);
             }
         }
 

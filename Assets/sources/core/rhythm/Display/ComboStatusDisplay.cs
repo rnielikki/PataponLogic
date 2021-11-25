@@ -134,7 +134,7 @@ namespace PataRoad.Core.Rhythm.Display
         public void DisplayCommandScore(Command.RhythmCommandModel model)
         {
             if (!gameObject.activeSelf) return;
-            SetColor(_currentStartColor, _currentEndColor, model.Percentage);
+            SetColor(_currentStartColor, _currentEndColor, model.AccuracyRate);
         }
         private void SetColor(Color startColor, Color endColor, float percentage) //percentage between bad-perfect, 0-1.
         {

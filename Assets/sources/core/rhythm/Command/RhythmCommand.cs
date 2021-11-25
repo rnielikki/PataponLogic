@@ -172,6 +172,7 @@ namespace PataRoad.Core.Rhythm.Command
                     TurnCounter.OnNextTurn.AddListener(() =>
                     {
                         _miracleListener.ResetMiracle();
+                        OnCommandCanceled.Invoke();
                         _miracleListener.OnMiracle.Invoke();
                         ClearDrumHits();
                     });

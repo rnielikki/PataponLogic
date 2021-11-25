@@ -20,8 +20,6 @@ namespace PataRoad.AppDebug
             _input.performed += PerformAction;
             _input.Enable();
             Boss = FindObjectOfType<Core.Character.Bosses.EnemyBoss>();
-            FindObjectOfType<Core.Rhythm.Command.MiracleListener>().OnMiracle.AddListener(() => Debug.Log("------------------- MIRACLE ---------------------"));
-
         }
         private void OnDestroy()
         {

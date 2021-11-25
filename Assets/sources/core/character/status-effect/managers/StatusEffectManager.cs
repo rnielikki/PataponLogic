@@ -18,6 +18,7 @@ namespace PataRoad.Core.Character
         public virtual bool CanContinue => !OnStatusEffect && !_target.IsDead;
 
         private UnityEngine.Events.UnityAction _onRecover;
+        protected bool _isBigTarget;
 
         private void Awake()
         {
@@ -95,7 +96,7 @@ namespace PataRoad.Core.Character
         protected void LoadEffectObject(StatusEffectType type)
         {
             //can be resized if big, I guess
-            _effectObject = _effectInstantiator.AttachEffect(type, _transform);
+            _effectObject = _effectInstantiator.AttachEffect(type, _transform, _isBigTarget);
         }
         protected virtual void StartStatusEffect()
         {

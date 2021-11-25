@@ -26,9 +26,7 @@ namespace PataRoad.Core.Character.Bosses
 
         private readonly Dictionary<GameObject, BreakablePart> _breakableParts = new Dictionary<GameObject, BreakablePart>();
 
-        [SerializeField]
-        private UnityEvent<float> _onDamageTaken;
-        public UnityEvent<float> OnDamageTaken => _onDamageTaken;
+        public UnityEvent<float> OnDamageTaken { get; private set; }
 
         protected virtual void Init(BossAttackData data)
         {
@@ -44,6 +42,13 @@ namespace PataRoad.Core.Character.Bosses
             CurrentHitPoint = Stat.HitPoint;
             StatusEffectManager = gameObject.AddComponent<BossStatusEffectManager>();
 
+            var health = GetComponentInChildren<HealthDisplay>();
+            if (health != null)
+            {
+                OnDamageTaken = new UnityEvent<float>();
+                OnDamageTaken.AddListener(health.UpdateBar);
+            }
+
             CharAnimator.Animate("Idle");
         }
 
@@ -58,8 +63,8 @@ namespace PataRoad.Core.Character.Bosses
             CharAnimator.PlayDyingAnimation();
         }
 
-        public float GetAttackValueOffset() => Random.Range(BossAttackData.MinLastDamageOffset, BossAttackData.MinLastDamageOffset);
-        public float GetDefenceValueOffset() => Random.Range(0, 1);
+        public virtual float GetAttackValueOffset() => Random.Range(BossAttackData.MinLastDamageOffset, BossAttackData.MinLastDamageOffset);
+        public virtual float GetDefenceValueOffset() => Random.Range(0, 1);
 
 
         public virtual void OnAttackHit(Vector2 point, int damage)
