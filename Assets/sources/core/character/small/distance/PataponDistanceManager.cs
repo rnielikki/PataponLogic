@@ -157,7 +157,7 @@ namespace PataRoad.Core.Character.Patapons
                 {
                     target = _targetPosition;
                 }
-
+                target.x = DistanceCalculator.GetSafeForwardPosition(target.x);
                 transform.position = Vector2.MoveTowards(transform.position, target, step);
                 _isMoving = !DistanceCalculator.IsInTargetRange(target.x, step);
             }

@@ -3,7 +3,7 @@
 namespace PataRoad.Core.Items
 {
     /// <summary>
-    /// Represents any equipment DATA that Patapon (or enemy) use, like spear, shield, cape, helm. Attached to every equipment prefab.
+    /// Represents Drum key item that is available. Without drum item, you can't use the drum.
     /// </summary>
     [CreateAssetMenu(fileName = "drum", menuName = "KeyItemData/Drum")]
     public class DrumItemData : KeyItemData

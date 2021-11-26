@@ -165,7 +165,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b66a65c8e2fa2d1459bf997db9674356, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -273,7 +273,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -380,7 +380,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9e91a30a20951ca488d02aa5cdb5a4c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 2754887892859512128}
   m_Layer: 8
   m_Name: Toripon
-  m_TagString: Untagged
+  m_TagString: SmallCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -470,7 +470,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 170
-        _defence: 4
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 1
         _damageMax: 4
         _attackSeconds: 2
@@ -669,7 +670,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fec7776bca1fee94abe56f169575b83d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -877,7 +878,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5a668a350c13c5f449b256c797f546f3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -912,7 +913,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0
@@ -1032,7 +1034,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 94972e82897b8e54dbf42477cb8afbfa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1211,7 +1213,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1317,7 +1319,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8a594628ae4b274479e0cb3a75635981, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1425,7 +1427,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 647c5baba87e48e46bae5a5097d71e31, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1459,7 +1461,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0
@@ -1578,7 +1581,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b66a65c8e2fa2d1459bf997db9674356, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1686,7 +1689,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d9c61adad3fef724890059534c40bc98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1772,7 +1775,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d1c542a3f3fb8464298307fe228764fa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1911,7 +1914,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c8ad14db0c7fdf14eae156eacb777434, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2016,7 +2019,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e9b9facde83b88a408a881415e6f872a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2100,7 +2103,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3aea3f31240c77149a143ac33dd4dc18, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2187,7 +2190,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0
@@ -2274,7 +2278,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c8de67e14a6cb084ca281bb52d465a95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2357,7 +2361,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c8de67e14a6cb084ca281bb52d465a95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2440,7 +2444,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5a56f7d05b1225a488e42f331afc3296, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2523,7 +2527,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fdf243d7cae995f40838d389525c7982, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2607,7 +2611,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d54e064822153544aaf5fa429dce3fc0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2877,7 +2881,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2914,7 +2918,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0

@@ -28,14 +28,14 @@ namespace PataRoad.Core.Rhythm.Bgm
     /// <summary>
     /// Background music player. Also controls fever status music and Patapon sounds.
     /// </summary>
-    internal class RhythmBgmPlayer : MonoBehaviour
+    public class RhythmBgmPlayer : MonoBehaviour
     {
         [SerializeField]
         AudioClip _feverEndSound;
-        //Bgm name, Serialize Field
-        [SerializeField]
-        private string _musicTheme;
-        public string Musictheme => _musicTheme;
+        /// <summary>
+        /// This MUST be initialized BEFORE this is initialized.
+        /// </summary>
+        public string MusicTheme { get; set; }
         private AudioSource _bgmShotSource; //for "Playing once"
         private AudioSource _bgmSource;
         private AudioSource _feverSource;
@@ -48,6 +48,10 @@ namespace PataRoad.Core.Rhythm.Bgm
 
         private void Awake()
         {
+            if (MusicTheme == null)
+            {
+                throw new System.MissingFieldException(nameof(RhythmBgmPlayer), nameof(MusicTheme));
+            }
             var sources = GetComponents<AudioSource>();
             _bgmShotSource = sources[0];
             _bgmSource = sources[1];
@@ -69,14 +73,18 @@ namespace PataRoad.Core.Rhythm.Bgm
         {
             _audioClips = new Dictionary<RhythmBgmIndex, AudioClip>()
             {
-                { RhythmBgmIndex.Intro, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/intro") as AudioClip },
-                { RhythmBgmIndex.Base, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/base") as AudioClip },
-                { RhythmBgmIndex.Command, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/command") as AudioClip },
-                { RhythmBgmIndex.BeforeFeverIntro, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/before-fever-intro") as AudioClip },
-                { RhythmBgmIndex.BeforeFever, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/before-fever") as AudioClip },
-                { RhythmBgmIndex.FeverIntro, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/fever-intro") as AudioClip },
-                { RhythmBgmIndex.Fever, Resources.Load(RhythmEnvironment.ThemePath + _musicTheme + "/fever") as AudioClip }
+                { RhythmBgmIndex.Intro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/intro") as AudioClip },
+                { RhythmBgmIndex.Base, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/base") as AudioClip },
+                { RhythmBgmIndex.Command, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/command") as AudioClip },
+                { RhythmBgmIndex.BeforeFeverIntro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever-intro") as AudioClip },
+                { RhythmBgmIndex.BeforeFever, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever") as AudioClip },
+                { RhythmBgmIndex.FeverIntro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever-intro") as AudioClip },
+                { RhythmBgmIndex.Fever, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever") as AudioClip }
             };
+            if (_audioClips[0] == null)
+            {
+                throw new MissingReferenceException($"The music theme \"{MusicTheme}\" doesn't exist!");
+            }
         }
         private void ChangeMusicWithIntro(RhythmBgmIndex introMusicIndex, RhythmBgmIndex musicIndex, AudioSource source)
         {

@@ -10,7 +10,9 @@ namespace PataRoad.Core.Character.Bosses
         public override float DefaultWorldPosition => _pataponManagerTransform.position.x;
         private BossSummonManager _manager;
         private bool _animatingWalking;
-        private bool _animatingIdle;
+        private bool _animatingIdle = true;
+        private bool _attacking;
+
         private float _lastPerfectionRate;
         private bool _charged;
         private SpriteRenderer[] _renderers;
@@ -38,29 +40,36 @@ namespace PataRoad.Core.Character.Bosses
 
             if (!StatusEffectManager.OnStatusEffect)
             {
-                PerformCommandAction(song);
+                _attacking = PerformCommandAction(song);
+                if (_attacking)
+                {
+                    _animatingWalking = false;
+                    _animatingIdle = false;
+                }
             }
             //Should be executed AFTER command execusion, for avoiding command bug
             _charged = song == Rhythm.Command.CommandSong.Ponchaka; //Removes charged status if it isn't charging command
         }
 
-        private void PerformCommandAction(Rhythm.Command.CommandSong song)
+        //returns if attacking command
+        private bool PerformCommandAction(Rhythm.Command.CommandSong song)
         {
             switch (song)
             {
                 case Rhythm.Command.CommandSong.Ponpon:
                     if (_charged) ChargedPonpon();
                     else Ponpon();
-                    break;
+                    return true;
                 case Rhythm.Command.CommandSong.Chakachaka:
                     if (_charged) ChargedChakachaka();
                     else Chakachaka();
-                    break;
+                    return true;
                 //boss won't be really "protected" but "cured" - boss should have high resistance for everything!
                 case Rhythm.Command.CommandSong.Donchaka:
                     StatusEffectManager.Recover();
                     break;
             }
+            return false;
         }
         public override void Die()
         {
@@ -71,7 +80,7 @@ namespace PataRoad.Core.Character.Bosses
 
         private void Update()
         {
-            if (Rhythm.Command.TurnCounter.IsPlayerTurn)
+            if ((Rhythm.Command.TurnCounter.IsPlayerTurn || !_attacking) && StatusEffectManager.CanContinue)
             {
                 var targetPosition = _manager.transform.position + _offsetFromManager * Vector3.left;
                 var offset = Stat.MovementSpeed * Time.deltaTime;
@@ -81,21 +90,15 @@ namespace PataRoad.Core.Character.Bosses
                     if (!_animatingWalking)
                     {
                         CharAnimator.Animate("walk");
-                        if (StatusEffectManager.CanContinue)
-                        {
-                            _animatingWalking = true;
-                            _animatingIdle = false;
-                        }
+                        _animatingWalking = true;
+                        _animatingIdle = false;
                     }
                 }
                 else
                 {
                     if (!_animatingIdle) CharAnimator.Animate("Idle");
-                    if (StatusEffectManager.CanContinue)
-                    {
-                        _animatingWalking = false;
-                        _animatingIdle = true;
-                    }
+                    _animatingWalking = false;
+                    _animatingIdle = true;
                 }
             }
             else if (IsDead)

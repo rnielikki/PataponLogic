@@ -57,6 +57,7 @@ namespace PataRoad.Core.Items
             }
             else return null;
         }
+        public static T GetItem<T>(ItemType type, string group, int index) where T : IItem => (T)GetItem(type, group, index);
 
         /// <summary>
         /// Get Random item.

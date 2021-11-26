@@ -84,7 +84,9 @@ namespace PataRoad.Core.Character
             Stat = _defaultStat;
             CurrentHitPoint = Stat.HitPoint;
             EquipmentManager = new EquipmentManager(gameObject);
+
             _rigidbody = GetComponent<Rigidbody2D>();
+
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
             StatusEffectManager = gameObject.AddComponent<SmallCharacterStatusEffectManager>();
         }

@@ -166,7 +166,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -272,7 +272,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8a594628ae4b274479e0cb3a75635981, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -411,7 +411,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b66a65c8e2fa2d1459bf997db9674356, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -582,7 +582,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9eeaa5f8a54f8a745ab2f505f68d2c48, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -667,7 +667,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -774,7 +774,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b66a65c8e2fa2d1459bf997db9674356, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -903,7 +903,7 @@ GameObject:
   - component: {fileID: 6647991443700256611}
   m_Layer: 7
   m_Name: Yariron
-  m_TagString: Untagged
+  m_TagString: SmallCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -978,13 +978,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultStat:
     id: 0
+  _onAfterDeath:
+    m_PersistentCalls:
+      m_Calls: []
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 100
-        _defence: 2
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 3
         _damageMax: 6
         _attackSeconds: 2
@@ -1071,7 +1075,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0d9cbde7eaaf8d9429dd67529789effa, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -1278,7 +1282,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 16ae964656835d64da45f62246730235, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1303,11 +1307,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df95dad131d399c428239eebde0933c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 
   _stat:
     id: 0
   _mass: 1
-  _type: 0
   _attackType: 3
   references:
     version: 1
@@ -1315,7 +1317,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0
@@ -1466,7 +1469,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 96812befe31c5a0499a2dc0c924cdca4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

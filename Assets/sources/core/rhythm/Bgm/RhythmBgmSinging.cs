@@ -40,7 +40,7 @@ namespace PataRoad.Core.Rhythm.Bgm
         // Start is called before the first frame update
         void Awake()
         {
-            _themeName = _player.Musictheme;
+            _themeName = _player.MusicTheme;
             _audioSource = GetComponent<AudioSource>();
             _audioSource.velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
             InitAudioClips();

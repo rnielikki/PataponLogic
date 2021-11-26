@@ -163,7 +163,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1576ff2eea824fe47877609ca7e06955, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -197,7 +197,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0
@@ -314,7 +315,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 370e1f789c687504e8737b49fca200b9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -433,7 +434,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -539,7 +540,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: dc23cf1105871d8478f22729276aab32, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -643,7 +644,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fa52a1f649c108142a803996eebb802d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -677,7 +678,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0
@@ -796,7 +798,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e2927c4d7bf9f844687f496c06b245c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -933,7 +935,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e2927c4d7bf9f844687f496c06b245c3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1040,7 +1042,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1147,7 +1149,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9eeaa5f8a54f8a745ab2f505f68d2c48, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1262,7 +1264,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0d9cbde7eaaf8d9429dd67529789effa, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -1289,7 +1291,7 @@ GameObject:
   - component: {fileID: 8625201061726857681}
   m_Layer: 7
   m_Name: Megaron
-  m_TagString: Untagged
+  m_TagString: SmallCharacter
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1374,7 +1376,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 120
-        _defence: 2
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 1
         _damageMax: 3
         _attackSeconds: 2
@@ -1605,7 +1608,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 96812befe31c5a0499a2dc0c924cdca4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1690,7 +1693,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: db1c169872866ea44a358a6d3d3520ba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1725,7 +1728,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0

@@ -52,8 +52,8 @@ namespace PataRoad.Core.Character
         public float GetRushPosition()
         {
             var closest = _distanceCalculator.GetClosest();
-            if (closest == null) return MaxRushAttackPosition - _groupOffset;
-            return Mathf.Min(closest.Value.x - _patapon.CharacterSize, MaxRushAttackPosition) - _groupOffset;
+            if (closest == null) return MaxRushAttackPosition + _groupOffset;
+            return Mathf.Min(closest.Value.x - _patapon.CharacterSize, MaxRushAttackPosition) + _groupOffset;
         }
         private float Clamp(float value) => Mathf.Clamp(value, _min, _max);
         public bool IsAttackableRange() => GetAttackPosition() <= MaxRushAttackPosition;
