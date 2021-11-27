@@ -37,13 +37,17 @@ namespace PataRoad.Core.Character.Patapons
             if (!OnFever && !Charged)
             {
                 CharAnimator.Animate("defend");
+                Stat.DefenceMin *= 1.5f;
+                Stat.DefenceMax *= 1.8f;
             }
             else
             {
                 CharAnimator.Animate("defend-fever");
+                Stat.DefenceMin *= 2;
+                Stat.DefenceMax *= 2.5f;
             }
             _shield.SetActive(true);
-            DistanceManager.MoveTo(0.75f, Stat.MovementSpeed);
+            DistanceManager.MoveTo(0.75f, Stat.MovementSpeed, true);
         }
         public override void StopAttacking()
         {

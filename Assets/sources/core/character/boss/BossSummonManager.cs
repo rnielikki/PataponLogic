@@ -1,4 +1,3 @@
-using PataRoad.Editor;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Bosses
@@ -29,7 +28,7 @@ namespace PataRoad.Core.Character.Bosses
                 _dead = true;
                 return;
             }
-            _resource = Resources.Load<GameObject>(_path + item.Name + "/Summon");
+            _resource = Resources.Load<GameObject>(_path + item.Data + "/Summon");
             if (_resource == null)
             {
                 _summonCount = 0;
@@ -48,7 +47,15 @@ namespace PataRoad.Core.Character.Bosses
         {
             if (!_dead) _boss.Act(model);
         }
-        public void MarkAsDead() => _dead = true;
+        public void CancelAttack()
+        {
+            _boss?.BossAttackData?.StopAllAttacking();
+        }
+        public void MarkAsDead()
+        {
+            _dead = true;
+            _boss = null;
+        }
         public void SummonBoss()
         {
             if (_summonCount > 0 && _dead)

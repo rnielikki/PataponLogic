@@ -4,6 +4,8 @@ namespace PataRoad.Core.Character.Patapons
 {
     public class Robopon : Patapon
     {
+        [SerializeField]
+        GameObject _shield;
         private void Awake()
         {
             IsMeleeUnit = true;
@@ -30,6 +32,12 @@ namespace PataRoad.Core.Character.Patapons
             {
                 StartAttack("attack-charge");
             }
+        }
+        protected override void Defend()
+        {
+            _shield.SetActive(true);
+            CharAnimator.Animate("defend");
+            DistanceManager.MoveTo(0.75f, Stat.MovementSpeed, true);
         }
         protected override void Charge() => ChargeWithoutMoving();
         public override General.IGeneralEffect GetGeneralEffect() => new General.KonKimponEffect();

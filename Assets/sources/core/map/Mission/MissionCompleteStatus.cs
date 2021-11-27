@@ -15,8 +15,6 @@ namespace PataRoad.Core.Map
         int _waitTimeUntilChangeBackground;
         [SerializeField]
         Material _spriteMaterial;
-        Image _screenBackground;
-        private bool _bgFade;
 
         public void LoadMissionStatus()
         {
@@ -37,14 +35,13 @@ namespace PataRoad.Core.Map
         System.Collections.IEnumerator ChangeBack()
         {
             yield return new WaitForSeconds(_waitTimeUntilChangeBackground);
-            _screenBackground = GetComponent<Image>();
-            _screenBackground.enabled = true;
-            _bgFade = true;
-            while (_screenBackground.color.a < 1)
+            var screenBackground = GetComponent<Image>();
+            screenBackground.enabled = true;
+            while (screenBackground.color.a < 1)
             {
-                var clr = _screenBackground.color;
+                var clr = screenBackground.color;
                 clr.a = Mathf.Clamp01(clr.a + 0.5f * Time.deltaTime);
-                _screenBackground.color = clr;
+                screenBackground.color = clr;
                 yield return new WaitForEndOfFrame();
             }
             _spriteMaterial.color = Color.white;

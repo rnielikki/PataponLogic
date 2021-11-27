@@ -32,6 +32,7 @@ namespace PataRoad.Core.Character.Patapons
 
         private bool _isMoving;
         private bool _isMovingAsOffset;
+        private bool _ignoreSafeDistance;
 
         public float AttackDistanceWithOffset => _patapon.AttackDistance + PataponOffset;
 
@@ -61,18 +62,18 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         /// <param name="positionOffset">Position, relative from Patapon Manager 0 position. + is forward, - is backward.</param>
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
-        public void MoveTo(float positionOffset, float velocity)
+        public void MoveTo(float positionOffset, float velocity, bool ignoreSafeDistance = false)
         {
             float x = _pataponsManagerTransform.position.x + positionOffset;
             var hit = DistanceCalculator.GetClosest();
-            if (hit != null)
+            if (hit != null && !ignoreSafeDistance)
             {
                 x = Mathf.Min(
                     hit.Value.x,
                     x
                 );
             }
-            MoveWithTargetPosition(x, velocity);
+            MoveWithTargetPosition(x, velocity, ignoreSafeDistance);
         }
         /// <summary>
         /// Changes DEFAULT POSITION to front, when other Patapon dies on the front in the same group.
@@ -86,7 +87,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         /// <param name="targetX">The global target positoin to move.</param>
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
-        private void MoveWithTargetPosition(float targetX, float velocity)
+        private void MoveWithTargetPosition(float targetX, float velocity, bool ignoreSafeDistance = false)
         {
             if (velocity <= 0)
             {
@@ -101,6 +102,7 @@ namespace PataRoad.Core.Character.Patapons
             _movingVelocity = velocity;
             _isMovingAsOffset = false;
             _isMoving = true;
+            _ignoreSafeDistance = ignoreSafeDistance;
         }
 
         /// <summary>
@@ -137,6 +139,7 @@ namespace PataRoad.Core.Character.Patapons
             _movingVelocity = velocity;
             _isMovingAsOffset = true;
             _isMoving = true;
+            _ignoreSafeDistance = false;
         }
         private void Update()
         {
@@ -157,7 +160,7 @@ namespace PataRoad.Core.Character.Patapons
                 {
                     target = _targetPosition;
                 }
-                target.x = DistanceCalculator.GetSafeForwardPosition(target.x);
+                if (!_ignoreSafeDistance) target.x = DistanceCalculator.GetSafeForwardPosition(target.x);
                 transform.position = Vector2.MoveTowards(transform.position, target, step);
                 _isMoving = !DistanceCalculator.IsInTargetRange(target.x, step);
             }

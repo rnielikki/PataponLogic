@@ -30,6 +30,9 @@ namespace PataRoad.Core.Character.Patapons
                     input.DamageMin /= 5;
                     input.DamageMax /= 4;
                     break;
+                case CommandSong.Ponpata:
+                    input.MovementSpeed *= (0.8f + _patapon.LastPerfectionRate);
+                    break;
                 default:
                     return input;
             }

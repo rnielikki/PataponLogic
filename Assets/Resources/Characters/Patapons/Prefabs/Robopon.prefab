@@ -1123,6 +1123,7 @@ Transform:
   m_Children:
   - {fileID: 6044169350115808184}
   - {fileID: 6044169349745408171}
+  - {fileID: 595021600178291}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1162,6 +1163,7 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+  _shield: {fileID: 7262817651656721208}
   references:
     version: 1
     00000000:
@@ -2024,3 +2026,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 784feb6d08e130649b3080da3f451fc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &6439005777388662115
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6044169350870947314}
+    m_Modifications:
+    - target: {fileID: 4436405788258332251, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6438437214936149264, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}
+--- !u!1 &7262817651656721208 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4436405788258332251, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}
+  m_PrefabInstance: {fileID: 6439005777388662115}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &595021600178291 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6438437214936149264, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}
+  m_PrefabInstance: {fileID: 6439005777388662115}
+  m_PrefabAsset: {fileID: 0}
