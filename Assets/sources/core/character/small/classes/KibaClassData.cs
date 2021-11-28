@@ -1,14 +1,12 @@
-﻿namespace PataRoad.Core.Character.Patapons
+﻿namespace PataRoad.Core.Character.Class
 {
-    public class Kibapon : Patapon
+    internal class KibaClassData : ClassData
     {
-        private void Awake()
+        internal KibaClassData(SmallCharacter character) : base(character)
         {
             IsMeleeUnit = true;
-            Init();
-            Class = ClassType.Kibapon;
         }
-        void Start()
+        protected override void InitLateForClass()
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
@@ -19,33 +17,28 @@
                 }
                 );
         }
-        protected override void Attack()
+
+        public override void Attack()
         {
-            if (!OnFever && !Charged)
+            if (!_character.OnFever && !_character.Charged)
             {
                 base.Attack();
             }
             else
             {
-                StartAttack("attack-fever");
+                _attackController.StartAttack("attack-fever");
             }
         }
-        protected override void Defend()
+        public override void Defend()
         {
-            if (!OnFever && !Charged)
+            if (!_character.OnFever && !_character.Charged)
             {
-                StartAttack("defend");
+                _attackController.StartAttack("defend");
             }
             else
             {
-                StartAttack("defend-fever");
+                _attackController.StartAttack("defend-fever");
             }
         }
-        protected override void Charge()
-        {
-            base.Charge();
-            DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
-        }
-        public override General.IGeneralEffect GetGeneralEffect() => new General.HataponEffect();
     }
 }

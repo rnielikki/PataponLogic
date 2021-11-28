@@ -14,11 +14,16 @@ namespace PataRoad.Core.Character.Equipments.Logic
             _pataponDisplayObject = Resources.Load<GameObject>("Characters/Display/Damage/Damage.Pon");
             _nonPataponDisplayObject = Resources.Load<GameObject>("Characters/Display/Damage/Damage.NonPon");
         }
-        internal void DisplayDamage(int damage, Vector2 position, bool isPatapon)
+        internal void DisplayDamage(int damage, Vector2 position, bool isPatapon, bool isCritical)
         {
             var txt = Object.Instantiate((isPatapon) ? _pataponDisplayObject : _nonPataponDisplayObject);
-            txt.GetComponentInChildren<TMPro.TextMeshPro>().text = damage.ToString();
+            var txtPro = txt.GetComponentInChildren<TMPro.TextMeshPro>();
+            txtPro.text = damage.ToString();
             txt.transform.position = position;
+            if (isCritical)
+            {
+                txtPro.fontWeight = TMPro.FontWeight.Heavy;
+            }
         }
     }
 }

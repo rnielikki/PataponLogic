@@ -5,7 +5,6 @@ namespace PataRoad.Core.Items
     [CreateAssetMenu(fileName = "obtainable-item", menuName = "ItemDrop/Obtainable")]
     public class ObtainableItemDropData : ItemDropData
     {
-
         // ------- by item
         [Header("Item Info")]
         [SerializeField]

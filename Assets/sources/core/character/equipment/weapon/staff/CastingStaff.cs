@@ -25,6 +25,5 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         public void Defend()
         {
         }
-
     }
 }

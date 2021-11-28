@@ -3,7 +3,6 @@ using UnityEngine.Events;
 
 namespace PataRoad.Core.Items
 {
-
     [System.Serializable]
     [CreateAssetMenu(fileName = "healing-item", menuName = "ItemDrop/Heal")]
     public class HealingItemDropData : EventItemDropData

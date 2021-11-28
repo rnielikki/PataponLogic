@@ -1155,7 +1155,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6044169350870947313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3401c7e99b0d2ea4c94fcec23ac4a86a, type: 3}
+  m_Script: {fileID: 11500000, guid: f0692b0922a85494bb4c0672704a5aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultStat:
@@ -1163,31 +1163,31 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
-  _shield: {fileID: 7262817651656721208}
+  _type: 7
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _hitPoint: 180
-        _defenceMin: 0
-        _defenceMax: 0
-        _damageMin: 1
-        _damageMax: 6
+        _hitPoint: 200
+        _defenceMin: 8
+        _defenceMax: 10
+        _damageMin: 10
+        _damageMax: 15
         _attackSeconds: 2
         _movementSpeed: 8
-        _critical: 0.2
-        _stagger: 0.1
-        _knockback: 0.2
-        _criticalResistance: 0.05
-        _staggerResistance: 0.1
-        _knockbackResistance: 0.05
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
-        _fireResistance: 0.2
-        _iceResistance: 0.2
-        _sleepResistance: 0.1
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!50 &4440460395264440453
 Rigidbody2D:
   serializedVersion: 4
@@ -2043,11 +2043,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}
---- !u!1 &7262817651656721208 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4436405788258332251, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}
-  m_PrefabInstance: {fileID: 6439005777388662115}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &595021600178291 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6438437214936149264, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}

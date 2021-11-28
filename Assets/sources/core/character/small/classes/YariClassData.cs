@@ -1,15 +1,11 @@
-﻿using UnityEngine;
-
-namespace PataRoad.Core.Character.Patapons
+﻿namespace PataRoad.Core.Character.Class
 {
-    public class Yaripon : Patapon
+    internal class YariClassData : ClassData
     {
-        private void Awake()
+        internal YariClassData(SmallCharacter character) : base(character)
         {
-            Init();
-            Class = ClassType.Yaripon;
         }
-        private void Start()
+        protected override void InitLateForClass()
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
@@ -19,17 +15,17 @@ namespace PataRoad.Core.Character.Patapons
                 }
                 );
         }
-        protected override void Attack()
+
+        public override void Attack()
         {
-            if (!OnFever && !Charged)
+            if (!_character.OnFever && !_character.Charged)
             {
                 base.Attack();
             }
             else
             {
-                StartAttack("attack-fever");
+                _attackController.StartAttack("attack-fever");
             }
         }
-        public override General.IGeneralEffect GetGeneralEffect() => new General.PrincessEffect();
     }
 }

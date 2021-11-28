@@ -25,7 +25,7 @@ namespace PataRoad.Core.Character
             base.Init();
             _smallCharacter = _target as SmallCharacter;
             _xDirection = _smallCharacter.MovingDirection.x;
-            if (_smallCharacter.IsFlyingUnit) _transform = transform.Find(_smallCharacter.RootName);
+            if (!string.IsNullOrEmpty(_smallCharacter.RootName)) _transform = transform.Find(_smallCharacter.RootName);
             _soundCollection = _smallCharacter.Sounds;
             _isPatapon = _smallCharacter is Patapons.Patapon;
             _rigidbody = GetComponent<Rigidbody2D>();

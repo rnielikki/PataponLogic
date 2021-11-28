@@ -1,13 +1,11 @@
-﻿namespace PataRoad.Core.Character.Patapons
+﻿namespace PataRoad.Core.Character.Class
 {
-    class Megapon : Patapon
+    internal class MegaClassData : ClassData
     {
-        private void Awake()
+        internal MegaClassData(SmallCharacter character) : base(character)
         {
-            Init();
-            Class = ClassType.Megapon;
         }
-        void Start()
+        protected override void InitLateForClass()
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
@@ -17,23 +15,22 @@
                     { "defend-charge", GetAttackMoveModel("defend-charge", AttackMoveType.Defend, attackDistance: 5) },
                 }
                 );
-
         }
-        protected override void Attack()
+
+        public override void Attack()
         {
-            if (!OnFever && !Charged)
+            if (!_character.OnFever && !_character.Charged)
             {
                 base.Attack();
             }
             else
             {
-                StartAttack("attack-fever");
+                _attackController.StartAttack("attack-fever");
             }
         }
-        protected override void Defend()
+        public override void Defend()
         {
-            StartAttack(Charged ? "defend-charge" : "defend");
+            _attackController.StartAttack(_character.Charged ? "defend-charge" : "defend");
         }
-        public override General.IGeneralEffect GetGeneralEffect() => new General.PanPakaponEffect();
     }
 }

@@ -65,8 +65,6 @@ namespace PataRoad.Core.Character.Bosses
 
         public virtual float GetAttackValueOffset() => Random.Range(BossAttackData.MinLastDamageOffset, BossAttackData.MinLastDamageOffset);
         public virtual float GetDefenceValueOffset() => Random.Range(0, 1);
-
-
         public virtual void OnAttackHit(Vector2 point, int damage)
         {
         }

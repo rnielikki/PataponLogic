@@ -25,7 +25,7 @@ namespace PataRoad.Core.Character
             _patapon = patapon;
             _pataponManagerTransform = GameObject.FindGameObjectWithTag("Player").transform;
             _pataponGroupTransform = _patapon.GetComponentInParent<PataponGroup>().transform;
-            _distanceManager = patapon.DistanceManager;
+            _distanceManager = patapon.DistanceManager as PataponDistanceManager;
             _distanceCalculator = patapon.DistanceCalculator;
             _groupOffset = patapon.IndexInGroup * PataponEnvironment.AttackDistanceBetweenPatapons;
         }

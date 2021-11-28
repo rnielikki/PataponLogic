@@ -4,7 +4,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     public abstract class Weapon : Equipment
     {
-
         public virtual float MinAttackDistance { get; }
 
         /// <summary>

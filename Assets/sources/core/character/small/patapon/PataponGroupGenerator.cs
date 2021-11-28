@@ -17,7 +17,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         /// <param name="patapons">Array of Patapon types to create.</param>
         /// <param name="manager"><see cref="PataponManager"/> to reference. Also its transform is used to set as groups' parent.</param>
-        internal static void Generate(ClassType[] patapons, PataponsManager manager)
+        internal static void Generate(Class.ClassType[] patapons, PataponsManager manager)
         {
             _pataponGroupIndex = 0;
             _sortingLayerIndex = 0;
@@ -26,7 +26,7 @@ namespace PataRoad.Core.Character.Patapons
                 AddPataponGroupInstance(patapon, manager);
             }
         }
-        private static void AddPataponGroupInstance(ClassType classType, PataponsManager manager)
+        private static void AddPataponGroupInstance(Class.ClassType classType, PataponsManager manager)
         {
             var group = new GameObject("PataponGroup");
             var groupScript = group.AddComponent<PataponGroup>();

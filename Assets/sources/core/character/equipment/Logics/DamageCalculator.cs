@@ -15,8 +15,8 @@ namespace PataRoad.Core.Character.Equipments.Logic
         /// <returns><c>true</c> if found target to deal damage, otherwise <c>false</c>.</returns>
         public static void DealDamage(ICharacter attacker, Stat stat, GameObject target, Vector2 point)
         {
-            var component = target.GetComponentInParent<IAttackable>(false);
-            if (component == null || component.CurrentHitPoint <= 0 || component.IsDead)
+            var reciever = target.GetComponentInParent<IAttackable>(false);
+            if (reciever == null || reciever.CurrentHitPoint <= 0 || reciever.IsDead)
             {
                 attacker.OnAttackMiss(point);
             }
@@ -24,30 +24,30 @@ namespace PataRoad.Core.Character.Equipments.Logic
             {
                 if (Common.Utils.RandomByProbability(stat.FireRate))
                 {
-                    component.StatusEffectManager.SetFire(10);
+                    reciever.StatusEffectManager.SetFire(10);
 
                     int damage = (int)(GetAttackDamage(stat, attacker) * stat.FireRate);
                     if (damage != 0)
                     {
-                        SendDamage(component, damage);
+                        SendDamage(reciever, damage);
                         _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
                     }
                 }
             }
             else
             {
-                var damage = GetAttackDamage(stat, attacker);
-                if (component is Bosses.Boss boss)
+                (int damage, bool isCritical) = GetFinalDamage(attacker, reciever, stat);
+                if (reciever is Bosses.Boss boss)
                 {
                     damage = (int)(damage * boss.GetBrokenPartMultiplier(target, damage));
                 }
 
-                SendDamage(component, damage);
+                SendDamage(reciever, damage);
                 _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
-                CheckIfDie(component, target);
+
+                CheckIfDie(reciever, target);
                 attacker.OnAttackHit(point, damage);
             }
-
         }
         /// <summary>
         /// Gets fire duration based on attacker stats and reciever stats.
@@ -83,8 +83,24 @@ namespace PataRoad.Core.Character.Equipments.Logic
             target.TakeDamage(damage);
             target.OnDamageTaken?.Invoke((float)target.CurrentHitPoint / target.Stat.HitPoint);
         }
+        private static (int damage, bool isCritical) GetFinalDamage(ICharacter attacker, IAttackable reciever, Stat attackerStat)
+        {
+            var damage = GetAttackDamage(attackerStat, attacker);
+            var defence = GetDefence(reciever);
+            var critical = GetCritical(attackerStat, reciever);
+            return (Mathf.RoundToInt(Mathf.Max(0, damage) * (critical + 1) / Mathf.Max(0.1f, defence)), critical > 0);
+        }
+        private static float GetCritical(Stat attackerStat, IAttackable reciever)
+        {
+            var critChance = Mathf.Max(0, attackerStat.Critical - reciever.Stat.CriticalResistance);
+            if (Common.Utils.RandomByProbability(critChance))
+            {
+                return critChance;
+            }
+            else return 0;
+        }
         private static int GetAttackDamage(Stat stat, ICharacter character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());
-        private static int GetDefence(Stat stat, ICharacter character) => GetFinalValue(stat.DefenceMin, stat.DefenceMax, character.GetDefenceValueOffset());
+        private static int GetDefence(IAttackable attackable) => GetFinalValue(attackable.Stat.DefenceMin, attackable.Stat.DefenceMax, attackable.GetDefenceValueOffset());
         private static int GetFinalValue(int min, int max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
         private static int GetFinalValue(float min, float max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
     }

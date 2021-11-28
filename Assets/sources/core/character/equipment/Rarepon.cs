@@ -37,10 +37,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             Changecolor(color);
 
             if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = false;
-            if (Holder.Class == Patapons.ClassType.Dekapon)
-            {
-                //resize it.
-            }
         }
         public void SetToNormal(Stat stat)
         {

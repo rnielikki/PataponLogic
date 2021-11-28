@@ -33,7 +33,6 @@ namespace PataRoad.Core.Character
                 { StatusEffectType.Ice, _bossIceEffect },
                 { StatusEffectType.Sleep, _sleepEffect }
             };
-
         }
         public GameObject AttachEffect(StatusEffectType type, Transform body, bool isBigTarget)
         {

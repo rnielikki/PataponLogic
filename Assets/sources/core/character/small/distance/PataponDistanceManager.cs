@@ -7,15 +7,9 @@ namespace PataRoad.Core.Character.Patapons
     /// </summary>
     /// <remarks>This is NON-CONTINUOS MOVE in turn. When it arrives, it ends moving in same turn. for continuos move, see <see cref="AttackMoveController"/>.</remarks>
     /// <note>All values are relative to <see cref="PataponManager"/>Position, with own offset index.</note>
-    public class PataponDistanceManager : MonoBehaviour
+    public class PataponDistanceManager : DistanceManager
     {
-        internal DistanceCalculator DistanceCalculator { get; set; }
-
-        private Vector2 _defaultPosition; //relative to PATAPON GROUP
-        public float DefaultWorldPosition => _defaultPosition.x + _pataponGroupTransform.position.x;
-        private float _movingVelocity; //"movement speed" per second
-
-        private Vector2 _targetPosition;
+        public override float DefaultWorldPosition => _defaultPosition.x + _pataponGroupTransform.position.x;
 
         private Transform _pataponGroupTransform;
         //All are moved from this
@@ -25,44 +19,25 @@ namespace PataRoad.Core.Character.Patapons
         /// Returns current x value of <see cref="PataponsManager"/>.
         /// </summary>
         public float Front => _pataponsManagerTransform.position.x;
-
-        public float PataponOffset { get; private set; }
-
         private Patapon _patapon;
-
-        private bool _isMoving;
-        private bool _isMovingAsOffset;
-        private bool _ignoreSafeDistance;
-
-        public float AttackDistanceWithOffset => _patapon.AttackDistance + PataponOffset;
+        protected override Vector2 _parentPosition => _pataponGroupTransform.position;
 
         internal void Start()
         {
-            _patapon = GetComponent<Patapon>();
+            Init();
+            _patapon = _smallCharacter as Patapon;
             _pataponsManagerTransform = GetComponentInParent<PataponsManager>().transform;
             _pataponGroupTransform = GetComponentInParent<PataponGroup>().transform;
             _defaultPosition = transform.position - _pataponGroupTransform.position;
-            PataponOffset = _patapon.IndexInGroup * PataponEnvironment.AttackDistanceBetweenPatapons;
+            Offset = _patapon.IndexInGroup * PataponEnvironment.AttackDistanceBetweenPatapons;
         }
-
-        /// <summary>
-        /// Moves Patapon when got PONPATA song command.
-        /// </summary>
-        /// <param name="velocity">How fast will it run (movement speed).</param>
-        public void MoveBack(float velocity) => MoveAsOffset(-CharacterEnvironment.DodgeDistance, velocity);
-
-        /// <summary>
-        /// Brings to first line of Patapons Manager position. For example, Chakachaka song of Tatepon and Kibapon will do this.
-        /// </summary>
-        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
-        public void MoveZero(float velocity) => MoveTo(0, velocity);
 
         /// <summary>
         /// Move to specific position (*RELATIVE TO WHOLE PATAPON MANAGER) with certain speed.
         /// </summary>
         /// <param name="positionOffset">Position, relative from Patapon Manager 0 position. + is forward, - is backward.</param>
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
-        public void MoveTo(float positionOffset, float velocity, bool ignoreSafeDistance = false)
+        public override void MoveTo(float positionOffset, float velocity, bool ignoreSafeDistance = false)
         {
             float x = _pataponsManagerTransform.position.x + positionOffset;
             var hit = DistanceCalculator.GetClosest();
@@ -81,93 +56,6 @@ namespace PataRoad.Core.Character.Patapons
         public void UpdateDefaultPosition()
         {
             _defaultPosition = _patapon.IndexInGroup * PataponEnvironment.PataponIdleDistance * Vector2.left;
-        }
-        /// <summary>
-        /// Move to ABSOLUTE specific position with certain speed.
-        /// </summary>
-        /// <param name="targetX">The global target positoin to move.</param>
-        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
-        private void MoveWithTargetPosition(float targetX, float velocity, bool ignoreSafeDistance = false)
-        {
-            if (velocity <= 0)
-            {
-                throw new System.ArgumentException("Velocity cannot be 0 or less.");
-            }
-            else if (DistanceCalculator.IsInTargetRange(targetX, velocity * Time.deltaTime))
-            {
-                _isMoving = false;
-                return;
-            }
-            _targetPosition = new Vector2(targetX - PataponOffset, 0);
-            _movingVelocity = velocity;
-            _isMovingAsOffset = false;
-            _isMoving = true;
-            _ignoreSafeDistance = ignoreSafeDistance;
-        }
-
-        /// <summary>
-        /// Stop moving and do animation in current place.
-        /// </summary>
-        public void StopMoving()
-        {
-            _isMoving = false;
-        }
-        /// <summary>
-        /// Move to initial position, for DONCHAKA song etc.
-        /// </summary>
-        /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
-        public void MoveToInitialPlace(float velocity)
-        {
-            if (DistanceCalculator.IsInTargetRange(transform.localPosition.x, _defaultPosition.x, velocity * Time.deltaTime))
-            {
-                _isMoving = false;
-            }
-            else
-            {
-                MoveAsOffset(0, velocity);
-            }
-        }
-
-        /// <summary>
-        /// Moves relative to Patapon default position.
-        /// </summary>
-        /// <param name="offset">The offset from the default position.</param>
-        /// <param name="velocity">Speed, how much will move per second.</param>
-        private void MoveAsOffset(float offset, float velocity)
-        {
-            _targetPosition = _defaultPosition + offset * Vector2.right;
-            _movingVelocity = velocity;
-            _isMovingAsOffset = true;
-            _isMoving = true;
-            _ignoreSafeDistance = false;
-        }
-        private void Update()
-        {
-            if (_isMoving)
-            {
-                if (_patapon.StatusEffectManager.OnStatusEffect)
-                {
-                    _isMoving = false;
-                    return;
-                }
-                var step = _movingVelocity * Time.deltaTime;
-                Vector2 target;
-                if (_isMovingAsOffset)
-                {
-                    target = _targetPosition + (Vector2)_pataponGroupTransform.position;
-                }
-                else
-                {
-                    target = _targetPosition;
-                }
-                if (!_ignoreSafeDistance) target.x = DistanceCalculator.GetSafeForwardPosition(target.x);
-                transform.position = Vector2.MoveTowards(transform.position, target, step);
-                _isMoving = !DistanceCalculator.IsInTargetRange(target.x, step);
-            }
-            else
-            {
-                transform.position = new Vector2(DistanceCalculator.GetSafeForwardPosition(transform.position.x), 0);
-            }
         }
     }
 }

@@ -32,7 +32,7 @@ namespace PataRoad.Core.Character.Patapons
 
         //------------ Serialize field for auto generation, may be changed later.
         [SerializeField]
-        private ClassType[] _pataponTypes;
+        private Class.ClassType[] _pataponTypes;
 
         //------------------------------------- sounds of Patapon
         [SerializeField]
@@ -48,7 +48,6 @@ namespace PataRoad.Core.Character.Patapons
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
             _groups = GetComponentsInChildren<PataponGroup>().ToList();
 
-            //Camera.main.GetComponent<CameraController.CameraMover>().Target = _firstGroup.Patapons[0].gameObject;
             _cameraMover = Camera.main.GetComponent<CameraController.CameraMover>();
             _cameraMover.Target = gameObject;
 
@@ -134,6 +133,7 @@ namespace PataRoad.Core.Character.Patapons
             if (!_patapons.Any(p => p.IsGeneral))
             {
                 Map.MissionPoint.Current.WaitAndFailMission(4);
+                FindObjectOfType<Rhythm.Bgm.RhythmBgmSinging>().StopSinging();
             }
         }
         public void DoMissionEndAction(bool complete)
@@ -153,7 +153,6 @@ namespace PataRoad.Core.Character.Patapons
         }
         public void RemoveGroup(PataponGroup group)
         {
-
             var index = _groups.IndexOf(group);
             if (index < 0) return;
 

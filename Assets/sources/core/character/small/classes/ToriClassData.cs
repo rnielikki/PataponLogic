@@ -1,21 +1,20 @@
-﻿namespace PataRoad.Core.Character.Patapons
+﻿namespace PataRoad.Core.Character.Class
 {
-    public class Toripon : Patapon
+    internal class ToriClassData : ClassData
     {
         /// <summary>
         /// Determines if it needs to fly high.
         /// </summary>
         private bool _isFever;
 
-        private void Awake()
+        internal ToriClassData(SmallCharacter character) : base(character)
         {
             RootName = "Root/";
             IsFlyingUnit = true;
-            Init();
-            Class = ClassType.Toripon;
         }
-        private void Start()
+        protected override void InitLateForClass()
         {
+
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
                 new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
@@ -23,14 +22,21 @@
                     { "attack-fever", GetAttackMoveModel("attack-fever") },
                 }
                 );
-            WeaponLoadTest("Bird", 1);
-            WeaponLoadTest("Rarepon", 1);
-            WeaponLoadTest("Helm", 1);
         }
 
-        public override void Act(Rhythm.Command.RhythmCommandModel model)
+        public override void Attack()
         {
-            base.Act(model);
+            if (!_character.OnFever && !_character.Charged)
+            {
+                base.Attack();
+            }
+            else
+            {
+                _attackController.StartAttack("attack-fever");
+            }
+        }
+        public override void OnAction(Rhythm.Command.RhythmCommandModel model)
+        {
             var isFever = model.ComboType == Rhythm.Command.ComboStatus.Fever;
             if (!_isFever && isFever)
             {
@@ -41,42 +47,22 @@
                 FlyDown();
             }
         }
-        public override void PlayIdle()
+        public override void OnCanceled()
         {
-            base.PlayIdle();
             if (_isFever)
             {
                 FlyDown();
             }
         }
-
-        protected override void Attack()
-        {
-            if (!OnFever && !Charged)
-            {
-                base.Attack();
-            }
-            else
-            {
-                StartAttack("attack-fever");
-            }
-        }
-
         private void FlyUp()
         {
-            CharAnimator.AnimateFrom("tori-fly-up");
+            _animator.AnimateFrom("tori-fly-up");
             _isFever = true;
         }
         private void FlyDown()
         {
-            CharAnimator.AnimateFrom("tori-fly-down");
+            _animator.AnimateFrom("tori-fly-down");
             _isFever = false;
         }
-        protected override void BeforeDie()
-        {
-            base.BeforeDie();
-            CharAnimator.AnimateFrom("tori-fly-stop");
-        }
-        public override General.IGeneralEffect GetGeneralEffect() => new General.HataponEffect();
     }
 }

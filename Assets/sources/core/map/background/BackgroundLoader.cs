@@ -35,7 +35,6 @@ public class BackgroundLoader : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
     private void SetTexture(GameObject obj)
     {
@@ -45,7 +44,6 @@ public class BackgroundLoader : MonoBehaviour
         var mainTex = image.material.mainTexture;
         var rect = obj.GetComponent<RectTransform>().rect;
         image.material.SetTextureScale("_MainTex", new Vector2(mainTex.height * rect.width / (mainTex.width * rect.height), 1));
-
     }
     private Color ParseColor(string colourHex)
     {

@@ -1523,7 +1523,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7869386983148126796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f87ba8080c0b3741a53e1916ed42b1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 44b992ce318dcc545a387aa030472e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultStat:
@@ -1531,30 +1531,31 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+  _type: 3
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _hitPoint: 150
-        _defenceMin: 0
-        _defenceMax: 0
-        _damageMin: 1
+        _hitPoint: 200
+        _defenceMin: 8
+        _defenceMax: 10
+        _damageMin: 2
         _damageMax: 4
         _attackSeconds: 2
-        _movementSpeed: 8
-        _critical: 0.1
-        _stagger: 0.1
-        _knockback: 0.4
-        _criticalResistance: 0.1
-        _staggerResistance: 0.1
-        _knockbackResistance: 0.1
+        _movementSpeed: 10
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
-        _fireResistance: 0.1
-        _iceResistance: 0.1
-        _sleepResistance: 0.1
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!1 &7869386983215033255
 GameObject:
   m_ObjectHideFlags: 0

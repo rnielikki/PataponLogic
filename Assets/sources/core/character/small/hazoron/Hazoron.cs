@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Linq;
+using PataRoad.Core.Character.Class;
 
 namespace PataRoad.Core.Character.Hazorons
 {
-    public abstract class Hazoron : SmallCharacter
+    public class Hazoron : SmallCharacter
     {
         //Boss doesn't have default position. Small enemy does.
         private readonly static System.Collections.Generic.List<Hazoron> _hazorons = new System.Collections.Generic.List<Hazoron>();
@@ -15,25 +16,21 @@ namespace PataRoad.Core.Character.Hazorons
 
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
 
-        /// <summary>
-        /// Remember call this on Awake() in inherited class
-        /// </summary>
-        protected override void Init()
+        private void Awake()
         {
             _stat = _defaultStat;
-            base.Init();
+            OnFever = true;
+            Init();
             DefaultWorldPosition = transform.position.x;
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
-            AttackMoveData = new HazoronAttackMoveData(this);
-            //Save. this can be changed later.
-            StatusEffectManager.SetRecoverAction(() => StartAttack("attack-fever"));
-        }
-
-        protected override AttackMoveController SetAttackMoveController()
-        {
-            AttackMoveData = new HazoronAttackMoveData(this);
+            DistanceManager = gameObject.AddComponent<DistanceManager>();
+            StatusEffectManager.SetRecoverAction(() => ClassData.Attack());
             _hazorons.Add(this);
-            return base.SetAttackMoveController();
+        }
+        private void Start()
+        {
+            ClassData.InitLate();
+            ClassData.Attack();
         }
         public static float GetClosestHazoronPosition()
         {

@@ -14,7 +14,7 @@ namespace PataRoad.Core.Character.Patapons
         public System.Collections.Generic.IEnumerable<Patapon> Patapons => _patapons;
 
         private Display.PataponsHitPointDisplay _pataponsHitPointDisplay;
-        public ClassType ClassType { get; internal set; }
+        public Class.ClassType ClassType { get; internal set; }
         private float _marchDistance;
         private LayerMask _layerMask;
 
@@ -46,7 +46,7 @@ namespace PataRoad.Core.Character.Patapons
             for (int i = index + 1; i < _patapons.Count; i++)
             {
                 _patapons[i].IndexInGroup--;
-                _patapons[i].DistanceManager.UpdateDefaultPosition();
+                (_patapons[i].DistanceManager as PataponDistanceManager).UpdateDefaultPosition();
             }
             _pataponsHitPointDisplay.OnDead(patapon, _patapons);
             if (patapon.IsGeneral) General = null;

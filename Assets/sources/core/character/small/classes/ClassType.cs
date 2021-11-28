@@ -1,4 +1,4 @@
-﻿namespace PataRoad.Core.Character.Patapons
+﻿namespace PataRoad.Core.Character.Class
 {
     public enum ClassType
     {

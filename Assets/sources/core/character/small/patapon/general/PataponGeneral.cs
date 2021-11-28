@@ -1,6 +1,5 @@
 ﻿using PataRoad.Core.Rhythm.Command;
 using UnityEngine;
-using UnityEngine.Scripting;
 
 namespace PataRoad.Core.Character.Patapons.General
 {
@@ -28,10 +27,9 @@ namespace PataRoad.Core.Character.Patapons.General
         {
             Group = GetComponentInParent<PataponGroup>();
             _selfPatapon = GetComponent<Patapon>();
-            _generalEffect = _selfPatapon.GetGeneralEffect();
+            _generalEffect = GetGeneralEffect(_selfPatapon.Type);
 
             EquipGeneralMode(_generalModeData);
-
         }
         private void Start()
         {
@@ -69,5 +67,19 @@ namespace PataRoad.Core.Character.Patapons.General
             CancelGeneralMode();
             _generalEffect.EndGroupEffect(Group.Patapons);
         }
+        //------------ Loads general effect
+        public static IGeneralEffect GetGeneralEffect(Class.ClassType type) => type switch
+        {
+            Class.ClassType.Tatepon => new RahGashaponEffect(),
+            Class.ClassType.Dekapon => new TonKamponEffect(),
+            Class.ClassType.Robopon => new KonKimponEffect(),
+            Class.ClassType.Kibapon => new HataponEffect(),
+            Class.ClassType.Toripon => new HataponEffect(),
+            Class.ClassType.Yaripon => new PrincessEffect(),
+            Class.ClassType.Megapon => new PanPakaponEffect(),
+            Class.ClassType.Yumipon => new SukoponEffect(),
+            Class.ClassType.Mahopon => new MedenEffect(),
+            _ => throw new System.ArgumentException("???")
+        };
     }
 }

@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character
             AnimationType = animationType;
             MovingSpeed = movingSpeed;
             AttackSpeedMultiplier = attackSpeed;
-            _data = character.AttackMoveData;
+            _data = character.ClassData.AttackMoveData;
             _attackDistance = attackDistance;
 
             _distanceCalculator = character.DistanceCalculator;

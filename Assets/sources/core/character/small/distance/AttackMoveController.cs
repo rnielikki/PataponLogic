@@ -10,7 +10,6 @@ namespace PataRoad.Core.Character
         /// <summary>
         /// <c>true</c> if it's hit in last time. if it doesn't, it may stop animating and move.
         /// </summary>
-
         private SmallCharacter _character;
         private float _movingSpeed => _character.Stat.MovementSpeed;
         private float _attackSeconds => _character.Stat.AttackSeconds;
@@ -32,7 +31,7 @@ namespace PataRoad.Core.Character
         void Awake()
         {
             _character = GetComponent<SmallCharacter>();
-            _data = _character.AttackMoveData;
+            _data = _character.ClassData.AttackMoveData;
             _animator = _character.CharAnimator;
             _distanceCalculator = _character.DistanceCalculator;
         }

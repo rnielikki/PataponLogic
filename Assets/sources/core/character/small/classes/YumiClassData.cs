@@ -1,15 +1,12 @@
-﻿using UnityEngine;
-
-namespace PataRoad.Core.Character.Patapons
+﻿namespace PataRoad.Core.Character.Class
 {
-    class Yumipon : Patapon
+    internal class YumiClassData : ClassData
     {
-        private void Awake()
+        internal YumiClassData(SmallCharacter character) : base(character)
         {
-            Init();
-            Class = ClassType.Yumipon;
+            ChargeWithoutMove = true;
         }
-        private void Start()
+        protected override void InitLateForClass()
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
@@ -18,20 +15,18 @@ namespace PataRoad.Core.Character.Patapons
                     { "attack-fever", GetAttackMoveModel("attack", attackSpeedMultiplier: 3) },
                 }
                 );
-
         }
-        protected override void Attack()
+
+        public override void Attack()
         {
-            if (!OnFever && !Charged)
+            if (!_character.OnFever && !_character.Charged)
             {
                 base.Attack();
             }
             else
             {
-                StartAttack("attack-fever");
+                _attackController.StartAttack("attack-fever");
             }
         }
-        protected override void Charge() => ChargeWithoutMoving();
-        public override General.IGeneralEffect GetGeneralEffect() => new General.SukoponEffect();
     }
 }

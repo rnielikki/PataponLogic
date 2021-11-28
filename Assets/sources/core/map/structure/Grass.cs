@@ -30,7 +30,6 @@ namespace PataRoad.Core.Character
             Collider = GetComponent<Collider2D>();
             CurrentHitPoint = _stat.HitPoint;
             StatusEffectManager = gameObject.AddComponent<GrassStatusEffectManager>();
-
         }
         public void Die()
         {

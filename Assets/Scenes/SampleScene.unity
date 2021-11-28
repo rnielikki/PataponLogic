@@ -5584,7 +5584,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8625201061726857686, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eace26cbc35b9c8499b3e6b778a14663, type: 3}
@@ -12087,7 +12087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1107452048
 Transform:
   m_ObjectHideFlags: 0
@@ -12126,11 +12126,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _defaultStat._damageMax
-      value: 2
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _defaultStat._damageMin
-      value: 1
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
@@ -19642,7 +19642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6647991443700256610, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6647991443700256611, guid: 68743c4ca5d8e2a44917d3d39c95758d, type: 3}
       propertyPath: _defaultStat._hitPoint
@@ -20327,19 +20327,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5238186235997975602, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
       propertyPath: _pataponTypes.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5238186235997975602, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
       propertyPath: _pataponTypes.Array.data[0]
-      value: 7
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5238186235997975602, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
       propertyPath: _pataponTypes.Array.data[1]
-      value: 0
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5238186235997975602, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
       propertyPath: _pataponTypes.Array.data[2]
-      value: 0
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5238186235997975602, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
+      propertyPath: _pataponTypes.Array.data[3]
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5238186235997975604, guid: 27a429f07d456db4dbaa9088f3e23896, type: 3}
       propertyPath: m_Name

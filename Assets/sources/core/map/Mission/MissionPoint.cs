@@ -57,7 +57,7 @@ namespace PataRoad.Core.Map
             }
             else
             {
-                FailMission();
+                WaitAndFailMission(4);
             }
         }
 
@@ -69,6 +69,7 @@ namespace PataRoad.Core.Map
         {
             if (IsMissionEnd) return;
             IsMissionEnd = true;
+            OnMissionEnd.Invoke(false);
             StartCoroutine(WaitAndFail());
             System.Collections.IEnumerator WaitAndFail()
             {
@@ -80,12 +81,11 @@ namespace PataRoad.Core.Map
         {
             if (IsMissionEnd) return;
             IsMissionEnd = true;
+            OnMissionEnd.Invoke(false);
             FailMission();
         }
         private void FailMission()
         {
-            Camera.main.GetComponent<CameraController.CameraMover>().StopMoving();
-            OnMissionEnd.Invoke(false);
             AttachToScreen("MissionFailed");
             _soundSource.PlayOneShot(_missionFailedMusic);
         }

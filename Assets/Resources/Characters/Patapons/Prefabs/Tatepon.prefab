@@ -1442,7 +1442,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2031253672270326856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eb401e86c6f6d749972ce3a7cfd8df7, type: 3}
+  m_Script: {fileID: 11500000, guid: f0692b0922a85494bb4c0672704a5aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultStat:
@@ -1450,31 +1450,31 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
-  _shield: {fileID: 2471526608985096526}
+  _type: 1
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 200
-        _defenceMin: 0
-        _defenceMax: 0
-        _damageMin: 1
-        _damageMax: 4
+        _defenceMin: 10
+        _defenceMax: 20
+        _damageMin: 4
+        _damageMax: 8
         _attackSeconds: 2
         _movementSpeed: 8
-        _critical: 0.1
-        _stagger: 0.1
-        _knockback: 0.1
-        _criticalResistance: 0.1
-        _staggerResistance: 0.1
-        _knockbackResistance: 0.1
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
-        _fireResistance: 0.1
-        _iceResistance: 0.1
-        _sleepResistance: 0.1
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!114 &5332548193619605471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1958,10 +1958,5 @@ PrefabInstance:
 --- !u!4 &5081198773590868485 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6438437214936149264, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}
-  m_PrefabInstance: {fileID: 2296246283249413909}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2471526608985096526 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4436405788258332251, guid: 7b248b140d49e7c43a426e54137c7ce1, type: 3}
   m_PrefabInstance: {fileID: 2296246283249413909}
   m_PrefabAsset: {fileID: 0}

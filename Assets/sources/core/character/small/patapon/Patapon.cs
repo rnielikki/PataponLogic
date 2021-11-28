@@ -6,13 +6,8 @@ namespace PataRoad.Core.Character.Patapons
     /// <summary>
     /// Represents any one Patapon. Classes will inherited from this class.
     /// </summary>
-    public abstract class Patapon : SmallCharacter
+    public class Patapon : SmallCharacter
     {
-        /// <summary>
-        /// Represents if PONCHAKA song is used before command (and in a row). This can be used for PONCHAKA~PONPON or PONCHAKA~CHAKACHAKA command.
-        /// </summary>
-        public bool Charged { get; private set; }
-
         /// <summary>
         /// Current Patapon Index, from first of the line to the end of the line. Index starts from 0.
         /// </summary>
@@ -29,27 +24,19 @@ namespace PataRoad.Core.Character.Patapons
         public bool IsGeneral { get; private set; }
 
         internal PataponRendererInfo RendererInfo { get; private set; }
-        /// <summary>
-        /// Sets Patapon distance.
-        /// </summary>
-        public PataponDistanceManager DistanceManager { get; private set; }
         public PataponGroup Group { get; private set; }
         public override float DefaultWorldPosition => DistanceManager.DefaultWorldPosition;
         public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f);
         public override Vector2 MovingDirection => Vector2.right;
 
-        public bool OnFever { get; private set; }
         public bool Eaten { get; private set; }
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.PataponSounds;
-
 
         /// <summary>
         /// Stat before going through pipeline.
         /// </summary>
         protected Stat _realStat;
         public StatOperator StatOperator { get; private set; }
-
-        public abstract General.IGeneralEffect GetGeneralEffect();
 
         public void BeEaten()
         {
@@ -74,10 +61,7 @@ namespace PataRoad.Core.Character.Patapons
             Group.RemoveIfEmpty();
             if (!Eaten) Items.DeadPataponItemDrop.Create(transform.position, IsGeneral);
         }
-        /// <summary>
-        /// Remember call this on Awake() in inherited class
-        /// </summary>
-        protected override void Init()
+        private void Awake()
         {
             //--- initialise sats.
             _realStat = _defaultStat;
@@ -102,6 +86,10 @@ namespace PataRoad.Core.Character.Patapons
             var general = GetComponent<General.PataponGeneral>();
             if (general != null) IsGeneral = true;
         }
+        private void Start()
+        {
+            ClassData.InitLate();
+        }
 
         /// <summary>
         /// Sets distance from calculated Patapon head. Don't use this if the Patapon uses any vehicle.
@@ -122,14 +110,14 @@ namespace PataRoad.Core.Character.Patapons
         /// Recieves command song and starts corresponding moving.
         /// </summary>
         /// <param name="model">The command model, expected to be recieved from <see cref="PataponsManager"/>.</param>
-        public virtual void Act(RhythmCommandModel model)
+        public void Act(RhythmCommandModel model)
         {
             var song = model.Song;
             OnFever = model.ComboType == ComboStatus.Fever;
             if (LastSong != song)
             {
                 CharAnimator.ClearLateAnimation();
-                AttackMoveData.WasHitLastTime = false;
+                ClassData.AttackMoveData.WasHitLastTime = false;
             }
             LastSong = song;
             LastPerfectionRate = model.AccuracyRate;
@@ -142,6 +130,7 @@ namespace PataRoad.Core.Character.Patapons
             //Should be executed AFTER command execusion, for avoiding command bug
             Charged = song == CommandSong.Ponchaka; //Removes charged status if it isn't charging command
             StatusEffectManager.IgnoreStatusEffect = song == CommandSong.Donchaka;
+            ClassData.OnAction(model);
         }
         public void DoMissionCompleteGesture()
         {
@@ -164,7 +153,7 @@ namespace PataRoad.Core.Character.Patapons
         /// <summary>
         /// Going back to Idle status. This also means ALL FEVER/COMMAND is CANCELED. also removes PONCHAKA <see cref="Charged"/> status.
         /// </summary>
-        public virtual void PlayIdle()
+        public void PlayIdle()
         {
             Stat = _realStat;
             OnFever = false;
@@ -173,6 +162,7 @@ namespace PataRoad.Core.Character.Patapons
             StopAttacking();
             CharAnimator.Animate("Idle");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
+            ClassData.OnCanceled();
         }
         public override void StopAttacking()
         {
@@ -213,7 +203,7 @@ namespace PataRoad.Core.Character.Patapons
         /// <summary>
         /// PATAPATA Input
         /// </summary>
-        void Walk()
+        protected void Walk()
         {
             CharAnimator.Animate("walk");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
@@ -221,21 +211,15 @@ namespace PataRoad.Core.Character.Patapons
         /// <summary>
         /// PONPON Input
         /// </summary>
-        protected virtual void Attack()
-        {
-            StartAttack("attack");
-        }
+        protected void Attack() => ClassData.Attack();
         /// <summary>
         /// CHAKACHAKA Input
         /// </summary>
-        protected virtual void Defend()
-        {
-            StartAttack("defend");
-        }
+        protected void Defend() => ClassData.Defend();
         /// <summary>
         /// PONPATA Input
         /// </summary>
-        protected virtual void Dodge()
+        protected void Dodge()
         {
             CharAnimator.Animate("dodge");
             DistanceManager.MoveBack(Stat.MovementSpeed * 1.5f);
@@ -243,27 +227,19 @@ namespace PataRoad.Core.Character.Patapons
         /// <summary>
         /// PONCHAKA Input
         /// </summary>
-        protected virtual void Charge()
+        protected void Charge()
         {
             CharAnimator.Animate("charge");
-            DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
+            if (!ClassData.ChargeWithoutMove)
+            {
+                DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
+            }
         }
-
-        /// <summary>
-        /// Some range attack (like Mahopon or Yumipon) will use it. This prevents unnecessary moving while use many PONCHAKA~PONPON.
-        /// </summary>
-        /// <note>NOT all range unit use this.</note>
-        protected void ChargeWithoutMoving()
-        {
-            CharAnimator.Animate("charge");
-            DistanceManager.StopMoving();
-        }
-
 
         /// <summary>
         /// DONDON Input
         /// </summary>
-        protected virtual void Jump()
+        protected void Jump()
         {
             CharAnimator.Animate("jump");
             DistanceManager.StopMoving();
@@ -272,19 +248,12 @@ namespace PataRoad.Core.Character.Patapons
         /// <summary>
         /// DONCHAKA Input
         /// </summary>
-        protected virtual void Party()
+        protected void Party()
         {
             StatusEffectManager.Recover();
             CharAnimator.Animate("party");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }
-
-        protected override AttackMoveController SetAttackMoveController()
-        {
-            AttackMoveData = new PataponAttackMoveData(this);
-            return base.SetAttackMoveController();
-        }
-
         public override float GetAttackValueOffset()
         {
             return LastPerfectionRate;
@@ -314,6 +283,15 @@ namespace PataRoad.Core.Character.Patapons
         {
             CurrentHitPoint = Mathf.Clamp(amount, CurrentHitPoint + amount, Stat.HitPoint);
             Group.RefreshDisplay();
+        }
+        public override void OnAttackHit(Vector2 point, int damage)
+        {
+            base.OnAttackHit(point, damage);
+            //General group effect
+            if (IsGeneral && _type == Character.Class.ClassType.Tatepon && LastSong == CommandSong.Ponpon && Charged)
+            {
+                Group.HealAllInGroup((int)(damage * 0.1f));
+            }
         }
 
         //------------------

@@ -893,7 +893,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1287353318435100808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6680416df2612bb46aacac1692e3f0eb, type: 3}
+  m_Script: {fileID: 11500000, guid: f0692b0922a85494bb4c0672704a5aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultStat:
@@ -901,30 +901,31 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+  _type: 5
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _hitPoint: 160
-        _defenceMin: 0
-        _defenceMax: 0
-        _damageMin: 1
-        _damageMax: 2
+        _hitPoint: 200
+        _defenceMin: 4
+        _defenceMax: 7
+        _damageMin: 2
+        _damageMax: 5
         _attackSeconds: 2
         _movementSpeed: 8
         _critical: 0
-        _stagger: 0.3
+        _stagger: 0
         _knockback: 0
-        _criticalResistance: 0.1
-        _staggerResistance: 0.2
-        _knockbackResistance: 0.1
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
-        _fireResistance: 0.15
-        _iceResistance: 0.15
-        _sleepResistance: 0.1
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!50 &7770270610238886313
 Rigidbody2D:
   serializedVersion: 4
