@@ -15,8 +15,8 @@ namespace PataRoad.Core.Character.Equipments.Logic
         /// <returns><c>true</c> if found target to deal damage, otherwise <c>false</c>.</returns>
         public static void DealDamage(ICharacter attacker, Stat stat, GameObject target, Vector2 point)
         {
-            var reciever = target.GetComponentInParent<IAttackable>(false);
-            if (reciever == null || reciever.CurrentHitPoint <= 0 || reciever.IsDead)
+            var receiver = target.GetComponentInParent<IAttackable>(false);
+            if (receiver == null || receiver.CurrentHitPoint <= 0 || receiver.IsDead)
             {
                 attacker.OnAttackMiss(point);
             }
@@ -24,29 +24,68 @@ namespace PataRoad.Core.Character.Equipments.Logic
             {
                 if (Common.Utils.RandomByProbability(stat.FireRate))
                 {
-                    reciever.StatusEffectManager.SetFire(10);
+                    receiver.StatusEffectManager.SetFire(10);
 
                     int damage = (int)(GetAttackDamage(stat, attacker) * stat.FireRate);
                     if (damage != 0)
                     {
-                        SendDamage(reciever, damage);
+                        SendDamage(receiver, damage);
                         _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon, false);
                     }
                 }
             }
             else
             {
-                (int damage, bool isCritical) = GetFinalDamage(attacker, reciever, stat);
-                if (reciever is Bosses.Boss boss)
+                (int damage, bool isCritical) = GetFinalDamage(attacker, receiver, stat);
+                if (receiver is Bosses.Boss boss)
                 {
                     damage = (int)(damage * boss.GetBrokenPartMultiplier(target, damage));
                 }
 
-                SendDamage(reciever, damage);
+                SendDamage(receiver, damage);
                 _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon, isCritical);
 
-                CheckIfDie(reciever, target);
-                attacker.OnAttackHit(point, damage);
+
+                if (!CheckIfDie(receiver, target))
+                {
+                    attacker.OnAttackHit(point, damage);
+
+                    //------ status effect
+                    if (!receiver.StatusEffectManager.OnStatusEffect)
+                    {
+                        var receiverStat = receiver.Stat;
+                        var staggerProbability = CalculateStatusEffect(stat.Stagger, receiverStat.StaggerResistance, 0.1f);
+                        var knockbackProbability = CalculateStatusEffect(stat.Knockback, receiverStat.KnockbackResistance, 0.1f);
+
+                        if (Common.Utils.RandomByProbability(staggerProbability))
+                        {
+                            receiver.StatusEffectManager.SetStagger();
+                        }
+                        else if (Common.Utils.RandomByProbability(knockbackProbability))
+                        {
+                            receiver.StatusEffectManager.SetKnockback();
+                        }
+
+                        var fireProbability = CalculateStatusEffect(stat.FireRate, receiverStat.FireResistance, 0.5f);
+                        var iceProbability = CalculateStatusEffect(stat.IceRate, receiverStat.IceResistance, 0.5f);
+                        var sleepProbability = CalculateStatusEffect(stat.SleepRate, receiverStat.SleepResistance, 0.5f);
+                        var random = Random.Range(0, fireProbability + iceProbability + sleepProbability);
+
+                        if (random < fireProbability && Common.Utils.RandomByProbability(fireProbability))
+                        {
+                            receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(fireProbability * 10));
+                        }
+                        else if (random < fireProbability + iceProbability && Common.Utils.RandomByProbability(iceProbability))
+                        {
+                            receiver.StatusEffectManager.SetIce(2 + Mathf.RoundToInt(iceProbability * 10));
+                        }
+                        else if (Common.Utils.RandomByProbability(sleepProbability))
+                        {
+                            receiver.StatusEffectManager.SetSleep(2 + Mathf.RoundToInt(sleepProbability * 10));
+                        }
+                    }
+                    //--- status effect end
+                }
             }
         }
         /// <summary>
@@ -59,7 +98,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
         public static int GetFireDuration(Stat senderStat, Stat recieverStat, int time)
         {
             //will be implemented later!
-            return (int)(time * 0.75f);
+            return (int)(CalculateStatusEffect(senderStat.FireRate, recieverStat.FireRate) * time);
         }
         public static void DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform, bool displayDamage = true)
         {
@@ -69,14 +108,16 @@ namespace PataRoad.Core.Character.Equipments.Logic
             if (displayDamage) _damageDisplay.DisplayDamage(damage, objectTransform.position, false, false);
             CheckIfDie(attackable, targetObject);
         }
-        private static void CheckIfDie(IAttackable target, GameObject targetObject)
+        private static bool CheckIfDie(IAttackable target, GameObject targetObject)
         {
             if (target.CurrentHitPoint <= 0)
             {
                 foreach (var collider in targetObject.GetComponentsInChildren<Collider2D>()) collider.enabled = false;
                 //do destroy action.
                 target.Die();
+                return true;
             }
+            else return false;
         }
         private static void SendDamage(IAttackable target, int damage)
         {
@@ -98,6 +139,11 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 return critChance;
             }
             else return 0;
+        }
+        private static float CalculateStatusEffect(float attackRatio, float resistance, float additionalMultiplier = 1)
+        {
+            if (attackRatio == 0) return 0;
+            else return Mathf.Clamp01(attackRatio - resistance) * additionalMultiplier;
         }
         private static int GetAttackDamage(Stat stat, ICharacter character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());
         private static int GetDefence(IAttackable attackable) => GetFinalValue(attackable.Stat.DefenceMin, attackable.Stat.DefenceMax, attackable.GetDefenceValueOffset());

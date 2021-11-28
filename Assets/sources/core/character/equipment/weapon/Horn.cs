@@ -53,7 +53,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void AttackFever()
         {
             var newStat = Holder.Stat.Copy();
-            newStat.FireRate += 0.9f;
+            newStat.FireRate += 0.1f;
             newStat.DamageMin *= 3;
             newStat.DamageMax *= 3;
             CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, null, newStat).AddForce(Holder.MovingDirection * 5 * _feverPonponForceMultiplier);

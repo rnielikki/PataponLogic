@@ -11,7 +11,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private ParticleDamaging _particles;
         public void Initialize(SmallCharacter holder)
         {
-            //_particles = GetComponent<ParticleDamaging>();
+            _particles = GetComponent<ParticleDamaging>();
         }
         public void NormalAttack()
         {

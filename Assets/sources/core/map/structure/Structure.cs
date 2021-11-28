@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character
             CurrentHitPoint = _hitPoint;
             StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
         }
-        public void Die()
+        public virtual void Die()
         {
             IsDead = true;
             _onDestroy.Invoke();

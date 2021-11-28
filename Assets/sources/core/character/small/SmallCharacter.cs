@@ -66,6 +66,7 @@ namespace PataRoad.Core.Character
         private Rigidbody2D _rigidbody;
         [SerializeField]
         private UnityEvent _onAfterDeath;
+        public UnityEvent OnAfterDeath => _onAfterDeath;
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 
         public virtual CharacterSoundsCollection Sounds { get; protected set; }

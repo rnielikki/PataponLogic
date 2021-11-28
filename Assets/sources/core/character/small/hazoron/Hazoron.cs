@@ -13,6 +13,8 @@ namespace PataRoad.Core.Character.Hazorons
         public override Vector2 MovingDirection => Vector2.left;
         protected Stat _stat;
         public override Stat Stat => _stat;
+        private bool _gotPosition;
+        private bool _animatingWalk;
 
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
 
@@ -21,16 +23,13 @@ namespace PataRoad.Core.Character.Hazorons
             _stat = _defaultStat;
             OnFever = true;
             Init();
-            DefaultWorldPosition = transform.position.x;
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
             DistanceManager = gameObject.AddComponent<DistanceManager>();
             StatusEffectManager.SetRecoverAction(() => ClassData.Attack());
-            _hazorons.Add(this);
         }
         private void Start()
         {
             ClassData.InitLate();
-            ClassData.Attack();
         }
         public static float GetClosestHazoronPosition()
         {
@@ -51,13 +50,34 @@ namespace PataRoad.Core.Character.Hazorons
         {
             return Random.Range(0, 1f);
         }
-        private void OnDestroy()
-        {
-            _hazorons.Remove(this);
-        }
         protected override void BeforeDie()
         {
+            _hazorons.Remove(this);
             GameSound.SpeakManager.Current.Play(CharacterSoundLoader.Current.HazoronSounds.OnDead);
+        }
+        private void Update()
+        {
+            if (_gotPosition) return;
+            else if (StatusEffectManager.OnStatusEffect && _animatingWalk)
+            {
+                _animatingWalk = false;
+            }
+            if (DistanceCalculator.HasAttackTarget())
+            {
+                DefaultWorldPosition = transform.position.x;
+                _hazorons.Add(this);
+                ClassData.Attack();
+                _gotPosition = true;
+            }
+            else if (!StatusEffectManager.OnStatusEffect)
+            {
+                if (!_animatingWalk)
+                {
+                    CharAnimator.Animate("walk");
+                    _animatingWalk = true;
+                }
+                transform.position += (Vector3)(Stat.MovementSpeed * Time.deltaTime * MovingDirection);
+            }
         }
     }
 }
