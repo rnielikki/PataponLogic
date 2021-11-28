@@ -30,7 +30,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     if (damage != 0)
                     {
                         SendDamage(reciever, damage);
-                        _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
+                        _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon, false);
                     }
                 }
             }
@@ -43,7 +43,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 }
 
                 SendDamage(reciever, damage);
-                _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon);
+                _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon, isCritical);
 
                 CheckIfDie(reciever, target);
                 attacker.OnAttackHit(point, damage);
@@ -66,7 +66,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             //--- add fire resistance to fire damage taking!
             var damage = Mathf.Max(1, (int)(attackable.Stat.HitPoint * 0.05f));
             SendDamage(attackable, damage);
-            if (displayDamage) _damageDisplay.DisplayDamage(damage, objectTransform.position, false);
+            if (displayDamage) _damageDisplay.DisplayDamage(damage, objectTransform.position, false, false);
             CheckIfDie(attackable, targetObject);
         }
         private static void CheckIfDie(IAttackable target, GameObject targetObject)
