@@ -56,17 +56,11 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     if (!receiver.StatusEffectManager.OnStatusEffect)
                     {
                         var receiverStat = receiver.Stat;
-                        var staggerProbability = CalculateStatusEffect(stat.Stagger, receiverStat.StaggerResistance, 0.1f);
-                        var knockbackProbability = CalculateStatusEffect(stat.Knockback, receiverStat.KnockbackResistance, 0.1f);
+                        if (!CalculateAndSetStagger(receiver, stat.Stagger))
+                        {
+                            CalculateAndSetKnockback(receiver, stat.Knockback);
+                        }
 
-                        if (Common.Utils.RandomByProbability(staggerProbability))
-                        {
-                            receiver.StatusEffectManager.SetStagger();
-                        }
-                        else if (Common.Utils.RandomByProbability(knockbackProbability))
-                        {
-                            receiver.StatusEffectManager.SetKnockback();
-                        }
                         var fireRateMultiplier = Map.Weather.WeatherInfo.Current.FireRateMultiplier;
                         var iceRateMultiplier = Map.Weather.WeatherInfo.Current.IceRateMultiplier;
 
@@ -76,17 +70,17 @@ namespace PataRoad.Core.Character.Equipments.Logic
 
                         var random = Random.Range(0, fireProbability + iceProbability + sleepProbability);
 
-                        if (random < fireProbability && Common.Utils.RandomByProbability(fireProbability))
+                        if (random < fireProbability)
                         {
-                            receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(fireProbability * 10 * fireRateMultiplier));
+                            SetStatusEffect(receiver, StatusEffectType.Fire, fireProbability);
                         }
-                        else if (random < fireProbability + iceProbability && Common.Utils.RandomByProbability(iceProbability))
+                        else if (random < fireProbability + iceProbability)
                         {
-                            receiver.StatusEffectManager.SetIce(2 + Mathf.RoundToInt(iceProbability * 10 * iceRateMultiplier));
+                            SetStatusEffect(receiver, StatusEffectType.Ice, iceProbability);
                         }
-                        else if (Common.Utils.RandomByProbability(sleepProbability))
+                        else
                         {
-                            receiver.StatusEffectManager.SetSleep(2 + Mathf.RoundToInt(sleepProbability * 10));
+                            SetStatusEffect(receiver, StatusEffectType.Sleep, sleepProbability);
                         }
                     }
                     //--- status effect end
@@ -145,9 +139,44 @@ namespace PataRoad.Core.Character.Equipments.Logic
             }
             else return 0;
         }
+        public static bool CalculateAndSetStagger(IAttackable receiver, float staggerRate) =>
+            CalculateAndSetStatusEffect(receiver, StatusEffectType.Stagger, staggerRate, receiver.Stat.StaggerResistance, 0.1f);
+        public static bool CalculateAndSetKnockback(IAttackable receiver, float knockback) =>
+            CalculateAndSetStatusEffect(receiver, StatusEffectType.Knockback, knockback, receiver.Stat.KnockbackResistance, 0.1f);
+        public static bool CalculateAndSetStatusEffect(IAttackable receiver, StatusEffectType type, float attackRatio, float resistance, float additionalMultiplier = 1) =>
+            SetStatusEffect(receiver, type, CalculateStatusEffect(attackRatio, resistance, additionalMultiplier));
+
+        private static bool SetStatusEffect(IAttackable receiver, StatusEffectType type, float probability)
+        {
+            if (Common.Utils.RandomByProbability(probability))
+            {
+                switch (type)
+                {
+                    case StatusEffectType.Fire:
+                        receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(probability * 10 * Map.Weather.WeatherInfo.Current.FireRateMultiplier));
+                        break;
+                    case StatusEffectType.Ice:
+                        receiver.StatusEffectManager.SetIce(2 + Mathf.RoundToInt(probability * 10 * Map.Weather.WeatherInfo.Current.IceRateMultiplier));
+                        break;
+                    case StatusEffectType.Sleep:
+                        receiver.StatusEffectManager.SetSleep(2 + Mathf.RoundToInt(probability * 10));
+                        break;
+                    case StatusEffectType.Stagger:
+                        receiver.StatusEffectManager.SetStagger();
+                        break;
+                    case StatusEffectType.Knockback:
+                        receiver.StatusEffectManager.SetKnockback();
+                        break;
+                    default:
+                        return false;
+                }
+                return true;
+            }
+            else return false;
+        }
         private static float CalculateStatusEffect(float attackRatio, float resistance, float additionalMultiplier = 1)
         {
-            if (attackRatio == 0) return 0;
+            if (attackRatio == 0 || resistance == Mathf.Infinity) return 0;
             else return Mathf.Clamp01(attackRatio - resistance) * additionalMultiplier;
         }
         private static int GetAttackDamage(Stat stat, ICharacter character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());

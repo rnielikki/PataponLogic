@@ -120,6 +120,7 @@ namespace PataRoad.Core.Map.Weather
             type = GetMaxFlag(type);
             if (type > _windFlags)
             {
+                if (type == WindType.None) StopAllCoroutines();
                 _windActions[type]();
             }
             _windFlags |= type;
@@ -130,6 +131,7 @@ namespace PataRoad.Core.Map.Weather
             _windFlags &= ~type;
             if (type > _windFlags)
             {
+                if (type == WindType.Changing) StopAllCoroutines();
                 _windActions[GetMaxFlag(_windFlags)]();
             }
         }

@@ -4,6 +4,7 @@
     {
         Clear,
         Rain,
+        Storm,
         Snow,
         Fog
     }

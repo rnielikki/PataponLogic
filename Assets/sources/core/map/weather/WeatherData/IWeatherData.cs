@@ -4,6 +4,6 @@
     {
         public WeatherType Type { get; }
         public void OnWeatherStarted();
-        public void OnWeatherStopped();
+        public void OnWeatherStopped(WeatherType newType);
     }
 }

@@ -17,6 +17,8 @@ namespace PataRoad.Core.Map.Weather
         private System.Collections.Generic.Dictionary<WeatherType, IWeatherData> _weatherTypeDataMap;
         public float FireRateMultiplier { get; set; } = 1;
         public float IceRateMultiplier { get; set; } = 1;
+
+        public AudioSource AudioSource { get; private set; }
         // Start is called before the first frame update
         void Awake()
         {
@@ -38,19 +40,31 @@ namespace PataRoad.Core.Map.Weather
 #pragma warning disable S2696 // Instance members should not write to "static" fields
             _self = this;
 #pragma warning restore S2696 // Instance members should not write to "static" fields
+            AudioSource = GetComponent<AudioSource>();
             ChangeWeather(_defaultWeather);
         }
         public void ChangeWeather(WeatherType type)
         {
-            if ((_currentWeather?.Type ?? WeatherType.Clear) == type) return;
+            var weatherType = _currentWeather?.Type ?? WeatherType.Clear;
+            if (weatherType == type) return;
+            if (weatherType != WeatherType.Clear)
+            {
+                EndChangingWeather(type);
+            }
             _currentWeather = _weatherTypeDataMap[type];
             _currentWeather?.OnWeatherStarted();
         }
-        public void EndChangingWeather()
+        public void EndChangingWeather(WeatherType type)
         {
-            _currentWeather?.OnWeatherStopped();
+            _currentWeather?.OnWeatherStopped(type);
             ChangeWeather(_defaultWeather);
         }
+        internal void SetWeatherSound(AudioClip clip)
+        {
+            AudioSource.clip = clip;
+            AudioSource.Play();
+        }
+        internal void StopWeatherSound() => AudioSource.Stop();
         private void OnDestroy()
         {
 #pragma warning disable S2696 // Instance members should not write to "static" fields

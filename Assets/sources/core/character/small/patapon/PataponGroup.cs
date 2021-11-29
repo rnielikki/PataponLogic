@@ -35,8 +35,8 @@ namespace PataRoad.Core.Character.Patapons
         }
         public bool CanGoForward()
         {
-            var hit = Physics2D.Raycast(transform.position, Vector2.right, CharacterEnvironment.Sight, _layerMask);
-            return hit.collider == null || (hit.distance > _marchDistance && Hazorons.Hazoron.GetClosestHazoronPosition() > transform.position.x);
+            var closest = _patapons[0].DistanceCalculator.GetClosest();
+            return closest == null || (closest.Value.x > transform.position.x + _marchDistance && Hazorons.Hazoron.GetClosestHazoronPosition() > transform.position.x);
         }
 
         internal void RemovePon(Patapon patapon)

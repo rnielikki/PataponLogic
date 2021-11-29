@@ -4,6 +4,8 @@
     {
         Fire,
         Ice,
-        Sleep
+        Sleep,
+        Stagger,
+        Knockback
     }
 }
