@@ -62,7 +62,7 @@ namespace PataRoad.Core.Character.Bosses
             {
                 _summonCount--;
                 var boss = Instantiate(_resource, transform);
-                boss.transform.position += CharacterEnvironment.Sight * Vector3.left;
+                boss.transform.position += CharacterEnvironment.OriginalSight * Vector3.left;
                 boss.SetActive(true);
                 _boss = boss.GetComponent<SummonedBoss>();
                 _boss.SetManager(this);

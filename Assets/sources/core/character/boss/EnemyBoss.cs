@@ -80,10 +80,10 @@ namespace PataRoad.Core.Character.Bosses
             _movingBack = true;
         }
         //When staggered or got knockback.
-        public override void StopAttacking()
+        public override void StopAttacking(bool pause)
         {
             BossTurnManager.End();
-            base.StopAttacking();
+            base.StopAttacking(pause);
         }
 
         protected abstract float CalculateAttack();

@@ -11,7 +11,6 @@ namespace PataRoad.Core.Character
     {
         protected readonly ICharacter _character;
         protected readonly GameObject _target;
-        protected readonly float _sight;
         public int LayerMask { get; }
         protected readonly Vector2 _direction;
         protected readonly float _xDirection;
@@ -21,7 +20,7 @@ namespace PataRoad.Core.Character
         protected Vector2 _boxSize; //size for boxcasting. NOTE: boxcast doesn't catch from initial box position.
         protected Vector2 _boxcastYOffset;
         protected float _boxcastXOffset;
-        protected float MaxEnemyDistanceInSight => _character.DefaultWorldPosition * _xDirection + _sight + _character.AttackDistance;
+        protected float MaxEnemyDistanceInSight => _character.DefaultWorldPosition * _xDirection + CharacterEnvironment.Sight + _character.AttackDistance;
 
         /// <summary>
         /// Constructor for getting distances from target game object, like Patapon-Enemy, Enemy-Patapon, Patapon-Structure etc.
@@ -29,12 +28,11 @@ namespace PataRoad.Core.Character
         /// <param name="character">The target character. ("from")</param>
         /// <param name="sight">Maximum sight of the target. This is equivalent to raycast distance.</param>
         /// <param name="layerMask">Masks of layers to detect. ("to") Get this value using <see cref="UnityEngine.LayerMask"/>.</param>
-        internal DistanceCalculator(ICharacter character, float sight, int layerMask)
+        internal DistanceCalculator(ICharacter character, int layerMask)
         {
             _character = character;
             _size = (character as SmallCharacter)?.CharacterSize ?? 0;
             _target = (character as MonoBehaviour)?.gameObject;
-            _sight = sight;
             _direction = _character.MovingDirection;
             _xDirection = _direction.x;
             LayerMask = layerMask;
@@ -48,25 +46,25 @@ namespace PataRoad.Core.Character
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         internal static DistanceCalculator GetPataponDistanceCalculator(Patapons.Patapon target) =>
-            new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
+            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Hazoron (also from right to left).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         internal static DistanceCalculator GetHazoronDistanceCalculator(Hazorons.Hazoron target) =>
-            new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("patapons", "bosses"));
+            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("patapons", "bosses"));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for enemy boss (from right to left). Enemy boss represents boss in normal boss killing mission.
         /// </summary>
         /// <param name="target">The boss, as enemy. ("from")</param>
         internal static DistanceCalculator GetBossDistanceCalculator(Bosses.EnemyBoss target) =>
-            new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("patapons", "hazorons"));
+            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("patapons", "hazorons"));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for summoned boss (from left to right).
         /// </summary>
         /// <param name="target">The summoned boss. ("from")</param>
         internal static DistanceCalculator GetBossDistanceCalculator(Bosses.SummonedBoss target) =>
-            new DistanceCalculator(target, CharacterEnvironment.Sight, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
+            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
 
         /// <summary>
         /// Shoots RayCast to closest structure or enemy and returns the raycast hit if found.
@@ -91,7 +89,7 @@ namespace PataRoad.Core.Character
             var p = ReturnInRange(raycast);
             if (p == null)
             {
-                raycast = Physics2D.BoxCast(castPoint - _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, _direction, _sight - _character.AttackDistance, LayerMask);
+                raycast = Physics2D.BoxCast(castPoint - _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, _direction, CharacterEnvironment.Sight - _character.AttackDistance, LayerMask);
                 p = ReturnInRange(raycast);
                 if (p == null) return null;
             }
@@ -107,7 +105,7 @@ namespace PataRoad.Core.Character
 
         public virtual float GetSafeForwardPosition(float input)
         {
-            var raycast = Physics2D.BoxCast((Vector2)_target.transform.position - _boxSize.x * _direction + _boxcastYOffset, _boxSize, 0, _direction, _sight, LayerMask);
+            var raycast = Physics2D.BoxCast((Vector2)_target.transform.position - _boxSize.x * _direction + _boxcastYOffset, _boxSize, 0, _direction, CharacterEnvironment.Sight, LayerMask);
 
             if (raycast.collider == null)
             {
@@ -125,12 +123,15 @@ namespace PataRoad.Core.Character
 
         public IEnumerable<IAttackable> GetAllGroundedTargets()
         {
-            var all = Physics2D.BoxCastAll((Vector2)_target.transform.position - _sight * Vector2.right, new Vector2(0.1f, 1), 0, Vector2.right, _sight * 2, LayerMask);
+            var all = Physics2D.BoxCastAll(
+                (Vector2)_target.transform.position - CharacterEnvironment.OriginalSight * Vector2.right,
+                new Vector2(0.1f, 1), 0, Vector2.right,
+                CharacterEnvironment.OriginalSight * 2, LayerMask);
             return all.Select(res => res.collider.GetComponentInParent<IAttackable>()).Where(value => value != null);
         }
         public IEnumerable<Collider2D> GetAllTargetsOnFront()
         {
-            var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, _sight, LayerMask);
+            var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, CharacterEnvironment.OriginalSight, LayerMask);
             return all.Select(res => res.collider).Where(value => value?.gameObject != null);
         }
 

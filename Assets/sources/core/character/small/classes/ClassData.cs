@@ -11,7 +11,7 @@ namespace PataRoad.Core.Character.Class
         public bool IsMeleeUnit { get; protected set; }
         protected AttackMoveController _attackController { get; private set; }
         public IAttackMoveData AttackMoveData { get; protected set; }
-        public void StopAttack() => _attackController.StopAttack();
+        public void StopAttack(bool pause) => _attackController.StopAttack(pause);
 
         protected CharacterAnimator _animator;
 

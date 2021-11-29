@@ -17,6 +17,6 @@ namespace PataRoad.Core.Character
         public void OnAttackMiss(UnityEngine.Vector2 point);
         public DistanceCalculator DistanceCalculator { get; }
         public float AttackDistance { get; }
-        public void StopAttacking();
+        public void StopAttacking(bool pause);
     }
 }

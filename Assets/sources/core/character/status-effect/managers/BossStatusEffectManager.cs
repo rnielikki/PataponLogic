@@ -12,7 +12,7 @@
         {
             if (!_onFire)
             {
-                _character.StopAttacking();
+                _character.StopAttacking(false);
             }
         }
 

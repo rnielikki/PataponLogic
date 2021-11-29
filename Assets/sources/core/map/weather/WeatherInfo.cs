@@ -5,50 +5,57 @@ namespace PataRoad.Core.Map.Weather
     public class WeatherInfo : MonoBehaviour
     {
         public static Wind Wind { get; private set; }
-        public WeatherType CurrentWeather { get; private set; }
 
         [SerializeField]
         private WeatherType _defaultWeather;
 
-        private WeatherData _currentWeatherData;
-
-        [SerializeField]
-        private WeatherData _rain;
-        [SerializeField]
-        private WeatherData _snow;
-        [SerializeField]
-        private WeatherData _fog;
+        private IWeatherData _currentWeather;
 
         private static WeatherInfo _self;
+        public static WeatherInfo Current => _self;
 
-        private System.Collections.Generic.Dictionary<WeatherType, WeatherData> _weatherTypeDataMap;
+        private System.Collections.Generic.Dictionary<WeatherType, IWeatherData> _weatherTypeDataMap;
+        public float FireRateMultiplier { get; set; } = 1;
+        public float IceRateMultiplier { get; set; } = 1;
         // Start is called before the first frame update
         void Awake()
         {
-            _weatherTypeDataMap = new System.Collections.Generic.Dictionary<WeatherType, WeatherData>()
+            _weatherTypeDataMap = new System.Collections.Generic.Dictionary<WeatherType, IWeatherData>()
             {
-                { WeatherType.Clear, null },
-                { WeatherType.Rain, _rain },
-                { WeatherType.Snow, _snow },
-                { WeatherType.Fog, _fog }
+                { WeatherType.Clear, null }
             };
-            _defaultWeather = CurrentWeather;
-            _currentWeatherData = _weatherTypeDataMap[_defaultWeather];
+            foreach (var weather in GetComponentsInChildren<IWeatherData>(true))
+            {
+                if (_weatherTypeDataMap.ContainsKey(weather.Type))
+                {
+                    throw new System.InvalidOperationException($"The weather type {weather.Type} already exists!");
+                }
+                _weatherTypeDataMap.Add(weather.Type, weather);
+            }
+
             Wind = GetComponentInChildren<Wind>();
+
 #pragma warning disable S2696 // Instance members should not write to "static" fields
             _self = this;
 #pragma warning restore S2696 // Instance members should not write to "static" fields
+            ChangeWeather(_defaultWeather);
         }
-        public static void ChangeWeather(WeatherType type)
+        public void ChangeWeather(WeatherType type)
         {
-            if (_self.CurrentWeather == type) return;
-            _self.CurrentWeather = type;
-            _self._currentWeatherData = _self._weatherTypeDataMap[type];
+            if ((_currentWeather?.Type ?? WeatherType.Clear) == type) return;
+            _currentWeather = _weatherTypeDataMap[type];
+            _currentWeather?.OnWeatherStarted();
         }
-        public static void EndChangingWeather()
+        public void EndChangingWeather()
         {
-            _self.CurrentWeather = _self._defaultWeather;
-            _self._currentWeatherData = _self._weatherTypeDataMap[_self._defaultWeather];
+            _currentWeather?.OnWeatherStopped();
+            ChangeWeather(_defaultWeather);
+        }
+        private void OnDestroy()
+        {
+#pragma warning disable S2696 // Instance members should not write to "static" fields
+            _self = null;
+#pragma warning restore S2696 // Instance members should not write to "static" fields
         }
     }
 }

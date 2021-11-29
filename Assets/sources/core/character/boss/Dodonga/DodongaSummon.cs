@@ -30,7 +30,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             _attack = GetComponent<DodongaAttack>();
             Init(_attack);
-            _offsetFromManager = 10;
+            _offsetFromManager = 5;
         }
     }
 }

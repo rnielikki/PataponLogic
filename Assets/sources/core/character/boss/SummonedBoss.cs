@@ -38,7 +38,7 @@ namespace PataRoad.Core.Character.Bosses
             var song = model.Song;
             _lastPerfectionRate = model.AccuracyRate;
 
-            if (!StatusEffectManager.OnStatusEffect)
+            if (StatusEffectManager.CanContinue)
             {
                 _attacking = PerformCommandAction(song);
                 if (_attacking)
@@ -69,6 +69,10 @@ namespace PataRoad.Core.Character.Bosses
                     StatusEffectManager.Recover();
                     break;
             }
+            _animatingWalking = false;
+            _animatingIdle = true;
+            CharAnimator.Animate("Idle");
+
             return false;
         }
         public override void Die()

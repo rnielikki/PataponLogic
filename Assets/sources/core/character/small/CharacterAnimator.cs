@@ -3,18 +3,20 @@ using UnityEngine;
 namespace PataRoad.Core.Character
 {
     /// <summary>
-    /// Includes odd attacking black magic logic.
+    /// Includes odd attacking black magic logic... well, maybe not really.
     /// </summary>
     public class CharacterAnimator
     {
         private readonly Animator _animator;
 
         //Late animation, only for >2 seconds attack speed.
-        private float _animationTimeOffset;
         private bool _lateAnimating;
         private float _attackSeconds;
         private float _idleTime;
         private readonly ICharacter _target;
+        private bool _isIdleOnLateAttack;
+        private float _currentOffset;
+
         internal CharacterAnimator(Animator animator, ICharacter target)
         {
             _animator = animator;
@@ -50,7 +52,11 @@ namespace PataRoad.Core.Character
         /// <summary>
         /// Freezes the current animation.
         /// </summary>
-        public void Stop() => _animator.speed = 0;
+        public void Stop()
+        {
+            _animator.Play("Idle", -1, 0f);
+            _animator.speed = 0;
+        }
         public void Resume() => _animator.speed = 1;
         /// <summary>
         /// Set late animation status to zero.
@@ -60,6 +66,7 @@ namespace PataRoad.Core.Character
             if (_lateAnimating)
             {
                 _lateAnimating = false;
+                _currentOffset = 0;
             }
         }
         /// <summary>
@@ -102,30 +109,53 @@ namespace PataRoad.Core.Character
         internal System.Collections.IEnumerator AnimateLate(float attackSeconds, string animationType)
         {
             if (!_lateAnimating) InitLateAnimation(attackSeconds);
+            float offset = _currentOffset;
+            float idleAnimationLength = -1;
 
             while (true)
             {
-                float offset;
-                if (_animationTimeOffset < _idleTime)
+                if (_isIdleOnLateAttack)
                 {
-                    offset = _idleTime - _animationTimeOffset;
-                    _animator.Play("Idle", -1, _animationTimeOffset / _idleTime);
+                    if (idleAnimationLength < 0)
+                    {
+                        _animator.Play("Idle", -1, offset % 1);
+                        idleAnimationLength = _animator.GetCurrentAnimatorClipInfo(0).Length;
+                    }
+                    float idleLength = idleAnimationLength;
+                    if (offset != 0)
+                    {
+                        idleLength -= offset * idleAnimationLength;
+                        offset = 0;
+                    }
+                    yield return new WaitForSeconds(idleLength);
+                    _currentOffset += idleLength;
+
+                    if (_idleTime <= _currentOffset + 0.00001f) //just aware of float calculation
+                    {
+                        _isIdleOnLateAttack = false;
+                        _currentOffset = 0;
+                        idleAnimationLength = -1;
+                    }
                 }
                 else
                 {
-                    var attackOffset = _animationTimeOffset - _idleTime;
-                    offset = Rhythm.RhythmEnvironment.TurnSeconds - attackOffset;
-                    _animator.Play(animationType, -1, attackOffset / Rhythm.RhythmEnvironment.TurnSeconds);
+                    _animator.Play(animationType, -1, offset);
+                    yield return new WaitForSeconds(Rhythm.RhythmEnvironment.TurnSeconds);
+                    _isIdleOnLateAttack = true;
                 }
-                _animationTimeOffset = (_animationTimeOffset + offset) % _attackSeconds;
-                yield return new WaitForSeconds(offset);
             }
         }
+        public void PauseAttack()
+        {
+            if (_lateAnimating) _currentOffset += _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        }
+
         private void InitLateAnimation(float attackSeconds)
         {
             SetAttackSpeed(1);
-            _animationTimeOffset = 0;
+            _currentOffset = 0;
             _lateAnimating = true;
+            _isIdleOnLateAttack = true;
             _idleTime = attackSeconds - Rhythm.RhythmEnvironment.TurnSeconds;
             _attackSeconds = attackSeconds;
         }

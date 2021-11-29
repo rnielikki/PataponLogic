@@ -18,7 +18,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// Minimal attack ditance, when is 100% headwind.
         /// </summary>
         public override float MinAttackDistance { get; } = 20;
-        public override float WindAttackDistanceOffset { get; } = 10;
+        public override float WindAttackDistanceOffset { get; } = 9.5f;
 
         private SpriteRenderer _bowRenderer;
         private SpriteRenderer _arrowRenderer;

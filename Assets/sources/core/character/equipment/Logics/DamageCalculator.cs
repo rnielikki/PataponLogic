@@ -22,9 +22,11 @@ namespace PataRoad.Core.Character.Equipments.Logic
             }
             else if (target.tag == "Grass")
             {
-                if (Common.Utils.RandomByProbability(stat.FireRate))
+                var fireRateMultiplier = Map.Weather.WeatherInfo.Current.FireRateMultiplier;
+                var probability = CalculateStatusEffect(stat.FireRate, (1 - (float)receiver.CurrentHitPoint / receiver.Stat.HitPoint), fireRateMultiplier);
+                if (Common.Utils.RandomByProbability(probability))
                 {
-                    receiver.StatusEffectManager.SetFire(10);
+                    receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(probability * 10 * fireRateMultiplier));
 
                     int damage = (int)(GetAttackDamage(stat, attacker) * stat.FireRate);
                     if (damage != 0)
@@ -65,19 +67,22 @@ namespace PataRoad.Core.Character.Equipments.Logic
                         {
                             receiver.StatusEffectManager.SetKnockback();
                         }
+                        var fireRateMultiplier = Map.Weather.WeatherInfo.Current.FireRateMultiplier;
+                        var iceRateMultiplier = Map.Weather.WeatherInfo.Current.IceRateMultiplier;
 
-                        var fireProbability = CalculateStatusEffect(stat.FireRate, receiverStat.FireResistance, 0.5f);
-                        var iceProbability = CalculateStatusEffect(stat.IceRate, receiverStat.IceResistance, 0.5f);
+                        var fireProbability = CalculateStatusEffect(stat.FireRate, receiverStat.FireResistance, 0.5f * fireRateMultiplier);
+                        var iceProbability = CalculateStatusEffect(stat.IceRate, receiverStat.IceResistance, 0.5f * iceRateMultiplier);
                         var sleepProbability = CalculateStatusEffect(stat.SleepRate, receiverStat.SleepResistance, 0.5f);
+
                         var random = Random.Range(0, fireProbability + iceProbability + sleepProbability);
 
                         if (random < fireProbability && Common.Utils.RandomByProbability(fireProbability))
                         {
-                            receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(fireProbability * 10));
+                            receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(fireProbability * 10 * fireRateMultiplier));
                         }
                         else if (random < fireProbability + iceProbability && Common.Utils.RandomByProbability(iceProbability))
                         {
-                            receiver.StatusEffectManager.SetIce(2 + Mathf.RoundToInt(iceProbability * 10));
+                            receiver.StatusEffectManager.SetIce(2 + Mathf.RoundToInt(iceProbability * 10 * iceRateMultiplier));
                         }
                         else if (Common.Utils.RandomByProbability(sleepProbability))
                         {

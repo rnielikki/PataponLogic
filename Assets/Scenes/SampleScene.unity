@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 409506914}
   - component: {fileID: 409506916}
   - component: {fileID: 409506915}
+  - component: {fileID: 409506917}
   m_Layer: 17
   m_Name: Rain
   m_TagString: Untagged
@@ -5275,6 +5276,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &409506917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409506913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e47f48a3c93b684caa3523b4e075e0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &468044915
 GameObject:
   m_ObjectHideFlags: 0
@@ -6304,6 +6317,7 @@ GameObject:
   - component: {fileID: 994026551}
   - component: {fileID: 994026550}
   - component: {fileID: 994026549}
+  - component: {fileID: 994026552}
   m_Layer: 17
   m_Name: Fog
   m_TagString: Untagged
@@ -6392,6 +6406,18 @@ Canvas:
   m_SortingLayerID: -1226848115
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &994026552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 994026547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b265c3375af5ec340b92c06261c060fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &995254097
 GameObject:
   m_ObjectHideFlags: 0
@@ -12062,6 +12088,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7686851928935115828, guid: 54fd0b973ae8f6d42b619674a65ec2f9, type: 3}
+      propertyPath: _spawnAmount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686851928935115828, guid: 54fd0b973ae8f6d42b619674a65ec2f9, type: 3}
       propertyPath: _spawnInterval
       value: 2
       objectReference: {fileID: 0}
@@ -14613,10 +14643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77a6b3147a47d444b6f49628460464e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultWeather: 0
-  _rain: {fileID: 0}
-  _snow: {fileID: 0}
-  _fog: {fileID: 0}
+  _defaultWeather: 2
 --- !u!1 &1991737488
 GameObject:
   m_ObjectHideFlags: 0
@@ -14628,13 +14655,14 @@ GameObject:
   - component: {fileID: 1991737489}
   - component: {fileID: 1991737491}
   - component: {fileID: 1991737490}
+  - component: {fileID: 1991737492}
   m_Layer: 17
   m_Name: Snow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1991737489
 Transform:
   m_ObjectHideFlags: 0
@@ -18295,14 +18323,14 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
-    collisionMode: 0
+    type: 1
+    collisionMode: 1
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
-    multiplyColliderForceByCollisionAngle: 1
+    multiplyColliderForceByCollisionAngle: 0
     m_Planes: []
     m_Dampen:
       serializedVersion: 2
@@ -18360,7 +18388,7 @@ ParticleSystem:
     m_Bounce:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -18464,15 +18492,15 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 10000
+    maxKillSpeed: 0
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 384
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -19423,6 +19451,18 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &1991737492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991737488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fea3796fa31e1c446a294eebbf189d37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2025613691
 GameObject:
   m_ObjectHideFlags: 0

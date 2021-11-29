@@ -17,7 +17,7 @@ namespace PataRoad.Core.Character
         }
         protected override void StartStatusEffect()
         {
-            _character.StopAttacking();
+            _character.StopAttacking(false);
             (_character as MonoBehaviour)?.StopAllCoroutines();
         }
         public override void SetIce(int time)
@@ -68,7 +68,7 @@ namespace PataRoad.Core.Character
         public override void SetKnockback()
         {
             if (IgnoreStatusEffect || OnStatusEffect || _character.IsDead) return;
-            _character.StopAttacking();
+            _character.StopAttacking(false);
             (_character as MonoBehaviour)?.StopAllCoroutines();
             OnKnockback();
 

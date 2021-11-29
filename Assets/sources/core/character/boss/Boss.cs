@@ -73,7 +73,7 @@ namespace PataRoad.Core.Character.Bosses
         {
         }
 
-        public virtual void StopAttacking()
+        public virtual void StopAttacking(bool pause)
         {
             BossAttackData.StopAllAttacking();
             CharAnimator.Animate("Idle");

@@ -101,7 +101,7 @@ namespace PataRoad.Core.Character.Patapons
 
         public void MoveOnDrum(string drumName)
         {
-            StopAttacking();
+            StopAttacking(true);
             if (LastSong != CommandSong.Ponpon && LastSong != CommandSong.Chakachaka) DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
             CharAnimator.Animate(drumName);
         }
@@ -134,7 +134,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         public void DoMissionCompleteGesture()
         {
-            StopAttacking();
+            StopAttacking(false);
             StartCoroutine(PartyOnComplete());
             System.Collections.IEnumerator PartyOnComplete()
             {
@@ -159,14 +159,14 @@ namespace PataRoad.Core.Character.Patapons
             OnFever = false;
             Charged = false;
             StatusEffectManager.IgnoreStatusEffect = false;
-            StopAttacking();
+            StopAttacking(false);
             CharAnimator.Animate("Idle");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
             ClassData.OnCanceled();
         }
-        public override void StopAttacking()
+        public override void StopAttacking(bool pause)
         {
-            base.StopAttacking();
+            base.StopAttacking(pause);
             DistanceManager.StopMoving();
         }
         private void PerformCommandAction(CommandSong song)

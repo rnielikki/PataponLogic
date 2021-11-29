@@ -98,10 +98,10 @@ namespace PataRoad.Core.Character
             StatusEffectManager = gameObject.AddComponent<SmallCharacterStatusEffectManager>();
         }
 
-        public virtual void StopAttacking()
+        public virtual void StopAttacking(bool pause)
         {
             StopWeaponAttacking();
-            ClassData.StopAttack();
+            ClassData.StopAttack(pause);
         }
 
         public virtual void Die()
@@ -129,7 +129,7 @@ namespace PataRoad.Core.Character
             IsDead = true;
             CurrentHitPoint = 0;
             BeforeDie();
-            StopAttacking();
+            StopAttacking(false);
         }
 
         protected virtual void StopWeaponAttacking() => Weapon.StopAttacking();

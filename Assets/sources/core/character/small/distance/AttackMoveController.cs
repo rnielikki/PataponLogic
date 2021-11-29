@@ -62,7 +62,8 @@ namespace PataRoad.Core.Character
             {
                 _animator.Animate(_currentModel.AnimationType);
             }
-            else if (_data.WasHitLastTime && _currentModel.HasTarget())
+            else if ((_data.WasHitLastTime && _currentModel.HasTarget())
+                || _currentModel.IsInAttackDistance())
             {
                 AnimateAttack();
             }
@@ -71,8 +72,14 @@ namespace PataRoad.Core.Character
                 _animator.Animate("Idle");
             }
         }
-        public void StopAttack()
+        /// <summary>
+        /// Stops attacking.
+        /// </summary>
+        /// <param name="pause">Will pause attack. If <c>true</c>, it'll continue attack after the turn.</param>
+        public void StopAttack(bool pause)
         {
+            if (pause) _character.CharAnimator.PauseAttack();
+            else _character.CharAnimator.ClearLateAnimation();
             StopAllCoroutines();
             _attacking = false;
             _moving = false;
@@ -105,9 +112,10 @@ namespace PataRoad.Core.Character
         }
         private void Update()
         {
+            if (!_character.StatusEffectManager.CanContinue) return;
             if (_currentModel == null)
             {
-                if (_attacking) StopAttack();
+                if (_attacking) StopAttack(false);
                 return;
             }
             else if (_currentModel.AlwaysAnimate)
