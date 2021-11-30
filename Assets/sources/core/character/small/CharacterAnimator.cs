@@ -11,7 +11,6 @@ namespace PataRoad.Core.Character
 
         //Late animation, only for >2 seconds attack speed.
         private bool _lateAnimating;
-        private float _attackSeconds;
         private float _idleTime;
         private readonly ICharacter _target;
         private bool _isIdleOnLateAttack;
@@ -157,7 +156,6 @@ namespace PataRoad.Core.Character
             _lateAnimating = true;
             _isIdleOnLateAttack = true;
             _idleTime = attackSeconds - Rhythm.RhythmEnvironment.TurnSeconds;
-            _attackSeconds = attackSeconds;
         }
     }
 }

@@ -64,14 +64,14 @@ namespace PataRoad.Core.Character.Patapons
         private void Awake()
         {
             //--- initialise sats.
-            _realStat = _defaultStat;
-            StatOperator = new StatOperator(_realStat);
-            StatOperator.Add(new PataponStatOperation(this));
 
             //--- init
-            base.Init();
+            Init();
+            _realStat = _data.Stat;
+            StatOperator = new StatOperator(_realStat);
+            StatOperator.Add(new PataponStatOperation(this));
             Group = GetComponentInParent<PataponGroup>();
-            DistanceManager = GetComponent<PataponDistanceManager>();
+            DistanceManager = gameObject.AddComponent<PataponDistanceManager>();
             DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
             InitDistanceFromHead();
 
@@ -97,7 +97,8 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         protected void InitDistanceFromHead()
         {
-            CharacterSize = transform.Find(BodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
+            CharacterSize = transform.Find(BodyName + "/Face")
+                .GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
         public void MoveOnDrum(string drumName)
@@ -289,7 +290,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             base.OnAttackHit(point, damage);
             //General group effect
-            if (IsGeneral && _type == Character.Class.ClassType.Tatepon && LastSong == CommandSong.Ponpon && Charged)
+            if (IsGeneral && _data.Type == Class.ClassType.Tatepon && LastSong == CommandSong.Ponpon && Charged)
             {
                 Group.HealAllInGroup((int)(damage * 0.1f));
             }
@@ -301,7 +302,7 @@ namespace PataRoad.Core.Character.Patapons
             if (!IsGeneral)
             {
                 var data = Items.ItemLoader.GetItem(Items.ItemType.Equipment, path, index) as Items.EquipmentData;
-                if (data != null) EquipmentManager.Equip(data, _realStat);
+                if (data != null) _data.EquipmentManager.Equip(data, _realStat);
                 else Debug.Log("data is null :(");
             }
         }

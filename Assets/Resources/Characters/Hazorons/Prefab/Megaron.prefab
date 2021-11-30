@@ -1289,6 +1289,7 @@ GameObject:
   - component: {fileID: 8625201061726857683}
   - component: {fileID: 989327767675986167}
   - component: {fileID: 8625201061726857681}
+  - component: {fileID: 4475365411254649322}
   m_Layer: 7
   m_Name: Megaron
   m_TagString: SmallCharacter
@@ -1365,22 +1366,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b992ce318dcc545a387aa030472e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultStat:
-    id: 0
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4475365411254649322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8625201061726857686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12b8a34577964104d80b7f341cc3f0f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultStat:
+    id: 0
   _type: 5
+  _weaponData: {fileID: 0}
+  _protectorData: {fileID: 0}
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 200
-        _defenceMin: 4
-        _defenceMax: 8
-        _damageMin: 2
-        _damageMax: 4
+        _defenceMin: 1
+        _defenceMax: 5
+        _damageMin: 4
+        _damageMax: 8
         _attackSeconds: 2
         _movementSpeed: 8
         _critical: 0

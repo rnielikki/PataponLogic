@@ -1,5 +1,4 @@
 using PataRoad.Core.Character.Class;
-using PataRoad.Core.Character.Equipments;
 using PataRoad.Core.Character.Equipments.Weapons;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,32 +10,21 @@ namespace PataRoad.Core.Character
     /// </summary>
     public abstract class SmallCharacter : MonoBehaviour, ICharacter
     {
-        /// <summary>
-        /// Current Stat.
-        /// </summary>
-        public virtual Stat Stat { get; protected set; }
 
+        protected SmallCharacterData _data;
+        public Stat Stat { get; protected set; }
+        public Equipments.EquipmentManager EquipmentManager => _data.EquipmentManager;
+        public ClassType Type => _data.Type;
+        //----------------- needs only for mission fight
         /// <summary>
-        /// Default stat that a bit varies for each class.
+        /// Simple animator that moves pataponsa and not simple animator for attacking.
         /// </summary>
-        [SerializeReference]
-        protected Stat _defaultStat = new Stat();
-
+        public CharacterAnimator CharAnimator { get; protected set; }
         /// <summary>
         /// Current Hit point.
         /// <remarks>It shouldn't be bigger than <see cref="Stat.HitPoint"/> or smaller than 0. If this value is 0, it causes death.</remarks>
         /// </summary>
         public int CurrentHitPoint { get; protected set; }
-
-        /// <summary>
-        /// Class (e.g. Yaripon, Tatepon, Yumipon...) of the Patapon.
-        /// </summary>
-        public ClassType Class { get; protected set; }
-
-        /// <summary>
-        /// Simple animator that moves patapons.
-        /// </summary>
-        public CharacterAnimator CharAnimator { get; protected set; }
 
         public DistanceCalculator DistanceCalculator { get; protected set; }
         public virtual float DefaultWorldPosition { get; protected set; }
@@ -60,10 +48,8 @@ namespace PataRoad.Core.Character
 
         public bool IsFlyingUnit => ClassData.IsFlyingUnit;
 
-        internal EquipmentManager EquipmentManager { get; private set; }
         public StatusEffectManager StatusEffectManager { get; private set; }
-        public Weapon Weapon => EquipmentManager.Weapon;
-        private Rigidbody2D _rigidbody;
+        public Weapon Weapon => _data.EquipmentManager.Weapon;
         [SerializeField]
         private UnityEvent _onAfterDeath;
         public UnityEvent OnAfterDeath => _onAfterDeath;
@@ -74,9 +60,6 @@ namespace PataRoad.Core.Character
         public bool IsMeleeUnit => ClassData.IsMeleeUnit;
 
         public UnityEvent<float> OnDamageTaken => null;
-        [SerializeField]
-        protected ClassType _type;
-        public ClassType Type => _type;
 
         // ----------- data from Patapon but for class data.
         /// <summary>
@@ -85,28 +68,16 @@ namespace PataRoad.Core.Character
         public bool Charged { get; protected set; }
         public bool OnFever { get; protected set; }
 
-        protected void Init(Items.EquipmentData weaponData = null, Items.EquipmentData protectorData = null)
+        protected void Init()
         {
-            InitEquipment(weaponData, protectorData);
-            InitStat();
-            ClassData = ClassData.GetClassData(this, _type);
-
+            _data = GetComponent<SmallCharacterData>();
+            _data.Init();
+            Stat = _data.Stat;
+            CurrentHitPoint = _data.Stat.HitPoint;
+            ClassData = ClassData.GetClassData(this, _data.Type);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
             StatusEffectManager = gameObject.AddComponent<SmallCharacterStatusEffectManager>();
         }
-        private void InitStat()
-        {
-            Stat = _defaultStat;
-            CurrentHitPoint = Stat.HitPoint;
-        }
-        private void InitEquipment(Items.EquipmentData weaponData, Items.EquipmentData protectorData)
-        {
-            _rigidbody = GetComponent<Rigidbody2D>();
-            EquipmentManager = new EquipmentManager(gameObject);
-            if (weaponData != null) EquipmentManager.Equip(weaponData, _defaultStat);
-            if (protectorData != null) EquipmentManager.Equip(protectorData, _defaultStat);
-        }
-
         public virtual void StopAttacking(bool pause)
         {
             StopWeaponAttacking();
@@ -154,6 +125,6 @@ namespace PataRoad.Core.Character
         }
 
         public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
-        public void AddMass(float mass) => _rigidbody.mass += mass;
+        public void AddMass(float mass) => _data.Rigidbody.mass += mass;
     }
 }

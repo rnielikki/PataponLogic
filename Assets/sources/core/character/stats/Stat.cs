@@ -222,6 +222,19 @@
             DamageMin = (int)(DamageMin * amount);
             DamageMax = (int)(DamageMax * amount);
         }
+        public static Stat GetAnyDefaultStatForCharacter()
+        {
+            return new Stat
+            {
+                HitPoint = 200,
+                DefenceMin = 1,
+                DefenceMax = 5,
+                DamageMin = 4,
+                DamageMax = 8,
+                AttackSeconds = 2,
+                MovementSpeed = 8
+            };
+        }
         public static Stat operator +(Stat stat1, Stat stat2)
         {
             return new Stat

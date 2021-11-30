@@ -36,9 +36,9 @@
                 return ("Idle", 10);
             }
             var firstPon = _pataponsManager.FirstPatapon;
-            if (firstPon?.Class != Class.ClassType.Toripon &&
+            if (firstPon?.Type != Class.ClassType.Toripon &&
                 firstPon?.transform.position.x < _pataponsManager.transform.position.x) return ("fire", 20);
-            if (firstPon?.IsMeleeUnit == true || firstPon?.Class == Class.ClassType.Toripon)
+            if (firstPon?.IsMeleeUnit == true || firstPon?.Type == Class.ClassType.Toripon)
             {
                 if (Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 20))
                 {

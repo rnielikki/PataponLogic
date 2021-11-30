@@ -166,7 +166,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -272,7 +272,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8a594628ae4b274479e0cb3a75635981, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -411,7 +411,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b66a65c8e2fa2d1459bf997db9674356, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -582,7 +582,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9eeaa5f8a54f8a745ab2f505f68d2c48, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -667,7 +667,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -774,7 +774,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b66a65c8e2fa2d1459bf997db9674356, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -901,6 +901,7 @@ GameObject:
   - component: {fileID: 6647991443700256615}
   - component: {fileID: 8858511603589215724}
   - component: {fileID: 6647991443700256611}
+  - component: {fileID: 8813460397387343034}
   m_Layer: 7
   m_Name: Yariron
   m_TagString: SmallCharacter
@@ -976,20 +977,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44b992ce318dcc545a387aa030472e3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultStat:
-    id: 0
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8813460397387343034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6647991443700256610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12b8a34577964104d80b7f341cc3f0f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultStat:
+    id: 0
   _type: 0
+  _weaponData: {fileID: 0}
+  _protectorData: {fileID: 0}
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 200
-        _defenceMin: 4
-        _defenceMax: 8
+        _defenceMin: 1
+        _defenceMax: 5
         _damageMin: 4
         _damageMax: 8
         _attackSeconds: 2
@@ -1076,7 +1091,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0d9cbde7eaaf8d9429dd67529789effa, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -1283,7 +1298,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 16ae964656835d64da45f62246730235, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1470,7 +1485,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1965192439
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 96812befe31c5a0499a2dc0c924cdca4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

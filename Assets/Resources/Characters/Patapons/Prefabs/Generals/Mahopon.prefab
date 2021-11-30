@@ -143,7 +143,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 346d55f96abf91643a534be7c7b78d4a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -322,7 +322,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 94972e82897b8e54dbf42477cb8afbfa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -407,7 +407,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 114de7026ea21464fbccfbd52a725c23, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -532,7 +532,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f55ec896d13f5db4fa5407449c9e1138, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -669,7 +669,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9e91a30a20951ca488d02aa5cdb5a4c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -754,7 +754,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -891,7 +891,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fec7776bca1fee94abe56f169575b83d, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
@@ -916,8 +916,8 @@ GameObject:
   - component: {fileID: 4432989599371218509}
   - component: {fileID: 4432989599371218505}
   - component: {fileID: 521961560426869716}
-  - component: {fileID: 3902757757827971312}
   - component: {fileID: -6960739145771086645}
+  - component: {fileID: -2051969696417282929}
   m_Layer: 8
   m_Name: Mahopon
   m_TagString: SmallCharacter
@@ -974,36 +974,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0692b0922a85494bb4c0672704a5aae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultStat:
-    id: 0
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
-  _type: 8
-  references:
-    version: 1
-    00000000:
-      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _hitPoint: 200
-        _defenceMin: 2
-        _defenceMax: 4
-        _damageMin: 10
-        _damageMax: 20
-        _attackSeconds: 3
-        _movementSpeed: 8
-        _critical: 0
-        _stagger: 0
-        _knockback: 0
-        _criticalResistance: 0
-        _staggerResistance: 0
-        _knockbackResistance: 0
-        _fireRate: 0
-        _iceRate: 0
-        _sleepRate: 0
-        _fireResistance: 0
-        _iceResistance: 0
-        _sleepResistance: 0
 --- !u!50 &521961560426869716
 Rigidbody2D:
   serializedVersion: 4
@@ -1025,18 +998,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &3902757757827971312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4432989599371218504}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87e76ffd5a794014dae4df0931fe1eb5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-6960739145771086645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,6 +1012,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _generalModeSound: {fileID: 8300000, guid: 4bc4254064958d6428db6cc6c384daee, type: 3}
   _generalModeData: {fileID: 0}
+--- !u!114 &-2051969696417282929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4432989599371218504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12b8a34577964104d80b7f341cc3f0f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultStat:
+    id: 0
+  _type: 8
+  _weaponData: {fileID: 0}
+  _protectorData: {fileID: 0}
+  references:
+    version: 1
+    00000000:
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _hitPoint: 200
+        _defenceMin: 1
+        _defenceMax: 5
+        _damageMin: 4
+        _damageMax: 8
+        _attackSeconds: 2
+        _movementSpeed: 8
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
+        _fireRate: 0
+        _iceRate: 0
+        _sleepRate: 0
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!1 &4432989599441627043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1172,7 +1174,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 077759423c238bc4490980f89e967a65, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1256,7 +1258,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8a594628ae4b274479e0cb3a75635981, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1395,7 +1397,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f55ec896d13f5db4fa5407449c9e1138, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1535,7 +1537,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 462511eeb9811d948a44aff0b91865ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1701,7 +1703,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1465340099
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f866fa3f78a51d940817d3f8e5a2d94f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
