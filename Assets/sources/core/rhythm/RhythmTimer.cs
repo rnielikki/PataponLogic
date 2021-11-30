@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace PataRoad.Core.Rhythm
 {
@@ -76,18 +77,11 @@ namespace PataRoad.Core.Rhythm
             PerfectFrequency = (int)(RhythmEnvironment.PerfectRange / Time.fixedDeltaTime);
             GoodFrequency = (int)(RhythmEnvironment.GoodRange / Time.fixedDeltaTime);
             BadFrequency = (int)(RhythmEnvironment.BadRange / Time.fixedDeltaTime);
+            if (AutoStart) SceneManager.sceneLoaded += StartTimer;
         }
-        private void Start()
+        public void StartTimer(Scene scene, LoadSceneMode mode)
         {
-            if (AutoStart)
-            {
-                //A bit tricky way to start. Will be changed later.
-                OnNextHalfTime.AddListener(StartTimer);
-            }
-        }
-
-        public static void StartTimer()
-        {
+            if (AutoStart) SceneManager.sceneLoaded -= StartTimer;
             OnNext.AddListener(OnStart.Invoke);
         }
 

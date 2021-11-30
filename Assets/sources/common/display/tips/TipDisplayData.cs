@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.GameDisplay
+namespace PataRoad.Common.GameDisplay
 {
     [CreateAssetMenu(fileName = "tip-index", menuName = "Tip")]
     class TipDisplayData : ScriptableObject

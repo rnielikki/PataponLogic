@@ -37,7 +37,7 @@ namespace PataRoad.Core.Items
         }
         private void Open()
         {
-            var screen = Instantiate(_tutorialScreen).GetComponent<GameDisplay.SongTutorial>();
+            var screen = Instantiate(_tutorialScreen).GetComponent<Common.GameDisplay.SongTutorial>();
             screen.Init(_song, this);
         }
         void OnValidate()

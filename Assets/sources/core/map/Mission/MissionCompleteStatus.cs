@@ -15,7 +15,6 @@ namespace PataRoad.Core.Map
         int _waitTimeUntilChangeBackground;
         [SerializeField]
         Material _spriteMaterial;
-        Common.SceneLoaderOnAction _loader;
 
         public void LoadMissionStatus()
         {
@@ -30,7 +29,9 @@ namespace PataRoad.Core.Map
 
             _spriteMaterial.color = Color.black;
             FindObjectOfType<BackgroundLoader>().gameObject.SetActive(false);
-            _loader = new Common.SceneLoaderOnAction("Tips");
+
+            Common.SceneLoadingAction.Create("Patapolis", true, "Submit");
+
             Camera.main.backgroundColor = Color.white;
             StartCoroutine(ChangeBack());
         }
@@ -53,7 +54,6 @@ namespace PataRoad.Core.Map
         private void OnDestroy()
         {
             _spriteMaterial.color = Color.white;
-            _loader?.Destroy();
         }
     }
 }

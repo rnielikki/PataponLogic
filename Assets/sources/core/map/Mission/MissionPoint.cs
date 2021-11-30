@@ -93,7 +93,7 @@ namespace PataRoad.Core.Map
             System.Collections.IEnumerator WaitForNextScene()
             {
                 yield return new WaitForSeconds(9);
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Tips");
+                Common.SceneLoadingAction.Create("Patapolis", true);
             }
         }
         private void CompleteMission()

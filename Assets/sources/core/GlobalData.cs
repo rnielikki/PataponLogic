@@ -14,9 +14,9 @@ namespace PataRoad.Core
         // Start is called before the first frame update
         void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             Input = GetComponent<UnityEngine.InputSystem.PlayerInput>();
             Items.ItemLoader.LoadAll();
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

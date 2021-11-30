@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace PataRoad.GameDisplay
+namespace PataRoad.Common.GameDisplay
 {
     class MiracleTutorial : MonoBehaviour
     {

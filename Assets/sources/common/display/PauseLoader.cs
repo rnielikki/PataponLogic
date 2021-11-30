@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace PataRoad.GameDisplay
+namespace PataRoad.Common.GameDisplay
 {
     class PauseLoader : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace PataRoad.GameDisplay
+namespace PataRoad.Common.GameDisplay
 {
     /// <summary>
     /// Scrolls with the input system setting. Works OnLY with VERTICAL.
@@ -50,8 +50,6 @@ namespace PataRoad.GameDisplay
 
             var pos = _content.anchoredPosition;
             pos.y = Mathf.Clamp(pos.y - _viewport.rect.size.y * _sensitivity * context.ReadValue<Vector2>().y, 0, maxScroll);
-
-            Debug.Log(pos.y);
 
             _content.anchoredPosition = pos;
             _upArrow.enabled = pos.y != 0;

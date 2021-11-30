@@ -3,7 +3,7 @@ using PataRoad.Core.Rhythm.Command;
 using System.Linq;
 using UnityEngine;
 
-namespace PataRoad.GameDisplay
+namespace PataRoad.Common.GameDisplay
 {
     public class TutorialDrumUpdater : MonoBehaviour
     {

@@ -3,7 +3,7 @@ using PataRoad.Core.Rhythm.Command;
 using TMPro;
 using PataRoad.Core.Rhythm;
 
-namespace PataRoad.GameDisplay
+namespace PataRoad.Common.GameDisplay
 {
     public class SongTutorial : MonoBehaviour
     {
