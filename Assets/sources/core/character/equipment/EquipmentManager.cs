@@ -38,13 +38,12 @@ namespace PataRoad.Core.Character.Equipments
                 { EquipmentType.Rarepon, Rarepon}
             };
         }
-        public Stat Equip(EquipmentData equipmentData, Stat stat)
+        public void Equip(EquipmentData equipmentData, Stat stat)
         {
             if (_map.TryGetValue(equipmentData.Type, out Equipment eq))
             {
                 eq.ReplaceEqupiment(equipmentData, stat);
             }
-            return stat;
         }
     }
 }

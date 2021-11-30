@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    [CreateAssetMenu(fileName = "equipment-data-as-number", menuName = "EquipmentData/StaffData")]
+    [CreateAssetMenu(fileName = "equipment-data-as-number", menuName = "Item/EquipmentData/StaffData")]
     class StaffData : EquipmentData
     {
         [SerializeField]

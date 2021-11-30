@@ -7,7 +7,7 @@ namespace PataRoad.Core.Items
     /// <summary>
     /// Represents any equipment DATA that Patapon (or enemy) use, like spear, shield, cape, helm. Attached to every equipment prefab.
     /// </summary>
-    [CreateAssetMenu(fileName = "material-data-id", menuName = "MaterialData")]
+    [CreateAssetMenu(fileName = "material-data-id", menuName = "Item/MaterialData")]
     public class MaterialData : ScriptableObject, IItem
     {
         public System.Guid Id { get; set; }

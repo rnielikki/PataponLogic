@@ -1,13 +1,10 @@
 using UnityEngine;
-using System.Linq;
 using PataRoad.Core.Character.Class;
 
 namespace PataRoad.Core.Character.Hazorons
 {
     public class Hazoron : SmallCharacter
     {
-        //Boss doesn't have default position. Small enemy does.
-        private readonly static System.Collections.Generic.List<Hazoron> _hazorons = new System.Collections.Generic.List<Hazoron>();
         public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (1 - Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f);
 
         public override Vector2 MovingDirection => Vector2.left;
@@ -16,13 +13,18 @@ namespace PataRoad.Core.Character.Hazorons
         private bool _gotPosition;
         private bool _animatingWalk;
 
+        [SerializeField]
+        Items.EquipmentData _weaponData;
+        [SerializeField]
+        Items.EquipmentData _protectorData;
+
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
 
         private void Awake()
         {
             _stat = _defaultStat;
             OnFever = true;
-            Init();
+            Init(_weaponData, _protectorData);
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
             DistanceManager = gameObject.AddComponent<DistanceManager>();
             StatusEffectManager.SetRecoverAction(() => ClassData.Attack());
@@ -31,12 +33,6 @@ namespace PataRoad.Core.Character.Hazorons
         {
             ClassData.InitLate();
         }
-        public static float GetClosestHazoronPosition()
-        {
-            if (_hazorons.Count == 0) return Mathf.Infinity;
-            return _hazorons.Min(h => h.DefaultWorldPosition);
-        }
-
         protected void InitDistanceFromHead()
         {
             CharacterSize = transform.Find(BodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
@@ -52,7 +48,7 @@ namespace PataRoad.Core.Character.Hazorons
         }
         protected override void BeforeDie()
         {
-            _hazorons.Remove(this);
+            HazoronPositionManager.RemoveHazoron(this);
             GameSound.SpeakManager.Current.Play(CharacterSoundLoader.Current.HazoronSounds.OnDead);
         }
         private void Update()
@@ -65,7 +61,7 @@ namespace PataRoad.Core.Character.Hazorons
             if (DistanceCalculator.HasAttackTarget())
             {
                 DefaultWorldPosition = transform.position.x;
-                _hazorons.Add(this);
+                HazoronPositionManager.AddHazoron(this);
                 ClassData.Attack();
                 _gotPosition = true;
             }
@@ -77,6 +73,17 @@ namespace PataRoad.Core.Character.Hazorons
                     _animatingWalk = true;
                 }
                 transform.position += (Vector3)(Stat.MovementSpeed * Time.deltaTime * MovingDirection);
+            }
+        }
+        private void OnValidate()
+        {
+            if (_weaponData != null && _weaponData.Type != Equipments.EquipmentType.Weapon)
+            {
+                throw new System.ArgumentException("Weapon data should be type of weapon but it's " + _weaponData.Type);
+            }
+            if (_protectorData != null && _protectorData.Type != Equipments.EquipmentType.Protector)
+            {
+                throw new System.ArgumentException("Protector should be type of protector but it's " + _protectorData.Type);
             }
         }
     }

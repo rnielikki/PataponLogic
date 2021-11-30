@@ -27,7 +27,7 @@ namespace PataRoad.Core.Rhythm
         }
         protected virtual void Init()
         {
-            var actions = GetComponentInParent<PlayerInput>().actions;
+            var actions = FindObjectOfType<PlayerInput>().actions;
             _action = actions.FindAction("Drum/" + _drumType.ToString());
             SetResetTimer();
             RhythmTimer.OnStart.AddListener(() => Disabled = false);

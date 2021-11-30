@@ -40,7 +40,7 @@ namespace PataRoad.Core.CameraController
         void Awake()
         {
             _pos = transform.position;
-            var input = GameObject.FindGameObjectWithTag("Screen").GetComponent<PlayerInput>().actions;
+            var input = GlobalData.Input.actions;
             _action = input.FindAction("Player/Camera");
             _action.started += SetInputCameraMove;
             _action.canceled += ReleaseInputCameraMove;

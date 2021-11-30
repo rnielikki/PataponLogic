@@ -9,7 +9,7 @@ namespace PataRoad.GameDisplay
         private GameObject _pauseMenu;
         private void Awake()
         {
-            var actions = GetComponent<PlayerInput>().actions;
+            var actions = Core.GlobalData.Input.actions;
             _action = actions.FindAction("UI/Cancel");
             _action.started += Load;
             _action.Enable();

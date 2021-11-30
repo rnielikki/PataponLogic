@@ -85,17 +85,26 @@ namespace PataRoad.Core.Character
         public bool Charged { get; protected set; }
         public bool OnFever { get; protected set; }
 
-        protected void Init()
+        protected void Init(Items.EquipmentData weaponData = null, Items.EquipmentData protectorData = null)
         {
-            Stat = _defaultStat;
-            CurrentHitPoint = Stat.HitPoint;
+            InitEquipment(weaponData, protectorData);
+            InitStat();
             ClassData = ClassData.GetClassData(this, _type);
-            EquipmentManager = new EquipmentManager(gameObject);
-
-            _rigidbody = GetComponent<Rigidbody2D>();
 
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
             StatusEffectManager = gameObject.AddComponent<SmallCharacterStatusEffectManager>();
+        }
+        private void InitStat()
+        {
+            Stat = _defaultStat;
+            CurrentHitPoint = Stat.HitPoint;
+        }
+        private void InitEquipment(Items.EquipmentData weaponData, Items.EquipmentData protectorData)
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+            EquipmentManager = new EquipmentManager(gameObject);
+            if (weaponData != null) EquipmentManager.Equip(weaponData, _defaultStat);
+            if (protectorData != null) EquipmentManager.Equip(protectorData, _defaultStat);
         }
 
         public virtual void StopAttacking(bool pause)

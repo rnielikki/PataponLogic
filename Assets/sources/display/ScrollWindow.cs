@@ -22,8 +22,7 @@ namespace PataRoad.GameDisplay
         // Start is called before the first frame update
         void Awake()
         {
-            _action = GameObject.FindGameObjectWithTag("Screen")
-                .GetComponent<PlayerInput>().actions.FindAction("UI/Navigate");
+            _action = Core.GlobalData.Input.actions.FindAction("UI/Navigate");
         }
         private void OnEnable()
         {
@@ -51,6 +50,9 @@ namespace PataRoad.GameDisplay
 
             var pos = _content.anchoredPosition;
             pos.y = Mathf.Clamp(pos.y - _viewport.rect.size.y * _sensitivity * context.ReadValue<Vector2>().y, 0, maxScroll);
+
+            Debug.Log(pos.y);
+
             _content.anchoredPosition = pos;
             _upArrow.enabled = pos.y != 0;
             _downArrow.enabled = pos.y != maxScroll;

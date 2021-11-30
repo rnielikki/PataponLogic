@@ -88,6 +88,13 @@ namespace PataRoad.Core.Map
         {
             AttachToScreen("MissionFailed");
             _soundSource.PlayOneShot(_missionFailedMusic);
+            StartCoroutine(WaitForNextScene());
+
+            System.Collections.IEnumerator WaitForNextScene()
+            {
+                yield return new WaitForSeconds(9);
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Tips");
+            }
         }
         private void CompleteMission()
         {

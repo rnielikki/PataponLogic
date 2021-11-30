@@ -14,7 +14,7 @@
         }
         protected override void InitLateForClass()
         {
-
+            if (!(_character is Patapons.Patapon)) FlyUp();
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
                 new System.Collections.Generic.Dictionary<string, AttackMoveModel>()

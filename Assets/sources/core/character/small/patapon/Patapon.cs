@@ -77,7 +77,8 @@ namespace PataRoad.Core.Character.Patapons
 
             StatusEffectManager.SetRecoverAction(() =>
             {
-                if (!TurnCounter.IsPlayerTurn) PerformCommandAction(LastSong);
+                if (Map.MissionPoint.IsMissionEnd && Map.MissionPoint.IsMissionSuccess) DoMissionCompleteGesture();
+                else if (!TurnCounter.IsPlayerTurn) PerformCommandAction(LastSong);
                 else if (!TurnCounter.IsOn) DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
             });
 
