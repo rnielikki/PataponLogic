@@ -5,28 +5,33 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     public class Rarepon : Equipment
     {
-        public bool IsNormal { get; private set; } = true;
+        public bool IsNormal => _currentData == null || _currentData.Index == 0;
+
+        protected override EquipmentType _type => EquipmentType.Rarepon;
+
         [SerializeField]
         [Tooltip("It can be eye color, and Megapon mouth color etc.")]
         private SpriteRenderer[] _spritesToChangeColor;
         [SerializeField]
         private SpriteRenderer _spriteToHideOnRarepon;
-        private void Awake()
+        private void Start()
         {
             Load();
         }
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
-            if (_currentData == null)
+            var helm = HolderData.EquipmentManager.Helm;
+            if (_currentData.Index != 0 && helm != null)
             {
-                var helm = Holder.EquipmentManager.Helm;
-                if (helm != null)
-                {
-                    helm.HideEqupiment(stat);
-                }
+                helm.HideEqupiment(stat);
+                if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = false;
+            }
+            else if (helm != null)
+            {
+                if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = true;
+                helm.ShowEqupiment();
             }
             base.ReplaceEqupiment(equipmentData, stat);
-            IsNormal = false;
         }
 
         protected override void ReplaceImage(EquipmentData equipmentData)
@@ -38,21 +43,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
             if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = false;
         }
-        public void SetToNormal(Stat stat)
-        {
-            if (_currentData == null) return;
-            Changecolor(Color.white);
-            _currentData = null;
-            if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = true;
-            var helm = Holder.EquipmentManager.Helm;
-            if (helm != null)
-            {
-                helm.ShowEqupiment();
-            }
-            IsNormal = true;
-            base.ReplaceImage(null);
-            RemoveDataFromStat(stat);
-        }
+
         private void Changecolor(Color color)
         {
             _spriteRenderers[0].color = color;

@@ -683,6 +683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stat:
     id: 0
+  _name: 
   _mass: 0
   _spritesToChangeColor:
   - {fileID: 3928704229904380842}
@@ -855,7 +856,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3928704229798589754}
   - component: {fileID: 3928704229798589756}
-  - component: {fileID: 3928704229798589758}
   - component: {fileID: 7696824597547247324}
   - component: {fileID: -992470313729238231}
   m_Layer: 8
@@ -901,21 +901,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3928704229798589758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3928704229798589753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0692b0922a85494bb4c0672704a5aae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onAfterDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!50 &7696824597547247324
 Rigidbody2D:
   serializedVersion: 4
@@ -946,14 +931,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 3928704229798589753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12b8a34577964104d80b7f341cc3f0f8, type: 3}
+  m_Script: {fileID: 11500000, guid: bd9ba651f5a351c49954519eb7b214b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultStat:
     id: 0
   _type: 4
-  _weaponData: {fileID: 0}
-  _protectorData: {fileID: 0}
   references:
     version: 1
     00000000:
@@ -1542,6 +1525,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stat:
     id: 0
+  _name: Club
   _mass: 1
   _attackType: 1
   references:
@@ -2051,6 +2035,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stat:
     id: 0
+  _name: Shoulders
   _mass: 0
   references:
     version: 1

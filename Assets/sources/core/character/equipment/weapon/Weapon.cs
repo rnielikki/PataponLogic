@@ -15,10 +15,12 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// </summary>
         public Sprite ThrowableWeaponSprite { get; protected set; }
 
+        protected override EquipmentType _type => EquipmentType.Weapon;
+
         [SerializeField]
         private AttackType _attackType;
         public AttackType AttackType { get; internal set; }
-        private void Awake()
+        private void Start()
         {
             Load();
         }

@@ -30,10 +30,6 @@ namespace PataRoad.Core.Character.Patapons
         [Tooltip("Mission complete condition is going through Mission tower point.")]
         private bool _useMissionTower = true;
 
-        //------------ Serialize field for auto generation, may be changed later.
-        [SerializeField]
-        private Class.ClassType[] _pataponTypes;
-
         //------------------------------------- sounds of Patapon
         [SerializeField]
         private AudioClip[] _pataponSpeakingOnMiss;
@@ -43,7 +39,7 @@ namespace PataRoad.Core.Character.Patapons
 
         private void Awake()
         {
-            PataponGroupGenerator.Generate(_pataponTypes, this);
+            PataponGroupGenerator.Generate(GlobalData.PataponInfo.CurrentClasses, this);
 
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
             _groups = GetComponentsInChildren<PataponGroup>().ToList();

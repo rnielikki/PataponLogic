@@ -131,6 +131,8 @@ MonoBehaviour:
   _stat:
     id: 0
   _mass: 0
+  _fixedEquipment: 1
+  _hideEquipment: 0
   _attackType: 5
   references:
     version: 1
@@ -360,7 +362,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2781808015003858114}
   - component: {fileID: 2781808015003858116}
-  - component: {fileID: 2781808015003858115}
   - component: {fileID: 6670646132297661920}
   - component: {fileID: 6910226913817181891}
   - component: {fileID: 3434674913487857545}
@@ -407,21 +408,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2781808015003858115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2781808015003858113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0692b0922a85494bb4c0672704a5aae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onAfterDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!50 &6670646132297661920
 Rigidbody2D:
   serializedVersion: 4
@@ -450,7 +436,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2781808015003858113}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4188768b6cb67e0449f37ab5dd68bceb, type: 3}
   m_Name: 
@@ -466,14 +452,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2781808015003858113}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12b8a34577964104d80b7f341cc3f0f8, type: 3}
+  m_Script: {fileID: 11500000, guid: bd9ba651f5a351c49954519eb7b214b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultStat:
     id: 0
   _type: 5
-  _weaponData: {fileID: 0}
-  _protectorData: {fileID: 0}
   references:
     version: 1
     00000000:
@@ -875,6 +859,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2781808015758602888}
   - component: {fileID: 2781808015758602889}
+  - component: {fileID: 4275944897729303787}
   m_Layer: 8
   m_Name: Helm
   m_TagString: Untagged
@@ -948,6 +933,47 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4275944897729303787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2781808015758602903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbd99464f3a2a040967ff76228aa486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stat:
+    id: 0
+  _mass: 0
+  _fixedEquipment: 0
+  _hideEquipment: 1
+  references:
+    version: 1
+    00000000:
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _hitPoint: 0
+        _defenceMin: 0
+        _defenceMax: 0
+        _damageMin: 0
+        _damageMax: 0
+        _attackSeconds: 0
+        _movementSpeed: 0
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _criticalResistance: 0
+        _staggerResistance: 0
+        _knockbackResistance: 0
+        _fireRate: 0
+        _iceRate: 0
+        _sleepRate: 0
+        _fireResistance: 0
+        _iceResistance: 0
+        _sleepResistance: 0
 --- !u!1 &2781808015812474762
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Patapons
 {
@@ -12,53 +13,93 @@ namespace PataRoad.Core.Character.Patapons
         private static int _pataponGroupIndex;
         private static int _sortingLayerIndex;
 
+        private static System.Collections.Generic.Dictionary<Class.ClassType, (GameObject general, GameObject patapon)> _pataponObjects { get; }
+            = new System.Collections.Generic.Dictionary<Class.ClassType, (GameObject, GameObject)>();
+
         /// <summary>
-        /// Generates Patapons automatically..
+        /// Generates Patapons automatically on mission.
         /// </summary>
         /// <param name="patapons">Array of Patapon types to create.</param>
         /// <param name="manager"><see cref="PataponManager"/> to reference. Also its transform is used to set as groups' parent.</param>
-        internal static void Generate(Class.ClassType[] patapons, PataponsManager manager)
+        internal static void Generate(System.Collections.Generic.IEnumerable<Class.ClassType> patapons, PataponsManager manager)
         {
             _pataponGroupIndex = 0;
             _sortingLayerIndex = 0;
             foreach (var patapon in patapons)
             {
-                AddPataponGroupInstance(patapon, manager);
+                AddPataponGroupInstance(patapon, manager.transform, manager, true);
             }
         }
-        private static void AddPataponGroupInstance(Class.ClassType classType, PataponsManager manager)
+        /// <summary>
+        /// Generates Patapons automatically outside mission.
+        /// </summary>
+        /// <param name="patapons">Array of Patapon types to create.</param>
+        internal static void Generate(System.Collections.Generic.IEnumerable<Class.ClassType> patapons, Transform parent)
+        {
+            _pataponGroupIndex = 0;
+            _sortingLayerIndex = 0;
+            foreach (var patapon in patapons)
+            {
+                AddPataponGroupInstance(patapon, parent, null, false);
+            }
+        }
+        private static void AddPataponGroupInstance(Class.ClassType classType, Transform parent, PataponsManager manager, bool onMission)
         {
             var group = new GameObject("PataponGroup");
-            var groupScript = group.AddComponent<PataponGroup>();
-            groupScript.ClassType = classType;
+            group.transform.parent = parent;
 
-            AddPataponsInstance(classType.ToString(), group.transform);
-            groupScript.Init(manager);
-
-            group.transform.parent = manager.transform;
+            if (onMission)
+            {
+                var groupScript = group.AddComponent<PataponGroup>();
+                groupScript.ClassType = classType;
+                AddPataponsInstance(classType, group.transform, onMission);
+                groupScript.Init(manager);
+            }
+            else
+            {
+                AddPataponsInstance(classType, group.transform, onMission);
+            }
             group.transform.localPosition = Vector2.zero + _pataponGroupIndex * PataponEnvironment.GroupDistance * Vector2.left;
             _pataponGroupIndex++;
         }
 
-        private static void AddPataponsInstance(string className, Transform attachTarget)
+        private static void AddPataponsInstance(Class.ClassType classType, Transform attachTarget, bool onMission)
         {
-            var generalRes = Resources.Load(_pataponGeneralPrefabPath + className) as GameObject;
-            Attach(generalRes, 0);
+            GameObject general;
+            GameObject patapon;
+            if (!_pataponObjects.TryGetValue(classType, out (GameObject, GameObject) res))
+            {
+                string className = classType.ToString();
+                general = Resources.Load<GameObject>(_pataponGeneralPrefabPath + className);
+                patapon = Resources.Load<GameObject>(_pataponPrefabPath + className);
+            }
+            else (general, patapon) = res;
 
-            var ponRes = Resources.Load(_pataponPrefabPath + className) as GameObject;
+            var patapons = new GameObject[4];
+            patapons[0] = Object.Instantiate(general, attachTarget);
             for (int i = 1; i < 4; i++)
             {
-                Attach(ponRes, i);
+                patapons[i] = Object.Instantiate(patapon, attachTarget);
             }
+            for (int i = 0; i < 4; i++) Attach(patapons[i], i);
 
-            void Attach(GameObject ponObject, int offset)
+            if (onMission) patapons[0].GetComponent<General.PataponGeneral>().enabled = true;
+
+            void Attach(GameObject ponInstance, int offset)
             {
-                var ponInstance = Object.Instantiate(ponObject, attachTarget.transform);
-                var ponComponent = ponInstance.GetComponent<Patapon>();
-                ponComponent.Index = _sortingLayerIndex;
-                ponComponent.IndexInGroup = offset;
+                ponInstance.GetComponent<PataponData>().IndexInGroup = offset;
+                if (onMission)
+                {
+                    var ponComponent = ponInstance.AddComponent<Patapon>();
+                    ponComponent.Index = _sortingLayerIndex;
+                    ponComponent.IndexInGroup = offset;
+                }
+                else
+                {
+                    ponInstance.GetComponent<PataponData>().Init();
+                }
 
-                foreach (var renderer in ponComponent.GetComponentsInChildren<SpriteRenderer>())
+                foreach (var renderer in ponInstance.GetComponentsInChildren<SpriteRenderer>())
                 {
                     renderer.sortingOrder = _sortingLayerIndex;
                 }

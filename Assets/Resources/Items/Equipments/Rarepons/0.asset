@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fefff2b6cbbbe944383d4a9c19a0253f, type: 3}
   m_Name: 0
   m_EditorClassIdentifier: 
+  _isUniqueItem: 0
   _group: Rarepon
-  _name: Frog
-  _description: No, the green eyes are not Patapons
+  _name: Normal
+  _description: This looks like real patapon's nature.
   _stat:
     id: 0
-  _image: {fileID: 21300000, guid: b0cc6b73607230045816e5ab5dfa6691, type: 3}
+  _image: {fileID: 0}
   _mass: 0
   _type: 3
-  _color: {r: 0.8784314, g: 0.91764706, b: 0.4392157, a: 1}
+  _color: {r: 1, g: 1, b: 1, a: 1}
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0

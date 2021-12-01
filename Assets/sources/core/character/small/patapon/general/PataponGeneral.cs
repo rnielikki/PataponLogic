@@ -23,16 +23,14 @@ namespace PataRoad.Core.Character.Patapons.General
         [SerializeField]
         Items.GeneralModeData _generalModeData;
 
-        private void Awake()
+        private void Start()
         {
             Group = GetComponentInParent<PataponGroup>();
             _selfPatapon = GetComponent<Patapon>();
             _generalEffect = GetGeneralEffect(_selfPatapon.Type);
 
             EquipGeneralMode(_generalModeData);
-        }
-        private void Start()
-        {
+
             _generalEffect.StartSelfEffect(_selfPatapon);
             _generalEffect.StartGroupEffect(Group.Patapons);
         }
@@ -65,7 +63,7 @@ namespace PataRoad.Core.Character.Patapons.General
         private void OnDestroy()
         {
             CancelGeneralMode();
-            _generalEffect.EndGroupEffect(Group.Patapons);
+            if (Group != null) _generalEffect?.EndGroupEffect(Group.Patapons);
         }
         //------------ Loads general effect
         public static IGeneralEffect GetGeneralEffect(Class.ClassType type) => type switch
@@ -79,7 +77,7 @@ namespace PataRoad.Core.Character.Patapons.General
             Class.ClassType.Megapon => new PanPakaponEffect(),
             Class.ClassType.Yumipon => new SukoponEffect(),
             Class.ClassType.Mahopon => new MedenEffect(),
-            _ => throw new System.ArgumentException("???")
+            _ => throw new System.ArgumentException("Cannot get \"Any\" type of general data.")
         };
     }
 }

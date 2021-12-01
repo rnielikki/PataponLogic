@@ -7,7 +7,6 @@ namespace PataRoad.AppDebug
         // Start is called before the first frame update
         void Start()
         {
-            Common.SceneLoadingAction.Create("Battle", true, "Submit");
         }
     }
 }

@@ -23,20 +23,33 @@ namespace PataRoad.Core.Character.Equipments
         public Protector Protector { get; private set; }
         public Rarepon Rarepon { get; private set; }
         private readonly Dictionary<EquipmentType, Equipment> _map;
+        private readonly SmallCharacterData _target;
 
-        public EquipmentManager(GameObject target)
+        public EquipmentManager(SmallCharacterData target)
         {
             Helm = target.GetComponentInChildren<Helm>();
             Weapon = target.GetComponentInChildren<Weapon>();
             Protector = target.GetComponentInChildren<Protector>();
             Rarepon = target.GetComponentInChildren<Rarepon>();
-            _map = new Dictionary<EquipmentType, Equipment>()
+
+            _map = new Dictionary<EquipmentType, Equipment>();
+            _target = target;
+        }
+        public void Init()
+        {
+            AddToMapIfNotNull(EquipmentType.Helm, Helm, "Helm", _target);
+            AddToMapIfNotNull(EquipmentType.Weapon, Weapon, _target.WeaponName, _target);
+            AddToMapIfNotNull(EquipmentType.Protector, Protector, _target.ProtectorName, _target);
+            AddToMapIfNotNull(EquipmentType.Rarepon, Rarepon, "Rarepon", _target);
+        }
+
+        private void AddToMapIfNotNull<T>(EquipmentType type, T equipment, string equipmentGroup, SmallCharacterData target) where T : Equipment
+        {
+            if (equipment != null && !equipment.FixedEquipment)
             {
-                { EquipmentType.Helm, Helm},
-                { EquipmentType.Weapon, Weapon},
-                { EquipmentType.Protector, Protector},
-                { EquipmentType.Rarepon, Rarepon}
-            };
+                _map.Add(type, equipment);
+                if (type != EquipmentType.Rarepon) Equip(ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, equipmentGroup, 0), target.Stat);
+            }
         }
         public void Equip(EquipmentData equipmentData, Stat stat)
         {

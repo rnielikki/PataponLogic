@@ -295,16 +295,5 @@ namespace PataRoad.Core.Character.Patapons
                 Group.HealAllInGroup((int)(damage * 0.1f));
             }
         }
-
-        //------------------
-        protected void WeaponLoadTest(string path, int index)
-        {
-            if (!IsGeneral)
-            {
-                var data = Items.ItemLoader.GetItem(Items.ItemType.Equipment, path, index) as Items.EquipmentData;
-                if (data != null) _data.EquipmentManager.Equip(data, _realStat);
-                else Debug.Log("data is null :(");
-            }
-        }
     }
 }

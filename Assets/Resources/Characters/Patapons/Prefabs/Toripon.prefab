@@ -403,7 +403,6 @@ GameObject:
   m_Component:
   - component: {fileID: 917716601688046417}
   - component: {fileID: 917716601688046423}
-  - component: {fileID: 917716601688046416}
   - component: {fileID: 6686111299779610682}
   - component: {fileID: -6075534487242457420}
   m_Layer: 8
@@ -447,21 +446,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &917716601688046416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 917716601688046418}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0692b0922a85494bb4c0672704a5aae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _onAfterDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!50 &6686111299779610682
 Rigidbody2D:
   serializedVersion: 4
@@ -492,14 +476,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 917716601688046418}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12b8a34577964104d80b7f341cc3f0f8, type: 3}
+  m_Script: {fileID: 11500000, guid: bd9ba651f5a351c49954519eb7b214b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _defaultStat:
     id: 0
   _type: 6
-  _weaponData: {fileID: 0}
-  _protectorData: {fileID: 0}
   references:
     version: 1
     00000000:

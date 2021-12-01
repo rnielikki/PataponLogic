@@ -7,6 +7,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     {
         public override float MinAttackDistance { get; } = 22;
         public override float WindAttackDistanceOffset { get; } = 4;
+
         private IStaffActions _staffAction;
         private void Start()
         {

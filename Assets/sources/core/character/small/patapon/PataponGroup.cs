@@ -16,7 +16,6 @@ namespace PataRoad.Core.Character.Patapons
         private Display.PataponsHitPointDisplay _pataponsHitPointDisplay;
         public Class.ClassType ClassType { get; internal set; }
         private float _marchDistance;
-        private LayerMask _layerMask;
 
         private PataponsManager _manager;
 
@@ -27,7 +26,6 @@ namespace PataRoad.Core.Character.Patapons
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
             var sample = _patapons[0];
             _marchDistance = sample.AttackDistanceWithOffset;
-            _layerMask = sample.DistanceCalculator.LayerMask;
 
             _manager = manager;
 

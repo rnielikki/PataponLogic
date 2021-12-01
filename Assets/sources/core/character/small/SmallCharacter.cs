@@ -98,7 +98,7 @@ namespace PataRoad.Core.Character
                 CharAnimator.PlayDyingAnimation();
                 yield return new WaitForSeconds(1);
                 AfterDie();
-                _onAfterDeath.Invoke();
+                _onAfterDeath?.Invoke();
                 Destroy(gameObject);
             }
         }
@@ -125,6 +125,5 @@ namespace PataRoad.Core.Character
         }
 
         public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
-        public void AddMass(float mass) => _data.Rigidbody.mass += mass;
     }
 }

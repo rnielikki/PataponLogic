@@ -15,8 +15,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private ParticleSystem _particleSystem;
         private Stat _stat;
         private System.Collections.Generic.List<ParticleCollisionEvent> _collisionEvents;
-        // Start is called before the first frame update
-        void Awake()
+        void Start()
         {
             _collisionEvents = new System.Collections.Generic.List<ParticleCollisionEvent>();
             _particleSystem = GetComponent<ParticleSystem>();
