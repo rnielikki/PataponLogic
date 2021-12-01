@@ -38,6 +38,7 @@ namespace PataRoad.Core.Character
 
         public string WeaponName { get; private set; }
         public string ProtectorName { get; private set; }
+        public Animator Animator { get; private set; }
         private readonly static Dictionary<ClassType, (string weapon, string protector)> _weaponNameMap = new Dictionary<ClassType, (string, string)>()
         {
             { ClassType.Tatepon, ("Sword","Shield")},
@@ -64,6 +65,7 @@ namespace PataRoad.Core.Character
 
         public virtual void Init()
         {
+            Animator = GetComponent<Animator>();
             if (Stat != null) return;
             InitStat();
 

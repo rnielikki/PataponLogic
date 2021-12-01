@@ -47,6 +47,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             var group = new GameObject("PataponGroup");
             group.transform.parent = parent;
+            var distance = PataponEnvironment.GroupDistance;
 
             if (onMission)
             {
@@ -58,8 +59,9 @@ namespace PataRoad.Core.Character.Patapons
             else
             {
                 AddPataponsInstance(classType, group.transform, onMission);
+                distance *= 1.5f;
             }
-            group.transform.localPosition = Vector2.zero + _pataponGroupIndex * PataponEnvironment.GroupDistance * Vector2.left;
+            group.transform.localPosition = Vector2.zero + _pataponGroupIndex * distance * Vector2.left;
             _pataponGroupIndex++;
         }
 
@@ -67,6 +69,11 @@ namespace PataRoad.Core.Character.Patapons
         {
             GameObject general;
             GameObject patapon;
+
+            var generalOffset = onMission ? 0 : 1;
+            var idleDistance = PataponEnvironment.PataponIdleDistance;
+            if (!onMission) idleDistance *= 1.5f;
+
             if (!_pataponObjects.TryGetValue(classType, out (GameObject, GameObject) res))
             {
                 string className = classType.ToString();
@@ -105,7 +112,7 @@ namespace PataRoad.Core.Character.Patapons
                 }
                 _sortingLayerIndex++;
 
-                ponInstance.transform.localPosition = Vector2.zero + offset * PataponEnvironment.PataponIdleDistance * Vector2.left;
+                ponInstance.transform.localPosition = Vector2.zero + (offset * idleDistance + generalOffset) * Vector2.left;
             }
         }
     }

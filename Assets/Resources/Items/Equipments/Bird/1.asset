@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07630dd1bfb8cc54280660ce4f2f085b, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
+  _isUniqueItem: 0
   _group: Bird
   _name: Pelican
   _description: It tries to swallow everything. Patapon and Hazoron is their favourite
-    snack.
+    snack. You dare to train them?!
   _stat:
     id: 0
   _image: {fileID: 21300000, guid: f5a1b677b7dc9234b8f09f3aa57fb677, type: 3}
@@ -27,9 +28,10 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 20
-        _defence: 0
-        _damageMin: 45
-        _damageMax: 55
+        _defenceMin: 1
+        _defenceMax: 2
+        _damageMin: 1
+        _damageMax: 2
         _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0

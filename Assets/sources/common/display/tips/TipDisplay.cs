@@ -14,6 +14,8 @@ namespace PataRoad.Common.GameDisplay
         private UnityEngine.UI.Image _image;
         [SerializeField]
         private UnityEngine.UI.Text _loadingStatus;
+        [SerializeField]
+        private AudioClip _tipSound;
         private static Dictionary<int, TipDisplayData> _allTipsIndex { get; set; }
         private static TipDisplayData[] _allTips { get; set; }
         private InputAction _action;
@@ -45,6 +47,7 @@ namespace PataRoad.Common.GameDisplay
             {
                 LoadTip(_allTips[Random.Range(0, _allTips.Length - 1)]);
             }
+            Core.GlobalData.GlobalAudioSource.PlayOneShot(_tipSound);
         }
         private void LoadTip(TipDisplayData data)
         {

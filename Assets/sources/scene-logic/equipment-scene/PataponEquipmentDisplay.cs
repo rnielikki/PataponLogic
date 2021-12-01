@@ -1,3 +1,4 @@
+using PataRoad.Core.Character;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.EquipmentScene
@@ -14,8 +15,31 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             _audioSource = GetComponent<AudioSource>();
             Core.Character.Patapons.PataponGroupGenerator.Generate(Core.GlobalData.PataponInfo.CurrentClasses, transform);
-            Common.SceneLoadingAction.Create("Battle", true, "Submit", () => Core.GlobalData.GlobalAudioSource.PlayOneShot(_onEnter));
-            Common.SceneLoadingAction.Create("Patapolis", false, "Cancel", () => Core.GlobalData.GlobalAudioSource.PlayOneShot(_onCancel));
+            //Common.SceneLoadingAction.Create("Battle", true, "Submit", StartMission);
+            //Common.SceneLoadingAction.Create("Patapolis", false, "Cancel", GoBack);
+
+            foreach (var patapon in GetComponentsInChildren<PataponData>())
+            {
+                patapon.Animator.Play("walk");
+                if (patapon.Type == Core.Character.Class.ClassType.Toripon)
+                {
+                    patapon.Animator.Play("tori-fly-stop");
+                }
+            }
+            GetComponent<CharacterGroupNavigator>().Init();
+        }
+        private void StartMission()
+        {
+            Exit(_onEnter);
+        }
+        private void GoBack()
+        {
+            Exit(_onCancel);
+        }
+        private void Exit(AudioClip sound)
+        {
+            //And save data to static!
+            Core.GlobalData.GlobalAudioSource.PlayOneShot(sound);
         }
     }
 }

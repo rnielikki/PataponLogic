@@ -28,7 +28,7 @@ namespace PataRoad.Core.Character.Patapons.Data
             _currentClasses = new List<Class.ClassType>()
             {
                 Class.ClassType.Dekapon,
-                Class.ClassType.Yaripon,
+                Class.ClassType.Toripon,
                 Class.ClassType.Yumipon
             };
             //Serialize --
