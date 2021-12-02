@@ -1,62 +1,58 @@
-using PataRoad.Core.Character;
-using System.Collections.Generic;
+using PataRoad.Common.Navigator;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
-    public class CharacterNavigator : MonoBehaviour, ISelectHandler, IDeselectHandler, IMoveHandler
+    public class CharacterNavigator : SpriteNavigator
     {
-        private CharacterSelectable _currentSelectableCharacter;
-        private List<CharacterSelectable> _selectables = new List<CharacterSelectable>();
-        CharacterGroupNavigator _parent;
-        private SpriteRenderer _renderer;
-        private int _index;
-
-        public void Init(CharacterGroupNavigator parent, Sprite groupBackground, GameObject characterBackground)
+        private CharacterGroupNavigator _parent;
+        public void Init(Sprite background, AudioSource audioSource, AudioClip selectSound, UnityEvent<SpriteSelectable> onSelected, UnityEvent<Object> onSubmit)
         {
-            _parent = parent;
-            _renderer = gameObject.AddComponent<SpriteRenderer>();
-            _renderer.sprite = groupBackground;
-            foreach (var patapon in GetComponentsInChildren<PataponData>())
+            _useSprite = true;
+            _background = background;
+            _audioSource = audioSource;
+            _selectSound = selectSound;
+            _onSelected = onSelected;
+
+            _parent = GetComponentInParent<CharacterGroupNavigator>();
+            Init();
+            var onCanceled = new UnityEvent<Object>();
+            onCanceled.AddListener(SelectParent);
+
+            _map = gameObject.AddComponent<SpriteActionMap>();
+            _map.SetSender(this);
+            _map._actionAndEvents = new[]
             {
-                _selectables.Add(Instantiate(characterBackground, patapon.transform).GetComponent<CharacterSelectable>());
-            }
-            _currentSelectableCharacter = _selectables[0];
-            //_currentSelectableCharacter.SelectThis();
+                new SpriteActionMap.AEPair
+                {
+                    ActionName = "UI/Submit",
+                    OnPerformed = onSubmit
+                },
+                new SpriteActionMap.AEPair
+                {
+                    ActionName = "UI/Cancel",
+                    OnPerformed = onCanceled
+                }
+            };
         }
-        public void OnDeselect(BaseEventData eventData)
+        public override void Init()
         {
-            _renderer.color = Color.white;
-        }
-
-        public void OnMove(AxisEventData eventData)
-        {
-            _parent.MoveTo(eventData.moveDir);
-        }
-
-        public void OnSelect(BaseEventData eventData)
-        {
-            _renderer.color = Color.blue;
-        }
-        public void SelectThis() =>
-            EventSystem.current.SetSelectedGameObject(gameObject, null);
-
-        public void MoveTo(MoveDirection direction)
-        {
-            switch (direction)
+            foreach (Transform child in transform)
             {
-                case MoveDirection.Left:
-                    _index = (_index + 1) % _selectables.Count;
-                    break;
-                case MoveDirection.Right:
-                    _index = (_index - 1 + _selectables.Count) % _selectables.Count;
-                    break;
-                default:
-                    return;
+                if (child.GetComponentInChildren<Core.Character.PataponData>() == null) continue;
+
+                var comp = child.gameObject.AddComponent<SpriteSelectable>();
+                if (_useSprite) comp.Init(this, _background, _positionOffset, _onSelected);
+                else comp.Init(this, _backgroundObject, _positionOffset, _onSelected);
+                _navs.Add(comp);
             }
-            _currentSelectableCharacter = _selectables[_index];
-            _currentSelectableCharacter.SelectThis();
+        }
+        private void SelectParent(Object sender)
+        {
+            _parent.enabled = true;
+            _parent.Resume();
+            enabled = false;
         }
     }
 }

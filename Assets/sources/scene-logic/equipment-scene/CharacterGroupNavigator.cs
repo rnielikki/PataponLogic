@@ -1,52 +1,63 @@
-using System.Collections.Generic;
+using PataRoad.Common.Navigator;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
-    public class CharacterGroupNavigator : MonoBehaviour
+    public class CharacterGroupNavigator : SpriteNavigator
     {
         [SerializeField]
-        private Sprite _groupBackground;
+        private Sprite _characterBackground;
         [SerializeField]
-        private GameObject _characterBackground;
+        private AudioClip _childSelectionAudioClip;
         [SerializeField]
-        private AudioClip _selectSound;
-        private AudioSource _audioSource;
-
-        private CharacterNavigator _currentNavigator;
-        private List<CharacterNavigator> _characterNavs = new List<CharacterNavigator>();
-        private int _index;
-        // Start is called before the first frame update
-        public void Init()
+        private UnityEvent<SpriteSelectable> _onChildSelected;
+        [SerializeField]
+        private UnityEvent<Object> _onChildSubmit;
+        private CameraZoom _cameraZoom;
+        public override void Init()
         {
-            _audioSource = GetComponent<AudioSource>();
-            foreach (Transform child in transform)
+            base.Init();
+            _map = GetComponent<SpriteActionMap>();
+            _cameraZoom = Camera.main.GetComponent<CameraZoom>();
+            foreach (var nav in _navs)
             {
-                var comp = child.gameObject.AddComponent<CharacterNavigator>();
-                comp.Init(this, _groupBackground, _characterBackground);
-                _characterNavs.Add(comp);
-                Instantiate(_groupBackground);
+                var navigator = nav.gameObject.AddComponent<CharacterNavigator>();
+                navigator.Init(_characterBackground, _audioSource, _childSelectionAudioClip, _onChildSelected, _onChildSubmit);
+                navigator.enabled = false;
             }
-            _currentNavigator = _characterNavs[0];
-            _currentNavigator.SelectThis();
+            _navs[0].SelectThis();
         }
-        public void MoveTo(MoveDirection direction)
+        public void Zoom()
         {
-            switch (direction)
+            var charNavigator = Current.GetComponent<CharacterNavigator>();
+            charNavigator.enabled = true;
+            charNavigator.Current.SelectThis();
+            _cameraZoom.ZoomIn(charNavigator.transform);
+
+            foreach (var nav in _navs)
             {
-                case MoveDirection.Left:
-                    _index = (_index + 1) % _characterNavs.Count;
-                    break;
-                case MoveDirection.Right:
-                    _index = (_index - 1 + _characterNavs.Count) % _characterNavs.Count;
-                    break;
-                default:
-                    return;
+                if (nav.gameObject != Current.gameObject)
+                {
+                    //Deactivating can cause incorrect action so hiding by moving out of camera position sight.
+                    var pos = nav.transform.position;
+                    pos.z = _cameraZoom.transform.position.z - 10;
+                    nav.transform.position = pos;
+                }
             }
-            _currentNavigator = _characterNavs[_index];
-            _currentNavigator.SelectThis();
-            _audioSource.PlayOneShot(_selectSound);
+            enabled = false;
+        }
+        public void Resume()
+        {
+            _cameraZoom.ZoomOut();
+
+            foreach (var nav in _navs)
+            {
+                var pos = nav.transform.position;
+                pos.z = 0;
+                nav.transform.position = pos;
+            }
+            Current.SelectThis();
         }
     }
 }
