@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     public class Rarepon : Equipment
     {
-        public bool IsNormal => _currentData == null || _currentData.Index == 0;
+        public bool IsNormal => CurrentData == null || CurrentData.Index == 0;
 
         protected override EquipmentType _type => EquipmentType.Rarepon;
 
@@ -20,16 +20,18 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
+            if (HolderData == null) HolderData = GetComponentInParent<SmallCharacterData>();
             var helm = HolderData.EquipmentManager.Helm;
-            if (_currentData.Index != 0 && helm != null)
+
+            if (equipmentData.Index != 0)
             {
-                helm.HideEqupiment(stat);
+                helm?.HideEqupiment(stat);
                 if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = false;
             }
-            else if (helm != null)
+            else
             {
                 if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = true;
-                helm.ShowEqupiment();
+                helm?.ShowEqupiment();
             }
             base.ReplaceEqupiment(equipmentData, stat);
         }
@@ -40,8 +42,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             var color = (equipmentData as RareponData).Color;
 
             Changecolor(color);
-
-            if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = false;
         }
 
         private void Changecolor(Color color)

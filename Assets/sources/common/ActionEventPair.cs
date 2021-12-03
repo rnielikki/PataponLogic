@@ -5,16 +5,16 @@ using UnityEngine.InputSystem;
 namespace PataRoad.Common.Navigator
 {
     /// <summary>
-    /// One key-value pair of action and event map, which is serializable and visible to editor. Use inside <see cref="SpriteActionMap"/>.
+    /// One key-value pair of action and event map, which is serializable and visible to editor. Use inside <see cref="ActionEventMap"/>.
     /// </summary>
     [System.Serializable]
     public class ActionEventPair
     {
         InputAction _action;
-        UnityEvent<Object> _senderEvent;
+        UnityEvent<Object, InputAction.CallbackContext> _senderEvent;
         private Object _sender;
         private bool _addedEvent;
-        public ActionEventPair(string fullActionName, Object sender, UnityEvent<Object> senderEvent)
+        public ActionEventPair(string fullActionName, Object sender, UnityEvent<Object, InputAction.CallbackContext> senderEvent)
         {
             _action = Core.GlobalData.Input.actions.FindAction(fullActionName);
             _sender = sender;
@@ -43,7 +43,7 @@ namespace PataRoad.Common.Navigator
         {
             if (!UnityEngine.EventSystems.EventSystem.current.alreadySelecting)
             {
-                _senderEvent.Invoke(_sender);
+                _senderEvent.Invoke(_sender, callbackContext);
             }
         }
 

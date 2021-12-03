@@ -51,7 +51,7 @@ namespace PataRoad.Core.Character
             { ClassType.Yumipon, ("Bow", null)},
             { ClassType.Mahopon, ("Staff","Shoes")},
         };
-        private Dictionary<EquipmentType, string> _nameByEquipmentType = new Dictionary<EquipmentType, string>()
+        private readonly Dictionary<EquipmentType, string> _nameByEquipmentType = new Dictionary<EquipmentType, string>()
         {
             { EquipmentType.Helm, "Helm" },
             { EquipmentType.Rarepon, "Rarepon" },

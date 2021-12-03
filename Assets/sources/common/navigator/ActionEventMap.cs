@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PataRoad.Common.Navigator
 {
-    public class SpriteActionMap : MonoBehaviour
+    public class ActionEventMap : MonoBehaviour
     {
 #pragma warning disable S1104 // Fields should not have public accessibility. Shut up if you cannot fix editor. Even serializereference does nothing.
         [System.Serializable]
         public class AEPair
         {
             public string ActionName;
-            public UnityEngine.Events.UnityEvent<Object> OnPerformed;
+            public UnityEngine.Events.UnityEvent<Object, InputAction.CallbackContext> OnPerformed;
         }
         public AEPair[] _actionAndEvents;
 #pragma warning restore S1104 // Fields should not have public accessibility

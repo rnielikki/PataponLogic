@@ -13,12 +13,12 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private UnityEvent<SpriteSelectable> _onChildSelected;
         [SerializeField]
-        private UnityEvent<Object> _onChildSubmit;
+        private UnityEvent<Object, UnityEngine.InputSystem.InputAction.CallbackContext> _onChildSubmit;
         private CameraZoom _cameraZoom;
         public override void Init()
         {
             base.Init();
-            _map = GetComponent<SpriteActionMap>();
+            _map = GetComponent<ActionEventMap>();
             _cameraZoom = Camera.main.GetComponent<CameraZoom>();
             foreach (var nav in _navs)
             {
@@ -31,10 +31,23 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public void Zoom()
         {
             var charNavigator = Current.GetComponent<CharacterNavigator>();
-            charNavigator.enabled = true;
-            charNavigator.Current.SelectThis();
-            _cameraZoom.ZoomIn(charNavigator.transform);
+            SelectOther(charNavigator, () => ZoomIn(charNavigator.transform));
+        }
+        public void ResumeFromZoom()
+        {
+            _cameraZoom.ZoomOut();
 
+            foreach (var nav in _navs)
+            {
+                var pos = nav.transform.position;
+                pos.z = 0;
+                nav.transform.position = pos;
+            }
+        }
+
+        private void ZoomIn(Transform targetTransform)
+        {
+            _cameraZoom.ZoomIn(targetTransform);
             foreach (var nav in _navs)
             {
                 if (nav.gameObject != Current.gameObject)
@@ -45,19 +58,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     nav.transform.position = pos;
                 }
             }
-            enabled = false;
-        }
-        public void Resume()
-        {
-            _cameraZoom.ZoomOut();
-
-            foreach (var nav in _navs)
-            {
-                var pos = nav.transform.position;
-                pos.z = 0;
-                nav.transform.position = pos;
-            }
-            Current.SelectThis();
         }
     }
 }

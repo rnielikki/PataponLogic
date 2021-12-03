@@ -17,8 +17,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
             if (HolderData == null) HolderData = GetComponentInParent<SmallCharacterData>();
-            if (!(HolderData.EquipmentManager.Rarepon?.IsNormal ?? false)) return;
-            base.ReplaceEqupiment(equipmentData, stat);
+            if (HolderData.EquipmentManager.Rarepon == null || HolderData.EquipmentManager.Rarepon.IsNormal)
+            {
+                base.ReplaceEqupiment(equipmentData, stat);
+            }
         }
         internal void HideEqupiment(Stat stat)
         {

@@ -10,6 +10,9 @@ namespace PataRoad.Common.Navigator
         private SpriteRenderer _renderer;
         private UnityEvent<SpriteSelectable> _onSelected;
         private UnityEvent<SpriteSelectable> _onDeselected;
+
+        private bool _freeze; //set as deselcted but looks like selected.
+
         internal void Init(SpriteNavigator spriteNavigator, Sprite background, Vector2 positionOffset,
             UnityEvent<SpriteSelectable> onSelected, UnityEvent<SpriteSelectable> onDeselected = null)
         {
@@ -36,22 +39,31 @@ namespace PataRoad.Common.Navigator
             _onDeselected = onDeselected;
 
         }
+        public void Freeze()
+        {
+            _freeze = true;
+            EventSystem.current.SetSelectedGameObject(null, null);
+        }
         public void OnDeselect(BaseEventData eventData)
         {
-            _renderer.enabled = false;
+            if (!_freeze) _renderer.enabled = false;
             _onDeselected?.Invoke(this);
         }
 
         public void OnMove(AxisEventData eventData)
         {
-            _renderer.enabled = false;
-            _parent.MoveTo(eventData.moveDir);
+            if (eventData.moveDir == MoveDirection.Left || eventData.moveDir == MoveDirection.Right)
+            {
+                _renderer.enabled = false;
+                _parent.MoveTo(eventData.moveDir);
+            }
         }
-
         public void OnSelect(BaseEventData eventData)
         {
             _renderer.enabled = true;
             _onSelected?.Invoke(this);
+
+            _freeze = false;
         }
         public void SelectThis()
         {

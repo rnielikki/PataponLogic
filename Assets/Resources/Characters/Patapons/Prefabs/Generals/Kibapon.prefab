@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4188768b6cb67e0449f37ab5dd68bceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _generalName: Hatapon
   _generalModeSound: {fileID: 8300000, guid: 4267fd4cf66a1e74fbcf60b3efe23cbc, type: 3}
   _generalModeData: {fileID: 0}
 --- !u!1001 &4096967221806771822
@@ -30,8 +31,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3310965069107900894, guid: 306d8bbbe36fe4745bac7eb29d567a96, type: 3}
-      propertyPath: _fixedEquipment
+      propertyPath: _hideEquipment
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3310965069107900894, guid: 306d8bbbe36fe4745bac7eb29d567a96, type: 3}
+      propertyPath: _fixedEquipment
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4421656369953560958, guid: 306d8bbbe36fe4745bac7eb29d567a96, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.y
@@ -131,6 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5227443634511312292, guid: 306d8bbbe36fe4745bac7eb29d567a96, type: 3}
+    - {fileID: 1237069669772894955, guid: 306d8bbbe36fe4745bac7eb29d567a96, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 306d8bbbe36fe4745bac7eb29d567a96, type: 3}
 --- !u!1 &8283770400395330673 stripped
 GameObject:

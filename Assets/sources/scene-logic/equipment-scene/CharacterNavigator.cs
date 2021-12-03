@@ -7,7 +7,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
     public class CharacterNavigator : SpriteNavigator
     {
         private CharacterGroupNavigator _parent;
-        public void Init(Sprite background, AudioSource audioSource, AudioClip selectSound, UnityEvent<SpriteSelectable> onSelected, UnityEvent<Object> onSubmit)
+        public void Init(Sprite background, AudioSource audioSource, AudioClip selectSound,
+            UnityEvent<SpriteSelectable> onSelected, UnityEvent<Object, UnityEngine.InputSystem.InputAction.CallbackContext> onSubmit)
         {
             _useSprite = true;
             _background = background;
@@ -17,19 +18,19 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             _parent = GetComponentInParent<CharacterGroupNavigator>();
             Init();
-            var onCanceled = new UnityEvent<Object>();
+            var onCanceled = new UnityEvent<Object, UnityEngine.InputSystem.InputAction.CallbackContext>();
             onCanceled.AddListener(SelectParent);
 
-            _map = gameObject.AddComponent<SpriteActionMap>();
+            _map = gameObject.AddComponent<ActionEventMap>();
             _map.SetSender(this);
             _map._actionAndEvents = new[]
             {
-                new SpriteActionMap.AEPair
+                new ActionEventMap.AEPair
                 {
                     ActionName = "UI/Submit",
                     OnPerformed = onSubmit
                 },
-                new SpriteActionMap.AEPair
+                new ActionEventMap.AEPair
                 {
                     ActionName = "UI/Cancel",
                     OnPerformed = onCanceled
@@ -48,11 +49,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 _navs.Add(comp);
             }
         }
-        private void SelectParent(Object sender)
-        {
-            _parent.enabled = true;
-            _parent.Resume();
-            enabled = false;
-        }
+        private void SelectParent(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
+            => SelectOther(_parent, _parent.ResumeFromZoom);
     }
 }

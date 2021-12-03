@@ -17,6 +17,10 @@ namespace PataRoad.Core.Character.Patapons.General
         private IGeneralEffect _generalEffect;
 
         [SerializeField]
+        private string _generalName;
+        public string GeneralName => _generalName;
+
+        [SerializeField]
         private AudioClip _generalModeSound;
         private Patapon _selfPatapon;
 

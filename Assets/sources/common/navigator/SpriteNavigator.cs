@@ -22,8 +22,9 @@ namespace PataRoad.Common.Navigator
         protected Vector2 _positionOffset;
         [SerializeField]
         protected bool _preserveIndexOnDeselected;
+        public bool PreserveIndexOnDeselected { get; set; }
 
-        protected SpriteActionMap _map;
+        protected ActionEventMap _map;
 
         public SpriteSelectable Current => _navs[_index];
         protected List<SpriteSelectable> _navs = new List<SpriteSelectable>();
@@ -31,6 +32,7 @@ namespace PataRoad.Common.Navigator
         // Start is called before the first frame update
         public virtual void Init()
         {
+            PreserveIndexOnDeselected = _preserveIndexOnDeselected;
             foreach (Transform child in transform)
             {
                 var comp = child.gameObject.AddComponent<SpriteSelectable>();
@@ -39,6 +41,14 @@ namespace PataRoad.Common.Navigator
                 _navs.Add(comp);
             }
             Current.SelectThis();
+        }
+        /// <summary>
+        /// Show as selected, even it's really deselected. This includes deselecting and disabling the navigator.
+        /// </summary>
+        public void Freeze()
+        {
+            Current.Freeze();
+            enabled = false;
         }
         public virtual void MoveTo(MoveDirection direction)
         {
@@ -63,6 +73,7 @@ namespace PataRoad.Common.Navigator
                 spriteSelectable.enabled = true;
             }
             if (_map != null) _map.enabled = true;
+            OnThisEnabled();
         }
         private void OnDisable()
         {
@@ -70,15 +81,25 @@ namespace PataRoad.Common.Navigator
             {
                 spriteSelectable.enabled = false;
             }
-            if (!_preserveIndexOnDeselected)
+            if (!PreserveIndexOnDeselected)
             {
                 _index = 0;
             }
             if (_map != null) _map.enabled = false;
+            OnThisDisabled();
         }
         protected void OnDestroy()
         {
             _onSelected?.RemoveAllListeners();
+        }
+        protected virtual void OnThisEnabled() { }
+        protected virtual void OnThisDisabled() { }
+        protected virtual void SelectOther(SpriteNavigator other, UnityEngine.Events.UnityAction callback = null)
+        {
+            other.enabled = true;
+            callback?.Invoke();
+            other.Current.SelectThis();
+            enabled = false;
         }
         public void DeselectAll()
         {

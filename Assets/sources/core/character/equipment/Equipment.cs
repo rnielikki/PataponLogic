@@ -8,25 +8,14 @@ namespace PataRoad.Core.Character.Equipments
     /// </summary>
     public abstract class Equipment : MonoBehaviour
     {
-        /// <summary>
-        /// The stat bonus that attached to the weapon.
-        /// </summary>
-        [SerializeReference]
-        protected Stat _stat = new Stat();
-        public Stat Stat => _stat;
-        /// <summary>
-        /// Mass of the weapon. The mass affects to the knockback distance. Also it affects to the wind effect.
-        /// </summary>
-        /// <note>This won't affect to the throwing distance.</note>
-        [SerializeField]
-        private float _mass;
-        public float Mass => _mass;
+        public Stat Stat => CurrentData.Stat;
+        public float Mass => CurrentData.Mass;
 
         public SmallCharacter Holder { get; protected set; }
         public SmallCharacterData HolderData { get; protected set; }
         protected SpriteRenderer[] _spriteRenderers;
 
-        protected EquipmentData _currentData;
+        public EquipmentData CurrentData { get; protected set; }
         protected abstract EquipmentType _type { get; }
 
         [SerializeField]
@@ -45,7 +34,7 @@ namespace PataRoad.Core.Character.Equipments
         private void Start()
         {
             Load();
-            if (!_fixedEquipment) _currentData = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, HolderData.GetEquipmentName(_type), 0);
+            if (!_fixedEquipment) CurrentData = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, HolderData.GetEquipmentName(_type), 0);
         }
         internal void Load()
         {
@@ -61,21 +50,20 @@ namespace PataRoad.Core.Character.Equipments
             RemoveDataFromStat(stat);
             if (!_hideEquipment) ReplaceImage(equipmentData);
 
-            _stat = equipmentData.Stat;
-            _mass = equipmentData.Mass;
-            _currentData = equipmentData;
+            CurrentData = equipmentData;
 
             AddDataToStat(stat);
         }
         protected void RemoveDataFromStat(Stat stat)
         {
-            stat.Subtract(_stat);
-            HolderData.AddMass(-_mass);
+            if (CurrentData == null) return;
+            stat.Subtract(Stat);
+            HolderData.AddMass(Mass);
         }
         protected void AddDataToStat(Stat stat)
         {
-            stat.Add(_stat);
-            HolderData.AddMass(_mass);
+            stat.Add(Stat);
+            HolderData.AddMass(Mass);
         }
         protected virtual void LoadRenderersAndImage()
         {

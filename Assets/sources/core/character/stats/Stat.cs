@@ -1,4 +1,6 @@
-﻿namespace PataRoad.Core.Character
+﻿using System.Linq;
+
+namespace PataRoad.Core.Character
 {
     /// <summary>
     /// Reperesents stats for every characters and equipments.
@@ -316,6 +318,35 @@
             SleepRate -= other.SleepRate;
             SleepResistance -= other.SleepResistance;
             return this;
+        }
+        private Stat MidValueTo(Stat stat)
+        {
+            Add(stat);
+            HitPoint /= 2;
+            DefenceMin /= 2;
+            DefenceMax /= 2;
+            DamageMin /= 2;
+            DamageMax /= 2;
+            AttackSeconds /= 2;
+            MovementSpeed /= 2;
+            Critical /= 2;
+            CriticalResistance /= 2;
+            Knockback /= 2;
+            KnockbackResistance /= 2;
+            Stagger /= 2;
+            StaggerResistance /= 2;
+            FireRate /= 2;
+            FireResistance /= 2;
+            IceRate /= 2;
+            IceResistance /= 2;
+            SleepRate /= 2;
+            SleepResistance /= 2;
+            return this;
+        }
+
+        public static Stat GetMidValue(System.Collections.Generic.IEnumerable<Stat> stats)
+        {
+            return stats.Aggregate((s1, s2) => s1.MidValueTo(s2));
         }
         public Stat Copy() => (Stat)MemberwiseClone();
     }

@@ -63,10 +63,9 @@ namespace PataRoad.Core.Character.Patapons
         }
         private void Awake()
         {
-            //--- initialise sats.
-
             //--- init
             Init();
+            IsGeneral = (_data as PataponData).IsGeneral;
             _realStat = _data.Stat;
             StatOperator = new StatOperator(_realStat);
             StatOperator.Add(new PataponStatOperation(this));

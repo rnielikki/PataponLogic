@@ -1,7 +1,6 @@
 ﻿using PataRoad.Core.Character.Equipments.Weapons;
 using PataRoad.Core.Items;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments
 {
@@ -23,6 +22,7 @@ namespace PataRoad.Core.Character.Equipments
         public Protector Protector { get; private set; }
         public Rarepon Rarepon { get; private set; }
         private readonly Dictionary<EquipmentType, Equipment> _map;
+        public IEnumerable<Equipment> Equipments => _map.Values;
         private readonly SmallCharacterData _target;
 
         public EquipmentManager(SmallCharacterData target)
@@ -37,10 +37,10 @@ namespace PataRoad.Core.Character.Equipments
         }
         public void Init()
         {
-            AddToMapIfNotNull(EquipmentType.Helm, Helm, "Helm", _target);
             AddToMapIfNotNull(EquipmentType.Weapon, Weapon, _target.WeaponName, _target);
             AddToMapIfNotNull(EquipmentType.Protector, Protector, _target.ProtectorName, _target);
             AddToMapIfNotNull(EquipmentType.Rarepon, Rarepon, "Rarepon", _target);
+            AddToMapIfNotNull(EquipmentType.Helm, Helm, "Helm", _target);
         }
 
         private void AddToMapIfNotNull<T>(EquipmentType type, T equipment, string equipmentGroup, SmallCharacterData target) where T : Equipment
@@ -48,7 +48,7 @@ namespace PataRoad.Core.Character.Equipments
             if (equipment != null && !equipment.FixedEquipment)
             {
                 _map.Add(type, equipment);
-                if (type != EquipmentType.Rarepon) Equip(ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, equipmentGroup, 0), target.Stat);
+                Equip(ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, equipmentGroup, 0), target.Stat);
             }
         }
         public void Equip(EquipmentData equipmentData, Stat stat)
@@ -57,6 +57,14 @@ namespace PataRoad.Core.Character.Equipments
             {
                 eq.ReplaceEqupiment(equipmentData, stat);
             }
+        }
+        public EquipmentData GetEquipmentData(EquipmentType type)
+        {
+            if (_map.TryGetValue(type, out Equipment eq))
+            {
+                return eq.CurrentData;
+            }
+            else return null;
         }
     }
 }
