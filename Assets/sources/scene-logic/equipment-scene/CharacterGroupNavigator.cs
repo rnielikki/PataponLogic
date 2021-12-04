@@ -59,5 +59,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 }
             }
         }
+        public void SelectCurrent(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            (sender as GameObject).SetActive(false);
+            enabled = true;
+            Current?.SelectThis();
+        }
     }
 }

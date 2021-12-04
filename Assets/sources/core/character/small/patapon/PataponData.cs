@@ -3,7 +3,7 @@ using PataRoad.Core.Items;
 
 namespace PataRoad.Core.Character
 {
-    class PataponData : SmallCharacterData
+    public class PataponData : SmallCharacterData
     {
         //private PataponClassEquipmentInfo _equipmentInfo;
         public int IndexInGroup { get; internal set; }

@@ -50,6 +50,7 @@ namespace PataRoad.Common.Navigator
             Current.Freeze();
             enabled = false;
         }
+
         public virtual void MoveTo(MoveDirection direction)
         {
             switch (direction)

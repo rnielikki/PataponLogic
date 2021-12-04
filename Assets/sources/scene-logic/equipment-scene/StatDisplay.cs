@@ -83,6 +83,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             UpdateStat(stat, data.Average(d => d.Rigidbody.mass));
         }
+        public void UpdateGroup(ClassSelectionInfo info)
+        {
+            //UpdateStat(info.StatAverage, info.MassAverage);
+        }
         public void UpdateIndividual(SpriteSelectable selectable)
         {
             var pataponData = selectable.GetComponent<PataponData>();

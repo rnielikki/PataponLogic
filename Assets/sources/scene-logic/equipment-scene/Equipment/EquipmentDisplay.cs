@@ -56,7 +56,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             _rect.anchorMin = pos;
             _rect.anchorMax = pos;
-
         }
         public void HideEquipment(Object sender)
         {

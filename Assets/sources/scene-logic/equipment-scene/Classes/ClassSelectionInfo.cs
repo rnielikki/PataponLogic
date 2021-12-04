@@ -1,5 +1,7 @@
 ﻿using PataRoad.Core.Character.Class;
 using PataRoad.Core.Character.Patapons;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,7 +12,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private ClassType _classType;
         public ClassType ClassType => _classType;
-        private GameObject _generalObject;
+        public GameObject GeneralObject { get; private set; }
         public string GeneralName { get; private set; }
 
         [SerializeField]
@@ -28,21 +30,28 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         [TextArea]
         private string _groupEffectDescription;
-
         public string GroupEffectDescription => _groupEffectDescription;
+
+        public Core.Character.Stat StatAverage { get; private set; }
+        public float MassAverage { get; private set; }
+        private IEnumerable<Core.Character.PataponData> _members;
+
         private void Awake()
         {
-            _generalObject = PataponGroupGenerator.GetGeneralObject(_classType);
-            GeneralName = _generalObject.GetComponent<Core.Character.Patapons.General.PataponGeneral>().GeneralName;
+            GeneralObject = GetGeneralObject();
+            GeneralName = GeneralObject.GetComponent<Core.Character.Patapons.General.PataponGeneral>().GeneralName;
+            if (_members == null) _members = PataponGroupGenerator.GetGroupMembers(_classType);
         }
-        public GameObject GetGeneralObject()
+        private GameObject GetGeneralObject()
         {
-            var obj = Instantiate(_generalObject);
-            obj.GetComponent<Core.Character.PataponData>().enabled = false;
+            var obj = Instantiate(PataponGroupGenerator.GetGeneralObject(_classType));
+            var data = obj.GetComponent<Core.Character.PataponData>();
+            data.enabled = false;
             foreach (var eq in obj.GetComponentsInChildren<Core.Character.Equipments.Equipment>())
             {
                 eq.enabled = false;
             }
+            obj.SetActive(false);
             return obj;
         }
 

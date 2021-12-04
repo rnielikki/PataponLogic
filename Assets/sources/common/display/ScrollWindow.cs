@@ -31,7 +31,6 @@ namespace PataRoad.Common.GameDisplay
         }
         private void OnDisable()
         {
-            _action.Disable();
             _action.performed -= Scroll;
         }
         private void OnDestroy()
@@ -54,6 +53,12 @@ namespace PataRoad.Common.GameDisplay
             _content.anchoredPosition = pos;
             _upArrow.enabled = pos.y != 0;
             _downArrow.enabled = pos.y != maxScroll;
+        }
+        public void Refresh()
+        {
+            _downArrow.enabled = true;
+            _upArrow.enabled = false;
+            _content.anchoredPosition = new Vector2(_content.anchoredPosition.x, 0);
         }
         private void OnValidate()
         {

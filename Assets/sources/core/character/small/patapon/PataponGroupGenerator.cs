@@ -43,6 +43,7 @@ namespace PataRoad.Core.Character.Patapons
                 AddPataponGroupInstance(patapon, parent, null, false);
             }
         }
+        // -------- ADD WEAPON LATER ----------
         private static void AddPataponGroupInstance(Class.ClassType classType, Transform parent, PataponsManager manager, bool onMission)
         {
             var group = new GameObject("PataponGroup");
@@ -112,6 +113,21 @@ namespace PataRoad.Core.Character.Patapons
 
         }
         public static GameObject GetGeneralObject(Class.ClassType classType) => LoadResource(classType).general;
+        // -------- ADD WEAPON LATER ----------
+        public static System.Collections.Generic.IEnumerable<PataponData> GetGroupMembers(Class.ClassType classType)
+        {
+            var (general, pon) = LoadResource(classType);
+
+            //later instantiate and add weapons
+            var res = (new GameObject[] { general, pon, pon, pon }).Select(p => Object.Instantiate(p).GetComponent<PataponData>());
+            foreach (var patapon in res)
+            {
+                patapon.Init();
+                patapon.gameObject.SetActive(false);
+            }
+            return res;
+        }
+
         private static (GameObject general, GameObject patapon) LoadResource(Class.ClassType classType)
         {
             if (!_pataponObjects.TryGetValue(classType, out (GameObject, GameObject) res))

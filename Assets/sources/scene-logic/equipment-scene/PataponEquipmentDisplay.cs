@@ -9,14 +9,25 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private AudioClip _onEnter;
         [SerializeField]
         private AudioClip _onCancel;
+        private PataponData[] _patapons;
         // Start is called before the first frame update
         void Start()
         {
             Core.Character.Patapons.PataponGroupGenerator.Generate(Core.GlobalData.PataponInfo.CurrentClasses, transform);
             //Common.SceneLoadingAction.Create("Battle", true, "Submit", StartMission);
             //Common.SceneLoadingAction.Create("Patapolis", false, "Cancel", GoBack);
+            _patapons = GetComponentsInChildren<PataponData>();
+            Animate();
 
-            foreach (var patapon in GetComponentsInChildren<PataponData>())
+            GetComponent<CharacterGroupNavigator>().Init();
+        }
+        private void OnEnable()
+        {
+            if (_patapons != null) Animate();
+        }
+        private void Animate()
+        {
+            foreach (var patapon in _patapons)
             {
                 patapon.Animator.Play("walk");
                 if (patapon.Type == Core.Character.Class.ClassType.Toripon)
@@ -24,7 +35,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     patapon.Animator.Play("tori-fly-stop");
                 }
             }
-            GetComponent<CharacterGroupNavigator>().Init();
         }
         private void StartMission()
         {

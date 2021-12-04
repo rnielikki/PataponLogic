@@ -37,7 +37,6 @@ namespace PataRoad.Common.Navigator
             _renderer.enabled = false;
             _onSelected = onSelected;
             _onDeselected = onDeselected;
-
         }
         public void Freeze()
         {
