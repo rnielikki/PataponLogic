@@ -74,13 +74,8 @@ namespace PataRoad.Core.Character.Patapons
             var idleDistance = PataponEnvironment.PataponIdleDistance;
             if (!onMission) idleDistance *= 1.5f;
 
-            if (!_pataponObjects.TryGetValue(classType, out (GameObject, GameObject) res))
-            {
-                string className = classType.ToString();
-                general = Resources.Load<GameObject>(_pataponGeneralPrefabPath + className);
-                patapon = Resources.Load<GameObject>(_pataponPrefabPath + className);
-            }
-            else (general, patapon) = res;
+
+            (general, patapon) = LoadResource(classType);
 
             var patapons = new GameObject[4];
             patapons[0] = Object.Instantiate(general, attachTarget);
@@ -114,6 +109,18 @@ namespace PataRoad.Core.Character.Patapons
 
                 ponInstance.transform.localPosition = Vector2.zero + (offset * idleDistance + generalOffset) * Vector2.left;
             }
+
+        }
+        public static GameObject GetGeneralObject(Class.ClassType classType) => LoadResource(classType).general;
+        private static (GameObject general, GameObject patapon) LoadResource(Class.ClassType classType)
+        {
+            if (!_pataponObjects.TryGetValue(classType, out (GameObject, GameObject) res))
+            {
+                string className = classType.ToString();
+                return (Resources.Load<GameObject>(_pataponGeneralPrefabPath + className),
+                    Resources.Load<GameObject>(_pataponPrefabPath + className));
+            }
+            else return res;
         }
     }
 }
