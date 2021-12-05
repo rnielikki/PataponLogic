@@ -994,7 +994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultStat:
     id: 0
-  _type: 0
+  _type: 4
   _weaponData: {fileID: 11400000, guid: fd34f0dc7ae3a294c90a7559e3b06767, type: 2}
   _protectorData: {fileID: 0}
   references:
@@ -1323,34 +1323,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df95dad131d399c428239eebde0933c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stat:
-    id: 0
-  _mass: 1
+  _fixedEquipment: 0
+  _hideEquipment: 0
   _attackType: 3
-  references:
-    version: 1
-    00000000:
-      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _hitPoint: 0
-        _defenceMin: 0
-        _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
-        _attackSeconds: 0
-        _movementSpeed: 0
-        _critical: 0
-        _stagger: 0
-        _knockback: 0
-        _criticalResistance: 0
-        _staggerResistance: 0
-        _knockbackResistance: 0
-        _fireRate: 0
-        _iceRate: 0
-        _sleepRate: 0
-        _fireResistance: 0
-        _iceResistance: 0
-        _sleepResistance: 0
 --- !u!1 &6647991444214415934
 GameObject:
   m_ObjectHideFlags: 0

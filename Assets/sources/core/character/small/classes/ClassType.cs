@@ -2,14 +2,14 @@
 {
     public enum ClassType
     {
-        Yaripon,
         Tatepon,
-        Yumipon,
-        Kibapon,
         Dekapon,
+        Robopon,
+        Kibapon,
+        Yaripon,
         Megapon,
         Toripon,
-        Robopon,
+        Yumipon,
         Mahopon
     }
 }
