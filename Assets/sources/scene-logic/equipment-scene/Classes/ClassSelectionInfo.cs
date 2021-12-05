@@ -11,7 +11,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         [SerializeField]
         CharacterGroupSaver _groupDataSaver;
-        private GameObject _groupObject;
+        public GameObject GroupObject { get; private set; }
 
         [SerializeField]
         private ClassType _classType;
@@ -41,9 +41,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         void Start()
         {
-            _groupObject = _groupDataSaver.GetGroup(_classType);
+            GroupObject = _groupDataSaver.GetGroup(_classType);
 
-            var general = _groupObject.GetComponentInChildren<Core.Character.Patapons.General.PataponGeneral>(true);
+            var general = GroupObject.GetComponentInChildren<Core.Character.Patapons.General.PataponGeneral>(true);
             GeneralObject = Instantiate(general.gameObject);
             var generalData = GeneralObject.GetComponent<PataponData>();
             generalData.DisableAllEquipments();
@@ -55,7 +55,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private void CalculateData()
         {
-            var data = _groupObject.GetComponentsInChildren<PataponData>();
+            var data = GroupObject.GetComponentsInChildren<PataponData>();
             StatAverage = Stat.GetMidValue(data.Select(p => p.Stat));
             MassAverage = data.Average(p => p.Rigidbody.mass);
         }

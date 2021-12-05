@@ -1,4 +1,6 @@
 using PataRoad.Common.Navigator;
+using System;
+using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.EquipmentScene
@@ -11,6 +13,16 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private CharacterNavigator[] _navigators;
         [SerializeField]
         private GameObject _summaryField;
+        [SerializeField]
+        private GameObject _equipmentSummaryField;
+        [SerializeField]
+        AudioClip _soundIn;
+        [SerializeField]
+        AudioClip _soundOut;
+        [SerializeField]
+        AudioClip _soundError;
+        [SerializeField]
+        ClassMenu _classMenu;
 
         public override void Init()
         {
@@ -29,6 +41,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             {
                 SelectOther(charNavigator, () => ZoomIn(charNavigator.transform));
                 _summaryField.SetActive(false);
+                _equipmentSummaryField.SetActive(true);
             }
         }
         public void ResumeFromZoom()
@@ -59,13 +72,54 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void SelectCurrent(ClassSelectionInfo info, bool saved)
         {
-            Current?.SelectThis();
-            _groupSaver.Animate(gameObject);
             if (saved)
             {
-                //update data
+                Current?.OnDeselect(null);
+                RemoveChildren();
+                AddTarget(info);
+                ReOrderIndex();
+
+                _audioSource.PlayOneShot(_soundIn);
+                _classMenu.UpdateStatus();
+            }
+            _groupSaver.Animate(gameObject);
+            Current?.SelectThis();
+        }
+        public void RemoveTarget()
+        {
+            _audioSource.PlayOneShot(RemoveChildren() ? _soundOut : _soundError);
+        }
+        private bool RemoveChildren()
+        {
+            //1. remove old, if exists.-------------------------
+            if (!_navigators[_index].IsEmpty)
+            {
+                var oldObject = GetPataponGroupObject(Current);
+                oldObject.transform.parent = transform.root.parent;
+                oldObject.SetActive(false);
+                Core.GlobalData.PataponInfo.RemoveClass(
+                    oldObject.GetComponentInChildren<Core.Character.PataponData>().Type
+                );
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
+        private GameObject GetPataponGroupObject(SpriteSelectable target) => target.transform.Find("PataponGroup")?.gameObject;
+        private void AddTarget(ClassSelectionInfo info)
+        {
+            //2. add new-----------------------------------
+            var targetGroupObject = info.GroupObject;
+            targetGroupObject.transform.parent = Current.transform;
+            targetGroupObject.transform.position = Current.transform.position;
+            targetGroupObject.SetActive(true);
+            _navigators[_index].Init();
+            //update data
+            Core.GlobalData.PataponInfo.AddClass(info.ClassType);
+        }
+
         public void UpdateClasses()
         {
             var classes = Core.GlobalData.PataponInfo.CurrentClasses;
@@ -81,11 +135,37 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 charNav.Init();
             }
         }
-        public void PlaceGroup(int index)
+        private void ReOrderIndex()
         {
+            //this is before ordering index.
+            var oldIndex = _index;
+            var allGroupObjects = _selectables.Select(s => GetPataponGroupObject(s)).Where(s => s != null);
+            var allGroupObjectsToArray = allGroupObjects.ToArray();
+
+            //this is right index.
+            var ordered = allGroupObjects.OrderBy(s => s.GetComponentInChildren<Core.Character.PataponData>().Type).ToArray();
+            foreach (var current in allGroupObjects)
+            {
+                var indexOld = Array.IndexOf(allGroupObjectsToArray, current);
+                var indexNew = Array.IndexOf(ordered, current);
+                if (indexOld < 0 || indexNew < 0) throw new System.InvalidOperationException("WTF");
+                MoveGroupTo(current, indexOld, indexNew);
+                if (oldIndex == indexOld)
+                {
+                    _index = indexNew;
+                }
+            }
+            //lastly select the new index
         }
-        public void RemoveGroup()
+        private void MoveGroupTo(GameObject pataponGroup, int beforeIndex, int newIndex)
         {
+            if (beforeIndex != newIndex)
+            {
+                var targetTransform = _navigators[newIndex].transform;
+                pataponGroup.transform.parent = targetTransform;
+                pataponGroup.transform.position = targetTransform.position;
+                pataponGroup.GetComponentInParent<CharacterNavigator>().Init();
+            }
         }
     }
 }

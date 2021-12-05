@@ -89,15 +89,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             UpdateStat(stat, data.Average(d => d.Rigidbody.mass));
         }
-        private void Empty()
-        {
-            //empty the data...
-        }
-
         public void UpdateGroup(ClassSelectionInfo info)
         {
             UpdateStat(info.StatAverage, info.MassAverage);
         }
+
         public void UpdateIndividual(SpriteSelectable selectable)
         {
             var pataponData = selectable.GetComponent<PataponData>();
@@ -108,6 +104,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             UpdateStat(pataponData.Stat, pataponData.Rigidbody.mass);
         }
+        private void Empty()
+        {
+            //empty the data...
+        }
+
         private void OnChangedToGroup()
         {
             _bg1.color = _backgroundAsGroup;

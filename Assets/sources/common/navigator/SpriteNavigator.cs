@@ -22,7 +22,7 @@ namespace PataRoad.Common.Navigator
         protected AudioSource _audioSource;
         [SerializeField]
         protected UnityEngine.Events.UnityEvent<SpriteSelectable> _onSelected = new UnityEngine.Events.UnityEvent<SpriteSelectable>();
-        public virtual UnityEngine.Events.UnityEvent<SpriteSelectable> OnSelected { get; protected set; }
+        public UnityEngine.Events.UnityEvent<SpriteSelectable> OnSelected => _onSelected;
         [SerializeField]
         protected Vector2 _positionOffset;
         public Vector2 PositionOffset => _positionOffset;
@@ -38,7 +38,6 @@ namespace PataRoad.Common.Navigator
         // Start is called before the first frame update
         public virtual void Init()
         {
-            OnSelected = _onSelected;
             PreserveIndexOnDeselected = _preserveIndexOnDeselected;
             _selectables.Clear();
             foreach (Transform child in transform)

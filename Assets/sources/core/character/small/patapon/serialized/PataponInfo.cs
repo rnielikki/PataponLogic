@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -34,6 +35,7 @@ namespace PataRoad.Core.Character.Patapons.Data
                 Class.ClassType.Mahopon,
                 Class.ClassType.Robopon
             };
+            Order();
             //Serialize --
         }
         public void ReplaceClass(Class.ClassType from, Class.ClassType to)
@@ -56,6 +58,8 @@ namespace PataRoad.Core.Character.Patapons.Data
         {
             _currentClasses = _currentClasses.OrderBy(c => (int)c).ToList();
         }
+
+        internal bool ContainsClass(Class.ClassType type) => _currentClasses.Contains(type);
 
         public void Serialize()
         {

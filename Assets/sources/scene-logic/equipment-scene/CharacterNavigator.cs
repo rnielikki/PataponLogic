@@ -13,8 +13,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
         /// </summary>
         public override void Init()
         {
-            _parent = GetComponentInParent<CharacterGroupNavigator>();
+            if (_parent == null) _parent = GetComponentInParent<CharacterGroupNavigator>();
             if (_map == null) _map = GetComponent<ActionEventMap>();
+
             _selectables.Clear();
             foreach (var comp in GetComponentsInChildren<SpriteSelectable>())
             {

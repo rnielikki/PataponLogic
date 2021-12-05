@@ -12,7 +12,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void Start()
         {
             Init();
-            _damageSeconds = Holder.Stat.AttackSeconds / 4;
+            if (Holder != null) _damageSeconds = Holder.Stat.AttackSeconds / 4;
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
