@@ -155,7 +155,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     _index = indexNew;
                 }
             }
-            //lastly select the new index
+            //Finally, match to right index (note that it's not in progress. If you do in progress it'll cause bug.)
+            foreach (var comp in GetComponentsInChildren<CharacterNavigator>()) comp.Init();
         }
         private void MoveGroupTo(GameObject pataponGroup, int beforeIndex, int newIndex)
         {
@@ -164,7 +165,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 var targetTransform = _navigators[newIndex].transform;
                 pataponGroup.transform.parent = targetTransform;
                 pataponGroup.transform.position = targetTransform.position;
-                pataponGroup.GetComponentInParent<CharacterNavigator>().Init();
             }
         }
     }
