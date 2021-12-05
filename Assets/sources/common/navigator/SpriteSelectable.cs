@@ -9,34 +9,36 @@ namespace PataRoad.Common.Navigator
         private SpriteNavigator _parent;
         private SpriteRenderer _renderer;
         private UnityEvent<SpriteSelectable> _onSelected;
-        private UnityEvent<SpriteSelectable> _onDeselected;
 
         private bool _freeze; //set as deselcted but looks like selected.
 
-        internal void Init(SpriteNavigator spriteNavigator, Sprite background, Vector2 positionOffset,
-            UnityEvent<SpriteSelectable> onSelected, UnityEvent<SpriteSelectable> onDeselected = null)
+        internal void Init(SpriteNavigator navigator)
         {
-            var bg = new GameObject("selectingSprite");
-            _renderer = bg.AddComponent<SpriteRenderer>();
-            _renderer.sprite = background;
-            InitCommon(spriteNavigator, bg, positionOffset, onSelected, onDeselected);
-        }
-        internal void Init(SpriteNavigator spriteNavigator, GameObject backgroundObject, Vector2 positionOffset,
-            UnityEvent<SpriteSelectable> onSelected, UnityEvent<SpriteSelectable> onDeselected = null)
-        {
-            var bg = Instantiate(backgroundObject);
-            _renderer = bg.GetComponentInChildren<SpriteRenderer>();
-            InitCommon(spriteNavigator, bg, positionOffset, onSelected, onDeselected);
+            _parent = navigator;
+            GameObject bg;
+            if (navigator.UseSprite)
+            {
+                var background = navigator.Background;
+                bg = new GameObject("selectingSprite");
+                _renderer = bg.AddComponent<SpriteRenderer>();
+                _renderer.sprite = background;
+            }
+            else
+            {
+                var backgroundObject = navigator.BackgroundObject;
+                bg = Instantiate(backgroundObject);
+                _renderer = bg.GetComponentInChildren<SpriteRenderer>();
+            }
+            InitCommon(navigator, bg, navigator.PositionOffset, navigator.OnSelected);
         }
         private void InitCommon(SpriteNavigator spriteNavigator, GameObject instantiated, Vector2 positionOffset,
-            UnityEvent<SpriteSelectable> onSelected, UnityEvent<SpriteSelectable> onDeselected = null)
+            UnityEvent<SpriteSelectable> onSelected)
         {
             _parent = spriteNavigator;
             instantiated.transform.parent = transform;
             instantiated.transform.position = transform.position + (Vector3)positionOffset;
             _renderer.enabled = false;
             _onSelected = onSelected;
-            _onDeselected = onDeselected;
         }
         public void Freeze()
         {
@@ -46,7 +48,6 @@ namespace PataRoad.Common.Navigator
         public void OnDeselect(BaseEventData eventData)
         {
             if (!_freeze) _renderer.enabled = false;
-            _onDeselected?.Invoke(this);
         }
 
         public void OnMove(AxisEventData eventData)

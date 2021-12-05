@@ -1,43 +1,41 @@
 using PataRoad.Common.Navigator;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
     public class CharacterGroupNavigator : SpriteNavigator
     {
-        [SerializeField]
-        private Sprite _characterBackground;
-        [SerializeField]
-        private AudioClip _childSelectionAudioClip;
-        [SerializeField]
-        private UnityEvent<SpriteSelectable> _onChildSelected;
-        [SerializeField]
-        private UnityEvent<Object, UnityEngine.InputSystem.InputAction.CallbackContext> _onChildSubmit;
+
         private CameraZoom _cameraZoom;
+        private CharacterGroupSaver _groupSaver;
+        private CharacterNavigator[] _navigators;
+        [SerializeField]
+        private GameObject _summaryField;
+
         public override void Init()
         {
-            base.Init();
             _map = GetComponent<ActionEventMap>();
             _cameraZoom = Camera.main.GetComponent<CameraZoom>();
-            foreach (var nav in _navs)
-            {
-                var navigator = nav.gameObject.AddComponent<CharacterNavigator>();
-                navigator.Init(_characterBackground, _audioSource, _childSelectionAudioClip, _onChildSelected, _onChildSubmit);
-                navigator.enabled = false;
-            }
-            _navs[0].SelectThis();
+            _groupSaver = GetComponent<CharacterGroupSaver>();
+
+            _navigators = GetComponentsInChildren<CharacterNavigator>();
+            UpdateClasses();
+            base.Init();
         }
         public void Zoom()
         {
             var charNavigator = Current.GetComponent<CharacterNavigator>();
-            SelectOther(charNavigator, () => ZoomIn(charNavigator.transform));
+            if (!charNavigator.IsEmpty)
+            {
+                SelectOther(charNavigator, () => ZoomIn(charNavigator.transform));
+                _summaryField.SetActive(false);
+            }
         }
         public void ResumeFromZoom()
         {
             _cameraZoom.ZoomOut();
 
-            foreach (var nav in _navs)
+            foreach (var nav in _selectables)
             {
                 var pos = nav.transform.position;
                 pos.z = 0;
@@ -48,7 +46,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private void ZoomIn(Transform targetTransform)
         {
             _cameraZoom.ZoomIn(targetTransform);
-            foreach (var nav in _navs)
+            foreach (var nav in _selectables)
             {
                 if (nav.gameObject != Current.gameObject)
                 {
@@ -59,11 +57,35 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 }
             }
         }
-        public void SelectCurrent(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
+        public void SelectCurrent(ClassSelectionInfo info, bool saved)
         {
-            (sender as GameObject).SetActive(false);
-            enabled = true;
             Current?.SelectThis();
+            _groupSaver.Animate(gameObject);
+            if (saved)
+            {
+                //update data
+            }
+        }
+        public void UpdateClasses()
+        {
+            var classes = Core.GlobalData.PataponInfo.CurrentClasses;
+            for (int i = 0; i < Core.Character.Patapons.Data.PataponInfo.MaxPataponGroup; i++)
+            {
+                var charNav = _navigators[i];
+                if (i < classes.Length)
+                {
+                    var group = _groupSaver.LoadGroup(classes[i]);
+                    group.transform.position = charNav.transform.position;
+                    group.transform.parent = charNav.transform;
+                }
+                charNav.Init();
+            }
+        }
+        public void PlaceGroup(int index)
+        {
+        }
+        public void RemoveGroup()
+        {
         }
     }
 }

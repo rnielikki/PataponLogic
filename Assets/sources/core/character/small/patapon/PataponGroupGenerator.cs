@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Patapons
@@ -13,15 +14,15 @@ namespace PataRoad.Core.Character.Patapons
         private static int _pataponGroupIndex;
         private static int _sortingLayerIndex;
 
-        private static System.Collections.Generic.Dictionary<Class.ClassType, (GameObject general, GameObject patapon)> _pataponObjects { get; }
-            = new System.Collections.Generic.Dictionary<Class.ClassType, (GameObject, GameObject)>();
+        private static Dictionary<Class.ClassType, (GameObject general, GameObject patapon)> _pataponObjects { get; }
+            = new Dictionary<Class.ClassType, (GameObject, GameObject)>();
 
         /// <summary>
         /// Generates Patapons automatically on mission.
         /// </summary>
         /// <param name="patapons">Array of Patapon types to create.</param>
         /// <param name="manager"><see cref="PataponManager"/> to reference. Also its transform is used to set as groups' parent.</param>
-        internal static void Generate(System.Collections.Generic.IEnumerable<Class.ClassType> patapons, PataponsManager manager)
+        internal static void Generate(IEnumerable<Class.ClassType> patapons, PataponsManager manager)
         {
             _pataponGroupIndex = 0;
             _sortingLayerIndex = 0;
@@ -31,24 +32,29 @@ namespace PataRoad.Core.Character.Patapons
             }
         }
         /// <summary>
-        /// Generates Patapons automatically outside mission.
+        /// Generates every Patapons automatically outside mission.
         /// </summary>
-        /// <param name="patapons">Array of Patapon types to create.</param>
-        internal static void Generate(System.Collections.Generic.IEnumerable<Class.ClassType> patapons, Transform parent)
+        /// <param name="parent">Parent of the group objects.</param>
+        /// <returns>Group dictionary.</returns>
+        internal static Dictionary<Class.ClassType, GameObject> Generate(Transform parent)
         {
             _pataponGroupIndex = 0;
             _sortingLayerIndex = 0;
-            foreach (var patapon in patapons)
+            Dictionary<Class.ClassType, GameObject> pataponGroups = new Dictionary<Class.ClassType, GameObject>();
+            foreach (var pataponClass in System.Enum.GetValues(typeof(Class.ClassType)))
             {
-                AddPataponGroupInstance(patapon, parent, null, false);
+                var classType = (Class.ClassType)pataponClass;
+                var group = AddPataponGroupInstance(classType, parent, null, false);
+                pataponGroups.Add(classType, group);
+                group.SetActive(false);
             }
+            return pataponGroups;
         }
         // -------- ADD WEAPON LATER ----------
-        private static void AddPataponGroupInstance(Class.ClassType classType, Transform parent, PataponsManager manager, bool onMission)
+        private static GameObject AddPataponGroupInstance(Class.ClassType classType, Transform parent, PataponsManager manager, bool onMission)
         {
             var group = new GameObject("PataponGroup");
             group.transform.parent = parent;
-            var distance = PataponEnvironment.GroupDistance;
 
             if (onMission)
             {
@@ -56,14 +62,14 @@ namespace PataRoad.Core.Character.Patapons
                 groupScript.ClassType = classType;
                 AddPataponsInstance(classType, group.transform, onMission);
                 groupScript.Init(manager);
+                group.transform.localPosition = Vector2.zero + _pataponGroupIndex * PataponEnvironment.GroupDistance * Vector2.left;
             }
             else
             {
                 AddPataponsInstance(classType, group.transform, onMission);
-                distance *= 1.5f;
             }
-            group.transform.localPosition = Vector2.zero + _pataponGroupIndex * distance * Vector2.left;
             _pataponGroupIndex++;
+            return group;
         }
 
         private static void AddPataponsInstance(Class.ClassType classType, Transform attachTarget, bool onMission)
@@ -111,21 +117,6 @@ namespace PataRoad.Core.Character.Patapons
                 ponInstance.transform.localPosition = Vector2.zero + (offset * idleDistance + generalOffset) * Vector2.left;
             }
 
-        }
-        public static GameObject GetGeneralObject(Class.ClassType classType) => LoadResource(classType).general;
-        // -------- ADD WEAPON LATER ----------
-        public static System.Collections.Generic.IEnumerable<PataponData> GetGroupMembers(Class.ClassType classType)
-        {
-            var (general, pon) = LoadResource(classType);
-
-            //later instantiate and add weapons
-            var res = (new GameObject[] { general, pon, pon, pon }).Select(p => Object.Instantiate(p).GetComponent<PataponData>());
-            foreach (var patapon in res)
-            {
-                patapon.Init();
-                patapon.gameObject.SetActive(false);
-            }
-            return res;
         }
 
         private static (GameObject general, GameObject patapon) LoadResource(Class.ClassType classType)

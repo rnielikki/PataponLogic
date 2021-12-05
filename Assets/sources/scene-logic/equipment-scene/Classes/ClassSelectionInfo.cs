@@ -1,6 +1,5 @@
-﻿using PataRoad.Core.Character.Class;
-using PataRoad.Core.Character.Patapons;
-using System.Collections.Generic;
+﻿using PataRoad.Core.Character;
+using PataRoad.Core.Character.Class;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,6 +8,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
 {
     public class ClassSelectionInfo : MonoBehaviour, ISelectHandler
     {
+
+        [SerializeField]
+        CharacterGroupSaver _groupDataSaver;
+        private GameObject _groupObject;
+
         [SerializeField]
         private ClassType _classType;
         public ClassType ClassType => _classType;
@@ -32,27 +36,28 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private string _groupEffectDescription;
         public string GroupEffectDescription => _groupEffectDescription;
 
-        public Core.Character.Stat StatAverage { get; private set; }
+        public Stat StatAverage { get; private set; }
         public float MassAverage { get; private set; }
-        private IEnumerable<Core.Character.PataponData> _members;
 
-        private void Awake()
+        void Start()
         {
-            GeneralObject = GetGeneralObject();
-            GeneralName = GeneralObject.GetComponent<Core.Character.Patapons.General.PataponGeneral>().GeneralName;
-            if (_members == null) _members = PataponGroupGenerator.GetGroupMembers(_classType);
+            _groupObject = _groupDataSaver.GetGroup(_classType);
+
+            var general = _groupObject.GetComponentInChildren<Core.Character.Patapons.General.PataponGeneral>(true);
+            GeneralObject = Instantiate(general.gameObject);
+            var generalData = GeneralObject.GetComponent<PataponData>();
+            generalData.DisableAllEquipments();
+            generalData.enabled = false;
+
+            GeneralName = general.GeneralName;
+            GeneralObject.SetActive(false);
+            CalculateData();
         }
-        private GameObject GetGeneralObject()
+        private void CalculateData()
         {
-            var obj = Instantiate(PataponGroupGenerator.GetGeneralObject(_classType));
-            var data = obj.GetComponent<Core.Character.PataponData>();
-            data.enabled = false;
-            foreach (var eq in obj.GetComponentsInChildren<Core.Character.Equipments.Equipment>())
-            {
-                eq.enabled = false;
-            }
-            obj.SetActive(false);
-            return obj;
+            var data = _groupObject.GetComponentsInChildren<PataponData>();
+            StatAverage = Stat.GetMidValue(data.Select(p => p.Stat));
+            MassAverage = data.Average(p => p.Rigidbody.mass);
         }
 
         public void OnSelect(BaseEventData eventData)

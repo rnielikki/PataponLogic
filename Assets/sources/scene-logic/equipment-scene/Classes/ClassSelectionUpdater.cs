@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.EquipmentScene
@@ -20,10 +21,16 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private ClassSelectionInfo _current;
 
         [SerializeField]
-        private ClassSelectionInfo _firstSelect;
+        private GameObject _groupOfSelectables;
 
         [SerializeField]
-        private UnityEngine.Events.UnityEvent<ClassSelectionInfo> _onUpdated;
+        private UnityEvent<ClassSelectionInfo> _onUpdated;
+
+        [SerializeField]
+        private UnityEvent<ClassSelectionInfo, bool> _closingEvent;
+
+        private bool _fullyLoaded;
+
         internal void UpdateDescription(ClassSelectionInfo classSelectionInfo)
         {
             if (classSelectionInfo == null) return;
@@ -39,10 +46,20 @@ namespace PataRoad.SceneLogic.EquipmentScene
             UpdateGeneralObject(_current.GeneralObject);
             _onUpdated.Invoke(classSelectionInfo);
         }
+        public void Close(bool save) => _closingEvent.Invoke(_current, save);
+        private void Start()
+        {
+            var firstSelect = _groupOfSelectables.GetComponentInChildren<ClassSelectionInfo>();
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstSelect.gameObject);
+            _current = firstSelect;
+            _fullyLoaded = true;
+        }
         private void OnEnable()
         {
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_firstSelect.gameObject);
-            _current = _firstSelect;
+            if (!_fullyLoaded) return;
+            var firstSelect = _groupOfSelectables.GetComponentInChildren<ClassSelectionInfo>();
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstSelect.gameObject);
+            _current = firstSelect;
         }
         private void OnDisable()
         {

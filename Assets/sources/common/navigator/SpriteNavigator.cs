@@ -8,38 +8,47 @@ namespace PataRoad.Common.Navigator
     {
         [SerializeField]
         protected GameObject _backgroundObject;
+        public GameObject BackgroundObject => _backgroundObject;
         [SerializeField]
         protected bool _useSprite;
+        public bool UseSprite => _useSprite;
         [SerializeField]
         protected Sprite _background;
+        public Sprite Background => _background;
         [SerializeField]
         protected AudioClip _selectSound;
+        public AudioClip SelectSound => _selectSound;
         [SerializeField]
         protected AudioSource _audioSource;
         [SerializeField]
         protected UnityEngine.Events.UnityEvent<SpriteSelectable> _onSelected = new UnityEngine.Events.UnityEvent<SpriteSelectable>();
+        public virtual UnityEngine.Events.UnityEvent<SpriteSelectable> OnSelected { get; protected set; }
         [SerializeField]
         protected Vector2 _positionOffset;
+        public Vector2 PositionOffset => _positionOffset;
         [SerializeField]
         protected bool _preserveIndexOnDeselected;
         public bool PreserveIndexOnDeselected { get; set; }
 
         protected ActionEventMap _map;
 
-        public SpriteSelectable Current => _navs[_index];
-        protected List<SpriteSelectable> _navs = new List<SpriteSelectable>();
+        public SpriteSelectable Current => _selectables[_index];
+        protected List<SpriteSelectable> _selectables = new List<SpriteSelectable>();
         protected int _index;
         // Start is called before the first frame update
         public virtual void Init()
         {
+            OnSelected = _onSelected;
             PreserveIndexOnDeselected = _preserveIndexOnDeselected;
+            _selectables.Clear();
             foreach (Transform child in transform)
             {
-                var comp = child.gameObject.AddComponent<SpriteSelectable>();
-                if (_useSprite) comp.Init(this, _background, _positionOffset, _onSelected);
-                else comp.Init(this, _backgroundObject, _positionOffset, _onSelected);
-                _navs.Add(comp);
+                var comp = child.gameObject.GetComponent<SpriteSelectable>();
+                if (comp == null) continue;
+                comp.Init(this);
+                _selectables.Add(comp);
             }
+            if (_map == null) _map = GetComponent<ActionEventMap>();
             Current.SelectThis();
         }
         /// <summary>
@@ -56,10 +65,10 @@ namespace PataRoad.Common.Navigator
             switch (direction)
             {
                 case MoveDirection.Left:
-                    _index = (_index + 1) % _navs.Count;
+                    _index = (_index + 1) % _selectables.Count;
                     break;
                 case MoveDirection.Right:
-                    _index = (_index - 1 + _navs.Count) % _navs.Count;
+                    _index = (_index - 1 + _selectables.Count) % _selectables.Count;
                     break;
                 default:
                     return;
@@ -69,7 +78,7 @@ namespace PataRoad.Common.Navigator
         }
         private void OnEnable()
         {
-            foreach (var spriteSelectable in _navs)
+            foreach (var spriteSelectable in _selectables)
             {
                 spriteSelectable.enabled = true;
             }
@@ -78,7 +87,7 @@ namespace PataRoad.Common.Navigator
         }
         private void OnDisable()
         {
-            foreach (var spriteSelectable in _navs)
+            foreach (var spriteSelectable in _selectables)
             {
                 spriteSelectable.enabled = false;
             }

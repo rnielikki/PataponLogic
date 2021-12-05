@@ -55,6 +55,7 @@ namespace PataRoad.Common.Navigator
         public void Destroy()
         {
             _action.performed -= InvokeEvent;
+            _action.Disable();
             _senderEvent.RemoveAllListeners();
         }
     }

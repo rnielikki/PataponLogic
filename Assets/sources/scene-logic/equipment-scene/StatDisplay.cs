@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using PataRoad.Common.Navigator;
 using System.Linq;
+using System;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
@@ -74,6 +75,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public void UpdateGroup(SpriteSelectable selectable)
         {
             var data = selectable.GetComponentsInChildren<PataponData>();
+            if (data.Length == 0)
+            {
+                Empty();
+                return;
+            }
             var stat = Stat.GetMidValue(data.Select(data => data.Stat));
 
             _header.text = $"{data[0].Type} - Average stat";
@@ -83,9 +89,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             UpdateStat(stat, data.Average(d => d.Rigidbody.mass));
         }
+        private void Empty()
+        {
+            //empty the data...
+        }
+
         public void UpdateGroup(ClassSelectionInfo info)
         {
-            //UpdateStat(info.StatAverage, info.MassAverage);
+            UpdateStat(info.StatAverage, info.MassAverage);
         }
         public void UpdateIndividual(SpriteSelectable selectable)
         {

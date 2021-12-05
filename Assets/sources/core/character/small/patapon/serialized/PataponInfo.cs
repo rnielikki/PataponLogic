@@ -9,7 +9,11 @@ namespace PataRoad.Core.Character.Patapons.Data
     {
         [SerializeField]
         private List<Class.ClassType> _currentClasses;
-        public IEnumerable<Class.ClassType> CurrentClasses => _currentClasses;
+        public Class.ClassType[] CurrentClasses => _currentClasses.ToArray();
+        /// <summary>
+        /// How many groups (how many group of various classes) can go to fight.
+        /// </summary>
+        public const int MaxPataponGroup = 3;
 
         //[SerializeReference]
         //PataponCurrentClassInfo[] _allClasses;
@@ -27,11 +31,30 @@ namespace PataRoad.Core.Character.Patapons.Data
             */
             _currentClasses = new List<Class.ClassType>()
             {
-                Class.ClassType.Dekapon,
-                Class.ClassType.Toripon,
-                Class.ClassType.Yumipon
+                Class.ClassType.Mahopon,
+                Class.ClassType.Robopon
             };
             //Serialize --
+        }
+        public void ReplaceClass(Class.ClassType from, Class.ClassType to)
+        {
+            if (from == to) return;
+            _currentClasses.Remove(from);
+            _currentClasses.Add(to);
+            Order();
+        }
+        public void AddClass(Class.ClassType type)
+        {
+            if (!_currentClasses.Contains(type) && _currentClasses.Count < MaxPataponGroup)
+            {
+                _currentClasses.Add(type);
+            }
+            Order();
+        }
+        public void RemoveClass(Class.ClassType type) => _currentClasses.Remove(type);
+        private void Order()
+        {
+            _currentClasses = _currentClasses.OrderBy(c => (int)c).ToList();
         }
 
         public void Serialize()

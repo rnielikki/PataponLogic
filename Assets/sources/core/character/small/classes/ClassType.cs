@@ -10,7 +10,6 @@
         Megapon,
         Toripon,
         Robopon,
-        Mahopon,
-        Any = 15
+        Mahopon
     }
 }

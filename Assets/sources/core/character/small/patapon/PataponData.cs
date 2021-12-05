@@ -26,5 +26,9 @@ namespace PataRoad.Core.Character
         {
             //_equipmentInfo = GlobalData.PataponInfo.GetEquipmentInfo(Type, IndexInGroup);
         }
+        public void DisableAllEquipments()
+        {
+            foreach (var eq in GetComponentsInChildren<Equipments.Equipment>()) eq.enabled = false;
+        }
     }
 }
