@@ -36,6 +36,7 @@ namespace PataRoad.Common.Navigator
         protected List<SpriteSelectable> _selectables = new List<SpriteSelectable>();
         protected int _index;
         // Start is called before the first frame update
+        protected bool _selectOnInit = true;
         public virtual void Init()
         {
             PreserveIndexOnDeselected = _preserveIndexOnDeselected;
@@ -48,7 +49,7 @@ namespace PataRoad.Common.Navigator
                 _selectables.Add(comp);
             }
             if (_map == null) _map = GetComponent<ActionEventMap>();
-            Current.SelectThis();
+            if (_selectOnInit) Current.SelectThis();
         }
         /// <summary>
         /// Show as selected, even it's really deselected. This includes deselecting and disabling the navigator.

@@ -4320,6 +4320,7 @@ MonoBehaviour:
   _soundOut: {fileID: 8300000, guid: df89903849301ac4ea03a1e70e71a03e, type: 3}
   _soundError: {fileID: 8300000, guid: ffe369070ee5a2a449ef08902f6d0682, type: 3}
   _classMenu: {fileID: 1844808396}
+  _statDisplay: {fileID: 292037167}
 --- !u!114 &1164260355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4333,7 +4334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _actionAndEvents:
-  - ActionName: UI/Submit
+  - ActionName: Drum/Chaka
     OnPerformed:
       m_PersistentCalls:
         m_Calls:
@@ -4350,7 +4351,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - ActionName: Drum/Pata
+  - ActionName: UI/Submit
     OnPerformed:
       m_PersistentCalls:
         m_Calls:
@@ -4394,6 +4395,23 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
           m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - ActionName: Drum/Pata
+    OnPerformed:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1164260354}
+          m_TargetAssemblyTypeName: PataRoad.SceneLogic.EquipmentScene.CharacterGroupNavigator,
+            Assembly-CSharp
+          m_MethodName: RemoveTarget
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

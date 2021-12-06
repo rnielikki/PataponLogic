@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using PataRoad.Common.Navigator;
 using System.Linq;
-using System;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
@@ -104,9 +103,31 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             UpdateStat(pataponData.Stat, pataponData.Rigidbody.mass);
         }
-        private void Empty()
+        public void Empty()
         {
-            //empty the data...
+            _header.text = "Empty squad";
+
+            _stamina.text = "-";
+            _damage.text = "-";
+            _defence.text = "-";
+            _attackSeconds.text = "-";
+            _movementSpeed.text = "-";
+
+            _critical.text = "-";
+            _criticalResistance.text = "-";
+            _knockback.text = "-";
+            _knockbackResistance.text = "-";
+            _stagger.text = "-";
+            _staggerResistance.text = "-";
+
+            _fire.text = "-";
+            _fireResistance.text = "-";
+            _ice.text = "-";
+            _iceResistance.text = "-";
+            _sleep.text = "-";
+            _sleepResistance.text = "-";
+
+            _mass.text = "-";
         }
 
         private void OnChangedToGroup()

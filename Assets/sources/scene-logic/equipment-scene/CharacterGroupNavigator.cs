@@ -1,5 +1,7 @@
 using PataRoad.Common.Navigator;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -10,7 +12,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         private CameraZoom _cameraZoom;
         private CharacterGroupSaver _groupSaver;
-        private CharacterNavigator[] _navigators;
+        private Vector2[] _navPositions;
+
         [SerializeField]
         private GameObject _summaryField;
         [SerializeField]
@@ -23,6 +26,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         AudioClip _soundError;
         [SerializeField]
         ClassMenu _classMenu;
+        [SerializeField]
+        StatDisplay _statDisplay;
 
         public override void Init()
         {
@@ -30,9 +35,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _cameraZoom = Camera.main.GetComponent<CameraZoom>();
             _groupSaver = GetComponent<CharacterGroupSaver>();
 
-            _navigators = GetComponentsInChildren<CharacterNavigator>();
-            UpdateClasses();
+            _selectOnInit = false;
             base.Init();
+            LoadClasses();
+            _navPositions = _selectables.Select(n => (Vector2)n.transform.position).ToArray();
+            Current.SelectThis();
         }
         public void Zoom()
         {
@@ -74,8 +81,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             if (saved)
             {
+                var targetNav = _selectables[_index].GetComponent<CharacterNavigator>();
                 Current?.OnDeselect(null);
-                RemoveChildren();
+                RemoveChildren(targetNav);
                 AddTarget(info);
                 ReOrderIndex();
 
@@ -87,12 +95,22 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void RemoveTarget()
         {
-            _audioSource.PlayOneShot(RemoveChildren() ? _soundOut : _soundError);
+            if (Core.GlobalData.PataponInfo.ClassCount > 1 && RemoveChildren(_selectables[_index].GetComponent<CharacterNavigator>()))
+            {
+                ReOrderIndex(99);
+                _statDisplay.Empty();
+                _audioSource.PlayOneShot(_soundOut);
+            }
+            else
+            {
+                _audioSource.PlayOneShot(_soundError);
+            }
+            ReOrderIndex(99);
         }
-        private bool RemoveChildren()
+        private bool RemoveChildren(CharacterNavigator targetNav)
         {
             //1. remove old, if exists.-------------------------
-            if (!_navigators[_index].IsEmpty)
+            if (!targetNav.IsEmpty)
             {
                 var oldObject = GetPataponGroupObject(Current);
                 oldObject.transform.parent = transform.root.parent;
@@ -115,57 +133,89 @@ namespace PataRoad.SceneLogic.EquipmentScene
             targetGroupObject.transform.parent = Current.transform;
             targetGroupObject.transform.position = Current.transform.position;
             targetGroupObject.SetActive(true);
-            _navigators[_index].Init();
+            _selectables[_index].GetComponent<CharacterNavigator>().Init();
             //update data
             Core.GlobalData.PataponInfo.AddClass(info.ClassType);
         }
-
-        public void UpdateClasses()
+        private void LoadClasses()
         {
             var classes = Core.GlobalData.PataponInfo.CurrentClasses;
             for (int i = 0; i < Core.Character.Patapons.Data.PataponInfo.MaxPataponGroup; i++)
             {
-                var charNav = _navigators[i];
+                var targetNav = _selectables[i].GetComponent<CharacterNavigator>();
                 if (i < classes.Length)
                 {
                     var group = _groupSaver.LoadGroup(classes[i]);
-                    group.transform.position = charNav.transform.position;
-                    group.transform.parent = charNav.transform;
+                    group.transform.position = targetNav.transform.position;
+                    group.transform.parent = targetNav.transform;
                 }
-                charNav.Init();
+                targetNav.Init();
             }
         }
-        private void ReOrderIndex()
+        private void ReOrderIndex() => ReOrderIndex((int)_selectables[_index].GetComponentInChildren<Core.Character.PataponData>().Type);
+        private void ReOrderIndex(int classTypeAsNumber)
         {
-            //this is before ordering index.
-            var oldIndex = _index;
-            var allGroupObjects = _selectables.Select(s => GetPataponGroupObject(s)).Where(s => s != null);
-            var allGroupObjectsToArray = allGroupObjects.ToArray();
+            int i;
+            Dictionary<SpriteSelectable, (int oldIndex, int newIndex)> indexMap = new Dictionary<SpriteSelectable, (int oldIndex, int newIndex)>();
+            int currentType = classTypeAsNumber;
 
-            //this is right index.
-            var ordered = allGroupObjects.OrderBy(s => s.GetComponentInChildren<Core.Character.PataponData>().Type).ToArray();
-            foreach (var current in allGroupObjects)
+            var indexOfCurrent = _index;
+
+            for (i = 0; i < _selectables.Count; i++)
             {
-                var indexOld = Array.IndexOf(allGroupObjectsToArray, current);
-                var indexNew = Array.IndexOf(ordered, current);
-                if (indexOld < 0 || indexNew < 0) throw new System.InvalidOperationException("WTF");
-                MoveGroupTo(current, indexOld, indexNew);
-                if (oldIndex == indexOld)
+                var pataponData = _selectables[i].GetComponentInChildren<Core.Character.PataponData>();
+                int type = 99 + i;
+                if (pataponData != null) type = (int)pataponData.Type;
+                var selectable = _selectables[i];
+                if (i < _index && type > currentType)
                 {
-                    _index = indexNew;
+                    indexMap.Add(selectable, (i, i + 1));
+                    indexOfCurrent--;
+                }
+                else if (i > _index && type < currentType)
+                {
+                    indexMap.Add(selectable, (i, i - 1));
+                    indexOfCurrent++;
+                }
+                else if (i != _index)
+                {
+                    indexMap.Add(selectable, (i, i));
                 }
             }
-            //Finally, match to right index (note that it's not in progress. If you do in progress it'll cause bug.)
-            foreach (var comp in GetComponentsInChildren<CharacterNavigator>()) comp.Init();
+            indexMap.Add(_selectables[_index], (_index, indexOfCurrent));
+
+            ///reorder <see cref="_selectables"/>
+            _selectables = indexMap.OrderBy(kv => kv.Value.newIndex).Select(kv => kv.Key).ToList();
+            _index = indexOfCurrent;
+            StartCoroutine(MoveAllPositions(indexMap));
         }
-        private void MoveGroupTo(GameObject pataponGroup, int beforeIndex, int newIndex)
+        IEnumerator MoveAllPositions(Dictionary<SpriteSelectable, (int oldIndex, int newIndex)> indexMap)
         {
-            if (beforeIndex != newIndex)
+            _map.enabled = false; //don't do anything while moving, prevents confusion and bug
+            int waiting = 0;
+            for (int i = 0; i < _selectables.Count; i++)
             {
-                var targetTransform = _navigators[newIndex].transform;
-                pataponGroup.transform.parent = targetTransform;
-                pataponGroup.transform.position = targetTransform.position;
+                var selectable = _selectables[i];
+                var (oldValue, newValue) = indexMap[selectable];
+                if (oldValue != newValue)
+                {
+                    waiting++;
+                    StartCoroutine(MovePosition(selectable.transform, _navPositions[i], Mathf.Abs(oldValue - newValue)));
+                }
+            }
+            yield return new WaitUntil(() => waiting == 0);
+            _map.enabled = true;
+
+            IEnumerator MovePosition(Transform targetTransform, Vector3 newPosition, int speedOffset)
+            {
+                while (targetTransform.position != newPosition)
+                {
+                    targetTransform.position = Vector3.MoveTowards(targetTransform.position, newPosition, speedOffset * 15 * Time.deltaTime);
+                    yield return new WaitForEndOfFrame();
+                }
+                waiting--;
             }
         }
+
     }
 }

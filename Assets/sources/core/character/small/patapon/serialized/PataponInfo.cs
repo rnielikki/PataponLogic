@@ -11,6 +11,7 @@ namespace PataRoad.Core.Character.Patapons.Data
         [SerializeField]
         private List<Class.ClassType> _currentClasses;
         public Class.ClassType[] CurrentClasses => _currentClasses.ToArray();
+        public int ClassCount => _currentClasses.Count;
         /// <summary>
         /// How many groups (how many group of various classes) can go to fight.
         /// </summary>
