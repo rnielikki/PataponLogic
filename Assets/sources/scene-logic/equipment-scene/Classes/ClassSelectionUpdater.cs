@@ -33,20 +33,40 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         internal void UpdateDescription(ClassSelectionInfo classSelectionInfo)
         {
-            if (classSelectionInfo == null) return;
             if (_current != null) _current.GeneralObject.SetActive(false);
+            else
+            {
+                _generalName.gameObject.SetActive(true);
+                _selfEffect.gameObject.SetActive(true);
+                _groupEffect.gameObject.SetActive(true);
+            }
 
-            _className.text = classSelectionInfo.ClassType.ToString();
-            _description.text = classSelectionInfo.ClassDescription;
-            _generalName.text = classSelectionInfo.GeneralName;
-            _selfEffect.text = classSelectionInfo.SelfEffectDescription;
-            _groupEffect.text = classSelectionInfo.GroupEffectDescription;
+            if (classSelectionInfo != null)
+            {
+                _className.text = classSelectionInfo.ClassType.ToString();
+                _description.text = classSelectionInfo.ClassDescription;
+                _generalName.text = classSelectionInfo.GeneralName;
+                _selfEffect.text = classSelectionInfo.SelfEffectDescription;
+                _groupEffect.text = classSelectionInfo.GroupEffectDescription;
 
-            _current = classSelectionInfo;
-            UpdateGeneralObject(_current.GeneralObject);
+                _current = classSelectionInfo;
+                UpdateGeneralObject(_current.GeneralObject);
+            }
+            else
+            {
+                _className.text = "Remove Army";
+                _description.text = "Select this to remove current army";
+                _generalName.gameObject.SetActive(false);
+                _selfEffect.gameObject.SetActive(false);
+                _groupEffect.gameObject.SetActive(false);
+
+                _current = null;
+            }
             _onUpdated.Invoke(classSelectionInfo);
+
         }
         public void Close(bool save) => _closingEvent.Invoke(_current, save);
+        public void RemoveArmy() => _closingEvent.Invoke(null, true);
         private void Start()
         {
             var firstSelect = _groupOfSelectables.GetComponentInChildren<ClassSelectionInfo>();
@@ -63,7 +83,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private void OnDisable()
         {
-            _current.GeneralObject.SetActive(false);
+            _current?.GeneralObject?.SetActive(false);
             _current = null;
         }
         private void UpdateGeneralObject(GameObject obj)

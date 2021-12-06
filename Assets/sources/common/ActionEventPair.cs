@@ -43,7 +43,15 @@ namespace PataRoad.Common.Navigator
         {
             if (!UnityEngine.EventSystems.EventSystem.current.alreadySelecting)
             {
-                _senderEvent.Invoke(_sender, callbackContext);
+                try
+                {
+                    _senderEvent.Invoke(_sender, callbackContext);
+                }
+                catch (System.Exception)
+                {
+                    Debug.LogError($"Error while sending {_senderEvent.GetPersistentEventCount()} of events with sender {_sender}.");
+                    throw;
+                }
             }
         }
 

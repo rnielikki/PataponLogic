@@ -2,33 +2,22 @@ using PataRoad.Common.Navigator;
 using PataRoad.Core.Character.Equipments;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
-    public class EquipmentSummary : MonoBehaviour
+    public class EquipmentSummary : SummaryMenu<EquipmentSummaryElement>
     {
-        [SerializeField]
-        AudioSource _selectSoundSource;
-        [SerializeField]
-        AudioClip _selectSound;
-        ActionEventMap _actionEvent;
-
         private Dictionary<EquipmentType, EquipmentSummaryElement> _map;
         private EquipmentSummaryElement _generalMode;
 
         //It really selects nothing. just look like it's selected.
-        private int _index;
-        private EquipmentSummaryElement[] _activeNavs;
-        private bool _hasGeneral;
-        public EquipmentSummaryElement Current { get; private set; }
 
-        // Start is called before the first frame update
         void Awake()
         {
-            _actionEvent = GetComponent<ActionEventMap>();
+            Init();
+            _actionEvent.enabled = false;
             _map = new Dictionary<EquipmentType, EquipmentSummaryElement>();
-            foreach (var obj in GetComponentsInChildren<EquipmentSummaryElement>())
+            foreach (var obj in GetComponentsInChildren<EquipmentSummaryElement>(true))
             {
                 if (obj.IsGeneralMode)
                 {
@@ -40,39 +29,15 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 }
                 obj.gameObject.SetActive(false);
             }
-            _actionEvent.enabled = false;
         }
-        private void OnDisable()
-        {
-            SetInactive();
-            Current?.MarkAsDeselected();
-            _index = 0;
-        }
-        public void SetInactive()
+        public override void ResumeToActive()
         {
             if (_activeNavs != null)
             {
-                foreach (var elem in _activeNavs)
-                {
-                    elem.enabled = false;
-                }
-            }
-            _actionEvent.enabled = false;
-        }
-        public void ResumeToActive()
-        {
-            if (_activeNavs != null)
-            {
-                Current?.MarkAsDeselected();
-                foreach (var elem in _activeNavs)
-                {
-                    elem.enabled = true;
-                }
+                base.ResumeToActive();
                 SelectSameOrZero();
             }
-            _actionEvent.enabled = true;
         }
-
         public void LoadElements(SpriteSelectable target)
         {
             var ponData = target.GetComponent<Core.Character.PataponData>();
@@ -94,7 +59,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 }
             }
             _generalMode.gameObject.SetActive(ponData.IsGeneral);
-            _hasGeneral = ponData.IsGeneral;
 
             //initialize navigation
             _activeNavs = GetComponentsInChildren<EquipmentSummaryElement>(false);
@@ -102,27 +66,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             if (!_actionEvent.enabled) _actionEvent.enabled = true;
         }
-        public void MoveTo(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
+        protected override void WhenDisabled()
         {
-            if (EventSystem.current.alreadySelecting) return;
-
-            var directionY = Mathf.RoundToInt(context.ReadValue<Vector2>().y);
-            var index = _index;
-
-            if (directionY == 1 || directionY == -1)
-            {
-                index = (index + directionY * -1 + _activeNavs.Length) % _activeNavs.Length;
-            }
-            MarkIndex(index);
-            if (_selectSound != null) _selectSoundSource.PlayOneShot(_selectSound);
-        }
-        private void MarkIndex(int index)
-        {
-            var oldCurrent = Current;
-            oldCurrent?.MarkAsDeselected();
-            _index = index;
-            Current = _activeNavs[_index];
-            Current.MarkAsSelected();
+            _index = 0;
         }
         private void SelectSameOrZero()
         {

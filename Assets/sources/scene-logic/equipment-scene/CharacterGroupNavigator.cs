@@ -81,24 +81,34 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             if (saved)
             {
-                var targetNav = _selectables[_index].GetComponent<CharacterNavigator>();
-                Current?.OnDeselect(null);
-                RemoveChildren(targetNav);
-                AddTarget(info);
-                ReOrderIndex();
+                if (info != null)
+                {
+                    var targetNav = _selectables[_index].GetComponent<CharacterNavigator>();
+                    Current?.OnDeselect(null);
+                    RemoveChildren(targetNav);
+                    AddTarget(info);
+                    ReOrderIndex();
 
-                _audioSource.PlayOneShot(_soundIn);
-                _classMenu.UpdateStatus();
+                    _audioSource.PlayOneShot(_soundIn);
+                    _classMenu.UpdateStatus();
+
+                }
+                else
+                {
+                    RemoveTarget();
+                }
             }
             _groupSaver.Animate(gameObject);
             Current?.SelectThis();
         }
         public void RemoveTarget()
         {
-            if (Core.GlobalData.PataponInfo.ClassCount > 1 && RemoveChildren(_selectables[_index].GetComponent<CharacterNavigator>()))
+            var nav = _selectables[_index].GetComponent<CharacterNavigator>();
+            if (Core.GlobalData.PataponInfo.ClassCount > 1 && RemoveChildren(nav))
             {
                 ReOrderIndex(99);
                 _statDisplay.Empty();
+                nav.Init();
                 _audioSource.PlayOneShot(_soundOut);
             }
             else
@@ -133,9 +143,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
             targetGroupObject.transform.parent = Current.transform;
             targetGroupObject.transform.position = Current.transform.position;
             targetGroupObject.SetActive(true);
-            _selectables[_index].GetComponent<CharacterNavigator>().Init();
-            //update data
             Core.GlobalData.PataponInfo.AddClass(info.ClassType);
+
+            _selectables[_index].GetComponent<CharacterNavigator>().Init();
         }
         private void LoadClasses()
         {

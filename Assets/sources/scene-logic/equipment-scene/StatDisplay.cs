@@ -90,7 +90,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void UpdateGroup(ClassSelectionInfo info)
         {
-            UpdateStat(info.StatAverage, info.MassAverage);
+            if (info == null) Empty();
+            else UpdateStat(info.StatAverage, info.MassAverage);
         }
 
         public void UpdateIndividual(SpriteSelectable selectable)
