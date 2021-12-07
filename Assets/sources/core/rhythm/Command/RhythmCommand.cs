@@ -60,9 +60,10 @@ namespace PataRoad.Core.Rhythm.Command
         /// This also counts first command, before <see cref="TurnCounter.IsOn"/>
         /// </summary>
         private bool _started;
+        private CommandSong[] _allSongs;
 
         // Start is called before the first frame update
-        private void Awake()
+        private void Start()
         {
             _onPerfectEnd.AddListener((_) => _audioSource.PlayOneShot(_perfectSound));
             OnCommandCanceled.AddListener(ComboManager.EndCombo);
@@ -90,10 +91,7 @@ namespace PataRoad.Core.Rhythm.Command
             //Initalizes drum beats
             //Will loaded based on game progress
             _data = new CommandListData(
-                new CommandSong[]
-                {
-                    CommandSong.Patapata,CommandSong.Ponpon, CommandSong.Chakachaka, CommandSong.Dondon, CommandSong.Ponchaka, CommandSong.Ponpata
-                }
+                _allSongs
                 );
         }
 
@@ -183,6 +181,11 @@ namespace PataRoad.Core.Rhythm.Command
                 OnCommandCanceled.Invoke();
             }
         }
+        /// <summary>
+        /// Set commaand song. CALLED BEFORE START().
+        /// </summary>
+        /// <param name="songs">The liste of song.</param>
+        public void SetCommandSong(CommandSong[] songs) => _allSongs = songs;
         public PracticingCommandListData ToPracticeMode(CommandSong song)
         {
             OnCommandCanceled?.Invoke();

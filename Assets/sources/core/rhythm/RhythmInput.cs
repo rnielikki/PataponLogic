@@ -30,6 +30,7 @@ namespace PataRoad.Core.Rhythm
             var actions = FindObjectOfType<PlayerInput>().actions;
             _action = actions.FindAction("Drum/" + _drumType.ToString());
             SetResetTimer();
+            _action.Enable();
             RhythmTimer.OnStart.AddListener(() => Disabled = false);
         }
         protected virtual void SetResetTimer()
@@ -38,7 +39,6 @@ namespace PataRoad.Core.Rhythm
         }
         protected void DrumHit(InputAction.CallbackContext context)
         {
-            if (!gameObject.activeSelf) return;
             RhythmInputModel model;
             if (Disabled || (Command.TurnCounter.IsOn && !Command.TurnCounter.IsPlayerTurn))
             {
@@ -65,13 +65,11 @@ namespace PataRoad.Core.Rhythm
         {
             RhythmTimer.OnHalfTime.AddListener(SetEnable);
             _action.started += DrumHit;
-            _action.Enable();
         }
         protected void Disable()
         {
             RhythmTimer.OnHalfTime.RemoveListener(SetEnable);
             _action.started -= DrumHit;
-            _action.Disable();
         }
         protected void Destroy()
         {
