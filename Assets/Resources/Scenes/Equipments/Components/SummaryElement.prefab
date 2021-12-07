@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 7583985799742121172}
   - component: {fileID: 7583985799742121168}
   - component: {fileID: 7583985799742121171}
-  - component: {fileID: 1150615249907221139}
+  - component: {fileID: 6014113676942068586}
   m_Layer: 5
   m_Name: SummaryElement
   m_TagString: Untagged
@@ -116,7 +116,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 35}
+  m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7583985799742121168
 CanvasRenderer:
@@ -156,7 +156,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &1150615249907221139
+--- !u!114 &6014113676942068586
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,7 +165,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7583985799742121175}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ddc6e31bfe72474e9f25256fca20e45, type: 3}
+  m_Script: {fileID: 11500000, guid: 6ba0995d45631124c86f1ac9f8ef3bbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _selectedColor: {r: 0.8392157, g: 0.70980394, b: 0.39215687, a: 1}
+  _onSubmit:
+    m_PersistentCalls:
+      m_Calls: []

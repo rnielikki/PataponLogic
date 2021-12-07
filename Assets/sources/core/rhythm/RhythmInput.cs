@@ -7,7 +7,7 @@ namespace PataRoad.Core.Rhythm
     /// <summary>
     /// Sends one drum input signal. <see cref="RhythmInputMiracle"/> inherits this.
     /// </summary>
-    internal class RhythmInput : MonoBehaviour
+    public class RhythmInput : MonoBehaviour
     {
         /// <summary>
         /// When the drum is hit. Note that it's "THIS DRUM", not any drum. If you want "Any drum" you must find all of them manually.
@@ -38,6 +38,7 @@ namespace PataRoad.Core.Rhythm
         }
         protected void DrumHit(InputAction.CallbackContext context)
         {
+            if (!gameObject.activeSelf) return;
             RhythmInputModel model;
             if (Disabled || (Command.TurnCounter.IsOn && !Command.TurnCounter.IsPlayerTurn))
             {

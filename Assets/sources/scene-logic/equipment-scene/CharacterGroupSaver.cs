@@ -23,9 +23,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 }
             }
             GetComponent<CharacterGroupNavigator>().Init();
-
-            //Common.SceneLoadingAction.Create("Battle", true, "Submit", StartMission);
-            //Common.SceneLoadingAction.Create("Patapolis", false, "Cancel", GoBack);
         }
         public GameObject GetGroup(Core.Character.Class.ClassType type) => _groupObjects[type];
         public GameObject LoadGroup(Core.Character.Class.ClassType type)
@@ -52,12 +49,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 }
             }
         }
-        private void StartMission()
+        public void StartMission()
         {
+            Common.SceneLoadingAction.Create("Battle", true);
             Exit(_onEnter);
         }
-        private void GoBack()
+        public void GoBack()
         {
+            Common.SceneLoadingAction.Create("Patapolis", false);
             Exit(_onCancel);
         }
         private void Exit(AudioClip sound)
@@ -65,5 +64,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
             //And save data to static!
             Core.GlobalData.GlobalAudioSource.PlayOneShot(sound);
         }
+
     }
 }

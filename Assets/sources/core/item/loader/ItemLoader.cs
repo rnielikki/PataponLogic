@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 /// <summary>
 /// Manages all item informations. Also can pass to the other data loader like <see cref="EquipmentDataLoader"/>.
@@ -78,6 +79,11 @@ namespace PataRoad.Core.Items
             var random = UnityEngine.Random.Range(indexMin, indexMax);
             if (itemData.TryGetValue(random, out IItem item)) return item;
             else return null;
+        }
+
+        internal static IEnumerable<EquipmentData> GetAllDefaultEquipments()
+        {
+            return _data[ItemType.Equipment].SelectMany(item => item.Value).Where(item => item.Key == 0).Select(item => item.Value as EquipmentData);
         }
     }
 }

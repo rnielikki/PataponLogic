@@ -18,6 +18,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         Text _groupEffect;
         [SerializeField]
         private RectTransform _statScreen;
+        [SerializeField]
+        private EmptyClassSelection _emptySelection;
         private ClassSelectionInfo _current;
 
         [SerializeField]
@@ -69,22 +71,33 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public void RemoveArmy() => _closingEvent.Invoke(null, true);
         private void Start()
         {
-            var firstSelect = _groupOfSelectables.GetComponentInChildren<ClassSelectionInfo>();
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstSelect.gameObject);
-            _current = firstSelect;
+            Load();
             _fullyLoaded = true;
         }
         private void OnEnable()
         {
             if (!_fullyLoaded) return;
-            var firstSelect = _groupOfSelectables.GetComponentInChildren<ClassSelectionInfo>();
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstSelect.gameObject);
-            _current = firstSelect;
+            Load();
         }
         private void OnDisable()
         {
             _current?.GeneralObject?.SetActive(false);
             _current = null;
+        }
+        private void Load()
+        {
+            var firstSelect = _groupOfSelectables.GetComponentInChildren<ClassSelectionInfo>();
+
+            if (firstSelect != null)
+            {
+                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstSelect.gameObject);
+            }
+            else
+            {
+                UnityEngine.EventSystems.EventSystem.current
+                   .SetSelectedGameObject(_emptySelection.gameObject);
+            }
+            _current = firstSelect;
         }
         private void UpdateGeneralObject(GameObject obj)
         {

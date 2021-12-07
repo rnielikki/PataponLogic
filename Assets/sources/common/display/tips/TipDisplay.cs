@@ -21,10 +21,15 @@ namespace PataRoad.Common.GameDisplay
         private InputAction _action;
         private AsyncOperation _op;
         private bool _fadingCreated;
+
+        private bool _loadingCompleteCalled;
+
         // Start is called before the first frame update
         void Start()
         {
-            _action = Core.GlobalData.Input.actions.FindAction("UI/Submit");
+            _action = new InputAction(binding: "/*/<button>");
+
+            _action.Enable();
             if (_allTipsIndex == null)
             {
                 _allTips = Resources.LoadAll<TipDisplayData>("Tips/Content");
@@ -47,7 +52,6 @@ namespace PataRoad.Common.GameDisplay
             {
                 LoadTip(_allTips[Random.Range(0, _allTips.Length - 1)]);
             }
-            Core.GlobalData.GlobalAudioSource.PlayOneShot(_tipSound);
         }
         private void LoadTip(TipDisplayData data)
         {
@@ -75,10 +79,14 @@ namespace PataRoad.Common.GameDisplay
                 _op = loading;
                 while (!loading.isDone)
                 {
-                    _loadingStatus.text = _op.progress * 100 + "% loaded...";
-                    if (loading.progress >= 0.9f)
+                    if (loading.progress >= 0.9f && !_loadingCompleteCalled)
                     {
                         OnLoadingCompleted();
+                        _loadingCompleteCalled = true;
+                    }
+                    else if (loading.progress < 0.9f)
+                    {
+                        _loadingStatus.text = _op.progress * 100 + "% loaded...";
                     }
                     yield return null;
                 }
@@ -89,10 +97,14 @@ namespace PataRoad.Common.GameDisplay
         {
             _loadingStatus.text = "Press Enter or submit to continue";
             _action.performed += GoToNextScene;
+            _action.Enable();
+
+            Core.GlobalData.GlobalAudioSource.PlayOneShot(_tipSound);
         }
         private void GoToNextScene(InputAction.CallbackContext context)
         {
             _action.performed -= GoToNextScene;
+            _action.Disable();
             _op.allowSceneActivation = true;
             if (!_fadingCreated)
             {
@@ -102,7 +114,11 @@ namespace PataRoad.Common.GameDisplay
         }
         private void OnDestroy()
         {
-            if (_action != null) _action.performed -= GoToNextScene;
+            if (_action != null)
+            {
+                _action.performed -= GoToNextScene;
+                _action.Disable();
+            }
         }
     }
 }

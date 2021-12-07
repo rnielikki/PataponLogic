@@ -54,7 +54,11 @@ namespace PataRoad.Core.Items
             switch (data)
             {
                 case ObtainableItemDropData obtainableItemData:
-                    if (obtainableItemData.Item == null) return false;
+                    var item = obtainableItemData.Item;
+                    if (item == null || item.IsUniqueItem && GlobalData.Inventory.HasItem(item))
+                    {
+                        return false;
+                    }
                     GetItemDropGameObject(ItemManager.Current.ItemDropTemplate, position).GetComponent<ItemDrop>().SetItem(obtainableItemData);
                     return true;
                 case EventItemDropData eventItemData:

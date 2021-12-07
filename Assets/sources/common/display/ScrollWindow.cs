@@ -35,7 +35,6 @@ namespace PataRoad.Common.GameDisplay
         }
         private void OnDestroy()
         {
-            _action.Disable();
             _action.performed -= Scroll;
         }
         private void Scroll(InputAction.CallbackContext context)

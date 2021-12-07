@@ -1,3 +1,4 @@
+using PataRoad.Common.Navigator;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,8 +6,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
 {
     public class EquipmentDisplay : MonoBehaviour
     {
-        private Common.Navigator.ActionEventMap _map;
-        private CharacterNavigator _nav;
+        private ActionEventMap _map;
+        private SpriteNavigator _nav;
+        [SerializeField]
+        private CharacterGroupNavigator _groupNav;
         [SerializeField]
         private GameObject _child;
         [SerializeField]
@@ -17,51 +20,52 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private Text _text;
 
+        private bool _doesNavPreserveIndex;
+
         // Start is called before the first frame update
         void Awake()
         {
-            _map = GetComponent<Common.Navigator.ActionEventMap>();
+            _map = GetComponent<ActionEventMap>();
             _map.enabled = false;
             _rect = _child.GetComponent<RectTransform>();
         }
 
-        // Update is called once per frame
         public void ShowEquipment(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
-            _nav = sender as CharacterNavigator;
+            _nav = sender as SpriteNavigator;
             var data = _nav?.Current?.GetComponent<Core.Character.PataponData>();
             if (data == null) return;
-
             _nav.PreserveIndexOnDeselected = true;
+            _doesNavPreserveIndex = false;
+            var elem = _summary.Current;
+            _summary.SetInactive();
+
+            SetPosition(data.IndexInGroup < 2);
+
+            SetAppear(LoadItemType(data, elem));
+
+        }
+        public void ShowItem(string itemType)
+        {
+            _nav = _groupNav;
+            _doesNavPreserveIndex = true;
+            SetAppear(itemType);
+            SetPosition(false);
+        }
+        private void SetAppear(string itemType)
+        {
             _map.enabled = true;
             enabled = true;
             _nav.Freeze();
             _child.SetActive(true);
 
-            var elem = _summary.Current;
-            _summary.SetInactive();
-
             GetComponentInChildren<Selectable>().Select();
-            _text.text = $"Type : {LoadItemType(data, elem)}";
-
-            Vector2 pos;
-
-            if (data.IndexInGroup > 1)
-            {
-                pos = Vector2.right;
-            }
-            else
-            {
-                pos = Vector2.zero;
-            }
-            _rect.anchorMin = pos;
-            _rect.anchorMax = pos;
+            _text.text = $"Type : {itemType}";
         }
-        public void HideEquipment(Object sender)
+        public void HideEquipment()
         {
-            _nav.enabled = true;
-            _nav.PreserveIndexOnDeselected = false;
-            _nav.Current.SelectThis();
+            _nav.PreserveIndexOnDeselected = _doesNavPreserveIndex;
+            _nav.Defrost();
             _map.enabled = false;
             _child.SetActive(false);
 
@@ -71,6 +75,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             if (equipElement.IsGeneralMode) return "Key/GeneralMode";
             else return "Equipment/" + data.GetEquipmentName(equipElement.EquipmentType);
+        }
+        private void SetPosition(bool left)
+        {
+            Vector2 pos;
+            if (left) pos = Vector2.zero;
+            else pos = Vector2.right;
+            _rect.anchorMin = pos;
+            _rect.anchorMax = pos;
         }
     }
 }

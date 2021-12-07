@@ -59,6 +59,11 @@ namespace PataRoad.Common.Navigator
             Current.Freeze();
             enabled = false;
         }
+        public void Defrost()
+        {
+            enabled = true;
+            Current.Defrost();
+        }
 
         public virtual void MoveTo(MoveDirection direction)
         {

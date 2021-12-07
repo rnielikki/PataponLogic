@@ -51,6 +51,11 @@ namespace PataRoad.Common.Navigator
             _freeze = true;
             EventSystem.current.SetSelectedGameObject(null, null);
         }
+        public void Defrost()
+        {
+            _freeze = false;
+            SelectThis();
+        }
         public void OnDeselect(BaseEventData eventData)
         {
             if (!_freeze) _renderer.enabled = false;

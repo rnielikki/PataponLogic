@@ -45,6 +45,7 @@ namespace PataRoad.Common
         private void Set(string sceneName, bool useTip, string uiButton, UnityEngine.Events.UnityAction additionalAction = null)
         {
             _action = GlobalData.Input.actions.FindAction("UI/" + uiButton);
+            _action.Enable();
             _sceneName = sceneName;
             _useTip = useTip;
             _action.started += ChangeScene;

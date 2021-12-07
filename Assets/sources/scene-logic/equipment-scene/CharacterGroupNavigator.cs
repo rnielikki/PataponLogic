@@ -90,7 +90,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     ReOrderIndex();
 
                     _audioSource.PlayOneShot(_soundIn);
-                    _classMenu.UpdateStatus();
 
                 }
                 else

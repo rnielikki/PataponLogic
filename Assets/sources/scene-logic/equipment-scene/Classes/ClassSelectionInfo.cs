@@ -39,7 +39,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public Stat StatAverage { get; private set; }
         public float MassAverage { get; private set; }
 
-        void Start()
+        public void Init()
         {
             GroupObject = _groupDataSaver.GetGroup(_classType);
 

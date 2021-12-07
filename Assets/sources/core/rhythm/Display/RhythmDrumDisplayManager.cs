@@ -21,8 +21,7 @@ namespace PataRoad.Core.Rhythm.Display
         private void Awake()
         {
             _displays = GetComponentsInChildren<RhythmInputDisplay>();
-            var inputs = GetComponentsInChildren<RhythmInput>();
-            foreach (var input in inputs)
+            foreach (var input in GetComponentsInChildren<RhythmInput>())
             {
                 input.OnDrumHit.AddListener((model) => OnAnyDrumInput.Invoke(model));
             }

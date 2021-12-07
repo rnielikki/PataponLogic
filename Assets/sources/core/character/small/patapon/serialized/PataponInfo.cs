@@ -33,8 +33,7 @@ namespace PataRoad.Core.Character.Patapons.Data
             */
             _currentClasses = new List<Class.ClassType>()
             {
-                Class.ClassType.Mahopon,
-                Class.ClassType.Robopon
+                Class.ClassType.Yumipon
             };
             Order();
             //Serialize --

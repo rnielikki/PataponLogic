@@ -54,13 +54,15 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             _actionEvent.enabled = true;
         }
-        public void MoveTo(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
+        public virtual void MoveTo(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
             if (UnityEngine.EventSystems.EventSystem.current.alreadySelecting) return;
-
             var directionY = Mathf.RoundToInt(context.ReadValue<Vector2>().y);
+            MoveTo(directionY);
+        }
+        protected void MoveTo(int directionY)
+        {
             var index = _index;
-
             if (directionY == 1 || directionY == -1)
             {
                 index = (index + directionY * -1 + _activeNavs.Length) % _activeNavs.Length;

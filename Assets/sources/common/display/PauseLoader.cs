@@ -7,10 +7,12 @@ namespace PataRoad.Common.GameDisplay
     {
         private InputAction _action;
         private GameObject _pauseMenu;
+        [SerializeField]
+        private string _actionName;
         private void Awake()
         {
             var actions = Core.GlobalData.Input.actions;
-            _action = actions.FindAction("UI/Cancel");
+            _action = actions.FindAction(_actionName);
             _action.started += Load;
             _action.Enable();
         }
