@@ -9,6 +9,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
     {
         private Dictionary<EquipmentType, EquipmentSummaryElement> _map;
         private EquipmentSummaryElement _generalMode;
+        [SerializeField]
+        private EquipmentSummaryElement _helmElement;
 
         //It really selects nothing. just look like it's selected.
 
@@ -38,6 +40,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 SelectSameOrZero();
             }
         }
+        private void HideHelmIfRarepon(EquipmentManager equipmentManager)
+        {
+            if (equipmentManager.Rarepon != null && equipmentManager.Rarepon.CurrentData.Index != 0)
+            {
+                _helmElement.gameObject.SetActive(false);
+            }
+        }
         public void LoadElements(SpriteSelectable target)
         {
             var ponData = target.GetComponent<Core.Character.PataponData>();
@@ -55,10 +64,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 else
                 {
                     row.gameObject.SetActive(true);
-                    row.SetText(currentData.Name);
+                    row.SetItem(currentData);
                 }
             }
             _generalMode.gameObject.SetActive(ponData.IsGeneral);
+            HideHelmIfRarepon(equipmentManager);
 
             //initialize navigation
             _activeNavs = GetComponentsInChildren<EquipmentSummaryElement>(false);

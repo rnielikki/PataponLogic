@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07630dd1bfb8cc54280660ce4f2f085b, type: 3}
   m_Name: 0
   m_EditorClassIdentifier: 
+  _isUniqueItem: 0
   _group: Helm
   _name: Iron Helm
   _description: Nobody will recognize Patapons without this helm.
@@ -26,7 +27,8 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0

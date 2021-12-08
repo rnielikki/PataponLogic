@@ -6,11 +6,16 @@ namespace PataRoad.SceneLogic.EquipmentScene
     public class HeadquarterSummaryElement : SummaryElement
     {
         [UnityEngine.SerializeField]
-        UnityEngine.Events.UnityEvent _onSubmit;
-        public UnityEngine.Events.UnityEvent OnSubmit => _onSubmit;
+        UnityEngine.Events.UnityEvent<HeadquarterSummaryElement> _onSubmit;
+        public UnityEngine.Events.UnityEvent<HeadquarterSummaryElement> OnSubmit => _onSubmit;
 
         [UnityEngine.SerializeField]
         string _bindingName;
+
+        [UnityEngine.SerializeField]
+        string _additionalData;
+        public string AdditionalData => _additionalData;
+
         private void Awake()
         {
             if (!string.IsNullOrEmpty(_bindingName) && Core.GlobalData.TryGetActionBindingName(_bindingName, out string result))

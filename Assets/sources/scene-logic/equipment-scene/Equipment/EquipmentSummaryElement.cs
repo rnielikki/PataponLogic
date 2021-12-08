@@ -11,11 +11,24 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private EquipmentType _equipmentType;
         public EquipmentType EquipmentType => _equipmentType;
+        private Core.Items.IItem _current;
+        public Core.Items.IItem Item => _current;
 
         void Awake()
         {
             Init();
         }
-        public void SetText(string text) => _text.text = text;
+        public void SetItem(Core.Items.IItem item)
+        {
+            _current = item;
+            if (item != null)
+            {
+                _text.text = item.Name;
+            }
+            else
+            {
+                _text.text = "None";
+            }
+        }
     }
 }

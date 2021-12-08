@@ -87,11 +87,12 @@ namespace PataRoad.Core.Character
             Equip(weaponData);
             Equip(protectorData);
         }
-        protected void Equip(Items.EquipmentData data)
+        public void Equip(Items.EquipmentData data)
         {
-            if (data != null) EquipmentManager.Equip(data, _defaultStat);
+            if (data != null) EquipmentManager.Equip(data, Stat);
         }
         public void AddMass(float mass) => Rigidbody.mass += mass;
         public string GetEquipmentName(EquipmentType type) => _nameByEquipmentType[type];
+        public static (string weapon, string protector) GetWeaponAndProtectorName(ClassType type) => _weaponNameMap[type];
     }
 }

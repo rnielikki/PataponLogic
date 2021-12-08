@@ -319,34 +319,31 @@ namespace PataRoad.Core.Character
             SleepResistance -= other.SleepResistance;
             return this;
         }
-        private Stat MidValueTo(Stat stat)
-        {
-            Add(stat);
-            HitPoint /= 2;
-            DefenceMin /= 2;
-            DefenceMax /= 2;
-            DamageMin /= 2;
-            DamageMax /= 2;
-            AttackSeconds /= 2;
-            MovementSpeed /= 2;
-            Critical /= 2;
-            CriticalResistance /= 2;
-            Knockback /= 2;
-            KnockbackResistance /= 2;
-            Stagger /= 2;
-            StaggerResistance /= 2;
-            FireRate /= 2;
-            FireResistance /= 2;
-            IceRate /= 2;
-            IceResistance /= 2;
-            SleepRate /= 2;
-            SleepResistance /= 2;
-            return this;
-        }
 
         public static Stat GetMidValue(System.Collections.Generic.IEnumerable<Stat> stats)
         {
-            return stats.Aggregate((s1, s2) => s1.MidValueTo(s2));
+            return new Stat
+            {
+                HitPoint = (int)stats.Average(s => s.HitPoint),
+                DefenceMin = stats.Average(s => s.DefenceMin),
+                DefenceMax = stats.Average(s => s.DefenceMax),
+                DamageMin = (int)stats.Average(s => s.DamageMin),
+                DamageMax = (int)stats.Average(s => s.DamageMax),
+                AttackSeconds = (int)stats.Average(s => s.AttackSeconds),
+                MovementSpeed = (int)stats.Average(s => s.MovementSpeed),
+                Critical = (int)stats.Average(s => s.Critical),
+                CriticalResistance = (int)stats.Average(s => s.CriticalResistance),
+                Knockback = (int)stats.Average(s => s.Knockback),
+                KnockbackResistance = (int)stats.Average(s => s.KnockbackResistance),
+                Stagger = (int)stats.Average(s => s.Stagger),
+                StaggerResistance = (int)stats.Average(s => s.StaggerResistance),
+                FireRate = (int)stats.Average(s => s.FireRate),
+                FireResistance = (int)stats.Average(s => s.FireResistance),
+                IceRate = (int)stats.Average(s => s.IceRate),
+                IceResistance = (int)stats.Average(s => s.IceResistance),
+                SleepRate = (int)stats.Average(s => s.SleepRate),
+                SleepResistance = (int)stats.Average(s => s.SleepResistance)
+            };
         }
         public Stat Copy() => (Stat)MemberwiseClone();
     }

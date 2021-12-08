@@ -14,11 +14,6 @@ namespace PataRoad.Common
         private InputAction _action;
         private bool _useTip;
         private UnityEngine.Events.UnityAction _additionalAction;
-        private static System.Collections.Generic.List<SceneLoadingAction> _sceneLoadingActions = new System.Collections.Generic.List<SceneLoadingAction>();
-        private void Start()
-        {
-            _sceneLoadingActions.Add(this);
-        }
 
         /// <summary>
         /// Loads scene when pressed the UI Button.
@@ -65,16 +60,11 @@ namespace PataRoad.Common
         }
         public void ChangeScene()
         {
-            foreach (var action in _sceneLoadingActions)
-            {
-                if (action != this) Destroy(action.gameObject);
-            }
-            _sceneLoadingActions.Clear();
+            DontDestroyOnLoad(gameObject);
             GameDisplay.ScreenFading.Create(false, 2, () =>
             {
                 if (_useTip)
                 {
-                    DontDestroyOnLoad(gameObject);
                     SceneManager.LoadScene("Tips");
                     SceneManager.sceneLoaded += SetTipsDisplay;
                 }

@@ -10,19 +10,25 @@ namespace PataRoad.Core
 {
     public class GlobalData : MonoBehaviour
     {
+        public static GlobalSoundSystem Sound { get; private set; }
         public static PlayerInput Input { get; private set; }
-        public static PataponInfo PataponInfo { get; } = new PataponInfo();
+        public static PataponInfo PataponInfo { get; private set; }
         public static Inventory Inventory { get; private set; }
+
+        public static Map.MapData MapData { get; set; }
+
         [SerializeField]
         int _tipIndex = -1;
         public int TipIndex => _tipIndex;
-        public static AudioSource GlobalAudioSource { get; private set; }
         // Start is called before the first frame update
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
-            GlobalAudioSource = GetComponentInChildren<AudioSource>();
             Input = GetComponent<PlayerInput>();
+            Sound = GetComponentInChildren<GlobalSoundSystem>();
+            MapData = new Map.MapData();
+
+            PataponInfo = new PataponInfo();
 
             ItemLoader.LoadAll();
             Inventory = new Inventory(); //must be loaded after item loader init

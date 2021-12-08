@@ -6,19 +6,17 @@ namespace PataRoad.Core.Items
 {
     public class Inventory
     {
-        private Dictionary<IItem, int> _data = new Dictionary<IItem, int>();
-
-        private readonly Dictionary<ItemType, Dictionary<string, Dictionary<int, (IItem item, int amount)>>> _indexed
-            = new Dictionary<ItemType, Dictionary<string, Dictionary<int, (IItem item, int amount)>>>();
+        private readonly Dictionary<ItemType, Dictionary<string, Dictionary<int, InventoryData>>> _indexed
+            = new Dictionary<ItemType, Dictionary<string, Dictionary<int, InventoryData>>>();
+        private Dictionary<IItem, InventoryData> _existingData = new Dictionary<IItem, InventoryData>();
 
         [SerializeReference]
         private InventoryData[] _serializableData;
 
-        const string _keyInPref = "inventory";
         const int _maxValue = 999;
         public Inventory()
         {
-            if (!PlayerPrefs.HasKey(_keyInPref))
+            if (!PlayerPrefs.HasKey(SerializationKeys.Inventory))
             {
                 LoadDefault();
             }
@@ -26,17 +24,24 @@ namespace PataRoad.Core.Items
             {
                 try
                 {
-                    Deserialize(PlayerPrefs.GetString(_keyInPref));
+                    Deserialize(PlayerPrefs.GetString(SerializationKeys.Inventory));
                 }
                 catch (System.Exception)
                 {
-                    Debug.Log("Error while loading item. loading default items...");
+                    Debug.LogError("Error while loading item. loading default items...");
                     LoadDefault();
+                    return;
                 }
+                UpdateAllItemIndexes();
             }
-            UpdateAllItemIndexes();
         }
-        public bool HasItem(IItem item) => _data.ContainsKey(item);
+        /// <summary>
+        /// Check if the item exists in the inventory.
+        /// </summary>
+        /// <param name="item">item to check if it's in inventory.</param>
+        /// <note>This doesn't check <c>null</c> and throws exception if data is <c>null</c></note>
+        /// <returns><c>true</c> if exists in inventory, otherwise <c>false</c>.</returns>
+        public bool HasItem(IItem item) => _existingData.ContainsKey(item);
         /// <summary>
         /// Adds an item to the inventory.
         /// </summary>
@@ -55,10 +60,8 @@ namespace PataRoad.Core.Items
             if (amount < 0) throw new System.ArgumentException("amount cannot be less than zero.");
             if (HasItem(item))
             {
-                var currentAmount = _data[item];
-                if (!item.IsUniqueItem && currentAmount < _maxValue)
+                if (!item.IsUniqueItem)
                 {
-                    _data[item] = Mathf.Min(_maxValue, currentAmount + amount);
                     UpdateItemIndex(item, amount);
                 }
                 return false;
@@ -66,7 +69,6 @@ namespace PataRoad.Core.Items
             else
             {
                 if (item.IsUniqueItem) amount = 1;
-                _data.Add(item, amount);
                 UpdateItemIndex(item, amount);
                 return true;
             }
@@ -86,79 +88,74 @@ namespace PataRoad.Core.Items
         public bool RemoveItem(IItem item, int amount)
         {
             if (amount < 0) throw new System.ArgumentException("amount cannot be less than zero.");
-            if (item.IsUniqueItem || !HasItem(item) || _data[item] < amount) return false;
+            if (item.IsUniqueItem || !HasItem(item) || _existingData[item].Amount < amount) return false;
 
-            _data[item] -= _data[item] - amount;
-            if (_data[item] == 0) _data.Remove(item);
-            SetNewAmountFromItemIndexes(item, amount);
+            var newAmount = _existingData[item].Amount - amount;
+            SetNewAmountFromItemIndexes(item, newAmount);
             return true;
         }
-        public IEnumerable<(IItem item, int amount)> GetItemsByType(ItemType type, string group)
+        public IEnumerable<InventoryData> GetItemsByType(ItemType type, string group)
         {
-            if (!_indexed.ContainsKey(type) || !_indexed[type].ContainsKey(group)) return Enumerable.Empty<(IItem, int)>();
+            if (!_indexed.ContainsKey(type) || !_indexed[type].ContainsKey(group)) return Enumerable.Empty<InventoryData>();
             else return _indexed[type][group].Select(item => item.Value);
+        }
+        public IEnumerable<T> GetKeyItems<T>(string group) where T : IItem
+        {
+            return GetItemsByType(ItemType.Key, group).Select(item => (T)item.Item);
         }
         void LoadDefault()
         {
             //PATA AND PON DRUM
-            _data.Add(ItemLoader.GetItem(ItemType.Key, "Drum", 0), 1);
-            _data.Add(ItemLoader.GetItem(ItemType.Key, "Drum", 1), 1);
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Drum", 0));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Drum", 1));
 
             //SONGS
-            _data.Add(ItemLoader.GetItem(ItemType.Key, "Song", 0), 1);
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Song", 0));
 
             //MEMORIES
-            _data.Add(ItemLoader.GetItem(ItemType.Key, "Class", 0), 1);
-            _data.Add(ItemLoader.GetItem(ItemType.Key, "Class", 2), 1);
-            _data.Add(ItemLoader.GetItem(ItemType.Key, "Class", 4), 1);
-            _data.Add(ItemLoader.GetItem(ItemType.Key, "Class", 7), 1);
-            _data.Add(ItemLoader.GetItem(ItemType.Key, "Class", 8), 1);
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 0));
 
-            //Default equipments
-            foreach (var item in ItemLoader.GetAllDefaultEquipments())
-            {
-                int amount;
-                switch (item.Type)
-                {
-                    case Character.Equipments.EquipmentType.Rarepon:
-                        amount = 27;
-                        break;
-                    case Character.Equipments.EquipmentType.Helm:
-                        amount = 36;
-                        break;
-                    default:
-                        amount = 3;
-                        break;
-                }
-                _data.Add(item, amount);
-            }
+            //Weapon
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", 0), 3);
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", 0), 4);
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 0), 3);
+
+            //Test
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", 1), 3);
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", 1), 4);
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 1), 3);
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 2), 3);
+            AddMultiple(ItemLoader.GetItem(ItemType.Key, "Boss", 0), 1);
         }
         private void UpdateAllItemIndexes()
         {
-            foreach (var item in _data.Select(kv => (kv.Key, kv.Value)))
+            foreach (var item in _existingData.Values)
             {
-                UpdateItemIndex(item.Key, item.Value);
+                UpdateItemIndex(item.Item, item.Amount);
             }
         }
+        //UPDATE MUST CALLED *AFTER* ITEM IS ADDED TO "_existingData".
         private void UpdateItemIndex(IItem item, int amount)
         {
             if (!_indexed.ContainsKey(item.ItemType))
             {
-                _indexed.Add(item.ItemType, new Dictionary<string, Dictionary<int, (IItem item, int amount)>>());
+                _indexed.Add(item.ItemType, new Dictionary<string, Dictionary<int, InventoryData>>());
             }
             var dataByItemType = _indexed[item.ItemType];
             if (!dataByItemType.ContainsKey(item.Group))
             {
-                dataByItemType.Add(item.Group, new Dictionary<int, (IItem item, int amount)>());
+                dataByItemType.Add(item.Group, new Dictionary<int, InventoryData>());
             }
             var dataByItemGroup = dataByItemType[item.Group];
+
             if (!dataByItemGroup.ContainsKey(item.Index))
             {
-                dataByItemGroup.Add(item.Index, (item, amount));
+                if (!_existingData.ContainsKey(item)) _existingData.Add(item, new InventoryData(item, amount));
+                dataByItemGroup.Add(item.Index, _existingData[item]);
             }
             else
             {
-                dataByItemGroup[item.Index] = (item, Mathf.Min(dataByItemGroup[item.Index].amount + amount, 999));
+                dataByItemGroup[item.Index].Amount = Mathf.Min(dataByItemGroup[item.Index].Amount + amount, 999);
             }
         }
         private void SetNewAmountFromItemIndexes(IItem item, int newAmount)
@@ -167,22 +164,23 @@ namespace PataRoad.Core.Items
             if (newAmount < 1)
             {
                 group.Remove(item.Index);
+                _existingData.Remove(item);
             }
             else
             {
-                group[item.Index] = (item, newAmount);
+                group[item.Index].Amount = newAmount;
             }
         }
         public string Serialize()
         {
-            _serializableData = _data.Select(kv => new InventoryData(kv)).ToArray();
+            _serializableData = _existingData.Values.ToArray();
             return JsonUtility.ToJson(this);
         }
         public void Deserialize(string raw)
         {
             var inventoryData = JsonUtility.FromJson<Inventory>(raw);
             _serializableData = inventoryData._serializableData;
-            _data = _serializableData.ToDictionary(data => data.ItemMeta.ToItem(), data => data.Amount);
+            _existingData = _serializableData.ToDictionary(data => data.ItemMeta.ToItem(), data => data.AssignItem());
         }
     }
 }

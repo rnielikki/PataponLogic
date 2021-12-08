@@ -33,7 +33,12 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void Submit()
         {
-            Current.OnSubmit.Invoke();
+            Current.OnSubmit.Invoke(Current);
+        }
+        public override void ResumeToActive()
+        {
+            base.ResumeToActive();
+            Current.MarkAsSelected();
         }
         public override void MoveTo(Object sender, InputAction.CallbackContext context)
         {

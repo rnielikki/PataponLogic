@@ -26,6 +26,8 @@ namespace PataRoad.Core.Character.Equipments
         [SerializeField]
         [Tooltip("Can equip, but not be shown. For general.")]
         protected bool _hideEquipment;
+        protected EquipmentData _defaultEquipmentData;
+
         private void Awake()
         {
             LoadRenderersAndImage();
@@ -34,12 +36,13 @@ namespace PataRoad.Core.Character.Equipments
         private void Start()
         {
             Load();
-            if (!_fixedEquipment) CurrentData = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, HolderData.GetEquipmentName(_type), 0);
+            if (!_fixedEquipment) CurrentData = _defaultEquipmentData;
         }
         internal void Load()
         {
             Holder = GetComponentInParent<SmallCharacter>();
             HolderData = GetComponentInParent<SmallCharacterData>();
+            _defaultEquipmentData = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, HolderData.GetEquipmentName(_type), 0);
         }
         internal virtual void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
@@ -58,7 +61,7 @@ namespace PataRoad.Core.Character.Equipments
         {
             if (CurrentData == null) return;
             stat.Subtract(Stat);
-            HolderData.AddMass(Mass);
+            HolderData.AddMass(-Mass);
         }
         protected void AddDataToStat(Stat stat)
         {

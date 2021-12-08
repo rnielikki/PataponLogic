@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PataRoad.Core.Character.Patapons.Data
 {
-    [System.Serializable]
+    [Serializable]
     public class PataponInfo
     {
         [SerializeField]
@@ -17,26 +17,29 @@ namespace PataRoad.Core.Character.Patapons.Data
         /// </summary>
         public const int MaxPataponGroup = 3;
 
-        //[SerializeReference]
-        //PataponCurrentClassInfo[] _allClasses;
-
-        //Dictionary<Class.ClassType, PataponCurrentClassInfo> _classInfoMap = new Dictionary<Class.ClassType, PataponCurrentClassInfo>();
+        Dictionary<Class.ClassType, PataponClassInfo> _classInfoMap = new Dictionary<Class.ClassType, PataponClassInfo>();
+        Dictionary<Items.IItem, int> _amountMap = new Dictionary<Items.IItem, int>();
 
         public PataponInfo()
         {
-            //Not serialized --
-            /*
-            foreach (Class.ClassType type in System.Enum.GetValues(typeof(Class.ClassType)))
+            if (PlayerPrefs.HasKey(SerializationKeys.PataponInfo))
             {
-                if (type != Class.ClassType.Any) _classInfoMap.Add(type, new PataponCurrentClassInfo(type));
+                //Serialize --
             }
-            */
-            _currentClasses = new List<Class.ClassType>()
+            else
             {
-                Class.ClassType.Yumipon
-            };
-            Order();
-            //Serialize --
+                //Not serialized --
+                foreach (Class.ClassType type in Enum.GetValues(typeof(Class.ClassType)))
+                {
+                    _classInfoMap.Add(type, new PataponClassInfo(type));
+                }
+
+                _currentClasses = new List<Class.ClassType>()
+                {
+                    Class.ClassType.Yaripon
+                };
+                Order();
+            }
         }
         public void ReplaceClass(Class.ClassType from, Class.ClassType to)
         {
@@ -60,6 +63,12 @@ namespace PataRoad.Core.Character.Patapons.Data
         }
 
         internal bool ContainsClass(Class.ClassType type) => _currentClasses.Contains(type);
+
+        public int GetEquippedCount(Items.IItem item)
+        {
+            if (_amountMap.TryGetValue(item, out int res)) return res;
+            else return 0;
+        }
 
         public void Serialize()
         {

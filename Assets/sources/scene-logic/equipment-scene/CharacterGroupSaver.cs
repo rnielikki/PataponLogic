@@ -62,7 +62,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private void Exit(AudioClip sound)
         {
             //And save data to static!
-            Core.GlobalData.GlobalAudioSource.PlayOneShot(sound);
+            Core.GlobalData.Sound.Play(sound);
         }
 
     }

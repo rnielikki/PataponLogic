@@ -14,8 +14,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private void Awake()
         {
             _availableClasses = Core.GlobalData.Inventory
-                .GetItemsByType(Core.Items.ItemType.Key, "Class")
-                .Select(item => (item.item as Core.Items.ClassMemoryData).Class).ToArray();
+                .GetKeyItems<Core.Items.ClassMemoryData>("Class")
+                .Select(item => item.Class).ToArray();
             _classSelections = GetComponentsInChildren<ClassSelectionInfo>(true);
 
             foreach (var classSelection in _classSelections)

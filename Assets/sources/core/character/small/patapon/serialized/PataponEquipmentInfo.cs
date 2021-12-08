@@ -7,7 +7,7 @@ namespace PataRoad.Core.Character.Patapons.Data
     /// Represents equipment of 'A' Patapon.
     /// </summary>
     [System.Serializable]
-    public class PataponClassEquipmentInfo
+    public class PataponEquipmentInfo
     {
         private EquipmentData _weaponData;
         private EquipmentData _protectorData;
@@ -30,10 +30,11 @@ namespace PataRoad.Core.Character.Patapons.Data
         [SerializeField]
         private int _rareponIndex;
 
-        public PataponClassEquipmentInfo(string weaponName, string protectorName)
+        public PataponEquipmentInfo(Class.ClassType classType)
         {
-            _weaponType = weaponName;
-            _protectorType = protectorName;
+            var equipmentNames = SmallCharacterData.GetWeaponAndProtectorName(classType);
+            _weaponType = equipmentNames.weapon;
+            _protectorType = equipmentNames.protector;
         }
         public void Serialize()
         {

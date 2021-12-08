@@ -24,8 +24,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         internal void HideEqupiment(Stat stat)
         {
+            ReplaceEqupiment(_defaultEquipmentData, stat);
             ReplaceImage(null);
-            RemoveDataFromStat(stat);
         }
         internal void ShowEqupiment()
         {

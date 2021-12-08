@@ -1,28 +1,27 @@
-﻿/*
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PataRoad.Core.Character.Patapons.Data
 {
     [System.Serializable]
-    public class PataponCurrentClassInfo
+    public class PataponClassInfo
     {
         [SerializeField]
         Class.ClassType _class;
         public Class.ClassType Class => _class;
         [SerializeReference]
-        PataponClassEquipmentInfo[] _info;
-        internal PataponCurrentClassInfo(Class.ClassType type)
+        PataponEquipmentInfo[] _info;
+        internal PataponClassInfo(Class.ClassType type)
         {
             _class = type;
-            _info = new PataponClassEquipmentInfo[4]
+            _info = new PataponEquipmentInfo[4]
             {
-                new PataponClassEquipmentInfo(),
-                new PataponClassEquipmentInfo(),
-                new PataponClassEquipmentInfo(),
-                new PataponClassEquipmentInfo()
+                new PataponEquipmentInfo(type),
+                new PataponEquipmentInfo(type),
+                new PataponEquipmentInfo(type),
+                new PataponEquipmentInfo(type)
             };
         }
-        public PataponClassEquipmentInfo GetEquipmentInIndex(int index)
+        public PataponEquipmentInfo GetEquipmentInIndex(int index)
         {
             if (index > 4 || index < 0)
             {
@@ -32,4 +31,3 @@ namespace PataRoad.Core.Character.Patapons.Data
         }
     }
 }
-*/
