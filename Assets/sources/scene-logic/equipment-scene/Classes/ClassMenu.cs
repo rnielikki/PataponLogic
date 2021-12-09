@@ -1,5 +1,4 @@
-﻿using PataRoad.Core.Character.Class;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.EquipmentScene
@@ -9,18 +8,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private ClassSelectionInfo[] _classSelections;
         [SerializeField]
         private UnityEngine.Events.UnityEvent _onOpenClass;
-        private ClassType[] _availableClasses;
 
         private void Awake()
         {
-            _availableClasses = Core.GlobalData.Inventory
-                .GetKeyItems<Core.Items.ClassMemoryData>("Class")
-                .Select(item => item.Class).ToArray();
             _classSelections = GetComponentsInChildren<ClassSelectionInfo>(true);
 
             foreach (var classSelection in _classSelections)
             {
-                if (_availableClasses.Contains(classSelection.ClassType)) classSelection.Init();
+                if (CharacterGroupSaver.AvailableClasses.Contains(classSelection.ClassType)) classSelection.Init();
             }
         }
         private void OnEnable()
@@ -31,7 +26,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             foreach (var selection in _classSelections)
             {
-                if (Core.GlobalData.PataponInfo.ContainsClass(selection.ClassType) || !_availableClasses.Contains(selection.ClassType))
+                if (Core.Global.GlobalData.PataponInfo.ContainsClass(selection.ClassType) || !CharacterGroupSaver.AvailableClasses.Contains(selection.ClassType))
                 {
                     selection.gameObject.SetActive(false);
                 }

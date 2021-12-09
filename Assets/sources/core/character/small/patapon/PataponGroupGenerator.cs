@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using PataRoad.Core.Character.Class;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Patapons
@@ -14,15 +14,15 @@ namespace PataRoad.Core.Character.Patapons
         private static int _pataponGroupIndex;
         private static int _sortingLayerIndex;
 
-        private static Dictionary<Class.ClassType, (GameObject general, GameObject patapon)> _pataponObjects { get; }
-            = new Dictionary<Class.ClassType, (GameObject, GameObject)>();
+        private static Dictionary<ClassType, (GameObject general, GameObject patapon)> _pataponObjects { get; }
+            = new Dictionary<ClassType, (GameObject, GameObject)>();
 
         /// <summary>
         /// Generates Patapons automatically on mission.
         /// </summary>
         /// <param name="patapons">Array of Patapon types to create.</param>
         /// <param name="manager"><see cref="PataponManager"/> to reference. Also its transform is used to set as groups' parent.</param>
-        internal static void Generate(IEnumerable<Class.ClassType> patapons, PataponsManager manager)
+        internal static void Generate(IEnumerable<ClassType> patapons, PataponsManager manager)
         {
             _pataponGroupIndex = 0;
             _sortingLayerIndex = 0;
@@ -36,22 +36,22 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         /// <param name="parent">Parent of the group objects.</param>
         /// <returns>Group dictionary.</returns>
-        internal static Dictionary<Class.ClassType, GameObject> Generate(Transform parent)
+        internal static Dictionary<ClassType, GameObject> Generate(Transform parent, IEnumerable<ClassType> classes)
         {
             _pataponGroupIndex = 0;
             _sortingLayerIndex = 0;
-            Dictionary<Class.ClassType, GameObject> pataponGroups = new Dictionary<Class.ClassType, GameObject>();
-            foreach (var pataponClass in System.Enum.GetValues(typeof(Class.ClassType)))
+            Dictionary<ClassType, GameObject> pataponGroups = new Dictionary<ClassType, GameObject>();
+            foreach (var pataponClass in classes)
             {
-                var classType = (Class.ClassType)pataponClass;
-                var group = AddPataponGroupInstance(classType, parent, null, false);
-                pataponGroups.Add(classType, group);
+                var group = AddPataponGroupInstance(pataponClass, parent, null, false);
+                pataponGroups.Add(pataponClass, group);
                 group.SetActive(false);
             }
             return pataponGroups;
         }
+
         // -------- ADD WEAPON LATER ----------
-        private static GameObject AddPataponGroupInstance(Class.ClassType classType, Transform parent, PataponsManager manager, bool onMission)
+        private static GameObject AddPataponGroupInstance(ClassType classType, Transform parent, PataponsManager manager, bool onMission)
         {
             var group = new GameObject("PataponGroup");
             group.transform.parent = parent;
@@ -72,7 +72,7 @@ namespace PataRoad.Core.Character.Patapons
             return group;
         }
 
-        private static void AddPataponsInstance(Class.ClassType classType, Transform attachTarget, bool onMission)
+        private static void AddPataponsInstance(ClassType classType, Transform attachTarget, bool onMission)
         {
             GameObject general;
             GameObject patapon;
@@ -118,8 +118,7 @@ namespace PataRoad.Core.Character.Patapons
             }
 
         }
-
-        private static (GameObject general, GameObject patapon) LoadResource(Class.ClassType classType)
+        private static (GameObject general, GameObject patapon) LoadResource(ClassType classType)
         {
             if (!_pataponObjects.TryGetValue(classType, out (GameObject, GameObject) res))
             {

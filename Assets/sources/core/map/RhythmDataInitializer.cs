@@ -9,13 +9,13 @@ namespace PataRoad.Core.Map
         Rhythm.Command.RhythmCommand _command;
         private void Awake()
         {
-            var allSongs = GlobalData.Inventory
+            var allSongs = Global.GlobalData.Inventory
                 .GetKeyItems<Items.SongItemData>("Song").Select(item => item.Song);
             _command.SetCommandSong(allSongs.ToArray());
         }
         void Start()
         {
-            var allDrums = GlobalData.Inventory
+            var allDrums = Global.GlobalData.Inventory
                 .GetKeyItems<Items.DrumItemData>("Drum").Select(item => item.Drum);
             foreach (var input in GetComponentsInChildren<Rhythm.RhythmInput>())
             {

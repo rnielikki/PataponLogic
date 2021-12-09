@@ -11,7 +11,7 @@ namespace PataRoad.Common.GameDisplay
         private string _actionName;
         private void Awake()
         {
-            var actions = Core.GlobalData.Input.actions;
+            var actions = Core.Global.GlobalData.Input.actions;
             _action = actions.FindAction(_actionName);
             _action.started += Load;
             _action.Enable();

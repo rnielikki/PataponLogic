@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Globally initializes all. LOADED AT VERY FIRST AND NEVER BEEN DESTROYED.
 /// </summary>
-namespace PataRoad.Core
+namespace PataRoad.Core.Global
 {
     public class GlobalData : MonoBehaviour
     {
@@ -39,6 +39,33 @@ namespace PataRoad.Core
             var actionBindingName = Input.actions.FindAction(actionName)?.GetBindingDisplayString();
             name = actionBindingName;
             return !string.IsNullOrEmpty(actionBindingName);
+        }
+        public void Serialize(string key, IPlayerData data)
+        {
+            var str = data.Serialize();
+            PlayerPrefs.SetString(key, str);
+        }
+        public T Deserialize<T>(string key) where T : IPlayerData
+        {
+            if (!PlayerPrefs.HasKey(key))
+            {
+                return default(T);
+            }
+            else
+            {
+                try
+                {
+                    var data = PlayerPrefs.GetString(key);
+                    var res = JsonUtility.FromJson<T>(data);
+                    res.Deserialize();
+                    return res;
+                }
+                catch (System.Exception)
+                {
+                    Debug.LogError("Error while loading item. loading default items...");
+                    return default(T);
+                }
+            }
         }
     }
 }

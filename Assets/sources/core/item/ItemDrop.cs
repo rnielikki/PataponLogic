@@ -1,3 +1,4 @@
+using PataRoad.Core.Global;
 using UnityEngine;
 
 namespace PataRoad.Core.Items

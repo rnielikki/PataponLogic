@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using PataRoad.Core.Global;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.Core.Items
 {
-    public class Inventory
+    public class Inventory : IPlayerData
     {
         private readonly Dictionary<ItemType, Dictionary<string, Dictionary<int, InventoryData>>> _indexed
             = new Dictionary<ItemType, Dictionary<string, Dictionary<int, InventoryData>>>();
@@ -14,26 +15,10 @@ namespace PataRoad.Core.Items
         private InventoryData[] _serializableData;
 
         const int _maxValue = 999;
+
         public Inventory()
         {
-            if (!PlayerPrefs.HasKey(SerializationKeys.Inventory))
-            {
-                LoadDefault();
-            }
-            else
-            {
-                try
-                {
-                    Deserialize(PlayerPrefs.GetString(SerializationKeys.Inventory));
-                }
-                catch (System.Exception)
-                {
-                    Debug.LogError("Error while loading item. loading default items...");
-                    LoadDefault();
-                    return;
-                }
-                UpdateAllItemIndexes();
-            }
+            LoadDefault();
         }
         /// <summary>
         /// Check if the item exists in the inventory.
@@ -126,6 +111,9 @@ namespace PataRoad.Core.Items
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 1), 3);
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 2), 3);
             AddMultiple(ItemLoader.GetItem(ItemType.Key, "Boss", 0), 1);
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 1));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 2));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 8));
         }
         private void UpdateAllItemIndexes()
         {
@@ -155,7 +143,7 @@ namespace PataRoad.Core.Items
             }
             else
             {
-                dataByItemGroup[item.Index].Amount = Mathf.Min(dataByItemGroup[item.Index].Amount + amount, 999);
+                dataByItemGroup[item.Index].Amount = Mathf.Min(dataByItemGroup[item.Index].Amount + amount, _maxValue);
             }
         }
         private void SetNewAmountFromItemIndexes(IItem item, int newAmount)
@@ -176,11 +164,10 @@ namespace PataRoad.Core.Items
             _serializableData = _existingData.Values.ToArray();
             return JsonUtility.ToJson(this);
         }
-        public void Deserialize(string raw)
+        public void Deserialize()
         {
-            var inventoryData = JsonUtility.FromJson<Inventory>(raw);
-            _serializableData = inventoryData._serializableData;
             _existingData = _serializableData.ToDictionary(data => data.ItemMeta.ToItem(), data => data.AssignItem());
+            UpdateAllItemIndexes();
         }
     }
 }

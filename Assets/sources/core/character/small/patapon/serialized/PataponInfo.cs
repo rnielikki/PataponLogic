@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PataRoad.Core.Global;
+using PataRoad.Core.Items;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,40 +8,44 @@ using UnityEngine;
 namespace PataRoad.Core.Character.Patapons.Data
 {
     [Serializable]
-    public class PataponInfo
+    public class PataponInfo : IPlayerData
     {
         [SerializeField]
         private List<Class.ClassType> _currentClasses;
         public Class.ClassType[] CurrentClasses => _currentClasses.ToArray();
         public int ClassCount => _currentClasses.Count;
+
         /// <summary>
         /// How many groups (how many group of various classes) can go to fight.
         /// </summary>
         public const int MaxPataponGroup = 3;
 
         Dictionary<Class.ClassType, PataponClassInfo> _classInfoMap = new Dictionary<Class.ClassType, PataponClassInfo>();
-        Dictionary<Items.IItem, int> _amountMap = new Dictionary<Items.IItem, int>();
+        Dictionary<IItem, int> _amountMap = new Dictionary<IItem, int>();
+        [SerializeReference]
+        PataponClassInfo[] _classInfoForSerialization;
+
+        public StringKeyItemData BossToSummon { get; set; }
+        public StringKeyItemData CustomMusic { get; set; }
+
+        [SerializeReference]
+        int _summonIndex;
+        [SerializeReference]
+        int _musicIndex;
 
         public PataponInfo()
         {
-            if (PlayerPrefs.HasKey(SerializationKeys.PataponInfo))
+            //Not serialized --
+            foreach (Class.ClassType type in Enum.GetValues(typeof(Class.ClassType)))
             {
-                //Serialize --
+                _classInfoMap.Add(type, new PataponClassInfo(type));
             }
-            else
-            {
-                //Not serialized --
-                foreach (Class.ClassType type in Enum.GetValues(typeof(Class.ClassType)))
-                {
-                    _classInfoMap.Add(type, new PataponClassInfo(type));
-                }
 
-                _currentClasses = new List<Class.ClassType>()
-                {
-                    Class.ClassType.Yaripon
-                };
-                Order();
-            }
+            _currentClasses = new List<Class.ClassType>()
+            {
+                Class.ClassType.Yaripon
+            };
+            Order();
         }
         public void ReplaceClass(Class.ClassType from, Class.ClassType to)
         {
@@ -64,31 +70,48 @@ namespace PataRoad.Core.Character.Patapons.Data
 
         internal bool ContainsClass(Class.ClassType type) => _currentClasses.Contains(type);
 
-        public int GetEquippedCount(Items.IItem item)
+        public int GetEquippedCount(IItem item)
         {
             if (_amountMap.TryGetValue(item, out int res)) return res;
             else return 0;
         }
-
-        public void Serialize()
+        public void UpdateClassEquipmentStatus(PataponData data, EquipmentData equipmentData)
         {
-            //_allClasses = _classInfoMap.Values.ToArray();
+            data.Equip(equipmentData);
+            GetClassInfo(data.Type).SetEquipmentInIndex(data.IndexInGroup, equipmentData);
+        }
+        public void UpdateGeneralEquipmentStatus(PataponData data, GeneralModeData generalModeData)
+        {
+            GetClassInfo(data.Type).SetGeneralModeData(generalModeData);
+        }
+        public IEnumerable<EquipmentData> GetCurrentEquipments(PataponData data)
+        {
+            return GetClassInfo(data.Type).GetEquipmentInIndex(data.IndexInGroup);
+        }
+        private PataponClassInfo GetClassInfo(Class.ClassType type)
+        {
+            if (!_classInfoMap.ContainsKey(type))
+            {
+                _classInfoMap.Add(type, new PataponClassInfo(type));
+            }
+            return _classInfoMap[type];
+        }
+        public string Serialize()
+        {
+            _classInfoForSerialization = _classInfoMap.Values.ToArray();
+            _summonIndex = BossToSummon.Index;
+            _musicIndex = CustomMusic.Index;
+            return JsonUtility.ToJson(this);
         }
         public void Deserialize()
         {
-            /*
             _classInfoMap.Clear();
-            foreach (var pataponClassInfo in _allClasses)
+            foreach (var classInfo in _classInfoForSerialization)
             {
-                _classInfoMap.Add(pataponClassInfo.Class, pataponClassInfo);
+                _classInfoMap.Add(classInfo.Class, classInfo);
             }
-            */
+            BossToSummon = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Boss", _summonIndex);
+            CustomMusic = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Music", _musicIndex);
         }
-        /*
-        public PataponClassEquipmentInfo GetEquipmentInfo(Class.ClassType type, int index)
-        {
-            return _classInfoMap[type].GetEquipmentInIndex(index);
-        }
-        */
     }
 }

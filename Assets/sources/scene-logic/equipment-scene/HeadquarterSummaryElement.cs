@@ -1,5 +1,7 @@
 ﻿using System.Linq;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
@@ -18,10 +20,27 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         private void Awake()
         {
-            if (!string.IsNullOrEmpty(_bindingName) && Core.GlobalData.TryGetActionBindingName(_bindingName, out string result))
+            if (!string.IsNullOrEmpty(_bindingName) && Core.Global.GlobalData.TryGetActionBindingName(_bindingName, out string result))
             {
-                GetComponentInChildren<UnityEngine.UI.Text>().text += $" ({result})";
+                GetComponentInChildren<Text>().text += $" ({result})";
             }
+            if (!string.IsNullOrEmpty(_additionalData))
+            {
+                switch (_additionalData)
+                {
+                    case "Boss":
+                        UpdateImageAndText(Core.Global.GlobalData.PataponInfo.BossToSummon, "Boss to summon");
+                        break;
+                    case "Music":
+                        UpdateImageAndText(Core.Global.GlobalData.PataponInfo.CustomMusic, "Music theme");
+                        break;
+                }
+            }
+        }
+        private void UpdateImageAndText(Core.Items.IItem item, string defaultText)
+        {
+            GetComponentInChildren<Text>().text = item?.Name ?? defaultText;
+            transform.Find("Image").GetComponent<Image>().sprite = item?.Image;
         }
         private void OnDestroy()
         {

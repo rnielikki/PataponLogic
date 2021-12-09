@@ -1,5 +1,6 @@
 ﻿using PataRoad.Core.Character.Class;
 using PataRoad.Core.Character.Equipments;
+using PataRoad.Core.Items;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,12 +34,10 @@ namespace PataRoad.Core.Character
         internal EquipmentManager EquipmentManager { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
 
-        public virtual Items.EquipmentData WeaponData { get; protected set; }
-        public virtual Items.EquipmentData ProtectorData { get; protected set; }
-
         public string WeaponName { get; private set; }
         public string ProtectorName { get; private set; }
         public Animator Animator { get; private set; }
+
         private readonly static Dictionary<ClassType, (string weapon, string protector)> _weaponNameMap = new Dictionary<ClassType, (string, string)>()
         {
             { ClassType.Tatepon, ("Sword","Shield")},
@@ -69,25 +68,22 @@ namespace PataRoad.Core.Character
             if (Stat != null) return;
             InitStat();
 
-            SetEquipments();
-            InitEquipment(WeaponData, ProtectorData);
+            InitEquipment(GetEquipmentData());
         }
+        protected abstract IEnumerable<EquipmentData> GetEquipmentData();
 
         private void InitStat()
         {
             Stat = _defaultStat;
         }
-        protected abstract void SetEquipments();
 
-        private void InitEquipment(Items.EquipmentData weaponData, Items.EquipmentData protectorData)
+        private void InitEquipment(IEnumerable<EquipmentData> equipmentData)
         {
             Rigidbody = GetComponent<Rigidbody2D>();
             EquipmentManager = new EquipmentManager(this);
-            EquipmentManager.Init();
-            Equip(weaponData);
-            Equip(protectorData);
+            EquipmentManager.Init(equipmentData);
         }
-        public void Equip(Items.EquipmentData data)
+        public void Equip(EquipmentData data)
         {
             if (data != null) EquipmentManager.Equip(data, Stat);
         }

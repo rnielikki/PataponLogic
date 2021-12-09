@@ -16,7 +16,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
-            if (HolderData == null) HolderData = GetComponentInParent<SmallCharacterData>();
+            if (HolderData == null) Load();
             if (HolderData.EquipmentManager.Rarepon == null || HolderData.EquipmentManager.Rarepon.IsNormal)
             {
                 base.ReplaceEqupiment(equipmentData, stat);
@@ -24,12 +24,13 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         internal void HideEqupiment(Stat stat)
         {
+            if (HolderData == null) Load();
             ReplaceEqupiment(_defaultEquipmentData, stat);
             ReplaceImage(null);
         }
         internal void ShowEqupiment()
         {
-            _spriteRenderers[0].sprite = _defaultImage;
+            _spriteRenderers[0].sprite = CurrentData?.Image ?? _defaultImage;
         }
     }
 }

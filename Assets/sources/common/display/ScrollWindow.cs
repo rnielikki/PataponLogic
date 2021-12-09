@@ -18,11 +18,14 @@ namespace PataRoad.Common.GameDisplay
         private UnityEngine.UI.Image _upArrow;
         [SerializeField]
         private UnityEngine.UI.Image _downArrow;
+        [SerializeField]
+        private string _actionName;
         private InputAction _action;
         // Start is called before the first frame update
         void Awake()
         {
-            _action = Core.GlobalData.Input.actions.FindAction("UI/Navigate");
+            if (string.IsNullOrEmpty(_actionName)) _actionName = "UI/Navigate";
+            _action = Core.Global.GlobalData.Input.actions.FindAction(_actionName);
         }
         private void OnEnable()
         {

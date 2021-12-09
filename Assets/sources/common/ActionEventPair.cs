@@ -16,7 +16,7 @@ namespace PataRoad.Common.Navigator
         private bool _addedEvent;
         public ActionEventPair(string fullActionName, Object sender, UnityEvent<Object, InputAction.CallbackContext> senderEvent)
         {
-            _action = Core.GlobalData.Input.actions.FindAction(fullActionName);
+            _action = Core.Global.GlobalData.Input.actions.FindAction(fullActionName);
             _sender = sender;
             _senderEvent = senderEvent;
             _action.performed += InvokeEvent;

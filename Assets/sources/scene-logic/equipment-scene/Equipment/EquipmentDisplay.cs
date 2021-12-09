@@ -20,7 +20,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private HeadquarterMenu _summaryForHeadquarter;
 
-        private RectTransform _rect;
         private Core.Character.PataponData _currentPataponData;
 
         [SerializeField]
@@ -28,13 +27,17 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private bool _doesNavPreserveIndex;
 
         private HeadquarterSummaryElement _summaryElem;
+        private HorizontalLayoutGroup _layout;
+
+        [SerializeField]
+        private UnityEngine.Events.UnityEvent<IItem> _onItemSelected;
 
         // Start is called before the first frame update
         void Awake()
         {
             _map = GetComponent<ActionEventMap>();
             _map.enabled = false;
-            _rect = _child.GetComponent<RectTransform>();
+            _layout = GetComponent<HorizontalLayoutGroup>();
         }
         public void ShowEquipment(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
@@ -76,24 +79,25 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _map.enabled = true;
             _nav.Freeze();
 
-            bool selected = false;
+            ItemDisplay last = null;
 
-            foreach (var inventoryData in Core.GlobalData.Inventory.GetItemsByType(type, itemGroup))
+            foreach (var inventoryData in Core.Global.GlobalData.Inventory.GetItemsByType(type, itemGroup))
             {
                 var obj = Instantiate(_itemTemplate, _child.transform);
-                obj.GetComponent<ItemDisplay>().Init(inventoryData.Item, inventoryData.Amount);
-                if (inventoryData.Item == currentItem)
+                var display = obj.GetComponent<ItemDisplay>();
+                display.Init(inventoryData.Item, inventoryData.Amount);
+                if (inventoryData.Item != null && inventoryData.Item == currentItem)
                 {
                     obj.GetComponent<Selectable>().interactable = false;
                     obj.GetComponent<ItemDisplay>().MarkAsDisable();
                 }
-                else if (!selected)
-                {
-                    obj.GetComponent<Selectable>().Select();
-                    selected = true;
-                }
+                else last = display;
             }
-            if (!selected) UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(last?.gameObject);
+            if (last == null)
+            {
+                _onItemSelected.Invoke(null);
+            }
         }
         public void HideEquipment() => HideEquipment(_currentPataponData != null);
         private void HideEquipment(bool wasFromEquipmentSummary)
@@ -122,24 +126,37 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             if (_currentPataponData != null)
             {
-                _currentPataponData.Equip(item as EquipmentData);
+                var equipment = item as EquipmentData;
+                if (equipment != null)
+                {
+                    Core.Global.GlobalData.PataponInfo.UpdateClassEquipmentStatus(_currentPataponData, equipment);
+                }
+                else if (item != null)
+                {
+                    //general mode update!
+                    _currentPataponData
+                        .GetComponent<Core.Character.Patapons.General.PataponGeneral>()
+                        .EquipGeneralMode(item as GeneralModeData);
+                }
                 wasFromEquipmentSummary = true;
             }
             else
             {
+                StringKeyItemData stringItem = item as StringKeyItemData;
                 if (_summaryElem.AdditionalData == "Boss")
                 {
-                    Core.GlobalData.MapData.BossToSummon = (item as StringKeyItemData);
+                    Core.Global.GlobalData.PataponInfo.BossToSummon = stringItem;
                 }
                 else if (_summaryElem.AdditionalData == "Music")
                 {
-                    Core.GlobalData.MapData.Music = (item as StringKeyItemData)?.Data;
+                    Core.Global.GlobalData.PataponInfo.CustomMusic = stringItem;
                 }
                 _summaryElem.transform.Find("Image").GetComponent<Image>().sprite = item?.Image;
                 _summaryElem.GetComponentInChildren<Text>().text = item?.Name ?? "None";
             }
             HideEquipment(wasFromEquipmentSummary);
         }
+        public void SelectItem(ItemDisplay item) => _onItemSelected.Invoke(item.Item);
         private (ItemType type, string group) LoadItemType(Core.Character.PataponData data, EquipmentSummaryElement equipElement)
         {
             if (equipElement.IsGeneralMode) return (ItemType.Key, "GeneralMode");
@@ -147,11 +164,16 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private void SetPosition(bool left)
         {
-            Vector2 pos;
-            if (left) pos = Vector2.zero;
-            else pos = Vector2.right;
-            _rect.anchorMin = pos;
-            _rect.anchorMax = pos;
+            if (left)
+            {
+                _layout.childAlignment = TextAnchor.LowerLeft;
+                _layout.reverseArrangement = false;
+            }
+            else
+            {
+                _layout.childAlignment = TextAnchor.LowerRight;
+                _layout.reverseArrangement = true;
+            }
         }
     }
 }

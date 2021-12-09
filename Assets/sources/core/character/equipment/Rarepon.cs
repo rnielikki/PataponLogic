@@ -20,7 +20,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
-            if (HolderData == null) HolderData = GetComponentInParent<SmallCharacterData>();
+            if (HolderData == null) Load();
             var helm = HolderData.EquipmentManager.Helm;
 
             if (equipmentData.Index != 0)
@@ -28,10 +28,13 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 helm?.HideEqupiment(stat);
                 if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = false;
             }
-            else
+            else if (helm != null)
             {
-                if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = true;
-                helm?.ShowEqupiment();
+                helm.ShowEqupiment();
+            }
+            else if (_spriteToHideOnRarepon != null)
+            {
+                _spriteToHideOnRarepon.enabled = true;
             }
             base.ReplaceEqupiment(equipmentData, stat);
         }

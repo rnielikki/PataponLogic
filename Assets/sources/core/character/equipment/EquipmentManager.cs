@@ -35,20 +35,36 @@ namespace PataRoad.Core.Character.Equipments
             _map = new Dictionary<EquipmentType, Equipment>();
             _target = target;
         }
-        public void Init()
+        public void Init(IEnumerable<EquipmentData> equipmentData)
         {
-            AddToMapIfNotNull(EquipmentType.Weapon, Weapon, _target.WeaponName, _target);
-            AddToMapIfNotNull(EquipmentType.Protector, Protector, _target.ProtectorName, _target);
-            AddToMapIfNotNull(EquipmentType.Rarepon, Rarepon, "Rarepon", _target);
-            AddToMapIfNotNull(EquipmentType.Helm, Helm, "Helm", _target);
+            AddToMapIfNotNull(EquipmentType.Weapon, Weapon);
+            AddToMapIfNotNull(EquipmentType.Protector, Protector);
+            AddToMapIfNotNull(EquipmentType.Rarepon, Rarepon);
+            AddToMapIfNotNull(EquipmentType.Helm, Helm);
+
+
+            foreach (var eq in equipmentData)
+            {
+                _target.Equip(eq);
+            }
+            foreach (var kv in _map)
+            {
+                if (kv.Value.CurrentData == null)
+                {
+                    _target.Equip(
+                        ItemLoader.GetItem<EquipmentData>(
+                            ItemType.Equipment, _target.GetEquipmentName(kv.Key), 0
+                            ));
+                }
+            }
         }
 
-        private void AddToMapIfNotNull<T>(EquipmentType type, T equipment, string equipmentGroup, SmallCharacterData target) where T : Equipment
+        private void AddToMapIfNotNull<T>(EquipmentType type, T equipment) where T : Equipment
         {
+            //, string equipmentGroup, SmallCharacterData target
             if (equipment != null && !equipment.FixedEquipment)
             {
                 _map.Add(type, equipment);
-                Equip(ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, equipmentGroup, 0), target.Stat);
             }
         }
         public void Equip(EquipmentData equipmentData, Stat stat)

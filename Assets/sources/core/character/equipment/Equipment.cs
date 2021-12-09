@@ -40,6 +40,7 @@ namespace PataRoad.Core.Character.Equipments
         }
         internal void Load()
         {
+            if (Holder != null && HolderData != null && _defaultEquipmentData != null) return;
             Holder = GetComponentInParent<SmallCharacter>();
             HolderData = GetComponentInParent<SmallCharacterData>();
             _defaultEquipmentData = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, HolderData.GetEquipmentName(_type), 0);
@@ -48,9 +49,8 @@ namespace PataRoad.Core.Character.Equipments
         {
             //Sometimes null but why
             if (Holder == null) Holder = GetComponentInParent<SmallCharacter>();
-            if (HolderData == null) HolderData = GetComponentInParent<SmallCharacterData>();
+            if (HolderData == null) Load();
 
-            RemoveDataFromStat(stat);
             if (!_hideEquipment) ReplaceImage(equipmentData);
 
             CurrentData = equipmentData;

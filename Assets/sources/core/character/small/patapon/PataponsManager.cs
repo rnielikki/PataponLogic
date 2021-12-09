@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character.Patapons
 
         private void Awake()
         {
-            PataponGroupGenerator.Generate(GlobalData.PataponInfo.CurrentClasses, this);
+            PataponGroupGenerator.Generate(Global.GlobalData.PataponInfo.CurrentClasses, this);
 
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
             _groups = GetComponentsInChildren<PataponGroup>().ToList();

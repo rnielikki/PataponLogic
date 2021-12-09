@@ -1,4 +1,4 @@
-﻿namespace PataRoad.Core
+﻿namespace PataRoad.Core.Global
 {
     public static class SerializationKeys
     {

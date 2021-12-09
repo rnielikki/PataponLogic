@@ -6,7 +6,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         void Start()
         {
             var textElement = GetComponent<UnityEngine.UI.Text>();
-            if (Core.GlobalData.TryGetActionBindingName("UI/Equip", out string name))
+            if (Core.Global.GlobalData.TryGetActionBindingName("UI/Equip", out string name))
             {
                 textElement.text = $"{name} to optimize";
             }

@@ -43,7 +43,7 @@ namespace PataRoad.Common.GameDisplay
                 }
             }
 
-            var tipindex = FindObjectOfType<Core.GlobalData>().TipIndex;
+            var tipindex = FindObjectOfType<Core.Global.GlobalData>().TipIndex;
             if (tipindex > -1 && _allTipsIndex.TryGetValue(tipindex, out TipDisplayData data))
             {
                 LoadTip(data);
@@ -99,7 +99,7 @@ namespace PataRoad.Common.GameDisplay
             _action.performed += GoToNextScene;
             _action.Enable();
 
-            Core.GlobalData.Sound.Play(_tipSound);
+            Core.Global.GlobalData.Sound.Play(_tipSound);
         }
         private void GoToNextScene(InputAction.CallbackContext context)
         {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core
+namespace PataRoad.Core.Global
 {
     /// <summary>
     /// Plays sound on scene change.

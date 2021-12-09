@@ -1,5 +1,6 @@
 using PataRoad.Core.Character;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.EquipmentScene
@@ -11,10 +12,15 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private AudioClip _onCancel;
         private Dictionary<Core.Character.Class.ClassType, GameObject> _groupObjects;
+        public static Core.Character.Class.ClassType[] AvailableClasses { get; private set; }
 
         void Start()
         {
-            _groupObjects = Core.Character.Patapons.PataponGroupGenerator.Generate(transform);
+            AvailableClasses = Core.Global.GlobalData.Inventory
+                .GetKeyItems<Core.Items.ClassMemoryData>("Class")
+                .Select(item => item.Class).ToArray();
+            _groupObjects = Core.Character.Patapons.PataponGroupGenerator.Generate(transform, AvailableClasses);
+
             foreach (var obj in _groupObjects.Values)
             {
                 foreach (var pon in obj.GetComponentsInChildren<PataponData>())
@@ -62,7 +68,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private void Exit(AudioClip sound)
         {
             //And save data to static!
-            Core.GlobalData.Sound.Play(sound);
+            Core.Global.GlobalData.Sound.Play(sound);
         }
 
     }

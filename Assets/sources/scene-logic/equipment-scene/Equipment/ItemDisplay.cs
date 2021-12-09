@@ -1,10 +1,11 @@
 ﻿using PataRoad.Core.Items;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
-    public class ItemDisplay : MonoBehaviour
+    public class ItemDisplay : MonoBehaviour, ISelectHandler
     {
         [SerializeField]
         private Image _image;
@@ -13,9 +14,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private IItem _item;
         public IItem Item => _item;
         private int _amount;
+        private EquipmentDisplay _parent;
         private void Awake()
         {
             _text = GetComponentInChildren<Text>();
+            _parent = GetComponentInParent<EquipmentDisplay>();
         }
         public void Init(IItem item, int amount)
         {
@@ -33,12 +36,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             _image.color = GetComponent<Selectable>().colors.disabledColor;
         }
-        private bool UpdateDisplay()
+
+        public void OnSelect(BaseEventData eventData)
         {
-            if (_amount < 1) return false;
-            _amount--;
-            _text.text = _amount.ToString();
-            return true;
+            _parent.SelectItem(this);
         }
     }
 }

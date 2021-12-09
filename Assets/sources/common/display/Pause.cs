@@ -10,7 +10,7 @@ namespace PataRoad.Common.GameDisplay
         {
             Time.timeScale = 0;
             AudioListener.pause = true;
-            Core.GlobalData.Input.actions.FindAction("UI/Submit").Enable();
+            Core.Global.GlobalData.Input.actions.FindAction("UI/Submit").Enable();
             InputSystem.settings.updateMode = InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
             var resumeButton = transform.Find("Resume").GetComponent<Button>();
             resumeButton.onClick.AddListener(Destroy);

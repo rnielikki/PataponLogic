@@ -50,8 +50,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public void LoadElements(SpriteSelectable target)
         {
             var ponData = target.GetComponent<Core.Character.PataponData>();
-            var equipmentManager = ponData?.EquipmentManager;
-            if (equipmentManager == null) return;
+            var equipmentManager = ponData.EquipmentManager;
 
             foreach (var kvPair in _map)
             {
