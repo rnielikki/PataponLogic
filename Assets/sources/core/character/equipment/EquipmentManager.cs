@@ -67,11 +67,11 @@ namespace PataRoad.Core.Character.Equipments
                 _map.Add(type, equipment);
             }
         }
-        public void Equip(EquipmentData equipmentData, Stat stat)
+        public void Equip(EquipmentData equipmentData)
         {
             if (_map.TryGetValue(equipmentData.Type, out Equipment eq))
             {
-                eq.ReplaceEqupiment(equipmentData, stat);
+                eq.ReplaceEqupiment(equipmentData, _target.Stat);
             }
         }
         public EquipmentData GetEquipmentData(EquipmentType type)
@@ -81,6 +81,11 @@ namespace PataRoad.Core.Character.Equipments
                 return eq.CurrentData;
             }
             else return null;
+        }
+        public IEnumerable<EquipmentType> GetAvailableEquipmentTypes => _map.Keys;
+        public bool CanEquipHelm()
+        {
+            return ((Rarepon == null) || Rarepon.IsNormal) && Helm != null;
         }
     }
 }

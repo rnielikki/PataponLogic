@@ -72,13 +72,101 @@ namespace PataRoad.Core.Character.Patapons.Data
 
         public int GetEquippedCount(IItem item)
         {
-            if (_amountMap.TryGetValue(item, out int res)) return res;
+            if (item != null && _amountMap.TryGetValue(item, out var res)) return res;
             else return 0;
         }
         public void UpdateClassEquipmentStatus(PataponData data, EquipmentData equipmentData)
         {
+            var type = equipmentData.Type;
+            var oldEquipment = data.EquipmentManager.GetEquipmentData(type);
+            if (oldEquipment == equipmentData) return;
+
+            if (type == Equipments.EquipmentType.Rarepon && oldEquipment.Index == 0)
+            {
+                var helm = data.EquipmentManager.GetEquipmentData(Equipments.EquipmentType.Helm);
+                RemoveFromAmountMapData(helm);
+            }
+            RemoveFromAmountMapData(oldEquipment);
+
             data.Equip(equipmentData);
+            AddToAmountMapData(equipmentData);
+
             GetClassInfo(data.Type).SetEquipmentInIndex(data.IndexInGroup, equipmentData);
+        }
+        public (Class.ClassType type, int index) GetExchangablePataponMetaData(IEnumerable<Class.ClassType> allAvailableClasses,
+            PataponData currentPataponData, EquipmentData data)
+        {
+            //1. not in squad
+            var resultnPataponMeta = GetPataponMetaFrom(allAvailableClasses.Except(_currentClasses), data);
+            if (resultnPataponMeta != null) return resultnPataponMeta.Value;
+
+            var currentClassWrap = new Class.ClassType[] { currentPataponData.Type };
+
+            //2. in squad but not current 
+            resultnPataponMeta = GetPataponMetaFrom(_currentClasses.Except(currentClassWrap), data);
+            if (resultnPataponMeta != null) return resultnPataponMeta.Value;
+
+            //3. Finally from self. final result shouldn't be null
+            resultnPataponMeta = GetPataponMetaFrom(currentClassWrap, data, currentPataponData);
+            return resultnPataponMeta.Value;
+        }
+        public bool IsEquippedOutside(IEnumerable<Class.ClassType> allAvailableClasses, EquipmentData data, out (Class.ClassType type, int index) result)
+        {
+            var res = GetPataponMetaFrom(allAvailableClasses.Except(_currentClasses), data);
+            if (res != null)
+            {
+                result = res.Value;
+            }
+            else
+            {
+                result = (Class.ClassType.Yaripon, -1);
+            }
+            return res != null;
+        }
+
+        private (Class.ClassType type, int index)? GetPataponMetaFrom(IEnumerable<Class.ClassType> classes, EquipmentData equipmentData, PataponData pataponData = null)
+        {
+            foreach (var classType in classes)
+            {
+                var allHolders = _classInfoMap[classType].GetAllHolders(equipmentData);
+                if (allHolders.Count > 0)
+                {
+                    int finalIndex;
+                    if (pataponData != null) finalIndex = allHolders.Last(holder => holder != pataponData.IndexInGroup);
+                    else finalIndex = allHolders[allHolders.Count - 1];
+                    return (classType, finalIndex);
+                }
+            }
+            return null;
+        }
+        public void ExchangeClassEquipmentStatus(PataponData oldHolder, PataponData newHolder, EquipmentData equipmentData)
+        {
+            var oldEquipment = newHolder.EquipmentManager.GetEquipmentData(equipmentData.Type);
+
+            oldHolder.Equip(oldEquipment);
+            GetClassInfo(oldHolder.Type).SetEquipmentInIndex(oldHolder.IndexInGroup, oldEquipment);
+
+            newHolder.Equip(equipmentData);
+            GetClassInfo(newHolder.Type).SetEquipmentInIndex(newHolder.IndexInGroup, equipmentData);
+        }
+        private void RemoveFromAmountMapData(EquipmentData equipmentData)
+        {
+            if (equipmentData == null || equipmentData.Index == 0) return;
+            //well amountMap must contain the equipment and data.
+            _amountMap[equipmentData]--;
+            if (_amountMap[equipmentData] == 0) _amountMap.Remove(equipmentData);
+        }
+        private void AddToAmountMapData(EquipmentData equipmentData)
+        {
+            if (equipmentData == null || equipmentData.Index == 0) return;
+            if (_amountMap.ContainsKey(equipmentData))
+            {
+                _amountMap[equipmentData]++;
+            }
+            else
+            {
+                _amountMap.Add(equipmentData, 1);
+            }
         }
         public void UpdateGeneralEquipmentStatus(PataponData data, GeneralModeData generalModeData)
         {
@@ -112,6 +200,11 @@ namespace PataRoad.Core.Character.Patapons.Data
             }
             BossToSummon = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Boss", _summonIndex);
             CustomMusic = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Music", _musicIndex);
+
+            foreach (var equipmentData in _classInfoForSerialization.SelectMany(item => item.GetAllEquipments()))
+            {
+                AddToAmountMapData(equipmentData);
+            }
         }
     }
 }

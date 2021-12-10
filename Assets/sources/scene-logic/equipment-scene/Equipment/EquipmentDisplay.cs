@@ -1,5 +1,6 @@
 using PataRoad.Common.Navigator;
 using PataRoad.Core.Items;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private HeadquarterMenu _summaryForHeadquarter;
 
         private Core.Character.PataponData _currentPataponData;
+        [SerializeField]
+        private EquipmentSetter _equipmentSetter;
 
         [SerializeField]
         private GameObject _itemTemplate;
@@ -54,7 +57,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             SetPosition(_currentPataponData.IndexInGroup < 2);
             var itemGroup = LoadItemType(_currentPataponData, elem);
-            SetAppear(itemGroup.type, itemGroup.group, elem.Item);
+
+            var obj = Instantiate(_itemTemplate, _child.transform);
+            obj.GetComponent<ItemDisplay>().Init(ItemLoader.GetItem(itemGroup.type, itemGroup.group, 0));
+            SetAppear(itemGroup.type, itemGroup.group, elem.Item, true);
         }
         public void ShowItem(HeadquarterSummaryElement elem)
         {
@@ -73,31 +79,35 @@ namespace PataRoad.SceneLogic.EquipmentScene
             obj.GetComponent<ItemDisplay>().InitEmpty();
             SetAppear(ItemType.Key, elem.AdditionalData);
         }
-        private void SetAppear(ItemType type, string itemGroup, IItem currentItem = null)
+        private void SetAppear(ItemType type, string itemGroup, IItem currentItem = null, bool isEquipments = false)
         {
             _nav.PreserveIndexOnDeselected = true;
             _map.enabled = true;
             _nav.Freeze();
 
-            ItemDisplay last = null;
 
             foreach (var inventoryData in Core.Global.GlobalData.Inventory.GetItemsByType(type, itemGroup))
             {
                 var obj = Instantiate(_itemTemplate, _child.transform);
                 var display = obj.GetComponent<ItemDisplay>();
-                display.Init(inventoryData.Item, inventoryData.Amount);
-                if (inventoryData.Item != null && inventoryData.Item == currentItem)
+
+                var amount = inventoryData.Amount;
+                if (isEquipments)
                 {
-                    obj.GetComponent<Selectable>().interactable = false;
-                    obj.GetComponent<ItemDisplay>().MarkAsDisable();
+                    amount -= Core.Global.GlobalData.PataponInfo.GetEquippedCount(inventoryData.Item as EquipmentData);
                 }
-                else last = display;
+                display.Init(inventoryData.Item, amount);
             }
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(last?.gameObject);
-            if (last == null)
+
+            var allItemDisplays = GetComponentsInChildren<ItemDisplay>();
+            foreach (var obj in allItemDisplays.Where(item => item.Item == currentItem))
             {
-                _onItemSelected.Invoke(null);
+                obj.GetComponent<Selectable>().interactable = false;
+                obj.MarkAsDisable();
             }
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
+                    allItemDisplays.LastOrDefault(item => item.GetComponent<Selectable>().interactable)?.gameObject
+                );
         }
         public void HideEquipment() => HideEquipment(_currentPataponData != null);
         private void HideEquipment(bool wasFromEquipmentSummary)
@@ -121,15 +131,16 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             bool wasFromEquipmentSummary = false;
 
-            var item = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject
-                ?.GetComponent<ItemDisplay>()?.Item;
+            var itemDisplay = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject
+                ?.GetComponent<ItemDisplay>();
+            var item = itemDisplay?.Item;
 
             if (_currentPataponData != null)
             {
                 var equipment = item as EquipmentData;
                 if (equipment != null)
                 {
-                    Core.Global.GlobalData.PataponInfo.UpdateClassEquipmentStatus(_currentPataponData, equipment);
+                    _equipmentSetter.SetEquipment(_currentPataponData, equipment);
                 }
                 else if (item != null)
                 {

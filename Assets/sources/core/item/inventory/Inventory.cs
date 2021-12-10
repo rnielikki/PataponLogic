@@ -101,13 +101,14 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 0));
 
             //Weapon
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", 0), 3);
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", 0), 4);
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 0), 3);
+            //Default should be always zero and shouldn't count how much it is.
+            //AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", 0), 3);
+            //AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", 0), 4);
+            //AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 0), 3);
 
             //Test
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", 1), 3);
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", 1), 4);
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", 1), 1);
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", 1), 2);
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 1), 3);
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 2), 3);
             AddMultiple(ItemLoader.GetItem(ItemType.Key, "Boss", 0), 1);
@@ -115,6 +116,18 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 2));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 8));
         }
+        public int GetAmount(IItem item) =>
+           _existingData.ContainsKey(item) ? _existingData[item].Amount : 0;
+
+        public int GetBestEquipmentIndex(string group)
+        {
+            if (!_indexed.ContainsKey(ItemType.Equipment)) return 0;
+            var allEquipments = _indexed[ItemType.Equipment];
+            if (!allEquipments.ContainsKey(group)) return 0;
+            return allEquipments[group].Max(eq => eq.Key);
+        }
+
+
         private void UpdateAllItemIndexes()
         {
             foreach (var item in _existingData.Values)

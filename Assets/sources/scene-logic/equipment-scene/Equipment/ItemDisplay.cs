@@ -26,12 +26,20 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _image.sprite = item.Image;
             _text.text = amount.ToString();
         }
+        public void Init(IItem item)
+        {
+            _item = item;
+            _image.sprite = item.Image;
+            _text.transform.parent.gameObject.SetActive(false);
+        }
+
         public void InitEmpty()
         {
             _item = null;
             _image.sprite = null;
             _text.transform.parent.gameObject.SetActive(false);
         }
+        public void UpdateText(int amount) => _text.text = amount.ToString();
         public void MarkAsDisable()
         {
             _image.color = GetComponent<Selectable>().colors.disabledColor;

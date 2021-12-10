@@ -66,11 +66,16 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private const string _percentFormat = "p0";
 
         private bool _onGroup;
+        private SpriteSelectable _current;
 
         private void Start()
         {
             OnChangedToGroup();
         }
+        /// <summary>
+        /// Show group average stat on group window.
+        /// </summary>
+        /// <param name="selectable">The selected Group.</param>
         public void UpdateGroup(SpriteSelectable selectable)
         {
             var data = selectable.GetComponentsInChildren<PataponData>();
@@ -87,7 +92,12 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 OnChangedToGroup();
             }
             UpdateStat(stat, data.Average(d => d.Rigidbody.mass));
+            _current = selectable;
         }
+        /// <summary>
+        /// Show stat on class selection window.
+        /// </summary>
+        /// <param name="info">Information that provided in class selection window.</param>
         public void UpdateGroup(ClassSelectionInfo info)
         {
             if (info == null) Empty();
@@ -103,7 +113,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 OnChangedToIndividual();
             }
             UpdateStat(pataponData.Stat, pataponData.Rigidbody.mass);
+            _current = selectable;
         }
+        /// <summary>
+        /// Empty the stat. Expected this when empty group is choosen.
+        /// </summary>
         public void Empty()
         {
             _header.text = "Empty squad";
@@ -129,6 +143,21 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _sleepResistance.text = "-";
 
             _mass.text = "-";
+        }
+        /// <summary>
+        /// Refresh stat after optimization.
+        /// </summary>
+        /// <param name="isFullOptimization"><c>true</c> if all groups are optimized. <c>false</c> if only one group is optimized.</param>
+        public void RefreshStat(bool isFullOptimization)
+        {
+            if (isFullOptimization)
+            {
+                UpdateGroup(_current);
+            }
+            else
+            {
+                UpdateIndividual(_current);
+            }
         }
 
         private void OnChangedToGroup()

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Patapons.Data
@@ -27,6 +28,7 @@ namespace PataRoad.Core.Character.Patapons.Data
                 new PataponEquipmentInfo(type, false)
             };
         }
+        internal IEnumerable<Items.EquipmentData> GetAllEquipments() => _info.SelectMany(info => info.GetAllEquipments());
         internal IEnumerable<Items.EquipmentData> GetEquipmentInIndex(int index)
         {
             if (index > 4 || index < 0)
@@ -46,6 +48,15 @@ namespace PataRoad.Core.Character.Patapons.Data
         internal void SetGeneralModeData(Items.GeneralModeData data)
         {
             _generalModeData = data;
+        }
+        internal List<int> GetAllHolders(Items.EquipmentData data)
+        {
+            List<int> res = new List<int>();
+            for (int i = 0; i < 4; i++)
+            {
+                if (_info[i].HasEquipment(data)) res.Add(i);
+            }
+            return res;
         }
 
         public void OnBeforeSerialize()

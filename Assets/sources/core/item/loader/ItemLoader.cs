@@ -80,10 +80,5 @@ namespace PataRoad.Core.Items
             if (itemData.TryGetValue(random, out IItem item)) return item;
             else return null;
         }
-
-        internal static IEnumerable<EquipmentData> GetAllDefaultEquipments()
-        {
-            return _data[ItemType.Equipment].SelectMany(item => item.Value).Where(item => item.Key == 0).Select(item => item.Value as EquipmentData);
-        }
     }
 }

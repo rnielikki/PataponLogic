@@ -11,6 +11,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private EquipmentSummaryElement _generalMode;
         [SerializeField]
         private EquipmentSummaryElement _helmElement;
+        private SpriteSelectable _currentTarget;
 
         //It really selects nothing. just look like it's selected.
 
@@ -74,6 +75,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             SelectSameOrZero();
 
             if (!_actionEvent.enabled) _actionEvent.enabled = true;
+            _currentTarget = target;
         }
         protected override void WhenDisabled()
         {
@@ -88,6 +90,19 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 if (index < 0) index = 0;
             }
             MarkIndex(index);
+        }
+        public void UpdateAll(bool isGroup)
+        {
+            if (isGroup) return;
+            foreach (var nav in _activeNavs)
+            {
+                if (nav.Item?.ItemType == Core.Items.ItemType.Equipment)
+                {
+                    var type = (nav.Item as Core.Items.EquipmentData).Type;
+                    var target = _currentTarget.GetComponent<Core.Character.PataponData>();
+                    nav.SetItem(target.EquipmentManager.GetEquipmentData(type));
+                }
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private AudioClip _onCancel;
         private Dictionary<Core.Character.Class.ClassType, GameObject> _groupObjects;
+        private Dictionary<GameObject, PataponData[]> _pataponDataMap;
         public static Core.Character.Class.ClassType[] AvailableClasses { get; private set; }
 
         void Start()
@@ -20,6 +21,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 .GetKeyItems<Core.Items.ClassMemoryData>("Class")
                 .Select(item => item.Class).ToArray();
             _groupObjects = Core.Character.Patapons.PataponGroupGenerator.Generate(transform, AvailableClasses);
+            _pataponDataMap = _groupObjects.ToDictionary(kv => kv.Value, kv => kv.Value.GetComponentsInChildren<PataponData>().OrderBy(data => data.IndexInGroup).ToArray());
 
             foreach (var obj in _groupObjects.Values)
             {
@@ -38,6 +40,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
             Animate(obj);
             return obj;
         }
+        public PataponData GetPataponDataInIndex(Core.Character.Class.ClassType type, int index) =>
+            _pataponDataMap[_groupObjects[type]][index];
         public GameObject HideGroup(Core.Character.Class.ClassType type)
         {
             var obj = _groupObjects[type];

@@ -49,6 +49,7 @@ namespace PataRoad.Core.Character.Patapons.Data
             }
         }
         public IEnumerable<EquipmentData> GetAllEquipments() => _map.Values;
+        public bool HasEquipment(EquipmentData data) => _map.ContainsKey(data.Type) && _map[data.Type] == data;
 
         private void Serialize()
         {

@@ -51,6 +51,8 @@ namespace PataRoad.Core.Character.Equipments
             if (Holder == null) Holder = GetComponentInParent<SmallCharacter>();
             if (HolderData == null) Load();
 
+            RemoveDataFromStat(stat);
+
             if (!_hideEquipment) ReplaceImage(equipmentData);
 
             CurrentData = equipmentData;
