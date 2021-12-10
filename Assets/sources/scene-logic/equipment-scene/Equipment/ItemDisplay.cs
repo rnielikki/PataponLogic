@@ -28,6 +28,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void Init(IItem item)
         {
+            if (item == null)
+            {
+                InitEmpty();
+                return;
+            }
             _item = item;
             _image.sprite = item.Image;
             _text.transform.parent.gameObject.SetActive(false);

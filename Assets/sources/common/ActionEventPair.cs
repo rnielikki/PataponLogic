@@ -19,7 +19,7 @@ namespace PataRoad.Common.Navigator
             _action = Core.Global.GlobalData.Input.actions.FindAction(fullActionName);
             _sender = sender;
             _senderEvent = senderEvent;
-            _action.performed += InvokeEvent;
+            _action.started += InvokeEvent;
             _action.Enable();
             _addedEvent = true;
         }
@@ -27,7 +27,7 @@ namespace PataRoad.Common.Navigator
         {
             if (!_addedEvent)
             {
-                _action.performed += InvokeEvent;
+                _action.started += InvokeEvent;
                 _addedEvent = true;
             }
         }
@@ -35,7 +35,7 @@ namespace PataRoad.Common.Navigator
         {
             if (_addedEvent)
             {
-                _action.performed -= InvokeEvent;
+                _action.started -= InvokeEvent;
                 _addedEvent = false;
             }
         }
@@ -62,7 +62,7 @@ namespace PataRoad.Common.Navigator
 
         public void Destroy()
         {
-            _action.performed -= InvokeEvent;
+            _action.started -= InvokeEvent;
             _action.Disable();
             _senderEvent.RemoveAllListeners();
         }

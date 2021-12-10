@@ -59,7 +59,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
             var itemGroup = LoadItemType(_currentPataponData, elem);
 
             var obj = Instantiate(_itemTemplate, _child.transform);
-            obj.GetComponent<ItemDisplay>().Init(ItemLoader.GetItem(itemGroup.type, itemGroup.group, 0));
+            IItem item = (itemGroup.type == ItemType.Equipment) ? ItemLoader.GetItem(itemGroup.type, itemGroup.group, 0) : null;
+            obj.GetComponent<ItemDisplay>().Init(item);
             SetAppear(itemGroup.type, itemGroup.group, elem.Item, true);
         }
         public void ShowItem(HeadquarterSummaryElement elem)
@@ -100,7 +101,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
 
             var allItemDisplays = GetComponentsInChildren<ItemDisplay>();
-            foreach (var obj in allItemDisplays.Where(item => item.Item == currentItem))
+            foreach (var obj in allItemDisplays.Where(item => item.Item == currentItem && item.Item != null))
             {
                 obj.GetComponent<Selectable>().interactable = false;
                 obj.MarkAsDisable();

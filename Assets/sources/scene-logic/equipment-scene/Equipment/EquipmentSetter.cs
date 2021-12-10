@@ -1,4 +1,5 @@
-﻿using PataRoad.Core.Character;
+﻿using PataRoad.Common.GameDisplay;
+using PataRoad.Core.Character;
 using PataRoad.Core.Global;
 using PataRoad.Core.Items;
 using UnityEngine;
@@ -9,6 +10,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
     {
         [SerializeField]
         private CharacterGroupSaver _characterGroupSaver;
+        [SerializeField]
+        private CharacterGroupNavigator _characterGroupNavigator;
         [SerializeField]
         private UnityEngine.Events.UnityEvent<bool> _onOptimized;
         public void SetEquipment(PataponData pataponData, EquipmentData equipment)
@@ -27,6 +30,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         public void Optimize()
         {
+            ConfirmDialog.Create("All Patapons are equipped automatically. Are you sure to proceed?", _characterGroupNavigator, OptimizeInAction);
+        }
+        private void OptimizeInAction()
+        {
             foreach (var classType in GlobalData.PataponInfo.CurrentClasses)
             {
                 OptimizeGroup(classType);
@@ -34,6 +41,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _onOptimized.Invoke(true);
         }
         public void OptimizeGroup(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            ConfirmDialog.Create("All in this group are equipped automatically. Are you sure to proceed?", sender as CharacterNavigator, () => OptimizeGroupInAction(sender));
+        }
+        private void OptimizeGroupInAction(Object sender)
         {
             OptimizeGroup((sender as Component).GetComponentInChildren<PataponData>().Type);
             _onOptimized.Invoke(false);

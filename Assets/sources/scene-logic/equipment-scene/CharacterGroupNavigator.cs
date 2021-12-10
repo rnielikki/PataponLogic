@@ -19,13 +19,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private GameObject _equipmentSummaryField;
         [SerializeField]
+        private HeadquarterMenu _headquarterMenu;
+        [SerializeField]
         AudioClip _soundIn;
         [SerializeField]
         AudioClip _soundOut;
         [SerializeField]
         AudioClip _soundError;
-        [SerializeField]
-        ClassMenu _classMenu;
         [SerializeField]
         StatDisplay _statDisplay;
 
@@ -118,7 +118,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private bool RemoveChildren(CharacterNavigator targetNav)
         {
-            //1. remove old, if exists.-------------------------
             if (!targetNav.IsEmpty)
             {
                 var oldObject = GetPataponGroupObject(Current);
@@ -137,7 +136,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private GameObject GetPataponGroupObject(SpriteSelectable target) => target.transform.Find("PataponGroup")?.gameObject;
         private void AddTarget(ClassSelectionInfo info)
         {
-            //2. add new-----------------------------------
             var targetGroupObject = info.GroupObject;
             targetGroupObject.transform.parent = Current.transform;
             targetGroupObject.transform.position = Current.transform.position;
@@ -225,6 +223,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 waiting--;
             }
         }
-
+        protected override void OnThisEnabled()
+        {
+            _headquarterMenu.enabled = true;
+        }
+        protected override void OnThisDisabled()
+        {
+            if (_headquarterMenu != null) _headquarterMenu.enabled = false;
+        }
     }
 }
