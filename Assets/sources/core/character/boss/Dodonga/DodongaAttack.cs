@@ -38,15 +38,18 @@ namespace PataRoad.Core.Character.Bosses
 
         public void FireAttack()
         {
+            _boss.AttackType = Equipments.Weapons.AttackType.Magic;
             Fire.Attack();
         }
         public void HeadbuttAttack()
         {
+            _boss.AttackType = Equipments.Weapons.AttackType.Crush;
             Headbutt.Attack();
         }
         public void StopHeadbuttAttack()
         {
             Headbutt.StopAttacking();
+            _boss.AttackType = Equipments.Weapons.AttackType.Neutral;
         }
         public void EatingAttack()
         {

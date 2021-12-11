@@ -12,7 +12,7 @@
             RootName = "Root/";
             IsFlyingUnit = true;
         }
-        protected override void InitLateForClass()
+        protected override void InitLateForClass(Stat realStat)
         {
             if (!(_character is Patapons.Patapon)) FlyUp();
             AddDefaultModelsToAttackMoveController()

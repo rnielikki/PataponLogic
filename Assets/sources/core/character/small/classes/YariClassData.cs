@@ -5,7 +5,7 @@
         internal YariClassData(SmallCharacter character) : base(character)
         {
         }
-        protected override void InitLateForClass()
+        protected override void InitLateForClass(Stat realStat)
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(

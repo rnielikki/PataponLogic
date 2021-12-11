@@ -13,6 +13,9 @@ namespace PataRoad.Core.Character.Hazorons
 
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
 
+        [SerializeField]
+        private int _attackTypeIndex;
+
         private void Awake()
         {
             OnFever = true;
@@ -24,13 +27,14 @@ namespace PataRoad.Core.Character.Hazorons
         }
         private void Start()
         {
-            ClassData.InitLate();
+            ClassData.InitLate(Stat);
         }
         protected void InitDistanceFromHead()
         {
             CharacterSize = transform.Find(BodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
+        public override int GetAttackType() => _attackTypeIndex;
         public override float GetAttackValueOffset()
         {
             return Random.Range(0, 1f);

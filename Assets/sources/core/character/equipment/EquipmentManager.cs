@@ -53,7 +53,7 @@ namespace PataRoad.Core.Character.Equipments
                 {
                     _target.Equip(
                         ItemLoader.GetItem<EquipmentData>(
-                            ItemType.Equipment, _target.GetEquipmentName(kv.Key), 0
+                            ItemType.Equipment, _target.ClassMetaData.GetEquipmentName(kv.Key), 0
                             ));
                 }
             }

@@ -12,12 +12,4 @@
         Magic,
         Sound
     }
-    /// <summary>
-    /// Defines elemental attack type, like fire or ice.
-    /// </summary>
-    public enum ElementalAttackType
-    {
-        Fire,
-        Ice
-    }
 }

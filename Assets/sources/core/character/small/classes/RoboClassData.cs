@@ -1,4 +1,5 @@
 ﻿using PataRoad.Core.Rhythm.Command;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Class
 {
@@ -10,19 +11,37 @@ namespace PataRoad.Core.Character.Class
             IsMeleeUnit = true;
             _shield = _character.transform.Find(RootName + "shield").gameObject;
         }
-        protected override void InitLateForClass()
+        protected override void InitLateForClass(Stat realStat)
         {
-            AddDefaultModelsToAttackMoveController()
-                .AddModels(
-                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
-                {
-                    { "attack-charge", GetAttackMoveModel("attack-charge", attackDistance: 4.5f) },
-                }
-                );
+            switch (_attackType)
+            {
+                case 0:
+                    AddDefaultModelsToAttackMoveController()
+                        .AddModels(
+                        new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                        {
+                            { "attack-charge", GetAttackMoveModel("attack-charge", attackDistance: 4.5f) }
+                        }
+                        );
+                    break;
+                case 1:
+                    SetAttackMoveController()
+                        .AddModels(
+                        new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                        {
+                            { "attack", GetAttackMoveModel("attack-charge", AttackMoveType.Rush, movingSpeed: 1.2f) },
+                            { "defend", GetAttackMoveModel("defend", AttackMoveType.Defend) }
+                        }
+                        );
+                    realStat.DamageMax = Mathf.Max(1, realStat.DamageMax - 20);
+                    realStat.DamageMin = Mathf.Max(1, realStat.DamageMax - 20);
+                    break;
+            }
+
         }
         public override void Attack()
         {
-            if (!_character.Charged)
+            if (!_character.Charged || _attackType == 1)
             {
                 base.Attack();
             }

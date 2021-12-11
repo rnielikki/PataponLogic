@@ -12,6 +12,11 @@
         public Stat Stat { get; }
 
         /// <summary>
+        /// Attack type resistance, which is unique by each class/boss/structure...
+        /// </summary>
+        public AttackTypeResistance AttackTypeResistance { get; }
+
+        /// <summary>
         /// Current Hit point.
         /// <remarks>It shouldn't be bigger than <see cref="Stat.HitPoint"/> or smaller than 0. If this value is 0, it causes death.</remarks>
         /// </summary>

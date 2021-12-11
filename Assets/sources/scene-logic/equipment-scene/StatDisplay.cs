@@ -68,8 +68,15 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private bool _onGroup;
         private SpriteSelectable _current;
 
+        [SerializeField]
+        private Text _guideText;
+        private string _selectButtonName;
+
+        bool _hasSelectButton;
+
         private void Start()
         {
+            _hasSelectButton = Core.Global.GlobalData.TryGetActionBindingName("UI/Select", out _selectButtonName);
             OnChangedToGroup();
         }
         /// <summary>
@@ -165,6 +172,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _bg1.color = _backgroundAsGroup;
             _bg2.color = _backgroundAsGroup;
             _equipmentSummary.gameObject.SetActive(false);
+            if (_hasSelectButton) _guideText.text = $"{_selectButtonName} to see/change attack type";
 
             _onGroup = true;
         }
@@ -174,6 +182,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _bg1.color = Color.white;
             _bg2.color = Color.white;
             _equipmentSummary.gameObject.SetActive(true);
+            if (_hasSelectButton) _guideText.text = $"{_selectButtonName} to see attack type resistance";
 
             _onGroup = false;
         }

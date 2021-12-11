@@ -6,7 +6,7 @@
         {
             ChargeWithoutMove = true;
         }
-        protected override void InitLateForClass()
+        protected override void InitLateForClass(Stat realStat)
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(

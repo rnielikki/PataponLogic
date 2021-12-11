@@ -10,19 +10,33 @@ namespace PataRoad.Core.Character.Class
             IsMeleeUnit = true;
             _shield = _character.transform.Find(RootName + "shield").gameObject;
         }
-        protected override void InitLateForClass()
+        protected override void InitLateForClass(Stat realStat)
         {
-            SetAttackMoveController()
-                .AddModels(
-                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
-                {
-                    { "attack", GetAttackMoveModel("attack") },
-                    { "attack-charge", GetAttackMoveModel("attack-charge", AttackMoveType.Rush, movingSpeed: 1.2f) },
-                }
-                );
+            switch (_attackType)
+            {
+                case 0:
+                    SetAttackMoveController()
+                        .AddModels(
+                        new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                        {
+                            { "attack", GetAttackMoveModel("attack") },
+                            { "attack-charge", GetAttackMoveModel("attack-charge", AttackMoveType.Rush, movingSpeed: 1.2f) },
+                        }
+                        );
+                    break;
+                case 1:
+                    realStat.DefenceMax *= 5;
+                    realStat.DefenceMin *= 3;
+                    break;
+            }
         }
         public override void Attack()
         {
+            if (_attackType == 1)
+            {
+                Defend();
+                return;
+            }
             if (_character.Charged)
             {
                 _attackController.StartAttack("attack-charge");

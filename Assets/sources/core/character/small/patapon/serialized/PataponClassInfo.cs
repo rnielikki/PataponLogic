@@ -17,6 +17,10 @@ namespace PataRoad.Core.Character.Patapons.Data
         [SerializeField]
         private int _generalModeDataIndex;
 
+        [SerializeField]
+        private int _attackTypeIndex;
+        public int AttackTypeIndex { get; set; }
+
         internal PataponClassInfo(Class.ClassType type)
         {
             _class = type;
@@ -62,11 +66,13 @@ namespace PataRoad.Core.Character.Patapons.Data
         public void OnBeforeSerialize()
         {
             _generalModeDataIndex = _generalModeData?.Index ?? -1;
+            _attackTypeIndex = AttackTypeIndex;
         }
 
         public void OnAfterDeserialize()
         {
             if (_generalModeDataIndex != -1) _generalModeData = Items.ItemLoader.GetItem<Items.GeneralModeData>(Items.ItemType.Key, "GeneralMode", _generalModeDataIndex);
+            AttackTypeIndex = _attackTypeIndex;
         }
     }
 }

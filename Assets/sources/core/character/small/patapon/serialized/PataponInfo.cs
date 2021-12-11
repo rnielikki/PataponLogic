@@ -180,6 +180,12 @@ namespace PataRoad.Core.Character.Patapons.Data
         {
             return GetClassInfo(data.Type).GetEquipmentInIndex(data.IndexInGroup);
         }
+        public int GetAttackIndex(Class.ClassType classType) =>
+            GetClassInfo(classType).AttackTypeIndex;
+
+        public void SetAttackIndex(Class.ClassType classType, int index) =>
+            GetClassInfo(classType).AttackTypeIndex = index;
+
         private PataponClassInfo GetClassInfo(Class.ClassType type)
         {
             if (!_classInfoMap.ContainsKey(type))

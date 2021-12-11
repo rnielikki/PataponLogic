@@ -27,9 +27,15 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             foreach (var obj in _groupObjects.Values)
             {
+                bool init = false;
                 foreach (var pon in obj.GetComponentsInChildren<PataponData>())
                 {
                     pon.gameObject.AddComponent<Common.Navigator.SpriteSelectable>();
+                    if (!init)
+                    {
+                        obj.AddComponent<CharacterGroupData>().Init(pon.Type);
+                        init = true;
+                    }
                 }
             }
             GetComponent<CharacterGroupNavigator>().Init();
@@ -74,6 +80,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
             StartCoroutine(CheckStatus());
             System.Collections.IEnumerator CheckStatus()
             {
+                bool isWarned = false;
+                string ignoreMessage = "------------------------------ \nIgnore these warning message above if it's intended.";
                 yield return null;
                 var rect = window.GetComponent<RectTransform>();
                 var dialogContent = window.Content;
@@ -81,29 +89,39 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 if (Core.Global.GlobalData.PataponInfo.ClassCount < Core.Character.Patapons.Data.PataponInfo.MaxPataponGroup
                     && AvailableClasses.Length > Core.Global.GlobalData.PataponInfo.ClassCount)
                 {
-                    dialogContent.text += "\n[!] Squad is not full";
-                    UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+                    AddMessage("\n[!] Squad is not full");
                 }
                 yield return null;
 
                 foreach (var classType in Core.Global.GlobalData.PataponInfo.CurrentClasses)
                 {
 #pragma warning disable S1643 // Strings should not be concatenated using '+' in a loop - real time update
-                    (var weaponName, var protectorName) = SmallCharacterData.GetWeaponAndProtectorName(classType);
+                    (var weaponName, var protectorName) = Core.Character.Class.ClassMetaData.GetWeaponAndProtectorName(classType);
                     if (!isEquipped(classType, weaponName))
                     {
-                        dialogContent.text += $"\n[!] Can optimize {weaponName} for {classType}";
-                        UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+                        AddMessage($"\n[!] Can optimize {weaponName} for {classType}");
                     }
                     if (!isEquipped(classType, protectorName))
                     {
-                        dialogContent.text += $"\n[!] Can optimize {protectorName} for {classType}";
-                        UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+                        AddMessage($"\n[!] Can optimize {protectorName} for {classType}");
                     }
                     yield return null;
-#pragma warning restore S1643 // Strings should not be concatenated using '+' in a loop
                 }
                 yield return null;
+                void AddMessage(string message)
+                {
+                    dialogContent.text += message;
+                    if (!isWarned)
+                    {
+                        var obj = new GameObject();
+                        obj.transform.parent = dialogContent.transform;
+                        var txt = obj.AddComponent<UnityEngine.UI.Text>();
+                        txt.text = ignoreMessage;
+                        isWarned = true;
+                    }
+                    UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+                }
+#pragma warning restore S1643 // Strings should not be concatenated using '+' in a loop
             }
             bool isEquipped(Core.Character.Class.ClassType classType, string equipmentName)
             {

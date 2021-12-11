@@ -1,4 +1,5 @@
 ﻿
+using PataRoad.Core.Character.Equipments.Weapons;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,6 +28,12 @@ namespace PataRoad.Core.Character.Bosses
         private readonly Dictionary<GameObject, BreakablePart> _breakableParts = new Dictionary<GameObject, BreakablePart>();
 
         public UnityEvent<float> OnDamageTaken { get; private set; }
+
+        public AttackType AttackType { get; set; }
+
+        [SerializeReference]
+        private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
+        public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
 
         protected virtual void Init(BossAttackData data)
         {

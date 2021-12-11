@@ -88,7 +88,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         private void Start()
         {
-            ClassData.InitLate();
+            ClassData.InitLate(_realStat);
         }
 
         /// <summary>
@@ -255,6 +255,8 @@ namespace PataRoad.Core.Character.Patapons
             CharAnimator.Animate("party");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }
+        public override int GetAttackType() =>
+            Global.GlobalData.PataponInfo.GetAttackIndex(_data.Type);
         public override float GetAttackValueOffset()
         {
             return LastPerfectionRate;

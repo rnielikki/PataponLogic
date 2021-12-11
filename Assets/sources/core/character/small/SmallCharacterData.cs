@@ -11,12 +11,18 @@ namespace PataRoad.Core.Character
     /// </summary>
     public abstract class SmallCharacterData : MonoBehaviour
     {
-
         /// <summary>
         /// Default stat that a bit varies for each class.
         /// </summary>
         [SerializeReference]
         protected Stat _defaultStat = Stat.GetAnyDefaultStatForCharacter();
+        [SerializeReference]
+        [Tooltip("Attack type resistance when Rarepon isn't used")]
+        private AttackTypeResistance _defaultAttackTypeResistance = new AttackTypeResistance();
+
+        public AttackTypeResistance AttackTypeResistance => EquipmentManager.Rarepon?.CurrentData == null ?
+            _defaultAttackTypeResistance :
+            (EquipmentManager.Rarepon.CurrentData as Equipments.Weapons.RareponData).AttackTypeResistance;
 
         /// <summary>
         /// Current Stat.
@@ -30,36 +36,15 @@ namespace PataRoad.Core.Character
         protected ClassType _type;
         public ClassType Type => _type;
 
-
         internal EquipmentManager EquipmentManager { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
 
-        public string WeaponName { get; private set; }
-        public string ProtectorName { get; private set; }
+        public ClassMetaData ClassMetaData { get; private set; }
         public Animator Animator { get; private set; }
 
-        private readonly static Dictionary<ClassType, (string weapon, string protector)> _weaponNameMap = new Dictionary<ClassType, (string, string)>()
-        {
-            { ClassType.Tatepon, ("Sword","Shield")},
-            { ClassType.Dekapon, ("Club","Shoulders")},
-            { ClassType.Robopon, ("Arms",null)},
-            { ClassType.Kibapon, ("Lance","Horse")},
-            { ClassType.Yaripon, ("Spear",null)},
-            { ClassType.Megapon, ("Horn","Cape")},
-            { ClassType.Toripon, ("Javelin","Bird")},
-            { ClassType.Yumipon, ("Bow", null)},
-            { ClassType.Mahopon, ("Staff","Shoes")},
-        };
-        private readonly Dictionary<EquipmentType, string> _nameByEquipmentType = new Dictionary<EquipmentType, string>()
-        {
-            { EquipmentType.Helm, "Helm" },
-            { EquipmentType.Rarepon, "Rarepon" },
-        };
         private void Awake()
         {
-            (WeaponName, ProtectorName) = _weaponNameMap[Type];
-            _nameByEquipmentType.Add(EquipmentType.Weapon, WeaponName);
-            _nameByEquipmentType.Add(EquipmentType.Protector, ProtectorName);
+            ClassMetaData = ClassMetaData.Get(_type);
         }
 
         public virtual void Init()
@@ -88,7 +73,5 @@ namespace PataRoad.Core.Character
             if (data != null) EquipmentManager.Equip(data);
         }
         public void AddMass(float mass) => Rigidbody.mass += mass;
-        public string GetEquipmentName(EquipmentType type) => _nameByEquipmentType[type];
-        public static (string weapon, string protector) GetWeaponAndProtectorName(ClassType type) => _weaponNameMap[type];
     }
 }

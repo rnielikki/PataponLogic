@@ -68,6 +68,10 @@ namespace PataRoad.Core.Character
         public bool Charged { get; protected set; }
         public bool OnFever { get; protected set; }
 
+        public AttackType AttackType => Weapon.AttackType;
+
+        public AttackTypeResistance AttackTypeResistance { get; private set; }
+
         protected void Init()
         {
             _data = GetComponent<SmallCharacterData>();
@@ -77,6 +81,8 @@ namespace PataRoad.Core.Character
             ClassData = ClassData.GetClassData(this, _data.Type);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
             StatusEffectManager = gameObject.AddComponent<SmallCharacterStatusEffectManager>();
+
+            AttackTypeResistance = _data.AttackTypeResistance;
         }
         public virtual void StopAttacking(bool pause)
         {
@@ -113,6 +119,7 @@ namespace PataRoad.Core.Character
         }
 
         protected virtual void StopWeaponAttacking() => Weapon.StopAttacking();
+        public abstract int GetAttackType();
 
         public abstract float GetAttackValueOffset();
         public abstract float GetDefenceValueOffset();

@@ -13,7 +13,7 @@ namespace PataRoad.Core.Character.Bosses
         public float MinLastDamageOffset { get; protected set; } = 0;
         public float MaxLastDamageOffset { get; protected set; } = 0;
         public CharacterAnimator CharAnimator { get; set; }
-        private Boss _boss;
+        protected Boss _boss;
         private void Awake()
         {
             Init();

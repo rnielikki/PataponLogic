@@ -22,18 +22,21 @@ namespace PataRoad.Core.Character.Class
         public bool IsFlyingUnit { get; protected set; }
         public bool ChargeWithoutMove { get; protected set; }
 
+        protected int _attackType;
+
         protected ClassData(SmallCharacter character)
         {
             _character = character;
+            _attackType = character.GetAttackType();
         }
-        public virtual void InitLate()
+        public virtual void InitLate(Stat realStat)
         {
             _animator = _character.CharAnimator;
             if (_character is Patapons.Patapon patapon) AttackMoveData = new PataponAttackMoveData(patapon);
             else if (_character is Hazorons.Hazoron hazoron) AttackMoveData = new HazoronAttackMoveData(hazoron);
-            InitLateForClass();
+            InitLateForClass(realStat);
         }
-        protected abstract void InitLateForClass();
+        protected abstract void InitLateForClass(Stat realStat);
         public virtual void Attack()
         {
             _attackController.StartAttack("attack");

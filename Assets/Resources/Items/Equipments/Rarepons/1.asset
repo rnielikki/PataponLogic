@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fefff2b6cbbbe944383d4a9c19a0253f, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
+  _isUniqueItem: 0
   _group: Rarepon
   _name: Meow
   _description: Meow meow meow? meow meow!
@@ -21,13 +22,16 @@ MonoBehaviour:
   _mass: 0
   _type: 3
   _color: {r: 0.9137255, g: 0.827451, b: 0.5568628, a: 1}
+  _attackTypeResistance:
+    id: 1
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 0
         _damageMax: 0
         _attackSeconds: 0
@@ -44,3 +48,13 @@ MonoBehaviour:
         _fireResistance: 0
         _iceResistance: 0
         _sleepResistance: 0
+    00000001:
+      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _crushMultiplier: 0.8
+        _slashMultiplier: 1.1
+        _stabMultiplier: 1.2
+        _soundMultiplier: 1.2
+        _magicMultiplier: 0.5
+        _fireMultiplier: 0.8
+        _iceMultiplier: 0.8

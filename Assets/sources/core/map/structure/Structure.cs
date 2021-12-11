@@ -22,6 +22,10 @@ namespace PataRoad.Core.Character
         private UnityEngine.Events.UnityEvent<float> _onDamageTaken;
         public UnityEngine.Events.UnityEvent<float> OnDamageTaken => _onDamageTaken;
 
+        [SerializeReference]
+        private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
+        public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
+
         private void Awake()
         {
             Stat = new Stat

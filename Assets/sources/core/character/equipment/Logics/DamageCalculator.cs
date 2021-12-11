@@ -96,7 +96,6 @@ namespace PataRoad.Core.Character.Equipments.Logic
         /// <returns>Calculated final time of fire effect duration.</returns>
         public static int GetFireDuration(Stat senderStat, Stat recieverStat, int time)
         {
-            //will be implemented later!
             return (int)(CalculateStatusEffect(senderStat.FireRate, recieverStat.FireRate) * time);
         }
         public static void DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform, bool displayDamage = true)
@@ -123,12 +122,25 @@ namespace PataRoad.Core.Character.Equipments.Logic
             target.TakeDamage(damage);
             target.OnDamageTaken?.Invoke((float)target.CurrentHitPoint / target.Stat.HitPoint);
         }
-        private static (int damage, bool isCritical) GetFinalDamage(ICharacter attacker, IAttackable reciever, Stat attackerStat)
+        private static (int damage, bool isCritical) GetFinalDamage(ICharacter attacker, IAttackable receiver, Stat attackerStat)
         {
             var damage = GetAttackDamage(attackerStat, attacker);
-            var defence = GetDefence(reciever);
-            var critical = GetCritical(attackerStat, reciever);
-            return (Mathf.RoundToInt(Mathf.Max(0, damage) * (critical + 1) / Mathf.Max(0.1f, defence)), critical > 0);
+            var defence = GetDefence(receiver);
+            var critical = GetCritical(attackerStat, receiver);
+            var resistances = receiver.AttackTypeResistance;
+
+            //"Elemental damage"
+            var fireProbability = (float)(1 + (attackerStat.FireRate - receiver.Stat.FireResistance) * 0.5 * resistances.FireMultiplier);
+            var iceProbability = (float)(1 + (attackerStat.IceRate - receiver.Stat.IceResistance) * 0.5 * resistances.IceMultiplier);
+
+            return (Mathf.RoundToInt(
+                fireProbability * iceProbability //elemental damage
+                * resistances.GetMultiplier(attacker.AttackType) //attack type multiplier
+                * Mathf.Max(0, damage) //actual damage
+                * (critical + 1) //critical
+                / Mathf.Max(0.1f, defence) //defence
+
+                ), critical > 0);
         }
         private static float GetCritical(Stat attackerStat, IAttackable reciever)
         {

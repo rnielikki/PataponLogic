@@ -6,7 +6,7 @@
         {
             ChargeWithoutMove = true;
         }
-        protected override void InitLateForClass()
+        protected override void InitLateForClass(Stat realStat)
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
@@ -15,6 +15,15 @@
                     { "attack-charge", GetAttackMoveModel("attack-charge") },
                 }
                 );
+            switch (_attackType)
+            {
+                case 1:
+                    realStat.FireRate += 0.35f;
+                    break;
+                case 2:
+                    realStat.IceRate += 0.25f;
+                    break;
+            }
         }
 
         public override void Attack()

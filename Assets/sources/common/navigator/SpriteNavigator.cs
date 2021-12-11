@@ -51,13 +51,16 @@ namespace PataRoad.Common.Navigator
             if (_map == null) _map = GetComponent<ActionEventMap>();
             if (_selectOnInit) Current.SelectThis();
         }
+
         /// <summary>
         /// Show as selected, even it's really deselected. This includes deselecting and disabling the navigator.
         /// </summary>
         public void Freeze()
         {
+            var index = _index;
             Current.Freeze();
             enabled = false;
+            _index = index;
         }
         public void Defrost()
         {

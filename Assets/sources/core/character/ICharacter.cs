@@ -1,5 +1,4 @@
-﻿
-namespace PataRoad.Core.Character
+﻿namespace PataRoad.Core.Character
 {
     /// <summary>
     /// Represents any basic charcter logic. It can be Patapon, enemy or boss. DOESN'T represent structures, though.
@@ -18,5 +17,6 @@ namespace PataRoad.Core.Character
         public DistanceCalculator DistanceCalculator { get; }
         public float AttackDistance { get; }
         public void StopAttacking(bool pause);
+        public Equipments.Weapons.AttackType AttackType { get; }
     }
 }

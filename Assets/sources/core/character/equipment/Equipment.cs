@@ -43,7 +43,7 @@ namespace PataRoad.Core.Character.Equipments
             if (Holder != null && HolderData != null && _defaultEquipmentData != null) return;
             Holder = GetComponentInParent<SmallCharacter>();
             HolderData = GetComponentInParent<SmallCharacterData>();
-            _defaultEquipmentData = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, HolderData.GetEquipmentName(_type), 0);
+            _defaultEquipmentData = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, HolderData.ClassMetaData.GetEquipmentName(_type), 0);
         }
         internal virtual void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {

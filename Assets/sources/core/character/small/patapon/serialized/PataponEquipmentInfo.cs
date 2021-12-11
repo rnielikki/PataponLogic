@@ -31,7 +31,7 @@ namespace PataRoad.Core.Character.Patapons.Data
 
         public PataponEquipmentInfo(Class.ClassType classType, bool isGeneral)
         {
-            var equipmentNames = SmallCharacterData.GetWeaponAndProtectorName(classType);
+            var equipmentNames = Class.ClassMetaData.GetWeaponAndProtectorName(classType);
             _weaponType = equipmentNames.weapon;
             _protectorType = equipmentNames.protector;
             _isGeneral = isGeneral;

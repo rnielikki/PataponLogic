@@ -9,5 +9,9 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         [SerializeField]
         private Color _color;
         public Color Color => _color;
+
+        [SerializeReference]
+        AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
+        public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
     }
 }

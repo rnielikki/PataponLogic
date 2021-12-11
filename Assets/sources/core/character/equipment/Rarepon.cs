@@ -14,6 +14,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private SpriteRenderer[] _spritesToChangeColor;
         [SerializeField]
         private SpriteRenderer _spriteToHideOnRarepon;
+
         private void Start()
         {
             Load();

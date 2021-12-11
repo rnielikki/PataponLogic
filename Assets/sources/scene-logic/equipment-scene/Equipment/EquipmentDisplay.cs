@@ -27,7 +27,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         [SerializeField]
         private GameObject _itemTemplate;
-        private bool _doesNavPreserveIndex;
 
         private HeadquarterSummaryElement _summaryElem;
         private HorizontalLayoutGroup _layout;
@@ -52,7 +51,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
             gameObject.SetActive(true);
 
             _nav = sender as SpriteNavigator;
-            _doesNavPreserveIndex = false;
 
             _currentPataponData = _nav?.Current?.GetComponent<Core.Character.PataponData>();
             if (_currentPataponData == null) return;
@@ -74,7 +72,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             _summaryElem = elem;
             _nav = _groupNav;
-            _doesNavPreserveIndex = true;
 
             _summaryForHeadquarter.SetInactive();
 
@@ -120,7 +117,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private void HideEquipment(bool wasFromEquipmentSummary)
         {
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-            _nav.PreserveIndexOnDeselected = _doesNavPreserveIndex;
             _nav.Defrost();
 
             Core.Global.GlobalData.Sound.Play(_soundClose);
@@ -181,7 +177,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private (ItemType type, string group) LoadItemType(Core.Character.PataponData data, EquipmentSummaryElement equipElement)
         {
             if (equipElement.IsGeneralMode) return (ItemType.Key, "GeneralMode");
-            else return (ItemType.Equipment, data.GetEquipmentName(equipElement.EquipmentType));
+            else return (ItemType.Equipment, data.ClassMetaData.GetEquipmentName(equipElement.EquipmentType));
         }
         private void SetPosition(bool left)
         {

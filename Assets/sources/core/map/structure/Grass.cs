@@ -24,6 +24,10 @@ namespace PataRoad.Core.Character
 
         public UnityEvent<float> OnDamageTaken => null;
 
+        [SerializeReference]
+        private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
+        public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
+
         void Awake()
         {
             _renderer = GetComponent<SpriteRenderer>();
