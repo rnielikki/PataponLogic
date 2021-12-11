@@ -21,6 +21,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private HeadquarterMenu _headquarterMenu;
         [SerializeField]
+        AudioClip _soundZoomIn;
+        [SerializeField]
+        AudioClip _soundZoomOut;
+        [SerializeField]
         AudioClip _soundIn;
         [SerializeField]
         AudioClip _soundOut;
@@ -49,11 +53,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 SelectOther(charNavigator, () => ZoomIn(charNavigator.transform));
                 _summaryField.SetActive(false);
                 _equipmentSummaryField.SetActive(true);
+                Core.Global.GlobalData.Sound.Play(_soundZoomIn);
             }
         }
         public void ResumeFromZoom()
         {
             _cameraZoom.ZoomOut();
+            Core.Global.GlobalData.Sound.Play(_soundZoomOut);
 
             foreach (var nav in _selectables)
             {

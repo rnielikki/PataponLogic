@@ -5098,6 +5098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onEnter: {fileID: 8300000, guid: 7182977f59e525c4a9cbb6f54b8f8910, type: 3}
   _onCancel: {fileID: 8300000, guid: 9ac2e66f37bae324f8a6763fd34efd63, type: 3}
+  _groupNav: {fileID: 1164260354}
 --- !u!4 &1164260352
 Transform:
   m_ObjectHideFlags: 0
@@ -5209,6 +5210,8 @@ MonoBehaviour:
   _summaryField: {fileID: 1628521285}
   _equipmentSummaryField: {fileID: 1860675890}
   _headquarterMenu: {fileID: 1628521291}
+  _soundZoomIn: {fileID: 8300000, guid: ee17a0148f4bbca44bbb777a2d20b3b0, type: 3}
+  _soundZoomOut: {fileID: 8300000, guid: d6943bd00b2d1574bb3e8c190de2e336, type: 3}
   _soundIn: {fileID: 8300000, guid: ef7aa252ecb0a704fb4503319b8dfe01, type: 3}
   _soundOut: {fileID: 8300000, guid: df89903849301ac4ea03a1e70e71a03e, type: 3}
   _soundError: {fileID: 8300000, guid: ffe369070ee5a2a449ef08902f6d0682, type: 3}
@@ -5941,6 +5944,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _soundOpen: {fileID: 8300000, guid: 2604c1205523d0942ab467a5be323b12, type: 3}
+  _soundClose: {fileID: 8300000, guid: b7cc22083162c4d48849d67e0c5692bd, type: 3}
 --- !u!114 &1350255102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7448,7 +7453,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectSoundSource: {fileID: 2091492372}
-  _selectSound: {fileID: 8300000, guid: 8b3c51978ad125243ae0861e55d96524, type: 3}
+  _selectSound: {fileID: 8300000, guid: 5b316802bc575aa4db75c6570e4d2b9d, type: 3}
   _equipElement: {fileID: 110006032}
 --- !u!114 &1628521292
 MonoBehaviour:
@@ -9112,7 +9117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectSoundSource: {fileID: 2091492372}
-  _selectSound: {fileID: 8300000, guid: 8b3c51978ad125243ae0861e55d96524, type: 3}
+  _selectSound: {fileID: 8300000, guid: 5b316802bc575aa4db75c6570e4d2b9d, type: 3}
   _helmElement: {fileID: 878384081}
 --- !u!114 &1860675897
 MonoBehaviour:

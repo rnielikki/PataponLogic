@@ -57,18 +57,19 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public virtual void MoveTo(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
             if (UnityEngine.EventSystems.EventSystem.current.alreadySelecting) return;
-            var directionY = Mathf.RoundToInt(context.ReadValue<Vector2>().y);
+            var directionY = context.ReadValue<Vector2>().y;
             MoveTo(directionY);
         }
-        protected void MoveTo(int directionY)
+        protected void MoveTo(float directionY)
         {
             var index = _index;
-            if (directionY == 1 || directionY == -1)
+            if (directionY < -0.5 || directionY > 0.5)
             {
-                index = (index + directionY * -1 + _activeNavs.Length) % _activeNavs.Length;
+                int dir = directionY < 0 ? -1 : 1;
+                index = (index + dir * -1 + _activeNavs.Length) % _activeNavs.Length;
+                _selectSoundSource.PlayOneShot(_selectSound);
             }
             MarkIndex(index);
-            if (_selectSound != null) _selectSoundSource.PlayOneShot(_selectSound);
         }
         protected void MarkIndex(int index)
         {

@@ -80,5 +80,10 @@ namespace PataRoad.Core.Items
             if (itemData.TryGetValue(random, out IItem item)) return item;
             else return null;
         }
+
+        internal static object GetItem<T>(object equipment, string equipmentName, int bestEquipmentIndex)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

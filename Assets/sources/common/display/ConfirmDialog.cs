@@ -6,9 +6,7 @@ using UnityEngine.UI;
 namespace PataRoad.Common.GameDisplay
 {
     /// <summary>
-    /// VERY IMPORTANT NOTE: CURRENTLY IT'S NOT WORKING PROPERLY WITH PARENT WITH "START" INPUT.
-    /// PARENT MUST USE "PERFORMED" INPUT (OR NOTHING)
-    /// ...input system is annoying.
+    /// This sometimes won't work due to the inputsystem bug. Let me know when it doesn't work...
     /// </summary>
     public class ConfirmDialog : MonoBehaviour
     {
@@ -18,10 +16,13 @@ namespace PataRoad.Common.GameDisplay
 
         [SerializeField]
         private Text _content;
+        public Text Content => _content;
         [SerializeField]
         private Button _okButton;
         [SerializeField]
         private Button _cancelButton;
+        [SerializeField]
+        private AudioClip _buttonClickSound;
 
         private InputAction _uiOkAction;
         private InputAction _uiCancelAction;
@@ -30,14 +31,34 @@ namespace PataRoad.Common.GameDisplay
         private static GameObject _dialogTemplate { get; set; }
         private const string _path = "Common/Display/Dialog";
 
+        public bool IsScreenChange { get; set; }
 
         private void Start()
         {
             _uiOkAction = Core.Global.GlobalData.Input.actions.FindAction("UI/Submit");
             _uiCancelAction = Core.Global.GlobalData.Input.actions.FindAction("UI/Cancel");
+            _uiOkAction.Disable();
+            _uiCancelAction.Disable();
 
-            _uiOkAction.started += OkOrCancel;
-            _uiCancelAction.started += Cancel;
+            //without waiting for next, it just continues... :/
+            StartCoroutine(WaitForNext());
+            IEnumerator WaitForNext()
+            {
+                if (InputSystem.settings.updateMode == InputSettings.UpdateMode.ProcessEventsInDynamicUpdate)
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+                else if (InputSystem.settings.updateMode == InputSettings.UpdateMode.ProcessEventsInFixedUpdate)
+                {
+                    yield return new WaitForFixedUpdate();
+                }
+                _okButton.onClick.AddListener(Confirm);
+                _cancelButton.onClick.AddListener(Cancel);
+                _uiCancelAction.performed += Cancel;
+
+                _uiOkAction.Enable();
+                _uiCancelAction.Enable();
+            }
         }
 
         public static ConfirmDialog Create(string text, MonoBehaviour targetToResume, UnityEngine.Events.UnityAction onConfirmed,
@@ -76,54 +97,39 @@ namespace PataRoad.Common.GameDisplay
             dialog._okButton.gameObject.SetActive(false);
             return dialog;
         }
-        private void OkOrCancel(InputAction.CallbackContext context)
+        public void Confirm()
         {
-            if (!context.started) return;
-            if (UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject == _okButton.gameObject)
-            {
-                Confirm(context);
-            }
-            else
-            {
-                Cancel(context);
-            }
-        }
-        public void Confirm(InputAction.CallbackContext context)
-        {
-            if (!context.started) return;
             _onConfirmed?.Invoke();
-            Close();
+            Close(true);
         }
-        public void Cancel(InputAction.CallbackContext context)
+        public void Cancel(InputAction.CallbackContext context) => Cancel();
+        public void Cancel()
         {
-            if (!context.started) return;
             _onCancled?.Invoke();
-            Close();
+            Close(false);
         }
-        private void Close()
+        private void Close(bool ok)
         {
             _uiOkAction.Disable();
             _uiCancelAction.Disable();
-            StartCoroutine(DestroyOnNextFrame());
 
-            IEnumerator DestroyOnNextFrame()
+            Core.Global.GlobalData.Sound.Play(_buttonClickSound);
+
+            if (_targetToResume != null) _targetToResume.enabled = true;
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelected);
+            var actionMap = _targetToResume.GetComponent<Navigator.ActionEventMap>();
+            if (actionMap != null) actionMap.enabled = true;
+
+            if (!IsScreenChange || !ok)
             {
-                yield return new WaitForFixedUpdate();
-                if (_targetToResume != null) _targetToResume.enabled = true;
-                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelected);
-                var actionMap = _targetToResume.GetComponent<Navigator.ActionEventMap>();
-                if (actionMap != null) actionMap.enabled = true;
-
                 _uiOkAction.Enable();
                 _uiCancelAction.Enable();
-                Destroy(gameObject);
             }
+            Destroy(gameObject);
         }
         private void OnDestroy()
         {
-            _uiOkAction.started -= OkOrCancel;
-            _uiCancelAction.started -= Cancel;
+            _uiCancelAction.performed -= Cancel;
         }
-
     }
 }

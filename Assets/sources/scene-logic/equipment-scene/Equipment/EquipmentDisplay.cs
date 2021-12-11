@@ -35,6 +35,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private UnityEngine.Events.UnityEvent<IItem> _onItemSelected;
 
+        [SerializeField]
+        private AudioClip _soundOpen;
+        [SerializeField]
+        private AudioClip _soundClose;
+
         // Start is called before the first frame update
         void Awake()
         {
@@ -86,6 +91,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _map.enabled = true;
             _nav.Freeze();
 
+            Core.Global.GlobalData.Sound.Play(_soundOpen);
 
             foreach (var inventoryData in Core.Global.GlobalData.Inventory.GetItemsByType(type, itemGroup))
             {
@@ -116,6 +122,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
             _nav.PreserveIndexOnDeselected = _doesNavPreserveIndex;
             _nav.Defrost();
+
+            Core.Global.GlobalData.Sound.Play(_soundClose);
+
             _map.enabled = false;
             gameObject.SetActive(false);
 

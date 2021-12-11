@@ -67,5 +67,19 @@ namespace PataRoad.Core.Global
                 }
             }
         }
+        public static void EnableAllInputs()
+        {
+            foreach (var inputMap in Input.actions.actionMaps)
+            {
+                foreach (var input in inputMap.actions) input.Enable();
+            }
+        }
+        public static void DisableAllInputs()
+        {
+            foreach (var inputMap in Input.actions.actionMaps)
+            {
+                foreach (var input in inputMap.actions) input.Disable();
+            }
+        }
     }
 }

@@ -123,6 +123,10 @@ namespace PataRoad.Core.Character.Patapons.Data
             }
             return res != null;
         }
+        public bool IsEquippedInside(Class.ClassType classType, EquipmentData equipmentData)
+        {
+            return _classInfoMap[classType].GetAllHolders(equipmentData).Count > 0;
+        }
 
         private (Class.ClassType type, int index)? GetPataponMetaFrom(IEnumerable<Class.ClassType> classes, EquipmentData equipmentData, PataponData pataponData = null)
         {
