@@ -38,6 +38,9 @@ namespace PataRoad.Core.Character.Class
             WeaponName = weaponName;
             ProtectorName = protectorName;
             AvailableAttackTypes = availableAttackTypes;
+
+            _nameByEquipmentType.Add(EquipmentType.Weapon, weaponName);
+            _nameByEquipmentType.Add(EquipmentType.Protector, weaponName);
         }
         public string GetEquipmentName(EquipmentType type) => _nameByEquipmentType[type];
         public static (string weapon, string protector) GetWeaponAndProtectorName(ClassType type) => (_map[type].WeaponName, _map[type].ProtectorName);

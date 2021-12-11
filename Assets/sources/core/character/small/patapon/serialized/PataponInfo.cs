@@ -81,10 +81,13 @@ namespace PataRoad.Core.Character.Patapons.Data
             var oldEquipment = data.EquipmentManager.GetEquipmentData(type);
             if (oldEquipment == equipmentData) return;
 
-            if (type == Equipments.EquipmentType.Rarepon && oldEquipment.Index == 0)
+            if (type == Equipments.EquipmentType.Rarepon)
             {
-                var helm = data.EquipmentManager.GetEquipmentData(Equipments.EquipmentType.Helm);
-                RemoveFromAmountMapData(helm);
+                if (oldEquipment == null || oldEquipment.Index == 0)
+                {
+                    var helm = data.EquipmentManager.GetEquipmentData(Equipments.EquipmentType.Helm);
+                    RemoveFromAmountMapData(helm);
+                }
             }
             RemoveFromAmountMapData(oldEquipment);
 
