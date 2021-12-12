@@ -74,6 +74,13 @@ namespace PataRoad.Core.Character.Equipments
                 eq.ReplaceEqupiment(equipmentData, _target.Stat);
             }
         }
+        public void EquipDefault(EquipmentType type)
+        {
+            if (_map.TryGetValue(type, out Equipment eq))
+            {
+                eq.EquipDefault(_target.Stat);
+            }
+        }
         public EquipmentData GetEquipmentData(EquipmentType type)
         {
             if (_map.TryGetValue(type, out Equipment eq))

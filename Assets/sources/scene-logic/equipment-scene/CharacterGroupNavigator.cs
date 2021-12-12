@@ -1,5 +1,4 @@
 using PataRoad.Common.Navigator;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +28,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         AudioClip _soundOut;
         [SerializeField]
-        AudioClip _soundError;
-        [SerializeField]
         StatDisplay _statDisplay;
 
         public override void Init()
@@ -53,13 +50,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 SelectOther(charNavigator, () => ZoomIn(charNavigator.transform));
                 _summaryField.SetActive(false);
                 _equipmentSummaryField.SetActive(true);
-                Core.Global.GlobalData.Sound.Play(_soundZoomIn);
+                Core.Global.GlobalData.Sound.PlayInScene(_soundZoomIn);
             }
         }
         public void ResumeFromZoom()
         {
             _cameraZoom.ZoomOut();
-            Core.Global.GlobalData.Sound.Play(_soundZoomOut);
+            Core.Global.GlobalData.Sound.PlayInScene(_soundZoomOut);
 
             foreach (var nav in _selectables)
             {
@@ -95,7 +92,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     AddTarget(info);
                     ReOrderIndex();
 
-                    _audioSource.PlayOneShot(_soundIn);
+                    Core.Global.GlobalData.Sound.PlayInScene(_soundIn);
 
                 }
                 else
@@ -114,11 +111,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 ReOrderIndex(99);
                 _statDisplay.Empty();
                 nav.Init();
-                _audioSource.PlayOneShot(_soundOut);
+                Core.Global.GlobalData.Sound.PlayInScene(_soundOut);
             }
             else
             {
-                _audioSource.PlayOneShot(_soundError);
+                Core.Global.GlobalData.Sound.PlayBeep();
             }
             ReOrderIndex(99);
         }

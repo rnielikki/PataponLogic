@@ -26,24 +26,27 @@ namespace PataRoad.Core.Character.Equipments
         [SerializeField]
         [Tooltip("Can equip, but not be shown. For general.")]
         protected bool _hideEquipment;
+        [SerializeField]
         protected EquipmentData _defaultEquipmentData;
 
         private void Awake()
         {
             LoadRenderersAndImage();
         }
-
         private void Start()
         {
             Load();
-            if (!_fixedEquipment) CurrentData = _defaultEquipmentData;
         }
         internal void Load()
         {
             if (Holder != null && HolderData != null && _defaultEquipmentData != null) return;
             Holder = GetComponentInParent<SmallCharacter>();
             HolderData = GetComponentInParent<SmallCharacterData>();
-            _defaultEquipmentData = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, HolderData.ClassMetaData.GetEquipmentName(_type), 0);
+            if (!_fixedEquipment)
+            {
+                _defaultEquipmentData = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, Class.ClassMetaData.GetEquipmentName(HolderData.Type, _type), 0);
+            }
+            CurrentData = _defaultEquipmentData;
         }
         internal virtual void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
@@ -58,6 +61,11 @@ namespace PataRoad.Core.Character.Equipments
             CurrentData = equipmentData;
 
             AddDataToStat(stat);
+        }
+        internal void EquipDefault(Stat stat)
+        {
+            if (HolderData == null) Load();
+            ReplaceEqupiment(_defaultEquipmentData, stat);
         }
         protected void RemoveDataFromStat(Stat stat)
         {
@@ -81,6 +89,13 @@ namespace PataRoad.Core.Character.Equipments
             foreach (var renderer in _spriteRenderers)
             {
                 renderer.sprite = equipmentData?.Image;
+            }
+        }
+        private void OnValidate()
+        {
+            if (_fixedEquipment && _defaultEquipmentData == null)
+            {
+                Debug.LogError($"Please set equipment data for {name} or disable fixed equipment.");
             }
         }
     }

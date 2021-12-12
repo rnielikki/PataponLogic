@@ -130,16 +130,37 @@ namespace PataRoad.Core.Character.Equipments.Logic
             var resistances = receiver.AttackTypeResistance;
 
             //"Elemental damage"
-            var fireProbability = (float)(1 + (attackerStat.FireRate - receiver.Stat.FireResistance) * 0.5 * resistances.FireMultiplier);
-            var iceProbability = (float)(1 + (attackerStat.IceRate - receiver.Stat.IceResistance) * 0.5 * resistances.IceMultiplier);
+            var fireProbability = (attackerStat.FireRate - receiver.Stat.FireResistance) * resistances.FireMultiplier;
+            var iceProbability = (attackerStat.IceRate - receiver.Stat.IceResistance) * resistances.IceMultiplier;
+            var thunderProbability = (attackerStat.FireRate - receiver.Stat.FireResistance) * resistances.ThunderMultiplier;
 
+            float elementalMultiplier = 1;
+            switch (attacker.ElementalAttackType)
+            {
+                case Weapons.ElementalAttackType.Fire:
+                    elementalMultiplier = Mathf.Max(0.1f, 1 + fireProbability);
+                    break;
+                case Weapons.ElementalAttackType.Ice:
+                    elementalMultiplier = Mathf.Max(0.1f, 1 + iceProbability);
+                    break;
+                case Weapons.ElementalAttackType.Thunder:
+                    elementalMultiplier = Mathf.Max(0.1f, 1 + thunderProbability);
+                    break;
+            }
+
+            //a bit complicated...
             return (Mathf.RoundToInt(
-                fireProbability * iceProbability //elemental damage
-                * resistances.GetMultiplier(attacker.AttackType) //attack type multiplier
-                * Mathf.Max(0, damage) //actual damage
-                * (critical + 1) //critical
-                / Mathf.Max(0.1f, defence) //defence
-
+                    Mathf.Max(0,
+                        (
+                        elementalMultiplier //elemental damage
+                        * resistances.GetMultiplier(attacker.AttackType) //attack type multiplier
+                        * resistances.GetMultiplier(attacker.ElementalAttackType) //attack type multiplier
+                        * Mathf.Max(0.1f, damage) //actual damage
+                        * (critical + 1) //critical
+                        / Mathf.Max(0.1f, defence) //defence
+                        )
+                        + (fireProbability + iceProbability + thunderProbability) * (critical + 1) * damage * 0.2f
+                    )
                 ), critical > 0);
         }
         private static float GetCritical(Stat attackerStat, IAttackable reciever)

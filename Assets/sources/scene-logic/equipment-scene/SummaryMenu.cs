@@ -6,8 +6,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
     public abstract class SummaryMenu<T> : MonoBehaviour where T : SummaryElement
     {
         [SerializeField]
-        protected AudioSource _selectSoundSource;
-        [SerializeField]
         protected AudioClip _selectSound;
         protected ActionEventMap _actionEvent;
 
@@ -67,7 +65,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             {
                 int dir = directionY < 0 ? -1 : 1;
                 index = (index + dir * -1 + _activeNavs.Length) % _activeNavs.Length;
-                _selectSoundSource.PlayOneShot(_selectSound);
+                Core.Global.GlobalData.Sound.PlayInScene(_selectSound);
             }
             MarkIndex(index);
         }

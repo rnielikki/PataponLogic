@@ -12,6 +12,9 @@ namespace PataRoad.Core.Character
         [SerializeField]
         private EquipmentData _protectorData;
 
+        [SerializeField]
+        private int _attackTypeIndex;
+        public int AttackTypeIndex => _attackTypeIndex;
         protected override IEnumerable<EquipmentData> GetEquipmentData() =>
             new EquipmentData[] { _weaponData, _protectorData };
 

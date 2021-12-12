@@ -25,6 +25,7 @@ namespace PataRoad.Core.Character.Class
                         );
                     break;
                 case 1:
+                    SetAttackMoveController();
                     realStat.DefenceMax *= 5;
                     realStat.DefenceMin *= 3;
                     break;

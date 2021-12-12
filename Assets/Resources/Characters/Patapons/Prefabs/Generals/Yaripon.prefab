@@ -272,6 +272,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultStat:
     id: 0
+  _defaultAttackTypeResistance:
+    id: 1
+  _elementalAttackType: 2
   _type: 4
   references:
     version: 1
@@ -297,6 +300,17 @@ MonoBehaviour:
         _fireResistance: 0
         _iceResistance: 0
         _sleepResistance: 0
+    00000001:
+      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _crushMultiplier: 1
+        _slashMultiplier: 1
+        _stabMultiplier: 1
+        _soundMultiplier: 1
+        _magicMultiplier: 1
+        _fireMultiplier: 1
+        _iceMultiplier: 1
+        _thunderMultiplier: 1
 --- !u!1 &4782172159781843462
 GameObject:
   m_ObjectHideFlags: 0
@@ -982,6 +996,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fixedEquipment: 1
   _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 11400000, guid: b04ab58bb77dbcd4ea61245c9845e2d6, type: 2}
   _attackType: 3
 --- !u!1 &4782172160447481580
 GameObject:
@@ -1630,6 +1645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fixedEquipment: 0
   _hideEquipment: 1
+  _defaultEquipmentData: {fileID: 0}
 --- !u!1 &4782172161597462694
 GameObject:
   m_ObjectHideFlags: 0

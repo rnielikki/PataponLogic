@@ -81,13 +81,10 @@ namespace PataRoad.Core.Character.Patapons.Data
             var oldEquipment = data.EquipmentManager.GetEquipmentData(type);
             if (oldEquipment == equipmentData) return;
 
-            if (type == Equipments.EquipmentType.Rarepon)
+            if (type == Equipments.EquipmentType.Rarepon && (oldEquipment == null || oldEquipment.Index == 0))
             {
-                if (oldEquipment == null || oldEquipment.Index == 0)
-                {
-                    var helm = data.EquipmentManager.GetEquipmentData(Equipments.EquipmentType.Helm);
-                    RemoveFromAmountMapData(helm);
-                }
+                var helm = data.EquipmentManager.GetEquipmentData(Equipments.EquipmentType.Helm);
+                RemoveFromAmountMapData(helm);
             }
             RemoveFromAmountMapData(oldEquipment);
 
@@ -183,10 +180,10 @@ namespace PataRoad.Core.Character.Patapons.Data
         {
             return GetClassInfo(data.Type).GetEquipmentInIndex(data.IndexInGroup);
         }
-        public int GetAttackIndex(Class.ClassType classType) =>
+        public int GetAttackTypeIndex(Class.ClassType classType) =>
             GetClassInfo(classType).AttackTypeIndex;
 
-        public void SetAttackIndex(Class.ClassType classType, int index) =>
+        public void SetAttackTypeIndex(Class.ClassType classType, int index) =>
             GetClassInfo(classType).AttackTypeIndex = index;
 
         private PataponClassInfo GetClassInfo(Class.ClassType type)

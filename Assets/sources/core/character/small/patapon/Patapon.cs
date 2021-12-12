@@ -1,4 +1,5 @@
-﻿using PataRoad.Core.Rhythm.Command;
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+using PataRoad.Core.Rhythm.Command;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Patapons
@@ -85,6 +86,7 @@ namespace PataRoad.Core.Character.Patapons
 
             var general = GetComponent<General.PataponGeneral>();
             if (general != null) IsGeneral = true;
+
         }
         private void Start()
         {
@@ -256,7 +258,7 @@ namespace PataRoad.Core.Character.Patapons
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }
         public override int GetAttackType() =>
-            Global.GlobalData.PataponInfo.GetAttackIndex(_data.Type);
+            Global.GlobalData.PataponInfo.GetAttackTypeIndex(_data.Type);
         public override float GetAttackValueOffset()
         {
             return LastPerfectionRate;

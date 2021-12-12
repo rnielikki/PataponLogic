@@ -19,8 +19,6 @@ namespace PataRoad.Common.Navigator
         protected AudioClip _selectSound;
         public AudioClip SelectSound => _selectSound;
         [SerializeField]
-        protected AudioSource _audioSource;
-        [SerializeField]
         protected UnityEngine.Events.UnityEvent<SpriteSelectable> _onSelected = new UnityEngine.Events.UnityEvent<SpriteSelectable>();
         public UnityEngine.Events.UnityEvent<SpriteSelectable> OnSelected => _onSelected;
         [SerializeField]
@@ -82,7 +80,7 @@ namespace PataRoad.Common.Navigator
                     return;
             }
             Current.SelectThis();
-            if (_selectSound != null) _audioSource.PlayOneShot(_selectSound);
+            if (_selectSound != null) Core.Global.GlobalData.Sound.PlayInScene(_selectSound);
         }
         private void OnEnable()
         {

@@ -1,5 +1,6 @@
 using UnityEngine;
 using PataRoad.Core.Character.Class;
+using PataRoad.Core.Character.Equipments.Weapons;
 
 namespace PataRoad.Core.Character.Hazorons
 {
@@ -10,11 +11,9 @@ namespace PataRoad.Core.Character.Hazorons
         public override Vector2 MovingDirection => Vector2.left;
         private bool _gotPosition;
         private bool _animatingWalk;
+        private int _attackTypeIndex;
 
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
-
-        [SerializeField]
-        private int _attackTypeIndex;
 
         private void Awake()
         {
@@ -23,7 +22,16 @@ namespace PataRoad.Core.Character.Hazorons
             Stat = _data.Stat;
             DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
             DistanceManager = gameObject.AddComponent<DistanceManager>();
-            StatusEffectManager.SetRecoverAction(() => ClassData.Attack());
+
+            StatusEffectManager.SetRecoverAction(() =>
+            {
+                if (IsFlyingUnit)
+                {
+                    (ClassData as ToriClassData)?.FlyUp();
+                }
+                ClassData.Attack();
+            });
+            _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
         }
         private void Start()
         {

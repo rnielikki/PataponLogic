@@ -54,7 +54,7 @@
                 FlyDown();
             }
         }
-        private void FlyUp()
+        public void FlyUp()
         {
             _animator.AnimateFrom("tori-fly-up");
             _isFever = true;

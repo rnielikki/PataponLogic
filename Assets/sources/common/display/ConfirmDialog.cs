@@ -21,8 +21,6 @@ namespace PataRoad.Common.GameDisplay
         private Button _okButton;
         [SerializeField]
         private Button _cancelButton;
-        [SerializeField]
-        private AudioClip _buttonClickSound;
 
         private InputAction _uiOkAction;
         private InputAction _uiCancelAction;
@@ -113,7 +111,7 @@ namespace PataRoad.Common.GameDisplay
             _uiOkAction.Disable();
             _uiCancelAction.Disable();
 
-            Core.Global.GlobalData.Sound.Play(_buttonClickSound);
+            Core.Global.GlobalData.Sound.PlaySelected();
 
             if (_targetToResume != null) _targetToResume.enabled = true;
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelected);

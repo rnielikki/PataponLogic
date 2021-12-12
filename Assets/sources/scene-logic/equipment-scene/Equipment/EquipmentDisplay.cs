@@ -88,7 +88,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _map.enabled = true;
             _nav.Freeze();
 
-            Core.Global.GlobalData.Sound.Play(_soundOpen);
+            Core.Global.GlobalData.Sound.PlayInScene(_soundOpen);
 
             foreach (var inventoryData in Core.Global.GlobalData.Inventory.GetItemsByType(type, itemGroup))
             {
@@ -119,7 +119,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
             _nav.Defrost();
 
-            Core.Global.GlobalData.Sound.Play(_soundClose);
+            Core.Global.GlobalData.Sound.PlayInScene(_soundClose);
 
             _map.enabled = false;
             gameObject.SetActive(false);

@@ -10,6 +10,7 @@
             switch (_attackType)
             {
                 case 0:
+                case 1:
                     AddDefaultModelsToAttackMoveController()
                         .AddModels(
                     new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
@@ -20,7 +21,7 @@
                     }
                     );
                     break;
-                case 1:
+                case 2:
                     AddDefaultModelsToAttackMoveController()
                         .AddModels(
                     new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
@@ -34,7 +35,7 @@
 
         public override void Attack()
         {
-            if (!_character.OnFever && !_character.Charged && _attackType == 0)
+            if (!_character.OnFever && !_character.Charged || _attackType == 2)
             {
                 base.Attack();
             }

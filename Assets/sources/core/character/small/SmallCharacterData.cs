@@ -24,6 +24,9 @@ namespace PataRoad.Core.Character
             _defaultAttackTypeResistance :
             (EquipmentManager.Rarepon.CurrentData as Equipments.Weapons.RareponData).AttackTypeResistance;
 
+        [SerializeField]
+        private Equipments.Weapons.ElementalAttackType _elementalAttackType;
+        public Equipments.Weapons.ElementalAttackType ElementalAttackType => _elementalAttackType;
         /// <summary>
         /// Current Stat.
         /// </summary>

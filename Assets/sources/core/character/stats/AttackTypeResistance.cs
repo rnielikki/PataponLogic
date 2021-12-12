@@ -37,7 +37,12 @@ namespace PataRoad.Core.Character
         private float _iceMultiplier = 1;
         public float IceMultiplier => _iceMultiplier;
 
+        [UnityEngine.SerializeField]
+        private float _thunderMultiplier = 1;
+        public float ThunderMultiplier => _thunderMultiplier;
+
         private Dictionary<AttackType, float> _map;
+        private Dictionary<ElementalAttackType, float> _elementalMap;
 
         public AttackTypeResistance()
         {
@@ -50,7 +55,16 @@ namespace PataRoad.Core.Character
                 { AttackType.Sound, _soundMultiplier},
                 { AttackType.Magic, _magicMultiplier},
             };
+            _elementalMap = new Dictionary<ElementalAttackType, float>()
+            {
+                { ElementalAttackType.Neutral, 1},
+                { ElementalAttackType.Fire, _crushMultiplier},
+                { ElementalAttackType.Ice, _slashMultiplier},
+                { ElementalAttackType.Thunder, _stabMultiplier},
+            };
+
         }
         public float GetMultiplier(AttackType attackType) => _map[attackType];
+        public float GetMultiplier(ElementalAttackType attackType) => _elementalMap[attackType];
     }
 }

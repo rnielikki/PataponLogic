@@ -35,6 +35,8 @@ namespace PataRoad.Core.Character.Bosses
         private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
         public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
 
+        public ElementalAttackType ElementalAttackType { get; set; }
+
         protected virtual void Init(BossAttackData data)
         {
             foreach (var part in GetComponentsInChildren<BreakablePart>())

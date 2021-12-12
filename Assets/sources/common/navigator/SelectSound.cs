@@ -12,7 +12,7 @@ namespace PataRoad.Common.Navigator
         AudioClip _selectSound;
         public void OnSelect(BaseEventData eventData)
         {
-            Core.Global.GlobalData.Sound.Play(_selectSound);
+            Core.Global.GlobalData.Sound.PlayInScene(_selectSound);
         }
     }
 }

@@ -99,7 +99,7 @@ namespace PataRoad.Common.GameDisplay
             _action.performed += GoToNextScene;
             _action.Enable();
 
-            Core.Global.GlobalData.Sound.Play(_tipSound);
+            Core.Global.GlobalData.Sound.PlayGlobal(_tipSound);
         }
         private void GoToNextScene(InputAction.CallbackContext context)
         {

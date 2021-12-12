@@ -26,13 +26,14 @@ namespace PataRoad.Core.Character.Class
             { ClassType.Robopon, new ClassMetaData("Arms",null, new string[]{"Melee","Throw"})},
             { ClassType.Kibapon, new ClassMetaData("Lance","Horse", new string[]{"Stab"})},
             { ClassType.Yaripon, new ClassMetaData("Spear",null,  new string[]{"Stab"})},
-            { ClassType.Megapon, new ClassMetaData("Horn","Cape", new string[]{"Default", "NoFire"})},
+            { ClassType.Megapon, new ClassMetaData("Horn","Cape", new string[]{"Fire on Fever", "Ice on Fever", "No Fever Attk"})},
             { ClassType.Toripon, new ClassMetaData("Javelin","Bird", new string[]{"Stab"})},
             { ClassType.Yumipon, new ClassMetaData("Bow", null, new string[]{"Stab"})},
-            { ClassType.Mahopon, new ClassMetaData("Staff","Shoes",  new string[]{"None", "Fire", "Ice"})},
+            { ClassType.Mahopon, new ClassMetaData("Staff","Shoes",  new string[]{"None", "Fire", "Ice", "Thunder"})},
         };
 
         public static ClassMetaData Get(ClassType type) => _map[type];
+        public static string GetEquipmentName(ClassType type, EquipmentType equipmentType) => _map[type].GetEquipmentName(equipmentType);
         private ClassMetaData(string weaponName, string protectorName, string[] availableAttackTypes)
         {
             WeaponName = weaponName;

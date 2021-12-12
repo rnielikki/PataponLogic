@@ -16,7 +16,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 _staffAction = GetComponentInChildren<IStaffActions>();
             }
-            _staffAction.Initialize(Holder);
+            if (Holder != null) _staffAction.Initialize(Holder);
         }
         public override void Attack(AttackCommandType attackCommandType)
         {
@@ -51,6 +51,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 //GetComponentInChldren<> doesn't work in some reason...
                 if (staffData != null) _staffAction = staffData;
             }
+            if (Holder != null) _staffAction?.Initialize(Holder);
         }
     }
 }

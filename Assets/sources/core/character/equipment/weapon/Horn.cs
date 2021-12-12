@@ -13,6 +13,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         protected float _forceMultiplier = 1;
         protected float _feverPonponForceMultiplier = 1;
 
+        private bool _ifFire;
+
         private void Start()
         {
             Init();
@@ -20,6 +22,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _attackParticles = _targetTransform.GetComponent<ParticleDamaging>();
             _feverAttackObject = GetWeaponInstance("Mega-FeverAttack");
             _chargeDefenceObject = GetWeaponInstance("Mega-ChargeDefence");
+
+            if (Holder != null) _ifFire = Holder.GetAttackType() == 0;
         }
 
         public override void Attack(AttackCommandType attackCommandType)
@@ -53,33 +57,48 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void AttackFever()
         {
             var newStat = Holder.Stat.Copy();
-            newStat.FireRate += 0.1f;
+            if (_ifFire)
+            {
+                newStat.FireRate += 0.15f;
+            }
+            else
+            {
+                newStat.IceRate += 0.15f;
+            }
             newStat.DamageMin *= 3;
             newStat.DamageMax *= 3;
-            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, null, newStat).AddForce(Holder.MovingDirection * 5 * _feverPonponForceMultiplier);
+            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, null, newStat, (_ifFire) ? Color.red : Color.blue)
+                .AddForce(Holder.MovingDirection * 5 * _feverPonponForceMultiplier);
         }
         private void ChargeDefend()
         {
             var newStat = Holder.Stat.Copy();
             newStat.Knockback = 0; //Knockback independent.
-            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, PushBack, newStat).AddForce(Holder.MovingDirection * 1000 * _forceMultiplier);
+            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, PushBack, newStat, default)
+                .AddForce(Holder.MovingDirection * 1000 * _forceMultiplier);
         }
         private Rigidbody2D CreateBulletInstance(GameObject targetObject,
             UnityEngine.Events.UnityAction<Collider2D> groundAction,
             UnityEngine.Events.UnityAction<Collider2D> collidingAction,
-            Stat stat, bool fixedRotation = false)
+            Stat stat, Color color)
         {
             var instance = Instantiate(targetObject, transform.root.parent);
             instance.transform.position = _targetTransform.position;
             instance.layer = gameObject.layer;
 
-            if (!fixedRotation) instance.transform.rotation = _targetTransform.rotation;
+            instance.transform.rotation = _targetTransform.rotation;
+            if (color != default)
+            {
+                instance.GetComponent<SpriteRenderer>().color = color;
+            }
+
             var bulletScript = instance.GetComponent<WeaponBullet>();
             bulletScript.Holder = Holder;
             bulletScript.Stat = stat;
             bulletScript.CollidingAction = collidingAction;
             bulletScript.GroundAction = groundAction;
             instance.SetActive(true);
+
             return instance.GetComponent<Rigidbody2D>();
         }
         //Fever Attack bullet

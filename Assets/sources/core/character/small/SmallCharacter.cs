@@ -71,11 +71,13 @@ namespace PataRoad.Core.Character
         public AttackType AttackType => Weapon.AttackType;
 
         public AttackTypeResistance AttackTypeResistance { get; private set; }
+        public ElementalAttackType ElementalAttackType { get; set; }
 
         protected void Init()
         {
             _data = GetComponent<SmallCharacterData>();
             _data.Init();
+            ElementalAttackType = _data.ElementalAttackType;
             Stat = _data.Stat;
             CurrentHitPoint = _data.Stat.HitPoint;
             ClassData = ClassData.GetClassData(this, _data.Type);

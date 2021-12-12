@@ -19,11 +19,18 @@
             {
                 case 1:
                     realStat.FireRate += 0.35f;
+                    _character.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Fire;
                     break;
                 case 2:
                     realStat.IceRate += 0.25f;
+                    _character.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Ice;
+                    break;
+                case 3:
+                    realStat.FireRate += 0.1f;
+                    _character.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Thunder;
                     break;
             }
+            var weapon = _character.EquipmentManager.Weapon as Equipments.Weapons.Staff;
         }
 
         public override void Attack()

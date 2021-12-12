@@ -683,6 +683,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fixedEquipment: 0
   _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 0}
   _spritesToChangeColor:
   - {fileID: 3928704229904380842}
   - {fileID: 4987181877891454064}
@@ -910,6 +911,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultStat:
     id: 0
+  _defaultAttackTypeResistance:
+    id: 1
+  _elementalAttackType: 0
   _type: 1
   references:
     version: 1
@@ -935,6 +939,17 @@ MonoBehaviour:
         _fireResistance: 0
         _iceResistance: 0
         _sleepResistance: 0
+    00000001:
+      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _crushMultiplier: 1
+        _slashMultiplier: 1
+        _stabMultiplier: 1
+        _soundMultiplier: 1
+        _magicMultiplier: 1
+        _fireMultiplier: 1
+        _iceMultiplier: 1
+        _thunderMultiplier: 1
 --- !u!1 &3928704229857646272
 GameObject:
   m_ObjectHideFlags: 0
@@ -1499,6 +1514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fixedEquipment: 0
   _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 0}
   _attackType: 1
 --- !u!1 &3928704230751993975
 GameObject:
@@ -1983,3 +1999,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fixedEquipment: 0
   _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 0}

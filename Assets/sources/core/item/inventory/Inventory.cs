@@ -100,12 +100,6 @@ namespace PataRoad.Core.Items
             //MEMORIES
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 0));
 
-            //Weapon
-            //Default should be always zero and shouldn't count how much it is.
-            //AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", 0), 3);
-            //AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", 0), 4);
-            //AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 0), 3);
-
             //Test
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", 1), 1);
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", 1), 2);
@@ -114,7 +108,9 @@ namespace PataRoad.Core.Items
             AddMultiple(ItemLoader.GetItem(ItemType.Key, "Boss", 0), 1);
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 1));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 2));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 5));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 8));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Song", 1));
         }
         public int GetAmount(IItem item) =>
            _existingData.ContainsKey(item) ? _existingData[item].Amount : 0;

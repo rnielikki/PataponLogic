@@ -9,10 +9,12 @@ namespace PataRoad.Core.Map.Weather
         {
             var target = collision.GetComponentInParent<IAttackable>();
             if (target == null) return;
-            if (!Character.Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(target, StatusEffectType.Fire, 0.2f, target.Stat.FireResistance))
+            if (Common.Utils.RandomByProbability(target.AttackTypeResistance.ThunderMultiplier * 0.8f)
+                && !Character.Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(target, StatusEffectType.Fire, 0.4f, target.Stat.FireResistance))
             {
-                Character.Equipments.Logic.DamageCalculator.CalculateAndSetStagger(target, 0.5f);
+                Character.Equipments.Logic.DamageCalculator.CalculateAndSetStagger(target, 0.7f);
             }
+
         }
     }
 }

@@ -21,5 +21,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         public void Defend()
         {
         }
+        public void ChangeElementalType(ElementalAttackType attackType)
+        {
+        }
     }
 }

@@ -18,5 +18,6 @@
         public float AttackDistance { get; }
         public void StopAttacking(bool pause);
         public Equipments.Weapons.AttackType AttackType { get; }
+        public Equipments.Weapons.ElementalAttackType ElementalAttackType { get; }
     }
 }
