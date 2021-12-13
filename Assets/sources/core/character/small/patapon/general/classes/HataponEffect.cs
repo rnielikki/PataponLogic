@@ -5,7 +5,6 @@
         readonly HataponGroupStatOperation _operation = new HataponGroupStatOperation();
         public void StartSelfEffect(Patapon patapon)
         {
-            patapon.StatOperator.Add(new HataponSelfStatOperation());
         }
         public void StartGroupEffect(System.Collections.Generic.IEnumerable<Patapon> patapons)
         {
@@ -14,16 +13,6 @@
         public void EndGroupEffect(System.Collections.Generic.IEnumerable<Patapon> patapons)
         {
             foreach (var patapon in patapons) patapon.StatOperator.Remove(_operation);
-        }
-        private class HataponSelfStatOperation : IStatOperation
-        {
-            public Stat Calculate(Rhythm.Command.CommandSong song, bool charged, Stat input)
-            {
-                input.FireResistance = UnityEngine.Mathf.Infinity;
-                input.IceResistance = UnityEngine.Mathf.Infinity;
-                input.SleepResistance = UnityEngine.Mathf.Infinity;
-                return input;
-            }
         }
         private class HataponGroupStatOperation : IStatOperation
         {

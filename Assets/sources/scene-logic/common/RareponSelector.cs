@@ -17,7 +17,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         AudioClip _newRareponSound;
         public AudioClip NewRareponSound => _newRareponSound;
         private Core.Character.PataponData _targetPatapon;
-        private Common.Navigator.SpriteNavigator _parent;
+        private Common.Navigator.SpriteNavigator _lastSelectNavigator;
 
         [SerializeField]
         private EquipmentSetter _equipmentSetter;
@@ -27,13 +27,31 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         private RareponSelection _lastSelected;
 
-        public void Open(Common.Navigator.SpriteNavigator parent, Core.Character.PataponData pataponData, RareponData data)
+        [SerializeField]
+        private Text _descriptionTitle;
+        [SerializeField]
+        private Text _descriptionContent;
+
+        public void Open(Common.Navigator.SpriteNavigator beforeSelect, Core.Character.PataponData pataponData, RareponData data)
         {
             _targetPatapon = pataponData;
-            _parent = parent;
+            _lastSelectNavigator = beforeSelect;
             gameObject.SetActive(true);
-            parent.Freeze();
+            beforeSelect.Freeze();
             Open(data);
+        }
+        public void UpdateText(RareponData data)
+        {
+            if (data == null)
+            {
+                _descriptionTitle.text = "???";
+                _descriptionContent.text = "Select to reveal the Rarepon";
+            }
+            else
+            {
+                _descriptionTitle.text = data.Name;
+                _descriptionContent.text = data.Description;
+            }
         }
         public void Open(RareponData data)
         {
@@ -62,8 +80,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         private void OnDisable()
         {
+            var currentSelected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
             foreach (var selection in _rareponSelections)
             {
+                if (selection.gameObject == currentSelected) _lastSelected = selection;
                 selection.enabled = false;
             }
             _actionEventMap.enabled = false;
@@ -106,7 +126,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _actionEventMap.enabled = false;
             gameObject.SetActive(false);
             Core.Global.GlobalData.Sound.PlaySelected();
-            _parent?.Defrost();
+            _lastSelectNavigator?.Defrost();
         }
     }
 }

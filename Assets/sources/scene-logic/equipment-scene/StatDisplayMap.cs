@@ -68,7 +68,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         internal void CompareValue(float current, float oldValue, float newValue)
         {
-            _text.text = (current - oldValue + newValue).ToString(_format);
+            _text.text = GetSafeFloatValue(current - oldValue + newValue);
             CompareAndUpdate(oldValue, newValue);
         }
         internal void CompareOneByOne(Stat currentStat, Stat oldStat, Stat newStat)
@@ -111,8 +111,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private string GetString(Stat stat)
         {
             if (_hasStringFormatGetter) return _stringValueGetter(stat);
-            else if (_isFloat) return _floatValueGetter(stat).ToString(_format);
+            else if (_isFloat) return GetSafeFloatValue(_floatValueGetter(stat));
             else return _intValueGetter(stat).ToString(_format);
+        }
+        private string GetSafeFloatValue(float value)
+        {
+            if (value != UnityEngine.Mathf.Infinity) return value.ToString(_format);
+            else return "∞";
         }
     }
 }

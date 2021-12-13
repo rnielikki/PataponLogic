@@ -14,6 +14,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private CharacterGroupNavigator _characterGroupNavigator;
         [SerializeField]
         private UnityEngine.Events.UnityEvent<bool> _onOptimized;
+        [SerializeField]
+        private AudioClip _optimizingSound;
+        public void PlayOptimizingSound() => GlobalData.Sound.PlayInScene(_optimizingSound);
         public void SetEquipment(PataponData pataponData, EquipmentData equipment)
         {
             var realAmount = GlobalData.Inventory.GetAmount(equipment);

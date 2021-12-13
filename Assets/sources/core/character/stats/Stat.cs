@@ -110,6 +110,8 @@ namespace PataRoad.Core.Character
             get => _knockback;
             set => _knockback = value;
         }
+        [UnityEngine.SerializeField]
+        private bool _infiniteCriticalResistance;
         /// <summary>
         /// How much can resist from <see cref="Critical"/> damage.
         /// </summary>
@@ -117,9 +119,11 @@ namespace PataRoad.Core.Character
         private float _criticalResistance;
         public float CriticalResistance
         {
-            get => _criticalResistance;
+            get => _infiniteCriticalResistance ? UnityEngine.Mathf.Infinity : _criticalResistance;
             set => _criticalResistance = value;
         }
+        [UnityEngine.SerializeField]
+        private bool _infiniteStaggerResistance;
         /// <summary>
         /// How much can resist from <see cref="Stagger"/> status.
         /// </summary>
@@ -127,9 +131,11 @@ namespace PataRoad.Core.Character
         private float _staggerResistance;
         public float StaggerResistance
         {
-            get => _staggerResistance;
+            get => _infiniteStaggerResistance ? UnityEngine.Mathf.Infinity : _staggerResistance;
             set => _staggerResistance = value;
         }
+        [UnityEngine.SerializeField]
+        private bool _infiniteKnockbackResistance;
         /// <summary>
         /// How much can resist from <see cref="Knockback"/> status.
         /// </summary>
@@ -137,7 +143,7 @@ namespace PataRoad.Core.Character
         private float _knockbackResistance;
         public float KnockbackResistance
         {
-            get => _knockbackResistance;
+            get => _infiniteKnockbackResistance ? UnityEngine.Mathf.Infinity : _knockbackResistance;
             set => _knockbackResistance = value;
         }
         /// <summary>
@@ -171,6 +177,8 @@ namespace PataRoad.Core.Character
             set => _sleepRate = value;
         }
 
+        [UnityEngine.SerializeField]
+        private bool _infiniteFireResistance;
         /// <summary>
         /// How much can resist from fire status effect. Counterpart of enemy's <see cref="FireRate"/>.
         /// </summary>
@@ -178,9 +186,11 @@ namespace PataRoad.Core.Character
         private float _fireResistance;
         public float FireResistance
         {
-            get => _fireResistance;
+            get => _infiniteFireResistance ? UnityEngine.Mathf.Infinity : _fireResistance;
             set => _fireResistance = value;
         }
+        [UnityEngine.SerializeField]
+        private bool _infiniteIceResistance;
         /// <summary>
         /// How much can resist from ice status effect. Counterpart of enemy's <see cref="IceRate"/>.
         /// </summary>
@@ -188,9 +198,11 @@ namespace PataRoad.Core.Character
         private float _iceResistance;
         public float IceResistance
         {
-            get => _iceResistance;
+            get => _infiniteIceResistance ? UnityEngine.Mathf.Infinity : _iceResistance;
             set => _iceResistance = value;
         }
+        [UnityEngine.SerializeField]
+        private bool _infiniteSleepResistance;
         /// <summary>
         /// How much can resist from sleep status effect. Counterpart of enemy's <see cref="SleepRate"/>.
         /// </summary>
@@ -198,7 +210,7 @@ namespace PataRoad.Core.Character
         private float _sleepResistance;
         public float SleepResistance
         {
-            get => _sleepResistance;
+            get => _infiniteSleepResistance ? UnityEngine.Mathf.Infinity : _sleepResistance;
             set => _sleepResistance = value;
         }
 
@@ -329,20 +341,20 @@ namespace PataRoad.Core.Character
                 DefenceMax = stats.Average(s => s.DefenceMax),
                 DamageMin = (int)stats.Average(s => s.DamageMin),
                 DamageMax = (int)stats.Average(s => s.DamageMax),
-                AttackSeconds = (int)stats.Average(s => s.AttackSeconds),
-                MovementSpeed = (int)stats.Average(s => s.MovementSpeed),
-                Critical = (int)stats.Average(s => s.Critical),
-                CriticalResistance = (int)stats.Average(s => s.CriticalResistance),
-                Knockback = (int)stats.Average(s => s.Knockback),
-                KnockbackResistance = (int)stats.Average(s => s.KnockbackResistance),
-                Stagger = (int)stats.Average(s => s.Stagger),
-                StaggerResistance = (int)stats.Average(s => s.StaggerResistance),
-                FireRate = (int)stats.Average(s => s.FireRate),
-                FireResistance = (int)stats.Average(s => s.FireResistance),
-                IceRate = (int)stats.Average(s => s.IceRate),
-                IceResistance = (int)stats.Average(s => s.IceResistance),
-                SleepRate = (int)stats.Average(s => s.SleepRate),
-                SleepResistance = (int)stats.Average(s => s.SleepResistance)
+                AttackSeconds = stats.Average(s => s.AttackSeconds),
+                MovementSpeed = stats.Average(s => s.MovementSpeed),
+                Critical = stats.Average(s => s.Critical),
+                CriticalResistance = stats.Average(s => s.CriticalResistance),
+                Knockback = stats.Average(s => s.Knockback),
+                KnockbackResistance = stats.Average(s => s.KnockbackResistance),
+                Stagger = stats.Average(s => s.Stagger),
+                StaggerResistance = stats.Average(s => s.StaggerResistance),
+                FireRate = stats.Average(s => s.FireRate),
+                FireResistance = stats.Average(s => s.FireResistance),
+                IceRate = stats.Average(s => s.IceRate),
+                IceResistance = stats.Average(s => s.IceResistance),
+                SleepRate = stats.Average(s => s.SleepRate),
+                SleepResistance = stats.Average(s => s.SleepResistance)
             };
         }
         public Stat Copy() => (Stat)MemberwiseClone();
