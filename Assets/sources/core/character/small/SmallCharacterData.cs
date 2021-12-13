@@ -42,13 +42,7 @@ namespace PataRoad.Core.Character
         internal EquipmentManager EquipmentManager { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
 
-        public ClassMetaData ClassMetaData { get; private set; }
         public Animator Animator { get; private set; }
-
-        private void Awake()
-        {
-            ClassMetaData = ClassMetaData.Get(_type);
-        }
 
         public virtual void Init()
         {

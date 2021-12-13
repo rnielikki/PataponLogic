@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c7fc9c139ee0446920549ab36b823f, type: 3}
   m_Name: 1
   m_EditorClassIdentifier: 
+  _isUniqueItem: 0
   _group: Staff
   _name: Demonic eye
   _description: According to the legend, the holder of this can rule the world.
@@ -29,10 +30,11 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _hitPoint: 0
-        _defence: 0
+        _defenceMin: 0
+        _defenceMax: 0
         _damageMin: 99
         _damageMax: 999
-        _attackSeconds: 0
+        _attackSeconds: 1
         _movementSpeed: 0
         _critical: 0
         _stagger: 0

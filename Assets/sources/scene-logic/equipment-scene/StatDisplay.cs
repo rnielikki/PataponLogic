@@ -19,9 +19,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         Text _stamina;
         [SerializeField]
-        Text _damage;
+        Text _damageMin;
         [SerializeField]
-        Text _defence;
+        Text _damageMax;
+        [SerializeField]
+        Text _defenceMin;
+        [SerializeField]
+        Text _defenceMax;
         [SerializeField]
         Text _attackSeconds;
         [SerializeField]
@@ -54,6 +58,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         Text _sleepResistance;
 
+        [Header("Comparer colourz")]
+        [SerializeField]
+        Color _positiveColor;
+        [SerializeField]
+        Color _negativeColor;
+        Color _neutralColor;
+
         [Header("Backgrounds")]
         [SerializeField]
         Image _bg1;
@@ -67,15 +78,54 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         private bool _onGroup;
         private SpriteSelectable _current;
+        private PataponData _lastData;
 
         [SerializeField]
         private Text _guideText;
         private string _selectButtonName;
 
         bool _hasSelectButton;
+        private StatDisplayMap[] _displayMaps;
+        private StatDisplayMap _massDisplay;
 
         private void Start()
         {
+            _displayMaps = new StatDisplayMap[]
+            {
+                new StatDisplayMap(_stamina, _format).SetValueGetter((stat) => stat.HitPoint),
+                new StatDisplayMap(_damageMin, _format).SetValueGetter((stat) => stat.DamageMin),
+                new StatDisplayMap(_damageMax, _format).SetValueGetter((stat) => stat.DamageMax),
+                new StatDisplayMap(_defenceMin, _format).SetValueGetter((stat) => stat.DefenceMin),
+                new StatDisplayMap(_defenceMax, _format).SetValueGetter((stat) => stat.DefenceMax),
+                new StatDisplayMap(_attackSeconds, _format).SetValueGetter((stat) => stat.AttackSeconds)
+                    .SetFormatGetter((stat)=> $"{stat.AttackSeconds.ToString(_format)}s ({Core.Rhythm.RhythmEnvironment.TurnSeconds / stat.AttackSeconds:G2}/cmd)")
+                    .SetNegativeIsBetter(),
+                new StatDisplayMap(_movementSpeed, _format).SetValueGetter((stat) => stat.MovementSpeed)
+                    .SetFormatGetter((stat)=>$"{stat.MovementSpeed.ToString(_format)}s ({(stat.MovementSpeed / 8).ToString(_percentFormat)})"),
+
+                new StatDisplayMap(_critical, _percentFormat).SetValueGetter((stat) => stat.Critical),
+                new StatDisplayMap(_criticalResistance, _percentFormat).SetValueGetter((stat) => stat.CriticalResistance),
+                new StatDisplayMap(_knockback, _percentFormat).SetValueGetter((stat) => stat.Knockback),
+                new StatDisplayMap(_knockbackResistance, _percentFormat).SetValueGetter((stat) => stat.KnockbackResistance),
+                new StatDisplayMap(_stagger, _percentFormat).SetValueGetter((stat) => stat.Stagger),
+                new StatDisplayMap(_staggerResistance, _percentFormat).SetValueGetter((stat) => stat.StaggerResistance),
+
+                new StatDisplayMap(_fire, _percentFormat).SetValueGetter((stat) => stat.FireRate),
+                new StatDisplayMap(_fireResistance, _percentFormat).SetValueGetter((stat) => stat.FireResistance),
+                new StatDisplayMap(_ice, _percentFormat).SetValueGetter((stat) => stat.IceRate),
+                new StatDisplayMap(_iceResistance, _percentFormat).SetValueGetter((stat) => stat.IceResistance),
+                new StatDisplayMap(_sleep, _percentFormat).SetValueGetter((stat) => stat.SleepRate),
+                new StatDisplayMap(_sleepResistance, _percentFormat).SetValueGetter((stat) => stat.SleepResistance),
+            };
+            _massDisplay = new StatDisplayMap(_mass, _format);
+
+            _neutralColor = _stamina.color;
+            foreach (var display in _displayMaps)
+            {
+                display.AssignColors(_positiveColor, _neutralColor, _negativeColor);
+            }
+            _massDisplay.AssignColors(_positiveColor, _neutralColor, _negativeColor);
+
             _hasSelectButton = Core.Global.GlobalData.TryGetActionBindingName("UI/Select", out _selectButtonName);
             OnChangedToGroup();
         }
@@ -100,6 +150,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             UpdateStat(stat, data.Average(d => d.Rigidbody.mass));
             _current = selectable;
+            _lastData = null;
         }
         /// <summary>
         /// Show stat on class selection window.
@@ -121,6 +172,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             UpdateStat(pataponData.Stat, pataponData.Rigidbody.mass);
             _current = selectable;
+            _lastData = pataponData;
         }
         /// <summary>
         /// Empty the stat. Expected this when empty group is choosen.
@@ -129,27 +181,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             _header.text = "Empty squad";
 
-            _stamina.text = "-";
-            _damage.text = "-";
-            _defence.text = "-";
-            _attackSeconds.text = "-";
-            _movementSpeed.text = "-";
-
-            _critical.text = "-";
-            _criticalResistance.text = "-";
-            _knockback.text = "-";
-            _knockbackResistance.text = "-";
-            _stagger.text = "-";
-            _staggerResistance.text = "-";
-
-            _fire.text = "-";
-            _fireResistance.text = "-";
-            _ice.text = "-";
-            _iceResistance.text = "-";
-            _sleep.text = "-";
-            _sleepResistance.text = "-";
-
-            _mass.text = "-";
+            foreach (var display in _displayMaps) display.SetText("");
+            _massDisplay.SetText("");
         }
         /// <summary>
         /// Refresh stat after optimization.
@@ -165,6 +198,31 @@ namespace PataRoad.SceneLogic.EquipmentScene
             {
                 UpdateIndividual(_current);
             }
+        }
+        public void CompareStat(Core.Items.IItem item)
+        {
+            if (_lastData == null || item.ItemType != Core.Items.ItemType.Equipment) return;
+            var equipmentData = item as Core.Items.EquipmentData;
+            if (equipmentData != null && equipmentData.Type != Core.Character.Equipments.EquipmentType.Rarepon)
+            {
+                var oldEquipment = _lastData.EquipmentManager.GetEquipmentData(equipmentData.Type);
+                var oldEquipmentStat = oldEquipment?.Stat ?? new Stat();
+                var newEquipmentStat = equipmentData.Stat;
+                foreach (var display in _displayMaps)
+                {
+                    display.CompareOneByOne(_lastData.Stat, oldEquipmentStat, newEquipmentStat);
+                }
+                _massDisplay.CompareValue(_lastData.Rigidbody.mass, oldEquipment?.Mass ?? 0, equipmentData.Mass);
+            }
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+        }
+        public void ResetAllComparisonColors()
+        {
+            foreach (var display in _displayMaps)
+            {
+                display.ResetColor();
+            }
+            _massDisplay.ResetColor();
         }
 
         private void OnChangedToGroup()
@@ -188,27 +246,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private void UpdateStat(Stat stat, float mass)
         {
-            _stamina.text = stat.HitPoint.ToString(_format);
-            _damage.text = $"{stat.DamageMin.ToString(_format)} - {stat.DamageMax.ToString(_format)}";
-            _defence.text = $"{stat.DefenceMin.ToString(_format)} - {stat.DefenceMax.ToString(_format)}";
-            _attackSeconds.text = $"{stat.AttackSeconds.ToString(_format)}s ({Core.Rhythm.RhythmEnvironment.TurnSeconds / stat.AttackSeconds:G2}/cmd)";
-            _movementSpeed.text = $"{stat.MovementSpeed.ToString(_format)}s ({(stat.MovementSpeed / 8).ToString(_percentFormat)})";
-
-            _critical.text = stat.Critical.ToString(_percentFormat);
-            _criticalResistance.text = stat.CriticalResistance.ToString(_percentFormat);
-            _knockback.text = stat.Knockback.ToString(_percentFormat);
-            _knockbackResistance.text = stat.KnockbackResistance.ToString(_percentFormat);
-            _stagger.text = stat.Stagger.ToString(_percentFormat);
-            _staggerResistance.text = stat.StaggerResistance.ToString(_percentFormat);
-
-            _fire.text = stat.FireRate.ToString(_percentFormat);
-            _fireResistance.text = stat.FireResistance.ToString(_percentFormat);
-            _ice.text = stat.IceRate.ToString(_percentFormat);
-            _iceResistance.text = stat.IceResistance.ToString(_percentFormat);
-            _sleep.text = stat.SleepRate.ToString(_percentFormat);
-            _sleepResistance.text = stat.SleepResistance.ToString(_percentFormat);
-
-            _mass.text = mass.ToString(_format);
+            foreach (var statDisplay in _displayMaps)
+            {
+                statDisplay.UpdateText(stat);
+            }
+            _massDisplay.SetText(mass.ToString(_format));
         }
     }
 }

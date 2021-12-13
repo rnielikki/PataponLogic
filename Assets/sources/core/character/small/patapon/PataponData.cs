@@ -1,5 +1,4 @@
-﻿using PataRoad.Core.Character.Patapons.Data;
-using PataRoad.Core.Items;
+﻿using PataRoad.Core.Items;
 using System.Collections.Generic;
 
 namespace PataRoad.Core.Character

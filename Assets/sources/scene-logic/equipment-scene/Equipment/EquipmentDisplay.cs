@@ -106,6 +106,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             var allItemDisplays = GetComponentsInChildren<ItemDisplay>();
             foreach (var obj in allItemDisplays.Where(item => item.Item == currentItem && item.Item != null))
             {
+                if (isEquipments && (obj.Item as EquipmentData).Index == 0) continue;
                 obj.GetComponent<Selectable>().interactable = false;
                 obj.MarkAsDisable();
             }
@@ -177,7 +178,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private (ItemType type, string group) LoadItemType(Core.Character.PataponData data, EquipmentSummaryElement equipElement)
         {
             if (equipElement.IsGeneralMode) return (ItemType.Key, "GeneralMode");
-            else return (ItemType.Equipment, data.ClassMetaData.GetEquipmentName(equipElement.EquipmentType));
+            else return (ItemType.Equipment, Core.Character.Class.ClassMetaData.GetEquipmentName(data.Type, equipElement.EquipmentType));
         }
         private void SetPosition(bool left)
         {
