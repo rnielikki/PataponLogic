@@ -201,7 +201,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void CompareStat(Core.Items.IItem item)
         {
-            if (_lastData == null || item.ItemType != Core.Items.ItemType.Equipment) return;
+            if (_lastData == null || item == null || item.ItemType != Core.Items.ItemType.Equipment) return;
             var equipmentData = item as Core.Items.EquipmentData;
             if (equipmentData != null && equipmentData.Type != Core.Character.Equipments.EquipmentType.Rarepon)
             {

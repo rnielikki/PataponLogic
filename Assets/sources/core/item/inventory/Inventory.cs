@@ -104,8 +104,6 @@ namespace PataRoad.Core.Items
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", 1), 1);
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Bow", 1), 1);
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", 1), 2);
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 1), 3);
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Rarepon", 2), 3);
             AddMultiple(ItemLoader.GetItem(ItemType.Key, "Boss", 0), 1);
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 1));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 2));

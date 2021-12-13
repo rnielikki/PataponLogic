@@ -1,0 +1,112 @@
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+
+namespace PataRoad.SceneLogic.EquipmentScene
+{
+    internal class RareponSelector : MonoBehaviour
+    {
+        [SerializeField]
+        UnityEvent _onOpen;
+        [SerializeField]
+        UnityEvent<RareponSelection> _onClicked;
+        [SerializeField]
+        AudioClip _newRareponSound;
+        public AudioClip NewRareponSound => _newRareponSound;
+        private Core.Character.PataponData _targetPatapon;
+        private Common.Navigator.SpriteNavigator _parent;
+
+        [SerializeField]
+        private EquipmentSetter _equipmentSetter;
+        private RareponSelection[] _rareponSelections;
+        [SerializeField]
+        private Common.Navigator.ActionEventMap _actionEventMap;
+
+        private RareponSelection _lastSelected;
+
+        public void Open(Common.Navigator.SpriteNavigator parent, Core.Character.PataponData pataponData, RareponData data)
+        {
+            _targetPatapon = pataponData;
+            _parent = parent;
+            gameObject.SetActive(true);
+            parent.Freeze();
+            Open(data);
+        }
+        public void Open(RareponData data)
+        {
+            _actionEventMap.enabled = true;
+            _rareponSelections = GetComponentsInChildren<RareponSelection>();
+            foreach (var rareponSelection in _rareponSelections)
+            {
+                rareponSelection.GetComponent<Button>()
+                    .onClick
+                    .AddListener(() => _onClicked.Invoke(rareponSelection));
+            }
+            _onOpen.Invoke();
+            gameObject.SetActive(true);
+            Select(data);
+        }
+        private void OnEnable()
+        {
+            if (_lastSelected == null) return;
+            foreach (var selection in _rareponSelections)
+            {
+                selection.enabled = true;
+            }
+            _lastSelected.Select();
+            _actionEventMap.enabled = true;
+        }
+
+        private void OnDisable()
+        {
+            foreach (var selection in _rareponSelections)
+            {
+                selection.enabled = false;
+            }
+            _actionEventMap.enabled = false;
+        }
+        public void Select(RareponData data)
+        {
+            var index = data.Index;
+            var uiOkAction = Core.Global.GlobalData.Input.actions.FindAction("UI/Submit");
+            uiOkAction.Disable();
+            StartCoroutine(WaitForNext());
+
+            System.Collections.IEnumerator WaitForNext()
+            {
+                if (InputSystem.settings.updateMode == InputSettings.UpdateMode.ProcessEventsInDynamicUpdate)
+                {
+                    yield return new WaitForEndOfFrame();
+                }
+                else if (InputSystem.settings.updateMode == InputSettings.UpdateMode.ProcessEventsInFixedUpdate)
+                {
+                    yield return new WaitForFixedUpdate();
+                }
+                _rareponSelections.SingleOrDefault(s => s.Index == index)?.Select();
+                uiOkAction.Enable();
+            }
+        }
+        public void Apply(RareponSelection selection)
+        {
+            if (selection.RareponData == null)
+            {
+                selection.ConfirmToCreateRarepon();
+            }
+            else
+            {
+                _equipmentSetter.SetEquipment(_targetPatapon, selection.RareponData);
+                Close();
+            }
+        }
+        public void Close()
+        {
+            _actionEventMap.enabled = false;
+            gameObject.SetActive(false);
+            Core.Global.GlobalData.Sound.PlaySelected();
+            _parent?.Defrost();
+        }
+    }
+}

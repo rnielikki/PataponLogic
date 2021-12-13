@@ -19,6 +19,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             Load();
         }
+        protected override EquipmentData GetDefault() => Global.GlobalData.PataponInfo.RareponInfo.GetRarepon(0);
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
             if (HolderData == null) Load();

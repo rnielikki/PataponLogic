@@ -26,6 +26,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private EquipmentSetter _equipmentSetter;
 
         [SerializeField]
+        private RareponSelector _rareponSelector;
+
+        [SerializeField]
         private GameObject _itemTemplate;
 
         private HeadquarterSummaryElement _summaryElem;
@@ -48,8 +51,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void ShowEquipment(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
-            gameObject.SetActive(true);
-
             _nav = sender as SpriteNavigator;
 
             _currentPataponData = _nav?.Current?.GetComponent<Core.Character.PataponData>();
@@ -58,11 +59,19 @@ namespace PataRoad.SceneLogic.EquipmentScene
             var elem = _summaryForEquipment.Current;
             _summaryForEquipment.SetInactive();
 
-            SetPosition(_currentPataponData.IndexInGroup < 2);
+            if (elem.Item is Core.Character.Equipments.Weapons.RareponData rarepon)
+            {
+                _rareponSelector.Open(_nav, _currentPataponData, rarepon);
+                return;
+            }
+
             var itemGroup = LoadItemType(_currentPataponData, elem);
 
             var obj = Instantiate(_itemTemplate, _child.transform);
             IItem item = (itemGroup.type == ItemType.Equipment) ? ItemLoader.GetItem(itemGroup.type, itemGroup.group, 0) : null;
+
+            gameObject.SetActive(true);
+            SetPosition(_currentPataponData.IndexInGroup < 2);
             obj.GetComponent<ItemDisplay>().Init(item);
             SetAppear(itemGroup.type, itemGroup.group, elem.Item, true);
         }

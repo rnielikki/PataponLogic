@@ -25,6 +25,10 @@ namespace PataRoad.Core.Character.Patapons.Data
         [SerializeReference]
         PataponClassInfo[] _classInfoForSerialization;
 
+        [SerializeReference]
+        RareponInfo _rareponInfo;
+        public RareponInfo RareponInfo => _rareponInfo;
+
         public StringKeyItemData BossToSummon { get; set; }
         public StringKeyItemData CustomMusic { get; set; }
 
@@ -45,6 +49,7 @@ namespace PataRoad.Core.Character.Patapons.Data
             {
                 Class.ClassType.Yaripon
             };
+            _rareponInfo = new RareponInfo();
             Order();
         }
         public void ReplaceClass(Class.ClassType from, Class.ClassType to)
