@@ -26,8 +26,7 @@ namespace PataRoad.Common.GameDisplay
         private void Destroy() => Destroy(gameObject);
         private void EndMission()
         {
-            GameObject.FindGameObjectWithTag("Finish")
-            .GetComponent<Core.Map.MissionPoint>()
+            Core.Map.MissionPoint.Current
             .FailMissionNow();
             Destroy();
         }

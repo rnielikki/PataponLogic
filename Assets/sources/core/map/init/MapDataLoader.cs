@@ -20,7 +20,8 @@ namespace PataRoad.Core.Map
         Transform _attachTarget;
         private void Awake()
         {
-            _mapData = Global.GlobalData.MapInfo.NextMapData;
+            var nextMap = Global.GlobalData.MapInfo.NextMap;
+            _mapData = nextMap.MapData;
             if (_mapData == null)
             {
                 ShowError("Map");
@@ -47,8 +48,8 @@ namespace PataRoad.Core.Map
             _backgroundLoader.Init(_mapData?.BackgroundName ?? "Ruins");
 
             //-- weather.
-            _weatherInfo.Init(_mapData.Weather);
-            _weatherInfo.Wind.Init(_mapData.WindType);
+            _weatherInfo.Init(nextMap.CurrentWeather);
+            _weatherInfo.Wind.Init(nextMap.CurrentWind);
 
             //-- missionPoint.
             _missionPoint.FilledMissionCondition = _mapData.FilledMissionCondition;

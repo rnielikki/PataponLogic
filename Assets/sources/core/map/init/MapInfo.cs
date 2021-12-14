@@ -8,83 +8,92 @@ namespace PataRoad.Core.Global
     [System.Serializable]
     public class MapInfo : IPlayerData
     {
-        public MapData NextMapData { get; private set; }
-        public MapData LastMapData { get; private set; }
-        private List<MapData> _openMaps = new List<MapData>();
+        public MapDataContainer NextMap { get; private set; }
+        public MapDataContainer LastMap { get; private set; }
 
+        [SerializeReference]
+        private List<MapDataContainer> _openMaps = new List<MapDataContainer>();
+
+        [SerializeField]
+        private int _lastMapIndex;
         [SerializeField]
         private int _nextMapIndex;
         [SerializeField]
         private bool _succeededLast;
         public bool SuccededLast => _succeededLast;
-        [SerializeField]
-        private int[] _openMapIndexes;
         public const string MapPath = "Map/Levels/";
-
-        //-- boss
-        //----------- WE'LL NEED TO ADD THIS!
-        private Dictionary<MapData, int> _bossLevels = new Dictionary<MapData, int>();
-        private const int _maxBossLevel = 99;
 
         internal MapInfo()
         {
-            NextMapData = LoadResource(2);
+            NextMap = LoadResource(2);
+            RefreshAllWeathers();
         }
         public void OpenNext()
         {
-            if (NextMapData.NextIndex > 0)
+            if (NextMap.MapData.NextIndex > 0 && NextMap.CanLoadNextLevel())
             {
-                NextMapData = LoadResource(NextMapData.NextIndex);
+                NextMap = LoadResource(NextMap.MapData.NextIndex);
             }
         }
         public void MissionSucceeded()
         {
-            if (_bossLevels.ContainsKey(NextMapData) && _bossLevels[NextMapData] < _maxBossLevel)
-            {
-                _bossLevels[NextMapData]++;
-            }
-            LastMapData = NextMapData;
+            NextMap.LevelUp();
+            LastMap = NextMap;
             OpenNext();
 
             _succeededLast = true;
             GlobalData.PataponInfo.CustomMusic = null;
+            RefreshAllWeathers();
         }
         public void MissionFailed()
         {
             _succeededLast = false;
             GlobalData.PataponInfo.CustomMusic = null;
+            RefreshAllWeathers();
         }
-        private MapData LoadResource(int index)
+        public void RefreshAllWeathers()
         {
-            var mapData = Resources.Load<MapData>(MapPath + index.ToString());
-            if (mapData == null) return null;
-            if (!_openMaps.Contains(mapData))
+            foreach (var map in _openMaps)
             {
-                mapData.Index = index;
-                _openMaps.Add(mapData);
+                map.ChangeWeather();
             }
-            return mapData;
+        }
+        private MapDataContainer LoadResource(int index)
+        {
+            var map = _openMaps.SingleOrDefault(a => a.Index == index);
+            if (map == null)
+            {
+                map = new MapDataContainer(index);
+            }
+            if (map.MapData != null)
+            {
+                _openMaps.Add(map);
+            }
+            return map;
         }
         public string Serialize()
         {
-            _nextMapIndex = NextMapData.Index;
-            _openMapIndexes = _openMaps.Select(map => map.Index).ToArray();
+            _nextMapIndex = NextMap.Index;
             return JsonUtility.ToJson(this);
         }
         public void Deserialize()
         {
-            foreach (var mapIndex in _openMapIndexes)
+            foreach (var map in _openMaps)
             {
-                var res = LoadResource(mapIndex);
-                if (mapIndex == _nextMapIndex)
+                if (map.Index == _lastMapIndex)
                 {
-                    NextMapData = res;
+                    LastMap = map;
+                }
+                if (map.Index == _nextMapIndex)
+                {
+                    NextMap = map;
                 }
             }
-            if (NextMapData == null)
+            if (NextMap == null)
             {
-                NextMapData = _openMaps.Last();
+                NextMap = _openMaps.Last();
             }
+            RefreshAllWeathers();
         }
     }
 }

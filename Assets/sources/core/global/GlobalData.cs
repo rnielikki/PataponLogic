@@ -22,6 +22,7 @@ namespace PataRoad.Core.Global
         // Start is called before the first frame update
         void Awake()
         {
+            TipIndex = -1;
             DontDestroyOnLoad(gameObject);
             Input = GetComponent<PlayerInput>();
             Sound = GetComponentInChildren<GlobalSoundSystem>();

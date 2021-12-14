@@ -69,7 +69,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void StartMission()
         {
-            if (Core.Global.GlobalData.MapInfo.NextMapData == null)
+            if (Core.Global.GlobalData.MapInfo.NextMap == null)
             {
                 Common.GameDisplay.ConfirmDialog.CreateCancelOnly("Error: Map data doesn't exist so we cannot deploy!");
                 Core.Global.GlobalData.Sound.PlayBeep();
@@ -86,8 +86,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
             StartCoroutine(CheckStatus());
             System.Collections.IEnumerator CheckStatus()
             {
-                bool isWarned = false;
-                string ignoreMessage = "------------------------------ \nIgnore these warning message above if it's intended.";
                 yield return null;
                 var rect = window.GetComponent<RectTransform>();
                 var dialogContent = window.Content;

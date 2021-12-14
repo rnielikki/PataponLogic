@@ -52,6 +52,7 @@ namespace PataRoad.Common.GameDisplay
             {
                 LoadTip(_allTips[Random.Range(0, _allTips.Length - 1)]);
             }
+            Core.Global.GlobalData.TipIndex = -1;
         }
         private void LoadTip(TipDisplayData data)
         {

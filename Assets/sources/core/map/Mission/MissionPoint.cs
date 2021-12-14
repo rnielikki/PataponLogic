@@ -94,7 +94,7 @@ namespace PataRoad.Core.Map
         {
             AttachToScreen("MissionFailed");
             _soundSource.PlayOneShot(_missionFailedMusic);
-            Global.GlobalData.TipIndex = Global.GlobalData.MapInfo.NextMapData.TipIndexOnFail;
+            Global.GlobalData.TipIndex = Global.GlobalData.MapInfo.NextMap.MapData.TipIndexOnFail;
             Global.GlobalData.MapInfo.MissionFailed();
             StartCoroutine(WaitForNextScene());
 
@@ -110,7 +110,7 @@ namespace PataRoad.Core.Map
             IsMissionSuccess = true;
             OnMissionEnd.Invoke(true);
             Global.GlobalData.MapInfo.MissionSucceeded();
-            Global.GlobalData.TipIndex = Global.GlobalData.MapInfo.NextMapData.TipIndexOnSuccess;
+            Global.GlobalData.TipIndex = Global.GlobalData.MapInfo.NextMap.MapData.TipIndexOnSuccess;
 
             if (_animator != null)
             {

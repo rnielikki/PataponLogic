@@ -1,6 +1,5 @@
 ﻿using PataRoad.Core.Rhythm.Command;
 using System;
-using System.Collections;
 using UnityEngine;
 
 namespace PataRoad.Core.Rhythm
@@ -10,9 +9,6 @@ namespace PataRoad.Core.Rhythm
     /// </summary>
     internal class RhythmInputMiracle : RhythmInput
     {
-        [SerializeField]
-        [Tooltip("If miracle hit is outside this range (as seconds), it's considered as miss in miracle hit.")]
-        private float _newGoodRange;
         /// <summary>
         /// Reperesents 'Should send miracle signal'. DOESN'T directly affect <see cref="MiracleDrumCount"/>.
         /// </summary>
@@ -23,11 +19,7 @@ namespace PataRoad.Core.Rhythm
         int[] _maxTimerIndexes;
         private void Awake()
         {
-            if (_newGoodRange > RhythmEnvironment.InputInterval / 4)
-            {
-                throw new ArgumentException("The good range cannot be more than " + RhythmEnvironment.InputInterval / 4);
-            }
-            int newHalfGoodFrequency = (_newGoodRange == 0) ? (int)(RhythmTimer.GoodFrequency * 0.5) : (int)(_newGoodRange / Time.fixedDeltaTime);
+            int newHalfGoodFrequency = (RhythmEnvironment.MiracleRange == 0) ? (int)(RhythmTimer.GoodFrequency * 0.5) : (int)(RhythmEnvironment.MiracleRange / Time.fixedDeltaTime);
             int newGoodFrequency = newHalfGoodFrequency * 2;
             if (DrumType != DrumType.Don)
             {
@@ -134,12 +126,5 @@ namespace PataRoad.Core.Rhythm
         private void OnEnable() => Enable();
         private void OnDisable() => Disable();
         private void OnDestroy() => Destroy();
-        private void OnValidate()
-        {
-            if (_newGoodRange > RhythmEnvironment.InputInterval / 4)
-            {
-                throw new ArgumentException("The good range cannot be more than " + RhythmEnvironment.InputInterval / 4);
-            }
-        }
     }
 }

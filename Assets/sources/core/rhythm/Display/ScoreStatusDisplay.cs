@@ -33,7 +33,6 @@ namespace PataRoad.Core.Rhythm.Display
             _animator = warning.GetComponent<Animator>();
             _warningImage = warning.GetComponent<Image>();
             _warningAnimationHash = Animator.StringToHash("Fever-Warning");
-
         }
         public void ShowFeverWarning()
         {

@@ -35,7 +35,10 @@ namespace PataRoad.Core.Rhythm
         /// How much <see cref="Count"/> is considered as bad hit.
         /// </summary>
         public static int BadFrequency { get; private set; }
-
+        /// <summary>
+        /// Threshold of minimal effect <see cref="RhythmEnvironment.MinEffectThreshold"/>, as frequency, as <see cref="Count"/>.
+        /// </summary>
+        public static int MinEffectThresholdFrequency { get; private set; }
         /// <summary>
         /// 1/4 of the <see cref="Frequency"/> value.
         /// </summary>
@@ -77,6 +80,7 @@ namespace PataRoad.Core.Rhythm
             PerfectFrequency = (int)(RhythmEnvironment.PerfectRange / Time.fixedDeltaTime);
             GoodFrequency = (int)(RhythmEnvironment.GoodRange / Time.fixedDeltaTime);
             BadFrequency = (int)(RhythmEnvironment.BadRange / Time.fixedDeltaTime);
+            MinEffectThresholdFrequency = (int)(RhythmEnvironment.MinEffectThreshold / Time.fixedDeltaTime);
             if (AutoStart) SceneManager.sceneLoaded += StartTimer;
         }
         public void StartTimer(Scene scene, LoadSceneMode mode)

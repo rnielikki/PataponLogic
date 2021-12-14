@@ -37,6 +37,6 @@ namespace PataRoad.Core.Rhythm.Command
             BadCount = statusCollection.Count(status => status == DrumHitStatus.Bad);
             AccuracyRate = GetPercentage(inputs.Sum(input => input.Timing));
         }
-        private float GetPercentage(int timingSum) => UnityEngine.Mathf.InverseLerp(RhythmTimer.GoodFrequency * 4, RhythmTimer.PerfectFrequency * 4, timingSum);
+        private float GetPercentage(int timingSum) => UnityEngine.Mathf.InverseLerp(RhythmTimer.MinEffectThresholdFrequency * 4, RhythmTimer.PerfectFrequency * 4, timingSum);
     }
 }
