@@ -8,11 +8,11 @@
         }
         public void StartGroupEffect(System.Collections.Generic.IEnumerable<Patapon> patapons)
         {
-            Map.Weather.WeatherInfo.Wind.StartWind(Map.Weather.WindType.TailWind);
+            Map.Weather.WeatherInfo.Current.Wind.StartWind(Map.Weather.WindType.TailWind);
         }
         public void EndGroupEffect(System.Collections.Generic.IEnumerable<Patapon> patapons)
         {
-            Map.Weather.WeatherInfo.Wind.StopWind(Map.Weather.WindType.TailWind);
+            Map.Weather.WeatherInfo.Current?.Wind?.StopWind(Map.Weather.WindType.TailWind);
         }
     }
 }

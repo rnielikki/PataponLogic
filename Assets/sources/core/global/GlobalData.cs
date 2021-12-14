@@ -15,23 +15,24 @@ namespace PataRoad.Core.Global
         public static PataponInfo PataponInfo { get; private set; }
         public static Inventory Inventory { get; private set; }
 
-        public static Map.MapData MapData { get; set; }
+        public static MapInfo MapInfo { get; private set; }
 
-        [SerializeField]
-        int _tipIndex = -1;
-        public int TipIndex => _tipIndex;
+
+        public static int TipIndex { get; set; }
         // Start is called before the first frame update
         void Awake()
         {
             DontDestroyOnLoad(gameObject);
             Input = GetComponent<PlayerInput>();
             Sound = GetComponentInChildren<GlobalSoundSystem>();
-            MapData = new Map.MapData();
 
+            //---------------------------------- Not serialized.
             PataponInfo = new PataponInfo();
 
             ItemLoader.LoadAll();
             Inventory = new Inventory(); //must be loaded after item loader init
+
+            MapInfo = new MapInfo();
         }
         public static bool TryGetActionBindingName(string actionName, out string name)
         {
@@ -49,7 +50,7 @@ namespace PataRoad.Core.Global
         {
             if (!PlayerPrefs.HasKey(key))
             {
-                return default(T);
+                return default;
             }
             else
             {

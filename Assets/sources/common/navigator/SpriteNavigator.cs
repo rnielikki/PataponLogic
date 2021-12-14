@@ -26,7 +26,7 @@ namespace PataRoad.Common.Navigator
         public Vector2 PositionOffset => _positionOffset;
         [SerializeField]
         protected bool _preserveIndexOnDeselected;
-        public bool PreserveIndexOnDeselected { get; set; }
+        public bool PreserveIndexOnDeselected => _preserveIndexOnDeselected;
 
         protected ActionEventMap _map;
 
@@ -37,7 +37,6 @@ namespace PataRoad.Common.Navigator
         protected bool _selectOnInit = true;
         public virtual void Init()
         {
-            PreserveIndexOnDeselected = _preserveIndexOnDeselected;
             _selectables.Clear();
             foreach (Transform child in transform)
             {

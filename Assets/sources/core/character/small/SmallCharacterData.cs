@@ -65,10 +65,7 @@ namespace PataRoad.Core.Character
             EquipmentManager = new EquipmentManager(this);
             EquipmentManager.Init(equipmentData);
         }
-        public void Equip(EquipmentData data)
-        {
-            if (data != null) EquipmentManager.Equip(data);
-        }
+        public void Equip(EquipmentData data) => EquipmentManager.Equip(data);
         public void AddMass(float mass) => Rigidbody.mass += mass;
     }
 }

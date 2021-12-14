@@ -45,7 +45,7 @@ namespace PataRoad.Core.Character.Equipments
 
             foreach (var eq in equipmentData)
             {
-                _target.Equip(eq);
+                Equip(eq);
             }
             foreach (var kv in _map)
             {
@@ -69,6 +69,7 @@ namespace PataRoad.Core.Character.Equipments
         }
         public void Equip(EquipmentData equipmentData)
         {
+            if (equipmentData == null) return;
             if (_map.TryGetValue(equipmentData.Type, out Equipment eq))
             {
                 eq.ReplaceEqupiment(equipmentData, _target.Stat);

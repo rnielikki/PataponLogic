@@ -177,9 +177,34 @@ namespace PataRoad.Core.Character.Patapons.Data
                 _amountMap.Add(equipmentData, 1);
             }
         }
-        public void UpdateGeneralEquipmentStatus(PataponData data, GeneralModeData generalModeData)
+        public GeneralModeData GetGeneralMode(Class.ClassType type) => GetClassInfo(type).GeneralModeData;
+        public bool HasGeneralMode(GeneralModeData generalModeData, out Class.ClassType classType)
         {
-            GetClassInfo(data.Type).SetGeneralModeData(generalModeData);
+            var duplication = _classInfoMap.Values.Where(cl => cl.GeneralModeData == generalModeData);
+            if (duplication.Any())
+            {
+                classType = duplication.Single().Class;
+                return true;
+            }
+            else
+            {
+                classType = Class.ClassType.Yaripon;
+                return false;
+            }
+        }
+        public void UpdateGeneralEquipmentStatus(Class.ClassType type, GeneralModeData generalModeData)
+        {
+            if (generalModeData != null && HasGeneralMode(generalModeData, out Class.ClassType havingClassType))
+            {
+                var oldClassInfo = GetClassInfo(type);
+                var newClassInfo = GetClassInfo(havingClassType);
+                //SWAP
+                var temp = oldClassInfo.GeneralModeData;
+                oldClassInfo.SetGeneralModeData(generalModeData);
+                newClassInfo.SetGeneralModeData(temp);
+                return;
+            }
+            GetClassInfo(type).SetGeneralModeData(generalModeData);
         }
         public IEnumerable<EquipmentData> GetCurrentEquipments(PataponData data)
         {
@@ -202,8 +227,8 @@ namespace PataRoad.Core.Character.Patapons.Data
         public string Serialize()
         {
             _classInfoForSerialization = _classInfoMap.Values.ToArray();
-            _summonIndex = BossToSummon.Index;
-            _musicIndex = CustomMusic.Index;
+            _summonIndex = BossToSummon?.Index ?? -1;
+            _musicIndex = CustomMusic?.Index ?? -1;
             return JsonUtility.ToJson(this);
         }
         public void Deserialize()
@@ -213,8 +238,8 @@ namespace PataRoad.Core.Character.Patapons.Data
             {
                 _classInfoMap.Add(classInfo.Class, classInfo);
             }
-            BossToSummon = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Boss", _summonIndex);
-            CustomMusic = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Music", _musicIndex);
+            if (_summonIndex != -1) BossToSummon = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Boss", _summonIndex);
+            if (_musicIndex != -1) CustomMusic = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Music", _musicIndex);
 
             foreach (var equipmentData in _classInfoForSerialization.SelectMany(item => item.GetAllEquipments()))
             {

@@ -20,10 +20,6 @@ namespace PataRoad.Core.Map
 
         [SerializeField]
         private AudioClip[] _ponsSpeakingWhenMissionComplete;
-
-        [SerializeField]
-        [Tooltip("Mission complete condition, by default. Only true Misison Condition will call Mission Complete. Can be changed later in code.")]
-        private bool _filledMissionCondition = true;
         public static bool IsMissionEnd { get; private set; }
         public static bool IsMissionSuccess { get; private set; }
 
@@ -34,15 +30,25 @@ namespace PataRoad.Core.Map
         /// Mission complete, only when this is true.
         /// </summary>
         public bool FilledMissionCondition { get; set; }
+        public bool UseMissionTower { get; set; }
         public static MissionPoint Current { get; private set; }
+
+        public Vector2 MissionPointPosition { get; private set; }
 
         void Awake()
         {
             IsMissionEnd = false;
             Current = this;
-            FilledMissionCondition = _filledMissionCondition;
-            _animator = GetComponent<Animator>();
             _soundSource = GameObject.FindGameObjectWithTag("Sound").GetComponent<AudioSource>();
+        }
+        private void Start()
+        {
+            var missionPoint = GameObject.FindGameObjectWithTag("Finish");
+            if (missionPoint != null)
+            {
+                MissionPointPosition = missionPoint.transform.position;
+                _animator = missionPoint.GetComponent<Animator>();
+            }
         }
         /// <summary>
         /// Ends mission. Mission complete if <see cref="FilledMissionCondition"/> is true, otherwise Mission failed.
@@ -88,6 +94,8 @@ namespace PataRoad.Core.Map
         {
             AttachToScreen("MissionFailed");
             _soundSource.PlayOneShot(_missionFailedMusic);
+            Global.GlobalData.TipIndex = Global.GlobalData.MapInfo.NextMapData.TipIndexOnFail;
+            Global.GlobalData.MapInfo.MissionFailed();
             StartCoroutine(WaitForNextScene());
 
             System.Collections.IEnumerator WaitForNextScene()
@@ -101,6 +109,8 @@ namespace PataRoad.Core.Map
             MissionCompleteTime = (int)Time.timeSinceLevelLoad;
             IsMissionSuccess = true;
             OnMissionEnd.Invoke(true);
+            Global.GlobalData.MapInfo.MissionSucceeded();
+            Global.GlobalData.TipIndex = Global.GlobalData.MapInfo.NextMapData.TipIndexOnSuccess;
 
             if (_animator != null)
             {

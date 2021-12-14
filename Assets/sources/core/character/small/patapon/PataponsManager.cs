@@ -25,10 +25,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         internal static bool IsMovingForward { get; set; }
         private float _missionEndPosition;
-
-        [SerializeField]
-        [Tooltip("Mission complete condition is going through Mission tower point.")]
-        private bool _useMissionTower = true;
+        private bool _useMissionTower;
 
         //------------------------------------- sounds of Patapon
         [SerializeField]
@@ -52,7 +49,11 @@ namespace PataRoad.Core.Character.Patapons
             {
                 if (!TurnCounter.IsPlayerTurn) General.PataponGeneral.ShoutedOnThisTurn = false;
             });
-            _missionEndPosition = GameObject.FindGameObjectWithTag("Finish").transform.position.x;
+        }
+        private void Start()
+        {
+            _useMissionTower = Map.MissionPoint.Current.UseMissionTower;
+            if (_useMissionTower) _missionEndPosition = Map.MissionPoint.Current.MissionPointPosition.x;
         }
         /// <summary>
         /// Attach to <see cref="RhythmInput.OnDrumHit"/>.
@@ -176,7 +177,7 @@ namespace PataRoad.Core.Character.Patapons
                 if (_useMissionTower && transform.position.x >= _missionEndPosition)
                 {
                     Map.MissionPoint.Current.EndMission();
-                    _useMissionTower = false;
+                    Map.MissionPoint.Current.UseMissionTower = false;
                 }
             }
         }

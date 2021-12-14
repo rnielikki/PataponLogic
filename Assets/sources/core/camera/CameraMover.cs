@@ -49,7 +49,7 @@ namespace PataRoad.Core.CameraController
 
         void LateUpdate()
         {
-            if (!_moving) return;
+            if (!_moving || Target == null) return;
 
             _pos.x = Target.transform.position.x + _inputMoveOffset;
 

@@ -25,13 +25,13 @@ namespace PataRoad.Core.Map.Weather
         public void OnWeatherStarted()
         {
             _rainData.OnWeatherStarted();
-            WeatherInfo.Wind.StartTailwind();
+            WeatherInfo.Current.Wind.StartTailwind();
             StartCoroutine(DropThunder());
         }
 
         public void OnWeatherStopped(WeatherType newType)
         {
-            WeatherInfo.Wind.StopWind(WindType.TailWind);
+            WeatherInfo.Current.Wind.StopWind(WindType.TailWind);
             StopAllCoroutines();
             if (newType != WeatherType.Rain)
             {

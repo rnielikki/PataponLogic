@@ -14,7 +14,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _wind = WeatherInfo.Wind;
+            _wind = WeatherInfo.Current.Wind;
         }
         private void FixedUpdate()
         {

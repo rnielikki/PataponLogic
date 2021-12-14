@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1908906587
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: ac4a5ad6f7f8f0543a7fa1bd4d769c94, type: 3}
   m_Color: {r: 0.8784314, g: 0.29411766, b: 0.49019608, a: 1}
@@ -155,7 +155,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1908906587
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0f0fe266ecc7db146a5e2e2b026e4253, type: 3}
   m_Color: {r: 0.8784314, g: 0.29411766, b: 0.49019608, a: 1}
@@ -239,7 +239,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1908906587
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 32fc5093ffaf8ab42a8f622d8e8b0236, type: 3}
   m_Color: {r: 0.8784314, g: 0.29411766, b: 0.49019608, a: 1}
@@ -323,7 +323,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1908906587
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 805ab27a433d41c4da1eb4876714f8f1, type: 3}
   m_Color: {r: 0.8784314, g: 0.29411766, b: 0.49019608, a: 1}
@@ -346,7 +346,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1290418071052663260}
   - component: {fileID: 1290418071052663262}
-  - component: {fileID: 1290418071052663261}
   m_Layer: 0
   m_Name: MissionPoint
   m_TagString: Finish
@@ -388,113 +387,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1290418071052663261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1290418071052662819}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b068f652c2821d4ea8b01eec4114463, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnMissionEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Core.Rhythm.Display.RhythmDisplay, Assembly-CSharp
-        m_MethodName: Stop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Core.Rhythm.Bgm.RhythmBgmPlayer, Assembly-CSharp
-        m_MethodName: StopAllMusic
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Core.Rhythm.RhythmTimer, Assembly-CSharp
-        m_MethodName: StopAndRemoveAllListeners
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Core.Rhythm.Display.ComboStatusDisplay, Assembly-CSharp
-        m_MethodName: Hide
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Core.Rhythm.Display.RhythmDrumDisplayManager, Assembly-CSharp
-        m_MethodName: Deactive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Core.Character.Patapon.PataponsManager, Assembly-CSharp
-        m_MethodName: DoMissionEndAction
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PataRoad.Core.Rhythm.Bgm.RhythmBgmSinging, Rhythm
-        m_MethodName: StopSinging
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _missionSuccessSound: {fileID: 8300000, guid: b19fdce2faecf754ea5de66705249615, type: 3}
-  _missionSuccessMusic: {fileID: 8300000, guid: eda6a86ff3175ed439c9989adfe7f29c, type: 3}
-  _missionFailedMusic: {fileID: 8300000, guid: 5d0e2c553296feb47a8e681e5ffa9118, type: 3}
-  _ponsSpeakingWhenMissionComplete:
-  - {fileID: 8300000, guid: 38abcafdd4a96404a96330754579494a, type: 3}
-  - {fileID: 8300000, guid: bb5455814ebd7f84295df8d17b5602b4, type: 3}
-  - {fileID: 8300000, guid: 38abcafdd4a96404a96330754579494a, type: 3}
-  _filledMissionCondition: 1
 --- !u!1 &1290418072247043982
 GameObject:
   m_ObjectHideFlags: 0

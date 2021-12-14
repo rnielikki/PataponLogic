@@ -27,7 +27,7 @@ namespace PataRoad.Core.Character.Patapons
         internal PataponRendererInfo RendererInfo { get; private set; }
         public PataponGroup Group { get; private set; }
         public override float DefaultWorldPosition => DistanceManager.DefaultWorldPosition;
-        public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f);
+        public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (Map.Weather.WeatherInfo.Current.Wind?.AttackOffsetOnWind ?? 0.5f);
         public override Vector2 MovingDirection => Vector2.right;
 
         public bool Eaten { get; private set; }

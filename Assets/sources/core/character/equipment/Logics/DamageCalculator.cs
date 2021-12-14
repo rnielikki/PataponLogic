@@ -157,7 +157,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
                         * resistances.GetMultiplier(attacker.ElementalAttackType) //attack type multiplier
                         * Mathf.Max(0.1f, damage) //actual damage
                         * (critical + 1) //critical
-                        / Mathf.Max(0.1f, defence) //defence
+                        / defence //defence
                         )
                         + (fireProbability + iceProbability + thunderProbability) * (critical + 1) * damage * 0.2f
                     )
@@ -213,8 +213,8 @@ namespace PataRoad.Core.Character.Equipments.Logic
             else return Mathf.Clamp01(attackRatio - resistance) * additionalMultiplier;
         }
         private static int GetAttackDamage(Stat stat, ICharacter character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());
-        private static int GetDefence(IAttackable attackable) => GetFinalValue(attackable.Stat.DefenceMin, attackable.Stat.DefenceMax, attackable.GetDefenceValueOffset());
+        private static float GetDefence(IAttackable attackable) => GetFinalValue(attackable.Stat.DefenceMin, attackable.Stat.DefenceMax, attackable.GetDefenceValueOffset());
         private static int GetFinalValue(int min, int max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
-        private static int GetFinalValue(float min, float max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
+        private static float GetFinalValue(float min, float max, float offset) => Mathf.Lerp(min, max, offset);
     }
 }

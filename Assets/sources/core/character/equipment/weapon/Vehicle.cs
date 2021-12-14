@@ -11,10 +11,12 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         protected override void LoadRenderersAndImage()
         {
+            if (_renderer != null) return;
             _renderer = transform.Find("Head").GetComponent<UnityEngine.SpriteRenderer>();
         }
         protected override void ReplaceImage(EquipmentData equipmentData)
         {
+            if (_renderer == null) LoadRenderersAndImage();
             _renderer.sprite = equipmentData.Image;
         }
     }

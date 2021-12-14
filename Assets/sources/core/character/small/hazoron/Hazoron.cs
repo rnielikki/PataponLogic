@@ -6,7 +6,7 @@ namespace PataRoad.Core.Character.Hazorons
 {
     public class Hazoron : SmallCharacter
     {
-        public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (1 - Map.Weather.WeatherInfo.Wind?.AttackOffsetOnWind ?? 0.5f);
+        public override float AttackDistance => Weapon.MinAttackDistance + Weapon.WindAttackDistanceOffset * (1 - Map.Weather.WeatherInfo.Current.Wind?.AttackOffsetOnWind ?? 0.5f);
 
         public override Vector2 MovingDirection => Vector2.left;
         private bool _gotPosition;

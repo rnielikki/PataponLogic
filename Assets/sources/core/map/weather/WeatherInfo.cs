@@ -4,15 +4,15 @@ namespace PataRoad.Core.Map.Weather
 {
     public class WeatherInfo : MonoBehaviour
     {
-        public static Wind Wind { get; private set; }
+        private WeatherType _defaultWeather;
 
         [SerializeField]
-        private WeatherType _defaultWeather;
+        private Wind _wind;
+        public Wind Wind => _wind;
 
         private IWeatherData _currentWeather;
 
-        private static WeatherInfo _self;
-        public static WeatherInfo Current => _self;
+        public static WeatherInfo Current { get; private set; }
 
         private System.Collections.Generic.Dictionary<WeatherType, IWeatherData> _weatherTypeDataMap;
         public float FireRateMultiplier { get; set; } = 1;
@@ -20,6 +20,10 @@ namespace PataRoad.Core.Map.Weather
 
         public AudioSource AudioSource { get; private set; }
         // Start is called before the first frame update
+        public void Init(WeatherType type)
+        {
+            _defaultWeather = type;
+        }
         void Awake()
         {
             _weatherTypeDataMap = new System.Collections.Generic.Dictionary<WeatherType, IWeatherData>()
@@ -35,11 +39,7 @@ namespace PataRoad.Core.Map.Weather
                 _weatherTypeDataMap.Add(weather.Type, weather);
             }
 
-            Wind = GetComponentInChildren<Wind>();
-
-#pragma warning disable S2696 // Instance members should not write to "static" fields
-            _self = this;
-#pragma warning restore S2696 // Instance members should not write to "static" fields
+            Current = this;
             AudioSource = GetComponent<AudioSource>();
             ChangeWeather(_defaultWeather);
         }
@@ -67,9 +67,7 @@ namespace PataRoad.Core.Map.Weather
         internal void StopWeatherSound() => AudioSource.Stop();
         private void OnDestroy()
         {
-#pragma warning disable S2696 // Instance members should not write to "static" fields
-            _self = null;
-#pragma warning restore S2696 // Instance members should not write to "static" fields
+            Current = null;
         }
     }
 }

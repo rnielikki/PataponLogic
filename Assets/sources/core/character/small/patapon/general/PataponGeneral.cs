@@ -24,16 +24,13 @@ namespace PataRoad.Core.Character.Patapons.General
         private AudioClip _generalModeSound;
         private Patapon _selfPatapon;
 
-        [SerializeField]
-        Items.GeneralModeData _generalModeData;
-
         private void Start()
         {
             Group = GetComponentInParent<PataponGroup>();
             _selfPatapon = GetComponent<Patapon>();
             _generalEffect = GetGeneralEffect(_selfPatapon.Type);
 
-            EquipGeneralMode(_generalModeData);
+            EquipGeneralMode(Global.GlobalData.PataponInfo.GetGeneralMode(_selfPatapon.Type));
 
             _generalEffect.StartSelfEffect(_selfPatapon);
             _generalEffect.StartGroupEffect(Group.Patapons);

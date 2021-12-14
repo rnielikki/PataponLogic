@@ -6,41 +6,43 @@ namespace PataRoad.Core.Character.Bosses
     {
         private const string _path = "Characters/Bosses/BossData/";
         private GameObject _resource;
-        [SerializeField]
-        private int _dataIndex;
         private SummonedBoss _boss;
 
-        [SerializeField]
-        private int _summonCount;
         private bool _dead;
 
+        private int _summonCount;
         [SerializeField]
         private Transform _summonStatus;
         [SerializeField]
         private GameObject _summonThumbnail;
 
-        private void Awake()
+        public void Init(int dataIndex, int summonCount)
         {
-            var item = Items.ItemLoader.GetItem<Items.StringKeyItemData>(Items.ItemType.Key, "Boss", _dataIndex);
-            if (item == null || _summonCount <= 0)
+            var item = Items.ItemLoader.GetItem<Items.StringKeyItemData>(Items.ItemType.Key, "Boss", dataIndex);
+            if (item == null || summonCount <= 0)
             {
-                _summonCount = 0;
-                _dead = true;
+                InitZero();
                 return;
             }
             _resource = Resources.Load<GameObject>(_path + item.Data + "/Summon");
             if (_resource == null)
             {
-                _summonCount = 0;
+                InitZero();
             }
             else
             {
-                for (int i = 0; i < _summonCount; i++)
+                for (int i = 0; i < summonCount; i++)
                 {
                     var obj = Instantiate(_summonThumbnail, _summonStatus);
                     obj.GetComponent<UnityEngine.UI.Image>().sprite = item.Image;
                 }
+                _summonCount = summonCount;
+                _dead = true;
             }
+        }
+        public void InitZero()
+        {
+            _summonCount = 0;
             _dead = true;
         }
         public void SendCommand(Rhythm.Command.RhythmCommandModel model)

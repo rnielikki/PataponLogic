@@ -8255,8 +8255,9 @@ GameObject:
   - component: {fileID: 1363486136}
   - component: {fileID: 1363486138}
   - component: {fileID: 1363486137}
+  - component: {fileID: 1363486139}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8301,7 +8302,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: HEADQUARTERS
+  m_text: '[mission name]'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2c6e23d237d6c3745b04d7570f169e50, type: 2}
   m_sharedMaterial: {fileID: -1124191317819577656, guid: 2c6e23d237d6c3745b04d7570f169e50, type: 2}
@@ -8328,12 +8329,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54
-  m_fontSizeBase: 54
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 48
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -8378,6 +8379,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1363486135}
   m_CullTransparentMesh: 1
+--- !u!114 &1363486139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363486135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aed497fd891124d4b9cd94dcdf1fb6ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _text: {fileID: 1363486137}
 --- !u!1 &1375987440
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,7 +42,6 @@ namespace PataRoad.Core.Map.Weather
         [SerializeField]
         private WindImage _image;
 
-        [SerializeField]
         private WindType _defaultStatus;
 
         private WindType _windFlags;
@@ -50,7 +49,11 @@ namespace PataRoad.Core.Map.Weather
         private Dictionary<WindType, UnityAction> _windActions;
         private bool _isActive = true;
 
-        void Awake()
+        public void Init(WindType windType)
+        {
+            _defaultStatus = windType;
+        }
+        private void Awake()
         {
             foreach (int flag in System.Enum.GetValues(typeof(WindType)))
             {
@@ -152,7 +155,7 @@ namespace PataRoad.Core.Map.Weather
         {
             foreach (Transform children in transform)
             {
-                children.gameObject.SetActive(on);
+                if (children != null) children.gameObject.SetActive(on);
             }
             _isActive = on;
         }

@@ -68,12 +68,20 @@ namespace PataRoad.SceneLogic.EquipmentScene
             var itemGroup = LoadItemType(_currentPataponData, elem);
 
             var obj = Instantiate(_itemTemplate, _child.transform);
-            IItem item = (itemGroup.type == ItemType.Equipment) ? ItemLoader.GetItem(itemGroup.type, itemGroup.group, 0) : null;
+            bool isEquipment = itemGroup.type == ItemType.Equipment;
+            IItem item = isEquipment ? ItemLoader.GetItem(itemGroup.type, itemGroup.group, 0) : null;
 
             gameObject.SetActive(true);
             SetPosition(_currentPataponData.IndexInGroup < 2);
-            obj.GetComponent<ItemDisplay>().Init(item);
-            SetAppear(itemGroup.type, itemGroup.group, elem.Item, true);
+            if (isEquipment)
+            {
+                obj.GetComponent<ItemDisplay>().Init(item);
+            }
+            else
+            {
+                obj.GetComponent<ItemDisplay>().InitEmpty();
+            }
+            SetAppear(itemGroup.type, itemGroup.group, elem.Item, isEquipment);
         }
         public void ShowItem(HeadquarterSummaryElement elem)
         {
@@ -93,7 +101,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private void SetAppear(ItemType type, string itemGroup, IItem currentItem = null, bool isEquipments = false)
         {
-            _nav.PreserveIndexOnDeselected = true;
             _map.enabled = true;
             _nav.Freeze();
 
@@ -161,9 +168,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 else if (item != null)
                 {
                     //general mode update!
-                    _currentPataponData
-                        .GetComponent<Core.Character.Patapons.General.PataponGeneral>()
-                        .EquipGeneralMode(item as GeneralModeData);
+                    Core.Global.GlobalData.PataponInfo.UpdateGeneralEquipmentStatus(_currentPataponData.Type, item as GeneralModeData);
                 }
                 wasFromEquipmentSummary = true;
             }

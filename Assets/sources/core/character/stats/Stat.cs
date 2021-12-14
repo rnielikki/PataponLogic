@@ -9,6 +9,8 @@ namespace PataRoad.Core.Character
     [System.Serializable]
     public class Stat
     {
+        [UnityEngine.SerializeField]
+        private bool _isCharacterStat;
         /// <summary>
         /// "HP", A.k.a stamina.
         /// </summary>
@@ -28,7 +30,7 @@ namespace PataRoad.Core.Character
         public float DefenceMin
         {
             get => _defenceMin;
-            set => _defenceMin = value;
+            set => _defenceMin = GetSafeValue(value, 0.1f);
         }
         /// <summary>
         /// How much can resist attack, in maximum value.
@@ -38,7 +40,7 @@ namespace PataRoad.Core.Character
         public float DefenceMax
         {
             get => _defenceMax;
-            set => _defenceMax = value;
+            set => _defenceMax = GetSafeValue(value, 0.1f);
         }
         /// <summary>
         /// Minimum damage value.
@@ -68,7 +70,7 @@ namespace PataRoad.Core.Character
         public float AttackSeconds
         {
             get => _attackSeconds;
-            set => _attackSeconds = value;
+            set => _attackSeconds = GetSafeValue(value, 0.01f);
         }
         /// <summary>
         /// Movement speed (for attack, dodge etc) of a Patapon. Default for a normal patapon is usually expected as 8.
@@ -78,7 +80,7 @@ namespace PataRoad.Core.Character
         public float MovementSpeed
         {
             get => _movementSpeed;
-            set => _movementSpeed = value;
+            set => _movementSpeed = GetSafeValue(value, 0.1f);
         }
         /// <summary>
         /// Chance to inflict critical damage. e.g. If critical chance is 100% it's 1 and if it's 150% this value is 1.5.
@@ -238,7 +240,7 @@ namespace PataRoad.Core.Character
         }
         public static Stat GetAnyDefaultStatForCharacter()
         {
-            return new Stat
+            var stat = new Stat
             {
                 HitPoint = 200,
                 DefenceMin = 1,
@@ -248,6 +250,8 @@ namespace PataRoad.Core.Character
                 AttackSeconds = 2,
                 MovementSpeed = 8
             };
+            stat._isCharacterStat = true;
+            return stat;
         }
         public static Stat operator +(Stat stat1, Stat stat2)
         {
@@ -358,5 +362,6 @@ namespace PataRoad.Core.Character
             };
         }
         public Stat Copy() => (Stat)MemberwiseClone();
+        private float GetSafeValue(float value, float min) => _isCharacterStat ? UnityEngine.Mathf.Max(min, value) : value;
     }
 }

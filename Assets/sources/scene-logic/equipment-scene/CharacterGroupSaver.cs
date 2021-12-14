@@ -69,6 +69,12 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void StartMission()
         {
+            if (Core.Global.GlobalData.MapInfo.NextMapData == null)
+            {
+                Common.GameDisplay.ConfirmDialog.CreateCancelOnly("Error: Map data doesn't exist so we cannot deploy!");
+                Core.Global.GlobalData.Sound.PlayBeep();
+                return;
+            }
             var window = Common.GameDisplay.ConfirmDialog.Create("Start the mission?", _groupNav, () =>
             {
                 StopAllCoroutines();
@@ -111,14 +117,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 void AddMessage(string message)
                 {
                     dialogContent.text += message;
-                    if (!isWarned)
-                    {
-                        var obj = new GameObject();
-                        obj.transform.parent = dialogContent.transform;
-                        var txt = obj.AddComponent<UnityEngine.UI.Text>();
-                        txt.text = ignoreMessage;
-                        isWarned = true;
-                    }
                     UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
                 }
 #pragma warning restore S1643 // Strings should not be concatenated using '+' in a loop

@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Linq;
 
 /// <summary>
 /// Loads background by theme name.
@@ -13,56 +12,51 @@ using System.Linq;
 /// [Colour.txt] contains 6-digit HEX (NO ALPHA) WITHOUT #
 /// *---------------------------------------------------------------------------------
 /// </remarks>
-public class BackgroundLoader : MonoBehaviour
+namespace PataRoad.Core.Map.Background
 {
-    const string _path = "Map/Backgrounds/";
-    [SerializeField]
-    string _theme;
-    // Start is called before the first frame update
-    void Awake()
+    public class BackgroundLoader : MonoBehaviour
     {
-        var txt = Resources.Load<TextAsset>(_path + _theme + "/colour");
-        Camera.main.backgroundColor = ParseColor(txt.text);
-    }
-    private void Start()
-    {
-        foreach (var bg in Resources.LoadAll<GameObject>(_path + _theme))
+        const string _path = "Map/Backgrounds/";
+        // Start is called before the first frame update
+        public void Init(string theme)
         {
-            SetTexture(Instantiate(bg, transform));
-        }
-    }
+            var txt = Resources.Load<TextAsset>(_path + theme + "/colour");
+            Camera.main.backgroundColor = ParseColor(txt.text);
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-    private void SetTexture(GameObject obj)
-    {
-        var image = obj.GetComponent<UnityEngine.UI.Image>();
-        if (image == null) return;
-
-        var mainTex = image.material.mainTexture;
-        var rect = obj.GetComponent<RectTransform>().rect;
-        image.material.SetTextureScale("_MainTex", new Vector2(mainTex.height * rect.width / (mainTex.width * rect.height), 1));
-    }
-    private Color ParseColor(string colourHex)
-    {
-        try
-        {
-            if (colourHex.Length != 6)
+            foreach (var bg in Resources.LoadAll<GameObject>(_path + theme))
             {
-                throw new System.ArgumentException("Length of the file is invalid.");
+                SetTexture(Instantiate(bg, transform));
             }
-            int[] colors = new int[3];
-            for (int i = 0; i < 3; i++)
-            {
-                colors[i] = System.Convert.ToInt32(colourHex.Substring(i * 2, 2), 16);
-            }
-            return new Color((float)colors[0] / 255, (float)colors[1] / 255, (float)colors[2] / 255);
         }
-        catch (System.Exception)
+
+        private void SetTexture(GameObject obj)
         {
-            throw new System.ArgumentException("colour.txt in backgorund: Format is invalid. Make sure that it contains 6-digit HEX without any space!");
+            var image = obj.GetComponent<UnityEngine.UI.Image>();
+            if (image == null) return;
+
+            var mainTex = image.material.mainTexture;
+            var rect = obj.GetComponent<RectTransform>().rect;
+            image.material.SetTextureScale("_MainTex", new Vector2(mainTex.height * rect.width / (mainTex.width * rect.height), 1));
+        }
+        private Color ParseColor(string colourHex)
+        {
+            try
+            {
+                if (colourHex.Length != 6)
+                {
+                    throw new System.ArgumentException("Length of the file is invalid.");
+                }
+                int[] colors = new int[3];
+                for (int i = 0; i < 3; i++)
+                {
+                    colors[i] = System.Convert.ToInt32(colourHex.Substring(i * 2, 2), 16);
+                }
+                return new Color((float)colors[0] / 255, (float)colors[1] / 255, (float)colors[2] / 255);
+            }
+            catch (System.Exception)
+            {
+                throw new System.ArgumentException("colour.txt in backgorund: Format is invalid. Make sure that it contains 6-digit HEX without any space!");
+            }
         }
     }
 }

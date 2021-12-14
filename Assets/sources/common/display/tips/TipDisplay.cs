@@ -43,7 +43,7 @@ namespace PataRoad.Common.GameDisplay
                 }
             }
 
-            var tipindex = FindObjectOfType<Core.Global.GlobalData>().TipIndex;
+            var tipindex = Core.Global.GlobalData.TipIndex;
             if (tipindex > -1 && _allTipsIndex.TryGetValue(tipindex, out TipDisplayData data))
             {
                 LoadTip(data);

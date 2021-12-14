@@ -481,12 +481,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _defaultStat:
     id: 0
+  _defaultAttackTypeResistance:
+    id: 1
+  _elementalAttackType: 0
   _type: 6
   references:
     version: 1
     00000000:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
+        _isCharacterStat: 1
         _hitPoint: 200
         _defenceMin: 1
         _defenceMax: 5
@@ -497,15 +501,32 @@ MonoBehaviour:
         _critical: 0
         _stagger: 0
         _knockback: 0
+        _infiniteCriticalResistance: 0
         _criticalResistance: 0
+        _infiniteStaggerResistance: 0
         _staggerResistance: 0
+        _infiniteKnockbackResistance: 0
         _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
+        _infiniteFireResistance: 0
         _fireResistance: 0
+        _infiniteIceResistance: 0
         _iceResistance: 0
+        _infiniteSleepResistance: 0
         _sleepResistance: 0
+    00000001:
+      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _crushMultiplier: 1
+        _slashMultiplier: 1
+        _stabMultiplier: 1
+        _soundMultiplier: 1
+        _magicMultiplier: 1
+        _fireMultiplier: 1
+        _iceMultiplier: 1
+        _thunderMultiplier: 1
 --- !u!1 &917716601756046009
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,34 +909,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252087eb366b41e449dd92a9000af50b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stat:
-    id: 0
-  _mass: 2
+  _fixedEquipment: 0
+  _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 0}
   _attackType: 3
-  references:
-    version: 1
-    00000000:
-      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _hitPoint: 0
-        _defenceMin: 0
-        _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
-        _attackSeconds: 0
-        _movementSpeed: 0
-        _critical: 0
-        _stagger: 0
-        _knockback: 0
-        _criticalResistance: 0
-        _staggerResistance: 0
-        _knockbackResistance: 0
-        _fireRate: 0
-        _iceRate: 0
-        _sleepRate: 0
-        _fireResistance: 0
-        _iceResistance: 0
-        _sleepResistance: 0
 --- !u!1 &917716602434545235
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,33 +1434,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfbd99464f3a2a040967ff76228aa486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stat:
-    id: 0
-  _mass: 0
-  references:
-    version: 1
-    00000000:
-      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _hitPoint: 0
-        _defenceMin: 0
-        _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
-        _attackSeconds: 0
-        _movementSpeed: 0
-        _critical: 0
-        _stagger: 0
-        _knockback: 0
-        _criticalResistance: 0
-        _staggerResistance: 0
-        _knockbackResistance: 0
-        _fireRate: 0
-        _iceRate: 0
-        _sleepRate: 0
-        _fireResistance: 0
-        _iceResistance: 0
-        _sleepResistance: 0
+  _fixedEquipment: 0
+  _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 0}
 --- !u!1 &917716603557557579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,33 +2139,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99c3a0707f0014241a5815574f9e86b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stat:
-    id: 0
-  _mass: 1
-  references:
-    version: 1
-    00000000:
-      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _hitPoint: 0
-        _defenceMin: 0
-        _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
-        _attackSeconds: 0
-        _movementSpeed: 0
-        _critical: 0
-        _stagger: 0
-        _knockback: 0
-        _criticalResistance: 0
-        _staggerResistance: 0
-        _knockbackResistance: 0
-        _fireRate: 0
-        _iceRate: 0
-        _sleepRate: 0
-        _fireResistance: 0
-        _iceResistance: 0
-        _sleepResistance: 0
+  _fixedEquipment: 0
+  _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 0}
 --- !u!1 &1015977985435583286
 GameObject:
   m_ObjectHideFlags: 0
@@ -2891,33 +2840,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b5ce08b54acdf84281e1a923c0c41c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _stat:
-    id: 0
-  _mass: 0
+  _fixedEquipment: 0
+  _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 0}
   _spritesToChangeColor:
   - {fileID: 917716601680592321}
   _spriteToHideOnRarepon: {fileID: 0}
-  references:
-    version: 1
-    00000000:
-      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _hitPoint: 0
-        _defenceMin: 0
-        _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
-        _attackSeconds: 0
-        _movementSpeed: 0
-        _critical: 0
-        _stagger: 0
-        _knockback: 0
-        _criticalResistance: 0
-        _staggerResistance: 0
-        _knockbackResistance: 0
-        _fireRate: 0
-        _iceRate: 0
-        _sleepRate: 0
-        _fireResistance: 0
-        _iceResistance: 0
-        _sleepResistance: 0

@@ -19,16 +19,23 @@ namespace PataRoad.Core.Map
         public void LoadMissionStatus()
         {
             Destroy(Items.ItemManager.Current.ItemDropPoint.gameObject);
-            var spoils = Items.ItemManager.Current.LoadItemStatus()
+
+            var allItemStatus = Items.ItemManager.Current.LoadItemStatus();
+            var spoils = allItemStatus
                 .Select(item =>
                     (item.Amount > 1) ? $"{item.Item.Name} ({item.Amount})" : $"{item.Item.Name}"
                 );
             _spoilsField.text = spoils.Any() ? string.Join("\n", spoils) : "None";
+            foreach (var itemStatus in allItemStatus)
+            {
+                Global.GlobalData.Inventory.AddMultiple(itemStatus.Item, itemStatus.Amount);
+            }
+
             var seconds = System.TimeSpan.FromSeconds(MissionPoint.MissionCompleteTime);
             _timeField.text = seconds.ToString(@"hh\:mm\:ss");
 
             _spriteMaterial.color = Color.black;
-            FindObjectOfType<BackgroundLoader>().gameObject.SetActive(false);
+            FindObjectOfType<Background.BackgroundLoader>().gameObject.SetActive(false);
 
             Common.SceneLoadingAction.Create("Patapolis", true, "Submit");
 
