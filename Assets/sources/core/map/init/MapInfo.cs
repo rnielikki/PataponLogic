@@ -11,8 +11,10 @@ namespace PataRoad.Core.Global
         public MapDataContainer NextMap { get; private set; }
         public MapDataContainer LastMap { get; private set; }
 
+        private Dictionary<int, MapDataContainer> _openMaps = new Dictionary<int, MapDataContainer>();
+
         [SerializeReference]
-        private List<MapDataContainer> _openMaps = new List<MapDataContainer>();
+        private MapDataContainer[] _openMapsForSerializing;
 
         [SerializeField]
         private int _lastMapIndex;
@@ -25,8 +27,16 @@ namespace PataRoad.Core.Global
 
         internal MapInfo()
         {
+            LoadResource(0);
+            LoadResource(1);
             NextMap = LoadResource(2);
             RefreshAllWeathers();
+        }
+        public IEnumerable<MapDataContainer> GetAllAvailableMaps() => _openMaps.Values;
+        public MapDataContainer GetMapByIndex(int index)
+        {
+            if (_openMaps.TryGetValue(index, out MapDataContainer map)) return map;
+            else return null;
         }
         public void OpenNext()
         {
@@ -34,6 +44,10 @@ namespace PataRoad.Core.Global
             {
                 NextMap = LoadResource(NextMap.MapData.NextIndex);
             }
+        }
+        public void Select(MapDataContainer data)
+        {
+            NextMap = data;
         }
         public void MissionSucceeded()
         {
@@ -55,31 +69,32 @@ namespace PataRoad.Core.Global
         {
             foreach (var map in _openMaps)
             {
-                map.ChangeWeather();
+                map.Value.ChangeWeather();
             }
         }
         private MapDataContainer LoadResource(int index)
         {
-            var map = _openMaps.SingleOrDefault(a => a.Index == index);
-            if (map == null)
+            if (!_openMaps.TryGetValue(index, out MapDataContainer map))
             {
                 map = new MapDataContainer(index);
-            }
-            if (map.MapData != null)
-            {
-                _openMaps.Add(map);
+                if (map.MapData != null)
+                {
+                    _openMaps.Add(index, map);
+                }
             }
             return map;
         }
         public string Serialize()
         {
             _nextMapIndex = NextMap.Index;
+            _openMapsForSerializing = _openMaps.Values.ToArray();
             return JsonUtility.ToJson(this);
         }
         public void Deserialize()
         {
-            foreach (var map in _openMaps)
+            foreach (var map in _openMapsForSerializing)
             {
+                LoadResource(map.Index);
                 if (map.Index == _lastMapIndex)
                 {
                     LastMap = map;
@@ -91,7 +106,7 @@ namespace PataRoad.Core.Global
             }
             if (NextMap == null)
             {
-                NextMap = _openMaps.Last();
+                NextMap = _openMapsForSerializing.Last();
             }
             RefreshAllWeathers();
         }

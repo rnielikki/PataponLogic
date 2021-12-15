@@ -9,9 +9,20 @@ namespace PataRoad.Core.Map
         [SerializeField]
         private int _nextIndex;
         public int NextIndex => _nextIndex;
+        [Header("Basic Informations")]
         [SerializeField]
         private string _name;
         public string Name => _name;
+        [SerializeField]
+        [TextArea]
+        private string _description;
+        public string Description => _description;
+        [SerializeField]
+        private Sprite _thumbail;
+        public Sprite Thumbnail => _thumbail;
+        [SerializeField]
+        private MapType _type;
+        public MapType Type => _type;
         [Header("In-game environment")]
         [SerializeField]
         private string _defaultMusic;

@@ -224,7 +224,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -280,8 +280,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1863194534}
-  - component: {fileID: 1863194533}
   - component: {fileID: 1863194532}
+  - component: {fileID: 1863194533}
   m_Layer: 0
   m_Name: _
   m_TagString: Untagged
@@ -311,26 +311,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1863194531}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f83958cf6d945dd42a51a5286b64decd, type: 3}
+  m_Script: {fileID: 11500000, guid: a9047a1194d094e49914d7a9637720bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _input:
-    m_Name: Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: d196c8b7-2c0c-4f06-8c26-9f4cf3fc7db4
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 23b5d926-d548-4c36-9613-ee67de60b2dd
-      m_Path: <Keyboard>/x
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input
-      m_Flags: 0
-  _action:
+  _onStarted:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1863194532}

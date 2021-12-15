@@ -21,6 +21,9 @@ namespace PataRoad.Core.Map
         private Dictionary<Weather.WeatherType, float> _weatherValueMap = new Dictionary<Weather.WeatherType, float>();
 
         [SerializeField]
+        private int _reachedMaxLevel; //for example difficulty hard->easy->hard scenario
+
+        [SerializeField]
         private int _level;
         public int Level => _level;
 
@@ -30,8 +33,25 @@ namespace PataRoad.Core.Map
         {
             _mapDataIndex = index;
             _mapData = LoadResource();
+            _reachedMaxLevel = _level = 1;
         }
-        public void ChangeWeather()
+        public string GetNameWithLevel()
+        {
+            if (_level > 1)
+            {
+                var str = $"{MapData.Name} Lv. {_level}";
+                if (_level >= MapData.GetMaxLevel())
+                {
+                    str += "★";
+                }
+                return str;
+            }
+            else
+            {
+                return MapData.Name;
+            }
+        }
+        internal void ChangeWeather()
         {
             var rand = Random.Range(0, 1f);
             _currentWind = (rand < MapData.NoWindChance) ? Weather.WindType.None : Weather.WindType.Changing;
@@ -56,6 +76,7 @@ namespace PataRoad.Core.Map
             if (Level < MapData.GetMaxLevel())
             {
                 _level++;
+                if (_reachedMaxLevel < _level) _reachedMaxLevel = _level;
             }
         }
         internal bool CanLoadNextLevel() => Level >= MapData.LevelRequirementForNext;
@@ -85,6 +106,11 @@ namespace PataRoad.Core.Map
         public void OnAfterDeserialize()
         {
             _mapData = LoadResource();
+            var maxLevel = _mapData.GetMaxLevel();
+            if (maxLevel < _level)
+            {
+                _level = maxLevel;
+            }
         }
     }
 }

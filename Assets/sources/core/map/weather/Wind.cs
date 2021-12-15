@@ -45,7 +45,7 @@ namespace PataRoad.Core.Map.Weather
         private WindType _defaultStatus;
 
         private WindType _windFlags;
-        private int _maxFlag;
+        private static int _maxFlag { get; set; }
         private Dictionary<WindType, UnityAction> _windActions;
         private bool _isActive = true;
 
@@ -138,7 +138,7 @@ namespace PataRoad.Core.Map.Weather
                 _windActions[GetMaxFlag(_windFlags)]();
             }
         }
-        private WindType GetMaxFlag(WindType type)
+        public static WindType GetMaxFlag(WindType type)
         {
             var flag = _maxFlag;
             while (!type.HasFlag((WindType)flag))
