@@ -27,10 +27,13 @@ namespace PataRoad.Core.Global
 
         internal MapInfo()
         {
-            NextMap = LoadResource(0);
+            LoadResource(0);
+            LoadResource(1);
+            NextMap = LoadResource(2);
             RefreshAllWeathers();
         }
         public IEnumerable<MapDataContainer> GetAllAvailableMaps() => _openMaps.Values;
+
         public MapDataContainer GetMapByIndex(int index)
         {
             if (_openMaps.TryGetValue(index, out MapDataContainer map)) return map;

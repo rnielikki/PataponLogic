@@ -15,12 +15,22 @@ namespace PataRoad.SceneLogic.WorldMap
         Text _text;
         [SerializeField]
         Button _button;
+        [SerializeField]
+        AudioClip _selectSound;
+        [SerializeField]
+        AudioClip _enterSound;
+
         WorldMapSelector _parent;
+        RectTransform _rectTransform;
+        ScrollList _scrollList;
         private MapDataContainer _map;
         private Color _textColor;
+        public int Index { get; set; }
 
-        public void Init(MapDataContainer map, WorldMapSelector parent, Color textColor, Sprite weatherSprite)
+        public void Init(MapDataContainer map, WorldMapSelector parent, ScrollList scrollList, Color textColor, Sprite weatherSprite)
         {
+            _rectTransform = GetComponent<RectTransform>();
+            _scrollList = scrollList;
             _parent = parent;
             _map = map;
             _text.text = map.GetNameWithLevel();
@@ -34,6 +44,8 @@ namespace PataRoad.SceneLogic.WorldMap
             _button.onClick.AddListener(StartMission);// -- start mission
             _sprite.sprite = weatherSprite;
             _windSprite.enabled = map.CurrentWind != Core.Map.Weather.WindType.None;
+
+            _button.onClick.AddListener(() => Core.Global.GlobalData.Sound.PlayGlobal(_enterSound));
         }
         public void Select() => _button.Select();
         private void StartMission()
@@ -54,8 +66,10 @@ namespace PataRoad.SceneLogic.WorldMap
 
         public void OnSelect(BaseEventData eventData)
         {
+            Core.Global.GlobalData.Sound.PlayInScene(_selectSound);
             _parent.UpdateDescription(_map);
             _text.color = Color.black;
+            _scrollList.Scroll(_rectTransform, Index);
         }
         private void OnDisable()
         {

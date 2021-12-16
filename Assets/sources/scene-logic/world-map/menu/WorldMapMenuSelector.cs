@@ -16,6 +16,8 @@ namespace PataRoad.SceneLogic.WorldMap
 
         [SerializeField]
         WorldMapSelector _list;
+        [SerializeField]
+        AudioClip _selectSound;
 
         private void Start()
         {
@@ -34,6 +36,7 @@ namespace PataRoad.SceneLogic.WorldMap
         }
         public void Move(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
+            Core.Global.GlobalData.Sound.PlayInScene(_selectSound);
             float value = context.ReadValue<float>();
             if (value == 0) return;
             int offset = value > 0 ? 1 : -1;
