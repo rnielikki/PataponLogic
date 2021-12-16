@@ -53,9 +53,21 @@ namespace PataRoad.SceneLogic.WorldMap
         }
         public void Filter(MapType mapType)
         {
+            WorldMapItem _last = null;
             foreach (var item in _items)
             {
-                item.HideIfNotRightType(mapType);
+                if (item.HideIfNotType(mapType))
+                {
+                    _last = item;
+                }
+            }
+            if (_last != null)
+            {
+                _last.Select();
+            }
+            else
+            {
+                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
             }
         }
         public void ShowAll()
@@ -64,6 +76,7 @@ namespace PataRoad.SceneLogic.WorldMap
             {
                 item.gameObject.SetActive(true);
             }
+            _items[_items.Count - 1].Select();
         }
         private Color GetColorForMap(MapType mapType) =>
             mapType switch

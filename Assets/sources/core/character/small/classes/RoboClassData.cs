@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character.Class
 {
     internal class RoboClassData : ClassData
     {
-        private readonly UnityEngine.GameObject _shield;
+        private readonly GameObject _shield;
         internal RoboClassData(SmallCharacter character) : base(character)
         {
             IsMeleeUnit = true;
@@ -29,7 +29,7 @@ namespace PataRoad.Core.Character.Class
                         .AddModels(
                         new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
                         {
-                            { "attack", GetAttackMoveModel("attack-charge", AttackMoveType.Rush, movingSpeed: 1.2f) },
+                            { "attack", GetAttackMoveModel("attack-charge", attackDistance: 4.5f) },
                             { "defend", GetAttackMoveModel("defend", AttackMoveType.Defend) }
                         }
                         );

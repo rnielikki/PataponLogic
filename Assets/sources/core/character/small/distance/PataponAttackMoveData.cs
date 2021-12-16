@@ -33,7 +33,7 @@ namespace PataRoad.Core.Character
         public float GetAttackPosition(float customDistance = -1)
         {
             if (customDistance < 0) customDistance = _patapon.AttackDistance;
-            var closest = _distanceCalculator.GetClosest();
+            var closest = _distanceCalculator.GetClosest(customDistance);
             if (closest == null) return _patapon.DefaultWorldPosition;
             customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
             return Clamp(closest.Value.x - customDistance - _patapon.CharacterSize) - _groupOffset;
@@ -42,7 +42,7 @@ namespace PataRoad.Core.Character
         public float GetDefendingPosition(float customDistance = -1)
         {
             if (customDistance < 0) customDistance = _patapon.AttackDistance;
-            var closest = _distanceCalculator.GetClosest();
+            var closest = _distanceCalculator.GetClosest(customDistance);
             var front = _distanceManager.Front;
             if (closest == null) return Clamp(front - _groupOffset);
             customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
@@ -51,7 +51,7 @@ namespace PataRoad.Core.Character
 
         public float GetRushPosition()
         {
-            var closest = _distanceCalculator.GetClosest();
+            var closest = _distanceCalculator.GetClosest(0);
             if (closest == null) return MaxRushAttackPosition + _groupOffset;
             return Mathf.Min(closest.Value.x - _patapon.CharacterSize, MaxRushAttackPosition) + _groupOffset;
         }

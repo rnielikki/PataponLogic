@@ -20,7 +20,6 @@ namespace PataRoad.Core.Character
         protected Vector2 _boxSize; //size for boxcasting. NOTE: boxcast doesn't catch from initial box position.
         protected Vector2 _boxcastYOffset;
         protected float _boxcastXOffset;
-        protected float MaxEnemyDistanceInSight => _character.DefaultWorldPosition * _xDirection + CharacterEnvironment.Sight + _character.AttackDistance;
 
         /// <summary>
         /// Constructor for getting distances from target game object, like Patapon-Enemy, Enemy-Patapon, Patapon-Structure etc.
@@ -70,10 +69,10 @@ namespace PataRoad.Core.Character
         /// Shoots RayCast to closest structure or enemy and returns the raycast hit if found.
         /// </summary>
         /// <returns>X position as collider hit, Y position as collided game object position.</returns>
-        public Vector2? GetClosest()
+        public Vector2? GetClosest(float attackDistance)
         {
-            var closest = GetClosest((Vector2)_target.transform.position + _character.AttackDistance * _direction);
-            if (closest != null && closest.Value.x * _xDirection > MaxEnemyDistanceInSight)
+            var closest = GetClosest((Vector2)_target.transform.position + attackDistance * _direction, attackDistance);
+            if (closest != null && closest.Value.x * _xDirection > MaxEnemyDistanceInSight(attackDistance) * _xDirection)
             {
                 return null;
             }
@@ -83,13 +82,13 @@ namespace PataRoad.Core.Character
             }
         }
 
-        protected virtual Vector2? GetClosest(Vector2 castPoint)//bidirectional
+        protected virtual Vector2? GetClosest(Vector2 castPoint, float attackDistance)//bidirectional
         {
-            var raycast = Physics2D.BoxCast(castPoint + _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, -_direction, _character.AttackDistance, LayerMask);
+            var raycast = Physics2D.BoxCast(castPoint + _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, -_direction, attackDistance, LayerMask);
             var p = ReturnInRange(raycast);
             if (p == null)
             {
-                raycast = Physics2D.BoxCast(castPoint - _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, _direction, CharacterEnvironment.Sight - _character.AttackDistance, LayerMask);
+                raycast = Physics2D.BoxCast(castPoint - _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, _direction, CharacterEnvironment.Sight - attackDistance, LayerMask);
                 p = ReturnInRange(raycast);
                 if (p == null) return null;
             }
@@ -141,6 +140,7 @@ namespace PataRoad.Core.Character
         /// Check if the character has attack target on their sight.
         /// </summary>
         /// <returns><c>true</c> if Patapon finds obstacle (attack) target to Patapon sight, otherwise <c>false</c>.</returns>
-        public bool HasAttackTarget() => GetClosest() != null;
+        public bool HasAttackTarget() => GetClosest(_character.AttackDistance) != null;
+        protected float MaxEnemyDistanceInSight(float attackDistance) => _character.DefaultWorldPosition + _xDirection * (CharacterEnvironment.Sight + attackDistance);
     }
 }

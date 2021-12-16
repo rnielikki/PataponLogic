@@ -108,6 +108,8 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 1));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 2));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 5));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 6));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 7));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 8));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Song", 1));
             AddItem(ItemLoader.GetItem(ItemType.Key, "GeneralMode", 0));

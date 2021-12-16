@@ -35,19 +35,17 @@ namespace PataRoad.SceneLogic.WorldMap
             _sprite.sprite = weatherSprite;
             _windSprite.enabled = map.CurrentWind != Core.Map.Weather.WindType.None;
         }
-        private void Start()
-        {
-            //GetComponentInChildren<WeatherUpdater>().UpdateWeather(_map.CurrentWeather, _map.CurrentWind != Core.Map.Weather.WindType.None);
-        }
         public void Select() => _button.Select();
         private void StartMission()
         {
             Core.Global.GlobalData.MapInfo.Select(_map);
             UnityEngine.SceneManagement.SceneManager.LoadScene("EquipmentScreen");
         }
-        public void HideIfNotRightType(MapType mapType)
+        public bool HideIfNotType(MapType mapType)
         {
-            gameObject.SetActive(_map.MapData.Type == mapType);
+            bool isType = _map.MapData.Type == mapType;
+            gameObject.SetActive(isType);
+            return isType;
         }
         public void OnDeselect(BaseEventData eventData)
         {
@@ -58,6 +56,10 @@ namespace PataRoad.SceneLogic.WorldMap
         {
             _parent.UpdateDescription(_map);
             _text.color = Color.black;
+        }
+        private void OnDisable()
+        {
+            _text.color = _textColor;
         }
     }
 }

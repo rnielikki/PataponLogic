@@ -11,14 +11,12 @@ namespace PataRoad.Core.Character.Hazorons
         private readonly static System.Collections.Generic.List<Hazoron> _hazorons = new System.Collections.Generic.List<Hazoron>();
         [SerializeField]
         HazoronPositionDisplay _display;
-        private static HazoronPositionDisplay _currentDisplay;
+        internal static HazoronPositionManager Current { get; private set; }
         // Start is called before the first frame update
         void Awake()
         {
-#pragma warning disable S2696 // Instance members should not write to "static" fields
-            _currentDisplay = Instantiate(_display);
-#pragma warning restore S2696 // Instance members should not write to "static" fields
             _display.gameObject.SetActive(false);
+            Current = this;
         }
         public static float GetClosestHazoronPosition()
         {
@@ -29,30 +27,34 @@ namespace PataRoad.Core.Character.Hazorons
         {
             return _hazorons.Aggregate((h1, h2) => h1.DefaultWorldPosition < h2.DefaultWorldPosition ? h1 : h2);
         }
-        internal static void AddHazoron(Hazoron hazoron)
+        internal void AddHazoron(Hazoron hazoron)
         {
             if (!_hazorons.Contains(hazoron))
             {
                 _hazorons.Add(hazoron);
-                if (!_currentDisplay.gameObject.activeSelf)
+                if (!_display.gameObject.activeSelf)
                 {
-                    _currentDisplay.gameObject.SetActive(true);
+                    _display.gameObject.SetActive(true);
                 }
-                _currentDisplay.TrackHazoron(GetClosestHazoron());
+                _display.TrackHazoron(GetClosestHazoron());
             }
         }
-        internal static void RemoveHazoron(Hazoron hazoron)
+        internal void RemoveHazoron(Hazoron hazoron)
         {
-            _currentDisplay.StopTracking(hazoron);
+            _display.StopTracking(hazoron);
             _hazorons.Remove(hazoron);
             if (_hazorons.Count == 0)
             {
-                _currentDisplay.gameObject.SetActive(false);
+                _display.gameObject.SetActive(false);
             }
             else
             {
-                _currentDisplay.TrackHazoron(GetClosestHazoron());
+                _display.TrackHazoron(GetClosestHazoron());
             }
+        }
+        private void OnDestroy()
+        {
+            Current = null;
         }
     }
 }

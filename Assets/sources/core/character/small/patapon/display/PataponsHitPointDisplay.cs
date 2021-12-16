@@ -10,7 +10,7 @@ namespace PataRoad.Core.Character.Patapons.Display
     public class PataponsHitPointDisplay : MonoBehaviour
     {
         private static GameObject _displayTemplate;
-        private static Transform _displayParent;
+        private static Transform _displayParent { get; set; }
 
         private RawImage _image;
         [SerializeField]
@@ -37,6 +37,7 @@ namespace PataRoad.Core.Character.Patapons.Display
 
         void Awake()
         {
+
             _bg = transform.Find("Image").GetComponent<Image>();
             _bg.color = _bgOnGeneral;
 
@@ -53,6 +54,9 @@ namespace PataRoad.Core.Character.Patapons.Display
             if (_displayTemplate == null)
             {
                 _displayTemplate = Resources.Load<GameObject>("Characters/Patapons/Display/PonStatus");
+            }
+            if (_displayParent == null)
+            {
                 _displayParent = GameObject.FindGameObjectWithTag("Screen").transform.Find("PataponsStatus");
             }
             var instance = Instantiate(_displayTemplate, _displayParent).GetComponent<PataponsHitPointDisplay>();
@@ -167,7 +171,6 @@ namespace PataRoad.Core.Character.Patapons.Display
                 }
             }
         }
-
         private void AddCamera()
         {
             var renderTexture = new RenderTexture(50, 50, 0);
@@ -187,6 +190,10 @@ namespace PataRoad.Core.Character.Patapons.Display
                 Refresh(_group.Patapons);
                 UpdateText();
             }
+        }
+        private void OnDestroy()
+        {
+            _displayParent = null;
         }
     }
 }

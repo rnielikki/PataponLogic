@@ -28,6 +28,8 @@ namespace PataRoad.Core.Character
         private DistanceCalculator _distanceCalculator;
         private bool _movingRight;
 
+        private bool _onAttackCommand;
+
         void Awake()
         {
             _character = GetComponent<SmallCharacter>();
@@ -62,8 +64,7 @@ namespace PataRoad.Core.Character
             {
                 _animator.Animate(_currentModel.AnimationType);
             }
-            else if ((_data.WasHitLastTime && _currentModel.HasTarget())
-                || _currentModel.IsInAttackDistance())
+            else if (_data.WasHitLastTime && _currentModel.HasTarget())
             {
                 AnimateAttack();
             }
@@ -71,25 +72,28 @@ namespace PataRoad.Core.Character
             {
                 _animator.Animate("Idle");
             }
+            _onAttackCommand = true;
         }
         /// <summary>
         /// Stops attacking.
         /// </summary>
         /// <param name="pause">Will pause attack. If <c>true</c>, it'll continue attack after the turn.</param>
-        public void StopAttack(bool pause)
+        public void StopAttack(bool pause) => StopAttack(pause, false);
+        private void StopAttack(bool pause, bool keepAttackCommand)
         {
             if (pause) _character.CharAnimator.PauseAttack();
             else _character.CharAnimator.ClearLateAnimation();
             StopAllCoroutines();
             _attacking = false;
-            _moving = false;
-            _currentModel = null;
-            _currentStatusFlag = 0;
-        }
-        public bool IsInAttackDistance()
-        {
-            if (_currentModel == null) return false;
-            return _distanceCalculator.HasAttackTarget() && _distanceCalculator.IsInTargetRange(_currentModel.GetPosition(), _movingSpeed * Time.deltaTime);
+
+            _onAttackCommand = keepAttackCommand;
+
+            if (!keepAttackCommand)
+            {
+                _moving = false;
+                _currentModel = null;
+                _currentStatusFlag = 0;
+            }
         }
 
         private void AnimateAttack()
@@ -112,7 +116,7 @@ namespace PataRoad.Core.Character
         }
         private void Update()
         {
-            if (!_character.StatusEffectManager.CanContinue) return;
+            if (!_character.StatusEffectManager.CanContinue || !_onAttackCommand) return;
             if (_currentModel == null)
             {
                 if (_attacking) StopAttack(false);
@@ -133,24 +137,19 @@ namespace PataRoad.Core.Character
                 if (_currentStatusFlag != 1)
                 {
                     _currentStatusFlag = 1;
-                    if (_moving)
-                    {
-                        if (_distanceCalculator.IsInTargetRange(_character.DefaultWorldPosition, _movingSpeed * Time.deltaTime))
-                        {
-                            _animator.Animate("Idle");
-                        }
-                    }
-                    else if (!_distanceCalculator.IsInTargetRange(_character.DefaultWorldPosition, _movingSpeed * Time.deltaTime))
-                    {
-                        _moving = true;
-                        _animator.Animate("walk");
-                    }
-                    else _animator.Animate("Idle");
-                    _data.WasHitLastTime = false;
+                    StopAttack(false, true);
                 }
-                if (_moving)
+                var onDefaultPosition = _character.transform.position.x == _character.DefaultWorldPosition;
+                if (!_moving && !onDefaultPosition)
                 {
+                    _animator.Animate("walk");
+                    _moving = true;
                     MoveTowards(_character.DefaultWorldPosition);
+                }
+                else if (_moving && onDefaultPosition)
+                {
+                    _animator.Animate("Idle");
+                    _moving = false;
                 }
             }
             else if (!isInDistance) //2. Found target.
@@ -159,6 +158,7 @@ namespace PataRoad.Core.Character
                 {
                     _currentStatusFlag = 2;
                     _moving = true;
+                    StopAttack(false, true);
                     _animator.Animate("walk");
                 }
                 MoveTowards(_distanceCalculator.GetSafeForwardPosition(_currentModel.GetPosition()));

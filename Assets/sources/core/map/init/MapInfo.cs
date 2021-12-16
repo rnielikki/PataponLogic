@@ -27,9 +27,7 @@ namespace PataRoad.Core.Global
 
         internal MapInfo()
         {
-            LoadResource(0);
-            LoadResource(1);
-            NextMap = LoadResource(2);
+            NextMap = LoadResource(0);
             RefreshAllWeathers();
         }
         public IEnumerable<MapDataContainer> GetAllAvailableMaps() => _openMaps.Values;

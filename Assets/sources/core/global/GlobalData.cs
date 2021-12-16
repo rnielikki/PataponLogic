@@ -42,6 +42,32 @@ namespace PataRoad.Core.Global
             name = actionBindingName;
             return !string.IsNullOrEmpty(actionBindingName);
         }
+        public static bool TryGetAllActionBindingNames(string actionName,
+            out System.Collections.Generic.Dictionary<string, string> bindingNames)
+        {
+            var action = Input.actions.FindAction(actionName);
+            bindingNames = new System.Collections.Generic.Dictionary<string, string>();
+            if (action == null) return false;
+            var bindingMask = GetInputBindingMask();
+
+            for (int i = 0; i < action.bindings.Count; i++)
+            {
+                var binding = action.bindings[i];
+                if ((bindingMask?.Matches(binding) ?? false) && binding.isPartOfComposite && !bindingNames.ContainsKey(binding.name))
+                {
+                    bindingNames.Add(binding.name, action.GetBindingDisplayString(i));
+                }
+            }
+            return bindingNames.Count != 0;
+
+            //from InputAction.FindEffectiveBindingMask
+            InputBinding? GetInputBindingMask()
+            {
+                if (action.bindingMask != null) return action.bindingMask;
+                else if (action.actionMap.bindingMask != null) return action.actionMap.bindingMask;
+                else return action.actionMap.asset.bindingMask;
+            }
+        }
         public void Serialize(string key, IPlayerData data)
         {
             var str = data.Serialize();

@@ -53,7 +53,7 @@ namespace PataRoad.Core.Character.Hazorons
         }
         protected override void BeforeDie()
         {
-            HazoronPositionManager.RemoveHazoron(this);
+            HazoronPositionManager.Current.RemoveHazoron(this);
             GameSound.SpeakManager.Current.Play(CharacterSoundLoader.Current.HazoronSounds.OnDead);
         }
         private void Update()
@@ -66,7 +66,7 @@ namespace PataRoad.Core.Character.Hazorons
             if (DistanceCalculator.HasAttackTarget())
             {
                 DefaultWorldPosition = transform.position.x;
-                HazoronPositionManager.AddHazoron(this);
+                HazoronPositionManager.Current.AddHazoron(this);
                 ClassData.Attack();
                 _gotPosition = true;
             }

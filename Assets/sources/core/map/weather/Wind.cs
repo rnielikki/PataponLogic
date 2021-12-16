@@ -51,10 +51,6 @@ namespace PataRoad.Core.Map.Weather
 
         public void Init(WindType windType)
         {
-            _defaultStatus = windType;
-        }
-        private void Awake()
-        {
             foreach (int flag in System.Enum.GetValues(typeof(WindType)))
             {
                 if (_maxFlag < flag) _maxFlag = flag;
@@ -71,7 +67,9 @@ namespace PataRoad.Core.Map.Weather
             _windChangeWaitTime = _windChangeTime / _windChangeInterval;
             _windChangeSize = _windRange / _windChangeInterval;
             _image.Init();
-            StartWind(_defaultStatus);
+            _defaultStatus = windType;
+            if (_defaultStatus != 0) StartWind(_defaultStatus);
+            else StartNoWind();
         }
 
 
@@ -119,14 +117,15 @@ namespace PataRoad.Core.Map.Weather
         }
         public void StartWind(WindType type)
         {
-            if (!_isActive && type != 0) ActivateWind(true);
             type = GetMaxFlag(type);
+            if (!_isActive && type != 0) ActivateWind(true);
             if (type > _windFlags)
             {
                 if (type == WindType.None) StopAllCoroutines();
                 _windActions[type]();
             }
             _windFlags |= type;
+
         }
         public void StopWind(WindType type)
         {
@@ -159,7 +158,13 @@ namespace PataRoad.Core.Map.Weather
             }
             _isActive = on;
         }
-        public void StartNoWind() => ActivateWind(false);
+        public void StartNoWind()
+        {
+            StopAllCoroutines();
+            _onFixedWindDirection = true;
+            UpdateWind(0);
+            ActivateWind(false);
+        }
         private void StartChangingWind()
         {
             if (_onFixedWindDirection) return;

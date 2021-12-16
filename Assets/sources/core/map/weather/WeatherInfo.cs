@@ -22,10 +22,6 @@ namespace PataRoad.Core.Map.Weather
         // Start is called before the first frame update
         public void Init(WeatherType type)
         {
-            _defaultWeather = type;
-        }
-        void Awake()
-        {
             _weatherTypeDataMap = new System.Collections.Generic.Dictionary<WeatherType, IWeatherData>()
             {
                 { WeatherType.Clear, null }
@@ -41,6 +37,7 @@ namespace PataRoad.Core.Map.Weather
 
             Current = this;
             AudioSource = GetComponent<AudioSource>();
+            _defaultWeather = type;
             ChangeWeather(_defaultWeather);
         }
         public void ChangeWeather(WeatherType type)

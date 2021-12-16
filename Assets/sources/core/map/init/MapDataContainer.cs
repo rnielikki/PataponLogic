@@ -54,7 +54,8 @@ namespace PataRoad.Core.Map
         internal void ChangeWeather()
         {
             var rand = Random.Range(0, 1f);
-            _currentWind = (rand < MapData.NoWindChance) ? Weather.WindType.None : Weather.WindType.Changing;
+            //_currentWind = (rand < MapData.NoWindChance) ? Weather.WindType.None : Weather.WindType.Changing;
+            _currentWind = Weather.WindType.None;
 
             rand = Random.Range(0, 1f);
             float prob = 0;
@@ -65,7 +66,7 @@ namespace PataRoad.Core.Map
                 if (rand < prob)
                 {
                     _currentWeather = kv.Key;
-                    return;
+                    //return;
                 }
             }
             _currentWeather = Weather.WeatherType.Clear;

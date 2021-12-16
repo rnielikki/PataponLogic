@@ -16,17 +16,6 @@
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "da55f898-e2a8-4c72-921a-90130bc9f8cf",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Camera",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "Keyboard",
                     "id": "f28c0ceb-5a93-4a2b-af79-e08ae7dfdeae",
                     "path": "1DAxis",
@@ -126,6 +115,14 @@
                     "type": "Value",
                     "id": "c183807c-d450-459e-bd9f-03eb9a2c81f4",
                     "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LR",
+                    "type": "Value",
+                    "id": "5a14df09-88da-48ce-8a8b-470a637d20d2",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
                 }
@@ -515,6 +512,72 @@
                     "action": "ScrollOnNavigate",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "Gamepad",
+                    "id": "107c6aba-7bdd-47b8-80d4-c64300537c3d",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LR",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "4a22534c-09c2-4434-9bbb-80e2473bfbe4",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "LR",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "992287a8-1a71-43ee-8f3e-ac74cf30cf6b",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "LR",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Keyboard",
+                    "id": "1b985843-868e-426a-9990-75466a841e38",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LR",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "c40aafd7-4d36-4119-90e7-7d8e4f4aaded",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "LR",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "88e58602-2888-4b45-afa1-b93978576159",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "LR",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

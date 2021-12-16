@@ -24,7 +24,7 @@ namespace PataRoad.Core.Character
         public float GetAttackPosition(float customDistance = -1)
         {
             if (customDistance < 0) customDistance = _hazoron.AttackDistance;
-            var closest = _distanceCalculator.GetClosest();
+            var closest = _distanceCalculator.GetClosest(customDistance);
             if (closest == null) return _hazoron.DefaultWorldPosition;
             customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
             return Clamp(
@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character
 
         public float GetRushPosition()
         {
-            var closest = _distanceCalculator.GetClosest();
+            var closest = _distanceCalculator.GetClosest(0);
             if (closest == null) return MaxRushAttackPosition;
             return Mathf.Max(closest.Value.x + _hazoron.CharacterSize, MaxRushAttackPosition);
         }

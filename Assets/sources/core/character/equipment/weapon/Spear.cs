@@ -13,7 +13,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
         private void Start()
         {
-            Load();
             Init();
             _copiedSpear = GetWeaponInstance();
         }

@@ -27,6 +27,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
         protected virtual void Init()
         {
+            Load();
             AttackType = _attackType;
             Holder = GetComponentInParent<SmallCharacter>();
             ThrowableWeaponSprite = GetThrowableWeaponSprite();
