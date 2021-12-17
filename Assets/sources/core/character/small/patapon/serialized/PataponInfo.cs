@@ -91,7 +91,10 @@ namespace PataRoad.Core.Character.Patapons.Data
                 var helm = data.EquipmentManager.GetEquipmentData(Equipments.EquipmentType.Helm);
                 RemoveFromAmountMapData(helm);
             }
-            RemoveFromAmountMapData(oldEquipment);
+            else
+            {
+                RemoveFromAmountMapData(oldEquipment);
+            }
 
             data.Equip(equipmentData);
             AddToAmountMapData(equipmentData);

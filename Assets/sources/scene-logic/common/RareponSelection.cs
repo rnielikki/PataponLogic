@@ -43,6 +43,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             if (_button != null) _button.enabled = true;
         }
+        private void OnDisable()
+        {
+            if (_button != null) _button.enabled = false;
+        }
         public void Select() => GetComponent<Button>().Select();
         private void SetRarepon(RareponData data)
         {
@@ -57,11 +61,21 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             _text.text = data.Name;
         }
-        public void ConfirmToCreateRarepon()
+        public bool ConfirmToCreateRarepon()
         {
-            //check condition. And...
-            _parent.enabled = false;
-            Common.GameDisplay.ConfirmDialog.Create("Create?", _parent, AddThisRarepon);
+            //check condition example. And...
+            var material = Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Drum", 0);
+            if (!Core.Global.GlobalData.Inventory.HasItem(material))
+            {
+                Core.Global.GlobalData.Sound.PlayBeep();
+                return false;
+            }
+            else
+            {
+                _parent.enabled = false;
+                Common.GameDisplay.ConfirmDialog.Create("Create?", _parent, AddThisRarepon);
+            }
+            return true;
         }
         private void AddThisRarepon()
         {

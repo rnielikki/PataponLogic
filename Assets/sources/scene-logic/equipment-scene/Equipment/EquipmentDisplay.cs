@@ -37,10 +37,20 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private UnityEngine.Events.UnityEvent<IItem> _onItemSelected;
 
+        [Header("Sound")]
         [SerializeField]
         private AudioClip _soundOpen;
         [SerializeField]
+        private AudioClip _soundSelected;
+        [SerializeField]
         private AudioClip _soundClose;
+
+        [Header("Scroll")]
+        [SerializeField]
+        private Common.GameDisplay.ScrollList _scrollList;
+        internal Common.GameDisplay.ScrollList ScrollList => _scrollList;
+        [SerializeField]
+        private GridLayoutGroup _gridLayoutGroup;
 
         // Start is called before the first frame update
         void Awake()
@@ -48,6 +58,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _map = GetComponent<ActionEventMap>();
             _map.enabled = false;
             _layout = GetComponent<HorizontalLayoutGroup>();
+            _scrollList.Init(_gridLayoutGroup.cellSize.y);
         }
         public void ShowEquipment(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
@@ -118,25 +129,27 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 }
                 display.Init(inventoryData.Item, amount);
             }
-
             var allItemDisplays = GetComponentsInChildren<ItemDisplay>();
+
             foreach (var obj in allItemDisplays.Where(item => item.Item == currentItem && item.Item != null))
             {
                 if (isEquipments && (obj.Item as EquipmentData).Index == 0) continue;
                 obj.GetComponent<Selectable>().interactable = false;
                 obj.MarkAsDisable();
             }
+            var lastSelectable = allItemDisplays.LastOrDefault(item => item.GetComponent<Selectable>().interactable);
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
-                    allItemDisplays.LastOrDefault(item => item.GetComponent<Selectable>().interactable)?.gameObject
+                    lastSelectable?.gameObject
                 );
+            _scrollList.SetMaximumScrollLength(0, lastSelectable);
         }
         public void HideEquipment() => HideEquipment(_currentPataponData != null);
-        private void HideEquipment(bool wasFromEquipmentSummary)
+        private void HideEquipment(bool wasFromEquipmentSummary, bool equipped = false)
         {
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
             _nav.Defrost();
 
-            Core.Global.GlobalData.Sound.PlayInScene(_soundClose);
+            Core.Global.GlobalData.Sound.PlayInScene(equipped ? _soundSelected : _soundClose);
 
             _map.enabled = false;
             gameObject.SetActive(false);
@@ -186,7 +199,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 _summaryElem.transform.Find("Image").GetComponent<Image>().sprite = item?.Image;
                 _summaryElem.GetComponentInChildren<Text>().text = item?.Name ?? "None";
             }
-            HideEquipment(wasFromEquipmentSummary);
+            HideEquipment(wasFromEquipmentSummary, true);
         }
         public void SelectItem(ItemDisplay item) => _onItemSelected.Invoke(item.Item);
         private (ItemType type, string group) LoadItemType(Core.Character.PataponData data, EquipmentSummaryElement equipElement)

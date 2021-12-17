@@ -1,11 +1,12 @@
-﻿using PataRoad.Core.Map;
+﻿using PataRoad.Common.GameDisplay;
+using PataRoad.Core.Map;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.WorldMap
 {
-    class WorldMapItem : MonoBehaviour, ISelectHandler, IDeselectHandler
+    class WorldMapItem : MonoBehaviour, IDeselectHandler, IScrollListElement
     {
         [SerializeField]
         Image _sprite;
@@ -22,10 +23,13 @@ namespace PataRoad.SceneLogic.WorldMap
 
         WorldMapSelector _parent;
         RectTransform _rectTransform;
+        public RectTransform RectTransform => _rectTransform;
         ScrollList _scrollList;
         private MapDataContainer _map;
         private Color _textColor;
         public int Index { get; set; }
+        public MapDataContainer Map => _map;
+        public Selectable Selectable => _button;
 
         public void Init(MapDataContainer map, WorldMapSelector parent, ScrollList scrollList, Color textColor, Sprite weatherSprite)
         {
@@ -69,7 +73,7 @@ namespace PataRoad.SceneLogic.WorldMap
             Core.Global.GlobalData.Sound.PlayInScene(_selectSound);
             _parent.UpdateDescription(_map);
             _text.color = Color.black;
-            _scrollList.Scroll(_rectTransform, Index);
+            _scrollList.Scroll(this);
         }
         private void OnDisable()
         {

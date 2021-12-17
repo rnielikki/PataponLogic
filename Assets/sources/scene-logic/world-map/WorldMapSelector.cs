@@ -1,6 +1,7 @@
 ﻿using PataRoad.Core.Map;
 using PataRoad.Core.Map.Weather;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.WorldMap
@@ -12,7 +13,7 @@ namespace PataRoad.SceneLogic.WorldMap
         [SerializeField]
         MapDescription _description;
         [SerializeField]
-        ScrollList _scrollList;
+        Common.GameDisplay.ScrollList _scrollList;
         [Header("Colors")]
         [SerializeField]
         Color _huntColor;
@@ -55,9 +56,8 @@ namespace PataRoad.SceneLogic.WorldMap
                 mapItem.Index = ++index;
             }
             var lastItem = selectedItem ?? _items[_items.Count - 1];
-            var lastItemRect = lastItem.GetComponent<RectTransform>();
-            _scrollList.Init(lastItemRect);
-            _scrollList.SetMaximumScrollLength(index);
+            _scrollList.Init(lastItem);
+            _scrollList.SetMaximumScrollLength(index, lastItem);
             lastItem.Select();
         }
         public void Filter(MapType mapType)
@@ -72,15 +72,7 @@ namespace PataRoad.SceneLogic.WorldMap
                     _last = item;
                 }
             }
-            _scrollList.SetMaximumScrollLength(index);
-            if (_last != null)
-            {
-                _last.Select();
-            }
-            else
-            {
-                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
-            }
+            _scrollList.SetMaximumScrollLength(index, _last);
         }
         public void ShowAll()
         {
@@ -90,8 +82,11 @@ namespace PataRoad.SceneLogic.WorldMap
                 item.Index = ++index;
                 item.gameObject.SetActive(true);
             }
-            _scrollList.SetMaximumScrollLength(index);
-            _items[_items.Count - 1].Select();
+
+            var nextMission = Core.Global.GlobalData.MapInfo.NextMap;
+            var itemIndex = _items.FindLastIndex(item => item.Map == nextMission);
+            if (itemIndex < 0) itemIndex = _items.Count - 1;
+            _scrollList.SetMaximumScrollLength(index, _items[itemIndex]);
         }
         private Color GetColorForMap(MapType mapType) =>
             mapType switch

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
-    public class ItemDisplay : MonoBehaviour, ISelectHandler
+    public class ItemDisplay : MonoBehaviour, Common.GameDisplay.IScrollListElement
     {
         [SerializeField]
         private Image _image;
@@ -13,12 +13,19 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private Text _text;
         private IItem _item;
         public IItem Item => _item;
-        private int _amount;
         private EquipmentDisplay _parent;
+        private Common.GameDisplay.ScrollList _scrollList;
+
+        public RectTransform RectTransform { get; private set; }
+        public int Index { get; private set; }
+        public Selectable Selectable { get; private set; }
         private void Awake()
         {
+            RectTransform = GetComponent<RectTransform>();
+            Selectable = GetComponent<Selectable>();
             _text = GetComponentInChildren<Text>();
             _parent = GetComponentInParent<EquipmentDisplay>();
+            _scrollList = _parent.ScrollList;
         }
         public void Init(IItem item, int amount)
         {
@@ -30,7 +37,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             if (item == null)
             {
-                InitEmpty();
                 return;
             }
             _item = item;
@@ -53,6 +59,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public void OnSelect(BaseEventData eventData)
         {
             _parent.SelectItem(this);
+            _scrollList.Scroll(this);
         }
     }
 }
