@@ -130,7 +130,7 @@ namespace PataRoad.Core.Character
             }
             else if (_attacking) return;
 
-            bool isInDistance = _data.IsAttackableRange();
+            bool isInDistance = _currentModel.IsInAttackDistance();
             bool hasTarget = _currentModel.HasTarget();
 
             if (!hasTarget && _currentModel.Type == AttackMoveType.Attack) //1. No target in sight!
