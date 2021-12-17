@@ -29,6 +29,7 @@ namespace PataRoad.Core.Character
         private bool _movingRight;
 
         private bool _onAttackCommand;
+        public bool IsAttacking => _attacking;
 
         void Awake()
         {
@@ -129,7 +130,7 @@ namespace PataRoad.Core.Character
             }
             else if (_attacking) return;
 
-            bool isInDistance = _currentModel.IsInAttackDistance();
+            bool isInDistance = _data.IsAttackableRange();
             bool hasTarget = _currentModel.HasTarget();
 
             if (!hasTarget && _currentModel.Type == AttackMoveType.Attack) //1. No target in sight!

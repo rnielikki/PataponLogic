@@ -32,11 +32,7 @@ namespace PataRoad.Core.Character
 
         public float GetAttackPosition(float customDistance = -1)
         {
-            if (customDistance < 0) customDistance = _patapon.AttackDistance;
-            var closest = _distanceCalculator.GetClosest(customDistance);
-            if (closest == null) return _patapon.DefaultWorldPosition;
-            customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
-            return Clamp(closest.Value.x - customDistance - _patapon.CharacterSize) - _groupOffset;
+            return Clamp(GetAttackPositionNonClamp(customDistance)) - _groupOffset;
         }
 
         public float GetDefendingPosition(float customDistance = -1)
@@ -56,6 +52,15 @@ namespace PataRoad.Core.Character
             return Mathf.Min(closest.Value.x - _patapon.CharacterSize, MaxRushAttackPosition) + _groupOffset;
         }
         private float Clamp(float value) => Mathf.Clamp(value, _min, _max);
-        public bool IsAttackableRange() => GetAttackPosition() <= MaxRushAttackPosition;
+        private float GetAttackPositionNonClamp(float customDistance = -1)
+        {
+            if (customDistance < 0) customDistance = _patapon.AttackDistance;
+
+            var closest = _distanceCalculator.GetClosest(customDistance);
+            if (closest == null) return _patapon.DefaultWorldPosition;
+            customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
+            return closest.Value.x - customDistance - _patapon.CharacterSize;
+        }
+        public bool IsAttackableRange() => GetAttackPositionNonClamp() - _groupOffset <= MaxRushAttackPosition;
     }
 }

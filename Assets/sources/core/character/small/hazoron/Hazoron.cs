@@ -29,12 +29,13 @@ namespace PataRoad.Core.Character.Hazorons
                 {
                     (ClassData as ToriClassData)?.FlyUp();
                 }
-                ClassData.Attack();
+                if (_gotPosition) ClassData.Attack();
             });
             _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
         }
         private void Start()
         {
+            DefaultWorldPosition = transform.position.x;
             ClassData.InitLate(Stat);
         }
         protected void InitDistanceFromHead()
@@ -63,12 +64,13 @@ namespace PataRoad.Core.Character.Hazorons
             {
                 _animatingWalk = false;
             }
-            if (DistanceCalculator.HasAttackTarget())
+            if (ClassData.IsInAttackDistance())
             {
                 DefaultWorldPosition = transform.position.x;
                 HazoronPositionManager.Current.AddHazoron(this);
                 ClassData.Attack();
                 _gotPosition = true;
+                return;
             }
             else if (!StatusEffectManager.OnStatusEffect)
             {
@@ -77,8 +79,12 @@ namespace PataRoad.Core.Character.Hazorons
                     CharAnimator.Animate("walk");
                     _animatingWalk = true;
                 }
-                transform.position += (Vector3)(Stat.MovementSpeed * Time.deltaTime * MovingDirection);
+                transform.position =
+                    DistanceCalculator.GetSafeForwardPosition(
+                        transform.position.x + Stat.MovementSpeed * Time.deltaTime * MovingDirection.x)
+                    * Vector3.right;
             }
+            DefaultWorldPosition = transform.position.x;
         }
     }
 }

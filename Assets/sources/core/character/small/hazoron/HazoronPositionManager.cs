@@ -8,7 +8,7 @@ namespace PataRoad.Core.Character.Hazorons
     /// </summary>
     internal class HazoronPositionManager : MonoBehaviour
     {
-        private readonly static System.Collections.Generic.List<Hazoron> _hazorons = new System.Collections.Generic.List<Hazoron>();
+        private readonly System.Collections.Generic.List<Hazoron> _hazorons = new System.Collections.Generic.List<Hazoron>();
         [SerializeField]
         HazoronPositionDisplay _display;
         internal static HazoronPositionManager Current { get; private set; }
@@ -18,12 +18,12 @@ namespace PataRoad.Core.Character.Hazorons
             _display.gameObject.SetActive(false);
             Current = this;
         }
-        public static float GetClosestHazoronPosition()
+        public float GetClosestHazoronPosition()
         {
             if (_hazorons.Count == 0) return Mathf.Infinity;
             return _hazorons.Min(h => h.DefaultWorldPosition);
         }
-        private static Hazoron GetClosestHazoron()
+        private Hazoron GetClosestHazoron()
         {
             return _hazorons.Aggregate((h1, h2) => h1.DefaultWorldPosition < h2.DefaultWorldPosition ? h1 : h2);
         }

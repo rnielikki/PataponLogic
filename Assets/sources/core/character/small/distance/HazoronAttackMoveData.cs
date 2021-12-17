@@ -23,13 +23,7 @@ namespace PataRoad.Core.Character
         }
         public float GetAttackPosition(float customDistance = -1)
         {
-            if (customDistance < 0) customDistance = _hazoron.AttackDistance;
-            var closest = _distanceCalculator.GetClosest(customDistance);
-            if (closest == null) return _hazoron.DefaultWorldPosition;
-            customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
-            return Clamp(
-                Mathf.Max(_pataponTransform.position.x + _hazoron.CharacterSize, closest.Value.x + customDistance + _hazoron.CharacterSize)
-                );
+            return Clamp(GetAttackPositionNonClamp(customDistance));
         }
 
         public float GetDefendingPosition(float customDistance = -1)
@@ -44,7 +38,16 @@ namespace PataRoad.Core.Character
             return Mathf.Max(closest.Value.x + _hazoron.CharacterSize, MaxRushAttackPosition);
         }
 
-        public bool IsAttackableRange() => GetAttackPosition() >= MaxRushAttackPosition;
+        public bool IsAttackableRange() => GetAttackPositionNonClamp() >= MaxRushAttackPosition;
+        private float GetAttackPositionNonClamp(float customDistance = -1)
+        {
+            if (customDistance < 0) customDistance = _hazoron.AttackDistance;
+            var closest = _distanceCalculator.GetClosest(customDistance);
+            if (closest == null) return _hazoron.DefaultWorldPosition;
+            customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
+
+            return Mathf.Max(_pataponTransform.position.x + _hazoron.CharacterSize, closest.Value.x + customDistance + _hazoron.CharacterSize);
+        }
         private float Clamp(float value) => Mathf.Clamp(value, _min, _max);
     }
 }

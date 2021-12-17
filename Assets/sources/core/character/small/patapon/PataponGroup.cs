@@ -35,7 +35,8 @@ namespace PataRoad.Core.Character.Patapons
         {
             var firstPon = _patapons[0];
             var closest = firstPon.DistanceCalculator.GetClosest(firstPon.AttackDistance);
-            return closest == null || (closest.Value.x > transform.position.x + _marchDistance && Hazorons.HazoronPositionManager.GetClosestHazoronPosition() > transform.position.x);
+            return closest == null || (closest.Value.x > transform.position.x + _marchDistance
+                && Hazorons.HazoronPositionManager.Current.GetClosestHazoronPosition() > transform.position.x);
         }
 
         internal void RemovePon(Patapon patapon)

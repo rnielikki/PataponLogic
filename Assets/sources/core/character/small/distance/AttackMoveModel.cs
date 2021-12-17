@@ -54,6 +54,7 @@ namespace PataRoad.Core.Character
         {
             return _distanceCalculator.IsInTargetRange(GetPosition(), MovingSpeed * Time.deltaTime);
         }
+
         public float GetPosition() => GeAttackPositioneFromData(_attackDistance);
         public AttackMoveModel SetAlwaysAnimate()
         {
