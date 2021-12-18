@@ -8,8 +8,8 @@ namespace PataRoad.Core.Character
     public interface IAttackMoveData
     {
         public float MaxRushAttackPosition { get; }
-        public float GetAttackPosition(float customDistance = -1);
-        public float GetDefendingPosition(float customDistance = -1);
+        public float GetAttackPosition();
+        public float GetDefendingPosition();
         public bool IsAttackableRange();
         public float GetRushPosition();
         public bool WasHitLastTime { get; set; } //should remember last hit even the turn endps, so can keep attacking without moving too much.

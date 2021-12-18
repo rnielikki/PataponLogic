@@ -1,4 +1,7 @@
-﻿namespace PataRoad.Core.Character.Class
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+using PataRoad.Core.Rhythm.Command;
+
+namespace PataRoad.Core.Character.Class
 {
     internal class MegaClassData : ClassData
     {
@@ -13,20 +16,20 @@
                 case 1:
                     AddDefaultModelsToAttackMoveController()
                         .AddModels(
-                    new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                    new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                     {
 
-                        { "attack-fever", GetAttackMoveModel("attack-fever") },
-                        { "defend-charge", GetAttackMoveModel("defend-charge", AttackMoveType.Defend, attackDistance: 5) },
+                        { AttackCommandType.FeverAttack, GetAttackMoveModel("attack-fever") },
+                        { AttackCommandType.ChargeDefend, GetAttackMoveModel("defend-charge", AttackMoveType.Defend) },
                     }
                     );
                     break;
                 case 2:
                     AddDefaultModelsToAttackMoveController()
                         .AddModels(
-                    new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                    new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                     {
-                        { "defend-charge", GetAttackMoveModel("defend-charge", AttackMoveType.Defend, attackDistance: 5) },
+                        { AttackCommandType.ChargeDefend, GetAttackMoveModel("defend-charge", AttackMoveType.Defend) },
                     }
                     );
                     break;
@@ -41,8 +44,13 @@
             }
             else
             {
-                _attackController.StartAttack("attack-fever");
+                _attackController.StartAttack(AttackCommandType.FeverAttack);
             }
+        }
+        public override void OnAction(RhythmCommandModel model)
+        {
+            base.OnAction(model);
+            if (model.Song == CommandSong.Ponchaka) _animator.Animate("charge");
         }
         public override void Defend()
         {

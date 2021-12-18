@@ -8,8 +8,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private ParticleDamaging _attackParticles;
         private GameObject _feverAttackObject;
         private GameObject _chargeDefenceObject;
-        public override float MinAttackDistance { get; } = 10;
-        public override float WindAttackDistanceOffset { get; } = 5;
         protected float _forceMultiplier = 1;
         protected float _feverPonponForceMultiplier = 1;
 
@@ -119,6 +117,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void PushBack(Collider2D other)
         {
             other.GetComponentInParent<SmallCharacter>()?.StatusEffectManager?.SetKnockback();
+        }
+        public override float GetAttackDistance()
+        {
+            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
+            return base.GetAttackDistance() + weatherOffset;
         }
     }
 }

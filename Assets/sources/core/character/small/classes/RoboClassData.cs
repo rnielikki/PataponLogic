@@ -1,4 +1,5 @@
-﻿using PataRoad.Core.Rhythm.Command;
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+using PataRoad.Core.Rhythm.Command;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Class
@@ -18,19 +19,19 @@ namespace PataRoad.Core.Character.Class
                 case 0:
                     AddDefaultModelsToAttackMoveController()
                         .AddModels(
-                        new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                        new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                         {
-                            { "attack-charge", GetAttackMoveModel("attack-charge", attackDistance: 4.5f) }
+                            { AttackCommandType.ChargeAttack, GetAttackMoveModel("attack-charge") }
                         }
                         );
                     break;
                 case 1:
                     SetAttackMoveController()
                         .AddModels(
-                        new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                        new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                         {
-                            { "attack", GetAttackMoveModel("attack-charge", attackDistance: 4.5f) },
-                            { "defend", GetAttackMoveModel("defend", AttackMoveType.Defend) }
+                            { AttackCommandType.Attack, GetAttackMoveModel("attack-charge") },
+                            { AttackCommandType.Defend, GetAttackMoveModel("defend") }
                         }
                         );
                     realStat.DamageMax = Mathf.Max(1, realStat.DamageMax - 20);
@@ -47,7 +48,7 @@ namespace PataRoad.Core.Character.Class
             }
             else
             {
-                _attackController.StartAttack("attack-charge");
+                _attackController.StartAttack(AttackCommandType.ChargeAttack);
             }
         }
 

@@ -16,7 +16,7 @@ namespace PataRoad.Core.Character
         /// <summary>
         /// Gets proper distance of current attack type. returns Infinity if the attack type isn't rush and there is no enemy on sight.
         /// </summary>
-        public System.Func<float, float> GeAttackPositioneFromData { get; private set; }
+        public System.Func<float> GeAttackPositioneFromData { get; private set; }
 
         /// <summary>
         /// Determines if it's attacking, defending or rushing.
@@ -34,13 +34,12 @@ namespace PataRoad.Core.Character
         /// <param name="attackSpeed">The speed for animationg attack.</param>
         /// <param name="type">Attack movement type, which determines distance calculation logic.</param>
         /// <param name="attackDistance">Distance from enemy while attacking. -1 is default, which will use calculated distance from <see cref="Patapons"/>.</param>
-        internal AttackMoveModel(SmallCharacter character, string animationType, AttackMoveType type, float movingSpeed, float attackSpeed, float attackDistance = -1)
+        internal AttackMoveModel(SmallCharacter character, string animationType, AttackMoveType type, float movingSpeed, float attackSpeed)
         {
             AnimationType = animationType;
             MovingSpeed = movingSpeed;
             AttackSpeedMultiplier = attackSpeed;
             _data = character.ClassData.AttackMoveData;
-            _attackDistance = attackDistance;
 
             _distanceCalculator = character.DistanceCalculator;
 
@@ -55,7 +54,7 @@ namespace PataRoad.Core.Character
             return _distanceCalculator.IsInTargetRange(GetPosition(), MovingSpeed * Time.deltaTime);
         }
 
-        public float GetPosition() => GeAttackPositioneFromData(_attackDistance);
+        public float GetPosition() => GeAttackPositioneFromData();
         public AttackMoveModel SetAlwaysAnimate()
         {
             AlwaysAnimate = true;
@@ -73,7 +72,7 @@ namespace PataRoad.Core.Character
                     GeAttackPositioneFromData = _data.GetDefendingPosition;
                     break;
                 case AttackMoveType.Rush:
-                    GeAttackPositioneFromData = (_) => _data.GetRushPosition();
+                    GeAttackPositioneFromData = () => _data.GetRushPosition();
                     AlwaysAnimate = true;
                     break;
             }

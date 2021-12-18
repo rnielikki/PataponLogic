@@ -31,7 +31,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
         public void Copy(SmallCharacter holder)
         {
-            var pos = holder.DistanceCalculator.GetClosest(holder.AttackDistance);
+            var pos = holder.DistanceCalculator.GetClosest();
             if (pos == null) return;
             var position = pos.Value;
 

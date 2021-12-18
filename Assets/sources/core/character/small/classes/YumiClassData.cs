@@ -10,9 +10,9 @@
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
-                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                new System.Collections.Generic.Dictionary<Equipments.Weapons.AttackCommandType, AttackMoveModel>()
                 {
-                    { "attack-fever", GetAttackMoveModel("attack", attackSpeedMultiplier: 3) },
+                    { Equipments.Weapons.AttackCommandType.FeverAttack, GetAttackMoveModel("attack", attackSpeedMultiplier: 3) },
                 }
                 );
         }
@@ -25,7 +25,7 @@
             }
             else
             {
-                _attackController.StartAttack("attack-fever");
+                _attackController.StartAttack(Equipments.Weapons.AttackCommandType.FeverAttack);
             }
         }
     }

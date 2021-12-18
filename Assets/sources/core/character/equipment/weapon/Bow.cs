@@ -14,14 +14,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// </summary>
         private GameObject _copiedArrow;
         private static readonly Vector3 _throwAdditionalForce = Vector3.up;
-        /// <summary>
-        /// Minimal attack ditance, when is 100% headwind.
-        /// </summary>
-        public override float MinAttackDistance { get; } = 20;
-        public override float WindAttackDistanceOffset { get; } = 9.5f;
 
         private SpriteRenderer _bowRenderer;
         private SpriteRenderer _arrowRenderer;
+        protected override float _throwMass => 0.175f;
         private void Awake()
         {
             LoadRenderersAndImage();
@@ -54,7 +50,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
 
             arrowForThrowing.GetComponent<WeaponInstance>()
-                .Initialize(this, 0.175f, transformOriginal: _arrowTransform)
+                .Initialize(this, _throwMass, transformOriginal: _arrowTransform)
                 .Throw(minForce, maxForce, _throwAdditionalForce);
         }
         protected override void LoadRenderersAndImage()
@@ -66,6 +62,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             _bowRenderer.sprite = equipmentData.Image;
             _arrowRenderer.sprite = (equipmentData as BowData).ArrowImage;
+        }
+        public override float GetAttackDistance()
+        {
+            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
+            return base.GetAttackDistance() + weatherOffset;
         }
     }
 }

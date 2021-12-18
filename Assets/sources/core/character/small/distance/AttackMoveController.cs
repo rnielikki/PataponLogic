@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+using System.Collections.Generic;
 using UnityEngine;
 namespace PataRoad.Core.Character
 {
@@ -16,7 +17,12 @@ namespace PataRoad.Core.Character
         private CharacterAnimator _animator;
 
         private AttackMoveModel _currentModel;
-        private readonly Dictionary<string, AttackMoveModel> _attackMoves = new Dictionary<string, AttackMoveModel>();
+        private readonly Dictionary<AttackCommandType, AttackMoveModel> _attackMoves = new Dictionary<AttackCommandType, AttackMoveModel>();
+
+        internal void StartAttack(object feverAttack)
+        {
+            throw new System.NotImplementedException();
+        }
 
         private bool _moving;
 
@@ -43,7 +49,7 @@ namespace PataRoad.Core.Character
         /// </summary>
         /// <param name="attackMoves">Dictionary of the models for indexing.</param>
         /// <note>Register key is expected as animation for most cases, for understanding code. (exception : same animation for other type of attack)</note>
-        internal void AddModels(Dictionary<string, AttackMoveModel> attackMoves)
+        internal void AddModels(Dictionary<AttackCommandType, AttackMoveModel> attackMoves)
         {
             foreach (var attackMove in attackMoves)
             {
@@ -55,8 +61,9 @@ namespace PataRoad.Core.Character
         /// </summary>
         /// <param name="attackType">Attack type that was registered.</param>
         /// <note>If you followed <see cref="AddModels"/> instruction, then the attackType is animation name.</note>
-        public void StartAttack(string attackType)
+        public void StartAttack(AttackCommandType attackType)
         {
+            _character.Weapon.SetLastAttackCommandType(attackType);
             if (!_attackMoves.TryGetValue(attackType, out _currentModel))
             {
                 throw new System.ArgumentException($"The attack animation type {attackType} is not registered.");

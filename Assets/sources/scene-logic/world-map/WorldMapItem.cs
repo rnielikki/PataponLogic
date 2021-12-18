@@ -55,7 +55,7 @@ namespace PataRoad.SceneLogic.WorldMap
         private void StartMission()
         {
             Core.Global.GlobalData.MapInfo.Select(_map);
-            UnityEngine.SceneManagement.SceneManager.LoadScene("EquipmentScreen");
+            Common.SceneLoadingAction.Create("EquipmentScreen", false);
         }
         public bool HideIfNotType(MapType mapType)
         {

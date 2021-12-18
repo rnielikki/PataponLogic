@@ -7,8 +7,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private GameObject _bullet;
         private Transform _startTransform;
 
-        public override float MinAttackDistance { get; } = 20;
-        public override float WindAttackDistanceOffset { get; } = 10;
         private void Start()
         {
             Init();
@@ -24,6 +22,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             var bulletScript = bullet.GetComponent<WeaponCannonBullet>();
             bulletScript.Holder = Holder;
             bulletScript.enabled = true;
+        }
+        public override float GetAttackDistance()
+        {
+            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
+            return base.GetAttackDistance() + weatherOffset;
         }
     }
 }

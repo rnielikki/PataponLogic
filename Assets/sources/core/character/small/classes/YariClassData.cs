@@ -1,4 +1,6 @@
-﻿namespace PataRoad.Core.Character.Class
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+
+namespace PataRoad.Core.Character.Class
 {
     internal class YariClassData : ClassData
     {
@@ -9,9 +11,9 @@
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
-                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                 {
-                    { "attack-fever", GetAttackMoveModel("attack-fever") },
+                    { AttackCommandType.FeverAttack, GetAttackMoveModel("attack-fever") },
                 }
                 );
         }
@@ -24,7 +26,7 @@
             }
             else
             {
-                _attackController.StartAttack("attack-fever");
+                _attackController.StartAttack(AttackCommandType.FeverAttack);
             }
         }
     }

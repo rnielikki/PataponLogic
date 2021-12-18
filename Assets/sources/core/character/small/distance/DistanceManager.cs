@@ -64,7 +64,7 @@ namespace PataRoad.Core.Character
         public virtual void MoveTo(float positionOffset, float velocity, bool ignoreSafeDistance = false)
         {
             float x = DefaultWorldPosition + positionOffset * _movingDirection;
-            var hit = DistanceCalculator.GetClosest(_smallCharacter.AttackDistance);
+            var hit = DistanceCalculator.GetClosest();
             if (hit != null && !ignoreSafeDistance)
             {
                 x = Mathf.Max(

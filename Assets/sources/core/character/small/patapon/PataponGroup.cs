@@ -34,7 +34,7 @@ namespace PataRoad.Core.Character.Patapons
         public bool CanGoForward()
         {
             var firstPon = _patapons[0];
-            var closest = firstPon.DistanceCalculator.GetClosest(firstPon.AttackDistance);
+            var closest = firstPon.DistanceCalculator.GetClosestForMarch();
             return closest == null || (closest.Value.x > transform.position.x + _marchDistance
                 && Hazorons.HazoronPositionManager.Current.GetClosestHazoronPosition() > transform.position.x);
         }

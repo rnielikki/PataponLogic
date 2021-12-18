@@ -21,32 +21,33 @@ namespace PataRoad.Core.Character
             _distanceCalculator = hazoron.DistanceCalculator;
             _pataponTransform = GameObject.FindGameObjectWithTag("Player").transform;
         }
-        public float GetAttackPosition(float customDistance = -1)
+        public float GetAttackPosition()
         {
-            return Clamp(GetAttackPositionNonClamp(customDistance));
+            return Clamp(GetAttackPositionNonClamp());
         }
 
-        public float GetDefendingPosition(float customDistance = -1)
+        public float GetDefendingPosition()
         {
             return _hazoron.DefaultWorldPosition;
         }
 
         public float GetRushPosition()
         {
-            var closest = _distanceCalculator.GetClosest(0);
+            var closest = _distanceCalculator.GetClosest();
             if (closest == null) return MaxRushAttackPosition;
             return Mathf.Max(closest.Value.x + _hazoron.CharacterSize, MaxRushAttackPosition);
         }
 
         public bool IsAttackableRange() => GetAttackPositionNonClamp() >= MaxRushAttackPosition;
-        private float GetAttackPositionNonClamp(float customDistance = -1)
+        private float GetAttackPositionNonClamp()
         {
-            if (customDistance < 0) customDistance = _hazoron.AttackDistance;
-            var closest = _distanceCalculator.GetClosest(customDistance);
+            var attackDistance = _hazoron.AttackDistance;
+            if (attackDistance < 0) attackDistance = _hazoron.AttackDistance;
+            var closest = _distanceCalculator.GetClosest();
             if (closest == null) return _hazoron.DefaultWorldPosition;
-            customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
+            //attackDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
 
-            return Mathf.Max(_pataponTransform.position.x + _hazoron.CharacterSize, closest.Value.x + customDistance + _hazoron.CharacterSize);
+            return Mathf.Max(_pataponTransform.position.x + _hazoron.CharacterSize, closest.Value.x + attackDistance + _hazoron.CharacterSize);
         }
         private float Clamp(float value) => Mathf.Clamp(value, _min, _max);
     }

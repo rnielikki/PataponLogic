@@ -1,4 +1,6 @@
-﻿namespace PataRoad.Core.Character.Class
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+
+namespace PataRoad.Core.Character.Class
 {
     internal class MahoClassData : ClassData
     {
@@ -10,27 +12,27 @@
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
-                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                 {
-                    { "attack-charge", GetAttackMoveModel("attack-charge") },
+                    { AttackCommandType.ChargeAttack, GetAttackMoveModel("attack-charge") },
                 }
                 );
             switch (_attackType)
             {
                 case 1:
                     realStat.FireRate += 0.35f;
-                    _character.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Fire;
+                    _character.ElementalAttackType = ElementalAttackType.Fire;
                     break;
                 case 2:
                     realStat.IceRate += 0.25f;
-                    _character.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Ice;
+                    _character.ElementalAttackType = ElementalAttackType.Ice;
                     break;
                 case 3:
                     realStat.FireRate += 0.1f;
-                    _character.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Thunder;
+                    _character.ElementalAttackType = ElementalAttackType.Thunder;
                     break;
             }
-            var weapon = _character.EquipmentManager.Weapon as Equipments.Weapons.Staff;
+            var weapon = _character.EquipmentManager.Weapon as Staff;
         }
 
         public override void Attack()
@@ -41,7 +43,7 @@
             }
             else
             {
-                _animator.Animate("attack-charge");
+                _attackController.StartAttack(AttackCommandType.ChargeAttack);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using PataRoad.Core.Rhythm.Command;
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+using PataRoad.Core.Rhythm.Command;
 
 namespace PataRoad.Core.Character.Class
 {
@@ -17,10 +18,10 @@ namespace PataRoad.Core.Character.Class
                 case 0:
                     SetAttackMoveController()
                         .AddModels(
-                        new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                        new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                         {
-                            { "attack", GetAttackMoveModel("attack") },
-                            { "attack-charge", GetAttackMoveModel("attack-charge", AttackMoveType.Rush, movingSpeed: 1.2f) },
+                            { AttackCommandType.Attack, GetAttackMoveModel("attack") },
+                            { AttackCommandType.ChargeAttack, GetAttackMoveModel("attack-charge", AttackMoveType.Rush, movingSpeed: 1.2f) },
                         }
                         );
                     break;

@@ -4,18 +4,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     public abstract class Weapon : Equipment
     {
-        public virtual float MinAttackDistance { get; }
-
-        /// <summary>
-        /// Additional force from environment from WIND.
-        /// </summary>
-        public virtual float WindAttackDistanceOffset { get; }
         /// <summary>
         /// Sprite of THROWABLE object, like arrows or spears.
         /// </summary>
         public Sprite ThrowableWeaponSprite { get; protected set; }
+        public AttackCommandType LastAttackCommandType { get; private set; }
+        protected Vector2 _initialVelocity { get; private set; }
 
         protected override EquipmentType _type => EquipmentType.Weapon;
+        protected virtual float _throwMass => Mass;
 
         [SerializeField]
         private AttackType _attackType;
@@ -32,6 +29,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             Holder = GetComponentInParent<SmallCharacter>();
             ThrowableWeaponSprite = GetThrowableWeaponSprite();
         }
+        public virtual float GetAttackDistance() => 0;
         /// <summary>
         /// Perform weapon specific attack.
         /// </summary>
@@ -52,6 +50,23 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         protected GameObject GetWeaponInstance(string name = "WeaponInstance")
         {
             return Resources.Load("Characters/Equipments/PrefabBase/" + name) as GameObject;
+        }
+        internal virtual void SetLastAttackCommandType(AttackCommandType attackCommandType)
+        {
+            LastAttackCommandType = attackCommandType;
+        }
+        protected void SetInitialVelocity(float force, float angle)
+        {
+            _initialVelocity = (Time.fixedDeltaTime * force / _throwMass) * new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+        }
+        /// <summary>
+        /// Gets range attack distance. It also considers wind, but doesn't consider y axis.
+        /// </summary>
+        /// <returns>x distance for range attack.</returns>
+        protected float GetRangeAttackDistance()
+        {
+            return (2 * _initialVelocity.x * _initialVelocity.y) / Physics2D.gravity.y
+                + 2 * Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Pow(_initialVelocity.y, 2) / _throwMass;
         }
     }
 }

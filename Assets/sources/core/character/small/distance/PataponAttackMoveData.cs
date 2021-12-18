@@ -30,36 +30,36 @@ namespace PataRoad.Core.Character
             _groupOffset = patapon.IndexInGroup * PataponEnvironment.AttackDistanceBetweenPatapons;
         }
 
-        public float GetAttackPosition(float customDistance = -1)
+        public float GetAttackPosition()
         {
-            return Clamp(GetAttackPositionNonClamp(customDistance)) - _groupOffset;
+            return Clamp(GetAttackPositionNonClamp()) - _groupOffset;
         }
 
-        public float GetDefendingPosition(float customDistance = -1)
+        public float GetDefendingPosition()
         {
-            if (customDistance < 0) customDistance = _patapon.AttackDistance;
-            var closest = _distanceCalculator.GetClosest(customDistance);
+            var attackDistance = _patapon.AttackDistance;
+            var closest = _distanceCalculator.GetClosest();
             var front = _distanceManager.Front;
             if (closest == null) return Clamp(front - _groupOffset);
-            customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
-            return Clamp(Mathf.Min(front, closest.Value.x - customDistance - _patapon.CharacterSize)) - _groupOffset;
+            //attackDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
+            return Clamp(Mathf.Min(front, closest.Value.x - attackDistance - _patapon.CharacterSize)) - _groupOffset;
         }
 
         public float GetRushPosition()
         {
-            var closest = _distanceCalculator.GetClosest(0);
+            var closest = _distanceCalculator.GetClosest();
             if (closest == null) return MaxRushAttackPosition + _groupOffset;
             return Mathf.Min(closest.Value.x - _patapon.CharacterSize, MaxRushAttackPosition) + _groupOffset;
         }
         private float Clamp(float value) => Mathf.Clamp(value, _min, _max);
-        private float GetAttackPositionNonClamp(float customDistance = -1)
+        private float GetAttackPositionNonClamp()
         {
-            if (customDistance < 0) customDistance = _patapon.AttackDistance;
+            var attackDistance = _patapon.AttackDistance;
 
-            var closest = _distanceCalculator.GetClosest(customDistance);
+            var closest = _distanceCalculator.GetClosest();
             if (closest == null) return _patapon.DefaultWorldPosition;
-            customDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
-            return closest.Value.x - customDistance - _patapon.CharacterSize;
+            //attackDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
+            return closest.Value.x - attackDistance - _patapon.CharacterSize;
         }
         public bool IsAttackableRange() => GetAttackPositionNonClamp() - _groupOffset <= MaxRushAttackPosition;
     }

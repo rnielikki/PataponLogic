@@ -1,4 +1,6 @@
-﻿namespace PataRoad.Core.Character.Class
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+
+namespace PataRoad.Core.Character.Class
 {
     internal class KibaClassData : ClassData
     {
@@ -10,10 +12,10 @@
         {
             AddDefaultModelsToAttackMoveController()
                 .AddModels(
-                new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                 {
-                    { "attack-fever", GetAttackMoveModel("attack-fever", AttackMoveType.Rush, 2) },
-                    { "defend-fever", GetAttackMoveModel("defend-fever", AttackMoveType.Defend).SetAlwaysAnimate() },
+                    { AttackCommandType.FeverAttack, GetAttackMoveModel("attack-fever", AttackMoveType.Rush, 2) },
+                    { AttackCommandType.FeverDefend, GetAttackMoveModel("defend-fever", AttackMoveType.Defend).SetAlwaysAnimate() },
                 }
                 );
         }
@@ -26,18 +28,18 @@
             }
             else
             {
-                _attackController.StartAttack("attack-fever");
+                _attackController.StartAttack(AttackCommandType.FeverAttack);
             }
         }
         public override void Defend()
         {
             if (!_character.OnFever && !_character.Charged)
             {
-                _attackController.StartAttack("defend");
+                _attackController.StartAttack(AttackCommandType.Defend);
             }
             else
             {
-                _attackController.StartAttack("defend-fever");
+                _attackController.StartAttack(AttackCommandType.FeverDefend);
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿using PataRoad.Core.Map;
 using PataRoad.Core.Map.Weather;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.WorldMap

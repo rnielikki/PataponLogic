@@ -5,10 +5,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     public class Staff : Weapon
     {
-        public override float MinAttackDistance { get; } = 22;
-        public override float WindAttackDistanceOffset { get; } = 4;
-
         private IStaffActions _staffAction;
+        protected override float _throwMass => 0.1f;
         private void Start()
         {
             Init();
@@ -52,6 +50,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 if (staffData != null) _staffAction = staffData;
             }
             if (Holder != null) _staffAction?.Initialize(Holder);
+        }
+        public override float GetAttackDistance()
+        {
+            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
+            return base.GetAttackDistance() + weatherOffset;
         }
     }
 }

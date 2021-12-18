@@ -1,5 +1,4 @@
-﻿using PataRoad.Core;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -61,7 +60,7 @@ namespace PataRoad.Common
         public void ChangeScene()
         {
             DontDestroyOnLoad(gameObject);
-            GameDisplay.ScreenFading.Create(false, 2, () =>
+            GameDisplay.ScreenFading.Create(false, 3, () =>
             {
                 if (_useTip)
                 {
@@ -70,6 +69,7 @@ namespace PataRoad.Common
                 }
                 else
                 {
+                    GameDisplay.ScreenFading.Create(true, 2);
                     SceneManager.LoadScene(_sceneName);
                 }
             });

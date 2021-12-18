@@ -7,6 +7,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private GameObject _copiedStone;
         private Transform _stoneTransform;
         private ArmTrigger[] _armTriggers;
+        protected override float _throwMass => 1;
         private void Start()
         {
             _stoneTransform = transform.Find("Stone");
@@ -21,7 +22,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 var stoneForThrowing = Instantiate(_copiedStone, transform.root.parent);
                 stoneForThrowing.GetComponent<WeaponInstance>()
-                    .Initialize(this, 1, _stoneTransform)
+                    .Initialize(this, _throwMass, _stoneTransform)
                     .Throw(650, 750, Vector3.zero);
             }
             else

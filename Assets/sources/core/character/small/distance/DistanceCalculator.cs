@@ -66,10 +66,16 @@ namespace PataRoad.Core.Character
             new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
 
         /// <summary>
+        /// Shoots Raycast for marching. Results same as melee unit of <see cref="GetClosest()"/>.
+        /// </summary>
+        /// <returns>X position as collider hit, Y position as collided game object position.</returns>
+        public Vector2? GetClosestForMarch() => GetClosest(0);
+        /// <summary>
         /// Shoots RayCast to closest structure or enemy and returns the raycast hit if found.
         /// </summary>
         /// <returns>X position as collider hit, Y position as collided game object position.</returns>
-        public Vector2? GetClosest(float attackDistance)
+        public Vector2? GetClosest() => GetClosest(_character.AttackDistance);
+        private Vector2? GetClosest(float attackDistance)
         {
             var closest = GetClosest((Vector2)_target.transform.position + attackDistance * _direction, attackDistance);
             if (closest != null && closest.Value.x * _xDirection > MaxEnemyDistanceInSight(attackDistance) * _xDirection)
@@ -140,7 +146,7 @@ namespace PataRoad.Core.Character
         /// Check if the character has attack target on their sight.
         /// </summary>
         /// <returns><c>true</c> if Patapon finds obstacle (attack) target to Patapon sight, otherwise <c>false</c>.</returns>
-        public bool HasAttackTarget() => GetClosest(_character.AttackDistance) != null;
+        public bool HasAttackTarget() => GetClosest() != null;
         protected float MaxEnemyDistanceInSight(float attackDistance) => _character.DefaultWorldPosition + _xDirection * (CharacterEnvironment.Sight + attackDistance);
     }
 }

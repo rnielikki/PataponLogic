@@ -12,7 +12,7 @@ namespace PataRoad.Common.GameDisplay
         private UnityEngine.Events.UnityAction _callback;
         private float _speed;
         private static GameObject _fadingResource { get; set; }
-        public static void Create(bool fadingIn, float speed = 1, UnityEngine.Events.UnityAction callback = null)
+        public static void Create(bool fadingIn, float speed = 2, UnityEngine.Events.UnityAction callback = null)
         {
             if (_fadingResource == null)
             {

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PataRoad.Core.Character.Equipments.Weapons;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Class
 {
@@ -39,11 +40,11 @@ namespace PataRoad.Core.Character.Class
         protected abstract void InitLateForClass(Stat realStat);
         public virtual void Attack()
         {
-            _attackController.StartAttack("attack");
+            _attackController.StartAttack(AttackCommandType.Attack);
         }
         public virtual void Defend()
         {
-            _attackController.StartAttack("defend");
+            _attackController.StartAttack(AttackCommandType.Defend);
         }
         public static ClassData GetClassData(SmallCharacter character, ClassType type)
         {
@@ -80,10 +81,10 @@ namespace PataRoad.Core.Character.Class
         {
             if (_attackController == null) SetAttackMoveController();
             _attackController
-                .AddModels(new System.Collections.Generic.Dictionary<string, AttackMoveModel>()
+                .AddModels(new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                 {
-                    { "attack", GetAttackMoveModel("attack") },
-                    { "defend", GetAttackMoveModel("defend", AttackMoveType.Defend) },
+                    { AttackCommandType.Attack, GetAttackMoveModel("attack") },
+                    { AttackCommandType.Defend, GetAttackMoveModel("defend", AttackMoveType.Defend) },
                 });
             return _attackController;
         }
@@ -96,7 +97,7 @@ namespace PataRoad.Core.Character.Class
         /// <param name="attackSpeedMultiplier">Attack speed multiplier, default is 1. Yumipon fever attack is expected to 3.</param>
         /// <param name="attackDistance">Attack distance. default distance value is <see cref="AttackDistance"/>.</param>
         /// <returns>Attack Move Model for <see cref="AttackMoveController"/>.</returns>
-        protected AttackMoveModel GetAttackMoveModel(string animationType, AttackMoveType type = AttackMoveType.Attack, float movingSpeed = 1, float attackSpeedMultiplier = 1, float attackDistance = -1)
+        protected AttackMoveModel GetAttackMoveModel(string animationType, AttackMoveType type = AttackMoveType.Attack, float movingSpeed = 1, float attackSpeedMultiplier = 1)
         {
             movingSpeed *= _character.Stat.MovementSpeed;
             return new AttackMoveModel(
@@ -104,8 +105,7 @@ namespace PataRoad.Core.Character.Class
                 animationType,
                 type,
                 movingSpeed,
-                attackSpeedMultiplier,
-                attackDistance
+                attackSpeedMultiplier
                 );
         }
         public bool IsInAttackDistance()
