@@ -40,6 +40,21 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 arm.DisableAttacking();
             }
         }
+        internal override void SetLastAttackCommandType(AttackCommandType attackCommandType)
+        {
+            base.SetLastAttackCommandType(attackCommandType);
+            if (IsThrowing())
+            {
+                SetInitialVelocity(700, 68.80682f);
+            }
+        }
+        public override float GetAttackDistance() => IsThrowing() ? GetThrowingAttackDistance() : 0;
+        private bool IsThrowing()
+        {
+            if (Holder == null) return false;
+            return LastAttackCommandType == AttackCommandType.ChargeAttack || (Holder.AttackTypeIndex == 1 && LastAttackCommandType == AttackCommandType.Attack);
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Logic.DamageCalculator.DealDamage(

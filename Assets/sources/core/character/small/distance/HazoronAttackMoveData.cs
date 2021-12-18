@@ -45,7 +45,7 @@ namespace PataRoad.Core.Character
             if (attackDistance < 0) attackDistance = _hazoron.AttackDistance;
             var closest = _distanceCalculator.GetClosest();
             if (closest == null) return _hazoron.DefaultWorldPosition;
-            //attackDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
+            attackDistance = _hazoron.Weapon.AdjustAttackDistanceByYPosition(attackDistance, closest.Value.y - _hazoron.RootTransform.position.y);
 
             return Mathf.Max(_pataponTransform.position.x + _hazoron.CharacterSize, closest.Value.x + attackDistance + _hazoron.CharacterSize);
         }

@@ -55,18 +55,25 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             LastAttackCommandType = attackCommandType;
         }
-        protected void SetInitialVelocity(float force, float angle)
+        protected void SetInitialVelocity(float force, float angle, Vector2 additionalDir = default)
         {
-            _initialVelocity = (Time.fixedDeltaTime * force / _throwMass) * new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+            _initialVelocity = Time.fixedDeltaTime * force * (new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)) + additionalDir);
         }
         /// <summary>
-        /// Gets range attack distance. It also considers wind, but doesn't consider y axis.
+        /// Gets throwing range attack distance. It also considers wind, but doesn't consider y axis. Use <see cref="AdjustAttackDistanceByYPosition(float, float)"/> for late adjustment.
         /// </summary>
         /// <returns>x distance for range attack.</returns>
-        protected float GetRangeAttackDistance()
+        protected float GetThrowingAttackDistance()
         {
-            return (2 * _initialVelocity.x * _initialVelocity.y) / Physics2D.gravity.y
-                + 2 * Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Pow(_initialVelocity.y, 2) / _throwMass;
+            return (2 * _initialVelocity.x * _initialVelocity.y) / -Physics2D.gravity.y
+                + 2 * Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Pow(_initialVelocity.y, 2) / Mathf.Pow(Physics2D.gravity.y, 2);
+        }
+        // Parabola approximation
+        public float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance)
+        {
+            if (_initialVelocity.x == 0) return 0; //No zero division
+            var velocityRate = _initialVelocity.y / _initialVelocity.x;
+            return Mathf.Sqrt((yDistance + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance;
         }
     }
 }

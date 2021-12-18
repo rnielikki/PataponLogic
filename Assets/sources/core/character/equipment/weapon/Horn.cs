@@ -10,6 +10,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private GameObject _chargeDefenceObject;
         protected float _forceMultiplier = 1;
         protected float _feverPonponForceMultiplier = 1;
+        private float _savedWindValue;
 
         private bool _ifFire;
 
@@ -21,7 +22,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _feverAttackObject = GetWeaponInstance("Mega-FeverAttack");
             _chargeDefenceObject = GetWeaponInstance("Mega-ChargeDefence");
 
-            if (Holder != null) _ifFire = Holder.GetAttackType() == 0;
+            if (Holder != null) _ifFire = Holder.AttackTypeIndex == 0;
         }
 
         public override void Attack(AttackCommandType attackCommandType)
@@ -118,10 +119,24 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             other.GetComponentInParent<SmallCharacter>()?.StatusEffectManager?.SetKnockback();
         }
+        internal override void SetLastAttackCommandType(AttackCommandType attackCommandType)
+        {
+            base.SetLastAttackCommandType(attackCommandType);
+            _savedWindValue = Map.Weather.WeatherInfo.Current.Wind.Magnitude;
+        }
         public override float GetAttackDistance()
         {
-            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
-            return base.GetAttackDistance() + weatherOffset;
+            switch (LastAttackCommandType)
+            {
+                case AttackCommandType.Charge:
+                case AttackCommandType.Attack:
+                    return 17.5f + _savedWindValue * 0.5f;
+                case AttackCommandType.FeverAttack:
+                case AttackCommandType.Defend:
+                    return 15 + _savedWindValue * 0.5f;
+                default:
+                    return 0;
+            }
         }
     }
 }

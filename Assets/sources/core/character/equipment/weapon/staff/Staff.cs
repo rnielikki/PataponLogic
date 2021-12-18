@@ -51,10 +51,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
             if (Holder != null) _staffAction?.Initialize(Holder);
         }
-        public override float GetAttackDistance()
-        {
-            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
-            return base.GetAttackDistance() + weatherOffset;
-        }
+        public override float GetAttackDistance() => 22;
     }
 }

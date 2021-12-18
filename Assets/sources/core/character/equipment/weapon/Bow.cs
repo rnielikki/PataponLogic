@@ -40,13 +40,13 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             float minForce, maxForce;
             if (attackCommandType == AttackCommandType.Defend)
             {
-                minForce = 300;
-                maxForce = 480;
+                minForce = 1200;
+                maxForce = 1400;
             }
             else
             {
-                minForce = 840;
-                maxForce = 1020;
+                minForce = 1000;
+                maxForce = 1200;
             }
 
             arrowForThrowing.GetComponent<WeaponInstance>()
@@ -63,10 +63,21 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _bowRenderer.sprite = equipmentData.Image;
             _arrowRenderer.sprite = (equipmentData as BowData).ArrowImage;
         }
-        public override float GetAttackDistance()
+        internal override void SetLastAttackCommandType(AttackCommandType attackCommandType)
         {
-            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
-            return base.GetAttackDistance() + weatherOffset;
+            base.SetLastAttackCommandType(attackCommandType);
+            //CHANGE ANGLE IF CHANGE ANIMATION.
+            switch (attackCommandType)
+            {
+                case AttackCommandType.Attack:
+                case AttackCommandType.FeverAttack:
+                    SetInitialVelocity(1400, 40.461f, _throwAdditionalForce);
+                    break;
+                case AttackCommandType.Defend:
+                    SetInitialVelocity(1100, 16.785f, _throwAdditionalForce);
+                    break;
+            }
         }
+        public override float GetAttackDistance() => GetThrowingAttackDistance();
     }
 }

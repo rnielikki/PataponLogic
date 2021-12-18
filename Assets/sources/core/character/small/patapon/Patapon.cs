@@ -38,6 +38,8 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         protected Stat _realStat;
         public StatOperator StatOperator { get; private set; }
+        private int _attackTypeIndex;
+        public override int AttackTypeIndex => _attackTypeIndex;
 
         public void BeEaten()
         {
@@ -66,6 +68,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             //--- init
             Init();
+            _attackTypeIndex = Global.GlobalData.PataponInfo.GetAttackTypeIndex(_data.Type);
             IsGeneral = (_data as PataponData).IsGeneral;
             _realStat = _data.Stat;
             StatOperator = new StatOperator(_realStat);
@@ -257,8 +260,6 @@ namespace PataRoad.Core.Character.Patapons
             CharAnimator.Animate("party");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }
-        public override int GetAttackType() =>
-            Global.GlobalData.PataponInfo.GetAttackTypeIndex(_data.Type);
         public override float GetAttackValueOffset()
         {
             return LastPerfectionRate;

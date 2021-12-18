@@ -35,10 +35,24 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 .Initialize(this)
                 .Throw(minForce, maxForce);
         }
-        public override float GetAttackDistance()
+        internal override void SetLastAttackCommandType(AttackCommandType attackCommandType)
         {
-            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
-            return base.GetAttackDistance() + weatherOffset;
+            base.SetLastAttackCommandType(attackCommandType);
+            //CHANGE ANGLE IF CHANGE ANIMATION.
+            switch (attackCommandType)
+            {
+                case AttackCommandType.Attack:
+                    SetInitialVelocity(875, 49.586f);
+                    break;
+                case AttackCommandType.FeverAttack:
+                    SetInitialVelocity(875, 50.807f);
+                    break;
+                case AttackCommandType.Defend:
+                    SetInitialVelocity(450, 36.918f);
+                    break;
+            }
         }
+        public override float GetAttackDistance() => GetThrowingAttackDistance();
+
     }
 }

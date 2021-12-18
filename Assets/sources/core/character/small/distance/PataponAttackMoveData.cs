@@ -41,7 +41,7 @@ namespace PataRoad.Core.Character
             var closest = _distanceCalculator.GetClosest();
             var front = _distanceManager.Front;
             if (closest == null) return Clamp(front - _groupOffset);
-            //attackDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
+            attackDistance = _patapon.Weapon.AdjustAttackDistanceByYPosition(attackDistance, closest.Value.y - _patapon.RootTransform.position.y);
             return Clamp(Mathf.Min(front, closest.Value.x - attackDistance - _patapon.CharacterSize)) - _groupOffset;
         }
 
@@ -58,7 +58,7 @@ namespace PataRoad.Core.Character
 
             var closest = _distanceCalculator.GetClosest();
             if (closest == null) return _patapon.DefaultWorldPosition;
-            //attackDistance *= (1 - Mathf.InverseLerp(2, CharacterEnvironment.MaxYToScan, closest.Value.y));
+            attackDistance = _patapon.Weapon.AdjustAttackDistanceByYPosition(attackDistance, closest.Value.y - _patapon.RootTransform.position.y);
             return closest.Value.x - attackDistance - _patapon.CharacterSize;
         }
         public bool IsAttackableRange() => GetAttackPositionNonClamp() - _groupOffset <= MaxRushAttackPosition;

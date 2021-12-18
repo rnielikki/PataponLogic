@@ -48,7 +48,7 @@ namespace PataRoad.Core.Character
         }
 
         public bool HasTarget() =>
-             _distanceCalculator.HasAttackTarget() && (Type == AttackMoveType.Attack && _data.IsAttackableRange());
+             _distanceCalculator.HasAttackTarget() || (Type == AttackMoveType.Rush && _data.IsAttackableRange());
         public bool IsInAttackDistance()
         {
             return _distanceCalculator.IsInTargetRange(GetPosition(), MovingSpeed * Time.deltaTime);

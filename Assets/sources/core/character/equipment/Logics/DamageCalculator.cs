@@ -28,7 +28,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 {
                     receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(probability * 10 * fireRateMultiplier));
 
-                    int damage = (int)(GetAttackDamage(stat, attacker) * stat.FireRate);
+                    int damage = Mathf.Max(0, (int)(GetAttackDamage(stat, attacker) * stat.FireRate));
                     if (damage != 0)
                     {
                         SendDamage(receiver, damage);
@@ -39,6 +39,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             else
             {
                 (int damage, bool isCritical) = GetFinalDamage(attacker, receiver, stat);
+                damage = Mathf.Max(0, damage);
                 if (receiver is Bosses.Boss boss)
                 {
                     damage = (int)(damage * boss.GetBrokenPartMultiplier(target, damage));

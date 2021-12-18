@@ -45,6 +45,7 @@ namespace PataRoad.Core.Character
 
         public string RootName => ClassData.RootName;
         internal string BodyName => ClassData.RootName + "Patapon-body";
+        public Transform RootTransform { get; private set; }
 
         public bool IsFlyingUnit => ClassData.IsFlyingUnit;
 
@@ -69,9 +70,9 @@ namespace PataRoad.Core.Character
         public bool OnFever { get; protected set; }
 
         public AttackType AttackType => Weapon.AttackType;
-
         public AttackTypeResistance AttackTypeResistance { get; private set; }
         public ElementalAttackType ElementalAttackType { get; set; }
+        public abstract int AttackTypeIndex { get; }
 
         protected void Init()
         {
@@ -81,6 +82,14 @@ namespace PataRoad.Core.Character
             Stat = _data.Stat;
             CurrentHitPoint = _data.Stat.HitPoint;
             ClassData = ClassData.GetClassData(this, _data.Type);
+            if (!string.IsNullOrEmpty(RootName))
+            {
+                RootTransform = transform.Find(RootName);
+            }
+            else
+            {
+                RootTransform = transform;
+            }
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
             StatusEffectManager = gameObject.AddComponent<SmallCharacterStatusEffectManager>();
 
@@ -121,8 +130,6 @@ namespace PataRoad.Core.Character
         }
 
         protected virtual void StopWeaponAttacking() => Weapon.StopAttacking();
-        public abstract int GetAttackType();
-
         public abstract float GetAttackValueOffset();
         public abstract float GetDefenceValueOffset();
 

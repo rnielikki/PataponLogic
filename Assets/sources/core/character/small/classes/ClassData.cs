@@ -28,10 +28,10 @@ namespace PataRoad.Core.Character.Class
         protected ClassData(SmallCharacter character)
         {
             _character = character;
-            _attackType = character.GetAttackType();
         }
         public virtual void InitLate(Stat realStat)
         {
+            _attackType = _character.AttackTypeIndex;
             _animator = _character.CharAnimator;
             if (_character is Patapons.Patapon patapon) AttackMoveData = new PataponAttackMoveData(patapon);
             else if (_character is Hazorons.Hazoron hazoron) AttackMoveData = new HazoronAttackMoveData(hazoron);

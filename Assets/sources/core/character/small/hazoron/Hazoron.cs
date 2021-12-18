@@ -12,6 +12,7 @@ namespace PataRoad.Core.Character.Hazorons
         private bool _gotPosition;
         private bool _animatingWalk;
         private int _attackTypeIndex;
+        public override int AttackTypeIndex => _attackTypeIndex;
 
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
 
@@ -42,8 +43,6 @@ namespace PataRoad.Core.Character.Hazorons
         {
             CharacterSize = transform.Find(BodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
         }
-
-        public override int GetAttackType() => _attackTypeIndex;
         public override float GetAttackValueOffset()
         {
             return Random.Range(0, 1f);
