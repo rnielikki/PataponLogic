@@ -36,7 +36,6 @@ namespace PataRoad.Core.Character.Patapons.Data
             _protectorType = equipmentNames.protector;
             _isGeneral = isGeneral;
         }
-
         public void Equip(EquipmentData data)
         {
             if (_map.ContainsKey(data.Type))
@@ -50,6 +49,7 @@ namespace PataRoad.Core.Character.Patapons.Data
         }
         public IEnumerable<EquipmentData> GetAllEquipments() => _map.Values;
         public bool HasEquipment(EquipmentData data) => _map.ContainsKey(data.Type) && _map[data.Type] == data;
+        public int GetEquipmentLevel(EquipmentType equipmentType) => _map.ContainsKey(equipmentType) ? _map[equipmentType].LevelGroup : -1;
 
         private void Serialize()
         {

@@ -62,6 +62,10 @@ namespace PataRoad.Core.Character.Patapons.Data
             }
             return res;
         }
+        internal int GetMaxEquipmentLevel(Equipments.EquipmentType equipmentType)
+        {
+            return _info.Max(i => i.GetEquipmentLevel(equipmentType));
+        }
 
         public void OnBeforeSerialize()
         {

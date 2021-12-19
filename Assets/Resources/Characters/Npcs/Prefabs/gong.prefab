@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4094685311950053619}
   - component: {fileID: 4983671417189478079}
-  - component: {fileID: 8313202369860589154}
   m_Layer: 8
   m_Name: Rarepon
   m_TagString: Untagged
@@ -84,24 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8313202369860589154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2471167878592005755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b5ce08b54acdf84281e1a923c0c41c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fixedEquipment: 0
-  _hideEquipment: 0
-  _defaultEquipmentData: {fileID: 0}
-  _spritesToChangeColor:
-  - {fileID: 8337157762581586486}
-  _spriteToHideOnRarepon: {fileID: 0}
 --- !u!1 &8337157762137148750
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +114,7 @@ Transform:
   - {fileID: 4094685311950053619}
   - {fileID: 8337157762806803614}
   m_Father: {fileID: 8337157763632794111}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &685124492111706906
 CircleCollider2D:
@@ -162,7 +143,6 @@ GameObject:
   - component: {fileID: 8337157762206049446}
   - component: {fileID: 8337157762206049440}
   - component: {fileID: 6133376510291467819}
-  - component: {fileID: -8926014407711071853}
   m_Layer: 8
   m_Name: gong
   m_TagString: SmallCharacter
@@ -181,7 +161,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8337157764135330540}
   - {fileID: 8337157762715100930}
   - {fileID: 8337157763632794111}
   m_Father: {fileID: 0}
@@ -227,66 +206,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 7
---- !u!114 &-8926014407711071853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8337157762206049445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd9ba651f5a351c49954519eb7b214b1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _defaultStat:
-    id: 0
-  _defaultAttackTypeResistance:
-    id: 1
-  _elementalAttackType: 0
-  _type: 4
-  references:
-    version: 1
-    00000000:
-      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _isCharacterStat: 1
-        _hitPoint: 200
-        _defenceMin: 1
-        _defenceMax: 5
-        _damageMin: 4
-        _damageMax: 8
-        _attackSeconds: 2
-        _movementSpeed: 8
-        _critical: 0
-        _stagger: 0
-        _knockback: 0
-        _infiniteCriticalResistance: 0
-        _criticalResistance: 0
-        _infiniteStaggerResistance: 0
-        _staggerResistance: 0
-        _infiniteKnockbackResistance: 0
-        _knockbackResistance: 0
-        _fireRate: 0
-        _iceRate: 0
-        _sleepRate: 0
-        _infiniteFireResistance: 0
-        _fireResistance: 0
-        _infiniteIceResistance: 0
-        _iceResistance: 0
-        _infiniteSleepResistance: 0
-        _sleepResistance: 0
-    00000001:
-      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _crushMultiplier: 1
-        _slashMultiplier: 1
-        _stabMultiplier: 1
-        _soundMultiplier: 1
-        _magicMultiplier: 1
-        _fireMultiplier: 1
-        _iceMultiplier: 1
-        _thunderMultiplier: 1
 --- !u!1 &8337157762296476027
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,7 +380,7 @@ Transform:
   - {fileID: 8337157763429470692}
   - {fileID: 8337157762533017437}
   m_Father: {fileID: 8337157763632794111}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8337157762533017436
 GameObject:
@@ -803,7 +722,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8337157762715100930}
   - component: {fileID: 8337157762715100931}
-  - component: {fileID: 8337157762715100988}
   m_Layer: 10
   m_Name: Weapon
   m_TagString: Untagged
@@ -823,7 +741,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8337157762206049446}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8337157762715100931
 SpriteRenderer:
@@ -877,22 +795,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8337157762715100988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8337157762715100929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df95dad131d399c428239eebde0933c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fixedEquipment: 1
-  _hideEquipment: 0
-  _defaultEquipmentData: {fileID: 11400000, guid: 0f6efa4a93b1d4f47b163b86d0414422, type: 2}
-  _attackType: 3
 --- !u!1 &8337157762748590585
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,7 +856,7 @@ Transform:
   - {fileID: 8337157763928809650}
   - {fileID: 8337157762640066985}
   m_Father: {fileID: 8337157763632794111}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8337157762806803613
 GameObject:
@@ -1328,11 +1230,12 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 8337157764135330540}
   - {fileID: 8337157762137148751}
   - {fileID: 8337157762500600253}
   - {fileID: 8337157762800712101}
   m_Father: {fileID: 8337157762206049446}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8337157763925813948
 GameObject:
@@ -1590,7 +1493,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8337157764135330540}
   - component: {fileID: 8337157764135330541}
-  - component: {fileID: 6400146027796637191}
   m_Layer: 8
   m_Name: Helm
   m_TagString: Untagged
@@ -1606,10 +1508,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8337157764135330547}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.443, z: -1}
+  m_LocalPosition: {x: 0, y: 0.443, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8337157762206049446}
+  m_Father: {fileID: 8337157763632794111}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8337157764135330541
@@ -1664,18 +1566,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6400146027796637191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8337157764135330547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfbd99464f3a2a040967ff76228aa486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fixedEquipment: 1
-  _hideEquipment: 0
-  _defaultEquipmentData: {fileID: 11400000, guid: 314dbbe58dcc80e43bace78772ebafab, type: 2}

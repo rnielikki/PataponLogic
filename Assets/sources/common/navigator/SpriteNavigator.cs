@@ -24,9 +24,6 @@ namespace PataRoad.Common.Navigator
         [SerializeField]
         protected Vector2 _positionOffset;
         public Vector2 PositionOffset => _positionOffset;
-        [SerializeField]
-        protected bool _preserveIndexOnDeselected;
-        public bool PreserveIndexOnDeselected => _preserveIndexOnDeselected;
 
         protected ActionEventMap _map;
 
@@ -95,10 +92,6 @@ namespace PataRoad.Common.Navigator
             foreach (var spriteSelectable in _selectables)
             {
                 spriteSelectable.enabled = false;
-            }
-            if (!PreserveIndexOnDeselected)
-            {
-                _index = 0;
             }
             if (_map != null) _map.enabled = false;
             OnThisDisabled();

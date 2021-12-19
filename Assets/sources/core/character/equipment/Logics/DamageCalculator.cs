@@ -155,12 +155,12 @@ namespace PataRoad.Core.Character.Equipments.Logic
                         (
                         elementalMultiplier //elemental damage
                         * resistances.GetMultiplier(attacker.AttackType) //attack type multiplier
-                        * resistances.GetMultiplier(attacker.ElementalAttackType) //attack type multiplier
+                        * resistances.GetMultiplier(attacker.ElementalAttackType) //elemental attack type multiplier
                         * Mathf.Max(0.1f, damage) //actual damage
                         * (critical + 1) //critical
-                        / defence //defence
+                        + (fireProbability + iceProbability + thunderProbability) * (critical + 1) * Mathf.Max(0.1f, damage)
                         )
-                        + (fireProbability + iceProbability + thunderProbability) * (critical + 1) * damage * 0.2f
+                        / defence //defence
                     )
                 ), critical > 0);
         }

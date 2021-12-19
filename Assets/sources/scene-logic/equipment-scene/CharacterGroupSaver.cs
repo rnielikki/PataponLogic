@@ -99,13 +99,12 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
                 foreach (var classType in Core.Global.GlobalData.PataponInfo.CurrentClasses)
                 {
-#pragma warning disable S1643 // Strings should not be concatenated using '+' in a loop - real time update
                     (var weaponName, var protectorName) = Core.Character.Class.ClassMetaData.GetWeaponAndProtectorName(classType);
-                    if (!isEquipped(classType, weaponName))
+                    if (!isEquipped(classType, Core.Character.Equipments.EquipmentType.Weapon, weaponName))
                     {
                         AddMessage($"\n[!] Can optimize {weaponName} for {classType}");
                     }
-                    if (!isEquipped(classType, protectorName))
+                    if (!isEquipped(classType, Core.Character.Equipments.EquipmentType.Protector, protectorName))
                     {
                         AddMessage($"\n[!] Can optimize {protectorName} for {classType}");
                     }
@@ -117,15 +116,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     dialogContent.text += message;
                     UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
                 }
-#pragma warning restore S1643 // Strings should not be concatenated using '+' in a loop
             }
-            bool isEquipped(Core.Character.Class.ClassType classType, string equipmentName)
+            bool isEquipped(Core.Character.Class.ClassType classType, Core.Character.Equipments.EquipmentType equipmentType, string equipmentName)
             {
                 if (equipmentName == null) return true;
                 var bestEquipmentIndex = Core.Global.GlobalData.Inventory.GetBestEquipmentIndex(equipmentName);
                 if (bestEquipmentIndex < 1) return true;
                 var bestEquipment = Core.Items.ItemLoader.GetItem<Core.Items.EquipmentData>(Core.Items.ItemType.Equipment, equipmentName, bestEquipmentIndex);
-                return Core.Global.GlobalData.PataponInfo.IsEquippedInside(classType, bestEquipment);
+                return Core.Global.GlobalData.PataponInfo.HasBestEquipmentInside(classType, equipmentType, bestEquipment.LevelGroup);
             }
         }
         public void GoBack()

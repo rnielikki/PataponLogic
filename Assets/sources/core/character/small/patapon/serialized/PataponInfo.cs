@@ -131,9 +131,9 @@ namespace PataRoad.Core.Character.Patapons.Data
             }
             return res != null;
         }
-        public bool IsEquippedInside(Class.ClassType classType, EquipmentData equipmentData)
+        public bool HasBestEquipmentInside(Class.ClassType classType, Equipments.EquipmentType equipmentType, int LevelGroup)
         {
-            return _classInfoMap[classType].GetAllHolders(equipmentData).Count > 0;
+            return _classInfoMap[classType].GetMaxEquipmentLevel(equipmentType) >= LevelGroup;
         }
 
         private (Class.ClassType type, int index)? GetPataponMetaFrom(IEnumerable<Class.ClassType> classes, EquipmentData equipmentData, PataponData pataponData = null)

@@ -28,7 +28,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
             IsEmpty = _selectables.Count == 0;
         }
         public void SelectParent(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
-            => SelectOther(_parent, _parent.ResumeFromZoom);
+        {
+            _index = 0;
+            SelectOther(_parent, _parent.ResumeFromZoom);
+        }
         protected override void OnThisEnabled()
         {
             _equipmentSummary.enabled = true;

@@ -31,6 +31,15 @@ namespace PataRoad.Core.Items
         [SerializeField]
         private string _description;
         public string Description => _description;
+
+        /// <summary>
+        /// Level group of the equipment data. Used for optimization - same level group means same level.
+        /// </summary>
+        [SerializeField]
+        [Tooltip("Keep same or more level to more index!")]
+        private int _levelGroup;
+        public int LevelGroup => _levelGroup;
+
         /// <summary>
         /// The stat bonus that attached to the weapon.
         /// </summary>
