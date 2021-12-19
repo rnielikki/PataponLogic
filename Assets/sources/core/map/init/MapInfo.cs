@@ -25,12 +25,23 @@ namespace PataRoad.Core.Global
         public bool SuccededLast => _succeededLast;
         public const string MapPath = "Map/Levels/";
 
+        [SerializeReference]
+        private MapWeather _patapolisWeather;
+        public MapWeather PatapolisWeather => _patapolisWeather;
+
         internal MapInfo()
         {
             LoadResource(0);
             LoadResource(1);
             NextMap = LoadResource(2);
-            RefreshAllWeathers();
+
+            _patapolisWeather = new MapWeather(new Dictionary<Map.Weather.WeatherType, float>()
+            {
+                { Map.Weather.WeatherType.Rain, 0.1f },
+                { Map.Weather.WeatherType.Storm, 0.05f },
+                { Map.Weather.WeatherType.Fog, 0.05f },
+                { Map.Weather.WeatherType.Snow, 0.05f }
+            }, 0.9f);
         }
         public IEnumerable<MapDataContainer> GetAllAvailableMaps() => _openMaps.Values;
 
@@ -67,6 +78,11 @@ namespace PataRoad.Core.Global
             RefreshAllWeathers();
         }
         public void RefreshAllWeathers()
+        {
+            RefreshAllMapWeathers();
+            _patapolisWeather.ChangeWeather();
+        }
+        public void RefreshAllMapWeathers()
         {
             foreach (var map in _openMaps)
             {

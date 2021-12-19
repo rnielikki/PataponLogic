@@ -48,8 +48,8 @@ namespace PataRoad.Core.Map
             _backgroundLoader.Init(_mapData?.BackgroundName ?? "Ruins");
 
             //-- weather.
-            _weatherInfo.Init(nextMap.CurrentWeather);
-            _weatherInfo.Wind.Init(nextMap.CurrentWind);
+            _weatherInfo.Init(nextMap.Weather.CurrentWeather);
+            _weatherInfo.Wind.Init(nextMap.Weather.CurrentWind);
 
             //-- missionPoint.
             _missionPoint.FilledMissionCondition = _mapData.FilledMissionCondition;

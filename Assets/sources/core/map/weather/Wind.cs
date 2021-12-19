@@ -9,6 +9,7 @@ namespace PataRoad.Core.Map.Weather
     /// </summary>
     public class Wind : MonoBehaviour
     {
+        [SerializeField]
         private WindZone _zone;
         private const float _windRange = 3; //min is -_windRange and max is _windRange
         private const float _changingWindRange = _windRange * 0.75f; //min is -_windRange and max is _windRange
@@ -59,7 +60,6 @@ namespace PataRoad.Core.Map.Weather
                 { WindType.TailWind, StartTailwind }
             };
 
-            _zone = GetComponentInChildren<WindZone>();
             _windChangeWaitTime = _windChangeTime / _windChangeInterval;
             _windChangeSize = _windRange / _windChangeInterval;
             _image.Init();

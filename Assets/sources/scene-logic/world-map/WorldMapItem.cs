@@ -47,7 +47,7 @@ namespace PataRoad.SceneLogic.WorldMap
 
             _button.onClick.AddListener(StartMission);// -- start mission
             _sprite.sprite = weatherSprite;
-            _windSprite.enabled = map.CurrentWind != Core.Map.Weather.WindType.None;
+            _windSprite.enabled = map.Weather.CurrentWind != Core.Map.Weather.WindType.None;
 
             _button.onClick.AddListener(() => Core.Global.GlobalData.Sound.PlayGlobal(_enterSound));
         }

@@ -16,7 +16,7 @@ namespace PataRoad.Core.Map.Weather
         private AudioClip _lightningSound;
         private GameObject _lightning;
 
-        private void Awake()
+        private void Start()
         {
             _lightning = GetComponentInChildren<LightningContact>(true).gameObject;
             _lightning.transform.parent = transform.root.parent;

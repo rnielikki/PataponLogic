@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PataRoad.Core.Map
 {
+    [System.Serializable]
     public class MapDataContainer : ISerializationCallbackReceiver
     {
         private MapData _mapData;
@@ -11,14 +11,9 @@ namespace PataRoad.Core.Map
         private int _mapDataIndex;
         public int Index => _mapDataIndex;
 
-        [SerializeField]
-        private Weather.WeatherType _currentWeather;
-        public Weather.WeatherType CurrentWeather => _currentWeather;
-        [SerializeField]
-        private Weather.WindType _currentWind;
-        public Weather.WindType CurrentWind => _currentWind;
-
-        private Dictionary<Weather.WeatherType, float> _weatherValueMap = new Dictionary<Weather.WeatherType, float>();
+        [SerializeReference]
+        private MapWeather _weather;
+        public MapWeather Weather => _weather;
 
         [SerializeField]
         private int _reachedMaxLevel; //for example difficulty hard->easy->hard scenario
@@ -34,6 +29,7 @@ namespace PataRoad.Core.Map
             _mapDataIndex = index;
             _mapData = LoadResource();
             _reachedMaxLevel = _level = 1;
+            _weather = new MapWeather(_mapData);
         }
         public string GetNameWithLevel()
         {
@@ -51,25 +47,7 @@ namespace PataRoad.Core.Map
                 return MapData.Name;
             }
         }
-        internal void ChangeWeather()
-        {
-            var rand = Random.Range(0, 1f);
-            _currentWind = (rand < MapData.NoWindChance) ? Weather.WindType.None : Weather.WindType.Changing;
-
-            rand = Random.Range(0, 1f);
-            float prob = 0;
-
-            foreach (var kv in _weatherValueMap)
-            {
-                prob += kv.Value;
-                if (rand < prob)
-                {
-                    _currentWeather = kv.Key;
-                    return;
-                }
-            }
-            _currentWeather = Weather.WeatherType.Clear;
-        }
+        internal void ChangeWeather() => _weather.ChangeWeather();
 
         internal void LevelUp()
         {
@@ -86,18 +64,7 @@ namespace PataRoad.Core.Map
             if (mapData == null) return null;
             mapData.Index = _mapDataIndex;
 
-            LoadWeatherMap(mapData);
             return mapData;
-        }
-        private void LoadWeatherMap(MapData mapData)
-        {
-            _weatherValueMap = new Dictionary<Weather.WeatherType, float>()
-            {
-                { Weather.WeatherType.Rain, mapData.RainWeatherChance },
-                { Weather.WeatherType.Storm, mapData.StormWeatherChance },
-                { Weather.WeatherType.Fog, mapData.FogWeatherChance },
-                { Weather.WeatherType.Snow, mapData.SnowWeatherChance }
-            };
         }
         public void OnBeforeSerialize()
         {
@@ -106,6 +73,7 @@ namespace PataRoad.Core.Map
         public void OnAfterDeserialize()
         {
             _mapData = LoadResource();
+            _weather.LoadWeatherMap(_mapData);
             var maxLevel = _mapData.GetMaxLevel();
             if (maxLevel < _level)
             {
