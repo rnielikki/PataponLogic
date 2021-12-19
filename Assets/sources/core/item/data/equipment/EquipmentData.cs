@@ -45,7 +45,7 @@ namespace PataRoad.Core.Items
         /// </summary>
         [SerializeReference]
         protected Stat _stat = new Stat();
-        public Stat Stat => _stat;
+        public virtual Stat Stat => _stat;
 
         /// <summary>
         /// Sprite image of the weapon.

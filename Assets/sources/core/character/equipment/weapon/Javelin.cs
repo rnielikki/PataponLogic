@@ -37,7 +37,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 var instance = Instantiate(_copiedJavelin, transform.root.parent);
                 if (angle != 0) instance.transform.Rotate(Vector3.forward * angle);
                 instance.GetComponent<WeaponInstance>()
-                    .Initialize(this)
+                    .Initialize(this, _color)
                     .Throw(minForce, maxForce);
             }
         }

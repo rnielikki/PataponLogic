@@ -1376,9 +1376,11 @@ MonoBehaviour:
   _defaultAttackTypeResistance:
     id: 1
   _elementalAttackType: 0
+  ElementalAttackType: 0
   _type: 6
   _weaponData: {fileID: 11400000, guid: bb9a14c1fc7862f4dadc0d3b08228ba5, type: 2}
   _protectorData: {fileID: 11400000, guid: 38f0e77e1499a344ea94e882126ea4a8, type: 2}
+  _gemData: {fileID: 11400000, guid: 43aa27696a1d69a4a8ede08f2c941474, type: 2}
   _attackTypeIndex: 0
   references:
     version: 1
@@ -2445,6 +2447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7986080316476884570}
+  - component: {fileID: 5390638098489392511}
   m_Layer: 7
   m_Name: Patapon-body
   m_TagString: Untagged
@@ -2469,6 +2472,21 @@ Transform:
   m_Father: {fileID: 8168655873741703540}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.997}
+--- !u!114 &5390638098489392511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7986080316476884571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42950a673da3f334eb46fa41dcbdfce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fixedEquipment: 0
+  _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 11400000, guid: 69713eb32a916424ab78c18a94ff78b9, type: 2}
 --- !u!1 &7986080316718378772
 GameObject:
   m_ObjectHideFlags: 0

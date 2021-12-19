@@ -94,7 +94,17 @@ namespace PataRoad.Core.Character
             StatusEffectManager = gameObject.AddComponent<SmallCharacterStatusEffectManager>();
 
             AttackTypeResistance = _data.AttackTypeResistance;
+            InitDistanceFromHead();
         }
+        /// <summary>
+        /// Sets distance from calculated Patapon head. Don't use this if the Patapon uses any vehicle.
+        /// </summary>
+        protected void InitDistanceFromHead()
+        {
+            CharacterSize = transform.Find(BodyName + "/Face")
+                .GetComponent<CircleCollider2D>().radius + 0.1f;
+        }
+
         public virtual void StopAttacking(bool pause)
         {
             StopWeaponAttacking();

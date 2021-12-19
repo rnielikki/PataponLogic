@@ -39,10 +39,7 @@ namespace PataRoad.Core.Character.Hazorons
             DefaultWorldPosition = transform.position.x;
             ClassData.InitLate(Stat);
         }
-        protected void InitDistanceFromHead()
-        {
-            CharacterSize = transform.Find(BodyName + "/Face").GetComponent<CircleCollider2D>().radius + 0.1f;
-        }
+
         public override float GetAttackValueOffset()
         {
             return Random.Range(0, 1f);

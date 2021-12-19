@@ -26,7 +26,7 @@ namespace PataRoad.Core.Character
 
         [SerializeField]
         private Equipments.Weapons.ElementalAttackType _elementalAttackType;
-        public Equipments.Weapons.ElementalAttackType ElementalAttackType => _elementalAttackType;
+        public Equipments.Weapons.ElementalAttackType ElementalAttackType { get; set; }
         /// <summary>
         /// Current Stat.
         /// </summary>
@@ -46,6 +46,7 @@ namespace PataRoad.Core.Character
 
         public virtual void Init()
         {
+            ElementalAttackType = _elementalAttackType;
             Animator = GetComponent<Animator>();
             if (Stat != null) return;
             InitStat();

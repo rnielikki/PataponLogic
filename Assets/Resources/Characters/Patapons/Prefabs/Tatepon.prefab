@@ -415,6 +415,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2031253671147651346}
+  - component: {fileID: 6129183505122890688}
   m_Layer: 8
   m_Name: Patapon-body
   m_TagString: Untagged
@@ -439,6 +440,21 @@ Transform:
   m_Father: {fileID: 2031253672270326859}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6129183505122890688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031253671147651347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42950a673da3f334eb46fa41dcbdfce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fixedEquipment: 0
+  _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 0}
 --- !u!1 &2031253671346788614
 GameObject:
   m_ObjectHideFlags: 0
@@ -1401,6 +1417,7 @@ MonoBehaviour:
   _defaultAttackTypeResistance:
     id: 1
   _elementalAttackType: 0
+  ElementalAttackType: 0
   _type: 0
   references:
     version: 1

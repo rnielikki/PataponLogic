@@ -24,7 +24,7 @@ namespace PataRoad.Core.Character
         public AttackMoveType Type { get; }
 
         private readonly IAttackMoveData _data;
-        private readonly float _attackDistance;
+        private readonly float _range;
 
         /// <summary>
         /// Creates the class that contains and calculates attack movement logic.
@@ -34,11 +34,12 @@ namespace PataRoad.Core.Character
         /// <param name="attackSpeed">The speed for animationg attack.</param>
         /// <param name="type">Attack movement type, which determines distance calculation logic.</param>
         /// <param name="attackDistance">Distance from enemy while attacking. -1 is default, which will use calculated distance from <see cref="Patapons"/>.</param>
-        internal AttackMoveModel(SmallCharacter character, string animationType, AttackMoveType type, float movingSpeed, float attackSpeed)
+        internal AttackMoveModel(SmallCharacter character, string animationType, AttackMoveType type, float movingSpeed, float attackSpeed, float Range = 5)
         {
             AnimationType = animationType;
             MovingSpeed = movingSpeed;
             AttackSpeedMultiplier = attackSpeed;
+            _range = Range;
             _data = character.ClassData.AttackMoveData;
 
             _distanceCalculator = character.DistanceCalculator;
@@ -51,7 +52,7 @@ namespace PataRoad.Core.Character
              _distanceCalculator.HasAttackTarget() || (Type == AttackMoveType.Rush && _data.IsAttackableRange());
         public bool IsInAttackDistance()
         {
-            return _distanceCalculator.IsInTargetRange(GetPosition(), MovingSpeed * Time.deltaTime);
+            return _distanceCalculator.IsInTargetRange(GetPosition(), _range * Time.deltaTime);
         }
 
         public float GetPosition() => GeAttackPositioneFromData();

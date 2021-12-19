@@ -12,6 +12,7 @@ namespace PataRoad.Core.Character
         public const float OriginalSight = 40; //After certain distance, Patapon can't find where is the enemy!
         public static float Sight { get; set; } = OriginalSight; //After certain distance, Patapon can't find where is the enemy!
 
+        public const float MaxAttackDistance = 25;
         /// <summary>
         /// Like Tatepon Ponchaka~Ponpon. This position is relative to the root Patapon position manager.
         /// </summary>

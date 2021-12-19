@@ -5,6 +5,7 @@
         Weapon,
         Protector,
         Helm,
-        Rarepon
+        Rarepon,
+        Gem
     }
 }

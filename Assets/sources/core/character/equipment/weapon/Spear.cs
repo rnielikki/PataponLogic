@@ -32,7 +32,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
 
             spearForThrowing.GetComponent<WeaponInstance>()
-                .Initialize(this)
+                .Initialize(this, _color)
                 .Throw(minForce, maxForce);
         }
         internal override void SetLastAttackCommandType(AttackCommandType attackCommandType)

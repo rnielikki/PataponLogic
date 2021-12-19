@@ -76,7 +76,6 @@ namespace PataRoad.Core.Character.Patapons
             Group = GetComponentInParent<PataponGroup>();
             DistanceManager = gameObject.AddComponent<PataponDistanceManager>();
             DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
-            InitDistanceFromHead();
 
             StatusEffectManager.SetRecoverAction(() =>
             {
@@ -94,15 +93,6 @@ namespace PataRoad.Core.Character.Patapons
         private void Start()
         {
             ClassData.InitLate(_realStat);
-        }
-
-        /// <summary>
-        /// Sets distance from calculated Patapon head. Don't use this if the Patapon uses any vehicle.
-        /// </summary>
-        protected void InitDistanceFromHead()
-        {
-            CharacterSize = transform.Find(BodyName + "/Face")
-                .GetComponent<CircleCollider2D>().radius + 0.1f;
         }
 
         public void MoveOnDrum(string drumName)

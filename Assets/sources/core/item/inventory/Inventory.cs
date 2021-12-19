@@ -104,10 +104,16 @@ namespace PataRoad.Core.Items
             for (int i = 1; i < 11; i++) AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", i), 1);
             for (int i = 1; i < 11; i++) AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", i), 1);
 
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Gem", 1), 10);
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Gem", 2), 10);
+            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Gem", 3), 10);
+
             AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Bow", 1), 3);
             AddMultiple(ItemLoader.GetItem(ItemType.Key, "Boss", 0), 1);
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 1));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 2));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 3));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 4));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 5));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 6));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 7));

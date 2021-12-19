@@ -63,7 +63,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             foreach (var equipmentType in pataponData.EquipmentManager.GetAvailableEquipmentTypes)
             {
-                if (equipmentType != Core.Character.Equipments.EquipmentType.Rarepon &&
+                if (!(equipmentType == Core.Character.Equipments.EquipmentType.Rarepon || equipmentType == Core.Character.Equipments.EquipmentType.Gem) &&
                     !(equipmentType == Core.Character.Equipments.EquipmentType.Helm && !pataponData.EquipmentManager.CanEquipHelm())
                         )
                     OptimizeOne(equipmentType);

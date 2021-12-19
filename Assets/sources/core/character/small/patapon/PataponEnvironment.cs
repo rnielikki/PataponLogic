@@ -8,7 +8,13 @@ namespace PataRoad.Core.Character.Patapons
     {
         //Marching info
         //------- DO NOT SET SIGHT TO SHORTER THAN LONGEST RANGE (Mahopon) DISTANCE!
-        public const float WalkingSteps = 6; //defines walking steps for one PATAPATA song.
+        /// <summary>
+        /// defines walking steps for one PATAPATA song.
+        /// </summary>
+        public const float WalkingSteps = 6;
+        /// <summary>
+        /// Walking step (one PATAPATA) per second.
+        /// </summary>
         public const float Steps = WalkingSteps / Rhythm.RhythmEnvironment.TurnSeconds;
 
         //Distance info

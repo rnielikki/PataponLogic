@@ -95,7 +95,6 @@ namespace PataRoad.Core.Character.Class
         /// <param name="type">Telling attack movement type, if it's attack, defend or rush.</param>
         /// <param name="movingSpeed">Moving speed MULTIPLIER. It automatically multiplies to <see cref="Stat.MovementSpeed"/>.</param>
         /// <param name="attackSpeedMultiplier">Attack speed multiplier, default is 1. Yumipon fever attack is expected to 3.</param>
-        /// <param name="attackDistance">Attack distance. default distance value is <see cref="AttackDistance"/>.</param>
         /// <returns>Attack Move Model for <see cref="AttackMoveController"/>.</returns>
         protected AttackMoveModel GetAttackMoveModel(string animationType, AttackMoveType type = AttackMoveType.Attack, float movingSpeed = 1, float attackSpeedMultiplier = 1)
         {
@@ -108,7 +107,7 @@ namespace PataRoad.Core.Character.Class
                 attackSpeedMultiplier
                 );
         }
-        public bool IsInAttackDistance()
+        public virtual bool IsInAttackDistance()
         {
             return AttackMoveData.IsAttackableRange();
         }

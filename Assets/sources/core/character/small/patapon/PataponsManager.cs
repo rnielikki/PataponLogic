@@ -173,7 +173,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             if (IsMovingForward && _groups[0].CanGoForward())
             {
-                transform.Translate(PataponEnvironment.Steps * Time.deltaTime, 0, 0);
+                transform.position += PataponEnvironment.Steps * Vector3.right * Time.deltaTime;
                 if (_useMissionTower && transform.position.x >= _missionEndPosition)
                 {
                     Map.MissionPoint.Current.EndMission();

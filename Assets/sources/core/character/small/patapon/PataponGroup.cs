@@ -15,7 +15,6 @@ namespace PataRoad.Core.Character.Patapons
 
         private Display.PataponsHitPointDisplay _pataponsHitPointDisplay;
         public Class.ClassType ClassType { get; internal set; }
-        private float _marchDistance;
 
         private PataponsManager _manager;
 
@@ -24,8 +23,6 @@ namespace PataRoad.Core.Character.Patapons
             if (_patapons != null) return;
             General = GetComponentInChildren<General.PataponGeneral>();
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
-            var sample = _patapons[0];
-            _marchDistance = sample.AttackDistanceWithOffset;
 
             _manager = manager;
 
@@ -33,10 +30,13 @@ namespace PataRoad.Core.Character.Patapons
         }
         public bool CanGoForward()
         {
+            if (transform.position.x + PataponEnvironment.Steps >= Hazorons.HazoronPositionManager.Current.GetClosestHazoronPosition()) return false;
             var firstPon = _patapons[0];
-            var closest = firstPon.DistanceCalculator.GetClosestForMarch();
-            return closest == null || (closest.Value.x > transform.position.x + _marchDistance
-                && Hazorons.HazoronPositionManager.Current.GetClosestHazoronPosition() > transform.position.x);
+            var closestV2 = firstPon.DistanceCalculator.GetClosestForMarch();
+            if (closestV2 == null) return true;
+            var closest = closestV2.Value.x + PataponEnvironment.Steps * Time.deltaTime;
+            var nextPosition = transform.position.x + PataponEnvironment.Steps * Time.deltaTime;
+            return closest > nextPosition;
         }
 
         internal void RemovePon(Patapon patapon)

@@ -42,5 +42,12 @@ namespace PataRoad.Core.Character.Class
                 _attackController.StartAttack(AttackCommandType.FeverDefend);
             }
         }
+        public override bool IsInAttackDistance()
+        {
+            var closest = _character.DistanceCalculator.GetClosest();
+            if (closest == null) return false;
+
+            return _character.DistanceCalculator.IsInTargetRange(closest.Value.x, _character.CharacterSize);
+        }
     }
 }

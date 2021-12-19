@@ -27,6 +27,8 @@ namespace PataRoad.Core.Character.Patapons.Data
         [SerializeField]
         private int _rareponIndex = -1;
         [SerializeField]
+        private int _gemIndex = -1;
+        [SerializeField]
         private bool _isGeneral;
 
         public PataponEquipmentInfo(Class.ClassType classType, bool isGeneral)
@@ -85,6 +87,10 @@ namespace PataRoad.Core.Character.Patapons.Data
             if (_rareponIndex == 0 && _helmIndex >= 0)
             {
                 _map.Add(EquipmentType.Helm, LoadEquipment("Helm", _helmIndex));
+            }
+            if (!_isGeneral && _gemIndex >= 0)
+            {
+                _map.Add(EquipmentType.Gem, LoadEquipment("Gem", _gemIndex));
             }
         }
         private EquipmentData LoadEquipment(string group, int index) =>

@@ -21,6 +21,7 @@ namespace PataRoad.Core.Character.Equipments
         /// </summary>
         public Protector Protector { get; private set; }
         public Rarepon Rarepon { get; private set; }
+        public ElementGem ElementGem { get; private set; }
         private readonly Dictionary<EquipmentType, Equipment> _map;
         public IEnumerable<Equipment> Equipments => _map.Values;
         private readonly SmallCharacterData _target;
@@ -31,6 +32,7 @@ namespace PataRoad.Core.Character.Equipments
             Weapon = target.GetComponentInChildren<Weapon>();
             Protector = target.GetComponentInChildren<Protector>();
             Rarepon = target.GetComponentInChildren<Rarepon>();
+            ElementGem = target.GetComponentInChildren<ElementGem>();
 
             _map = new Dictionary<EquipmentType, Equipment>();
             _target = target;
@@ -41,6 +43,7 @@ namespace PataRoad.Core.Character.Equipments
             AddToMapIfNotNull(EquipmentType.Protector, Protector);
             AddToMapIfNotNull(EquipmentType.Rarepon, Rarepon);
             AddToMapIfNotNull(EquipmentType.Helm, Helm);
+            AddToMapIfNotNull(EquipmentType.Gem, ElementGem);
 
 
             foreach (var eq in equipmentData)
@@ -58,7 +61,6 @@ namespace PataRoad.Core.Character.Equipments
                 }
             }
         }
-
         private void AddToMapIfNotNull<T>(EquipmentType type, T equipment) where T : Equipment
         {
             //, string equipmentGroup, SmallCharacterData target

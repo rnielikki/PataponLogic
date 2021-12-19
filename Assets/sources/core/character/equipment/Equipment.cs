@@ -39,8 +39,8 @@ namespace PataRoad.Core.Character.Equipments
         }
         internal void Load()
         {
-            if (Holder != null && HolderData != null && _defaultEquipmentData != null) return;
-            Holder = GetComponentInParent<SmallCharacter>();
+            if (HolderData != null && _defaultEquipmentData != null) return;
+            if (Holder == null) Holder = GetComponentInParent<SmallCharacter>();
             HolderData = GetComponentInParent<SmallCharacterData>();
             if (!_fixedEquipment)
             {

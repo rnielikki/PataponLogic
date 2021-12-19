@@ -13,6 +13,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
         protected override EquipmentType _type => EquipmentType.Weapon;
         protected virtual float _throwMass => Mass;
+        protected Color _color { get; private set; }
 
         [SerializeField]
         private AttackType _attackType;
@@ -74,6 +75,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (_initialVelocity.x == 0) return 0; //No zero division
             var velocityRate = _initialVelocity.y / _initialVelocity.x;
             return Mathf.Sqrt((yDistance + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance;
+        }
+        internal virtual void Colorize(Color color)
+        {
+            if (_spriteRenderers == null) LoadRenderersAndImage();
+            foreach (var renderer in _spriteRenderers)
+            {
+                renderer.color = color;
+            }
+            _color = color;
         }
     }
 }
