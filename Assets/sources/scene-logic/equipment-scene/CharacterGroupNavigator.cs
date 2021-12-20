@@ -19,6 +19,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private GameObject _equipmentSummaryField;
         [SerializeField]
         private HeadquarterMenu _headquarterMenu;
+        internal HeadquarterMenu HeadquarterMenu => _headquarterMenu;
         [SerializeField]
         AudioClip _soundZoomIn;
         [SerializeField]

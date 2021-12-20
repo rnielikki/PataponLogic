@@ -6,6 +6,7 @@ namespace PataRoad.Common.GameDisplay
     {
         [SerializeField]
         private RectTransform _viewportRectTransform;
+        [SerializeField]
         private RectTransform _rectTransform;
         private float _elementHeight;
         private bool _enabled;
@@ -22,7 +23,6 @@ namespace PataRoad.Common.GameDisplay
         internal void Init(IScrollListElement anyElement) => Init(anyElement.RectTransform.rect.size.y);
         internal void Init(float cellHeight)
         {
-            _rectTransform = GetComponent<RectTransform>();
             _elementHeight = cellHeight;
             _enabled = true;
         }

@@ -1,4 +1,5 @@
 ﻿using PataRoad.Core.Items;
+using PataRoad.SceneLogic.CommonSceneLogic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,7 +14,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private Text _text;
         private IItem _item;
         public IItem Item => _item;
-        private EquipmentDisplay _parent;
+        private InventoryDisplay _parent;
         private Common.GameDisplay.ScrollList _scrollList;
 
         public RectTransform RectTransform { get; private set; }
@@ -24,7 +25,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             RectTransform = GetComponent<RectTransform>();
             Selectable = GetComponent<Selectable>();
             _text = GetComponentInChildren<Text>();
-            _parent = GetComponentInParent<EquipmentDisplay>();
+            _parent = GetComponentInParent<InventoryDisplay>();
             _scrollList = _parent.ScrollList;
         }
         public void Init(IItem item, int amount)

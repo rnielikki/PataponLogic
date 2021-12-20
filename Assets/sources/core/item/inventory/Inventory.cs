@@ -28,6 +28,11 @@ namespace PataRoad.Core.Items
         /// <returns><c>true</c> if exists in inventory, otherwise <c>false</c>.</returns>
         public bool HasItem(IItem item) => _existingData.ContainsKey(item);
         /// <summary>
+        /// Retrieves all items the player have from the inventory.
+        /// </summary>
+        /// <returns>The inventory data of all items from the inventory.</returns>
+        public IEnumerable<InventoryData> GetAllItems() => _existingData.Values;
+        /// <summary>
         /// Adds an item to the inventory.
         /// </summary>
         ///<param name="item">The item to remove.</param>
@@ -122,6 +127,11 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "GeneralMode", 0));
             AddItem(ItemLoader.GetItem(ItemType.Key, "GeneralMode", 1));
             AddItem(ItemLoader.GetItem(ItemType.Key, "GeneralMode", 2));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 2));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 4));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 12));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 20));
+            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 22));
         }
         public int GetAmount(IItem item) =>
            _existingData.ContainsKey(item) ? _existingData[item].Amount : 0;

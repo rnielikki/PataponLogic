@@ -10,17 +10,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
     //dirty, I know, but can't even.
     public class EquipmentDisplay : MonoBehaviour
     {
-        private ActionEventMap _map;
         private SpriteNavigator _nav;
         [SerializeField]
         private CharacterGroupNavigator _groupNav;
         [SerializeField]
         private GameObject _child;
-
-        [SerializeField]
-        private EquipmentSummary _summaryForEquipment;
-        [SerializeField]
-        private HeadquarterMenu _summaryForHeadquarter;
 
         private Core.Character.PataponData _currentPataponData;
         [SerializeField]
@@ -29,14 +23,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private RareponSelector _rareponSelector;
 
-        [SerializeField]
-        private GameObject _itemTemplate;
-
         private HeadquarterSummaryElement _summaryElem;
+
+        [SerializeField]
         private HorizontalLayoutGroup _layout;
 
         [SerializeField]
-        private UnityEngine.Events.UnityEvent<IItem> _onItemSelected;
+        private InventoryDisplay _inventoryDisplay;
 
         [Header("Sound")]
         [SerializeField]
@@ -46,20 +39,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         private AudioClip _soundClose;
 
-        [Header("Scroll")]
-        [SerializeField]
-        private Common.GameDisplay.ScrollList _scrollList;
-        internal Common.GameDisplay.ScrollList ScrollList => _scrollList;
-        [SerializeField]
-        private GridLayoutGroup _gridLayoutGroup;
-
-        // Start is called before the first frame update
-        void Awake()
+        private void Awake()
         {
-            _map = GetComponent<ActionEventMap>();
-            _map.enabled = false;
             _layout = GetComponent<HorizontalLayoutGroup>();
-            _scrollList.Init(_gridLayoutGroup.cellSize.y);
         }
         public void ShowEquipment(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
@@ -68,32 +50,35 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _currentPataponData = _nav?.Current?.GetComponent<Core.Character.PataponData>();
             if (_currentPataponData == null) return;
 
-            var elem = _summaryForEquipment.Current;
-            _summaryForEquipment.SetInactive();
 
-            if (elem.Item is Core.Character.Equipments.Weapons.RareponData rarepon)
+            if (_nav is CharacterNavigator characterNavigator)
             {
-                _rareponSelector.Open(_nav, _currentPataponData, rarepon);
-                return;
-            }
+                var elem = characterNavigator.EquipmentSummary.Current;
+                characterNavigator.EquipmentSummary.SetInactive();
 
-            var itemGroup = LoadItemType(_currentPataponData, elem);
+                if (elem.Item is Core.Character.Equipments.Weapons.RareponData rarepon)
+                {
+                    _rareponSelector.Open(_nav, _currentPataponData, rarepon);
+                    return;
+                }
 
-            var obj = Instantiate(_itemTemplate, _child.transform);
-            bool isEquipment = itemGroup.type == ItemType.Equipment;
-            IItem item = isEquipment ? ItemLoader.GetItem(itemGroup.type, itemGroup.group, 0) : null;
+                var itemGroup = LoadItemType(_currentPataponData, elem);
 
-            gameObject.SetActive(true);
-            SetPosition(_currentPataponData.IndexInGroup < 2);
-            if (isEquipment)
-            {
-                obj.GetComponent<ItemDisplay>().Init(item);
+                bool isEquipment = itemGroup.type == ItemType.Equipment;
+                IItem item = isEquipment ? ItemLoader.GetItem(itemGroup.type, itemGroup.group, 0) : null;
+
+                gameObject.SetActive(true);
+                SetPosition(_currentPataponData.IndexInGroup < 2);
+                if (isEquipment)
+                {
+                    _inventoryDisplay.AddItem(item);
+                }
+                else
+                {
+                    _inventoryDisplay.AddItem(null);
+                }
+                SetAppear(itemGroup.type, itemGroup.group, elem.Item, isEquipment);
             }
-            else
-            {
-                obj.GetComponent<ItemDisplay>().InitEmpty();
-            }
-            SetAppear(itemGroup.type, itemGroup.group, elem.Item, isEquipment);
         }
         public void ShowItem(HeadquarterSummaryElement elem)
         {
@@ -102,47 +87,24 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _summaryElem = elem;
             _nav = _groupNav;
 
-            _summaryForHeadquarter.SetInactive();
+            _groupNav.HeadquarterMenu.SetInactive();
 
             SetPosition(false);
 
             //add empty
-            var obj = Instantiate(_itemTemplate, _child.transform);
-            obj.GetComponent<ItemDisplay>().InitEmpty();
+            _inventoryDisplay.AddItem(null);
+
             SetAppear(ItemType.Key, elem.AdditionalData);
         }
         private void SetAppear(ItemType type, string itemGroup, IItem currentItem = null, bool isEquipments = false)
         {
-            _map.enabled = true;
+            _inventoryDisplay.enabled = true;
             _nav.Freeze();
 
             Core.Global.GlobalData.Sound.PlayInScene(_soundOpen);
-
-            foreach (var inventoryData in Core.Global.GlobalData.Inventory.GetItemsByType(type, itemGroup))
-            {
-                var obj = Instantiate(_itemTemplate, _child.transform);
-                var display = obj.GetComponent<ItemDisplay>();
-
-                var amount = inventoryData.Amount;
-                if (isEquipments)
-                {
-                    amount -= Core.Global.GlobalData.PataponInfo.GetEquippedCount(inventoryData.Item as EquipmentData);
-                }
-                display.Init(inventoryData.Item, amount);
-            }
-            var allItemDisplays = GetComponentsInChildren<ItemDisplay>();
-
-            foreach (var obj in allItemDisplays.Where(item => item.Item == currentItem && item.Item != null))
-            {
-                if (isEquipments && (obj.Item as EquipmentData).Index == 0) continue;
-                obj.GetComponent<Selectable>().interactable = false;
-                obj.MarkAsDisable();
-            }
-            var lastSelectable = allItemDisplays.LastOrDefault(item => item.GetComponent<Selectable>().interactable);
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
-                    lastSelectable?.gameObject
-                );
-            _scrollList.SetMaximumScrollLength(0, lastSelectable);
+            _inventoryDisplay.SelectLast(
+                _inventoryDisplay.LoadData(Core.Global.GlobalData.Inventory.GetItemsByType(type, itemGroup), currentItem, isEquipments)
+            );
         }
         public void HideEquipment() => HideEquipment(_currentPataponData != null);
         private void HideEquipment(bool wasFromEquipmentSummary, bool equipped = false)
@@ -152,15 +114,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             Core.Global.GlobalData.Sound.PlayInScene(equipped ? _soundSelected : _soundClose);
 
-            _map.enabled = false;
             gameObject.SetActive(false);
 
             foreach (Transform item in _child.transform)
             {
                 Destroy(item.gameObject);
             }
-            if (wasFromEquipmentSummary) _summaryForEquipment.ResumeToActive();
-            else _summaryForHeadquarter.ResumeToActive();
+            if (wasFromEquipmentSummary) (_nav as CharacterNavigator)?.EquipmentSummary?.ResumeToActive();
+            else (_nav as CharacterGroupNavigator)?.HeadquarterMenu?.ResumeToActive();
             _currentPataponData = null;
             _summaryElem = null;
         }
@@ -202,7 +163,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             HideEquipment(wasFromEquipmentSummary, true);
         }
-        public void SelectItem(ItemDisplay item) => _onItemSelected.Invoke(item.Item);
         private (ItemType type, string group) LoadItemType(Core.Character.PataponData data, EquipmentSummaryElement equipElement)
         {
             if (equipElement.IsGeneralMode) return (ItemType.Key, "GeneralMode");

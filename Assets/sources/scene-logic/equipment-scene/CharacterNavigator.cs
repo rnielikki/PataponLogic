@@ -8,6 +8,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private CharacterGroupNavigator _parent;
         [SerializeField]
         private EquipmentSummary _equipmentSummary;
+        internal EquipmentSummary EquipmentSummary => _equipmentSummary;
         public bool IsEmpty { get; private set; }
 
         /// <summary>
