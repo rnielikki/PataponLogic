@@ -59,6 +59,7 @@ namespace PataRoad.Core.Map
                 { Weather.WeatherType.Snow, mapData.SnowWeatherChance }
             };
             _noWindChance = mapData.NoWindChance;
+            ChangeWeather();
         }
 
         public void OnAfterDeserialize()

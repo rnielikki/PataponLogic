@@ -244,6 +244,7 @@ GameObject:
   - component: {fileID: 8544532995383734318}
   - component: {fileID: 8544532995383734319}
   - component: {fileID: 8544532995383734313}
+  - component: {fileID: 6533826471285469680}
   m_Layer: 5
   m_Name: RareponTree
   m_TagString: Untagged
@@ -330,11 +331,45 @@ MonoBehaviour:
   _onClicked:
     m_PersistentCalls:
       m_Calls: []
+  _onClosed:
+    m_PersistentCalls:
+      m_Calls: []
   _newRareponSound: {fileID: 8300000, guid: 5c324d5309bf1364ebf91cd65d456bea, type: 3}
   _equipmentSetter: {fileID: 0}
-  _actionEventMap: {fileID: 0}
+  _actionEventMap: {fileID: 6533826471285469680}
   _descriptionTitle: {fileID: 1749043200907020427}
   _descriptionContent: {fileID: 1110538053162135893}
+--- !u!114 &6533826471285469680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544532995383734317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc606795e722b840a16f29a227efd7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actionAndEvents:
+  - ActionName: UI/Cancel
+    OnPerformed:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8544532995383734313}
+          m_TargetAssemblyTypeName: PataRoad.SceneLogic.EquipmentScene.RareponSelector,
+            Assembly-CSharp
+          m_MethodName: Close
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  _sender: {fileID: 0}
 --- !u!1 &8675470423047094312
 GameObject:
   m_ObjectHideFlags: 0
@@ -525,6 +560,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8544532995383734316}
     m_Modifications:
+    - target: {fileID: 483534814517558627, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
+      propertyPath: _index
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8249533403908419428, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
       propertyPath: m_Name
       value: Rarepon (2)
@@ -627,6 +666,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8544532995383734316}
     m_Modifications:
+    - target: {fileID: 483534814517558627, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
+      propertyPath: _index
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8249533403908419428, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
       propertyPath: m_Name
       value: Rarepon (1)

@@ -12,5 +12,9 @@ namespace PataRoad.Common
         {
             SceneManager.LoadScene(_sceneName);
         }
+        public void LoadSceneSmoothly()
+        {
+            SceneLoadingAction.Create(_sceneName, false);
+        }
     }
 }

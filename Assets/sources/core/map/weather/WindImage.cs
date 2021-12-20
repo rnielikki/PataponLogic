@@ -7,16 +7,16 @@ namespace PataRoad.Core.Map.Weather
     /// </summary>
     public class WindImage : MonoBehaviour
     {
+        [SerializeField]
         private TrailRenderer _trail;
+        [SerializeField]
         private Animator _animator;
-        private Color _color;
+        private Color _color = new Color(1, 1, 1);
+        [SerializeField]
         private AudioSource _windSound;
         public void Init()
         {
-            _trail = GetComponent<TrailRenderer>();
-            _animator = GetComponent<Animator>();
             _color = new Color(1, 1, 1);
-            _windSound = GetComponent<AudioSource>();
             PlayAnimation();
         }
         public void ClearTrail()

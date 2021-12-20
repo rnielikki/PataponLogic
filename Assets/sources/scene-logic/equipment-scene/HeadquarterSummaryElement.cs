@@ -7,14 +7,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
 {
     public class HeadquarterSummaryElement : SummaryElement
     {
-        [UnityEngine.SerializeField]
+        [SerializeField]
         UnityEngine.Events.UnityEvent<HeadquarterSummaryElement> _onSubmit;
         public UnityEngine.Events.UnityEvent<HeadquarterSummaryElement> OnSubmit => _onSubmit;
 
-        [UnityEngine.SerializeField]
+        [SerializeField]
         string _bindingName;
 
-        [UnityEngine.SerializeField]
+        [SerializeField]
         string _additionalData;
         public string AdditionalData => _additionalData;
 

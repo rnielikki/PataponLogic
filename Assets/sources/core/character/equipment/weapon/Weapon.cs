@@ -13,7 +13,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
         protected override EquipmentType _type => EquipmentType.Weapon;
         protected virtual float _throwMass => Mass;
-        protected Color _color { get; private set; }
+        protected Color _color { get; private set; } = Color.white;
 
         [SerializeField]
         private AttackType _attackType;

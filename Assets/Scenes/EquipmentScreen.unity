@@ -738,7 +738,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
   m_PrefabInstance: {fileID: 8544532995234266917}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8544532995234266918}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea2f9db4e7d182f46b88a1d1ea013291, type: 3}
@@ -15230,18 +15230,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 287791401}
     m_Modifications:
-    - target: {fileID: 8079909799124219798, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
-      propertyPath: _index
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8079909799473519516, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
-      propertyPath: _index
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
-      propertyPath: _actionEventMap
-      value: 
-      objectReference: {fileID: 8544532995234266919}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _equipmentSetter
       value: 
@@ -15392,39 +15380,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
---- !u!1 &8544532995234266918 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8544532995383734317, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
-  m_PrefabInstance: {fileID: 8544532995234266917}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8544532995234266919
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8544532995234266918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afc606795e722b840a16f29a227efd7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _actionAndEvents:
-  - ActionName: UI/Cancel
-    OnPerformed:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 167333644}
-          m_TargetAssemblyTypeName: PataRoad.SceneLogic.EquipmentScene.RareponSelector,
-            Assembly-CSharp
-          m_MethodName: Close
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  _sender: {fileID: 0}

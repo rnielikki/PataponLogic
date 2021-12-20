@@ -1,11 +1,12 @@
 ﻿using PataRoad.Core.Character.Equipments.Weapons;
+using PataRoad.SceneLogic.EquipmentScene;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace PataRoad.SceneLogic.EquipmentScene
+namespace PataRoad.SceneLogic.CommonSceneLogic
 {
     internal class RareponSelector : MonoBehaviour
     {
@@ -13,6 +14,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         UnityEvent _onOpen;
         [SerializeField]
         UnityEvent<RareponSelection> _onClicked;
+        [SerializeField]
+        UnityEvent _onClosed;
         [SerializeField]
         AudioClip _newRareponSound;
         public AudioClip NewRareponSound => _newRareponSound;
@@ -40,19 +43,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
             beforeSelect.Freeze();
             Open(data);
         }
-        public void UpdateText(RareponData data)
-        {
-            if (data == null)
-            {
-                _descriptionTitle.text = "???";
-                _descriptionContent.text = "Select to reveal the Rarepon";
-            }
-            else
-            {
-                _descriptionTitle.text = data.Name;
-                _descriptionContent.text = data.Description;
-            }
-        }
         public void Open(RareponData data)
         {
             _actionEventMap.enabled = true;
@@ -67,6 +57,20 @@ namespace PataRoad.SceneLogic.EquipmentScene
             gameObject.SetActive(true);
             Select(data);
         }
+        public void UpdateText(RareponData data)
+        {
+            if (data == null)
+            {
+                _descriptionTitle.text = "???";
+                _descriptionContent.text = "Select to reveal the Rarepon";
+            }
+            else
+            {
+                _descriptionTitle.text = data.Name;
+                _descriptionContent.text = data.Description;
+            }
+        }
+
         private void OnEnable()
         {
             if (_lastSelected == null) return;
@@ -113,7 +117,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             if (selection.RareponData == null)
             {
-                selection.ConfirmToCreateRarepon();
+                CreateRarepon(selection);
             }
             else
             {
@@ -121,12 +125,22 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 Close();
             }
         }
+        public void CreateNewRarepon(RareponSelection selection)
+        {
+            if (selection.RareponData == null)
+            {
+                CreateRarepon(selection);
+            }
+        }
+        private void CreateRarepon(RareponSelection selection) => selection.ConfirmToCreateRarepon();
+
         public void Close()
         {
             _actionEventMap.enabled = false;
             gameObject.SetActive(false);
             Core.Global.GlobalData.Sound.PlaySelected();
             _lastSelectNavigator?.Defrost();
+            _onClosed?.Invoke();
         }
     }
 }

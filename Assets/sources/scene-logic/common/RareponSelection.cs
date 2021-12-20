@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace PataRoad.SceneLogic.EquipmentScene
+namespace PataRoad.SceneLogic.CommonSceneLogic
 {
     internal class RareponSelection : MonoBehaviour, ISelectHandler
     {
@@ -73,7 +73,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             else
             {
                 _parent.enabled = false;
-                Common.GameDisplay.ConfirmDialog.Create("Create?", _parent, AddThisRarepon);
+                PataRoad.Common.GameDisplay.ConfirmDialog.Create("Create?", _parent, AddThisRarepon);
             }
             return true;
         }
