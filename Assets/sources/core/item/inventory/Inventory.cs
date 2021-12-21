@@ -106,6 +106,7 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 0));
 
             //Test
+            /*
             for (int i = 1; i < 11; i++) AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", i), 1);
             for (int i = 1; i < 11; i++) AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", i), 1);
 
@@ -132,6 +133,7 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 12));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 20));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 22));
+            */
         }
         public int GetAmount(IItem item) =>
            _existingData.ContainsKey(item) ? _existingData[item].Amount : 0;

@@ -37,7 +37,7 @@ namespace PataRoad.Common.GameDisplay
             _scrollLine.gameObject.SetActive(isScrollActive);
             _scroll.gameObject.SetActive(isScrollActive);
 
-            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+            ForceRebuildLayout();
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject((firstSelect as MonoBehaviour)?.gameObject);
 
             if (firstSelect == null)
@@ -49,7 +49,12 @@ namespace PataRoad.Common.GameDisplay
                 Scroll(firstSelect);
             }
         }
-        internal void Scroll(IScrollListElement element) => Scroll(element.RectTransform, element.Index);
+        internal void ForceRebuildLayout() => UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
+        internal void Scroll(IScrollListElement element)
+        {
+            if (element == null) SetToZero();
+            else Scroll(element.RectTransform, element.Index);
+        }
         private void Scroll(RectTransform rect, int index)
         {
             if (!_enabled) return;

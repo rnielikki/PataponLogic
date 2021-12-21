@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace PataRoad.SceneLogic.EquipmentScene
+namespace PataRoad.SceneLogic.CommonSceneLogic
 {
     internal class ItemDescriptionField : MonoBehaviour
     {

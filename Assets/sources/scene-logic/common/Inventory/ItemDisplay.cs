@@ -1,10 +1,9 @@
 ﻿using PataRoad.Core.Items;
-using PataRoad.SceneLogic.CommonSceneLogic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace PataRoad.SceneLogic.EquipmentScene
+namespace PataRoad.SceneLogic.CommonSceneLogic
 {
     public class ItemDisplay : MonoBehaviour, Common.GameDisplay.IScrollListElement
     {

@@ -1,6 +1,5 @@
 ﻿using PataRoad.Common.Navigator;
 using PataRoad.Core.Items;
-using PataRoad.SceneLogic.EquipmentScene;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -92,7 +91,6 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 );
             _scrollList.SetMaximumScrollLength(0, lastSelectable);
         }
-
         public void AddItem(IItem item)
         {
             //add empty

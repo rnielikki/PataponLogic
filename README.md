@@ -1,4 +1,4 @@
-# ~ PATAPORT - Definition of Demon ~
+# PATAROAD
 
 ## Goal
 
@@ -15,7 +15,7 @@ Complexity (scale) is maybe somewhere between Patapon2 and Patapon3.
 
 ### Music
 
-Some musics may not in sync. A music with sync hits beat in 0.5s - 2s (Note that not in sync in very small range, but ignore if it's too small so nobody can tell it).
+Some musics may not in sync. A music with sync hits beat in 0.5s * 4 = 2s (Note that not in sync in very small range, but ignore if it's too small so nobody can tell it).
 
 First intro should be about 2 seconds, and for this reason the first sound has delay. But for this work, intro sound file (without other sound like base sound) is needed from original Patapon sound file. If we can find every intro sound, the code will be fixed (it's simple work!).
 
@@ -46,6 +46,7 @@ You can contribute by:
 
 * Programming
 * Graphic design (UI/UX design. Do UI design only if you can continuosly contribute, for consistency.)
+* Music Fix
 * Documentation
 * Testing
 * Spreading this project
