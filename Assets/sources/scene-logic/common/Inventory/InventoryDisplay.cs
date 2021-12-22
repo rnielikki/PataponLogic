@@ -71,10 +71,13 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             foreach (var obj in allItemDisplays.Where(item => item.Item == currentItem && item.Item != null))
             {
                 if (isEquipments && (obj.Item as EquipmentData).Index == 0) continue;
-                obj.GetComponent<Selectable>().interactable = false;
                 obj.MarkAsDisable();
             }
             return allItemDisplays;
+        }
+        public void EmptyData()
+        {
+            foreach (var data in GetComponentsInChildren<ItemDisplay>()) Destroy(data.gameObject);
         }
         public void SelectFirst(IEnumerable<ItemDisplay> allItemDisplays)
         {

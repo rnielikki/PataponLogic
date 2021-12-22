@@ -21,7 +21,7 @@ namespace PataRoad.SceneLogic.Patapolis
             _allDisplays = loadedDisplays
                 .GroupBy(display => display.Item.ItemType)
                 .SelectMany(item => item.GroupBy(display => display.Item.Group))
-                .SelectMany(item => item.OrderBy(display => display.Item.Id))
+                .SelectMany(item => item.OrderBy(display => display.Item.Index))
                 .ToArray();
             _allDisplaysAlphabetOrder = loadedDisplays.OrderBy(display => display.Item.Name).ToArray();
             OrderToIndex();
@@ -74,7 +74,12 @@ namespace PataRoad.SceneLogic.Patapolis
             }
             Scroll(_inventoryDisplay.GetComponentInChildren<ItemDisplay>(false));
         }
-        private ItemDisplay GetLastSelect() => UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject?.GetComponent<ItemDisplay>();
+        private ItemDisplay GetLastSelect()
+        {
+            var lastSelect = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            if (lastSelect == null) return null; //destroyed gameobject. "?." doesn't work with destroyed gameobj :(
+            return lastSelect.GetComponent<ItemDisplay>();
+        }
         private void Scroll(ItemDisplay scrollTarget)
         {
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(scrollTarget?.gameObject);

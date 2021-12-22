@@ -17,6 +17,7 @@ namespace PataRoad.Core.Global
 
         public static MapInfo MapInfo { get; private set; }
 
+        public static GlobalInputSystem GlobalInputActions { get; private set; }
 
         public static int TipIndex { get; set; }
         // Start is called before the first frame update
@@ -25,6 +26,7 @@ namespace PataRoad.Core.Global
             TipIndex = -1;
             DontDestroyOnLoad(gameObject);
             Input = GetComponent<PlayerInput>();
+            GlobalInputActions = new GlobalInputSystem(Input);
             Sound = GetComponentInChildren<GlobalSoundSystem>();
 
             //---------------------------------- Not serialized.
@@ -34,39 +36,6 @@ namespace PataRoad.Core.Global
             Inventory = new Inventory(); //must be loaded after item loader init
 
             MapInfo = new MapInfo();
-        }
-        public static bool TryGetActionBindingName(string actionName, out string name)
-        {
-            //Note: To make GetBindingDisplayString() work, you MUST select CORRECT BINDING TYPE (keyboard, gamepad...) in input system.
-            var actionBindingName = Input.actions.FindAction(actionName)?.GetBindingDisplayString();
-            name = actionBindingName;
-            return !string.IsNullOrEmpty(actionBindingName);
-        }
-        public static bool TryGetAllActionBindingNames(string actionName,
-            out System.Collections.Generic.Dictionary<string, string> bindingNames)
-        {
-            var action = Input.actions.FindAction(actionName);
-            bindingNames = new System.Collections.Generic.Dictionary<string, string>();
-            if (action == null) return false;
-            var bindingMask = GetInputBindingMask();
-
-            for (int i = 0; i < action.bindings.Count; i++)
-            {
-                var binding = action.bindings[i];
-                if ((bindingMask?.Matches(binding) ?? false) && binding.isPartOfComposite && !bindingNames.ContainsKey(binding.name))
-                {
-                    bindingNames.Add(binding.name, action.GetBindingDisplayString(i));
-                }
-            }
-            return bindingNames.Count != 0;
-
-            //from InputAction.FindEffectiveBindingMask
-            InputBinding? GetInputBindingMask()
-            {
-                if (action.bindingMask != null) return action.bindingMask;
-                else if (action.actionMap.bindingMask != null) return action.actionMap.bindingMask;
-                else return action.actionMap.asset.bindingMask;
-            }
         }
         public void Serialize(string key, IPlayerData data)
         {
@@ -93,20 +62,6 @@ namespace PataRoad.Core.Global
                     Debug.LogError("Error while loading item. loading default items...");
                     return default(T);
                 }
-            }
-        }
-        public static void EnableAllInputs()
-        {
-            foreach (var inputMap in Input.actions.actionMaps)
-            {
-                foreach (var input in inputMap.actions) input.Enable();
-            }
-        }
-        public static void DisableAllInputs()
-        {
-            foreach (var inputMap in Input.actions.actionMaps)
-            {
-                foreach (var input in inputMap.actions) input.Disable();
             }
         }
     }

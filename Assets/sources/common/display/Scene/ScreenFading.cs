@@ -19,7 +19,7 @@ namespace PataRoad.Common.GameDisplay
                 _fadingResource = Resources.Load<GameObject>("Common/Display/FadeScreen");
             }
 
-            Core.Global.GlobalData.EnableAllInputs();
+            Core.Global.GlobalData.GlobalInputActions.EnableAllInputs();
             Instantiate(_fadingResource)
                 .GetComponent<ScreenFading>()
                 .Set(fadingIn, speed, callback);
@@ -60,7 +60,7 @@ namespace PataRoad.Common.GameDisplay
         }
         void DestroyThis(Scene scene)
         {
-            Core.Global.GlobalData.EnableAllInputs();
+            Core.Global.GlobalData.GlobalInputActions.EnableAllInputs();
             SceneManager.sceneUnloaded -= DestroyThis;
             Destroy(gameObject);
         }

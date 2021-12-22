@@ -1,4 +1,5 @@
 using PataRoad.Common.Navigator;
+using PataRoad.SceneLogic.CommonSceneLogic;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.EquipmentScene

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace PataRoad.SceneLogic.EquipmentScene
+namespace PataRoad.SceneLogic.CommonSceneLogic
 {
     public class SummaryElement : MonoBehaviour
     {
@@ -12,7 +12,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         protected Image _bg;
         protected Text _text;
 
-        public void Init()
+        public virtual void Init()
         {
             _bg = GetComponent<Image>();
             _text = GetComponentInChildren<Text>();

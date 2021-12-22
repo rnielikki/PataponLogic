@@ -126,7 +126,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             }
             _massDisplay.AssignColors(_positiveColor, _neutralColor, _negativeColor);
 
-            _hasSelectButton = Core.Global.GlobalData.TryGetActionBindingName("UI/Select", out _selectButtonName);
+            _hasSelectButton = Core.Global.GlobalData.GlobalInputActions.TryGetActionBindingName("UI/Select", out _selectButtonName);
             OnChangedToGroup();
         }
         /// <summary>

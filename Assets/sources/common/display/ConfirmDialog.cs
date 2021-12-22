@@ -35,28 +35,15 @@ namespace PataRoad.Common.GameDisplay
         {
             _uiOkAction = Core.Global.GlobalData.Input.actions.FindAction("UI/Submit");
             _uiCancelAction = Core.Global.GlobalData.Input.actions.FindAction("UI/Cancel");
-            _uiOkAction.Disable();
-            _uiCancelAction.Disable();
 
             //without waiting for next, it just continues... :/
-            StartCoroutine(WaitForNext());
-            IEnumerator WaitForNext()
+            StartCoroutine(
+                Core.Global.GlobalData.GlobalInputActions.WaitForNextInput(() =>
             {
-                if (InputSystem.settings.updateMode == InputSettings.UpdateMode.ProcessEventsInDynamicUpdate)
-                {
-                    yield return new WaitForEndOfFrame();
-                }
-                else if (InputSystem.settings.updateMode == InputSettings.UpdateMode.ProcessEventsInFixedUpdate)
-                {
-                    yield return new WaitForFixedUpdate();
-                }
                 _okButton.onClick.AddListener(Confirm);
                 _cancelButton.onClick.AddListener(Cancel);
                 _uiCancelAction.performed += Cancel;
-
-                _uiOkAction.Enable();
-                _uiCancelAction.Enable();
-            }
+            }));
         }
 
         public static ConfirmDialog Create(string text, MonoBehaviour targetToResume, UnityEngine.Events.UnityAction onConfirmed,

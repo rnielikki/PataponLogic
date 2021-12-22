@@ -21,7 +21,7 @@ namespace PataRoad.SceneLogic.WorldMap
 
         private void Start()
         {
-            Core.Global.GlobalData.TryGetAllActionBindingNames("UI/LR", out var guides);
+            Core.Global.GlobalData.GlobalInputActions.TryGetAllActionBindingNames("UI/LR", out var guides);
             if (guides.ContainsKey("positive"))
             {
                 _rightGuide.text = $"{guides["positive"]} -->";

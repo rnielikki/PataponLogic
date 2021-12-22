@@ -1,4 +1,5 @@
 using PataRoad.Core.Character.Equipments;
+using PataRoad.SceneLogic.CommonSceneLogic;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.EquipmentScene
