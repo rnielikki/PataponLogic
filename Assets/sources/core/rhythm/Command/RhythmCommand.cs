@@ -69,14 +69,14 @@ namespace PataRoad.Core.Rhythm.Command
             OnCommandCanceled.AddListener(ComboManager.EndCombo);
             OnCommandCanceled.AddListener(() =>
             {
-                RhythmTimer.OnNextHalfTime.RemoveListener(TurnCounter.Start);
+                RhythmTimer.Current.OnNextHalfTime.RemoveListener(TurnCounter.Start);
             });
             // --------------- Command sent check start
             OnCommandCanceled.AddListener(() =>
             {
                 _started = false;
             });
-            RhythmTimer.OnHalfTime.AddListener(() =>
+            RhythmTimer.Current.OnHalfTime.AddListener(() =>
             {
                 if (!TurnCounter.IsPlayerTurn) return;
                 else if (!_gotAnyCommandInput)
@@ -145,7 +145,7 @@ namespace PataRoad.Core.Rhythm.Command
                 {
                     if (!TurnCounter.IsOn)
                     {
-                        RhythmTimer.OnNextHalfTime.AddListener(TurnCounter.Start);
+                        RhythmTimer.Current.OnNextHalfTime.AddListener(TurnCounter.Start);
                     }
                     var model = new RhythmCommandModel(_currentHits, song);
                     model.ComboType = ComboManager.CountCombo(model);

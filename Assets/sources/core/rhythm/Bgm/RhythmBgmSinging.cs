@@ -88,7 +88,7 @@ namespace PataRoad.Core.Rhythm.Bgm
         public void ShoutFever()
         {
             //A bit delay needed to add listener in right time
-            RhythmTimer.OnNextHalfTime.AddListener(() =>
+            RhythmTimer.Current.OnNextHalfTime.AddListener(() =>
                 TurnCounter.OnNextTurn.AddListener(() => _audioSource.PlayOneShot(_feverShout))
             );
         }

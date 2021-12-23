@@ -44,8 +44,8 @@ namespace PataRoad.Core.Character.Bosses
         public void End()
         {
             _actionQueue.Clear();
-            RhythmTimer.OnTime.RemoveListener(CountSingleTurn);
-            RhythmTimer.OnTime.RemoveListener(CountComboTurn);
+            RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
+            RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
             Rhythm.Command.TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
             Attacking = false;
         }
@@ -63,14 +63,14 @@ namespace PataRoad.Core.Character.Bosses
         }
         private void WillStartComboAttack()
         {
-            RhythmTimer.OnNext.AddListener(() => RhythmTimer.OnTime.AddListener(CountComboTurn));
+            RhythmTimer.Current.OnNext.AddListener(() => RhythmTimer.Current.OnTime.AddListener(CountComboTurn));
         }
 
         private void CountSingleAttack()
         {
             _current = _actionQueue.Dequeue();
             if (_current != "nothing" && _current != "Idle") _charAnimator.Animate(_current + "-before");
-            RhythmTimer.OnTime.AddListener(CountSingleTurn);
+            RhythmTimer.Current.OnTime.AddListener(CountSingleTurn);
             _turnCount++;
         }
         private void CountSingleTurn()
@@ -83,7 +83,7 @@ namespace PataRoad.Core.Character.Bosses
                 case 12:
                     EndAttack();
                     _data.StopAllAttacking();
-                    RhythmTimer.OnTime.RemoveListener(CountSingleTurn);
+                    RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
                     break;
             }
             _turnCount++;
@@ -112,7 +112,7 @@ namespace PataRoad.Core.Character.Bosses
                     {
                         EndAttack();
                         _data.StopAllAttacking();
-                        RhythmTimer.OnTime.RemoveListener(CountComboTurn);
+                        RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
                         _willAttackEnd = false;
                     }
                     break;

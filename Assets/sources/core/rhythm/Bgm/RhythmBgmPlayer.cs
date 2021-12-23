@@ -67,7 +67,7 @@ namespace PataRoad.Core.Rhythm.Bgm
         }
         private void Start()
         {
-            RhythmTimer.OnStart.AddListener(() => ChangeMusicWithIntro(RhythmBgmIndex.Intro, RhythmBgmIndex.Base, _bgmSource));
+            RhythmTimer.Current.OnStart.AddListener(() => ChangeMusicWithIntro(RhythmBgmIndex.Intro, RhythmBgmIndex.Base, _bgmSource));
         }
         private void SetClips()
         {
@@ -113,7 +113,7 @@ namespace PataRoad.Core.Rhythm.Bgm
             }
             _hadFeverChance = feverChance;
         }
-        public void PlayBaseMusic() => RhythmTimer.OnNext.AddListener(() => ChangeMusic(RhythmBgmIndex.Base));
+        public void PlayBaseMusic() => RhythmTimer.Current.OnNext.AddListener(() => ChangeMusic(RhythmBgmIndex.Base));
         public void PlayFever()
         {
             _bgmSource.Stop();

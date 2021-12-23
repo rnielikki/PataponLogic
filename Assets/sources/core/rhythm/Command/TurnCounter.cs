@@ -39,7 +39,7 @@ namespace PataRoad.Core.Rhythm.Command
             TurnCount = 0;
             IsOn = true;
             IsPlayerTurn = false;
-            RhythmTimer.OnTime.AddListener(Count);
+            RhythmTimer.Current.OnTime.AddListener(Count);
         }
         internal static void Stop()
         {
@@ -49,7 +49,7 @@ namespace PataRoad.Core.Rhythm.Command
             }
             IsOn = false;
             IsPlayerTurn = true;
-            RhythmTimer.OnTime.RemoveListener(Count);
+            RhythmTimer.Current?.OnTime?.RemoveListener(Count);
         }
         internal static void Destroy()
         {
@@ -78,7 +78,7 @@ namespace PataRoad.Core.Rhythm.Command
                     }
                     break;
                 case 3:
-                    RhythmTimer.OnNextHalfTime.AddListener(() => IsPlayerTurn = !IsPlayerTurn);
+                    RhythmTimer.Current.OnNextHalfTime.AddListener(() => IsPlayerTurn = !IsPlayerTurn);
                     break;
             }
             TurnCount = (TurnCount + 1) % 4;

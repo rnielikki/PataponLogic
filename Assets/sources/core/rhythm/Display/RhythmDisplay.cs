@@ -20,7 +20,7 @@ namespace PataRoad.Core.Rhythm.Display
         public void ShowHit(RhythmInputModel model)
         {
             if (model.Status != DrumHitStatus.Miss) _hitImage.color = Color.white;
-            RhythmTimer.OnNextHalfTime.AddListener(() => _hitImage.color = Color.clear);
+            RhythmTimer.Current.OnNextHalfTime.AddListener(() => _hitImage.color = Color.clear);
         }
 
         // Update is called once per frame

@@ -26,14 +26,23 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         [SerializeField]
         [Tooltip("Although it says it's animation curve, it's not related to animation at all.")]
         AnimationCurve _estimationCurve;
+        [SerializeField]
+        AudioClip _openSound;
+        [SerializeField]
+        AudioClip _closeSound;
+        [SerializeField]
+        AudioClip _startSound;
         MaterialLoader[] _materialLoaders;
+        private bool _opening;
 
         public void Open(MinigameSelectionWindow parent, MinigameSelectionButton model)
         {
+            _opening = true;
             _lastSelection = model;
             _parent = parent;
             _parent.gameObject.SetActive(false);
             gameObject.SetActive(true);
+            Core.Global.GlobalData.Sound.PlayInScene(_openSound);
             StartCoroutine(
             Core.Global.GlobalData.GlobalInputActions.WaitForNextInput(() =>
             {
@@ -57,12 +66,15 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 }
                 UpdateEstimation();
                 _okButton.Select();
+                _opening = false;
             }));
         }
         public void Close(bool ok = false)
         {
+            if (_opening) return;
             _parent.gameObject.SetActive(true);
             gameObject.SetActive(false);
+            Core.Global.GlobalData.Sound.PlayInScene(_closeSound);
             foreach (Transform child in _contentTarget)
             {
                 Destroy(child.gameObject);
@@ -95,15 +107,15 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 Common.GameDisplay.ConfirmDialog.CreateCancelOnly("Item is insufficient", this);
                 return;
             }
-            var window = Common.GameDisplay.ConfirmDialog.Create("You will play in REAL.\nIf you fail, item will be LOST without reward.\nAre you sure to play in this mode?", this, () =>
+            Common.GameDisplay.ConfirmDialog.Create("You will play in REAL.\nIf you fail, item will be LOST without reward.\nAre you sure to play in this mode?", this, () =>
             {
                 foreach (var materialLoader in _materialLoaders)
                 {
                     Core.Global.GlobalData.Inventory.RemoveItem(materialLoader.Item);
                 }
                 //Load scene!
+                LoadMinigaeScene();
             });
-            window.IsScreenChange = true;
         }
 
         internal void UpdateEstimation()
@@ -119,11 +131,17 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
 
         public void LoadPracticeGame()
         {
-            var window = Common.GameDisplay.ConfirmDialog.Create("You're play as PRACTICE.\nThere will be NO REWARD, but NO ITEM WILL BE LOST.\nAre you sure to play in this mode?", this, () =>
+            Common.GameDisplay.ConfirmDialog.Create("You're play as PRACTICE.\nThere will be NO REWARD, but NO ITEM WILL BE LOST.\nAre you sure to play in this mode?", this, () =>
             {
                 //LOAD SCENE!
+                LoadMinigaeScene();
             });
-            window.IsScreenChange = true;
+        }
+        private void LoadMinigaeScene()
+        {
+            Core.Global.GlobalData.Sound.PlayInScene(_startSound);
+            gameObject.SetActive(false);
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Minigame", UnityEngine.SceneManagement.LoadSceneMode.Additive);
         }
 
         internal void FindNextSelectionTarget(MaterialLoader currentLoader)

@@ -44,7 +44,7 @@ namespace PataRoad.Core.Rhythm
         }
         protected override void SetResetTimer()
         {
-            RhythmTimer.OnHalfTime.AddListener(SetEnable);
+            RhythmTimer.Current.OnHalfTime.AddListener(SetEnable);
         }
         protected override RhythmInputModel GetInputModel()
         {
@@ -71,11 +71,11 @@ namespace PataRoad.Core.Rhythm
                 }
                 if (MiracleDrumCount % 2 == 1)
                 {
-                    RhythmTimer.OnNextQuarterTime.AddListener(() => Disabled = false);
+                    RhythmTimer.Current.OnNextQuarterTime.AddListener(() => Disabled = false);
                 }
                 else
                 {
-                    RhythmTimer.OnNextHalfTime.AddListener(() => Disabled = false);
+                    RhythmTimer.Current.OnNextHalfTime.AddListener(() => Disabled = false);
                 }
                 Disabled = true;
                 if (current >= _minTimerIndexes[MiracleDrumCount - 1] && current <= _maxTimerIndexes[MiracleDrumCount - 1])
@@ -102,7 +102,7 @@ namespace PataRoad.Core.Rhythm
             if (TurnCounter.IsOn && !EnteredMiracleHit)
             {
                 EnteredMiracleHit = true;
-                RhythmTimer.OnHalfTime.RemoveListener(SetEnable);
+                RhythmTimer.Current.OnHalfTime.RemoveListener(SetEnable);
                 MiracleDrumCount = count;
             }
             else
@@ -117,7 +117,7 @@ namespace PataRoad.Core.Rhythm
         {
             MiracleDrumCount = 0;
             if (!EnteredMiracleHit) return;
-            RhythmTimer.OnHalfTime.AddListener(SetEnable);
+            RhythmTimer.Current.OnHalfTime.AddListener(SetEnable);
             EnteredMiracleHit = false;
             StopAllCoroutines();
         }

@@ -11,6 +11,10 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         MinigameMaterialWindow _materialWindow;
         [SerializeField]
         Button _firstButton;
+        [SerializeField]
+        AudioClip _openSound;
+        [SerializeField]
+        AudioClip _closeSound;
         private MinigameSelectionButton[] _buttons;
         private bool _opening;
 
@@ -23,6 +27,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             _opening = true;
             _parentActionEventMap.enabled = false;
             gameObject.SetActive(true);
+            Core.Global.GlobalData.Sound.PlayInScene(_openSound);
             StartCoroutine(
             Core.Global.GlobalData.GlobalInputActions.WaitForNextInput(() =>
             {
@@ -42,6 +47,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         public void Close()
         {
             if (_opening) return;
+            Core.Global.GlobalData.Sound.PlayInScene(_closeSound);
             foreach (var obj in _buttons)
             {
                 obj.GetComponent<Button>().onClick.RemoveAllListeners();

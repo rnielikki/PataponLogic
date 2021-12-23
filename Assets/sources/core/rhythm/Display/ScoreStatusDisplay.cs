@@ -39,7 +39,7 @@ namespace PataRoad.Core.Rhythm.Display
             _warningImage.enabled = true;
             _audioSource.PlayOneShot(_warningSound);
             _animator.Play(_warningAnimationHash);
-            RhythmTimer.OnNextHalfTime.AddListener(() => Command.TurnCounter.OnNextTurn.AddListener(() => _warningImage.enabled = false));
+            RhythmTimer.Current.OnNextHalfTime.AddListener(() => Command.TurnCounter.OnNextTurn.AddListener(() => _warningImage.enabled = false));
         }
         public void ShowPerfect(Command.RhythmCommandModel model)
         {

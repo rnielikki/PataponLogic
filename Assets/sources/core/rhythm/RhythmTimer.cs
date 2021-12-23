@@ -43,37 +43,63 @@ namespace PataRoad.Core.Rhythm
         /// 1/4 of the <see cref="Frequency"/> value.
         /// </summary>
         public static int QuarterFrequency { get; private set; }
+
+        [SerializeField]
+        private UnityEvent _onStart;
         //Events
         /// <summary>
         /// When the timer service (the whole game with Rhythm) is actually started.
         /// </summary>
-        public static UnityEvent OnStart { get; } = new UnityEvent();
+        public UnityEvent OnStart { get; private set; }
+
+        [SerializeField]
+        private UnityEvent _onTime;
         /// <summary>
         /// Event, when rhythm reaches in just right time.
         /// </summary>
-        public static UnityEvent OnTime { get; } = new UnityEvent();
+        public UnityEvent OnTime { get; private set; }
+
+        [SerializeField]
+        private UnityEvent _onHalftime;
         /// <summary>
         /// Event, when rhythm reaches in half of right time (half of frequency).
         /// </summary>
-        public static UnityEvent OnHalfTime { get; } = new UnityEvent();
+        public UnityEvent OnHalfTime { get; private set; }
+
+        [SerializeField]
+        private UnityEvent _onNextQuarterTime;
         /// <summary>
         /// Event, which is called in next quarter time for miracle.
         /// </summary>
-        public static UnityEvent OnNextQuarterTime { get; } = new UnityEvent();
+        public UnityEvent OnNextQuarterTime { get; private set; }
+
+        [SerializeField]
+        private UnityEvent _onNext;
         /// <summary>
         /// This is called ONLY ONCE when reaches in right time (0 frequency count).
         /// </summary>
-        public static UnityEvent OnNext { get; } = new UnityEvent();
+        public UnityEvent OnNext { get; private set; }
         /// <summary>
         /// This is called ONLY ONCE when reaches in half of right time (half of frequency).
         /// </summary>
-        public static UnityEvent OnNextHalfTime { get; } = new UnityEvent();
+        public UnityEvent OnNextHalfTime { get; } = new UnityEvent();
 
         [SerializeField]
         private bool AutoStart = true;
+        [SerializeField]
+        private bool UseHalfOfTime = false;
+
+        public static RhythmTimer Current { get; private set; }
 
         private void Awake()
         {
+            Current = this;
+            OnStart = _onStart;
+            OnTime = _onTime;
+            OnHalfTime = _onHalftime;
+            OnNextQuarterTime = _onNextQuarterTime;
+            OnNext = _onNext;
+
             Frequency = (int)(RhythmEnvironment.InputInterval / Time.fixedDeltaTime);
             HalfFrequency = Frequency / 2;
             QuarterFrequency = Frequency / 4;
@@ -81,6 +107,16 @@ namespace PataRoad.Core.Rhythm
             GoodFrequency = (int)(RhythmEnvironment.GoodRange / Time.fixedDeltaTime);
             BadFrequency = (int)(RhythmEnvironment.BadRange / Time.fixedDeltaTime);
             MinEffectThresholdFrequency = (int)(RhythmEnvironment.MinEffectThreshold / Time.fixedDeltaTime);
+            if (UseHalfOfTime)
+            {
+                Frequency /= 2;
+                HalfFrequency /= 2;
+                QuarterFrequency /= 2;
+                PerfectFrequency /= 2;
+                GoodFrequency /= 2;
+                BadFrequency /= 2;
+                MinEffectThresholdFrequency /= 2;
+            }
             if (AutoStart) SceneManager.sceneLoaded += StartTimer;
         }
         public void StartTimer(Scene scene, LoadSceneMode mode)
@@ -116,6 +152,7 @@ namespace PataRoad.Core.Rhythm
         private void OnDestroy()
         {
             StopAndRemoveAllListeners();
+            Current = null;
         }
 
         public static int GetTiming() => GetTiming(Count);

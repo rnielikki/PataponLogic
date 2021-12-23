@@ -21,6 +21,8 @@ namespace PataRoad.Core.Rhythm
         /// Prevents from 'fast repeat hit'. Always miss if input interval is too fast.
         /// </summary>
         public static bool Disabled { get; protected set; }
+        [SerializeField]
+        bool _alwaysHit;
         void Awake()
         {
             Init();
@@ -31,16 +33,16 @@ namespace PataRoad.Core.Rhythm
             _action = actions.FindAction("Drum/" + _drumType.ToString());
             SetResetTimer();
             _action.Enable();
-            RhythmTimer.OnStart.AddListener(() => Disabled = false);
+            RhythmTimer.Current.OnStart.AddListener(() => Disabled = false);
         }
         protected virtual void SetResetTimer()
         {
-            RhythmTimer.OnHalfTime.AddListener(SetEnable);
+            RhythmTimer.Current.OnHalfTime.AddListener(SetEnable);
         }
         protected void DrumHit(InputAction.CallbackContext context)
         {
             RhythmInputModel model;
-            if (Disabled || (Command.TurnCounter.IsOn && !Command.TurnCounter.IsPlayerTurn))
+            if (!_alwaysHit && (Disabled || (Command.TurnCounter.IsOn && !Command.TurnCounter.IsPlayerTurn)))
             {
                 model = RhythmInputModel.Miss(_drumType);
             }
@@ -63,12 +65,12 @@ namespace PataRoad.Core.Rhythm
         private void OnDestroy() => Destroy();
         protected void Enable()
         {
-            RhythmTimer.OnHalfTime.AddListener(SetEnable);
+            RhythmTimer.Current?.OnHalfTime?.AddListener(SetEnable);
             _action.started += DrumHit;
         }
         protected void Disable()
         {
-            RhythmTimer.OnHalfTime.RemoveListener(SetEnable);
+            RhythmTimer.Current?.OnHalfTime?.RemoveListener(SetEnable);
             _action.started -= DrumHit;
         }
         protected void Destroy()
