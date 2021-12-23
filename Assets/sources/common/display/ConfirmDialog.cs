@@ -49,17 +49,10 @@ namespace PataRoad.Common.GameDisplay
         public static ConfirmDialog Create(string text, MonoBehaviour targetToResume, UnityEngine.Events.UnityAction onConfirmed,
             UnityEngine.Events.UnityAction onCanceled = null, bool okAsDefault = true)
         {
-            var lastSelected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-            var actionMap = targetToResume.GetComponent<Navigator.ActionEventMap>();
-            if (actionMap != null) actionMap.enabled = false;
-
-            var dialog = Create(text, onConfirmed, onCanceled, okAsDefault);
-            dialog._targetToResume = targetToResume;
-            dialog._lastSelected = lastSelected;
-            targetToResume.enabled = false;
-            return dialog;
+            var lastSelected = DisableParentAndGetLastSelection(targetToResume);
+            return Create(text, onConfirmed, onCanceled, okAsDefault).InitParent(targetToResume, lastSelected);
         }
-        public static ConfirmDialog Create(string text, UnityEngine.Events.UnityAction onConfirmed, UnityEngine.Events.UnityAction onCanceled = null, bool okAsDefault = true)
+        private static ConfirmDialog Create(string text, UnityEngine.Events.UnityAction onConfirmed, UnityEngine.Events.UnityAction onCanceled = null, bool okAsDefault = true)
         {
             if (_dialogTemplate == null) _dialogTemplate = Resources.Load<GameObject>(_path);
             var dialog = Instantiate(_dialogTemplate).GetComponent<ConfirmDialog>();
@@ -76,11 +69,29 @@ namespace PataRoad.Common.GameDisplay
             }
             return dialog;
         }
+        public static ConfirmDialog CreateCancelOnly(string text, MonoBehaviour targetToResume, UnityEngine.Events.UnityAction onCanceled = null)
+        {
+            var lastSelected = DisableParentAndGetLastSelection(targetToResume);
+            return CreateCancelOnly(text, onCanceled).InitParent(targetToResume, lastSelected);
+        }
         public static ConfirmDialog CreateCancelOnly(string text, UnityEngine.Events.UnityAction onCanceled = null)
         {
             var dialog = Create(text, null, onCanceled, false);
             dialog._okButton.gameObject.SetActive(false);
             return dialog;
+        }
+        private static GameObject DisableParentAndGetLastSelection(MonoBehaviour targetToResume)
+        {
+            var actionMap = targetToResume.GetComponent<Navigator.ActionEventMap>();
+            if (actionMap != null) actionMap.enabled = false;
+            targetToResume.enabled = false;
+            return UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+        }
+        public ConfirmDialog InitParent(MonoBehaviour targetToResume, GameObject lastSelected)
+        {
+            _targetToResume = targetToResume;
+            _lastSelected = lastSelected;
+            return this;
         }
         public void Confirm()
         {
@@ -100,10 +111,13 @@ namespace PataRoad.Common.GameDisplay
 
             Core.Global.GlobalData.Sound.PlaySelected();
 
-            if (_targetToResume != null) _targetToResume.enabled = true;
+            if (_targetToResume != null)
+            {
+                _targetToResume.enabled = true;
+                var actionMap = _targetToResume.GetComponent<Navigator.ActionEventMap>();
+                if (actionMap != null) actionMap.enabled = true;
+            }
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelected);
-            var actionMap = _targetToResume.GetComponent<Navigator.ActionEventMap>();
-            if (actionMap != null) actionMap.enabled = true;
 
             if (!IsScreenChange || !ok)
             {

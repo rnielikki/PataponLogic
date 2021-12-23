@@ -1,5 +1,6 @@
 ﻿using PataRoad.Core.Items;
 using PataRoad.SceneLogic.CommonSceneLogic;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,10 +22,12 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         Color _selectedColor;
         private ItemDisplay _current;
         private ItemDisplay[] _allDisplays;
-        public System.Collections.Generic.IEnumerable<ItemDisplay> AllDisplays => _allDisplays;
-        public IItem Item => _current.Item;
+        public IEnumerable<ItemDisplay> AllDisplays => _allDisplays;
+        private System.Guid[] _itemIds;
+        public IItem Item => _current?.Item;
         private MinigameMaterialWindow _parent;
         public string Group { get; private set; }
+        private bool _lateInitDone;
 
         public void Init(string materialGroup, MinigameMaterialWindow parent)
         {
@@ -40,59 +43,85 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 _current = obj;
             }
             _allDisplays = GetComponentsInChildren<ItemDisplay>();
+            _itemIds = _allDisplays.Select(disp => disp.Item.Id).ToArray();
         }
         public void LateInit()
         {
             if (_current != null)
             {
                 _defaultImage = _current.GetComponent<Image>().sprite;
-                Use(_current, true);
+                Use(_current);
             }
             else _titleField.text = $"{Group} (No item)";
+            _lateInitDone = true;
         }
 
         private void UpdateText(IItem item)
         {
             _titleField.text = $"{item.Name} (Level {item.Index + 1})";
         }
-        private void Use(ItemDisplay itemDisplay, bool firstInit = false)
+        /// <summary>
+        /// Select an item. Also updates all others' material amount status by sending message to parent.
+        /// </summary>
+        /// <param name="itemDisplay">The display of the item that will use.</param>
+        private void Use(ItemDisplay itemDisplay)
         {
-            if (itemDisplay.Amount == 0)
+            if (_lateInitDone)
             {
-                var index = System.Array.IndexOf(_allDisplays, itemDisplay) - 1;
-                while (index >= 0 && itemDisplay.Amount == 0)
+                if (itemDisplay == _current) return;
+                if (_current != null)
                 {
-                    itemDisplay = _allDisplays[index];
-                    index--;
+                    _current.Background.sprite = _defaultImage;
+                    _current.Background.color = Color.white;
+
+                    _parent.RestoreOne(_current.Item);
                 }
-                if (index < 0)
-                {
-                    //cannot use anything!
-                    return;
-                }
-                Debug.Log(itemDisplay.Item.Index);
             }
-            if (!firstInit && _current == itemDisplay) return;
-            if (_current != null && !firstInit)
+            else if (itemDisplay.Amount == 0)
             {
-                _current.Background.sprite = _defaultImage;
-                _current.Background.color = Color.white;
-                _parent.RestoreOne(this, _current);
+                var target = GetNextSelectionTarget(itemDisplay.Item);
+                if (target != null) itemDisplay = target;
+                else return;
             }
             UpdateText(itemDisplay.Item);
             itemDisplay.Background.sprite = _selectedImage;
             itemDisplay.Background.color = _selectedColor;
-            _parent.RemoveOne(this, itemDisplay);
+            _parent.RemoveOne(itemDisplay.Item);
             _current = itemDisplay;
+
+            if (_lateInitDone)
+            {
+                if (_current.Amount == 0)
+                {
+                    var nextTarget = GetNextSelectionTarget(itemDisplay.Item);
+                    if (nextTarget == null) _parent.FindNextSelectionTarget(this);
+                    else nextTarget.Selectable.Select();
+                }
+                _parent.UpdateEstimation();
+            }
         }
-        internal ItemDisplay GetNextSelectionTarget() => _allDisplays.FirstOrDefault();
-        internal ItemDisplay GetNextSelectionTarget(ItemDisplay itemDisplay)
+        internal void UpdateAmount(IItem item, bool remove = true)
         {
-            var index = System.Array.IndexOf(_allDisplays, itemDisplay) - 1;
+            var index = System.Array.IndexOf(_itemIds, item.Id);
+            if (index == -1) return;
+            var display = _allDisplays[index];
+            display.UpdateText(display.Amount + (remove ? -1 : 1));
+            if (remove && display.Amount == 0)
+            {
+                display.MarkAsDisable();
+            }
+            else if (!remove && display.Amount == 1)
+            {
+                display.MarkAsEnable();
+            }
+        }
+        private ItemDisplay GetNextSelectionTarget(IItem item)
+        {
+            var index = System.Array.IndexOf(_itemIds, item.Id);
             if (index < 0) return null;
             else if (index == 0)
             {
-                for (int i = 1; i < _allDisplays.Length; i++)
+                for (int i = 0; i < _allDisplays.Length; i++)
                 {
                     if (_allDisplays[i].Amount != 0) return _allDisplays[i];
                 }
@@ -100,12 +129,16 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             }
             else
             {
-                for (int i = _allDisplays.Length - 1; i >= 0; i--)
-                {
-                    if (_allDisplays[i].Amount != 0) return _allDisplays[i];
-                }
-                return null;
+                return GetNextSelectionTarget();
             }
+        }
+        internal ItemDisplay GetNextSelectionTarget()
+        {
+            for (int i = _allDisplays.Length - 1; i >= 0; i--)
+            {
+                if (_allDisplays[i].Amount != 0) return _allDisplays[i];
+            }
+            return null;
         }
     }
 }

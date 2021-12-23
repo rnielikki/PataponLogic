@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using PataRoad.Core.Items;
+using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.Patapolis.Minigame
@@ -16,9 +17,15 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         UnityEngine.UI.VerticalLayoutGroup _targetToRefresh;
         private MinigameSelectionButton _lastSelection;
         [SerializeField]
+        UnityEngine.UI.Text _estimationText;
+        private float _estimation;
+        [SerializeField]
         private UnityEngine.UI.Button _okButton;
         [SerializeField]
         Common.Navigator.HorizontalNavigationGroup _navGroup;
+        [SerializeField]
+        [Tooltip("Although it says it's animation curve, it's not related to animation at all.")]
+        AnimationCurve _estimationCurve;
         MaterialLoader[] _materialLoaders;
 
         public void Open(MinigameSelectionWindow parent, MinigameSelectionButton model)
@@ -48,7 +55,8 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 {
                     materialLoader.LateInit();
                 }
-                GetComponentsInChildren<UnityEngine.UI.Selectable>().First(item => item.enabled).Select();
+                UpdateEstimation();
+                _okButton.Select();
             }));
         }
         public void Close(bool ok = false)
@@ -64,61 +72,76 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelection.gameObject);
             }
         }
-        //lol nested so much, I don't usually do this but
-        internal void RemoveOne(MaterialLoader loader, CommonSceneLogic.ItemDisplay itemDisplay)
+        internal void RemoveOne(IItem item)
         {
             foreach (var materialLoader in _materialLoaders)
             {
-                if (materialLoader.Group == loader.Group)
-                {
-                    foreach (var display in materialLoader.AllDisplays)
-                    {
-                        if (display.Item == itemDisplay.Item)
-                        {
-                            display.UpdateText(display.Amount - 1);
-                            if (display.Amount == 0)
-                            {
-                                display.MarkAsDisable();
-                                if (display == itemDisplay) //select something else
-                                {
-                                    var target = loader.GetNextSelectionTarget(itemDisplay);
-                                    foreach (var matLoader in _materialLoaders)
-                                    {
-                                        target = matLoader.GetNextSelectionTarget();
-                                        if (target != null)
-                                        {
-                                            target.Selectable.Select();
-                                            return;
-                                        }
-                                    }
-                                    _okButton.Select();
-                                }
-                            }
-                        }
-                    }
-                }
+                materialLoader.UpdateAmount(item, true);
             }
         }
-        internal void RestoreOne(MaterialLoader loader, CommonSceneLogic.ItemDisplay itemDisplay)
+        internal void RestoreOne(IItem item)
         {
             foreach (var materialLoader in _materialLoaders)
             {
-                if (materialLoader.Group == loader.Group)
-                {
-                    foreach (var display in materialLoader.AllDisplays)
-                    {
-                        if (display.Item == itemDisplay.Item)
-                        {
-                            if (display.Amount == 0) display.MarkAsEnable();
-                            display.UpdateText(display.Amount + 1);
-                        }
-                    }
-                }
+                materialLoader.UpdateAmount(item, false);
             }
         }
         public void LoadGame()
         {
             // UI/Start to start.
+            if (_materialLoaders.Any(loader => loader.Item == null))
+            {
+                Core.Global.GlobalData.Sound.PlayBeep();
+                Common.GameDisplay.ConfirmDialog.CreateCancelOnly("Item is insufficient", this);
+                return;
+            }
+            var window = Common.GameDisplay.ConfirmDialog.Create("You will play in REAL.\nIf you fail, item will be LOST without reward.\nAre you sure to play in this mode?", this, () =>
+            {
+                foreach (var materialLoader in _materialLoaders)
+                {
+                    Core.Global.GlobalData.Inventory.RemoveItem(materialLoader.Item);
+                }
+                //Load scene!
+            });
+            window.IsScreenChange = true;
+        }
+
+        internal void UpdateEstimation()
+        {
+            if (_materialLoaders.Any(loader => loader.Item == null))
+            {
+                _estimationText.text = "-";
+                return;
+            }
+            _estimation = _estimationCurve.Evaluate((float)_materialLoaders.Average(value => value.Item.Index) / 8);
+            _estimationText.text = _estimation.ToString("p0");
+        }
+
+        public void LoadPracticeGame()
+        {
+            var window = Common.GameDisplay.ConfirmDialog.Create("You're play as PRACTICE.\nThere will be NO REWARD, but NO ITEM WILL BE LOST.\nAre you sure to play in this mode?", this, () =>
+            {
+                //LOAD SCENE!
+            });
+            window.IsScreenChange = true;
+        }
+
+        internal void FindNextSelectionTarget(MaterialLoader currentLoader)
+        {
+            foreach (var materialLoader in _materialLoaders)
+            {
+                if (materialLoader != currentLoader)
+                {
+                    var target = materialLoader.GetNextSelectionTarget();
+                    if (target != null)
+                    {
+                        target.Selectable.Select();
+                        return;
+                    }
+                }
+            }
+            //nothing to select!
+            _okButton.Select();
         }
     }
 }

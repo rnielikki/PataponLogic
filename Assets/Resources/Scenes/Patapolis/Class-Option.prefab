@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: 5629970596184855878}
   - component: {fileID: 5629970596184855897}
   - component: {fileID: 5629970596184855896}
+  - component: {fileID: 4206055175843217392}
   m_Layer: 8
   m_Name: Weapon
   m_TagString: Untagged
@@ -509,7 +510,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5629970597430914275}
-  _colorOnSelect: {r: 1, g: 1, b: 1, a: 0}
+  _colorOnSelect: {r: 0.26415092, g: 0, b: 0, a: 1}
+--- !u!114 &4206055175843217392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629970596184855898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19489c82b7ceff449a132a44de8738e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materialGroups:
+  - Mineral
+  _minigameType: weapon-yari
 --- !u!1 &5629970597232157790
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +539,7 @@ GameObject:
   - component: {fileID: 5629970597232157786}
   - component: {fileID: 5629970597232157789}
   - component: {fileID: 5629970597232157788}
+  - component: {fileID: 6723062286941668407}
   m_Layer: 8
   m_Name: Protector
   m_TagString: Untagged
@@ -645,7 +662,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _text: {fileID: 5629970595653897733}
-  _colorOnSelect: {r: 1, g: 1, b: 1, a: 0}
+  _colorOnSelect: {r: 0.036489844, g: 0.18867922, b: 0.043757394, a: 1}
+--- !u!114 &6723062286941668407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5629970597232157790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19489c82b7ceff449a132a44de8738e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materialGroups:
+  - Liquid
+  _minigameType: protector-yari
 --- !u!1 &5629970597430914277
 GameObject:
   m_ObjectHideFlags: 0

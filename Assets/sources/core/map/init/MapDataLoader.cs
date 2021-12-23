@@ -68,7 +68,7 @@ namespace PataRoad.Core.Map
         }
         private void ShowError(string missingTarget)
         {
-            Common.GameDisplay.ConfirmDialog.CreateCancelOnly($"[!] {missingTarget} data doesn't exist!", () => UnityEngine.SceneManagement.SceneManager.LoadScene("Patapolis"));
+            Common.GameDisplay.ConfirmDialog.CreateCancelOnly($"[!] {missingTarget} data doesn't exist!", onCanceled: () => UnityEngine.SceneManagement.SceneManager.LoadScene("Patapolis"));
         }
     }
 }
