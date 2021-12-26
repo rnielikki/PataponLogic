@@ -30,7 +30,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         public bool CanGoForward()
         {
-            if (transform.position.x + PataponEnvironment.Steps >= Hazorons.HazoronPositionManager.Current.GetClosestHazoronPosition()) return false;
+            if (transform.position.x + PataponEnvironment.Steps >= Hazorons.HazoronPositionManager.GetClosestHazoronPosition()) return false;
             var firstPon = _patapons[0];
             var closestV2 = firstPon.DistanceCalculator.GetClosestForMarch();
             if (closestV2 == null) return true;

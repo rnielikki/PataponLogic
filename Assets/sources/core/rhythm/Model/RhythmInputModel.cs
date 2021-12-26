@@ -18,7 +18,7 @@
         /// </summary>
         public int Count { get; }
         /// <summary>
-        /// The timing for the drum;
+        /// The timing for the drum, as frequency.
         /// </summary>
         public int Timing { get; }
         /// <summary>

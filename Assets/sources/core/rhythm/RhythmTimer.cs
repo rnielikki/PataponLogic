@@ -164,7 +164,7 @@ namespace PataRoad.Core.Rhythm
         internal static int GetHalfTiming(int count) => Mathf.Abs(HalfFrequency - count);
         public void StopAndRemoveAllListeners()
         {
-            Command.TurnCounter.Stop();
+            Command.TurnCounter.Destroy();
             OnTime.RemoveAllListeners();
             OnHalfTime.RemoveAllListeners();
             OnNext.RemoveAllListeners();

@@ -18,10 +18,10 @@ namespace PataRoad.Core.Character.Hazorons
             _display.gameObject.SetActive(false);
             Current = this;
         }
-        public float GetClosestHazoronPosition()
+        public static float GetClosestHazoronPosition()
         {
-            if (_hazorons.Count == 0) return Mathf.Infinity;
-            return _hazorons.Min(h => h.DefaultWorldPosition);
+            if (Current == null || Current._hazorons.Count == 0) return Mathf.Infinity;
+            return Current._hazorons.Min(h => h.DefaultWorldPosition);
         }
         private Hazoron GetClosestHazoron()
         {

@@ -44,8 +44,8 @@ namespace PataRoad.Core.Character.Bosses
         public void End()
         {
             _actionQueue.Clear();
-            RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
-            RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
+            RhythmTimer.Current?.OnTime?.RemoveListener(CountSingleTurn);
+            RhythmTimer.Current?.OnTime?.RemoveListener(CountComboTurn);
             Rhythm.Command.TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
             Attacking = false;
         }
