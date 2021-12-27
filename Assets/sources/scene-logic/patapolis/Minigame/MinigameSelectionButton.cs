@@ -8,7 +8,15 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         string[] _materialGroups;
         public string[] MaterialGroups => _materialGroups;
         [SerializeField]
-        string _minigameType;
-        public string MinigameType => _minigameType;
+        SceneLogic.Minigame.MinigameData _minigameData;
+        public SceneLogic.Minigame.MinigameData MinigameData => _minigameData;
+
+        //Will add later different reward depends on material.
+        [SerializeField]
+        private Core.Items.IItem _reward;
+        public Core.Items.IItem Reward => _reward;
+        [SerializeField]
+        private int _rewardAmount = 1;
+        public int RewardAmount => _rewardAmount;
     }
 }

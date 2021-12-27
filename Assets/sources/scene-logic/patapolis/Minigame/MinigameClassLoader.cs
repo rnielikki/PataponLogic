@@ -26,7 +26,6 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         private GameObject _mahopon;
         private Core.Character.Class.ClassType[] _availableClasses;
 
-
         private void Start()
         {
             _availableClasses = Core.Global.GlobalData.Inventory

@@ -1,4 +1,5 @@
 ﻿using PataRoad.Core.Items;
+using PataRoad.SceneLogic.Minigame;
 using System.Linq;
 using UnityEngine;
 
@@ -33,12 +34,13 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         [SerializeField]
         AudioClip _startSound;
         MaterialLoader[] _materialLoaders;
+        public SceneLogic.Minigame.MinigameData GameData => _lastSelection.MinigameData;
         private bool _opening;
 
-        public void Open(MinigameSelectionWindow parent, MinigameSelectionButton model)
+        public void Open(MinigameSelectionWindow parent, MinigameSelectionButton button)
         {
             _opening = true;
-            _lastSelection = model;
+            _lastSelection = button;
             _parent = parent;
             _parent.gameObject.SetActive(false);
             gameObject.SetActive(true);
@@ -46,7 +48,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             StartCoroutine(
             Core.Global.GlobalData.GlobalInputActions.WaitForNextInput(() =>
             {
-                foreach (var group in model.MaterialGroups)
+                foreach (var group in button.MaterialGroups)
                 {
                     var obj = Instantiate(_template, _contentTarget);
                     obj.GetComponent<MaterialLoader>().Init(group, this);
@@ -114,7 +116,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                     Core.Global.GlobalData.Inventory.RemoveItem(materialLoader.Item);
                 }
                 //Load scene!
-                LoadMinigaeScene();
+                LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData, _estimation, _lastSelection.Reward, _lastSelection.RewardAmount));
             });
         }
 
@@ -134,14 +136,15 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             Common.GameDisplay.ConfirmDialog.Create("You're play as PRACTICE.\nThere will be NO REWARD, but NO ITEM WILL BE LOST.\nAre you sure to play in this mode?", this, () =>
             {
                 //LOAD SCENE!
-                LoadMinigaeScene();
+                LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData));
             });
         }
-        private void LoadMinigaeScene()
+        private void LoadMinigaeScene(MinigameModel model)
         {
             Core.Global.GlobalData.Sound.PlayInScene(_startSound);
             gameObject.SetActive(false);
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Minigame", UnityEngine.SceneManagement.LoadSceneMode.Additive);
+            MinigameManager.SetModel(model);
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Minigame", UnityEngine.SceneManagement.LoadSceneMode.Additive);
         }
 
         internal void FindNextSelectionTarget(MaterialLoader currentLoader)
