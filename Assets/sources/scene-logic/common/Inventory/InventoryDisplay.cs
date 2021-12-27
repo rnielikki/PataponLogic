@@ -83,7 +83,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         {
             _scrollList.SetMaximumScrollLength(0, null);
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
-                    allItemDisplays.FirstOrDefault(item => item.GetComponent<Selectable>().interactable)?.gameObject
+                    allItemDisplays.FirstOrDefault(item => item != null && item.GetComponent<Selectable>().interactable)?.gameObject
                 );
         }
         public void SelectLast(IEnumerable<ItemDisplay> allItemDisplays)

@@ -8,14 +8,19 @@ namespace PataRoad.SceneLogic.Minigame
         private Animator _animator;
         [SerializeField]
         private UnityEngine.UI.Image _image;
+        [SerializeField]
+        private UnityEngine.UI.Image _statusImage;
         public void Appear()
         {
+            _animator.SetBool("Cleared", false);
             Activate();
             _animator.Play("Appear");
         }
-        public void Hit()
+        public void Hit(float accuracy)
         {
             _animator.Play("Hit");
+            _statusImage.enabled = true;
+            _statusImage.transform.localScale = Vector3.one * accuracy;
         }
         public void Disappear()
         {
@@ -23,5 +28,9 @@ namespace PataRoad.SceneLogic.Minigame
         }
         public void Activate() => _image.enabled = true;
         public void Deactivate() => _image.enabled = false;
+        public void ResetStatus()
+        {
+            _animator.SetBool("Cleared", true);
+        }
     }
 }

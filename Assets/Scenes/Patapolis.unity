@@ -1347,8 +1347,8 @@ GameObject:
   - component: {fileID: 234714601}
   - component: {fileID: 234714603}
   - component: {fileID: 234714604}
-  - component: {fileID: 234714605}
   - component: {fileID: 234714606}
+  - component: {fileID: 234714605}
   m_Layer: 5
   m_Name: Option (2)
   m_TagString: Untagged
@@ -1481,15 +1481,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 234714599}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19489c82b7ceff449a132a44de8738e9, type: 3}
+  m_Script: {fileID: 11500000, guid: babf58b57bd8673438da1c1323eee81a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _materialGroups:
-  - Mineral
-  - Mineral
   - Liquid
-  _minigameData: {fileID: 11400000, guid: 6bd709317f37ace4ab41bb6e4f3d80fb, type: 2}
-  _rewardAmount: 2
+  _minigameData: {fileID: 11400000, guid: 48093a01fd9f31940a7d6e24f55ebea6, type: 2}
+  _reward: {fileID: 11400000, guid: 1de9a8bb09771cf478150422f48f1a80, type: 2}
 --- !u!114 &234714606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7280,6 +7278,34 @@ MonoBehaviour:
   _openSound: {fileID: 8300000, guid: ee17a0148f4bbca44bbb777a2d20b3b0, type: 3}
   _closeSound: {fileID: 8300000, guid: d6943bd00b2d1574bb3e8c190de2e336, type: 3}
   _startSound: {fileID: 8300000, guid: e4aea730e29292b439d1bdccdec1995c, type: 3}
+  _onMinigameEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2108095004}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 158364136}
+        m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.InventoryLoader,
+          Assembly-CSharp
+        m_MethodName: Refresh
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1288727098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7929,7 +7955,7 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.Minigame.MinigameSelectionWindow,
             Assembly-CSharp
           m_MethodName: Close
-          m_Mode: 1
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8104,8 +8130,8 @@ GameObject:
   - component: {fileID: 1353199164}
   - component: {fileID: 1353199166}
   - component: {fileID: 1353199167}
-  - component: {fileID: 1353199168}
   - component: {fileID: 1353199169}
+  - component: {fileID: 1353199168}
   m_Layer: 5
   m_Name: Option (1)
   m_TagString: Untagged
@@ -8238,15 +8264,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1353199162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19489c82b7ceff449a132a44de8738e9, type: 3}
+  m_Script: {fileID: 11500000, guid: babf58b57bd8673438da1c1323eee81a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _materialGroups:
   - Mineral
-  - Mineral
-  - Liquid
-  _minigameData: {fileID: 11400000, guid: b8dd0c2396bf68f4782fe2f441c374cb, type: 2}
-  _rewardAmount: 2
+  _minigameData: {fileID: 11400000, guid: 48093a01fd9f31940a7d6e24f55ebea6, type: 2}
+  _reward: {fileID: 11400000, guid: 43aa27696a1d69a4a8ede08f2c941474, type: 2}
 --- !u!114 &1353199169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9226,8 +9250,8 @@ GameObject:
   - component: {fileID: 1561774751}
   - component: {fileID: 1561774753}
   - component: {fileID: 1561774754}
-  - component: {fileID: 1561774755}
   - component: {fileID: 1561774756}
+  - component: {fileID: 1561774755}
   m_Layer: 5
   m_Name: Option
   m_TagString: Untagged
@@ -9360,15 +9384,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1561774749}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19489c82b7ceff449a132a44de8738e9, type: 3}
+  m_Script: {fileID: 11500000, guid: babf58b57bd8673438da1c1323eee81a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _materialGroups:
-  - Mineral
-  - Mineral
   - Liquid
-  _minigameData: {fileID: 11400000, guid: 6bd709317f37ace4ab41bb6e4f3d80fb, type: 2}
-  _rewardAmount: 2
+  _minigameData: {fileID: 11400000, guid: 48093a01fd9f31940a7d6e24f55ebea6, type: 2}
+  _reward: {fileID: 11400000, guid: 69713eb32a916424ab78c18a94ff78b9, type: 2}
 --- !u!114 &1561774756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11921,7 +11943,7 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.Minigame.MinigameSelectionWindow,
           Assembly-CSharp
         m_MethodName: Close
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

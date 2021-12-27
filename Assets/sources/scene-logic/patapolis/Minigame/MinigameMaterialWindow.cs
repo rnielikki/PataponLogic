@@ -34,6 +34,10 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         [SerializeField]
         AudioClip _startSound;
         MaterialLoader[] _materialLoaders;
+
+        [SerializeField]
+        UnityEngine.Events.UnityEvent _onMinigameEnd;
+
         public SceneLogic.Minigame.MinigameData GameData => _lastSelection.MinigameData;
         private bool _opening;
 
@@ -76,7 +80,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             if (_opening) return;
             _parent.gameObject.SetActive(true);
             gameObject.SetActive(false);
-            Core.Global.GlobalData.Sound.PlayInScene(_closeSound);
+            if (!ok) Core.Global.GlobalData.Sound.PlayInScene(_closeSound);
             foreach (Transform child in _contentTarget)
             {
                 Destroy(child.gameObject);
@@ -111,12 +115,15 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             }
             Common.GameDisplay.ConfirmDialog.Create("You will play in REAL.\nIf you fail, item will be LOST without reward.\nAre you sure to play in this mode?", this, () =>
             {
+                int sum = 0;
+                int difference = 0;
                 foreach (var materialLoader in _materialLoaders)
                 {
                     Core.Global.GlobalData.Inventory.RemoveItem(materialLoader.Item);
                 }
                 //Load scene!
-                LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData, _estimation, _lastSelection.Reward, _lastSelection.RewardAmount));
+                var (item, amount) = _lastSelection.GetReward(_materialLoaders.Sum(lo => lo.Item.Index), _materialLoaders.Max(lo => lo.Item.Index) - _materialLoaders.Min(lo => lo.Item.Index));
+                LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData, _estimation, item, amount));
             });
         }
 
@@ -133,7 +140,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
 
         public void LoadPracticeGame()
         {
-            Common.GameDisplay.ConfirmDialog.Create("You're play as PRACTICE.\nThere will be NO REWARD, but NO ITEM WILL BE LOST.\nAre you sure to play in this mode?", this, () =>
+            Common.GameDisplay.ConfirmDialog.Create("You're play as PRACTICE.\nThere will be NO REWARD, but item WILL NOT LOST.\nAre you sure to play in this mode?", this, () =>
             {
                 //LOAD SCENE!
                 LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData));
@@ -142,8 +149,9 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         private void LoadMinigaeScene(MinigameModel model)
         {
             Core.Global.GlobalData.Sound.PlayInScene(_startSound);
-            gameObject.SetActive(false);
-            MinigameManager.SetModel(model);
+            Close(true);
+            _parent.Close(true);
+            MinigameManager.Init(model, _onMinigameEnd);
             UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Minigame", UnityEngine.SceneManagement.LoadSceneMode.Additive);
         }
 

@@ -1,11 +1,12 @@
 ﻿using PataRoad.Core.Rhythm;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PataRoad.SceneLogic.Minigame
 {
     class MinigameInputAudio : MonoBehaviour
     {
+        [SerializeField]
+        MinigameManager _manager;
         [SerializeField]
         RhythmInput _rhythmInput;
         [SerializeField]
@@ -39,6 +40,12 @@ namespace PataRoad.SceneLogic.Minigame
 
         public void PlayAudio(RhythmInputModel model)
         {
+            if (!_manager.ListeningInput)
+            {
+                _audioSource.PlayOneShot(_badSound);
+                return;
+            }
+
             float timing = model.Timing;
             if (timing <= _perfectFrequency) _audioSource.PlayOneShot(_perfectSound);
             else if (timing <= _goodFrequency) _audioSource.PlayOneShot(_goodSound);

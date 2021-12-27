@@ -40,6 +40,12 @@ namespace PataRoad.Core.Items
             _groupIndexes.Add(type, groupIndexes.ToArray());
             _data.Add(type, result);
         }
+        /// <summary>
+        /// Gets (serializefield expected) reference to real item as in-game data.
+        /// </summary>
+        /// <param name="item">Item object, expected as scriptableobject.</param>
+        /// <returns>Item in itemloader index.</returns>
+        public static IItem LoadByReference(IItem item) => GetItem(item.ItemType, item.Group, item.Index);
 
         /// <summary>
         /// Get Item

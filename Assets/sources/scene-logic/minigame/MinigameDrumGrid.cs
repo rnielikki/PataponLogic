@@ -35,9 +35,11 @@ namespace PataRoad.SceneLogic.Minigame
                 _current = _drumMap[drum];
                 _current.Appear();
             }
+            else _current = null;
         }
-        public void Hit() => _current.Hit();
-        public void Disappear() => _current.Disappear();
+        public void Hit(float accuracy) => _current?.Hit(accuracy);
+        public void Disappear() => _current?.Disappear();
+        public void ClearStatus() => _current?.ResetStatus();
     }
 }
 

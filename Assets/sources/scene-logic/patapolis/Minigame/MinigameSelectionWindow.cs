@@ -44,16 +44,16 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             }));
         }
 
-        public void Close()
+        public void Close(bool forMinigame = false)
         {
             if (_opening) return;
-            Core.Global.GlobalData.Sound.PlayInScene(_closeSound);
+            if (!forMinigame) Core.Global.GlobalData.Sound.PlayInScene(_closeSound);
             foreach (var obj in _buttons)
             {
                 obj.GetComponent<Button>().onClick.RemoveAllListeners();
             }
             gameObject.SetActive(false);
-            _parentActionEventMap.enabled = true;
+            if (!forMinigame) _parentActionEventMap.enabled = true;
         }
     }
 }

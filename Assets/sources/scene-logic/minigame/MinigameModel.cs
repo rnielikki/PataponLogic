@@ -6,7 +6,7 @@
         public bool IsPractice { get; private set; }
         public Core.Items.IItem Reward { get; private set; }
         public int RewardAmount { get; private set; }
-        public float PerfectionRequiprement { get; private set; } //range of 0-1
+        public float ClearRequirement { get; private set; } //range of 0-1
 
         /// <summary>
         /// Generates model to pass PRACTICE data.
@@ -15,6 +15,7 @@
         public MinigameModel(MinigameData minigameData)
         {
             MinigameData = minigameData;
+            IsPractice = true;
         }
         /// <summary>
         /// Generates model to pass NON-PRACTICE data.
@@ -25,7 +26,7 @@
         /// <param name="itemAmount">Amount of the item that will get as reward. Default is 1.</param>
         public MinigameModel(MinigameData minigameData, float perfectionRequirement, Core.Items.IItem reward, int itemAmount = 1)
         {
-            PerfectionRequiprement = perfectionRequirement;
+            ClearRequirement = perfectionRequirement;
             MinigameData = minigameData;
             Reward = reward;
             RewardAmount = itemAmount;

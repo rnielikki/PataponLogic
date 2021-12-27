@@ -17,6 +17,15 @@ namespace PataRoad.SceneLogic.Patapolis
 
         private void Start()
         {
+            Load();
+        }
+        public void Refresh()
+        {
+            _inventoryDisplay.EmptyData();
+            Load();
+        }
+        private void Load()
+        {
             var loadedDisplays = _inventoryDisplay.LoadData(Core.Global.GlobalData.Inventory.GetAllItems(), null, false);
             _allDisplays = loadedDisplays
                 .GroupBy(display => display.Item.ItemType)
@@ -26,6 +35,7 @@ namespace PataRoad.SceneLogic.Patapolis
             _allDisplaysAlphabetOrder = loadedDisplays.OrderBy(display => display.Item.Name).ToArray();
             OrderToIndex();
         }
+
         public void Open()
         {
             _actionEventMap.enabled = false;

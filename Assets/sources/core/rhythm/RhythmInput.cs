@@ -21,8 +21,6 @@ namespace PataRoad.Core.Rhythm
         /// Prevents from 'fast repeat hit'. Always miss if input interval is too fast.
         /// </summary>
         public static bool Disabled { get; protected set; }
-        [SerializeField]
-        bool _alwaysHit;
         void Awake()
         {
             Init();
@@ -42,7 +40,7 @@ namespace PataRoad.Core.Rhythm
         protected void DrumHit(InputAction.CallbackContext context)
         {
             RhythmInputModel model;
-            if (!_alwaysHit && (Disabled || (Command.TurnCounter.IsOn && !Command.TurnCounter.IsPlayerTurn)))
+            if (Disabled || (Command.TurnCounter.IsOn && !Command.TurnCounter.IsPlayerTurn))
             {
                 model = RhythmInputModel.Miss(_drumType);
             }

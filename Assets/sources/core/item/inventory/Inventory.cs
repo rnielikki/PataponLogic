@@ -11,6 +11,11 @@ namespace PataRoad.Core.Items
             = new Dictionary<ItemType, Dictionary<string, Dictionary<int, InventoryData>>>();
         private Dictionary<IItem, InventoryData> _existingData = new Dictionary<IItem, InventoryData>();
 
+        /// <summary>
+        /// Recent data after saved. This won't be serialized.
+        /// </summary>
+        private Queue<IItem> _recentData = new Queue<IItem>();
+
         [SerializeReference]
         private InventoryData[] _serializableData;
 
@@ -33,6 +38,11 @@ namespace PataRoad.Core.Items
         /// <returns>The inventory data of all items from the inventory.</returns>
         public IEnumerable<InventoryData> GetAllItems() => _existingData.Values;
         /// <summary>
+        /// Gets Inventory data of most lately added item.
+        /// </summary>
+        /// <returns>The inventory data of last added item.</returns>
+        public InventoryData GetLastItem() => _existingData[_recentData.Peek()];
+        /// <summary>
         /// Adds an item to the inventory.
         /// </summary>
         ///<param name="item">The item to remove.</param>
@@ -48,6 +58,7 @@ namespace PataRoad.Core.Items
         public bool AddMultiple(IItem item, int amount)
         {
             if (amount < 0) throw new System.ArgumentException("amount cannot be less than zero.");
+            _recentData.Enqueue(item);
             if (HasItem(item))
             {
                 if (!item.IsUniqueItem)
