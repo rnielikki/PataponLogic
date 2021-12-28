@@ -76,6 +76,14 @@ namespace PataRoad.Core.Map
         int _maxLevelOnNormal;
         [SerializeField]
         int _maxLevelOnHard;
+
+        [SerializeField]
+        Story.StoryData _nextStoryOnSuccess;
+        public Story.StoryData NextStoryOnSuccess => _nextStoryOnSuccess;
+        [SerializeField]
+        Story.StoryData _nextStoryOnFail;
+        public Story.StoryData NextStoryOnFail => _nextStoryOnFail;
+
         public int GetMaxLevel() =>
             Rhythm.RhythmEnvironment.Difficulty switch
             {

@@ -54,6 +54,8 @@ namespace PataRoad.Core.Map
             //-- missionPoint.
             _missionPoint.FilledMissionCondition = _mapData.FilledMissionCondition;
             _missionPoint.UseMissionTower = _mapData.UseMissionTower;
+            _missionPoint.NextStory = _mapData.NextStoryOnSuccess;
+            _missionPoint.NextFailureStory = _mapData.NextStoryOnFail;
         }
         private void Start()
         {

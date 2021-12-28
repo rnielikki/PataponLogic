@@ -61,6 +61,7 @@ namespace PataRoad.SceneLogic.Minigame
         {
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("Minigame");
             _onMinigameClosed.Invoke();
+            Core.Global.GlobalData.MapInfo.RefreshAllWeathers();
         }
     }
 }

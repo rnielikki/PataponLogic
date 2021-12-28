@@ -9,6 +9,19 @@ namespace PataRoad.Core.Map.Weather
     /// </summary>
     public class Wind : MonoBehaviour
     {
+        //the order "which is superior"
+        /// <summary>
+        /// Internal conversion of <see cref="WindType"/>.
+        /// </summary>
+        [System.Flags]
+        private enum PrioritizedWindType
+        {
+            None = 0,
+            Changing = 1,
+            HeadWind = 2,
+            TailWind = 4
+        }
+
         [SerializeField]
         private WindZone _zone;
         private const float _windRange = 3; //min is -_windRange and max is _windRange
@@ -41,17 +54,15 @@ namespace PataRoad.Core.Map.Weather
 
         private WindType _defaultStatus;
 
-        private WindType _windFlags;
+        private PrioritizedWindType _windFlags;
         private static int _maxFlag { get; set; }
         private Dictionary<WindType, UnityAction> _windActions;
         private bool _isActive = true;
 
         public void Init(WindType windType)
         {
-            foreach (int flag in System.Enum.GetValues(typeof(WindType)))
-            {
-                if (_maxFlag < flag) _maxFlag = flag;
-            }
+            _maxFlag = (int)GetFlag((WindType)(System.Enum.GetValues(typeof(WindType)).Length - 1));
+
             _windActions = new Dictionary<WindType, UnityAction>()
             {
                 { WindType.None, StartNoWind },
@@ -113,34 +124,40 @@ namespace PataRoad.Core.Map.Weather
         }
         public void StartWind(WindType type)
         {
-            type = GetMaxFlag(type);
+            var prioritizedType = GetFlag(type);
             if (!_isActive && type != 0) ActivateWind(true);
-            if (type > _windFlags)
+            if (prioritizedType > _windFlags)
             {
                 if (type == WindType.None) StopAllCoroutines();
                 _windActions[type]();
             }
-            _windFlags |= type;
+            _windFlags |= prioritizedType;
 
         }
         public void StopWind(WindType type)
         {
-            type = GetMaxFlag(type);
-            _windFlags &= ~type;
-            if (type > _windFlags)
+            var prioritizedType = GetFlag(type);
+            _windFlags &= ~prioritizedType;
+            if (prioritizedType > _windFlags)
             {
                 if (type == WindType.Changing) StopAllCoroutines();
                 _windActions[GetMaxFlag(_windFlags)]();
             }
         }
-        public static WindType GetMaxFlag(WindType type)
+        private static PrioritizedWindType GetFlag(WindType type)
+        {
+            if (type == 0) return 0;
+            else return (PrioritizedWindType)(1 << ((int)type - 1));
+        }
+        private static WindType GetMaxFlag(PrioritizedWindType type)
         {
             var flag = _maxFlag;
-            while (!type.HasFlag((WindType)flag))
+            while (!type.HasFlag((PrioritizedWindType)flag))
             {
                 flag >>= 1;
             }
-            return (WindType)flag;
+            //Square root
+            return (flag == 0) ? 0 : (WindType)((flag >> 2) + 1);
         }
         /// <summary>
         /// Activate or disactivate wind.

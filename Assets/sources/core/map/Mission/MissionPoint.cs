@@ -34,6 +34,8 @@ namespace PataRoad.Core.Map
         public static MissionPoint Current { get; private set; }
 
         public Vector2 MissionPointPosition { get; private set; }
+        public Story.StoryData NextStory { get; internal set; }
+        public Story.StoryData NextFailureStory { get; internal set; }
 
         void Awake()
         {
@@ -93,15 +95,19 @@ namespace PataRoad.Core.Map
         private void FailMission()
         {
             AttachToScreen("MissionFailed");
+
             _soundSource.PlayOneShot(_missionFailedMusic);
             Global.GlobalData.TipIndex = Global.GlobalData.MapInfo.NextMap.MapData.TipIndexOnFail;
             Global.GlobalData.MapInfo.MissionFailed();
+
+            if (NextFailureStory != null) Story.StoryLoader.Init();
             StartCoroutine(WaitForNextScene());
 
             System.Collections.IEnumerator WaitForNextScene()
             {
                 yield return new WaitForSeconds(9);
-                Common.SceneLoadingAction.Create("Patapolis", true);
+                if (NextFailureStory == null) Common.SceneLoadingAction.Create("Patapolis", true);
+                else Story.StoryLoader.LoadStory(NextFailureStory);
             }
         }
         private void CompleteMission()

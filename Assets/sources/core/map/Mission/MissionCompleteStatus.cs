@@ -15,10 +15,14 @@ namespace PataRoad.Core.Map
         int _waitTimeUntilChangeBackground;
         [SerializeField]
         Material _spriteMaterial;
+        private UnityEngine.InputSystem.InputAction _submitAction;
+        private Story.StoryData _nextStory;
 
-        public void LoadMissionStatus()
+        public void LoadMissionStatus(Story.StoryData nextStory)
         {
             Destroy(Items.ItemManager.Current.ItemDropPoint.gameObject);
+
+            if (nextStory != null) Story.StoryLoader.Init();
 
             var allItemStatus = Items.ItemManager.Current.LoadItemStatus();
             var spoils = allItemStatus
@@ -37,7 +41,16 @@ namespace PataRoad.Core.Map
             _spriteMaterial.color = Color.black;
             FindObjectOfType<Background.BackgroundLoader>().gameObject.SetActive(false);
 
-            Common.SceneLoadingAction.Create("Patapolis", true, "Submit");
+            if (nextStory == null)
+            {
+                Common.SceneLoadingAction.Create("Patapolis", true, "Submit");
+            }
+            else
+            {
+                _submitAction = Global.GlobalData.Input.actions.FindAction("UI/Submit");
+                _nextStory = nextStory;
+                _submitAction.performed += PerformAction;
+            }
 
             Camera.main.backgroundColor = Color.white;
             StartCoroutine(ChangeBack());
@@ -58,9 +71,15 @@ namespace PataRoad.Core.Map
             Character.Patapons.PataponsManager.IsMovingForward = false;
 
         }
+        void PerformAction(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            Story.StoryLoader.LoadStory(_nextStory);
+            _submitAction.performed -= PerformAction;
+        }
         private void OnDestroy()
         {
             _spriteMaterial.color = Color.white;
+            _submitAction.performed -= PerformAction;
         }
     }
 }

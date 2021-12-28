@@ -2100,6 +2100,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464485979}
   m_CullTransparentMesh: 1
+--- !u!1 &516462056
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 516462058}
+  - component: {fileID: 516462057}
+  m_Layer: 0
+  m_Name: StorySceneInfo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &516462057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516462056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7181e4046d47d84fba157413a7a7638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weatherInfo: {fileID: 703932483}
+  _wind: {fileID: 703932486}
+  _audioSource: {fileID: 549004028}
+  _background: {fileID: 0}
+  _parent: {fileID: 516462058}
+--- !u!4 &516462058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516462056}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.964017, y: 6.3822412, z: 61.343136}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519155160
 GameObject:
   m_ObjectHideFlags: 0
@@ -2226,7 +2274,7 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.Minigame.MinigameSelectionWindow,
           Assembly-CSharp
         m_MethodName: Close
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2374,7 +2422,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &566856550
 GameObject:
@@ -3550,6 +3598,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7088615851034155905, guid: 711e2a8438b798c4f96a231714a22cb0, type: 3}
   m_PrefabInstance: {fileID: 703932480}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &703932486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 938049652124668866, guid: 711e2a8438b798c4f96a231714a22cb0, type: 3}
+  m_PrefabInstance: {fileID: 703932480}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc8a90dbaa7b7b49b3ccef4cd592417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &706468906
 GameObject:
   m_ObjectHideFlags: 0
@@ -4103,7 +4162,7 @@ Transform:
   - {fileID: 251477609897085093}
   - {fileID: 295542915}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &842743339
 MonoBehaviour:
@@ -4119,6 +4178,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sensitivity: 50
   _camera: {fileID: 842743337}
+--- !u!1001 &883964035
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3279042058939350244, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_Name
+      value: StoryLoaderData
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.766134
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.6328363
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 60.495922
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
 --- !u!1 &884360630
 GameObject:
   m_ObjectHideFlags: 0
@@ -6938,7 +7054,7 @@ RectTransform:
   - {fileID: 1307451646}
   - {fileID: 1288727092}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -10143,7 +10259,7 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.Minigame.MinigameSelectionWindow,
             Assembly-CSharp
           m_MethodName: Close
-          m_Mode: 1
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -12026,7 +12142,7 @@ Transform:
   - {fileID: 8337157764144704320}
   - {fileID: 1824158892}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2108095004
 MonoBehaviour:

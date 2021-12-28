@@ -75,7 +75,6 @@ namespace PataRoad.Core.Global
         {
             _succeededLast = false;
             GlobalData.PataponInfo.CustomMusic = null;
-            RefreshAllWeathers();
         }
         public void RefreshAllWeathers()
         {
