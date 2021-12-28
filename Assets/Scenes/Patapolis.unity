@@ -2110,6 +2110,7 @@ GameObject:
   m_Component:
   - component: {fileID: 516462058}
   - component: {fileID: 516462057}
+  - component: {fileID: 516462059}
   m_Layer: 0
   m_Name: StorySceneInfo
   m_TagString: Untagged
@@ -2142,12 +2143,56 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 516462056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.964017, y: 6.3822412, z: 61.343136}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &516462059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516462056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f83958cf6d945dd42a51a5286b64decd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _testData: {fileID: 11400000, guid: 1233fbf7157ec264cbf07d92223bc685, type: 2}
+  _input:
+    m_Name: Input
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: aac30e15-23a2-4b4c-b5bd-a17548a75b8d
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: ef441fcd-c945-4bc8-9dca-c5662daa5ffb
+      m_Path: <Keyboard>/x
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Input
+      m_Flags: 0
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 516462059}
+        m_TargetAssemblyTypeName: PataRoad.AppDebug.ActionOnPress, Assembly-CSharp
+        m_MethodName: LoadStory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &519155160
 GameObject:
   m_ObjectHideFlags: 0
@@ -4162,7 +4207,7 @@ Transform:
   - {fileID: 251477609897085093}
   - {fileID: 295542915}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &842743339
 MonoBehaviour:

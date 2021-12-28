@@ -33,6 +33,14 @@ namespace PataRoad.Core.Items
         /// <returns><c>true</c> if exists in inventory, otherwise <c>false</c>.</returns>
         public bool HasItem(IItem item) => _existingData.ContainsKey(item);
         /// <summary>
+        /// Check if the item with specific amount exists in the inventory.
+        /// </summary>
+        /// <param name="item">item to check if it's in inventory.</param>
+        /// <param name="amount">amount of item that expected to be exist.</param>
+        /// <note>This doesn't check <c>null</c> and throws exception if data is <c>null</c></note>
+        /// <returns><c>true</c> if exists in inventory, otherwise <c>false</c>.</returns>
+        public bool HasAmountOfItem(IItem item, int amount) => _existingData.ContainsKey(item) && _existingData[item].Amount >= amount;
+        /// <summary>
         /// Retrieves all items the player have from the inventory.
         /// </summary>
         /// <returns>The inventory data of all items from the inventory.</returns>

@@ -3,7 +3,6 @@ using PataRoad.SceneLogic.EquipmentScene;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.CommonSceneLogic
@@ -30,10 +29,23 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
 
         private RareponSelection _lastSelected;
 
+        [Header("Description")]
         [SerializeField]
         private Text _descriptionTitle;
         [SerializeField]
         private Text _descriptionContent;
+        private void Start()
+        {
+            _rareponSelections = GetComponentsInChildren<RareponSelection>();
+            foreach (var rarepon in _rareponSelections)
+            {
+                rarepon.Init();
+            }
+            foreach (var rarepon in _rareponSelections)
+            {
+                rarepon.EnableIfAvailable();
+            }
+        }
 
         public void Open(Common.Navigator.SpriteNavigator beforeSelect, Core.Character.PataponData pataponData, RareponData data)
         {
@@ -46,10 +58,9 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public void Open(RareponData data)
         {
             _actionEventMap.enabled = true;
-            _rareponSelections = GetComponentsInChildren<RareponSelection>();
             foreach (var rareponSelection in _rareponSelections)
             {
-                rareponSelection.GetComponent<Button>()
+                rareponSelection.Button
                     .onClick
                     .AddListener(() => _onClicked.Invoke(rareponSelection));
             }
@@ -95,23 +106,10 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public void Select(RareponData data)
         {
             var index = data.Index;
-            var uiOkAction = Core.Global.GlobalData.Input.actions.FindAction("UI/Submit");
-            uiOkAction.Disable();
-            StartCoroutine(WaitForNext());
+            StartCoroutine(
+                Core.Global.GlobalData.GlobalInputActions.WaitForNextInput(() => _rareponSelections.SingleOrDefault(s => s.Index == index)?.Select())
+                );
 
-            System.Collections.IEnumerator WaitForNext()
-            {
-                if (InputSystem.settings.updateMode == InputSettings.UpdateMode.ProcessEventsInDynamicUpdate)
-                {
-                    yield return new WaitForEndOfFrame();
-                }
-                else if (InputSystem.settings.updateMode == InputSettings.UpdateMode.ProcessEventsInFixedUpdate)
-                {
-                    yield return new WaitForFixedUpdate();
-                }
-                _rareponSelections.SingleOrDefault(s => s.Index == index)?.Select();
-                uiOkAction.Enable();
-            }
         }
         public void Apply(RareponSelection selection)
         {

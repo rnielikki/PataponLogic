@@ -27,7 +27,7 @@ namespace PataRoad.Common.GameDisplay
         // Start is called before the first frame update
         void Start()
         {
-            _action = new InputAction(binding: "/*/<button>");
+            _action = Core.Global.GlobalData.Input.actions.FindAction("UI/Submit");
 
             _action.Enable();
             if (_allTipsIndex == null)
@@ -106,6 +106,7 @@ namespace PataRoad.Common.GameDisplay
         {
             _action.performed -= GoToNextScene;
             _action.Disable();
+            _action = null;
             _op.allowSceneActivation = true;
             if (!_fadingCreated)
             {

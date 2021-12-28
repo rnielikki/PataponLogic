@@ -41,13 +41,16 @@ namespace PataRoad.Story
             storySceneInfo.Wind.Init(data.Wind);
 
             storySceneInfo.AudioSource.clip = data.Music;
+            storySceneInfo.AudioSource.Play();
 
 
             if (data.UsePatapolis)
             {
                 var pos = Camera.main.transform.position;
                 pos.x = data.XCameraPosition;
+                pos.y = 5;
                 Camera.main.transform.position = pos;
+                Camera.main.orthographicSize = 10;
             }
             else
             {
@@ -57,14 +60,47 @@ namespace PataRoad.Story
             foreach (var storyAction in data.StoryActions)
             {
                 storyAction.InvokeEvent();
+                Coroutine waitingForSeconds = null;
+                Coroutine waitingForLine = null;
+                if (storyAction.WaitingSeconds > 0)
+                {
+                    waitingForSeconds = StartCoroutine(WaitForSeconds(storyAction.WaitingSeconds));
+                }
                 if (storyAction.UseLine)
                 {
-                    yield return _display.WaitUntilNext(storyAction);
+                    waitingForLine = StartCoroutine(_display.WaitUntilNext(storyAction));
                 }
+                else
+                {
+                    _display.Close();
+                }
+                if (waitingForSeconds != null) yield return waitingForSeconds;
+                if (waitingForLine != null) yield return waitingForLine;
             }
 
-            yield return null;
-            //Destory(gameObject)
+            if (data.NextMap != null)
+            {
+                var mapContainer = Core.Global.GlobalData.MapInfo.GetMapByIndex(data.NextMap.Index);
+                if (mapContainer != null)
+                {
+                    Core.Global.GlobalData.MapInfo.Select(mapContainer);
+                    Common.SceneLoadingAction.Create("Battle", false);
+                }
+                else
+                {
+                    Common.SceneLoadingAction.Create("Patapolis", true);
+                }
+            }
+            else
+            {
+                Common.SceneLoadingAction.Create("Patapolis", true);
+            }
+            Destroy(gameObject);
+
+            IEnumerator WaitForSeconds(float seconds)
+            {
+                yield return new WaitForSeconds(seconds);
+            }
         }
         private void OnDestroy()
         {

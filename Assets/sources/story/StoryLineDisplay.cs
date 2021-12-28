@@ -11,6 +11,8 @@ namespace PataRoad.Story
         Text _name;
         [SerializeField]
         Text _content;
+        [SerializeField]
+        Common.GameDisplay.ScrollWindow _scrollWindow;
         public System.Collections.IEnumerator WaitUntilNext(StoryAction story)
         {
             gameObject.SetActive(true);
@@ -20,12 +22,16 @@ namespace PataRoad.Story
         private void UpdateText(StoryAction story)
         {
             gameObject.SetActive(true);
+            _image.enabled = story.Image != null;
             _image.sprite = story.Image;
             _name.text = story.Name;
             _content.text = story.Content;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_content.rectTransform);
+            _scrollWindow.Refresh();
         }
         public void Close()
         {
+            _image.enabled = false;
             gameObject.SetActive(false);
         }
     }

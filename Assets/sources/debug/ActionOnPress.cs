@@ -1,4 +1,3 @@
-using PataRoad.Core.Items;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +8,9 @@ namespace PataRoad.AppDebug
 {
     public class ActionOnPress : MonoBehaviour
     {
+        [SerializeField]
+        Story.StoryData _testData;
+
         [SerializeField]
         private InputAction _input;
         [SerializeField]
@@ -52,6 +54,11 @@ namespace PataRoad.AppDebug
         public void SetKnockback()
         {
             Boss.StatusEffectManager.SetKnockback();
+        }
+        public void LoadStory()
+        {
+            Story.StoryLoader.Init();
+            Story.StoryLoader.LoadStory(_testData);
         }
     }
 }

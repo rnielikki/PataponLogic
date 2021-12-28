@@ -1,7 +1,7 @@
-﻿using PataRoad.Core.Items;
+﻿using PataRoad.Core.Character.Equipments.Weapons;
 using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipments.Weapons
+namespace PataRoad.Core.Items
 {
     [CreateAssetMenu(fileName = "equipment-data-as-number", menuName = "Item/EquipmentData/GemData")]
     class GemData : EquipmentData

@@ -5,6 +5,9 @@
     {
         [UnityEngine.SerializeField]
         UnityEngine.Events.UnityEvent _events;
+        [UnityEngine.SerializeField]
+        float _waitingSeconds;
+        public float WaitingSeconds => _waitingSeconds;
         [UnityEngine.Header("Line")]
         [UnityEngine.SerializeField]
         private bool _useLine;

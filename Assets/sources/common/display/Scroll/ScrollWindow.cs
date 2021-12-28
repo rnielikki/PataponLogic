@@ -47,7 +47,7 @@ namespace PataRoad.Common.GameDisplay
             }
 
             var pos = _content.anchoredPosition;
-            pos.y = Mathf.Clamp(pos.y - _viewport.rect.size.y * _sensitivity * context.ReadValue<float>(), 0, maxScroll);
+            pos.y = Mathf.Clamp(pos.y + _viewport.rect.size.y * _sensitivity * context.ReadValue<float>(), 0, maxScroll);
 
             _content.anchoredPosition = pos;
             _upArrow.enabled = pos.y != 0;

@@ -16,6 +16,7 @@ namespace PataRoad.Common.GameDisplay
             resumeButton.onClick.AddListener(Destroy);
             transform.Find("End").GetComponent<Button>().onClick.AddListener(EndMission);
             resumeButton.Select();
+            resumeButton.OnSelect(null);
         }
         private void OnDestroy()
         {

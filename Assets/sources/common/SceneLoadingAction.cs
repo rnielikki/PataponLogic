@@ -71,6 +71,7 @@ namespace PataRoad.Common
                 {
                     GameDisplay.ScreenFading.Create(true, 2);
                     SceneManager.LoadScene(_sceneName);
+                    SceneManager.sceneLoaded += DestroyThis;
                 }
             });
         }
@@ -82,10 +83,16 @@ namespace PataRoad.Common
             FindObjectOfType<GameDisplay.TipDisplay>().LoadNextScene(_sceneName);
             Destroy(gameObject);
         }
+        private void DestroyThis(Scene scene, LoadSceneMode mode)
+        {
+            Destroy(gameObject);
+            SceneManager.sceneLoaded -= DestroyThis;
+        }
 
         private void OnDestroy()
         {
             SceneManager.sceneLoaded -= SetTipsDisplay;
+            SceneManager.sceneLoaded -= DestroyThis;
             if (_action != null) _action.started -= ChangeScene;
         }
     }
