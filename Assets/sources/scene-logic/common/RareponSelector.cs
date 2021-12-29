@@ -22,6 +22,9 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         private Common.Navigator.SpriteNavigator _lastSelectNavigator;
 
         [SerializeField]
+        private RareponRequirementWindow _rareponRequirementWindow;
+        internal RareponRequirementWindow RareponRequirementWindow => _rareponRequirementWindow;
+        [SerializeField]
         private EquipmentSetter _equipmentSetter;
         private RareponSelection[] _rareponSelections;
         [SerializeField]
@@ -47,6 +50,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             {
                 rarepon.EnableIfAvailable();
             }
+            _rareponRequirementWindow.Init();
         }
 
         public void Open(Common.Navigator.SpriteNavigator beforeSelect, Core.Character.PataponData pataponData, RareponData data)

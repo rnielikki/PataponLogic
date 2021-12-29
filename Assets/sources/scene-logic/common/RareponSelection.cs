@@ -28,8 +28,13 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public RareponData RareponData => _isOpen ? _data : null;
         [SerializeField]
         private Button _button;
+        [SerializeField]
+        private RectTransform _rectTransform;
+        [SerializeField]
+        private Vector2 _requirementWindowPivot;
         public Button Button => _button;
         private RareponSelector _parent;
+
         [Header("Requirement")]
         [SerializeField]
         private RareponSelection[] _nextEnableTarget;
@@ -42,6 +47,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
 
         public void Init(RareponSelector parent)
         {
+            if (_data != null) return;
             var data = Core.Global.GlobalData.PataponInfo.RareponInfo.GetFromOpenRarepon(Index);
             _parent = parent;
             if (data != null)
@@ -143,7 +149,16 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void OnSelect(BaseEventData eventData)
         {
+            if (_data == null) return;
             _parent.UpdateText(_data);
+            if (_available && !_isOpen)
+            {
+                _parent.RareponRequirementWindow.ShowRequirements(_totalRequirements, _rectTransform, _requirementWindowPivot);
+            }
+            else if (_parent.RareponRequirementWindow.gameObject.activeSelf)
+            {
+                _parent.RareponRequirementWindow.HideRequirements();
+            }
         }
         private void ShowImages(bool show)
         {

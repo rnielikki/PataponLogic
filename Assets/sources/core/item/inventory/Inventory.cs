@@ -125,6 +125,7 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 0));
 
             //Test
+            /*
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 0), 10);
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 1), 1);
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 2), 3);
@@ -137,7 +138,6 @@ namespace PataRoad.Core.Items
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Mineral", 3), 1);
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Mineral", 4), 1);
 
-            /*
             for (int i = 1; i < 11; i++) AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", i), 1);
             for (int i = 1; i < 11; i++) AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", i), 1);
 
