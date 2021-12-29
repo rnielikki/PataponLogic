@@ -20,7 +20,7 @@ namespace PataRoad.SceneLogic.Minigame
         {
             _animator.Play("Hit");
             _statusImage.enabled = true;
-            _statusImage.transform.localScale = Vector3.one * accuracy;
+            _statusImage.transform.localScale = Vector3.one * (1 - accuracy);
         }
         public void Disappear()
         {

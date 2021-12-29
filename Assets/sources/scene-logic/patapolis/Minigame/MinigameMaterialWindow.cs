@@ -35,10 +35,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         AudioClip _startSound;
         MaterialLoader[] _materialLoaders;
 
-        [SerializeField]
-        UnityEngine.Events.UnityEvent _onMinigameEnd;
-
-        public SceneLogic.Minigame.MinigameData GameData => _lastSelection.MinigameData;
+        public MinigameData GameData => _lastSelection.MinigameData;
         private bool _opening;
 
         public void Open(MinigameSelectionWindow parent, MinigameSelectionButton button)
@@ -135,7 +132,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 return;
             }
             _estimation = _estimationCurve.Evaluate((float)_materialLoaders.Average(value => value.Item.Index) / 8);
-            _estimationText.text = _estimation.ToString("p0");
+            _estimationText.text = _estimation.ToString("p2");
         }
 
         public void LoadPracticeGame()
@@ -151,7 +148,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             Core.Global.GlobalData.Sound.PlayInScene(_startSound);
             Close(true);
             _parent.Close(true);
-            MinigameManager.Init(model, _onMinigameEnd);
+            MinigameManager.Init(model);
             UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("Minigame", UnityEngine.SceneManagement.LoadSceneMode.Additive);
         }
 

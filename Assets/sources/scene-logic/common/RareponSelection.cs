@@ -11,8 +11,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
     internal class RareponSelection : MonoBehaviour, ISelectHandler
     {
         [SerializeField]
-        RareponData _rareponData;
-        public int Index => _rareponData.Index;
+        int _index;
+        public int Index => _index;
         [SerializeField]
         Image _image;
         [SerializeField]
@@ -24,7 +24,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         [SerializeField]
         Image _questionImage;
         RareponData _data;
-        public RareponData RareponData => _data;
+        bool _isOpen;
+        public RareponData RareponData => _isOpen ? _data : null;
         [SerializeField]
         private Button _button;
         public Button Button => _button;
@@ -39,16 +40,18 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         private ItemRequirement[] _totalRequirements;
         private bool _available;
 
-        public void Init()
+        public void Init(RareponSelector parent)
         {
-            var data = Core.Global.GlobalData.PataponInfo.RareponInfo.GetRarepon(Index);
-            _parent = GetComponentInParent<RareponSelector>();
+            var data = Core.Global.GlobalData.PataponInfo.RareponInfo.GetFromOpenRarepon(Index);
+            _parent = parent;
             if (data != null)
             {
                 SetRarepon(data);
+                _available = true;
             }
             else
             {
+                _data = Core.Global.GlobalData.PataponInfo.RareponInfo.LoadResourceWithoutOpen(Index);
                 ShowImages(false);
                 _available = false;
                 _button.enabled = false;
@@ -68,6 +71,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             _button.enabled = false;
         }
         public void Select() => _button.Select();
+
         private void SetRarepon(RareponData data)
         {
             _data = data;
@@ -83,12 +87,12 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             {
                 foreach (var target in _nextEnableTarget)
                 {
-                    Core.Global.GlobalData.PataponInfo.RareponInfo.OpenNewRarepon(target.Index);
                     target._available = true;
                     target.enabled = true;
                 }
             }
             _text.text = data.Name;
+            _isOpen = true;
         }
         public bool ConfirmToCreateRarepon()
         {
@@ -103,7 +107,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             List<ItemRequirement> itemRequirements = new List<ItemRequirement>();
             foreach (var itemPair in _totalRequirements)
             {
-                if (Core.Global.GlobalData.Inventory.HasAmountOfItem(itemPair.Item, itemPair.Amount))
+                if (!Core.Global.GlobalData.Inventory.HasAmountOfItem(itemPair.Item, itemPair.Amount))
                 {
                     itemExists = false;
                     itemRequirements.Add(itemPair);
@@ -112,8 +116,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             if (!itemExists)
             {
                 Core.Global.GlobalData.Sound.PlayBeep();
-                var status = string.Join("\n", itemRequirements.Select(req => $"{req.Item} ({Core.Global.GlobalData.Inventory.GetAmount(req.Item)}/{req.Amount})"));
-                Common.GameDisplay.ConfirmDialog.CreateCancelOnly("The follow items are not enough:\n" + status);
+                var status = string.Join("\n", itemRequirements.Select(req => $"{req.Item.Name} ({Core.Global.GlobalData.Inventory.GetAmount(req.Item)}/{req.Amount})"));
+                Common.GameDisplay.ConfirmDialog.CreateCancelOnly("The follow items are not enough:\n" + status, targetToResume: _parent);
                 return false;
             }
             else
@@ -130,6 +134,11 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             {
                 SetRarepon(rarepon);
                 Core.Global.GlobalData.Sound.PlayInScene(_parent.NewRareponSound);
+                foreach (var item in _totalRequirements)
+                {
+                    Core.Global.GlobalData.Inventory.RemoveItem(item.Item, item.Amount);
+                }
+                _parent.InventoryRefresher?.Refresh();
             }
         }
         public void OnSelect(BaseEventData eventData)

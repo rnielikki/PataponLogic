@@ -9,7 +9,7 @@ namespace PataRoad.SceneLogic.Patapolis
         RareponSelector _rareponSelector;
         public void Open()
         {
-            _rareponSelector.Open(Core.Global.GlobalData.PataponInfo.RareponInfo.GetRarepon(0));
+            _rareponSelector.Open(Core.Global.GlobalData.PataponInfo.RareponInfo.GetFromOpenRarepon(0));
         }
     }
 }

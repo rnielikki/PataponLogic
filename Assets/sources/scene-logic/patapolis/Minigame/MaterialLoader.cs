@@ -14,7 +14,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         [SerializeField]
         Transform _content;
         [SerializeField]
-        ItemDisplay _template;
+        GameObject _template;
         Sprite _defaultImage;
         [SerializeField]
         Sprite _selectedImage;
@@ -38,9 +38,10 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             foreach (var data in allData)
             {
                 var obj = Instantiate(_template, _content);
-                obj.Init(data.Item, data.Amount);
-                (obj.Selectable as Button).onClick.AddListener(() => Use(obj));
-                _current = obj;
+                var display = obj.GetComponent<ItemDisplay>();
+                display.Init(data.Item, data.Amount);
+                (display.Selectable as Button).onClick.AddListener(() => Use(display));
+                _current = display;
             }
             _allDisplays = GetComponentsInChildren<ItemDisplay>();
             _itemIds = _allDisplays.Select(disp => disp.Item.Id).ToArray();

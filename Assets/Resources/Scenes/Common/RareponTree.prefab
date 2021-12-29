@@ -336,6 +336,7 @@ MonoBehaviour:
       m_Calls: []
   _newRareponSound: {fileID: 8300000, guid: 5c324d5309bf1364ebf91cd65d456bea, type: 3}
   _equipmentSetter: {fileID: 0}
+  _defaultRareponSelection: {fileID: 170470254703492706}
   _actionEventMap: {fileID: 6533826471285469680}
   _descriptionTitle: {fileID: 1749043200907020427}
   _descriptionContent: {fileID: 1110538053162135893}
@@ -561,6 +562,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8249533403908419429, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
   m_PrefabInstance: {fileID: 353670633403794177}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &170470254703492706 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 483534814517558627, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
+  m_PrefabInstance: {fileID: 353670633403794177}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d94e2ba813b6142bae9629554d604b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8544532995865135861
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -576,6 +588,14 @@ PrefabInstance:
       propertyPath: _rareponData
       value: 
       objectReference: {fileID: 11400000, guid: b229aa49f89b2644e85bbfd645e80761, type: 2}
+    - target: {fileID: 483534814517558627, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
+      propertyPath: _nextEnableTarget.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 483534814517558627, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
+      propertyPath: _nextEnableTarget.Array.data[0]
+      value: 
+      objectReference: {fileID: 8079909799473519516}
     - target: {fileID: 8249533403908419428, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
       propertyPath: m_Name
       value: Rarepon (2)
@@ -688,7 +708,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 0a7443464699f084ab24caf7f999da3b, type: 2}
     - target: {fileID: 483534814517558627, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
       propertyPath: _gemRequirements.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 483534814517558627, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
       propertyPath: _materialRequirements.Array.size
@@ -813,3 +833,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8249533403908419429, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
   m_PrefabInstance: {fileID: 8544532996584859391}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8079909799473519516 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 483534814517558627, guid: b1cb9a0d1156a4a40b943131ddc8941d, type: 3}
+  m_PrefabInstance: {fileID: 8544532996584859391}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1d94e2ba813b6142bae9629554d604b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

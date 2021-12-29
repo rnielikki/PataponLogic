@@ -9,22 +9,14 @@ namespace PataRoad.SceneLogic.Patapolis
     {
         [SerializeField]
         InventoryDisplay _inventoryDisplay;
-        [SerializeField]
-        ActionEventMap _actionEventMap;
-        ItemDisplay[] _allDisplays;
-        ItemDisplay[] _currentOrder;
+
+        private ItemDisplay[] _allDisplays;
+        private ItemDisplay[] _currentOrder;
         private ItemDisplay[] _allDisplaysAlphabetOrder;
 
-        private void Start()
-        {
-            Load();
-        }
-        public void Refresh()
-        {
-            _inventoryDisplay.EmptyData();
-            Load();
-        }
-        private void Load()
+        private ActionEventMap _parentSelector;
+
+        public void Init(ActionEventMap parentSelector)
         {
             var loadedDisplays = _inventoryDisplay.LoadData(Core.Global.GlobalData.Inventory.GetAllItems(), null, false);
             _allDisplays = loadedDisplays
@@ -34,18 +26,19 @@ namespace PataRoad.SceneLogic.Patapolis
                 .ToArray();
             _allDisplaysAlphabetOrder = loadedDisplays.OrderBy(display => display.Item.Name).ToArray();
             OrderToIndex();
+            _parentSelector = parentSelector;
         }
 
         public void Open()
         {
-            _actionEventMap.enabled = false;
+            _parentSelector.enabled = false;
             _inventoryDisplay.transform.parent.gameObject.SetActive(true);
             _inventoryDisplay.gameObject.SetActive(true);
             _inventoryDisplay.SelectFirst(_allDisplays);
         }
         public void Close()
         {
-            _actionEventMap.enabled = true;
+            _parentSelector.enabled = true;
             _inventoryDisplay.transform.parent.gameObject.SetActive(false);
             _inventoryDisplay.gameObject.SetActive(false);
         }
@@ -54,6 +47,7 @@ namespace PataRoad.SceneLogic.Patapolis
 
         private void OrderTo(ItemDisplay[] order)
         {
+            if (_currentOrder == order) return;
             _currentOrder = order;
             var lastSelect = GetLastSelect();
             for (int i = 0; i < order.Length; i++)

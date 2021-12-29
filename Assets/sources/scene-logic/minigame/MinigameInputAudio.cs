@@ -31,9 +31,9 @@ namespace PataRoad.SceneLogic.Minigame
 
         private void Start()
         {
-            _perfectFrequency = (int)_perfectRange * RhythmTimer.Frequency;
-            _goodFrequency = (int)_goodRange * RhythmTimer.Frequency;
-            _notGoodFrequency = (int)_notGoodRange * RhythmTimer.Frequency;
+            _perfectFrequency = (int)_perfectRange * RhythmTimer.HalfFrequency;
+            _goodFrequency = (int)_goodRange * RhythmTimer.HalfFrequency;
+            _notGoodFrequency = (int)_notGoodRange * RhythmTimer.HalfFrequency;
 
             _rhythmInput.OnDrumHit.AddListener(PlayAudio);
         }

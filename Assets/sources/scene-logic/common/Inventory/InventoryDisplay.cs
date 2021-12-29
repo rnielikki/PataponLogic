@@ -77,13 +77,13 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void EmptyData()
         {
-            foreach (var data in GetComponentsInChildren<ItemDisplay>()) Destroy(data.gameObject);
+            foreach (var data in _child.GetComponentsInChildren<ItemDisplay>()) Destroy(data.gameObject);
         }
         public void SelectFirst(IEnumerable<ItemDisplay> allItemDisplays)
         {
             _scrollList.SetMaximumScrollLength(0, null);
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
-                    allItemDisplays.FirstOrDefault(item => item != null && item.GetComponent<Selectable>().interactable)?.gameObject
+                    allItemDisplays.FirstOrDefault(item => item.GetComponent<Selectable>().interactable)?.gameObject
                 );
         }
         public void SelectLast(IEnumerable<ItemDisplay> allItemDisplays)

@@ -24,13 +24,10 @@ namespace PataRoad.SceneLogic.Minigame
         [SerializeField]
         AudioClip _onFail;
 
-        private UnityEngine.Events.UnityEvent _onMinigameClosed;
-
-        public void UpdateResult(MinigameModel model, float result, UnityEngine.Events.UnityEvent onMinigameClosed)
+        public void UpdateResult(MinigameModel model, float result)
         {
             gameObject.SetActive(true);
-            _onMinigameClosed = onMinigameClosed;
-            _result.text = result.ToString("p0");
+            _result.text = result.ToString("p2");
 
             if (model.IsPractice)
             {
@@ -42,7 +39,7 @@ namespace PataRoad.SceneLogic.Minigame
         }
         private void UpdateRealResult(MinigameModel model, bool success)
         {
-            _requirement.text = model.ClearRequirement.ToString("p0");
+            _requirement.text = model.ClearRequirement.ToString("p2");
             if (!success)
             {
                 _rewardGroup.SetActive(false);
@@ -60,7 +57,6 @@ namespace PataRoad.SceneLogic.Minigame
         public void Close()
         {
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("Minigame");
-            _onMinigameClosed.Invoke();
             Core.Global.GlobalData.MapInfo.RefreshAllWeathers();
         }
     }

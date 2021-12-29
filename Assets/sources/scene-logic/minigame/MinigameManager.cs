@@ -12,7 +12,7 @@ namespace PataRoad.SceneLogic.Minigame
         [SerializeField]
         private AudioClip _endSound;
         private static MinigameModel _model { get; set; }
-        private static MinigameData _data;
+        private static MinigameData _data { get; set; }
         [SerializeField]
         private MinigameDrumGrid[] _grids;
 
@@ -22,7 +22,10 @@ namespace PataRoad.SceneLogic.Minigame
         [SerializeReference]
         private MinigameResultDisplay _minigameResultDisplay;
 
-        private static UnityEngine.Events.UnityEvent _onMinigameEnd;
+        [SerializeField]
+        [Tooltip("Minimum hit percentage, value of 0-1 expected")]
+        private float _minimumHit = 0.15f;
+        private int _minimumHitFrequency;
 
         //--- on hit
         private MinigameDrumType _lastRequiredDrum;
@@ -33,35 +36,24 @@ namespace PataRoad.SceneLogic.Minigame
         //offset from zero. zero frequency is best hit. max is half of frequency. smaller is better.
         private readonly System.Collections.Generic.List<int> _frequencyOffset = new System.Collections.Generic.List<int>();
 
-        public static void Init(MinigameModel model, UnityEngine.Events.UnityEvent onMinigameEnd)
+        public static void Init(MinigameModel model)
         {
             _model = model;
             _data = model.MinigameData;
-            _onMinigameEnd = onMinigameEnd;
         }
         public void LoadGame()
         {
+            _minimumHitFrequency = (int)(_minimumHit * RhythmTimer.HalfFrequency);
             _voicePlayer.Init(_audioSource);
             RhythmTimer.Current.OnNext.AddListener(() => StartCoroutine(StartGame()));
         }
         private IEnumerator StartGame()
         {
+            yield return WaitForNextRhythmTime();
             foreach (MinigameTurn turn in _data.MinigameTurns)
             {
                 yield return PerformTurn(turn, _data.UseDonChakaGameSound);
-
-                //for example, PON-PON-PON-
-                if (turn.Drums[turn.Drums.Length - 1] == MinigameDrumType.Empty)
-                {
-                    yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency);
-                    yield return new WaitForRhythmTime(0);
-                }
-                _audioSource.PlayOneShot(_endSound);
-
-                yield return new WaitForRhythmTime(0);
-                yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency);
-                yield return new WaitForRhythmTime(0);
-                yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency);
+                yield return WaitForNextHalfRhythmTime();
                 yield return ListenTurn(turn);
 
                 for (int i = 0; i < _grids.Length; i++)
@@ -69,26 +61,41 @@ namespace PataRoad.SceneLogic.Minigame
                     _grids[i].ClearStatus();
                 }
             }
-            yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency);
             yield return new WaitForRhythmTime(0);
 
-            _minigameResultDisplay.UpdateResult(_model, _frequencyOffset.Average(offset => (1 - (float)offset / RhythmTimer.HalfFrequency)), _onMinigameEnd);
+            _minigameResultDisplay.UpdateResult(_model, _frequencyOffset.Average(offset => (1 - (float)offset / RhythmTimer.HalfFrequency)));
         }
 
         private IEnumerator PerformTurn(MinigameTurn turn, bool useDonChakaGameSound)
         {
+            Coroutine coroutine = StartCoroutine(WaitForNextRhythmTime());
+            bool isLastEmpty = turn.Drums[turn.Drums.Length - 1] == MinigameDrumType.Empty;
+            var multiCoroutine = StartCoroutine(WaitForNextMultipleRhythmTime(turn.Drums.Length + 1));
             if (!useDonChakaGameSound) _audioSource.PlayOneShot(turn.Sound);
-            for (int i = 0; i < turn.Drums.Length; i++)
+            int i;
+            for (i = 0; i < turn.Drums.Length; i++)
             {
-                yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency);
-                yield return new WaitForRhythmTime(0);
+                yield return coroutine;
+                coroutine = StartCoroutine(WaitForNextRhythmTime());
                 if (useDonChakaGameSound) _voicePlayer.Play(turn.Drums[i]);
                 _grids[i].Load(turn.Drums[i]);
             }
             _voicePlayer.ClearTurn();
+            if (isLastEmpty)
+            {
+                yield return multiCoroutine;
+                _audioSource.PlayOneShot(_endSound);
+                yield return WaitForNextRhythmTime();
+            }
+            else //for example, PON-PON-PON-
+            {
+                _audioSource.PlayOneShot(_endSound);
+                yield return multiCoroutine;
+            }
         }
         private IEnumerator ListenTurn(MinigameTurn turn)
         {
+            Coroutine coroutine = StartCoroutine(WaitForNextHalfRhythmTime());
             for (int i = 0; i < turn.Drums.Length; i++)
             {
                 _gotAnyInput = false;
@@ -96,21 +103,38 @@ namespace PataRoad.SceneLogic.Minigame
                 _lastRequiredDrum = turn.Drums[i];
 
                 ListeningInput = true;
-                yield return new WaitForRhythmTime(0);
-                yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency);
+                yield return coroutine;
+                coroutine = StartCoroutine(WaitForNextHalfRhythmTime());
                 ListeningInput = false;
 
                 if (_lastRequiredDrum != MinigameDrumType.Empty && !_gotAnyInput)
                 {
                     _grids[i].Disappear();
-                    _frequencyOffset.Add(0);
+                    _frequencyOffset.Add(RhythmTimer.HalfFrequency);
                 }
             }
             _lastRequiredDrum = MinigameDrumType.Empty;
             _gotAnyInput = false;
             _lastHitIndex = -1;
-            yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency);
+            yield return coroutine;
             yield return new WaitForRhythmTime(0);
+        }
+        private IEnumerator WaitForNextRhythmTime()
+        {
+            yield return new WaitForRhythmTime(RhythmTimer.Frequency - 1);
+            yield return new WaitForRhythmTime(0);
+        }
+        private IEnumerator WaitForNextMultipleRhythmTime(int time)
+        {
+            for (int i = 0; i < time; i++)
+            {
+                yield return WaitForNextRhythmTime();
+            }
+        }
+        private IEnumerator WaitForNextHalfRhythmTime()
+        {
+            yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency - 1);
+            yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency);
         }
 
         public void CheckDrum(RhythmInputModel inputModel)
@@ -119,15 +143,22 @@ namespace PataRoad.SceneLogic.Minigame
                     (int)inputModel.Drum == (int)_lastRequiredDrum)
             {
                 _gotAnyInput = true;
-                _grids[_lastHitIndex].Hit((1 - (float)inputModel.Timing / RhythmTimer.HalfFrequency));
-                _frequencyOffset.Add(inputModel.Timing);
+                var timing = Mathf.Max(_minimumHitFrequency, inputModel.Timing);
+                _grids[_lastHitIndex].Hit((float)timing / RhythmTimer.HalfFrequency);
+                _frequencyOffset.Add(timing);
             }
         }
         private void OnDestroy()
         {
             _model = null;
             _data = null;
-            _onMinigameEnd = null;
+        }
+        private void OnValidate()
+        {
+            if (_minimumHit < 0 || _minimumHit > 1)
+            {
+                throw new System.ArgumentException("Minimum hit must be range of 0-1");
+            }
         }
     }
 }

@@ -11,8 +11,10 @@ namespace PataRoad.Core.Character.Patapons.Data
     {
         [SerializeField]
         private List<int> _openRareponIndex;
-        private Dictionary<int, RareponData> _availableRarepons;
+        private Dictionary<int, RareponData> _allAvailableRarepons = new Dictionary<int, RareponData>();
+        private Dictionary<int, RareponData> _openRarepons = new Dictionary<int, RareponData>();
         private const string _resourcePath = "Characters/Patapons/Rarepons";
+
         public RareponInfo()
         {
             //_openRareponIndex = new List<int> { 0 }
@@ -22,10 +24,19 @@ namespace PataRoad.Core.Character.Patapons.Data
 
         private void Deserialize()
         {
-            _availableRarepons = new Dictionary<int, RareponData>();
+            var allRarepons = Resources.LoadAll<RareponData>(_resourcePath);
+            foreach (var rarepon in allRarepons)
+            {
+                if (int.TryParse(rarepon.name, out int index))
+                {
+                    rarepon.Index = index;
+                }
+                _allAvailableRarepons.Add(index, rarepon);
+            }
+
             foreach (var index in _openRareponIndex)
             {
-                LoadResource(index);
+                _openRarepons.Add(index, _allAvailableRarepons[index]);
             }
         }
         public RareponData OpenNewRarepon(int index)
@@ -33,31 +44,27 @@ namespace PataRoad.Core.Character.Patapons.Data
             if (!_openRareponIndex.Contains(index))
             {
                 _openRareponIndex.Add(index);
-                return LoadResource(index);
+                var data = _allAvailableRarepons[index];
+                _openRarepons.Add(index, data);
+                return data;
             }
             return null;
         }
-        public bool HasRarepon(int index) => _availableRarepons.ContainsKey(index);
-        public RareponData GetRarepon(int index)
+        public bool HasRarepon(int index) => _openRarepons.ContainsKey(index);
+        public RareponData GetFromOpenRarepon(int index)
         {
-            if (_availableRarepons.TryGetValue(index, out RareponData data)) return data;
+            if (_openRarepons.TryGetValue(index, out RareponData data)) return data;
             else return null;
         }
-        private RareponData LoadResource(int index)
+        public RareponData LoadResourceWithoutOpen(int index)
         {
-            var res = Resources.Load<RareponData>($"{_resourcePath}/{index}");
-            if (!HasRarepon(index) && res != null)
-            {
-                var instantiated = UnityEngine.Object.Instantiate(res);
-                instantiated.Index = index;
-                _availableRarepons.Add(index, instantiated);
-                return instantiated;
-            }
-            else return null;
+            if (!_allAvailableRarepons.TryGetValue(index, out RareponData data)) return null;
+            else return data;
         }
+
         public void OnBeforeSerialize()
         {
-            _openRareponIndex = _availableRarepons.Keys.ToList();
+            _openRareponIndex = _openRarepons.Keys.ToList();
         }
 
         public void OnAfterDeserialize()

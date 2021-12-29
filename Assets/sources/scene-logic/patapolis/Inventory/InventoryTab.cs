@@ -15,6 +15,15 @@ namespace PataRoad.SceneLogic.Patapolis
             _allTabElements = GetComponentsInChildren<InventoryTabElement>();
             _tabCount = _allTabElements.Length;
         }
+        public void ResetSelection()
+        {
+            if (_index != 0)
+            {
+                _index = 0;
+                _allTabElements[_index].Deselect();
+                _allTabElements[0].Select(_inventoryLoader);
+            }
+        }
         public void MoveTo(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
             var value = context.ReadValue<float>();

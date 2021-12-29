@@ -26,20 +26,22 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         private RareponSelection[] _rareponSelections;
         [SerializeField]
         private Common.Navigator.ActionEventMap _actionEventMap;
-
-        private RareponSelection _lastSelected;
+        [SerializeField]
+        private Patapolis.InventoryRefresher _inventoryRefresher;
+        public Patapolis.InventoryRefresher InventoryRefresher => _inventoryRefresher;
 
         [Header("Description")]
         [SerializeField]
         private Text _descriptionTitle;
         [SerializeField]
         private Text _descriptionContent;
-        private void Start()
+
+        private void Init()
         {
             _rareponSelections = GetComponentsInChildren<RareponSelection>();
             foreach (var rarepon in _rareponSelections)
             {
-                rarepon.Init();
+                rarepon.Init(this);
             }
             foreach (var rarepon in _rareponSelections)
             {
@@ -49,6 +51,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
 
         public void Open(Common.Navigator.SpriteNavigator beforeSelect, Core.Character.PataponData pataponData, RareponData data)
         {
+            if (_rareponSelections == null) Init();
             _targetPatapon = pataponData;
             _lastSelectNavigator = beforeSelect;
             gameObject.SetActive(true);
@@ -57,6 +60,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void Open(RareponData data)
         {
+            if (_rareponSelections == null) Init();
             _actionEventMap.enabled = true;
             foreach (var rareponSelection in _rareponSelections)
             {
@@ -70,38 +74,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void UpdateText(RareponData data)
         {
-            if (data == null)
-            {
-                _descriptionTitle.text = "???";
-                _descriptionContent.text = "Select to reveal the Rarepon";
-            }
-            else
-            {
-                _descriptionTitle.text = data.Name;
-                _descriptionContent.text = data.Description;
-            }
-        }
-
-        private void OnEnable()
-        {
-            if (_lastSelected == null) return;
-            foreach (var selection in _rareponSelections)
-            {
-                selection.enabled = true;
-            }
-            _lastSelected.Select();
-            _actionEventMap.enabled = true;
-        }
-
-        private void OnDisable()
-        {
-            var currentSelected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-            foreach (var selection in _rareponSelections)
-            {
-                if (selection.gameObject == currentSelected) _lastSelected = selection;
-                selection.enabled = false;
-            }
-            _actionEventMap.enabled = false;
+            _descriptionTitle.text = data.Name;
+            _descriptionContent.text = data.Description;
         }
         public void Select(RareponData data)
         {
@@ -109,7 +83,6 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             StartCoroutine(
                 Core.Global.GlobalData.GlobalInputActions.WaitForNextInput(() => _rareponSelections.SingleOrDefault(s => s.Index == index)?.Select())
                 );
-
         }
         public void Apply(RareponSelection selection)
         {

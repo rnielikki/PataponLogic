@@ -21,14 +21,15 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         private Common.GameDisplay.ScrollList _scrollList;
         public int Amount { get; private set; }
 
-        public RectTransform RectTransform { get; private set; }
+        [SerializeField]
+        private RectTransform _rectTransform;
+        public RectTransform RectTransform => _rectTransform;
         public int Index { get; private set; }
-        public Selectable Selectable { get; private set; }
+        [SerializeField]
+        private Selectable _selectable;
+        public Selectable Selectable => _selectable;
         private void Awake()
         {
-            RectTransform = GetComponent<RectTransform>();
-            Selectable = GetComponent<Selectable>();
-            _text = GetComponentInChildren<Text>();
             _parent = GetComponentInParent<InventoryDisplay>();
             _scrollList = _parent?.ScrollList;
         }
