@@ -14,6 +14,12 @@ namespace PataRoad.Core.Character.Patapons.Data
         private List<Class.ClassType> _currentClasses;
         public Class.ClassType[] CurrentClasses => _currentClasses.ToArray();
         public int ClassCount => _currentClasses.Count;
+        [SerializeField]
+        private bool _useSummon;
+        public bool CanUseSummon => _useSummon;
+        [SerializeField]
+        private bool _useMusic;
+        public bool CanUseMusic => _useMusic;
 
         /// <summary>
         /// How many groups (how many group of various classes) can go to fight.
@@ -227,6 +233,8 @@ namespace PataRoad.Core.Character.Patapons.Data
             }
             return _classInfoMap[type];
         }
+        public void UseSummon() => _useSummon = true;
+        public void UseMusic() => _useMusic = true;
         public string Serialize()
         {
             _classInfoForSerialization = _classInfoMap.Values.ToArray();
