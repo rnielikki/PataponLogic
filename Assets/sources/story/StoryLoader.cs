@@ -8,8 +8,6 @@ namespace PataRoad.Story
 {
     class StoryLoader : MonoBehaviour
     {
-        [SerializeField]
-        private StoryLineDisplay _display;
         private static StoryLoader _current { get; set; }
         private void Start()
         {
@@ -55,6 +53,9 @@ namespace PataRoad.Story
                 storySceneInfo.Weather.ChangeWeather(data.Weather);
                 storySceneInfo.Wind.StartNoWind();
                 storySceneInfo.Wind.StartWind(data.Wind);
+
+                var time = data.Time < 0 ? System.DateTime.Now.Hour : data.Time;
+                storySceneInfo.PatapolisWeather.SetBackgroundToTime(time);
             }
             else
             {
@@ -91,32 +92,16 @@ namespace PataRoad.Story
                 inst.SetInstance(inst); //I don't know does really it need but in any case if they find reference on runtime...
             }
             var imageFromResource = data.GetComponentInChildren<StoryImage>();
-            var imageFromInstance = obj.GetComponentInChildren<StoryImage>();
 
-            imageFromResource.Init(imageFromInstance);
-            imageFromInstance.Init(imageFromInstance);
+            if (imageFromResource != null)
+            {
+                var imageFromInstance = obj.GetComponentInChildren<StoryImage>();
+                imageFromResource.Init(imageFromInstance);
+                imageFromInstance.Init(imageFromInstance);
+            }
 
             //-- Do story action
-            foreach (var storyAction in data.StoryActions)
-            {
-                storyAction.InvokeEvent();
-                Coroutine waitingForSeconds = null;
-                Coroutine waitingForLine = null;
-                if (storyAction.WaitingSeconds > 0)
-                {
-                    waitingForSeconds = StartCoroutine(WaitForSeconds(storyAction.WaitingSeconds));
-                }
-                if (storyAction.UseLine)
-                {
-                    waitingForLine = StartCoroutine(_display.WaitUntilNext(storyAction));
-                }
-                else
-                {
-                    _display.Close();
-                }
-                if (waitingForSeconds != null) yield return waitingForSeconds;
-                if (waitingForLine != null) yield return waitingForLine;
-            }
+            yield return storySceneInfo.LoadStoryLines(data.StoryActions);
 
             //-- Move to the next map
             if (data.NextMap != null)
@@ -138,11 +123,6 @@ namespace PataRoad.Story
             }
             //-- Story done, you don't need this anymore!
             Destroy(gameObject);
-
-            IEnumerator WaitForSeconds(float seconds)
-            {
-                yield return new WaitForSeconds(seconds);
-            }
         }
         private void OnDestroy()
         {

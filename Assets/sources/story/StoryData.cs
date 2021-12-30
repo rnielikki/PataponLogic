@@ -21,7 +21,7 @@ namespace PataRoad.Story
         public bool UsePatapolis => _usePatapolis;
         public string SceneName => _usePatapolis ? "Patapolis" : "StoryScene";
         [SerializeField]
-        [Tooltip("If null, goes to the Patapolis")]
+        [Tooltip("If null, goes to the Patapolis after the story")]
         private Core.Map.MapData _nextMap;
         public Core.Map.MapData NextMap => _nextMap;
         [Header("Map info")]
@@ -36,6 +36,10 @@ namespace PataRoad.Story
         [Tooltip("This works only on Patapolis")]
         private float _xCameraPosition;
         public float XCameraPosition => _xCameraPosition;
+        [SerializeField]
+        [Tooltip("This also works only on Patapolis, if time is less than zero, it'll show current time.")]
+        private int _time = -1;
+        public int Time => _time;
         [Header("Story Data")]
 #pragma warning disable S1104 // Fields should not have public accessibility - we need AGAIN this for serialized array in inspector.
         public StoryAction[] StoryActions;

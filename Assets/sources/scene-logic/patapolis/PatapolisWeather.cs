@@ -24,10 +24,15 @@ namespace PataRoad.SceneLogic.Patapolis
             _weather.Wind.Init(patapolisWeather.CurrentWind);
 
             var currentHour = System.DateTime.Now.Hour;
+            SetBackgroundToTime(currentHour);
+        }
+        public void SetBackgroundToTime(int currentHour)
+        {
             var current = (float)Mathf.Abs(currentHour * 60 + System.DateTime.Now.Minute - 720) / 720;
             _camera.backgroundColor = _backgroundOverTime.Evaluate(current);
             _backgroundImage.color = _backgroundImageOverTime.Evaluate(current);
-            if (patapolisWeather.CurrentWeather == Core.Map.Weather.WeatherType.Clear && (currentHour < 6 || currentHour > 18))
+            if (Core.Global.GlobalData.MapInfo.PatapolisWeather.CurrentWeather == Core.Map.Weather.WeatherType.Clear
+                && (currentHour < 6 || currentHour > 18))
             {
                 _star.SetActive(true);
             }

@@ -1935,138 +1935,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 464485979}
   m_CullTransparentMesh: 1
---- !u!1 &516462056
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 516462058}
-  - component: {fileID: 516462057}
-  - component: {fileID: 516462059}
-  m_Layer: 0
-  m_Name: StorySceneInfo
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &516462057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 516462056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7181e4046d47d84fba157413a7a7638, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _weatherInfo: {fileID: 703932483}
-  _wind: {fileID: 703932486}
-  _audioSource: {fileID: 549004028}
-  _background: {fileID: 0}
-  _parent: {fileID: 516462058}
-  _whenUseSceneForStory:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2108095004}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 842743340}
-        m_TargetAssemblyTypeName: PataRoad.Common.TransformChanger, Assembly-CSharp
-        m_MethodName: MoveY
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: -3
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 251477609897085096}
-        m_TargetAssemblyTypeName: PataRoad.Common.TransformChanger, Assembly-CSharp
-        m_MethodName: MoveY
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 3
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!4 &516462058
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 516462056}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.875, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &516462059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 516462056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f83958cf6d945dd42a51a5286b64decd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _testData: {fileID: 5020256275169339409, guid: 4092a7dccddb24d458285722452b9399, type: 3}
-  _input:
-    m_Name: Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: aac30e15-23a2-4b4c-b5bd-a17548a75b8d
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: ef441fcd-c945-4bc8-9dca-c5662daa5ffb
-      m_Path: <Keyboard>/x
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input
-      m_Flags: 0
-  _action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 516462059}
-        m_TargetAssemblyTypeName: PataRoad.AppDebug.ActionOnPress, Assembly-CSharp
-        m_MethodName: LoadStory
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &519155160
 GameObject:
   m_ObjectHideFlags: 0
@@ -3921,6 +3789,114 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1001 &837683909
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.875
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118361, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118364, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: m_Name
+      value: StorySceneInfo
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _wind
+      value: 
+      objectReference: {fileID: 703932486}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _weatherInfo
+      value: 
+      objectReference: {fileID: 703932483}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _patapolisWeather
+      value: 
+      objectReference: {fileID: 703932484}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _whenUseSceneForStory.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _whenUseSceneForStory.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _whenUseSceneForStory.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2108095004}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _whenUseSceneForStory.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _whenUseSceneForStory.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_enabled
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _whenUseSceneForStory.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UnityEngine.Behaviour, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _whenUseSceneForStory.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+--- !u!114 &837683910 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+  m_PrefabInstance: {fileID: 837683909}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7181e4046d47d84fba157413a7a7638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &842743335
 GameObject:
   m_ObjectHideFlags: 0
@@ -3933,7 +3909,6 @@ GameObject:
   - component: {fileID: 842743337}
   - component: {fileID: 842743336}
   - component: {fileID: 842743339}
-  - component: {fileID: 842743340}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4000,7 +3975,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842743335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8, z: -10}
+  m_LocalPosition: {x: 0, y: 6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 703932481}
@@ -4023,18 +3998,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sensitivity: 75
   _camera: {fileID: 842743337}
---- !u!114 &842743340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842743335}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c418803ecfeec9548b727d25f065f660, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &883964035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4088,6 +4051,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3279042058939350246, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5550939267937898806, guid: a464dd377cf29f74087ca730f09b5cab, type: 3}
+      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6121,7 +6088,19 @@ MonoBehaviour:
       m_Calls: []
   _onPerformed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1227571064}
+        m_TargetAssemblyTypeName: PataRoad.Story.StoryLineLoader, Assembly-CSharp
+        m_MethodName: ReadLines
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!212 &1227571057 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 8337157762640066986, guid: 902c852cafbc78d44b27204f5210d378, type: 3}
@@ -6157,6 +6136,61 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8337157762137148751, guid: 902c852cafbc78d44b27204f5210d378, type: 3}
   m_PrefabInstance: {fileID: 1227571053}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1227571064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1227571055}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bed4da152a4efd4aa9424cade8ae352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StoryActions:
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2108095004}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Gong
+    _content: Go to the war and show the supreme Patapon power! Don't make me regret
+      to join you!
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2108095004}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 0
+    _image: {fileID: 0}
+    _name: 
+    _content: 
+  _storySceneInfo: {fileID: 837683910}
 --- !u!1 &1242097461
 GameObject:
   m_ObjectHideFlags: 0
@@ -9460,6 +9494,7 @@ GameObject:
   - component: {fileID: 1824158895}
   - component: {fileID: 1824158894}
   - component: {fileID: 1824158893}
+  - component: {fileID: 1824158896}
   m_Layer: 8
   m_Name: zigoton (1)
   m_TagString: SmallCharacter
@@ -9518,10 +9553,9 @@ MonoBehaviour:
   _onPerformed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1307451652}
-        m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.Minigame.MinigameSelectionWindow,
-          Assembly-CSharp
-        m_MethodName: Open
+      - m_Target: {fileID: 1824158896}
+        m_TargetAssemblyTypeName: PataRoad.Story.StoryLineLoader, Assembly-CSharp
+        m_MethodName: ReadLines
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9571,6 +9605,62 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1824158896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824158891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bed4da152a4efd4aa9424cade8ae352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StoryActions:
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2108095004}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Zigoton
+    _content: Zigo-. No, Ton Kampon, I was practicing, I didn't slack off! Never!
+      Zigo- Zigo! ...Almighty?! Do you need weapon or proector for Mighty Patapons?
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1307451652}
+          m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.Minigame.MinigameSelectionWindow,
+            Assembly-CSharp
+          m_MethodName: Open
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 0
+    _image: {fileID: 0}
+    _name: 
+    _content: 
+  _storySceneInfo: {fileID: 837683910}
 --- !u!1001 &1874004902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10108,10 +10198,9 @@ MonoBehaviour:
   _onPerformed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1773642325}
-        m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.Minigame.MinigameSelectionWindow,
-          Assembly-CSharp
-        m_MethodName: Open
+      - m_Target: {fileID: 8337157764144704324}
+        m_TargetAssemblyTypeName: PataRoad.Story.StoryLineLoader, Assembly-CSharp
+        m_MethodName: ReadLines
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10549,7 +10638,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 251477609897085095}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.5, z: 10}
+  m_LocalPosition: {x: 0, y: -8.5, z: 10}
   m_LocalScale: {x: 50, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 842743338}
@@ -10566,7 +10655,6 @@ GameObject:
   - component: {fileID: 251477609897085093}
   - component: {fileID: 251477609897085092}
   - component: {fileID: 251477609897085114}
-  - component: {fileID: 251477609897085096}
   m_Layer: 9
   m_Name: Ground
   m_TagString: Ground
@@ -10574,18 +10662,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &251477609897085096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 251477609897085095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c418803ecfeec9548b727d25f065f660, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &251477609897085114
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12462,6 +12538,7 @@ GameObject:
   - component: {fileID: 8337157764144704326}
   - component: {fileID: 6133376511022420429}
   - component: {fileID: 2089979888}
+  - component: {fileID: 8337157764144704324}
   m_Layer: 8
   m_Name: zigoton
   m_TagString: SmallCharacter
@@ -12469,6 +12546,61 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8337157764144704324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337157764144704323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bed4da152a4efd4aa9424cade8ae352, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StoryActions:
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2108095004}
+          m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Zigoton
+    _content: Zigo. Do you need any Gem? Zigo-.
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1773642325}
+          m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.Minigame.MinigameSelectionWindow,
+            Assembly-CSharp
+          m_MethodName: Open
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Liquid
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 0
+    _image: {fileID: 0}
+    _name: 
+    _content: 
+  _storySceneInfo: {fileID: 837683910}
 --- !u!95 &8337157764144704326
 Animator:
   serializedVersion: 3
