@@ -19,6 +19,9 @@ namespace PataRoad.Story
         internal Core.Map.Background.BackgroundLoader Background => _background;
         [SerializeField]
         Transform _parent;
+        [SerializeField]
+        UnityEngine.Events.UnityEvent _whenUseSceneForStory;
+        public void StartStoryScene() => _whenUseSceneForStory.Invoke();
         internal Transform Parent => _parent;
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.InputAction;
 
 namespace PataRoad.Core.Global
 {
@@ -19,18 +18,39 @@ namespace PataRoad.Core.Global
                 _input.actions.FindAction("UI/Cancel")
             };
         }
+        public void EnableOkCancelInputs() => EnableInputs(_defaultsToWaitNextInput);
+
         public void EnableAllInputs()
         {
-            foreach (var inputMap in _input.actions.actionMaps)
+            foreach (var map in _input.actions.actionMaps)
             {
-                foreach (var input in inputMap.actions) input.Enable();
+                EnableInputs(map);
             }
         }
+
+        public void EnableInputs(IEnumerable<InputAction> maps)
+        {
+            foreach (var input in maps)
+            {
+                input.Enable();
+            }
+        }
+
+        public void DisableOkCancelInputs() => DisableInputs(_defaultsToWaitNextInput);
+
         public void DisableAllInputs()
         {
-            foreach (var inputMap in _input.actions.actionMaps)
+            foreach (var map in _input.actions.actionMaps)
             {
-                foreach (var input in inputMap.actions) input.Disable();
+                DisableInputs(map);
+            }
+        }
+
+        public void DisableInputs(IEnumerable<InputAction> maps)
+        {
+            foreach (var input in maps)
+            {
+                input.Disable();
             }
         }
         public bool TryGetActionBindingName(string actionName, out string name)
@@ -41,10 +61,10 @@ namespace PataRoad.Core.Global
             return !string.IsNullOrEmpty(actionBindingName);
         }
         public bool TryGetAllActionBindingNames(string actionName,
-            out System.Collections.Generic.Dictionary<string, string> bindingNames)
+            out Dictionary<string, string> bindingNames)
         {
             var action = _input.actions.FindAction(actionName);
-            bindingNames = new System.Collections.Generic.Dictionary<string, string>();
+            bindingNames = new Dictionary<string, string>();
             if (action == null) return false;
             var bindingMask = GetInputBindingMask();
 

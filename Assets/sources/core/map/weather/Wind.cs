@@ -132,7 +132,6 @@ namespace PataRoad.Core.Map.Weather
                 _windActions[type]();
             }
             _windFlags |= prioritizedType;
-
         }
         public void StopWind(WindType type)
         {

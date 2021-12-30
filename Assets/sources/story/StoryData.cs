@@ -2,8 +2,7 @@
 
 namespace PataRoad.Story
 {
-    [CreateAssetMenu(fileName = "story-data", menuName = "Story Data")]
-    public class StoryData : ScriptableObject
+    public class StoryData : MonoBehaviour
     {
         [Header("Weather info")]
         [SerializeField]
@@ -41,9 +40,6 @@ namespace PataRoad.Story
 #pragma warning disable S1104 // Fields should not have public accessibility - we need AGAIN this for serialized array in inspector.
         public StoryAction[] StoryActions;
 #pragma warning restore S1104 // Fields should not have public accessibility
-        [SerializeField]
-        private GameObject _resource;
-        public GameObject Resource => _resource;
 
         private Core.Map.Weather.WeatherType GetRandomWeather()
         {

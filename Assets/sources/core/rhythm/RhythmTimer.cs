@@ -87,7 +87,7 @@ namespace PataRoad.Core.Rhythm
         [SerializeField]
         private bool AutoStart = true;
         [SerializeField]
-        private bool UseHalfOfTime = false;
+        private bool UseHalfOfTime;
 
         public static RhythmTimer Current { get; private set; }
 
@@ -100,6 +100,10 @@ namespace PataRoad.Core.Rhythm
             OnNextQuarterTime = _onNextQuarterTime;
             OnNext = _onNext;
 
+            if (AutoStart) SceneManager.sceneLoaded += StartTimer;
+        }
+        public void StartTimer(Scene scene, LoadSceneMode mode)
+        {
             Frequency = (int)(RhythmEnvironment.InputInterval / Time.fixedDeltaTime);
             HalfFrequency = Frequency / 2;
             QuarterFrequency = Frequency / 4;
@@ -117,10 +121,8 @@ namespace PataRoad.Core.Rhythm
                 BadFrequency /= 2;
                 MinEffectThresholdFrequency /= 2;
             }
-            if (AutoStart) SceneManager.sceneLoaded += StartTimer;
-        }
-        public void StartTimer(Scene scene, LoadSceneMode mode)
-        {
+            Count = 0;
+
             if (AutoStart) SceneManager.sceneLoaded -= StartTimer;
             OnNext.AddListener(OnStart.Invoke);
         }
