@@ -9,6 +9,15 @@ namespace PataRoad.Core.Map
         Rhythm.Command.RhythmCommand _command;
         [SerializeField]
         GameObject _songGuideParent;
+        [Header("drum guides")]
+        [SerializeField]
+        GameObject _pataDrumGuide;
+        [SerializeField]
+        GameObject _ponDrumGuide;
+        [SerializeField]
+        GameObject _chakaDrumGuide;
+        [SerializeField]
+        GameObject _donDrumGuide;
         private void Awake()
         {
             var allSongs = Global.GlobalData.Inventory
@@ -30,7 +39,25 @@ namespace PataRoad.Core.Map
                 .GetKeyItems<Items.DrumItemData>("Drum").Select(item => item.Drum);
             foreach (var input in GetComponentsInChildren<Rhythm.RhythmInput>())
             {
-                if (!allDrums.Contains(input.DrumType)) input.gameObject.SetActive(false);
+                if (!allDrums.Contains(input.DrumType))
+                {
+                    input.gameObject.SetActive(false);
+                    switch (input.DrumType)
+                    {
+                        case Rhythm.DrumType.Pata:
+                            _pataDrumGuide.SetActive(false);
+                            break;
+                        case Rhythm.DrumType.Pon:
+                            _ponDrumGuide.SetActive(false);
+                            break;
+                        case Rhythm.DrumType.Chaka:
+                            _chakaDrumGuide.SetActive(false);
+                            break;
+                        case Rhythm.DrumType.Don:
+                            _donDrumGuide.SetActive(false);
+                            break;
+                    }
+                }
             }
         }
     }

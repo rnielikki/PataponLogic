@@ -14,9 +14,9 @@ namespace PataRoad.SceneLogic.Patapolis
         private ItemDisplay[] _currentOrder;
         private ItemDisplay[] _allDisplaysAlphabetOrder;
 
-        private ActionEventMap _parentSelector;
+        private MonoBehaviour _parentSelector;
 
-        public void Init(ActionEventMap parentSelector)
+        public void Init(MonoBehaviour parentSelector)
         {
             var loadedDisplays = _inventoryDisplay.LoadData(Core.Global.GlobalData.Inventory.GetAllItems(), null, false);
             _allDisplays = loadedDisplays

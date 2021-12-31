@@ -8,6 +8,8 @@ namespace PataRoad.SceneLogic.Patapolis
         private Common.Navigator.ActionEventMap _actionEventMap;
         [SerializeField]
         CameraSmoothMover _cameraMover;
+        [SerializeField]
+        UnityEngine.Events.UnityEvent _onEnable;
         private PatapolisSelection[] _selections;
         private int _selectionsLength;
         private int _index;
@@ -22,6 +24,7 @@ namespace PataRoad.SceneLogic.Patapolis
         private void OnEnable()
         {
             _actionEventMap.enabled = true;
+            _onEnable.Invoke();
         }
         private void OnDisable()
         {
@@ -50,6 +53,10 @@ namespace PataRoad.SceneLogic.Patapolis
             oldCurrent.Deselect();
             _cameraMover.MoveTo(_current.transform.position.x);
             _current.Select();
+        }
+        private void OnDestroy()
+        {
+            _onEnable.RemoveAllListeners();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
     internal class MinigameSelectionWindow : MonoBehaviour
     {
         [SerializeField]
-        Common.Navigator.ActionEventMap _parentActionEventMap;
+        PatapolisSelector _parentSelector;
         [SerializeField]
         MinigameMaterialWindow _materialWindow;
         [SerializeField]
@@ -25,7 +25,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         public void Open()
         {
             _opening = true;
-            _parentActionEventMap.enabled = false;
+            _parentSelector.enabled = false;
             gameObject.SetActive(true);
             Core.Global.GlobalData.Sound.PlayInScene(_openSound);
             StartCoroutine(
@@ -53,7 +53,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 obj.GetComponent<Button>().onClick.RemoveAllListeners();
             }
             gameObject.SetActive(false);
-            if (!forMinigame) _parentActionEventMap.enabled = true;
+            if (!forMinigame) _parentSelector.enabled = true;
         }
     }
 }

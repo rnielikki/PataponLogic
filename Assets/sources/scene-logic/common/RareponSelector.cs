@@ -49,6 +49,9 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             foreach (var rarepon in _rareponSelections)
             {
                 rarepon.EnableIfAvailable();
+                rarepon.Button
+                    .onClick
+                    .AddListener(() => _onClicked.Invoke(rarepon));
             }
             _rareponRequirementWindow.Init();
         }
@@ -66,12 +69,6 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         {
             if (_rareponSelections == null) Init();
             _actionEventMap.enabled = true;
-            foreach (var rareponSelection in _rareponSelections)
-            {
-                rareponSelection.Button
-                    .onClick
-                    .AddListener(() => _onClicked.Invoke(rareponSelection));
-            }
             _onOpen.Invoke();
             gameObject.SetActive(true);
             Select(data);

@@ -70,7 +70,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -824033901
-  m_SortingLayer: 8
+  m_SortingLayer: 10
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 530bd5c4dc9063e489118dc27ee621e6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -93,7 +93,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5238186235997975605}
   - component: {fileID: 5238186235997975602}
-  - component: {fileID: 5238186235997975600}
   - component: {fileID: 5848687376848859880}
   m_Layer: 0
   m_Name: Patapons
@@ -129,54 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b9934fa1d26974aa7fd2e2b84a9c17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _useMissionTower: 1
-  _pataponTypes: 0500000008000000
   _pataponSpeakingOnMiss:
   - {fileID: 8300000, guid: 8781d5d1c64277c4daa9ef42be3cc69f, type: 3}
   - {fileID: 8300000, guid: 23d900ac3f4831e459f0d128ea7aa3ba, type: 3}
---- !u!114 &5238186235997975600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5238186235997975604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f83958cf6d945dd42a51a5286b64decd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _input:
-    m_Name: Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 94a6a6f5-78a2-4d29-a0c0-1f4ce69070a1
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 98294c02-267e-472f-a9c2-bdc8aed510ae
-      m_Path: <Keyboard>/z
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input
-      m_Flags: 0
-  _action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PataRoad.AppDebug.ActionOnPress, Assembly-CSharp
-        m_MethodName: SetKnockback
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &5848687376848859880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,13 +143,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b67e420eea4477f45b22423171e81815, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataIndex: 0
-  _summonCount: 3
-  _bossLayer: 16
-  _bossLayerNoRaycast: 19
-  _bossWeaponLayer: 18
-  _pataponLayer: 8
-  _pataponLayerNoRaycast: 20
-  _pataponWeaponLayer: 10
   _summonStatus: {fileID: 0}
   _summonThumbnail: {fileID: 4402174703164692396, guid: 4433fbc6ed43aba4995338acce61de37, type: 3}

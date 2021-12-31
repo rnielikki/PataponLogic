@@ -27,6 +27,8 @@ namespace PataRoad.Story
         UnityEngine.Events.UnityEvent _whenUseSceneForStory;
         [SerializeField]
         private StoryLineDisplay _display;
+        [SerializeField]
+        private AudioClip _nextSound;
         public void StartStoryScene() => _whenUseSceneForStory.Invoke();
         internal Transform Parent => _parent;
         public IEnumerator LoadStoryLines(StoryAction[] stories)
@@ -49,7 +51,11 @@ namespace PataRoad.Story
                     _display.Close();
                 }
                 if (waitingForSeconds != null) yield return waitingForSeconds;
-                if (waitingForLine != null) yield return waitingForLine;
+                if (waitingForLine != null)
+                {
+                    yield return waitingForLine;
+                    _audioSource.PlayOneShot(_nextSound);
+                }
             }
             IEnumerator WaitForSeconds(float seconds)
             {

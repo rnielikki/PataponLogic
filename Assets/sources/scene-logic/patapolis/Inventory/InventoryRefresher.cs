@@ -6,7 +6,7 @@
     class InventoryRefresher : UnityEngine.MonoBehaviour
     {
         [UnityEngine.SerializeField]
-        private Common.Navigator.ActionEventMap _parentSelector;
+        private PatapolisSelector _parentSelector;
         [UnityEngine.SerializeField]
         private UnityEngine.GameObject _template;
         [UnityEngine.SerializeField]

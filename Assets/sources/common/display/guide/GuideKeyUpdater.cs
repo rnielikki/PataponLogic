@@ -10,8 +10,11 @@ namespace PataRoad.Common.GameDisplay
         private UnityEngine.UI.Text _output;
         private void Start()
         {
-            Core.Global.GlobalData.GlobalInputActions.TryGetActionBindingName(_bindingName, out string name);
-            _output.text = name;
+            if (!Core.Global.GlobalData.GlobalInputActions.TryGetActionBindingName(_bindingName, out string name))
+            {
+                gameObject.SetActive(false);
+            }
+            else _output.text = name;
         }
     }
 }
