@@ -79,7 +79,7 @@ namespace PataRoad.Core.Map
         private void OnDestroy()
         {
             _spriteMaterial.color = Color.white;
-            _submitAction.performed -= PerformAction;
+            if (_submitAction != null) _submitAction.performed -= PerformAction;
         }
     }
 }

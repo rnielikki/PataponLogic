@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.Core.Map
@@ -14,15 +15,15 @@ namespace PataRoad.Core.Map
         Weather.WeatherInfo _weatherInfo;
         [SerializeField]
         MissionPoint _missionPoint;
-        private MapData _mapData;
+        private MapDataContainer _mapDataContainer;
 
         [SerializeField]
         Transform _attachTarget;
         private void Awake()
         {
-            var nextMap = Global.GlobalData.MapInfo.NextMap;
-            _mapData = nextMap.MapData;
-            if (_mapData == null)
+            _mapDataContainer = Global.GlobalData.MapInfo.NextMap;
+            var mapData = _mapDataContainer.MapData;
+            if (mapData == null)
             {
                 ShowError("Map");
                 return;
@@ -32,7 +33,7 @@ namespace PataRoad.Core.Map
             var boss = Global.GlobalData.PataponInfo.BossToSummon;
             if (boss != null)
             {
-                _bossSummonManager.Init(boss.Index, _mapData.SummonCount);
+                _bossSummonManager.Init(boss.Index, mapData.SummonCount);
             }
             else
             {
@@ -41,32 +42,36 @@ namespace PataRoad.Core.Map
 
             //-- music.
             string musicName = Global.GlobalData.PataponInfo.CustomMusic?.Data;
-            if (musicName == null) musicName = _mapData.DefaultMusic;
+            if (musicName == null) musicName = mapData.DefaultMusic;
             _bgmPlayer.MusicTheme = musicName;
 
             //-- background.
-            _backgroundLoader.Init(_mapData?.BackgroundName ?? "Ruins");
+            _backgroundLoader.Init(mapData?.BackgroundName ?? "Ruins");
 
             //-- weather.
-            _weatherInfo.Init(nextMap.Weather.CurrentWeather);
-            _weatherInfo.Wind.Init(nextMap.Weather.CurrentWind);
+            _weatherInfo.Init(_mapDataContainer.Weather.CurrentWeather);
+            _weatherInfo.Wind.Init(_mapDataContainer.Weather.CurrentWind);
 
             //-- missionPoint.
-            _missionPoint.FilledMissionCondition = _mapData.FilledMissionCondition;
-            _missionPoint.UseMissionTower = _mapData.UseMissionTower;
-            _missionPoint.NextStory = _mapData.NextStoryOnSuccess;
-            _missionPoint.NextFailureStory = _mapData.NextStoryOnFail;
+            _missionPoint.FilledMissionCondition = mapData.FilledMissionCondition;
+            _missionPoint.UseMissionTower = mapData.UseMissionTower;
+            _missionPoint.NextStory = mapData.NextStoryOnSuccess;
+            _missionPoint.NextFailureStory = mapData.NextStoryOnFail;
         }
         private void Start()
         {
             //-- Finally Game Object.
-            GameObject asset = Resources.Load<GameObject>($"{Global.MapInfo.MapPath}GameObjects/{_mapData.Index}");
+            GameObject asset = Resources.Load<GameObject>($"{Global.MapInfo.MapPath}GameObjects/{_mapDataContainer.MapData.Index}");
             if (asset == null)
             {
                 ShowError("Object");
                 return;
             }
-            Instantiate(asset, _attachTarget);
+            var obj = Instantiate(asset, _attachTarget);
+            foreach (var havingLevel in obj.GetComponents<MonoBehaviour>().OfType<IHavingLevel>())
+            {
+                havingLevel.SetLevel(_mapDataContainer.Level);
+            }
         }
         private void ShowError(string missingTarget)
         {

@@ -2,7 +2,7 @@
 
 namespace PataRoad.Core.Character.Bosses
 {
-    public abstract class EnemyBoss : Boss
+    public abstract class EnemyBoss : Boss, Map.IHavingLevel
     {
         public override Vector2 MovingDirection { get; } = Vector2.left;
         public BossTurnManager BossTurnManager { get; private set; }
@@ -85,7 +85,11 @@ namespace PataRoad.Core.Character.Bosses
             BossTurnManager.End();
             base.StopAttacking(pause);
         }
-
+        public void SetLevel(int level)
+        {
+            _level = level;
+            BossAttackData.UpdateStatForBoss(level);
+        }
         protected abstract float CalculateAttack();
         private void Update()
         {

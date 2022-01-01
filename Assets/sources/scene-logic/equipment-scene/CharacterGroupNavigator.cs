@@ -9,7 +9,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
     public class CharacterGroupNavigator : SpriteNavigator
     {
 
-        private CameraZoom _cameraZoom;
+        private Core.CameraController.CameraZoom _cameraZoom;
         private CharacterGroupSaver _groupSaver;
         private Vector2[] _navPositions;
 
@@ -34,7 +34,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public override void Init()
         {
             _map = GetComponent<ActionEventMap>();
-            _cameraZoom = Camera.main.GetComponent<CameraZoom>();
+            _cameraZoom = Camera.main.GetComponent<Core.CameraController.CameraZoom>();
             _groupSaver = GetComponent<CharacterGroupSaver>();
 
             _selectOnInit = false;

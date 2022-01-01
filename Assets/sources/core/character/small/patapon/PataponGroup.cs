@@ -10,6 +10,7 @@ namespace PataRoad.Core.Character.Patapons
         public General.PataponGeneral General { get; private set; }
 
         private System.Collections.Generic.List<Patapon> _patapons;
+        public Patapon FirstPon => _patapons.Count < 1 ? null : _patapons[0];
 
         public System.Collections.Generic.IEnumerable<Patapon> Patapons => _patapons;
 
@@ -28,17 +29,6 @@ namespace PataRoad.Core.Character.Patapons
 
             _pataponsHitPointDisplay = Display.PataponsHitPointDisplay.Add(this);
         }
-        public bool CanGoForward()
-        {
-            if (transform.position.x + PataponEnvironment.Steps >= Hazorons.HazoronPositionManager.GetClosestHazoronPosition()) return false;
-            var firstPon = _patapons[0];
-            var closestV2 = firstPon.DistanceCalculator.GetClosestForMarch();
-            if (closestV2 == null) return true;
-            var closest = closestV2.Value.x + PataponEnvironment.Steps * Time.deltaTime;
-            var nextPosition = transform.position.x + PataponEnvironment.Steps * Time.deltaTime;
-            return closest > nextPosition;
-        }
-
         internal void RemovePon(Patapon patapon)
         {
             var index = _patapons.IndexOf(patapon);

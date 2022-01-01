@@ -1,44 +1,51 @@
 using UnityEngine;
 
-namespace PataRoad.SceneLogic.EquipmentScene
+namespace PataRoad.Core.CameraController
 {
     public class CameraZoom : MonoBehaviour
     {
-        private Camera _camera;
-        Vector3 _defaultPosition;
-        Vector3 _positionOffset;
-        const float _zoomInCameraSize = 4;
-        float _zoomOutCameraSize;
+        protected Camera _camera;
+        protected virtual Vector3 _defaultPosition { get; set; }
+        protected Vector3 _positionOffset;
+        [SerializeField]
+        protected float _zoomInCameraSize = 4;
+        protected float _zoomOutCameraSize;
 
         //smooth zooming
         [SerializeField]
-        float _zoomSpeed = 2;
-        private bool _zooming;
-        private int _direction;
-        private Vector3 _zoomInPosition;
-        private float _lerpTime;
+        protected float _zoomSpeed = 2;
+        [SerializeField]
+        protected Vector2 _offset;
+        protected bool _zooming;
+        protected int _direction;
+        protected virtual Vector3 _zoomInPosition { get; set; }
+        protected float _lerpTime;
 
         // Start is called before the first frame update
         void Start()
         {
+            Init();
+        }
+        protected void Init()
+        {
             _lerpTime = 1;
             _camera = GetComponent<Camera>();
             _defaultPosition = transform.position;
-            _positionOffset = new Vector3(-4.5f, 2.8f, _defaultPosition.z);
+            _positionOffset = new Vector3(_offset.x, _offset.y, _defaultPosition.z);
             _zoomOutCameraSize = _camera.orthographicSize;
         }
-        public void ZoomIn(Transform target)
+        public virtual void ZoomIn(Transform target)
         {
             _zoomInPosition = target.position + _positionOffset;
             _zooming = true;
             _direction = -1;
         }
-        public void ZoomOut()
+        public virtual void ZoomOut()
         {
             _zooming = true;
             _direction = 1;
         }
-        private void Update()
+        protected void UpdateZoom()
         {
             if (_zooming)
             {
@@ -50,8 +57,16 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 if ((_lerpTime == 0 && _direction == -1) || (_lerpTime == 1 && _direction == 1))
                 {
                     _zooming = false;
+                    if (_direction < 0) AfterZoomIn();
+                    else AfterZoomOut();
                 }
             }
+        }
+        protected virtual void AfterZoomIn() { }
+        protected virtual void AfterZoomOut() { }
+        protected void Update()
+        {
+            UpdateZoom();
         }
     }
 }

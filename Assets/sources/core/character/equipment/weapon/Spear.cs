@@ -35,6 +35,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 .Initialize(this, _color)
                 .Throw(minForce, maxForce);
         }
+        public override float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance) =>
+            AdjustThrowingAttackDistanceByYPosition(attackDistance, yDistance);
         internal override void SetLastAttackCommandType(AttackCommandType attackCommandType)
         {
             base.SetLastAttackCommandType(attackCommandType);

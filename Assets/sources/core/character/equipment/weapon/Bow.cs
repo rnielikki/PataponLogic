@@ -64,6 +64,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _bowRenderer.sprite = equipmentData.Image;
             _arrowRenderer.sprite = (equipmentData as BowData).ArrowImage;
         }
+        public override float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance) =>
+            AdjustThrowingAttackDistanceByYPosition(attackDistance, yDistance);
         internal override void SetLastAttackCommandType(AttackCommandType attackCommandType)
         {
             base.SetLastAttackCommandType(attackCommandType);

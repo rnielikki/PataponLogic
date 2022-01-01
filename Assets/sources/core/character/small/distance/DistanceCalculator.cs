@@ -9,7 +9,7 @@ namespace PataRoad.Core.Character
     /// </summary>
     public class DistanceCalculator
     {
-        protected readonly ICharacter _character;
+        protected readonly IDistanceCalculatable _character;
         protected readonly GameObject _target;
         public int LayerMask { get; }
         protected readonly Vector2 _direction;
@@ -27,7 +27,7 @@ namespace PataRoad.Core.Character
         /// <param name="character">The target character. ("from")</param>
         /// <param name="sight">Maximum sight of the target. This is equivalent to raycast distance.</param>
         /// <param name="layerMask">Masks of layers to detect. ("to") Get this value using <see cref="UnityEngine.LayerMask"/>.</param>
-        internal DistanceCalculator(ICharacter character, int layerMask)
+        private DistanceCalculator(IDistanceCalculatable character, int layerMask)
         {
             _character = character;
             _size = (character as SmallCharacter)?.CharacterSize ?? 0;
@@ -40,6 +40,8 @@ namespace PataRoad.Core.Character
             _boxcastYOffset = (_boxSize.y / 2) * Vector2.up;
             _boxcastXOffset = _boxSize.x * 0.6f;
         }
+        internal static DistanceCalculator GetPataponManagerDistanceCalculator(Patapons.PataponsManager pataponsManager) =>
+            new DistanceCalculator(pataponsManager, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Patapon (also from left to right).
         /// </summary>

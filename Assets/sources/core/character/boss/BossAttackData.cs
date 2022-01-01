@@ -8,7 +8,7 @@ namespace PataRoad.Core.Character.Bosses
         private string _name;
         public string Name => _name;
         [SerializeReference]
-        private Stat _stat = new Stat();
+        protected Stat _stat = Stat.GetAnyDefaultStatForCharacter();
         public Stat Stat => _stat;
         public float MinLastDamageOffset { get; protected set; } = 0;
         public float MaxLastDamageOffset { get; protected set; } = 0;
@@ -22,6 +22,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             _boss = GetComponent<Boss>();
         }
+        internal abstract void UpdateStatForBoss(int level);
 
         /// <summary>
         /// Clear all collider or trigger of the body in here.

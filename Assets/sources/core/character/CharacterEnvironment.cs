@@ -9,7 +9,7 @@ namespace PataRoad.Core.Character
         //Distance info
 
         //------- DO NOT SET SIGHT TO SHORTER THAN LONGEST RANGE (Yumipon + wind) DISTANCE!
-        public const float OriginalSight = 40; //After certain distance, Patapon can't find where is the enemy!
+        public const float OriginalSight = 30; //After certain distance, Patapon can't find where is the enemy!
         public static float Sight { get; set; } = OriginalSight; //After certain distance, Patapon can't find where is the enemy!
 
         public const float MaxAttackDistance = 25;

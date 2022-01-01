@@ -6,7 +6,6 @@ namespace PataRoad.Core.CameraController
     public class CameraMover : MonoBehaviour
     {
         public GameObject Target { get; set; }
-        private Vector3 _pos;
 
         /// <summary>
         /// Camera smooth moving per second. Does nothing if <see cref="SmoothMoving" /> is <c>false</c>.
@@ -25,6 +24,8 @@ namespace PataRoad.Core.CameraController
         [SerializeField]
         private float _moveRange;
         private float _inputMoveOffset;
+        private float _xOffset;
+
         private InputAction _action;
 
         /// <summary>
@@ -39,7 +40,6 @@ namespace PataRoad.Core.CameraController
 
         void Awake()
         {
-            _pos = transform.position;
             var input = Global.GlobalData.Input.actions;
             _action = input.FindAction("Player/Camera");
             _action.started += SetInputCameraMove;
@@ -51,16 +51,17 @@ namespace PataRoad.Core.CameraController
         {
             if (!_moving || Target == null) return;
 
-            _pos.x = Target.transform.position.x + _inputMoveOffset;
+            var pos = transform.position;
+            pos.x = Target.transform.position.x + _inputMoveOffset;
 
             if (!SmoothMoving)
             {
-                transform.position = _pos;
+                transform.position = pos;
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, _pos, (_cameraMoveSensitivity + Mathf.Abs(_inputMoveOffset) * _inputTurnSpeed) * Time.deltaTime);
-                if (_pos.x == transform.position.x && _inputMoveOffset == 0) SmoothMoving = false;
+                transform.position = Vector3.MoveTowards(transform.position, pos, (_cameraMoveSensitivity + Mathf.Abs(_inputMoveOffset) * _inputTurnSpeed) * Time.deltaTime);
+                if (pos.x == transform.position.x && _inputMoveOffset == 0) SmoothMoving = false;
             }
         }
         /// <summary>
@@ -69,7 +70,7 @@ namespace PataRoad.Core.CameraController
         public void StopMoving()
         {
             _inputMoveOffset = 0;
-            _pos.x = Target.transform.position.x;
+            _xOffset = Target.transform.position.x;
             _moving = false;
         }
         private void SetInputCameraMove(InputAction.CallbackContext context)

@@ -125,7 +125,6 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 0));
 
             //Test
-            /*
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 0), 10);
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 1), 1);
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 2), 3);
@@ -164,6 +163,7 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 12));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 20));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 22));
+            /*
             */
         }
         public int GetAmount(IItem item) =>

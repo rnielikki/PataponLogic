@@ -60,7 +60,6 @@ namespace PataRoad.Core.Character.Bosses
 
             CharAnimator.Animate("Idle");
         }
-
         public virtual void Die()
         {
             IsDead = true;

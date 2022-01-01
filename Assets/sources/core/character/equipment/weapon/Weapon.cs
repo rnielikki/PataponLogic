@@ -70,7 +70,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 + 2 * Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Pow(_initialVelocity.y, 2) / Mathf.Pow(Physics2D.gravity.y, 2);
         }
         // Parabola approximation
-        public float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance)
+        public virtual float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance) => attackDistance;
+        protected float AdjustThrowingAttackDistanceByYPosition(float attackDistance, float yDistance)
         {
             if (_initialVelocity.x == 0) return 0; //No zero division
             var velocityRate = _initialVelocity.y / _initialVelocity.x;

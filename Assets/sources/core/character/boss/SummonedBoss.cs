@@ -5,6 +5,9 @@ namespace PataRoad.Core.Character.Bosses
 {
     public abstract class SummonedBoss : Boss
     {
+        [SerializeField]
+        [Tooltip("This will read automatically level from map and will update boss level")]
+        int _connectedMapIndex = -1;
         public override Vector2 MovingDirection { get; } = Vector2.right;
         private Transform _pataponManagerTransform;
         public override float DefaultWorldPosition => _pataponManagerTransform.position.x;
@@ -21,6 +24,8 @@ namespace PataRoad.Core.Character.Bosses
         protected override void Init(BossAttackData data)
         {
             base.Init(data);
+            var map = Global.GlobalData.MapInfo.GetMapByIndex(_connectedMapIndex);
+            BossAttackData.UpdateStatForBoss(map.Level);
             _pataponManagerTransform = FindObjectOfType<Patapons.PataponsManager>().transform;
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
             _renderers = GetComponentsInChildren<SpriteRenderer>();
@@ -123,6 +128,10 @@ namespace PataRoad.Core.Character.Bosses
                     }
                 }
             }
+        }
+        private void OnValidate()
+        {
+            if (_connectedMapIndex < 0) throw new MissingFieldException("Set proper map index to reference level!");
         }
     }
 }

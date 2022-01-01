@@ -141,5 +141,9 @@ namespace PataRoad.Core.Map
         }
         private void AttachToScreen(string prefabName) =>
             Instantiate(Resources.Load(_screenPath + prefabName));
+        private void OnDestroy()
+        {
+            IsMissionEnd = false;
+        }
     }
 }

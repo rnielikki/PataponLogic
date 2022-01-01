@@ -9,7 +9,7 @@ namespace PataRoad.Core.Character.Patapons
     /// <summary>
     /// Gets command and drum status and sends message to Patapons.
     /// </summary>
-    public class PataponsManager : MonoBehaviour
+    public class PataponsManager : MonoBehaviour, IDistanceCalculatable
     {
         private System.Collections.Generic.List<Patapon> _patapons;
         private System.Collections.Generic.List<PataponGroup> _groups;
@@ -24,8 +24,17 @@ namespace PataRoad.Core.Character.Patapons
         /// If this is set to true, Patapons go forward, also whole Patapon position does. For PATAPATA song.
         /// </summary>
         internal static bool IsMovingForward { get; set; }
+
+        public float DefaultWorldPosition => transform.position.x;
+
+        public Vector2 MovingDirection => Vector2.right;
+
+        public float AttackDistance => 0;
+
         private float _missionEndPosition;
         private bool _useMissionTower;
+
+        private bool _hasEnemyOnSight = true;
 
         //------------------------------------- sounds of Patapon
         [SerializeField]
@@ -33,6 +42,8 @@ namespace PataRoad.Core.Character.Patapons
         int _onMissSpeakingIndex;
 
         private CameraController.CameraMover _cameraMover;
+        private CameraController.CameraZoom _cameraZoom;
+        private DistanceCalculator _distanceCalculator;
 
         private void Awake()
         {
@@ -43,12 +54,15 @@ namespace PataRoad.Core.Character.Patapons
 
             _cameraMover = Camera.main.GetComponent<CameraController.CameraMover>();
             _cameraMover.Target = gameObject;
+            _cameraZoom = Camera.main.GetComponent<CameraController.CameraZoom>();
+            _distanceCalculator = DistanceCalculator.GetPataponManagerDistanceCalculator(this);
 
             TurnCounter.OnTurn.AddListener(() => IsMovingForward = false);
             TurnCounter.OnTurn.AddListener(() =>
             {
                 if (!TurnCounter.IsPlayerTurn) General.PataponGeneral.ShoutedOnThisTurn = false;
             });
+            RhythmTimer.Current.OnTime.AddListener(CheckIfZoom);
         }
         private void Start()
         {
@@ -164,14 +178,30 @@ namespace PataRoad.Core.Character.Patapons
                 {
                     _groups[i].MoveTo(i - 1, index > 0);
                 }
+                _groups.Remove(group);
+                Destroy(group.gameObject);
             }
-
-            _groups.Remove(group);
-            Destroy(group.gameObject);
         }
+        private bool HasEnemyOnSight() //for camera move
+        {
+            if (_patapons.Count == 0) return true;
+            else return _distanceCalculator.GetClosestForMarch() != null;
+        }
+        public bool CanGoForward()
+        {
+            if (transform.position.x + PataponEnvironment.Steps >= Hazorons.HazoronPositionManager.GetClosestHazoronPosition()) return false;
+            else if (_patapons.Count == 0) return true;
+            var firstPon = _patapons[0];
+            var closestV2 = firstPon.DistanceCalculator.GetClosestForMarch();
+            if (closestV2 == null) return true;
+            var closest = closestV2.Value.x + PataponEnvironment.Steps * Time.deltaTime;
+            var nextPosition = transform.position.x + PataponEnvironment.Steps * Time.deltaTime;
+            return closest > nextPosition;
+        }
+
         private void Update()
         {
-            if (IsMovingForward && _groups[0].CanGoForward())
+            if (IsMovingForward && CanGoForward())
             {
                 transform.position += PataponEnvironment.Steps * Vector3.right * Time.deltaTime;
                 if (_useMissionTower && transform.position.x >= _missionEndPosition)
@@ -179,6 +209,24 @@ namespace PataRoad.Core.Character.Patapons
                     Map.MissionPoint.Current.EndMission();
                     Map.MissionPoint.Current.UseMissionTower = false;
                 }
+            }
+        }
+        public void CheckIfZoom()
+        {
+            bool hasEnemyOnSight = HasEnemyOnSight() || (FirstPatapon.DistanceCalculator.GetClosestForMarch() != null);
+            if (!_hasEnemyOnSight && hasEnemyOnSight) //has enemy on sight
+            {
+                _cameraMover.Target = gameObject;
+                _cameraZoom.ZoomOut();
+
+                _hasEnemyOnSight = true;
+            }
+            else if (_hasEnemyOnSight && !hasEnemyOnSight) //no enemy on sight
+            {
+                var target = _groups[0].FirstPon.gameObject;
+                _cameraMover.Target = target;
+                _cameraZoom.ZoomIn(target.transform);
+                _hasEnemyOnSight = false;
             }
         }
         public void HealAll(int amount)

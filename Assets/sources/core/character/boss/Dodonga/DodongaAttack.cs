@@ -67,5 +67,13 @@ namespace PataRoad.Core.Character.Bosses
             Headbutt.StopAttacking();
             EatingMouth.StopAttacking();
         }
+        internal override void UpdateStatForBoss(int level)
+        {
+            var multiplier = Mathf.Sqrt(level);
+            _stat.MultipleDamage(multiplier);
+            _stat.DefenceMin *= multiplier;
+            _stat.DefenceMax *= multiplier;
+            _stat.HitPoint = Mathf.RoundToInt(_stat.HitPoint * multiplier);
+        }
     }
 }
