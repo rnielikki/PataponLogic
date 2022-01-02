@@ -14,12 +14,16 @@ namespace PataRoad.Core.Map.Weather
             gameObject.SetActive(true);
             WeatherInfo.Current.SetWeatherSound(_sound);
             WeatherInfo.Current.FireRateMultiplier = 0.5f;
+
+            Character.CharacterEnvironment.AnimalSightMultiplier = 0.6f;
         }
 
         public void OnWeatherStopped(WeatherType newType)
         {
             WeatherInfo.Current.FireRateMultiplier = 1;
             WeatherInfo.Current.StopWeatherSound();
+            Character.CharacterEnvironment.AnimalSightMultiplier = 1;
+
             gameObject.SetActive(false);
         }
     }

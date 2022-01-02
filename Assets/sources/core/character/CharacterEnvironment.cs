@@ -11,6 +11,10 @@ namespace PataRoad.Core.Character
         //------- DO NOT SET SIGHT TO SHORTER THAN LONGEST RANGE (Yumipon + wind) DISTANCE!
         public const float OriginalSight = 30; //After certain distance, Patapon can't find where is the enemy!
         public static float Sight { get; set; } = OriginalSight; //After certain distance, Patapon can't find where is the enemy!
+        /// <summary>
+        /// Attack distance multiplier of the animal. Affected by weather, especially RAIN.
+        /// </summary>
+        public static float AnimalSightMultiplier { get; set; } = 1; //This reacts to rain.
 
         public const float MaxAttackDistance = 25;
         /// <summary>

@@ -41,6 +41,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                     .Throw(minForce, maxForce);
             }
         }
+        public override float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance) =>
+            AdjustThrowingAttackDistanceByYPosition(attackDistance, yDistance);
         public override float GetAttackDistance()
         {
             var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);

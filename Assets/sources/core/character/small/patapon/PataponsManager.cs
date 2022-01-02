@@ -31,6 +31,8 @@ namespace PataRoad.Core.Character.Patapons
 
         public float AttackDistance => 0;
 
+        public float Sight => CharacterEnvironment.Sight;
+
         private float _missionEndPosition;
         private bool _useMissionTower;
 
@@ -185,14 +187,14 @@ namespace PataRoad.Core.Character.Patapons
         private bool HasEnemyOnSight() //for camera move
         {
             if (_patapons.Count == 0) return true;
-            else return _distanceCalculator.GetClosestForMarch() != null;
+            else return _distanceCalculator.GetClosest() != null;
         }
         public bool CanGoForward()
         {
             if (transform.position.x + PataponEnvironment.Steps >= Hazorons.HazoronPositionManager.GetClosestHazoronPosition()) return false;
             else if (_patapons.Count == 0) return true;
             var firstPon = _patapons[0];
-            var closestV2 = firstPon.DistanceCalculator.GetClosestForMarch();
+            var closestV2 = firstPon.DistanceCalculator.GetClosest();
             if (closestV2 == null) return true;
             var closest = closestV2.Value.x + PataponEnvironment.Steps * Time.deltaTime;
             var nextPosition = transform.position.x + PataponEnvironment.Steps * Time.deltaTime;
@@ -213,7 +215,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         public void CheckIfZoom()
         {
-            bool hasEnemyOnSight = HasEnemyOnSight() || (FirstPatapon.DistanceCalculator.GetClosestForMarch() != null);
+            bool hasEnemyOnSight = HasEnemyOnSight() || (FirstPatapon.DistanceCalculator.GetClosest() != null);
             if (!_hasEnemyOnSight && hasEnemyOnSight) //has enemy on sight
             {
                 _cameraMover.Target = gameObject;

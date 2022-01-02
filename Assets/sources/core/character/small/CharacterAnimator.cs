@@ -8,6 +8,7 @@ namespace PataRoad.Core.Character
     public class CharacterAnimator
     {
         private readonly Animator _animator;
+        public Animator Animator => _animator;
 
         //Late animation, only for >2 seconds attack speed.
         private bool _lateAnimating;
@@ -28,6 +29,13 @@ namespace PataRoad.Core.Character
         internal void SetAttackSpeed(float speed)
         {
             _animator.SetFloat("AttackSpeedMultiplier", speed);
+        }
+        /// <summary>
+        /// For huntable animal. Sets if the animal is moving away, when found the target.
+        /// </summary>
+        public void SetMoving(bool isMoving)
+        {
+            _animator.SetBool("moving", isMoving);
         }
         /// <summary>
         /// Performs animation, also ensure playing from zero offset without transition.

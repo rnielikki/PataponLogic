@@ -74,6 +74,8 @@ namespace PataRoad.Core.Character
         public ElementalAttackType ElementalAttackType { get; set; }
         public abstract int AttackTypeIndex { get; }
 
+        public float Sight => CharacterEnvironment.Sight;
+
         protected void Init()
         {
             _data = GetComponent<SmallCharacterData>();
@@ -120,6 +122,7 @@ namespace PataRoad.Core.Character
                 CharAnimator.AnimateFrom("tori-fly-stop");
             }
             StartCoroutine(WaitUntilDie());
+            StatusEffectManager.RecoverAndIgnoreEffect();
             System.Collections.IEnumerator WaitUntilDie()
             {
                 CharAnimator.PlayDyingAnimation();

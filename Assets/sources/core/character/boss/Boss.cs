@@ -37,6 +37,8 @@ namespace PataRoad.Core.Character.Bosses
 
         public ElementalAttackType ElementalAttackType { get; set; }
 
+        public float Sight => CharacterEnvironment.Sight;
+
         protected virtual void Init(BossAttackData data)
         {
             foreach (var part in GetComponentsInChildren<BreakablePart>())
@@ -67,7 +69,7 @@ namespace PataRoad.Core.Character.Bosses
             {
                 component.enabled = false;
             }
-
+            StatusEffectManager.RecoverAndIgnoreEffect();
             CharAnimator.PlayDyingAnimation();
         }
 

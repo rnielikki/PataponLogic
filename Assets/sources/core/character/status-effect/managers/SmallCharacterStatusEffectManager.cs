@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PataRoad.Core.Character
 {
@@ -74,7 +73,7 @@ namespace PataRoad.Core.Character
             _onKnockback = false;
             if (_isPatapon && _smallCharacter.IsFlyingUnit)
             {
-                if (((Patapons.Patapon)_smallCharacter).OnFever)
+                if (_smallCharacter.OnFever)
                 {
                     _smallCharacter.CharAnimator.AnimateFrom("tori-fly-up");
                 }

@@ -25,7 +25,6 @@ namespace PataRoad.Core.Character
         /// Constructor for getting distances from target game object, like Patapon-Enemy, Enemy-Patapon, Patapon-Structure etc.
         /// </summary>
         /// <param name="character">The target character. ("from")</param>
-        /// <param name="sight">Maximum sight of the target. This is equivalent to raycast distance.</param>
         /// <param name="layerMask">Masks of layers to detect. ("to") Get this value using <see cref="UnityEngine.LayerMask"/>.</param>
         private DistanceCalculator(IDistanceCalculatable character, int layerMask)
         {
@@ -68,18 +67,26 @@ namespace PataRoad.Core.Character
             new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
 
         /// <summary>
-        /// Shoots Raycast for marching. Results same as melee unit of <see cref="GetClosest()"/>.
+        /// <see cref="DistanceCalculator"/> for huntable animal (move direction changing).
         /// </summary>
-        /// <returns>X position as collider hit, Y position as collided game object position.</returns>
-        public Vector2? GetClosestForMarch() => GetClosest(0);
+        /// <param name="target">The animal that can hunt.</param>
+        internal static DistanceCalculator GetAnimalDistanceCalculator(Animal.AnimalBehaviour target) =>
+            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("patapons", "hazorons"));
+
+
+        /// <summary>
+        /// Shoots Raycast for marching. Uses <see cref="GetTargetOnSight"/>.
+        /// </summary>
+        /// <returns>Coordinate of collider hit. <c>null</c> if nothing is on forward sight.</returns>
+        public Vector2? GetClosest() => GetTargetOnSight(_character.Sight);
         /// <summary>
         /// Shoots RayCast to closest structure or enemy and returns the raycast hit if found.
         /// </summary>
         /// <returns>X position as collider hit, Y position as collided game object position.</returns>
-        public Vector2? GetClosest() => GetClosest(_character.AttackDistance);
-        private Vector2? GetClosest(float attackDistance)
+        public Vector2? GetClosestForAttack() => GetClosestForAttack(_character.AttackDistance);
+        private Vector2? GetClosestForAttack(float attackDistance)
         {
-            var closest = GetClosest((Vector2)_target.transform.position + attackDistance * _direction, attackDistance);
+            var closest = GetClosestForAttack((Vector2)_target.transform.position + attackDistance * _direction, attackDistance);
             if (closest != null && closest.Value.x * _xDirection > MaxEnemyDistanceInSight(attackDistance) * _xDirection)
             {
                 return null;
@@ -90,13 +97,13 @@ namespace PataRoad.Core.Character
             }
         }
 
-        protected virtual Vector2? GetClosest(Vector2 castPoint, float attackDistance)//bidirectional
+        protected virtual Vector2? GetClosestForAttack(Vector2 castPoint, float attackDistance)//bidirectional
         {
             var raycast = Physics2D.BoxCast(castPoint + _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, -_direction, attackDistance, LayerMask);
             var p = ReturnInRange(raycast);
             if (p == null)
             {
-                raycast = Physics2D.BoxCast(castPoint - _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, _direction, CharacterEnvironment.Sight - attackDistance, LayerMask);
+                raycast = Physics2D.BoxCast(castPoint - _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, _direction, _character.Sight - attackDistance, LayerMask);
                 p = ReturnInRange(raycast);
                 if (p == null) return null;
             }
@@ -109,11 +116,14 @@ namespace PataRoad.Core.Character
                 return hit.point.x;
             }
         }
-
+        /// <summary>
+        /// Prevents overlapping or going forward from the object. Better performance than continuous collider physics.
+        /// </summary>
+        /// <param name="input">The X position that want to go forward.</param>
+        /// <returns>Forward position without inturrupting.</returns>
         public virtual float GetSafeForwardPosition(float input)
         {
-            var raycast = Physics2D.BoxCast((Vector2)_target.transform.position - _boxSize.x * _direction + _boxcastYOffset, _boxSize, 0, _direction, CharacterEnvironment.Sight, LayerMask);
-
+            var raycast = GetRaycastHitOnForward(_character.Sight);
             if (raycast.collider == null)
             {
                 return input;
@@ -127,6 +137,17 @@ namespace PataRoad.Core.Character
                 return Mathf.Min(raycast.transform.position.x - (raycast.collider.bounds.size.x * 0.5f) - _size, input);
             }
         }
+        /// <summary>
+        /// Gets target from the custom defined sight.
+        /// </summary>
+        /// <param name="sight">Custom sight.</param>
+        /// <returns>The position data of the target, <c>null</c> if there are no target.</returns>
+        public Vector2? GetTargetOnSight(float sight)
+        {
+            var raycast = GetRaycastHitOnForward(sight);
+            return raycast.transform?.position;
+        }
+        private RaycastHit2D GetRaycastHitOnForward(float sight) => Physics2D.BoxCast((Vector2)_target.transform.position - _boxSize.x * _direction + _boxcastYOffset, _boxSize, 0, _direction, sight, LayerMask);
 
         public IEnumerable<IAttackable> GetAllGroundedTargets()
         {
@@ -136,11 +157,17 @@ namespace PataRoad.Core.Character
                 CharacterEnvironment.OriginalSight * 2, LayerMask);
             return all.Select(res => res.collider.GetComponentInParent<IAttackable>()).Where(value => value != null);
         }
-        public IEnumerable<Collider2D> GetAllTargetsOnFront()
+        public IEnumerable<Collider2D> GetAllAbsoluteTargetsOnFront()
         {
             var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, CharacterEnvironment.OriginalSight, LayerMask);
             return all.Select(res => res.collider).Where(value => value?.gameObject != null);
         }
+        public IEnumerable<Collider2D> GetAllTargetsOnFront()
+        {
+            var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, _character.Sight, LayerMask);
+            return all.Select(res => res.collider).Where(value => value?.gameObject != null);
+        }
+
 
         public bool IsInTargetRange(float targetX, float offset) => IsInTargetRange(_target.transform.position.x, targetX, offset);
         public bool IsInTargetRange(float x, float targetX, float offset) => targetX - offset < x && x < targetX + offset;
@@ -148,7 +175,7 @@ namespace PataRoad.Core.Character
         /// Check if the character has attack target on their sight.
         /// </summary>
         /// <returns><c>true</c> if Patapon finds obstacle (attack) target to Patapon sight, otherwise <c>false</c>.</returns>
-        public bool HasAttackTarget() => GetClosest() != null;
-        protected float MaxEnemyDistanceInSight(float attackDistance) => _character.DefaultWorldPosition + _xDirection * (CharacterEnvironment.Sight + attackDistance);
+        public bool HasAttackTarget() => GetClosestForAttack() != null;
+        protected float MaxEnemyDistanceInSight(float attackDistance) => _character.DefaultWorldPosition + _xDirection * (_character.Sight + attackDistance);
     }
 }

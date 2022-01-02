@@ -31,7 +31,7 @@ namespace PataRoad.Core.Character.Bosses
             {
                 _trigger.RemoveCollider(0);
             }
-            foreach (var hit in _distanceCalculator.GetAllTargetsOnFront())
+            foreach (var hit in _distanceCalculator.GetAllAbsoluteTargetsOnFront())
             {
                 _trigger.AddCollider(hit);
             }

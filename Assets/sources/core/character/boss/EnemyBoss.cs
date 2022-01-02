@@ -124,7 +124,7 @@ namespace PataRoad.Core.Character.Bosses
                 AttackDistance = CalculateAttack();
             }
             //phase 2: go forward
-            var closest = DistanceCalculator.GetClosest() ?? _pataponsManager.transform.position;
+            var closest = DistanceCalculator.GetClosestForAttack() ?? _pataponsManager.transform.position;
             var targetPos = new Vector2(Mathf.Max(_pataponsManager.transform.position.x, closest.x), 0);
             var offset = Stat.MovementSpeed * Time.deltaTime;
 

@@ -74,6 +74,11 @@ namespace PataRoad.Core.Character
         public virtual void Tumble() { }
         public virtual void TumbleAttack() { }
 
+        public void RecoverAndIgnoreEffect()
+        {
+            Recover();
+            IgnoreStatusEffect = true;
+        }
         public void Recover()
         {
             if (!OnStatusEffect || IgnoreStatusEffect) return;
