@@ -57,7 +57,7 @@ namespace PataRoad.Core.Map
                 if (_reachedMaxLevel < _level) _reachedMaxLevel = _level;
             }
         }
-        internal bool CanLoadNextLevel() => Level >= MapData.LevelRequirementForNext;
+        internal bool CanLoadNextLevel() => MapData.HasLevel && Level >= MapData.LevelRequirementForNext;
         private MapData LoadResource()
         {
             var mapData = Resources.Load<MapData>(MapPath + _mapDataIndex.ToString());
@@ -71,6 +71,9 @@ namespace PataRoad.Core.Map
             _mapDataIndex = _mapData.Index;
         }
         public void OnAfterDeserialize()
+        {
+        }
+        public void LoadDataAfterDeserialization()
         {
             _mapData = LoadResource();
             _weather.LoadWeatherMap(_mapData);

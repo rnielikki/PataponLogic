@@ -5,6 +5,7 @@ namespace PataRoad.Core.Character
     public class CharacterStatusEffectManager : StatusEffectManager
     {
         protected ICharacter _character;
+        internal UnityEngine.Events.UnityEvent OnStaggered { get; } = new UnityEngine.Events.UnityEvent();
 
         private void Awake()
         {
@@ -60,6 +61,7 @@ namespace PataRoad.Core.Character
         {
             if (!IsValidForStatusEffect(1)) return;
             StartStatusEffect();
+            OnStaggered.Invoke();
             _character.CharAnimator.Animate("Stagger");
             StartCoroutine(WaitForRecovery(1));
 

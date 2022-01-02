@@ -37,6 +37,10 @@ namespace PataRoad.Core.Character.Animal
         public float AttackDistance => 0;
 
         public float Sight => _animalData.Sight * CharacterEnvironment.AnimalSightMultiplier;
+        [SerializeReference]
+        AudioClip _soundOnStaggered;
+        [SerializeReference]
+        AudioClip _soundOnDead;
 
         private void Start()
         {
@@ -45,7 +49,10 @@ namespace PataRoad.Core.Character.Animal
 
             DistanceCalculator = DistanceCalculator.GetAnimalDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
-            StatusEffectManager = gameObject.AddComponent<CharacterStatusEffectManager>();
+
+            var charStatusManager = gameObject.AddComponent<CharacterStatusEffectManager>();
+            StatusEffectManager = charStatusManager;
+            charStatusManager.OnStaggered.AddListener(() => GameSound.SpeakManager.Current.Play(_soundOnStaggered));
             _animalData.InitFromParent(this);
         }
 
@@ -58,6 +65,8 @@ namespace PataRoad.Core.Character.Animal
             }
             StatusEffectManager.RecoverAndIgnoreEffect();
             CharAnimator.PlayDyingAnimation();
+            GameSound.SpeakManager.Current.Play(_soundOnDead);
+            Map.MissionPoint.Current.FilledMissionCondition = true;
         }
 
         public float GetAttackValueOffset()
@@ -82,6 +91,7 @@ namespace PataRoad.Core.Character.Animal
 
         public virtual void StopAttacking(bool pause)
         {
+            _animalData.StopAttacking();
             CharAnimator.Animate("Idle");
         }
 
@@ -89,6 +99,7 @@ namespace PataRoad.Core.Character.Animal
         {
             CurrentHitPoint -= damage;
             _animalData.OnDamaged();
+
         }
         private void Update()
         {
@@ -96,6 +107,10 @@ namespace PataRoad.Core.Character.Animal
             {
                 _animalData.OnTarget();
             }
+        }
+        private void OnDestroy()
+        {
+            (StatusEffectManager as CharacterStatusEffectManager)?.OnStaggered?.RemoveAllListeners();
         }
     }
 }

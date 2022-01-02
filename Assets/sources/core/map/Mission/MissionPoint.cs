@@ -58,9 +58,9 @@ namespace PataRoad.Core.Map
         public void EndMission()
         {
             if (IsMissionEnd) return;
-            IsMissionEnd = true;
             if (FilledMissionCondition)
             {
+                IsMissionEnd = true;
                 CompleteMission();
             }
             else

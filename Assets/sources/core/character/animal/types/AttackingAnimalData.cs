@@ -33,6 +33,7 @@ namespace PataRoad.Core.Character.Animal
         public void EndAttack()
         {
             //damage?
+            StopAttacking();
             _animator.Animator.SetBool("attacking", false);
             //Flip();
             base.OnTarget();
@@ -57,6 +58,10 @@ namespace PataRoad.Core.Character.Animal
             var pos = transform.position;
             pos.x = closest.Value.x + _attackDistance;
             _targetPosition = pos;
+        }
+        public override void StopAttacking()
+        {
+            //will stop attacking! like a boss!
         }
         private void Update()
         {

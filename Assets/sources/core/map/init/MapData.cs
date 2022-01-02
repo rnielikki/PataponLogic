@@ -23,6 +23,9 @@ namespace PataRoad.Core.Map
         [SerializeField]
         private MapType _type;
         public MapType Type => _type;
+        [SerializeField]
+        bool _openOnlyOnce;
+        public bool OpenOnlyOnce => _openOnlyOnce;
         [Header("In-game environment")]
         [SerializeField]
         private string _defaultMusic;
@@ -68,6 +71,9 @@ namespace PataRoad.Core.Map
 
         [Header("Level Requirements")]
         [SerializeField]
+        bool _hasLevel = true;
+        public bool HasLevel => _hasLevel;
+        [SerializeField]
         int _levelRequiprementForNext = 2;
         public int LevelRequirementForNext => _levelRequiprementForNext;
         [SerializeField]
@@ -77,6 +83,7 @@ namespace PataRoad.Core.Map
         [SerializeField]
         int _maxLevelOnHard;
 
+        [Header("Story")]
         [SerializeField]
         Story.StoryData _nextStoryOnSuccess;
         public Story.StoryData NextStoryOnSuccess => _nextStoryOnSuccess;
@@ -84,7 +91,12 @@ namespace PataRoad.Core.Map
         Story.StoryData _nextStoryOnFail;
         public Story.StoryData NextStoryOnFail => _nextStoryOnFail;
 
-        public int GetMaxLevel() =>
+        public int GetMaxLevel()
+        {
+            if (_hasLevel) return CheckMaxLevel();
+            else return 1;
+        }
+        private int CheckMaxLevel() =>
             Rhythm.RhythmEnvironment.Difficulty switch
             {
                 Rhythm.Difficulty.Easy => _maxLevelOnEasy,

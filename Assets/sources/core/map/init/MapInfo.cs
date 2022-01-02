@@ -18,6 +18,9 @@ namespace PataRoad.Core.Global
 
         [SerializeField]
         private int _lastMapIndex;
+        //for once mission succeeded and will never open. No hashset because serialization, also there's not so many so forget the performance
+        [SerializeReference]
+        private List<int> _closedMaps = new List<int>();
         [SerializeField]
         private int _nextMapIndex;
         [SerializeField]
@@ -63,7 +66,15 @@ namespace PataRoad.Core.Global
         }
         public void MissionSucceeded()
         {
-            NextMap.LevelUp();
+            if (NextMap.MapData.OpenOnlyOnce && !_closedMaps.Contains(NextMap.MapData.Index))
+            {
+                _closedMaps.Add(NextMap.MapData.Index);
+                _openMaps.Remove(NextMap.MapData.Index);
+            }
+            else
+            {
+                NextMap.LevelUp();
+            }
             LastMap = NextMap;
             OpenNext();
 
@@ -90,6 +101,7 @@ namespace PataRoad.Core.Global
         }
         private MapDataContainer LoadResource(int index)
         {
+            if (_closedMaps.Contains(index)) return LastMap;
             if (!_openMaps.TryGetValue(index, out MapDataContainer map))
             {
                 map = new MapDataContainer(index);
@@ -110,7 +122,8 @@ namespace PataRoad.Core.Global
         {
             foreach (var map in _openMapsForSerializing)
             {
-                LoadResource(map.Index);
+                map.LoadDataAfterDeserialization();
+                _openMaps.Add(map.Index, map);
                 if (map.Index == _lastMapIndex)
                 {
                     LastMap = map;

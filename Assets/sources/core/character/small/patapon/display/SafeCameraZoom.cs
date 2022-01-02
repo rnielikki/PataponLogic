@@ -22,13 +22,13 @@ namespace PataRoad.Core.CameraController
         }
         public override void ZoomIn(Transform target)
         {
-            _cameraMover.Target = _pataponManager.FirstPatapon.gameObject ?? _pataponManager.gameObject;
+            _cameraMover.SetTarget(_pataponManager.FirstPatapon.transform ?? _pataponManager.transform);
             _zooming = true;
             _direction = -1;
         }
         public override void ZoomOut()
         {
-            _cameraMover.Target = _pataponManager.gameObject;
+            _cameraMover.SetTarget(_pataponManager.transform);
             base.ZoomOut();
         }
         private void Update()

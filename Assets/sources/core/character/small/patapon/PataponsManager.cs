@@ -46,6 +46,7 @@ namespace PataRoad.Core.Character.Patapons
         private CameraController.CameraMover _cameraMover;
         private CameraController.CameraZoom _cameraZoom;
         private DistanceCalculator _distanceCalculator;
+        private const float _minimumPosition = -10;
 
         private void Awake()
         {
@@ -55,7 +56,7 @@ namespace PataRoad.Core.Character.Patapons
             _groups = GetComponentsInChildren<PataponGroup>().ToList();
 
             _cameraMover = Camera.main.GetComponent<CameraController.CameraMover>();
-            _cameraMover.Target = gameObject;
+            _cameraMover.SetTarget(transform, false);
             _cameraZoom = Camera.main.GetComponent<CameraController.CameraZoom>();
             _distanceCalculator = DistanceCalculator.GetPataponManagerDistanceCalculator(this);
 
@@ -213,12 +214,33 @@ namespace PataRoad.Core.Character.Patapons
                 }
             }
         }
+        private void LateUpdate()
+        {
+            var forward = FirstPatapon?.DistanceCalculator?.GetClosest()?.x;
+            if (forward != null && forward.Value < transform.position.x)
+            {
+                var newPosition = forward.Value;
+                if (newPosition < _minimumPosition) return;
+                var pos = transform.position;
+                var offset = transform.position.x - newPosition; //+
+                foreach (var group in _groups)
+                {
+                    foreach (var pon in _patapons)
+                    {
+                        var ponPos = pon.transform.position;
+                        ponPos.x += offset;
+                        pon.transform.position = ponPos;
+                    }
+                }
+                pos.x = newPosition;
+                transform.position = pos;
+            }
+        }
         public void CheckIfZoom()
         {
             bool hasEnemyOnSight = HasEnemyOnSight() || (FirstPatapon.DistanceCalculator.GetClosest() != null);
             if (!_hasEnemyOnSight && hasEnemyOnSight) //has enemy on sight
             {
-                _cameraMover.Target = gameObject;
                 _cameraZoom.ZoomOut();
 
                 _hasEnemyOnSight = true;
@@ -226,7 +248,6 @@ namespace PataRoad.Core.Character.Patapons
             else if (_hasEnemyOnSight && !hasEnemyOnSight) //no enemy on sight
             {
                 var target = _groups[0].FirstPon.gameObject;
-                _cameraMover.Target = target;
                 _cameraZoom.ZoomIn(target.transform);
                 _hasEnemyOnSight = false;
             }

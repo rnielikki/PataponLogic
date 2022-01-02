@@ -23,5 +23,6 @@
         public void OnDamaged();
         public void OnTarget();
         public void InitFromParent(AnimalBehaviour parent);
+        public void StopAttacking();
     }
 }

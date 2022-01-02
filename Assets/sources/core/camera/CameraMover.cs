@@ -5,7 +5,7 @@ namespace PataRoad.Core.CameraController
 {
     public class CameraMover : MonoBehaviour
     {
-        public GameObject Target { get; set; }
+        public Transform Target { get; private set; }
 
         /// <summary>
         /// Camera smooth moving per second. Does nothing if <see cref="SmoothMoving" /> is <c>false</c>.
@@ -24,7 +24,6 @@ namespace PataRoad.Core.CameraController
         [SerializeField]
         private float _moveRange;
         private float _inputMoveOffset;
-        private float _xOffset;
 
         private InputAction _action;
 
@@ -52,7 +51,7 @@ namespace PataRoad.Core.CameraController
             if (!_moving || Target == null) return;
 
             var pos = transform.position;
-            pos.x = Target.transform.position.x + _inputMoveOffset;
+            pos.x = Target.position.x + _inputMoveOffset;
 
             if (!SmoothMoving)
             {
@@ -64,13 +63,17 @@ namespace PataRoad.Core.CameraController
                 if (pos.x == transform.position.x && _inputMoveOffset == 0) SmoothMoving = false;
             }
         }
+        public void SetTarget(Transform targetTransform, bool smooth = true)
+        {
+            SmoothMoving = smooth;
+            Target = targetTransform;
+        }
         /// <summary>
         /// Stops moving completely and put to initial place.
         /// </summary>
         public void StopMoving()
         {
             _inputMoveOffset = 0;
-            _xOffset = Target.transform.position.x;
             _moving = false;
         }
         private void SetInputCameraMove(InputAction.CallbackContext context)

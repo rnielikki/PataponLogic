@@ -23,6 +23,9 @@ namespace PataRoad.Core.Character.Animal
         protected StatusEffectManager _statusEffectManager;
         protected DistanceCalculator _distanceCalculator;
 
+        [SerializeField]
+        protected AudioClip _soundOnFound;
+
         public bool PerformingAction { get; protected set; }
 
         public virtual void InitFromParent(AnimalBehaviour parent)
@@ -34,6 +37,7 @@ namespace PataRoad.Core.Character.Animal
         public virtual void OnTarget()
         {
             PerformingAction = true;
+            GameSound.SpeakManager.Current.Play(_soundOnFound);
             _statusEffectManager.IgnoreStatusEffect = true;
             _targetPosition = transform.position + _runningDistance * Vector3.right;
 
@@ -46,6 +50,9 @@ namespace PataRoad.Core.Character.Animal
         public void OnDamaged()
         {
             if (!PerformingAction) OnTarget();
+        }
+        public virtual void StopAttacking()
+        {
         }
         protected bool Move(bool endActionWhenMoved = true)
         {
