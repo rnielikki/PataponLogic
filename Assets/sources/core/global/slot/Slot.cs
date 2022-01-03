@@ -8,7 +8,7 @@ namespace PataRoad.Core.Global.Slots
     /// Represents a whole save data. For summary, use <see cref="SlotMeta"/>.
     /// </summary>
     [System.Serializable]
-    public class Slot
+    public class Slot : ISerializationCallbackReceiver
     {
         [SerializeField]
         private PataponInfo _pataponInfo;
@@ -37,7 +37,7 @@ namespace PataRoad.Core.Global.Slots
         /// Played time as seconds.
         /// </summary>
         public System.TimeSpan PlayTime => _playTime;
-        private int _startTime;
+        private float _startTime;
 
         [SerializeField]
         private string _almightyName;
@@ -70,20 +70,21 @@ namespace PataRoad.Core.Global.Slots
                     PlayerPrefs.GetString(slotIndex)
                 );
             slot._startTime = (int)Time.realtimeSinceStartup;
-            slot.DeserializeAll();
             return slot;
         }
-        public void Save(int slotIndex)
+        public SlotMeta Save(int slotIndex)
         {
-            _playTime += new System.TimeSpan((int)Time.realtimeSinceStartup - _startTime);
-            SerializeAll();
+            _playTime += new System.TimeSpan((long)(Time.realtimeSinceStartup - _startTime) * 10_000_000);
+            _startTime = (int)Time.realtimeSinceStartup;
             PlayerPrefs.SetString(slotIndex.ToString(),
                     JsonUtility.ToJson(this)
                 );
 
             //And update meta
-            SlotMetaList.Save(GetSlotMeta());
+            var slotMeta = GetSlotMeta();
+            SlotMetaList.Save(slotMeta, slotIndex);
             PlayerPrefs.Save();
+            return slotMeta;
         }
         public SlotMeta GetSlotMeta() => new SlotMeta(this);
         private void SerializeAll()
@@ -97,6 +98,16 @@ namespace PataRoad.Core.Global.Slots
             _pataponInfo.Deserialize();
             _inventory.Deserialize();
             _mapInfo.Deserialize();
+        }
+
+        public void OnBeforeSerialize()
+        {
+            SerializeAll();
+        }
+
+        public void OnAfterDeserialize()
+        {
+            DeserializeAll();
         }
     }
 }

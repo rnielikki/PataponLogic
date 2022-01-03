@@ -11,7 +11,7 @@ namespace PataRoad.Core.Global
         public MapDataContainer NextMap { get; private set; }
         public MapDataContainer LastMap { get; private set; }
 
-        private Dictionary<int, MapDataContainer> _openMaps = new Dictionary<int, MapDataContainer>();
+        private Dictionary<int, MapDataContainer> _openMaps;
 
         [SerializeReference]
         private MapDataContainer[] _openMapsForSerializing;
@@ -20,7 +20,7 @@ namespace PataRoad.Core.Global
         private int _lastMapIndex;
         //for once mission succeeded and will never open. No hashset because serialization, also there's not so many so forget the performance
         [SerializeField]
-        private List<int> _closedMaps = new List<int>();
+        private List<int> _closedMaps;
         [SerializeField]
         private int _nextMapIndex;
         [SerializeField]
@@ -32,12 +32,15 @@ namespace PataRoad.Core.Global
         private MapWeather _patapolisWeather;
         public MapWeather PatapolisWeather => _patapolisWeather;
 
+        public MapInfo()
+        {
+            _openMaps = new Dictionary<int, MapDataContainer>();
+            _closedMaps = new List<int>();
+        }
         internal static MapInfo CreateNew()
         {
             var mapInfo = new MapInfo();
-            mapInfo.LoadResource(0);
-            mapInfo.LoadResource(1);
-            mapInfo.NextMap = mapInfo.LoadResource(2);
+            mapInfo.LastMap = mapInfo.NextMap = mapInfo.LoadResource(0);
 
             mapInfo._patapolisWeather = new MapWeather(new Dictionary<Map.Weather.WeatherType, float>()
             {
@@ -138,7 +141,6 @@ namespace PataRoad.Core.Global
             {
                 NextMap = _openMapsForSerializing.Last();
             }
-            RefreshAllWeathers();
         }
     }
 }

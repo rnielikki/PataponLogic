@@ -27,10 +27,14 @@
             _current = result;
             return result;
         }
-        public static void Save(SlotMeta meta)
+        internal static void Save(SlotMeta meta, int index)
         {
+            if (index < 0 || index >= SlotSize) index = meta.SlotIndex;
             meta.SetLastSavedTime();
-            _current._slotMeta[meta.SlotIndex] = meta;
+            _current._slotMeta[index] = meta;
+            UnityEngine.PlayerPrefs.SetString("Saves",
+                UnityEngine.JsonUtility.ToJson(_current)
+            );
         }
     }
 }

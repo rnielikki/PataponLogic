@@ -24,11 +24,12 @@ namespace PataRoad.SceneLogic.Patapolis
                 _parentSelectorOnSave,
                 () => SaveAndUpdate(slotItem)
                 );
+            slotItem.ShowHighlight();
         }
         private void SaveAndUpdate(CommonSceneLogic.SlotDataItem slotItem)
         {
-            Core.Global.GlobalData.SlotManager.SaveSlot(slotItem.SlotMeta.SlotIndex);
-            slotItem.UpdateDisplay(slotItem.SlotMeta);
+            var saved = Core.Global.GlobalData.SlotManager.SaveSlot(slotItem.Index);
+            slotItem.UpdateDisplay(saved);
         }
         public void LoadMainMenu()
         {

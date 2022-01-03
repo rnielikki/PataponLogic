@@ -15,9 +15,14 @@ namespace PataRoad.Core.Map
         private Weather.WindType _currentWind;
         public Weather.WindType CurrentWind => _currentWind;
 
-        private Dictionary<Weather.WeatherType, float> _weatherValueMap = new Dictionary<Weather.WeatherType, float>();
+        private Dictionary<Weather.WeatherType, float> _weatherValueMap;
         [System.NonSerialized]
         private float _noWindChance;
+
+        public MapWeather()
+        {
+            _weatherValueMap = new Dictionary<Weather.WeatherType, float>();
+        }
 
         internal MapWeather(Dictionary<Weather.WeatherType, float> weatherValueMap, float noWindChance)
         {
@@ -25,7 +30,11 @@ namespace PataRoad.Core.Map
             _noWindChance = noWindChance;
             ChangeWeather();
         }
-        internal MapWeather(MapData mapData) => LoadWeatherMap(mapData);
+        internal MapWeather(MapData mapData)
+        {
+            LoadWeatherMap(mapData);
+            ChangeWeather();
+        }
         internal void ChangeWeather()
         {
             var rand = Random.Range(0, 1f);
@@ -59,7 +68,6 @@ namespace PataRoad.Core.Map
                 { Weather.WeatherType.Snow, mapData.SnowWeatherChance }
             };
             _noWindChance = mapData.NoWindChance;
-            ChangeWeather();
         }
 
         public void OnAfterDeserialize()
@@ -69,7 +77,7 @@ namespace PataRoad.Core.Map
 
         public void OnBeforeSerialize()
         {
-            //I mean really nothign to do!
+            //I mean really nothing to do!
         }
     }
 }

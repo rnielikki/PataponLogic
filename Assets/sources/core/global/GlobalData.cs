@@ -29,6 +29,7 @@ namespace PataRoad.Core.Global
             Sound = GetComponentInChildren<GlobalSoundSystem>();
 
             ItemLoader.LoadAll();
+            Character.Patapons.Data.RareponInfo.LoadAll();
 
             SlotManager = new SlotManager();
 

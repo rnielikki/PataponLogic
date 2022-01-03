@@ -11,7 +11,7 @@
         {
             CurrentSlot = slot;
         }
-        public void SaveSlot(int index) => CurrentSlot.Save(index);
+        public SlotMeta SaveSlot(int index) => CurrentSlot.Save(index);
         public void UnloadSlot()
         {
             CurrentSlot = null;

@@ -57,7 +57,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             }
             else
             {
-                _data = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.LoadResourceWithoutOpen(Index);
+                _data = Core.Character.Patapons.Data.RareponInfo.LoadResourceWithoutOpen(Index);
                 ShowImages(false);
                 _available = false;
                 _button.enabled = false;

@@ -11,21 +11,21 @@ namespace PataRoad.Core.Character.Patapons.Data
     {
         [SerializeField]
         private List<int> _openRareponIndex;
-        private Dictionary<int, RareponData> _allAvailableRarepons = new Dictionary<int, RareponData>();
-        private Dictionary<int, RareponData> _openRarepons = new Dictionary<int, RareponData>();
+        private static Dictionary<int, RareponData> _allAvailableRarepons;
+        private Dictionary<int, RareponData> _openRarepons;
         private const string _resourcePath = "Characters/Patapons/Rarepons";
+
         internal RareponInfo Init()
         {
-            _openRareponIndex = new List<int> { 0 };
-            //_openRareponIndex = new List<int> { 0, 2 }
+            //_openRareponIndex = new List<int> { 0 };
+            _openRareponIndex = new List<int> { 0, 2 };
             Deserialize();
             return this;
         }
-
-        private void Deserialize()
+        internal static void LoadAll()
         {
-            var allRarepons = Resources.LoadAll<RareponData>(_resourcePath);
-            foreach (var rarepon in allRarepons)
+            _allAvailableRarepons = new Dictionary<int, RareponData>();
+            foreach (var rarepon in Resources.LoadAll<RareponData>(_resourcePath))
             {
                 if (int.TryParse(rarepon.name, out int index))
                 {
@@ -33,7 +33,11 @@ namespace PataRoad.Core.Character.Patapons.Data
                 }
                 _allAvailableRarepons.Add(index, rarepon);
             }
+        }
 
+        private void Deserialize()
+        {
+            _openRarepons = new Dictionary<int, RareponData>();
             foreach (var index in _openRareponIndex)
             {
                 _openRarepons.Add(index, _allAvailableRarepons[index]);
@@ -56,7 +60,7 @@ namespace PataRoad.Core.Character.Patapons.Data
             if (_openRarepons.TryGetValue(index, out RareponData data)) return data;
             else return null;
         }
-        public RareponData LoadResourceWithoutOpen(int index)
+        public static RareponData LoadResourceWithoutOpen(int index)
         {
             if (!_allAvailableRarepons.TryGetValue(index, out RareponData data)) return null;
             else return data;

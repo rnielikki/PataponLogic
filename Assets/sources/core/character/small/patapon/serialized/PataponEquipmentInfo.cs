@@ -11,7 +11,7 @@ namespace PataRoad.Core.Character.Patapons.Data
     [System.Serializable]
     public class PataponEquipmentInfo : ISerializationCallbackReceiver
     {
-        private Dictionary<EquipmentType, EquipmentData> _map = new Dictionary<EquipmentType, EquipmentData>();
+        private Dictionary<EquipmentType, EquipmentData> _map;
 
         [SerializeField]
         private string _weaponType;
@@ -33,6 +33,7 @@ namespace PataRoad.Core.Character.Patapons.Data
 
         public PataponEquipmentInfo(Class.ClassType classType, bool isGeneral)
         {
+            _map = new Dictionary<EquipmentType, EquipmentData>();
             var equipmentNames = Class.ClassMetaData.GetWeaponAndProtectorName(classType);
             _weaponType = equipmentNames.weapon;
             _protectorType = equipmentNames.protector;
@@ -65,13 +66,14 @@ namespace PataRoad.Core.Character.Patapons.Data
             {
                 if (_map.ContainsKey(type))
                 {
-                    return _map[EquipmentType.Weapon].Index;
+                    return _map[type].Index;
                 }
                 else return -1;
             }
         }
         private void Deserialize()
         {
+            _map = new Dictionary<EquipmentType, EquipmentData>();
             if (_weaponType != null && _weaponIndex >= 0)
             {
                 _map.Add(EquipmentType.Weapon, LoadEquipment(_weaponType, _weaponIndex));
@@ -82,9 +84,9 @@ namespace PataRoad.Core.Character.Patapons.Data
             }
             if (!_isGeneral && _rareponIndex >= 0)
             {
-                _map.Add(EquipmentType.Rarepon, LoadEquipment("Rarepon", _rareponIndex));
+                _map.Add(EquipmentType.Rarepon, RareponInfo.LoadResourceWithoutOpen(_rareponIndex));
             }
-            if (_rareponIndex == 0 && _helmIndex >= 0)
+            if (_rareponIndex <= 0 && _helmIndex >= 0)
             {
                 _map.Add(EquipmentType.Helm, LoadEquipment("Helm", _helmIndex));
             }

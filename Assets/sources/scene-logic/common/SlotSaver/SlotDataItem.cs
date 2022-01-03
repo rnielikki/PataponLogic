@@ -24,8 +24,6 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
 
         [Header("Display texts")]
         [SerializeField]
-        Text _index;
-        [SerializeField]
         Text _almighty;
         [SerializeField]
         Text _lastMap;
@@ -35,6 +33,10 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         Text _lastSavedTime;
         [SerializeField]
         Text _playTime;
+        [SerializeField]
+        GameObject _content;
+        [SerializeField]
+        GameObject _textOnEmpty;
 
         UnityEngine.Events.UnityEvent<SlotDataItem> _events;
 
@@ -51,17 +53,24 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             Index = index;
             _events = selectedEvents;
             if (slotMeta != null) UpdateDisplay(slotMeta);
+            else HideDisplay();
             _button.onClick.AddListener(() => _events.Invoke(this));
         }
         public void UpdateDisplay(SlotMeta meta)
         {
+            _content.SetActive(true);
+            _textOnEmpty.SetActive(false);
             _meta = meta;
-            _index.text = meta.SlotIndex.ToString();
             _almighty.text = meta.AlmightyName;
             _lastMap.text = meta.LastMapName;
             _headquarters.text = meta.SquadStatus;
             _lastSavedTime.text = meta.LastSavedTime;
             _playTime.text = meta.PlayTime.ToString(@"hh\:mm\:ss");
+        }
+        private void HideDisplay()
+        {
+            _content.SetActive(false);
+            _textOnEmpty.SetActive(true);
         }
         public void OnSelect(BaseEventData eventData)
         {
@@ -74,6 +83,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         {
             _highlightImage.enabled = false;
         }
+        public void ShowHighlight() => _highlightImage.enabled = true;
         private void OnDisable()
         {
             if (_highlightImage.enabled)

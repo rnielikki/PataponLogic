@@ -72,6 +72,7 @@ namespace PataRoad.Core.Map
         }
         public void OnAfterDeserialize()
         {
+            //Hmm...
         }
         public void LoadDataAfterDeserialization()
         {
