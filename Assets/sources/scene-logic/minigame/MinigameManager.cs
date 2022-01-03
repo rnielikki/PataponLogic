@@ -36,6 +36,9 @@ namespace PataRoad.SceneLogic.Minigame
         //offset from zero. zero frequency is best hit. max is half of frequency. smaller is better.
         private readonly System.Collections.Generic.List<int> _frequencyOffset = new System.Collections.Generic.List<int>();
 
+        private int _currentIndex;
+        private MinigameTurn _currentTurn => _data.MinigameTurns[_currentIndex];
+
         public static void Init(MinigameModel model)
         {
             _model = model;
@@ -45,97 +48,89 @@ namespace PataRoad.SceneLogic.Minigame
         {
             _minimumHitFrequency = (int)(_minimumHit * RhythmTimer.HalfFrequency);
             _voicePlayer.Init(_audioSource);
-            RhythmTimer.Current.OnNext.AddListener(() => StartCoroutine(StartGame()));
+            RhythmTimer.Current.OnNext.AddListener(PerformTurn);
         }
-        private IEnumerator StartGame()
+        private void PerformTurn()
         {
-            yield return WaitForNextRhythmTime();
-            foreach (MinigameTurn turn in _data.MinigameTurns)
-            {
-                yield return PerformTurn(turn, _data.UseDonChakaGameSound);
-                yield return WaitForNextHalfRhythmTime();
-                yield return ListenTurn(turn);
+            var turn = _currentTurn;
+            if (!_data.UseDonChakaGameSound) _audioSource.PlayOneShot(turn.Sound);
+            int i = 0;
+            int lastTiming = turn.Drums.Length > 3 ? 6 : 3;
+            RhythmTimer.Current.OnTime.AddListener(PlayTurn);
 
-                for (int i = 0; i < _grids.Length; i++)
+            void PlayTurn()
+            {
+                if (i < turn.Drums.Length)
                 {
-                    _grids[i].ClearStatus();
+                    if (_data.UseDonChakaGameSound) _voicePlayer.Play(turn.Drums[i]);
+                    _grids[i].Load(turn.Drums[i]);
                 }
-            }
-            yield return new WaitForRhythmTime(0);
-
-            _minigameResultDisplay.UpdateResult(_model, _frequencyOffset.Average(offset => (1 - (float)offset / RhythmTimer.HalfFrequency)));
-        }
-
-        private IEnumerator PerformTurn(MinigameTurn turn, bool useDonChakaGameSound)
-        {
-            Coroutine coroutine = StartCoroutine(WaitForNextRhythmTime());
-            bool isLastEmpty = turn.Drums[turn.Drums.Length - 1] == MinigameDrumType.Empty;
-            var multiCoroutine = StartCoroutine(WaitForNextMultipleRhythmTime(turn.Drums.Length + 1));
-            if (!useDonChakaGameSound) _audioSource.PlayOneShot(turn.Sound);
-            int i;
-            for (i = 0; i < turn.Drums.Length; i++)
-            {
-                yield return coroutine;
-                coroutine = StartCoroutine(WaitForNextRhythmTime());
-                if (useDonChakaGameSound) _voicePlayer.Play(turn.Drums[i]);
-                _grids[i].Load(turn.Drums[i]);
-            }
-            _voicePlayer.ClearTurn();
-            if (isLastEmpty)
-            {
-                yield return multiCoroutine;
-                _audioSource.PlayOneShot(_endSound);
-                yield return WaitForNextRhythmTime();
-            }
-            else //for example, PON-PON-PON-
-            {
-                _audioSource.PlayOneShot(_endSound);
-                yield return multiCoroutine;
-            }
-        }
-        private IEnumerator ListenTurn(MinigameTurn turn)
-        {
-            Coroutine coroutine = StartCoroutine(WaitForNextHalfRhythmTime());
-            for (int i = 0; i < turn.Drums.Length; i++)
-            {
-                _gotAnyInput = false;
-                _lastHitIndex = i;
-                _lastRequiredDrum = turn.Drums[i];
-
-                ListeningInput = true;
-                yield return coroutine;
-                coroutine = StartCoroutine(WaitForNextHalfRhythmTime());
-                ListeningInput = false;
-
-                if (_lastRequiredDrum != MinigameDrumType.Empty && !_gotAnyInput)
+                if (i >= lastTiming)
                 {
-                    _grids[i].Disappear();
+                    _voicePlayer.ClearTurn();
+                    _audioSource.PlayOneShot(_endSound);
+                    RhythmTimer.Current.OnTime.RemoveListener(PlayTurn);
+                    RhythmTimer.Current.OnNext.AddListener(ListenTurn);
+                }
+                i++;
+            }
+        }
+        private void ListenTurn()
+        {
+            var turn = _currentTurn;
+            ListeningInput = false;
+            int i = 0;
+            int lastTiming = turn.Drums.Length > 3 ? 6 : 3;
+            bool waitLong = turn.Drums.Length > 3;
+            RhythmTimer.Current.OnHalfTime.AddListener(ListenThis);
+
+
+            void ListenThis()
+            {
+                if (waitLong)
+                {
+                    waitLong = false;
+                    return;
+                }
+                //Calculate
+                if (ListeningInput && !_gotAnyInput && _lastRequiredDrum != MinigameDrumType.Empty)
+                {
+                    _grids[_lastHitIndex].Disappear();
                     _frequencyOffset.Add(RhythmTimer.HalfFrequency);
                 }
+                //Listen
+                if (i < turn.Drums.Length)
+                {
+                    _gotAnyInput = false;
+                    _lastHitIndex = i;
+                    _lastRequiredDrum = turn.Drums[i];
+                    ListeningInput = true;
+                }
+                else if (i >= lastTiming)
+                {
+                    ListeningInput = false;
+                    _lastRequiredDrum = MinigameDrumType.Empty;
+                    _gotAnyInput = false;
+                    _lastHitIndex = -1;
+                    RhythmTimer.Current.OnHalfTime.RemoveListener(ListenThis);
+                    _currentIndex++;
+                    for (int j = 0; j < _grids.Length; j++)
+                    {
+                        _grids[j].ClearStatus();
+                    }
+                    if (_data.MinigameTurns.Length > _currentIndex)
+                    {
+                        RhythmTimer.Current.OnNext.AddListener(PerformTurn);
+                    }
+                    else
+                    {
+                        RhythmTimer.Current.OnNext.AddListener(ShowResult);
+                    }
+                }
+                i++;
             }
-            _lastRequiredDrum = MinigameDrumType.Empty;
-            _gotAnyInput = false;
-            _lastHitIndex = -1;
-            yield return coroutine;
-            yield return new WaitForRhythmTime(0);
         }
-        private IEnumerator WaitForNextRhythmTime()
-        {
-            yield return new WaitForRhythmTime(RhythmTimer.Frequency - 1);
-            yield return new WaitForRhythmTime(0);
-        }
-        private IEnumerator WaitForNextMultipleRhythmTime(int time)
-        {
-            for (int i = 0; i < time; i++)
-            {
-                yield return WaitForNextRhythmTime();
-            }
-        }
-        private IEnumerator WaitForNextHalfRhythmTime()
-        {
-            yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency - 1);
-            yield return new WaitForRhythmTime(RhythmTimer.HalfFrequency);
-        }
+        private void ShowResult() => _minigameResultDisplay.UpdateResult(_model, _frequencyOffset.Average(offset => (1 - (float)offset / RhythmTimer.HalfFrequency)));
 
         public void CheckDrum(RhythmInputModel inputModel)
         {
