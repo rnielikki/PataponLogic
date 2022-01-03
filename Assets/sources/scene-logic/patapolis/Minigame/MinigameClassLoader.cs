@@ -28,7 +28,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
 
         private void Start()
         {
-            _availableClasses = Core.Global.GlobalData.Inventory
+            _availableClasses = Core.Global.GlobalData.CurrentSlot.Inventory
                 .GetKeyItems<Core.Items.ClassMemoryData>("Class")
                 .Select(item => item.Class).ToArray();
 

@@ -13,7 +13,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         {
             gameObject.SetActive(true);
             _image.sprite = requirement.Item.Image;
-            var amount = Core.Global.GlobalData.Inventory.GetAmount(requirement.Item);
+            var amount = Core.Global.GlobalData.CurrentSlot.Inventory.GetAmount(requirement.Item);
             _text.text = $"{requirement.Item.Name} ({amount}/{requirement.Amount})\n";
             if (amount < requirement.Amount)
             {

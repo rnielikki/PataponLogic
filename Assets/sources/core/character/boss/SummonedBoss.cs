@@ -24,7 +24,7 @@ namespace PataRoad.Core.Character.Bosses
         protected override void Init(BossAttackData data)
         {
             base.Init(data);
-            var map = Global.GlobalData.MapInfo.GetMapByIndex(_connectedMapIndex);
+            var map = Global.GlobalData.CurrentSlot.MapInfo.GetMapByIndex(_connectedMapIndex);
             BossAttackData.UpdateStatForBoss(map.Level);
             _pataponManagerTransform = FindObjectOfType<Patapons.PataponsManager>().transform;
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);

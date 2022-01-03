@@ -2,7 +2,8 @@
 {
     public static class SerializationKeys
     {
-        public const string Inventory = "inventory";
-        public const string PataponInfo = "pataponInfo";
+        public const string Inventory = "saveslot-inventory";
+        public const string PataponInfo = "saveslot-pataponInfo";
+        public const string Map = "saveslot-map";
     }
 }

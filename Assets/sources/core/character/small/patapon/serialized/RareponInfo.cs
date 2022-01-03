@@ -14,12 +14,12 @@ namespace PataRoad.Core.Character.Patapons.Data
         private Dictionary<int, RareponData> _allAvailableRarepons = new Dictionary<int, RareponData>();
         private Dictionary<int, RareponData> _openRarepons = new Dictionary<int, RareponData>();
         private const string _resourcePath = "Characters/Patapons/Rarepons";
-
-        public RareponInfo()
+        internal RareponInfo Init()
         {
-            //_openRareponIndex = new List<int> { 0 }
-            _openRareponIndex = new List<int> { 0, 2 };
+            _openRareponIndex = new List<int> { 0 };
+            //_openRareponIndex = new List<int> { 0, 2 }
             Deserialize();
+            return this;
         }
 
         private void Deserialize()

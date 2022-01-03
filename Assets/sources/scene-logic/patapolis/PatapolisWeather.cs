@@ -19,7 +19,7 @@ namespace PataRoad.SceneLogic.Patapolis
         // Start is called before the first frame update
         void Awake()
         {
-            var patapolisWeather = Core.Global.GlobalData.MapInfo.PatapolisWeather;
+            var patapolisWeather = Core.Global.GlobalData.CurrentSlot.MapInfo.PatapolisWeather;
             _weather.Init(patapolisWeather.CurrentWeather);
             _weather.Wind.Init(patapolisWeather.CurrentWind);
 
@@ -31,7 +31,7 @@ namespace PataRoad.SceneLogic.Patapolis
             var current = (float)Mathf.Abs(currentHour * 60 + System.DateTime.Now.Minute - 720) / 720;
             _camera.backgroundColor = _backgroundOverTime.Evaluate(current);
             _backgroundImage.color = _backgroundImageOverTime.Evaluate(current);
-            if (Core.Global.GlobalData.MapInfo.PatapolisWeather.CurrentWeather == Core.Map.Weather.WeatherType.Clear
+            if (Core.Global.GlobalData.CurrentSlot.MapInfo.PatapolisWeather.CurrentWeather == Core.Map.Weather.WeatherType.Clear
                 && (currentHour < 6 || currentHour > 18))
             {
                 _star.SetActive(true);

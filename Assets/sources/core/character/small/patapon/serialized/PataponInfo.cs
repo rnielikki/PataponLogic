@@ -1,5 +1,4 @@
-﻿using PataRoad.Core.Global;
-using PataRoad.Core.Items;
+﻿using PataRoad.Core.Items;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ using UnityEngine;
 namespace PataRoad.Core.Character.Patapons.Data
 {
     [Serializable]
-    public class PataponInfo : IPlayerData
+    public class PataponInfo : Global.Slots.IPlayerData
     {
         [SerializeField]
         private List<Class.ClassType> _currentClasses;
@@ -38,25 +37,27 @@ namespace PataRoad.Core.Character.Patapons.Data
         public StringKeyItemData BossToSummon { get; set; }
         public StringKeyItemData CustomMusic { get; set; }
 
-        [SerializeReference]
+        [SerializeField]
         int _summonIndex;
-        [SerializeReference]
+        [SerializeField]
         int _musicIndex;
 
-        public PataponInfo()
+        internal static PataponInfo CreateNew()
         {
+            var pataponInfo = new PataponInfo();
             //Not serialized --
             foreach (Class.ClassType type in Enum.GetValues(typeof(Class.ClassType)))
             {
-                _classInfoMap.Add(type, new PataponClassInfo(type));
+                pataponInfo._classInfoMap.Add(type, new PataponClassInfo(type));
             }
 
-            _currentClasses = new List<Class.ClassType>()
+            pataponInfo._currentClasses = new List<Class.ClassType>()
             {
                 Class.ClassType.Yaripon
             };
-            _rareponInfo = new RareponInfo();
-            Order();
+            pataponInfo._rareponInfo = new RareponInfo().Init();
+            pataponInfo.Order();
+            return pataponInfo;
         }
         public void ReplaceClass(Class.ClassType from, Class.ClassType to)
         {
@@ -235,12 +236,11 @@ namespace PataRoad.Core.Character.Patapons.Data
         }
         public void UseSummon() => _useSummon = true;
         public void UseMusic() => _useMusic = true;
-        public string Serialize()
+        public void Serialize()
         {
             _classInfoForSerialization = _classInfoMap.Values.ToArray();
             _summonIndex = BossToSummon?.Index ?? -1;
             _musicIndex = CustomMusic?.Index ?? -1;
-            return JsonUtility.ToJson(this);
         }
         public void Deserialize()
         {

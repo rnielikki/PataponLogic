@@ -64,7 +64,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             if (pataponData.Type == Core.Character.Class.ClassType.Mahopon)
             {
                 _elementalAttackType.text = ((Core.Character.Equipments.Weapons.ElementalAttackType)
-                    Core.Global.GlobalData.PataponInfo.GetAttackTypeIndex(Core.Character.Class.ClassType.Mahopon)).ToString();
+                    Core.Global.GlobalData.CurrentSlot.PataponInfo.GetAttackTypeIndex(Core.Character.Class.ClassType.Mahopon)).ToString();
             }
             else
             {

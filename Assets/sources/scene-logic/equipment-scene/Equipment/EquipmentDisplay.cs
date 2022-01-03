@@ -103,7 +103,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             Core.Global.GlobalData.Sound.PlayInScene(_soundOpen);
             _inventoryDisplay.SelectLast(
-                _inventoryDisplay.LoadData(Core.Global.GlobalData.Inventory.GetItemsByType(type, itemGroup), currentItem, isEquipments)
+                _inventoryDisplay.LoadData(Core.Global.GlobalData.CurrentSlot.Inventory.GetItemsByType(type, itemGroup), currentItem, isEquipments)
             );
         }
         public void HideEquipment() => HideEquipment(_currentPataponData != null);
@@ -143,7 +143,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 else if (item != null)
                 {
                     //general mode update!
-                    Core.Global.GlobalData.PataponInfo.UpdateGeneralEquipmentStatus(_currentPataponData.Type, item as GeneralModeData);
+                    Core.Global.GlobalData.CurrentSlot.PataponInfo.UpdateGeneralEquipmentStatus(_currentPataponData.Type, item as GeneralModeData);
                 }
                 wasFromEquipmentSummary = true;
             }
@@ -152,11 +152,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 StringKeyItemData stringItem = item as StringKeyItemData;
                 if (_summaryElem.AdditionalData == "Boss")
                 {
-                    Core.Global.GlobalData.PataponInfo.BossToSummon = stringItem;
+                    Core.Global.GlobalData.CurrentSlot.PataponInfo.BossToSummon = stringItem;
                 }
                 else if (_summaryElem.AdditionalData == "Music")
                 {
-                    Core.Global.GlobalData.PataponInfo.CustomMusic = stringItem;
+                    Core.Global.GlobalData.CurrentSlot.PataponInfo.CustomMusic = stringItem;
                 }
                 _summaryElem.transform.Find("Image").GetComponent<Image>().sprite = item?.Image;
                 _summaryElem.GetComponentInChildren<Text>().text = item?.Name ?? "None";

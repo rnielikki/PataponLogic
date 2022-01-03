@@ -30,7 +30,7 @@ namespace PataRoad.Core.Character.Patapons.General
             _selfPatapon = GetComponent<Patapon>();
             _generalEffect = GetGeneralEffect(_selfPatapon.Type);
 
-            EquipGeneralMode(Global.GlobalData.PataponInfo.GetGeneralMode(_selfPatapon.Type));
+            EquipGeneralMode(Global.GlobalData.CurrentSlot.PataponInfo.GetGeneralMode(_selfPatapon.Type));
 
             _generalEffect.StartSelfEffect(_selfPatapon);
             _generalEffect.StartGroupEffect(Group.Patapons);

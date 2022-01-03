@@ -68,7 +68,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             //--- init
             Init();
-            _attackTypeIndex = Global.GlobalData.PataponInfo.GetAttackTypeIndex(_data.Type);
+            _attackTypeIndex = Global.GlobalData.CurrentSlot.PataponInfo.GetAttackTypeIndex(_data.Type);
             IsGeneral = (_data as PataponData).IsGeneral;
             _realStat = _data.Stat;
             StatOperator = new StatOperator(_realStat);

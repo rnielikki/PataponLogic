@@ -26,7 +26,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             foreach (var selection in _classSelections)
             {
-                if (Core.Global.GlobalData.PataponInfo.ContainsClass(selection.ClassType) || !CharacterGroupSaver.AvailableClasses.Contains(selection.ClassType))
+                if (Core.Global.GlobalData.CurrentSlot.PataponInfo.ContainsClass(selection.ClassType) || !CharacterGroupSaver.AvailableClasses.Contains(selection.ClassType))
                 {
                     selection.gameObject.SetActive(false);
                 }

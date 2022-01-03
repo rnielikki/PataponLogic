@@ -19,7 +19,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         void Start()
         {
-            AvailableClasses = Core.Global.GlobalData.Inventory
+            AvailableClasses = Core.Global.GlobalData.CurrentSlot.Inventory
                 .GetKeyItems<Core.Items.ClassMemoryData>("Class")
                 .Select(item => item.Class).ToArray();
             _groupObjects = Core.Character.Patapons.PataponGroupGenerator.Generate(transform, AvailableClasses);
@@ -69,7 +69,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void StartMission()
         {
-            if (Core.Global.GlobalData.MapInfo.NextMap == null)
+            if (Core.Global.GlobalData.CurrentSlot.MapInfo.NextMap == null)
             {
                 Common.GameDisplay.ConfirmDialog.CreateCancelOnly("Error: Map data doesn't exist so we cannot deploy!");
                 Core.Global.GlobalData.Sound.PlayBeep();
@@ -90,14 +90,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 var rect = window.GetComponent<RectTransform>();
                 var dialogContent = window.Content;
 
-                if (Core.Global.GlobalData.PataponInfo.ClassCount < Core.Character.Patapons.Data.PataponInfo.MaxPataponGroup
-                    && AvailableClasses.Length > Core.Global.GlobalData.PataponInfo.ClassCount)
+                if (Core.Global.GlobalData.CurrentSlot.PataponInfo.ClassCount < Core.Character.Patapons.Data.PataponInfo.MaxPataponGroup
+                    && AvailableClasses.Length > Core.Global.GlobalData.CurrentSlot.PataponInfo.ClassCount)
                 {
                     AddMessage("\n[!] Squad is not full");
                 }
                 yield return null;
 
-                foreach (var classType in Core.Global.GlobalData.PataponInfo.CurrentClasses)
+                foreach (var classType in Core.Global.GlobalData.CurrentSlot.PataponInfo.CurrentClasses)
                 {
                     (var weaponName, var protectorName) = Core.Character.Class.ClassMetaData.GetWeaponAndProtectorName(classType);
                     if (!isEquipped(classType, Core.Character.Equipments.EquipmentType.Weapon, weaponName))
@@ -120,10 +120,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
             bool isEquipped(Core.Character.Class.ClassType classType, Core.Character.Equipments.EquipmentType equipmentType, string equipmentName)
             {
                 if (equipmentName == null) return true;
-                var bestEquipmentIndex = Core.Global.GlobalData.Inventory.GetBestEquipmentIndex(equipmentName);
+                var bestEquipmentIndex = Core.Global.GlobalData.CurrentSlot.Inventory.GetBestEquipmentIndex(equipmentName);
                 if (bestEquipmentIndex < 1) return true;
                 var bestEquipment = Core.Items.ItemLoader.GetItem<Core.Items.EquipmentData>(Core.Items.ItemType.Equipment, equipmentName, bestEquipmentIndex);
-                return Core.Global.GlobalData.PataponInfo.HasBestEquipmentInside(classType, equipmentType, bestEquipment.LevelGroup);
+                return Core.Global.GlobalData.CurrentSlot.PataponInfo.HasBestEquipmentInside(classType, equipmentType, bestEquipment.LevelGroup);
             }
         }
         public void GoBack()

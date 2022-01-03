@@ -56,7 +56,7 @@ namespace PataRoad.Core.Items
             {
                 case ObtainableItemDropData obtainableItemData:
                     var item = obtainableItemData.Item;
-                    if (item == null || item.IsUniqueItem && GlobalData.Inventory.HasItem(item))
+                    if (item == null || item.IsUniqueItem && GlobalData.CurrentSlot.Inventory.HasItem(item))
                     {
                         return false;
                     }

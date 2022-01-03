@@ -8,7 +8,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         TMPro.TextMeshProUGUI _text;
         private void Start()
         {
-            _text.text = Core.Global.GlobalData.MapInfo.NextMap?.GetNameWithLevel() ?? "[NO MAP DATA]";
+            _text.text = Core.Global.GlobalData.CurrentSlot.MapInfo.NextMap?.GetNameWithLevel() ?? "[NO MAP DATA]";
         }
     }
 }

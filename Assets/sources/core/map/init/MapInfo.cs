@@ -6,7 +6,7 @@ using UnityEngine;
 namespace PataRoad.Core.Global
 {
     [System.Serializable]
-    public class MapInfo : IPlayerData
+    public class MapInfo : Slots.IPlayerData
     {
         public MapDataContainer NextMap { get; private set; }
         public MapDataContainer LastMap { get; private set; }
@@ -19,7 +19,7 @@ namespace PataRoad.Core.Global
         [SerializeField]
         private int _lastMapIndex;
         //for once mission succeeded and will never open. No hashset because serialization, also there's not so many so forget the performance
-        [SerializeReference]
+        [SerializeField]
         private List<int> _closedMaps = new List<int>();
         [SerializeField]
         private int _nextMapIndex;
@@ -32,19 +32,21 @@ namespace PataRoad.Core.Global
         private MapWeather _patapolisWeather;
         public MapWeather PatapolisWeather => _patapolisWeather;
 
-        internal MapInfo()
+        internal static MapInfo CreateNew()
         {
-            LoadResource(0);
-            LoadResource(1);
-            NextMap = LoadResource(2);
+            var mapInfo = new MapInfo();
+            mapInfo.LoadResource(0);
+            mapInfo.LoadResource(1);
+            mapInfo.NextMap = mapInfo.LoadResource(2);
 
-            _patapolisWeather = new MapWeather(new Dictionary<Map.Weather.WeatherType, float>()
+            mapInfo._patapolisWeather = new MapWeather(new Dictionary<Map.Weather.WeatherType, float>()
             {
                 { Map.Weather.WeatherType.Rain, 0.1f },
                 { Map.Weather.WeatherType.Storm, 0.05f },
                 { Map.Weather.WeatherType.Fog, 0.05f },
                 { Map.Weather.WeatherType.Snow, 0.05f }
             }, 0.9f);
+            return mapInfo;
         }
         public IEnumerable<MapDataContainer> GetAllAvailableMaps() => _openMaps.Values;
 
@@ -79,13 +81,13 @@ namespace PataRoad.Core.Global
             OpenNext();
 
             _succeededLast = true;
-            GlobalData.PataponInfo.CustomMusic = null;
+            GlobalData.CurrentSlot.PataponInfo.CustomMusic = null;
             RefreshAllWeathers();
         }
         public void MissionFailed()
         {
             _succeededLast = false;
-            GlobalData.PataponInfo.CustomMusic = null;
+            GlobalData.CurrentSlot.PataponInfo.CustomMusic = null;
         }
         public void RefreshAllWeathers()
         {
@@ -112,11 +114,10 @@ namespace PataRoad.Core.Global
             }
             return map;
         }
-        public string Serialize()
+        public void Serialize()
         {
             _nextMapIndex = NextMap.Index;
             _openMapsForSerializing = _openMaps.Values.ToArray();
-            return JsonUtility.ToJson(this);
         }
         public void Deserialize()
         {

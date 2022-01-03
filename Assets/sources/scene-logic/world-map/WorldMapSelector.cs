@@ -38,11 +38,11 @@ namespace PataRoad.SceneLogic.WorldMap
         private void Start()
         {
             _items = new List<WorldMapItem>();
-            var nextMission = Core.Global.GlobalData.MapInfo.NextMap;
+            var nextMission = Core.Global.GlobalData.CurrentSlot.MapInfo.NextMap;
             bool _selected = false;
             int index = -1;
             WorldMapItem selectedItem = null;
-            foreach (var map in Core.Global.GlobalData.MapInfo.GetAllAvailableMaps())
+            foreach (var map in Core.Global.GlobalData.CurrentSlot.MapInfo.GetAllAvailableMaps())
             {
                 var mapItem = Instantiate(_listElement, transform).GetComponent<WorldMapItem>();
                 mapItem.Init(map, this, _scrollList, GetColorForMap(map.MapData.Type), GetSpriteImageForWeather(map.Weather.CurrentWeather));
@@ -82,7 +82,7 @@ namespace PataRoad.SceneLogic.WorldMap
                 item.gameObject.SetActive(true);
             }
 
-            var nextMission = Core.Global.GlobalData.MapInfo.NextMap;
+            var nextMission = Core.Global.GlobalData.CurrentSlot.MapInfo.NextMap;
             var itemIndex = _items.FindLastIndex(item => item.Map == nextMission);
             if (itemIndex < 0) itemIndex = _items.Count - 1;
             _scrollList.SetMaximumScrollLength(index, _items[itemIndex]);

@@ -71,7 +71,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             if (ponData.IsGeneral)
             {
                 _generalMode.SetItem(
-                    Core.Global.GlobalData.PataponInfo.GetGeneralMode(ponData.Type)
+                    Core.Global.GlobalData.CurrentSlot.PataponInfo.GetGeneralMode(ponData.Type)
                     );
             }
             HideHelmIfRarepon(equipmentManager);

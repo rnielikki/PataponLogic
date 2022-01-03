@@ -32,7 +32,7 @@ namespace PataRoad.Core.Map
             _spoilsField.text = spoils.Any() ? string.Join("\n", spoils) : "None";
             foreach (var itemStatus in allItemStatus)
             {
-                Global.GlobalData.Inventory.AddMultiple(itemStatus.Item, itemStatus.Amount);
+                Global.GlobalData.CurrentSlot.Inventory.AddMultiple(itemStatus.Item, itemStatus.Amount);
             }
 
             var seconds = System.TimeSpan.FromSeconds(MissionPoint.MissionCompleteTime);

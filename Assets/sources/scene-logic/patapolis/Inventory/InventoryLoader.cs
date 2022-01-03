@@ -18,7 +18,7 @@ namespace PataRoad.SceneLogic.Patapolis
 
         public void Init(MonoBehaviour parentSelector)
         {
-            var loadedDisplays = _inventoryDisplay.LoadData(Core.Global.GlobalData.Inventory.GetAllItems(), null, false);
+            var loadedDisplays = _inventoryDisplay.LoadData(Core.Global.GlobalData.CurrentSlot.Inventory.GetAllItems(), null, false);
             _allDisplays = loadedDisplays
                 .GroupBy(display => display.Item.ItemType)
                 .SelectMany(item => item.GroupBy(display => display.Item.Group))

@@ -1,8 +1,8 @@
-﻿namespace PataRoad.Core.Global
+﻿namespace PataRoad.Core.Global.Slots
 {
     public interface IPlayerData
     {
-        public string Serialize();
+        public void Serialize();
         public void Deserialize();
     }
 }

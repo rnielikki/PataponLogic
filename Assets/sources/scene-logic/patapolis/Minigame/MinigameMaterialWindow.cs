@@ -116,7 +116,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 int difference = 0;
                 foreach (var materialLoader in _materialLoaders)
                 {
-                    Core.Global.GlobalData.Inventory.RemoveItem(materialLoader.Item);
+                    Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(materialLoader.Item);
                 }
                 //Load scene!
                 var (item, amount) = _lastSelection.GetReward(_materialLoaders.Sum(lo => lo.Item.Index), _materialLoaders.Max(lo => lo.Item.Index) - _materialLoaders.Min(lo => lo.Item.Index));

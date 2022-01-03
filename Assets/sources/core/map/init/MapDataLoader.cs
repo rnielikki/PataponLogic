@@ -21,7 +21,7 @@ namespace PataRoad.Core.Map
         Transform _attachTarget;
         private void Awake()
         {
-            _mapDataContainer = Global.GlobalData.MapInfo.NextMap;
+            _mapDataContainer = Global.GlobalData.CurrentSlot.MapInfo.NextMap;
             var mapData = _mapDataContainer.MapData;
             if (mapData == null)
             {
@@ -30,7 +30,7 @@ namespace PataRoad.Core.Map
             }
 
             //-- boss.
-            var boss = Global.GlobalData.PataponInfo.BossToSummon;
+            var boss = Global.GlobalData.CurrentSlot.PataponInfo.BossToSummon;
             if (boss != null)
             {
                 _bossSummonManager.Init(boss.Index, mapData.SummonCount);
@@ -41,7 +41,7 @@ namespace PataRoad.Core.Map
             }
 
             //-- music.
-            string musicName = Global.GlobalData.PataponInfo.CustomMusic?.Data;
+            string musicName = Global.GlobalData.CurrentSlot.PataponInfo.CustomMusic?.Data;
             if (musicName == null) musicName = mapData.DefaultMusic;
             _bgmPlayer.MusicTheme = musicName;
 

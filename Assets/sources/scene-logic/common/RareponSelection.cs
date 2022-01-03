@@ -48,7 +48,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public void Init(RareponSelector parent)
         {
             if (_data != null) return;
-            var data = Core.Global.GlobalData.PataponInfo.RareponInfo.GetFromOpenRarepon(Index);
+            var data = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.GetFromOpenRarepon(Index);
             _parent = parent;
             if (data != null)
             {
@@ -57,7 +57,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             }
             else
             {
-                _data = Core.Global.GlobalData.PataponInfo.RareponInfo.LoadResourceWithoutOpen(Index);
+                _data = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.LoadResourceWithoutOpen(Index);
                 ShowImages(false);
                 _available = false;
                 _button.enabled = false;
@@ -113,7 +113,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             List<ItemRequirement> itemRequirements = new List<ItemRequirement>();
             foreach (var itemPair in _totalRequirements)
             {
-                if (!Core.Global.GlobalData.Inventory.HasAmountOfItem(itemPair.Item, itemPair.Amount))
+                if (!Core.Global.GlobalData.CurrentSlot.Inventory.HasAmountOfItem(itemPair.Item, itemPair.Amount))
                 {
                     itemExists = false;
                     itemRequirements.Add(itemPair);
@@ -122,7 +122,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             if (!itemExists)
             {
                 Core.Global.GlobalData.Sound.PlayBeep();
-                var status = string.Join("\n", itemRequirements.Select(req => $"{req.Item.Name} ({Core.Global.GlobalData.Inventory.GetAmount(req.Item)}/{req.Amount})"));
+                var status = string.Join("\n", itemRequirements.Select(req => $"{req.Item.Name} ({Core.Global.GlobalData.CurrentSlot.Inventory.GetAmount(req.Item)}/{req.Amount})"));
                 Common.GameDisplay.ConfirmDialog.CreateCancelOnly("The follow items are not enough:\n" + status, targetToResume: _parent);
                 return false;
             }
@@ -135,14 +135,14 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         private void AddThisRarepon()
         {
-            var rarepon = Core.Global.GlobalData.PataponInfo.RareponInfo.OpenNewRarepon(Index);
+            var rarepon = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.OpenNewRarepon(Index);
             if (rarepon != null)
             {
                 SetRarepon(rarepon);
                 Core.Global.GlobalData.Sound.PlayInScene(_parent.NewRareponSound);
                 foreach (var item in _totalRequirements)
                 {
-                    Core.Global.GlobalData.Inventory.RemoveItem(item.Item, item.Amount);
+                    Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(item.Item, item.Amount);
                 }
                 _parent.InventoryRefresher?.Refresh();
             }

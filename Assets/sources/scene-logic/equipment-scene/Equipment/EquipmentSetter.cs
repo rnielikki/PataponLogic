@@ -19,15 +19,15 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public void PlayOptimizingSound() => GlobalData.Sound.PlayInScene(_optimizingSound);
         public void SetEquipment(PataponData pataponData, EquipmentData equipment)
         {
-            var realAmount = GlobalData.Inventory.GetAmount(equipment);
-            var amount = GlobalData.PataponInfo.GetEquippedCount(equipment);
+            var realAmount = GlobalData.CurrentSlot.Inventory.GetAmount(equipment);
+            var amount = GlobalData.CurrentSlot.PataponInfo.GetEquippedCount(equipment);
             if (equipment.Index != 0 && equipment.Type != Core.Character.Equipments.EquipmentType.Rarepon && realAmount <= amount)
             {
                 Exchange(pataponData, equipment);
             }
             else
             {
-                GlobalData.PataponInfo.UpdateClassEquipmentStatus(pataponData, equipment);
+                GlobalData.CurrentSlot.PataponInfo.UpdateClassEquipmentStatus(pataponData, equipment);
             }
         }
 
@@ -37,7 +37,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private void OptimizeInAction()
         {
-            foreach (var classType in GlobalData.PataponInfo.CurrentClasses)
+            foreach (var classType in GlobalData.CurrentSlot.PataponInfo.CurrentClasses)
             {
                 OptimizeGroup(classType);
             }
@@ -74,24 +74,24 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 var equipmentGroup = Core.Character.Class.ClassMetaData.GetEquipmentName(pataponData.Type, type);
                 var currentData = pataponData.EquipmentManager.GetEquipmentData(type);
                 var currentIndex = currentData.Index;
-                var index = GlobalData.Inventory.GetBestEquipmentIndex(equipmentGroup);
+                var index = GlobalData.CurrentSlot.Inventory.GetBestEquipmentIndex(equipmentGroup);
                 while (index > currentIndex)
                 {
                     var item = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, equipmentGroup, index);
-                    var availableAmount = GlobalData.Inventory.GetAmount(item) - GlobalData.PataponInfo.GetEquippedCount(item);
+                    var availableAmount = GlobalData.CurrentSlot.Inventory.GetAmount(item) - GlobalData.CurrentSlot.PataponInfo.GetEquippedCount(item);
                     if (item.LevelGroup <= currentData.LevelGroup)
                     {
                         return;
                     }
                     else if (availableAmount > 0)
                     {
-                        GlobalData.PataponInfo.UpdateClassEquipmentStatus(pataponData, item);
+                        GlobalData.CurrentSlot.PataponInfo.UpdateClassEquipmentStatus(pataponData, item);
                         return;
                     }
-                    else if (GlobalData.PataponInfo.IsEquippedOutside(CharacterGroupSaver.AvailableClasses, item, out var result))
+                    else if (GlobalData.CurrentSlot.PataponInfo.IsEquippedOutside(CharacterGroupSaver.AvailableClasses, item, out var result))
                     {
                         var oldPataponData = _characterGroupSaver.GetPataponDataInIndex(result.type, result.index);
-                        GlobalData.PataponInfo.ExchangeClassEquipmentStatus(oldPataponData, pataponData, item);
+                        GlobalData.CurrentSlot.PataponInfo.ExchangeClassEquipmentStatus(oldPataponData, pataponData, item);
                         return;
                     }
                     index--;
@@ -101,11 +101,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private void Exchange(PataponData pataponData, EquipmentData equipment)
         {
             //1. Load meta.
-            var data = GlobalData.PataponInfo.GetExchangablePataponMetaData(CharacterGroupSaver.AvailableClasses, pataponData, equipment);
+            var data = GlobalData.CurrentSlot.PataponInfo.GetExchangablePataponMetaData(CharacterGroupSaver.AvailableClasses, pataponData, equipment);
             //2. Get Patapon data from meta.
             var oldPataponData = _characterGroupSaver.GetPataponDataInIndex(data.type, data.index);
             //3. Exchange!
-            GlobalData.PataponInfo.ExchangeClassEquipmentStatus(oldPataponData, pataponData, equipment);
+            GlobalData.CurrentSlot.PataponInfo.ExchangeClassEquipmentStatus(oldPataponData, pataponData, equipment);
         }
         private void OnDestroy()
         {

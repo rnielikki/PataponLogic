@@ -107,7 +107,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public void RemoveTarget()
         {
             var nav = _selectables[_index].GetComponent<CharacterNavigator>();
-            if (Core.Global.GlobalData.PataponInfo.ClassCount > 1 && RemoveChildren(nav))
+            if (Core.Global.GlobalData.CurrentSlot.PataponInfo.ClassCount > 1 && RemoveChildren(nav))
             {
                 ReOrderIndex(99);
                 _statDisplay.Empty();
@@ -127,7 +127,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 var oldObject = GetPataponGroupObject(Current);
                 oldObject.transform.parent = transform.root.parent;
                 oldObject.SetActive(false);
-                Core.Global.GlobalData.PataponInfo.RemoveClass(
+                Core.Global.GlobalData.CurrentSlot.PataponInfo.RemoveClass(
                     oldObject.GetComponentInChildren<Core.Character.PataponData>().Type
                 );
                 return true;
@@ -144,13 +144,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
             targetGroupObject.transform.parent = Current.transform;
             targetGroupObject.transform.position = Current.transform.position;
             targetGroupObject.SetActive(true);
-            Core.Global.GlobalData.PataponInfo.AddClass(info.ClassType);
+            Core.Global.GlobalData.CurrentSlot.PataponInfo.AddClass(info.ClassType);
 
             _selectables[_index].GetComponent<CharacterNavigator>().Init();
         }
         private void LoadClasses()
         {
-            var classes = Core.Global.GlobalData.PataponInfo.CurrentClasses;
+            var classes = Core.Global.GlobalData.CurrentSlot.PataponInfo.CurrentClasses;
             for (int i = 0; i < Core.Character.Patapons.Data.PataponInfo.MaxPataponGroup; i++)
             {
                 var targetNav = _selectables[i].GetComponent<CharacterNavigator>();

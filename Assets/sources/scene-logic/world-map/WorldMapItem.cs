@@ -54,7 +54,7 @@ namespace PataRoad.SceneLogic.WorldMap
         public void Select() => _button.Select();
         private void StartMission()
         {
-            Core.Global.GlobalData.MapInfo.Select(_map);
+            Core.Global.GlobalData.CurrentSlot.MapInfo.Select(_map);
             Common.SceneLoadingAction.Create("EquipmentScreen", false);
         }
         public bool HideIfNotType(MapType mapType)

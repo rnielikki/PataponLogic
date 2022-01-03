@@ -97,8 +97,8 @@ namespace PataRoad.Core.Map
             AttachToScreen("MissionFailed");
 
             _soundSource.PlayOneShot(_missionFailedMusic);
-            Global.GlobalData.TipIndex = Global.GlobalData.MapInfo.NextMap.MapData.TipIndexOnFail;
-            Global.GlobalData.MapInfo.MissionFailed();
+            Global.GlobalData.TipIndex = Global.GlobalData.CurrentSlot.MapInfo.NextMap.MapData.TipIndexOnFail;
+            Global.GlobalData.CurrentSlot.MapInfo.MissionFailed();
 
             if (NextFailureStory != null) Story.StoryLoader.Init();
             StartCoroutine(WaitForNextScene());
@@ -115,8 +115,8 @@ namespace PataRoad.Core.Map
             MissionCompleteTime = (int)Time.timeSinceLevelLoad;
             IsMissionSuccess = true;
             OnMissionEnd.Invoke(true);
-            Global.GlobalData.MapInfo.MissionSucceeded();
-            Global.GlobalData.TipIndex = Global.GlobalData.MapInfo.NextMap.MapData.TipIndexOnSuccess;
+            Global.GlobalData.CurrentSlot.MapInfo.MissionSucceeded();
+            Global.GlobalData.TipIndex = Global.GlobalData.CurrentSlot.MapInfo.NextMap.MapData.TipIndexOnSuccess;
 
             if (_animator != null)
             {

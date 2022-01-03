@@ -1,11 +1,11 @@
-﻿using PataRoad.Core.Global;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace PataRoad.Core.Items
 {
-    public class Inventory : IPlayerData
+    [System.Serializable]
+    public class Inventory : Global.Slots.IPlayerData
     {
         private readonly Dictionary<ItemType, Dictionary<string, Dictionary<int, InventoryData>>> _indexed
             = new Dictionary<ItemType, Dictionary<string, Dictionary<int, InventoryData>>>();
@@ -20,10 +20,11 @@ namespace PataRoad.Core.Items
         private InventoryData[] _serializableData;
 
         const int _maxValue = 999;
-
-        public Inventory()
+        internal static Inventory CreateNew()
         {
-            LoadDefault();
+            var inventory = new Inventory();
+            inventory.LoadDefault();
+            return inventory;
         }
         /// <summary>
         /// Check if the item exists in the inventory.
@@ -222,10 +223,9 @@ namespace PataRoad.Core.Items
                 group[item.Index].Amount = newAmount;
             }
         }
-        public string Serialize()
+        public void Serialize()
         {
             _serializableData = _existingData.Values.ToArray();
-            return JsonUtility.ToJson(this);
         }
         public void Deserialize()
         {

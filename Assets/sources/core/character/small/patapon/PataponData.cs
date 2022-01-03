@@ -18,7 +18,7 @@ namespace PataRoad.Core.Character
                 GeneralName = general.GeneralName;
             }
         }
-        protected override IEnumerable<EquipmentData> GetEquipmentData() => Global.GlobalData.PataponInfo.GetCurrentEquipments(this);
+        protected override IEnumerable<EquipmentData> GetEquipmentData() => Global.GlobalData.CurrentSlot.PataponInfo.GetCurrentEquipments(this);
 
         public void DisableAllEquipments()
         {

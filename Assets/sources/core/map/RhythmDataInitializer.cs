@@ -20,13 +20,13 @@ namespace PataRoad.Core.Map
         GameObject _donDrumGuide;
         private void Awake()
         {
-            var allSongs = Global.GlobalData.Inventory
+            var allSongs = Global.GlobalData.CurrentSlot.Inventory
                 .GetKeyItems<Items.SongItemData>("Song").Select(item => item.Song).ToArray();
             _command.SetCommandSong(allSongs);
 
             foreach (var guide in _songGuideParent.GetComponentsInChildren<SongGuide>(true))
             {
-                if ((guide.Song == Rhythm.Command.CommandSong.None && !Global.GlobalData.PataponInfo.CanUseSummon) //summon
+                if ((guide.Song == Rhythm.Command.CommandSong.None && !Global.GlobalData.CurrentSlot.PataponInfo.CanUseSummon) //summon
                     || (System.Array.IndexOf(allSongs, guide.Song) < 0))
                 {
                     guide.gameObject.SetActive(false);
@@ -35,7 +35,7 @@ namespace PataRoad.Core.Map
         }
         void Start()
         {
-            var allDrums = Global.GlobalData.Inventory
+            var allDrums = Global.GlobalData.CurrentSlot.Inventory
                 .GetKeyItems<Items.DrumItemData>("Drum").Select(item => item.Drum);
             foreach (var input in GetComponentsInChildren<Rhythm.RhythmInput>())
             {

@@ -50,14 +50,14 @@ namespace PataRoad.SceneLogic.Minigame
                 _itemName.text = model.Reward.Name;
                 _itemImage.sprite = model.Reward.Image;
                 _itemAmountField.text = "x " + model.RewardAmount.ToString();
-                Core.Global.GlobalData.Inventory.AddMultiple(model.Reward, model.RewardAmount);
+                Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(model.Reward, model.RewardAmount);
                 Core.Global.GlobalData.Sound.PlayGlobal(_onSuccess);
             }
         }
         public void Close()
         {
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync("Minigame");
-            Core.Global.GlobalData.MapInfo.RefreshAllWeathers();
+            Core.Global.GlobalData.CurrentSlot.MapInfo.RefreshAllWeathers();
         }
     }
 }

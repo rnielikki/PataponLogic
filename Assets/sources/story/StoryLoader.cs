@@ -106,10 +106,10 @@ namespace PataRoad.Story
             //-- Move to the next map
             if (data.NextMap != null)
             {
-                var mapContainer = Core.Global.GlobalData.MapInfo.GetMapByIndex(data.NextMap.Index);
+                var mapContainer = Core.Global.GlobalData.CurrentSlot.MapInfo.GetMapByIndex(data.NextMap.Index);
                 if (mapContainer != null)
                 {
-                    Core.Global.GlobalData.MapInfo.Select(mapContainer);
+                    Core.Global.GlobalData.CurrentSlot.MapInfo.Select(mapContainer);
                     Common.SceneLoadingAction.Create("Battle", false);
                 }
                 else

@@ -19,7 +19,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _groupData = _groupNav.Current.GetComponentInChildren<CharacterGroupData>();
             if (_groupData == null) return;
             gameObject.SetActive(true);
-            LoadElements(_groupData.ClassData.AvailableAttackTypes, Core.Global.GlobalData.PataponInfo.GetAttackTypeIndex(_groupData.Type));
+            LoadElements(_groupData.ClassData.AvailableAttackTypes, Core.Global.GlobalData.CurrentSlot.PataponInfo.GetAttackTypeIndex(_groupData.Type));
         }
         private void LoadElements(string[] items, int currentIndex)
         {
@@ -34,7 +34,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void SaveAndClose(int index)
         {
-            Core.Global.GlobalData.PataponInfo.SetAttackTypeIndex(_groupData.Type, index);
+            Core.Global.GlobalData.CurrentSlot.PataponInfo.SetAttackTypeIndex(_groupData.Type, index);
             CloseWithoutSaving();
         }
         public void CloseWithoutSaving()

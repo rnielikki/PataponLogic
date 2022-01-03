@@ -31,7 +31,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
 
         public void Init(string materialGroup, MinigameMaterialWindow parent)
         {
-            var allData = Core.Global.GlobalData.Inventory.GetItemsByType(ItemType.Material, materialGroup).OrderBy(d => d.Item.Index);
+            var allData = Core.Global.GlobalData.CurrentSlot.Inventory.GetItemsByType(ItemType.Material, materialGroup).OrderBy(d => d.Item.Index);
             _parent = parent;
             Group = materialGroup;
 

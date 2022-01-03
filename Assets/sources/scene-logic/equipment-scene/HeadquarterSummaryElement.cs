@@ -28,10 +28,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 switch (_additionalData)
                 {
                     case "Boss":
-                        UpdateImageAndText(Core.Global.GlobalData.PataponInfo.BossToSummon, "Boss to summon");
+                        UpdateImageAndText(Core.Global.GlobalData.CurrentSlot.PataponInfo.BossToSummon, "Boss to summon");
                         break;
                     case "Music":
-                        UpdateImageAndText(Core.Global.GlobalData.PataponInfo.CustomMusic, "Music theme");
+                        UpdateImageAndText(Core.Global.GlobalData.CurrentSlot.PataponInfo.CustomMusic, "Music theme");
                         break;
                 }
             }
