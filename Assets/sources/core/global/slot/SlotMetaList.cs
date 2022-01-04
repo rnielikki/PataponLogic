@@ -12,6 +12,9 @@
         public const int SlotSize = 8;
         private static SlotMetaList _current { get; set; }
         public static bool HasSave { get; private set; }
+        [UnityEngine.SerializeField]
+        private int _lastSlotIndex;
+        public static int LastSlotIndex => _current._lastSlotIndex;
         private SlotMetaList()
         {
             _slotMeta = new SlotMeta[SlotSize];
@@ -33,6 +36,7 @@
             return result;
         }
         public static bool HasDataInIndex(int index) => index >= 0 && index < SlotSize && _current._slotMeta[index] != null;
+        internal static void SetLastSlotIndex(int index) => _current._lastSlotIndex = index;
         internal static void Save(SlotMeta meta, int index)
         {
             if (index < 0 || index >= SlotSize) index = meta.SlotIndex;
@@ -41,6 +45,7 @@
             UnityEngine.PlayerPrefs.SetString("Saves",
                 UnityEngine.JsonUtility.ToJson(_current)
             );
+            _current._lastSlotIndex = index;
             HasSave = true;
         }
     }

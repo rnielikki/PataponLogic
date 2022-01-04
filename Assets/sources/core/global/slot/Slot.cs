@@ -69,6 +69,7 @@ namespace PataRoad.Core.Global.Slots
             var slot = JsonUtility.FromJson<Slot>(
                     PlayerPrefs.GetString(slotIndex)
                 );
+            SlotMetaList.SetLastSlotIndex(index);
             slot._startTime = (int)Time.realtimeSinceStartup;
             return slot;
         }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PataRoad.Core.Global.Slots;
+using UnityEngine;
 
 namespace PataRoad.SceneLogic.CommonSceneLogic
 {
@@ -18,14 +19,15 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         {
             _items = GetComponentsInChildren<SlotDataItem>();
             int i;
-            for (i = 0; i < Core.Global.Slots.SlotMetaList.SlotMeta.Length; i++)
+            for (i = 0; i < SlotMetaList.SlotMeta.Length; i++)
             {
                 if (_items.Length <= i) break;
-                _items[i].Init(Core.Global.Slots.SlotMetaList.SlotMeta[i], _scrollList, i, _onEntered);
+                _items[i].Init(SlotMetaList.SlotMeta[i], _scrollList, i, _onEntered);
             }
-            _scrollList.Init(_items[0]);
-            _scrollList.SetMaximumScrollLength(i - 1, _items[0]);
-            _items[0].Selectable.Select();
+            var lastIndex = SlotMetaList.LastSlotIndex;
+            _scrollList.Init(_items[lastIndex]);
+            _scrollList.SetMaximumScrollLength(i - 1, _items[lastIndex]);
+            _items[lastIndex].Selectable.Select();
         }
         private void OnEnable()
         {
@@ -34,8 +36,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             {
                 item.Selectable.enabled = true;
             }
-            _items[0].Selectable.Select();
-            _items[0].OnSelect(null);
+            _items[SlotMetaList.LastSlotIndex].Selectable.Select();
+            _items[SlotMetaList.LastSlotIndex].OnSelect(null);
         }
         private void OnDisable()
         {

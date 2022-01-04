@@ -10,6 +10,7 @@ namespace PataRoad.SceneLogic.Main
         [SerializeField]
         private MainMenuSelection _continueButton;
         private MainMenuSelection[] _buttons;
+        private MainMenuSelection _lastSelected;
         private void Start()
         {
             if (SlotMetaList.HasSave)
@@ -28,23 +29,28 @@ namespace PataRoad.SceneLogic.Main
             _buttons = GetComponentsInChildren<MainMenuSelection>(false);
             foreach (var button in _buttons)
             {
-                button.Button.onClick.AddListener(() => enabled = false);
+                button.Button.onClick.AddListener(() => PauseNavigation(button));
             }
         }
-        public void OnDisable()
+        public void PauseNavigation(MainMenuSelection lastSelected)
         {
+            _lastSelected = lastSelected;
             foreach (var button in _buttons)
             {
                 button.Button.enabled = false;
+                button.enabled = false;
             }
         }
-        public void OnEnable()
+        public void ResumeNavigation()
         {
-            if (_buttons == null) return;
+            enabled = true;
             foreach (var button in _buttons)
             {
                 button.Button.enabled = true;
+                button.enabled = true;
             }
+            _lastSelected.Button.Select();
+            _lastSelected.OnSelect(null);
         }
         public void LoadGameIntro()
         {
