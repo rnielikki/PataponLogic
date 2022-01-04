@@ -125,7 +125,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 var status = string.Join("\n", itemRequirements.Select(req => $"{req.Item.Name} ({Core.Global.GlobalData.CurrentSlot.Inventory.GetAmount(req.Item)}/{req.Amount})"));
                 Common.GameDisplay.ConfirmDialog.Create("The follow items are not enough:\n" + status)
                     .HideOkButton()
-                    .SetTargetToResume(_parent);
+                    .SetTargetToResume(_parent)
+                    .SelectCancel();
                 return false;
             }
             else
@@ -133,7 +134,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 _parent.enabled = false;
                 Common.GameDisplay.ConfirmDialog.Create("Create?")
                     .SetTargetToResume(_parent)
-                    .SetOkAction(AddThisRarepon);
+                    .SetOkAction(AddThisRarepon)
+                    .SelectOk();
             }
             return true;
         }

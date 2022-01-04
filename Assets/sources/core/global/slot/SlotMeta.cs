@@ -36,7 +36,7 @@ namespace PataRoad.Core.Global.Slots
 
         public SlotMeta(Slot slot)
         {
-            _playTime = slot.PlayTime.Ticks;
+            _playTime = slot.PlayTime;
             _squadStatus = string.Join(" / ", slot.PataponInfo.CurrentClasses.Select(cl => cl.ToString()));
             _lastMapName = slot.MapInfo.LastMap?.MapData?.Name ?? "-";
             _almightyName = slot.AlmightyName;

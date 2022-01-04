@@ -77,7 +77,8 @@ namespace PataRoad.Core.Map
         {
             Common.GameDisplay.ConfirmDialog.Create($"[!] {missingTarget} data doesn't exist!")
                 .HideOkButton()
-                .SetCancelAction(() => UnityEngine.SceneManagement.SceneManager.LoadScene("Patapolis"));
+                .SetCancelAction(() => UnityEngine.SceneManagement.SceneManager.LoadScene("Patapolis"))
+                .SelectCancel();
         }
     }
 }

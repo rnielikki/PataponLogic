@@ -73,7 +73,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
             {
                 Common.GameDisplay.ConfirmDialog.Create("Error: Map data doesn't exist so we cannot deploy!")
                     .HideOkButton()
-                    .SetCancelAction(() => UnityEngine.SceneManagement.SceneManager.LoadScene("Patapolis"));
+                    .SetCancelAction(() => UnityEngine.SceneManagement.SceneManager.LoadScene("Patapolis"))
+                    .SelectCancel();
                 Core.Global.GlobalData.Sound.PlayBeep();
                 return;
             }
@@ -84,20 +85,19 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     StopAllCoroutines();
                     Common.GameDisplay.SceneLoadingAction.Create("Battle").UseTip().ChangeScene();
                     Exit(_onEnter);
-                });
+                })
+                .SelectOk();
             window.IsScreenChange = true;
             //this will take time and less important so works separately
             StartCoroutine(CheckStatus());
             System.Collections.IEnumerator CheckStatus()
             {
                 yield return null;
-                var rect = window.GetComponent<RectTransform>();
-                var dialogContent = window.Content;
 
                 if (Core.Global.GlobalData.CurrentSlot.PataponInfo.ClassCount < Core.Character.Patapons.Data.PataponInfo.MaxPataponGroup
                     && AvailableClasses.Length > Core.Global.GlobalData.CurrentSlot.PataponInfo.ClassCount)
                 {
-                    AddMessage("\n[!] Squad is not full");
+                    window.AppendText("[!] Squad is not full");
                 }
                 yield return null;
 
@@ -106,20 +106,15 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     (var weaponName, var protectorName) = Core.Character.Class.ClassMetaData.GetWeaponAndProtectorName(classType);
                     if (!isEquipped(classType, Core.Character.Equipments.EquipmentType.Weapon, weaponName))
                     {
-                        AddMessage($"\n[!] Can optimize {weaponName} for {classType}");
+                        window.AppendText($"[!] Can optimize {weaponName} for {classType}");
                     }
                     if (!isEquipped(classType, Core.Character.Equipments.EquipmentType.Protector, protectorName))
                     {
-                        AddMessage($"\n[!] Can optimize {protectorName} for {classType}");
+                        window.AppendText($"[!] Can optimize {protectorName} for {classType}");
                     }
                     yield return null;
                 }
                 yield return null;
-                void AddMessage(string message)
-                {
-                    dialogContent.text += message;
-                    UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
-                }
             }
             bool isEquipped(Core.Character.Class.ClassType classType, Core.Character.Equipments.EquipmentType equipmentType, string equipmentName)
             {
@@ -135,10 +130,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
             var window = Common.GameDisplay.ConfirmDialog.Create("Go back to the Patapolis?")
                 .SetTargetToResume(_groupNav)
                     .SetOkAction(() =>
-                {
-                    Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene();
-                    Exit(_onCancel);
-                });
+                    {
+                        Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene();
+                        Exit(_onCancel);
+                    })
+                    .SelectOk();
             window.IsScreenChange = true;
         }
         private void Exit(AudioClip sound)

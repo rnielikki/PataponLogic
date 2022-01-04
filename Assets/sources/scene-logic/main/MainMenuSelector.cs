@@ -14,25 +14,22 @@ namespace PataRoad.SceneLogic.Main
         {
             if (SlotMetaList.HasSave)
             {
-                StartCoroutine(WaitAndSelect(_continueButton));
+                UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+                _continueButton.Button.Select();
+                _continueButton.OnSelect(null);
             }
             else
             {
                 _continueButton.gameObject.SetActive(false);
-                StartCoroutine(WaitAndSelect(_newGameButton));
+                UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+                _newGameButton.Button.Select();
+                _newGameButton.OnSelect(null);
             }
             _buttons = GetComponentsInChildren<MainMenuSelection>(false);
             foreach (var button in _buttons)
             {
                 button.Button.onClick.AddListener(() => enabled = false);
             }
-            System.Collections.IEnumerator WaitAndSelect(MainMenuSelection toSelect)
-            {
-                yield return new WaitForEndOfFrame();
-                toSelect.Button.Select();
-                toSelect.OnSelect(null);
-            }
-
         }
         public void OnDisable()
         {
@@ -56,6 +53,11 @@ namespace PataRoad.SceneLogic.Main
         }
         public void LoadFromSaved(CommonSceneLogic.SlotDataItem item)
         {
+            if (!SlotMetaList.HasDataInIndex(item.Index))
+            {
+                Core.Global.GlobalData.Sound.PlayBeep();
+                return;
+            }
             Core.Global.GlobalData.SlotManager.LoadSlot(Slot.LoadSlot(item.Index));
             Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene();
         }

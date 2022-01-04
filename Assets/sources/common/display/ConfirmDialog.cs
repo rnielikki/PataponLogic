@@ -15,7 +15,6 @@ namespace PataRoad.Common.GameDisplay
 
         [SerializeField]
         private Text _content;
-        public Text Content => _content;
         [SerializeField]
         private Button _okButton;
         [SerializeField]
@@ -25,11 +24,17 @@ namespace PataRoad.Common.GameDisplay
         private InputAction _uiCancelAction;
         private GameObject _lastSelected;
 
+        private RectTransform _rect;
+
         private static GameObject _dialogTemplate { get; set; }
         private const string _path = "Common/Display/Dialog";
 
         public bool IsScreenChange { get; set; }
 
+        private void Awake()
+        {
+            _rect = GetComponent<RectTransform>();
+        }
         private void Start()
         {
             _uiOkAction = Core.Global.GlobalData.Input.actions.FindAction("UI/Submit");
@@ -47,18 +52,28 @@ namespace PataRoad.Common.GameDisplay
         public static ConfirmDialog Create(string content)
         {
             if (_dialogTemplate == null) _dialogTemplate = Resources.Load<GameObject>(_path);
+
             var dialog = Instantiate(_dialogTemplate).GetComponent<ConfirmDialog>();
-            dialog._okButton.Select();
+            //before selecting ok
             dialog._content.text = content;
             return dialog;
         }
-        public ConfirmDialog SetTargetToResume(MonoBehaviour targetToResume)
+        public ConfirmDialog AppendText(string content)
         {
-            var lastSelected = DisableParentAndGetLastSelection(targetToResume);
-            InitParent(targetToResume, lastSelected);
+            _content.text += "\n" + content;
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
             return this;
         }
-
+        public ConfirmDialog SetTargetToResume(MonoBehaviour targetToResume)
+        {
+            _lastSelected = DisableParent(targetToResume);
+            return this;
+        }
+        public ConfirmDialog SelectOk()
+        {
+            _okButton.Select();
+            return this;
+        }
         public ConfirmDialog SelectCancel()
         {
             _cancelButton.Select();
@@ -78,21 +93,15 @@ namespace PataRoad.Common.GameDisplay
         public ConfirmDialog HideOkButton()
         {
             _okButton.gameObject.SetActive(false);
-            _cancelButton.Select();
             return this;
         }
-        private static GameObject DisableParentAndGetLastSelection(MonoBehaviour targetToResume)
+        private GameObject DisableParent(MonoBehaviour targetToResume)
         {
+            _targetToResume = targetToResume;
             var actionMap = targetToResume.GetComponent<Navigator.ActionEventMap>();
             if (actionMap != null) actionMap.enabled = false;
             targetToResume.enabled = false;
             return UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
-        }
-        public ConfirmDialog InitParent(MonoBehaviour targetToResume, GameObject lastSelected)
-        {
-            _targetToResume = targetToResume;
-            _lastSelected = lastSelected;
-            return this;
         }
         public void Confirm()
         {
@@ -117,8 +126,8 @@ namespace PataRoad.Common.GameDisplay
                 _targetToResume.enabled = true;
                 var actionMap = _targetToResume.GetComponent<Navigator.ActionEventMap>();
                 if (actionMap != null) actionMap.enabled = true;
+                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelected);
             }
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelected);
 
             if (!IsScreenChange || !ok)
             {

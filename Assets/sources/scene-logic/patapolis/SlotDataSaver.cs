@@ -12,6 +12,8 @@ namespace PataRoad.SceneLogic.Patapolis
         [SerializeField]
         CommonSceneLogic.SlotDataList _slotDataLoader;
 
+        private bool _saved;
+
         public void ShowSlotData()
         {
             _slotDataLoader.gameObject.SetActive(true);
@@ -20,24 +22,41 @@ namespace PataRoad.SceneLogic.Patapolis
 
         public void Save(CommonSceneLogic.SlotDataItem slotItem)
         {
-            Common.GameDisplay.ConfirmDialog.Create("Do you want to save the data?")
-                .SetTargetToResume(_parentSelectorOnSave)
-                .SetOkAction(() => SaveAndUpdate(slotItem));
+            var dialog = Common.GameDisplay.ConfirmDialog.Create("Do you want to save the data?")
+                    .SetTargetToResume(_parentSelectorOnSave)
+                    .SetOkAction(() => SaveAndUpdate(slotItem));
+
+            if (Core.Global.Slots.SlotMetaList.HasDataInIndex(slotItem.Index))
+            {
+                dialog.AppendText("[!] Data exists and you're about to overwrite!");
+                dialog.SelectCancel();
+            }
+            else
+            {
+                dialog.SelectOk();
+            }
             slotItem.ShowHighlight();
         }
         private void SaveAndUpdate(CommonSceneLogic.SlotDataItem slotItem)
         {
             var saved = Core.Global.GlobalData.SlotManager.SaveSlot(slotItem.Index);
             slotItem.UpdateDisplay(saved);
+            _saved = true;
         }
+        public void MarkAsUnsaved() => _saved = false;
         public void LoadMainMenu()
         {
-            /*
-                Common.GameDisplay.ConfirmDialog.Create("Do you want to save the data?",
-                    _parentSelectorOnMain,
-                    () => UnityEngine.SceneManagement.SceneManager.LoadScene("Main")
-                    )
-                */
+            if (!_saved)
+            {
+                Common.GameDisplay.ConfirmDialog.Create("Are you sure to go to the main menu?\nThe play data won't saved.")
+                .SetTargetToResume(_parentSelectorOnMain)
+                .SetOkAction(() => Common.GameDisplay.SceneLoadingAction.Create("Main").ChangeScene())
+                .SelectCancel();
+            }
+            else
+            {
+                Common.GameDisplay.SceneLoadingAction.Create("Main").ChangeScene();
+            }
         }
     }
 }

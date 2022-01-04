@@ -32,6 +32,7 @@
             _current = result;
             return result;
         }
+        public static bool HasDataInIndex(int index) => index >= 0 && index < SlotSize && _current._slotMeta[index] != null;
         internal static void Save(SlotMeta meta, int index)
         {
             if (index < 0 || index >= SlotSize) index = meta.SlotIndex;

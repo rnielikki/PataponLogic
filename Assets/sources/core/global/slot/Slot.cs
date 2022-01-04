@@ -32,11 +32,11 @@ namespace PataRoad.Core.Global.Slots
         public MapInfo MapInfo => _mapInfo;
 
         [SerializeField]
-        private System.TimeSpan _playTime;
+        private long _playTime;
         /// <summary>
         /// Played time as seconds.
         /// </summary>
-        public System.TimeSpan PlayTime => _playTime;
+        public long PlayTime => _playTime;
         private float _startTime;
 
         [SerializeField]
@@ -53,7 +53,8 @@ namespace PataRoad.Core.Global.Slots
             slot._pataponInfo = PataponInfo.CreateNew();
             slot._inventory = Inventory.CreateNew(); //must be loaded after item loader init
             slot._mapInfo = MapInfo.CreateNew();
-            slot._playTime = new System.TimeSpan(0);
+            slot._playTime = 0;
+            slot._startTime = (int)Time.realtimeSinceStartup;
             slot._almightyName = "Kamipon";
 
             return slot;
@@ -73,8 +74,8 @@ namespace PataRoad.Core.Global.Slots
         }
         public SlotMeta Save(int slotIndex)
         {
-            _playTime += new System.TimeSpan((long)(Time.realtimeSinceStartup - _startTime) * 10_000_000);
-            _startTime = (int)Time.realtimeSinceStartup;
+            _playTime += (long)(Time.realtimeSinceStartup - _startTime) * 10_000_000;
+            _startTime = Time.realtimeSinceStartup;
             PlayerPrefs.SetString(slotIndex.ToString(),
                     JsonUtility.ToJson(this)
                 );

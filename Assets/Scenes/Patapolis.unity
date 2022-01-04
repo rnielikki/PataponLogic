@@ -7743,7 +7743,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onMinigameStarted:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 715892053}
+        m_TargetAssemblyTypeName: PataRoad.SceneLogic.Patapolis.SlotDataSaver, Assembly-CSharp
+        m_MethodName: MarkAsUnsaved
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _onMinigameEnd:
     m_PersistentCalls:
       m_Calls:
@@ -9430,7 +9442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onOpen.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
@@ -9461,6 +9473,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
+      propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClosed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2108095005}
@@ -9472,6 +9488,10 @@ PrefabInstance:
       propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1556852309}
+    - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
+      propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 715892053}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onOpen.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -9501,6 +9521,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
+      propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClosed.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: set_enabled
       objectReference: {fileID: 0}
@@ -9511,6 +9535,10 @@ PrefabInstance:
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: CreateNewRarepon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
+      propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: MarkAsUnsaved
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onOpen.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -9531,6 +9559,10 @@ PrefabInstance:
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PataRoad.SceneLogic.CommonSceneLogic.RareponSelector, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
+      propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PataRoad.SceneLogic.Patapolis.SlotDataSaver, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClosed.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
@@ -9562,6 +9594,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
+      propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734316, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}

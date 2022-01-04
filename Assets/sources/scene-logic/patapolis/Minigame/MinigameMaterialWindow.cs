@@ -109,15 +109,14 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 Core.Global.GlobalData.Sound.PlayBeep();
                 Common.GameDisplay.ConfirmDialog.Create("Item is insufficient")
                     .HideOkButton()
-                    .SetTargetToResume(this);
+                    .SetTargetToResume(this)
+                    .SelectCancel();
                 return;
             }
-            Common.GameDisplay.ConfirmDialog.Create("You will play in REAL.\nIf you fail, item will be LOST without reward.\nAre you sure to play in this mode?")
+            Common.GameDisplay.ConfirmDialog.Create("You will play in REAL.\nIf you fail, item will be LOST without reward.\nYou can practice instead without losing item.\nAre you sure to play in this mode?")
                 .SetTargetToResume(this)
                 .SetOkAction(() =>
                 {
-                    int sum = 0;
-                    int difference = 0;
                     foreach (var materialLoader in _materialLoaders)
                     {
                         Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(materialLoader.Item);
@@ -127,7 +126,8 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                         _materialLoaders.Sum(lo => lo.Item.Index),
                         _materialLoaders.Max(lo => lo.Item.Index) - _materialLoaders.Min(lo => lo.Item.Index));
                     LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData, _estimation, item, amount));
-                });
+                })
+                .SelectCancel();
         }
 
         internal void UpdateEstimation()
@@ -148,7 +148,8 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 .SetOkAction(() =>
                 {
                     LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData));
-                });
+                })
+                .SelectOk();
         }
         private void LoadMinigaeScene(MinigameModel model)
         {
