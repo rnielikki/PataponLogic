@@ -32,9 +32,6 @@ namespace PataRoad.Core.Global
             Character.Patapons.Data.RareponInfo.LoadAll();
 
             SlotManager = new SlotManager();
-
-            //--- test data
-            SlotManager.LoadSlot(Slot.LoadSlot(0));
         }
     }
 }

@@ -18,11 +18,12 @@ namespace PataRoad.Core.Map
         private UnityEngine.InputSystem.InputAction _submitAction;
         private Story.StoryData _nextStory;
 
-        public void LoadMissionStatus(Story.StoryData nextStory)
+        public void LoadMissionStatus()
         {
             Destroy(Items.ItemManager.Current.ItemDropPoint.gameObject);
 
-            if (nextStory != null) Story.StoryLoader.Init();
+            _nextStory = MissionPoint.Current.NextStory;
+            if (_nextStory != null) Story.StoryLoader.Init();
 
             var allItemStatus = Items.ItemManager.Current.LoadItemStatus();
             var spoils = allItemStatus
@@ -41,15 +42,14 @@ namespace PataRoad.Core.Map
             _spriteMaterial.color = Color.black;
             FindObjectOfType<Background.BackgroundLoader>().gameObject.SetActive(false);
 
-            if (nextStory == null)
+            _submitAction = Global.GlobalData.Input.actions.FindAction("UI/Submit");
+            if (_nextStory == null)
             {
-                Common.SceneLoadingAction.Create("Patapolis", true, "Submit");
+                _submitAction.performed += LoadPatapolis;
             }
             else
             {
-                _submitAction = Global.GlobalData.Input.actions.FindAction("UI/Submit");
-                _nextStory = nextStory;
-                _submitAction.performed += PerformAction;
+                _submitAction.performed += LoadStory;
             }
 
             Camera.main.backgroundColor = Color.white;
@@ -71,15 +71,20 @@ namespace PataRoad.Core.Map
             Character.Patapons.PataponsManager.IsMovingForward = false;
 
         }
-        void PerformAction(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        void LoadPatapolis(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            Common.GameDisplay.SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene();
+            _submitAction.performed -= LoadPatapolis;
+        }
+        void LoadStory(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
             Story.StoryLoader.LoadStory(_nextStory);
-            _submitAction.performed -= PerformAction;
+            _submitAction.performed -= LoadStory;
         }
         private void OnDestroy()
         {
             _spriteMaterial.color = Color.white;
-            if (_submitAction != null) _submitAction.performed -= PerformAction;
+            if (_submitAction != null) _submitAction.performed -= LoadStory;
         }
     }
 }

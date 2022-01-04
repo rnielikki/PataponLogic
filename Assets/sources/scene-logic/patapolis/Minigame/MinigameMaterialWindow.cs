@@ -107,21 +107,27 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             if (_materialLoaders.Any(loader => loader.Item == null))
             {
                 Core.Global.GlobalData.Sound.PlayBeep();
-                Common.GameDisplay.ConfirmDialog.CreateCancelOnly("Item is insufficient", this);
+                Common.GameDisplay.ConfirmDialog.Create("Item is insufficient")
+                    .HideOkButton()
+                    .SetTargetToResume(this);
                 return;
             }
-            Common.GameDisplay.ConfirmDialog.Create("You will play in REAL.\nIf you fail, item will be LOST without reward.\nAre you sure to play in this mode?", this, () =>
-            {
-                int sum = 0;
-                int difference = 0;
-                foreach (var materialLoader in _materialLoaders)
+            Common.GameDisplay.ConfirmDialog.Create("You will play in REAL.\nIf you fail, item will be LOST without reward.\nAre you sure to play in this mode?")
+                .SetTargetToResume(this)
+                .SetOkAction(() =>
                 {
-                    Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(materialLoader.Item);
-                }
-                //Load scene!
-                var (item, amount) = _lastSelection.GetReward(_materialLoaders.Sum(lo => lo.Item.Index), _materialLoaders.Max(lo => lo.Item.Index) - _materialLoaders.Min(lo => lo.Item.Index));
-                LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData, _estimation, item, amount));
-            });
+                    int sum = 0;
+                    int difference = 0;
+                    foreach (var materialLoader in _materialLoaders)
+                    {
+                        Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(materialLoader.Item);
+                    }
+                    //Load scene!
+                    var (item, amount) = _lastSelection.GetReward(
+                        _materialLoaders.Sum(lo => lo.Item.Index),
+                        _materialLoaders.Max(lo => lo.Item.Index) - _materialLoaders.Min(lo => lo.Item.Index));
+                    LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData, _estimation, item, amount));
+                });
         }
 
         internal void UpdateEstimation()
@@ -137,11 +143,12 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
 
         public void LoadPracticeGame()
         {
-            Common.GameDisplay.ConfirmDialog.Create("You're play as PRACTICE.\nThere will be NO REWARD, but item WILL NOT LOST.\nAre you sure to play in this mode?", this, () =>
-            {
-                //LOAD SCENE!
-                LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData));
-            });
+            Common.GameDisplay.ConfirmDialog.Create("You're play as PRACTICE.\nThere will be NO REWARD, but item WILL NOT LOST.\nAre you sure to play in this mode?")
+                .SetTargetToResume(this)
+                .SetOkAction(() =>
+                {
+                    LoadMinigaeScene(new MinigameModel(_lastSelection.MinigameData));
+                });
         }
         private void LoadMinigaeScene(MinigameModel model)
         {

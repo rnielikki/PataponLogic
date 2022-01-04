@@ -71,16 +71,20 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             if (Core.Global.GlobalData.CurrentSlot.MapInfo.NextMap == null)
             {
-                Common.GameDisplay.ConfirmDialog.CreateCancelOnly("Error: Map data doesn't exist so we cannot deploy!");
+                Common.GameDisplay.ConfirmDialog.Create("Error: Map data doesn't exist so we cannot deploy!")
+                    .HideOkButton()
+                    .SetCancelAction(() => UnityEngine.SceneManagement.SceneManager.LoadScene("Patapolis"));
                 Core.Global.GlobalData.Sound.PlayBeep();
                 return;
             }
-            var window = Common.GameDisplay.ConfirmDialog.Create("Start the mission?", _groupNav, () =>
-            {
-                StopAllCoroutines();
-                Common.SceneLoadingAction.Create("Battle", true);
-                Exit(_onEnter);
-            });
+            var window = Common.GameDisplay.ConfirmDialog.Create("Start the mission?")
+                .SetTargetToResume(_groupNav)
+                .SetOkAction(() =>
+                {
+                    StopAllCoroutines();
+                    Common.GameDisplay.SceneLoadingAction.Create("Battle").UseTip().ChangeScene();
+                    Exit(_onEnter);
+                });
             window.IsScreenChange = true;
             //this will take time and less important so works separately
             StartCoroutine(CheckStatus());
@@ -128,11 +132,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void GoBack()
         {
-            var window = Common.GameDisplay.ConfirmDialog.Create("Go back to the Patapolis?", _groupNav, () =>
-            {
-                Common.SceneLoadingAction.Create("Patapolis", false);
-                Exit(_onCancel);
-            });
+            var window = Common.GameDisplay.ConfirmDialog.Create("Go back to the Patapolis?")
+                .SetTargetToResume(_groupNav)
+                    .SetOkAction(() =>
+                {
+                    Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene();
+                    Exit(_onCancel);
+                });
             window.IsScreenChange = true;
         }
         private void Exit(AudioClip sound)

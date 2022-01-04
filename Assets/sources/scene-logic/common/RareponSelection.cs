@@ -123,13 +123,17 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             {
                 Core.Global.GlobalData.Sound.PlayBeep();
                 var status = string.Join("\n", itemRequirements.Select(req => $"{req.Item.Name} ({Core.Global.GlobalData.CurrentSlot.Inventory.GetAmount(req.Item)}/{req.Amount})"));
-                Common.GameDisplay.ConfirmDialog.CreateCancelOnly("The follow items are not enough:\n" + status, targetToResume: _parent);
+                Common.GameDisplay.ConfirmDialog.Create("The follow items are not enough:\n" + status)
+                    .HideOkButton()
+                    .SetTargetToResume(_parent);
                 return false;
             }
             else
             {
                 _parent.enabled = false;
-                Common.GameDisplay.ConfirmDialog.Create("Create?", _parent, AddThisRarepon);
+                Common.GameDisplay.ConfirmDialog.Create("Create?")
+                    .SetTargetToResume(_parent)
+                    .SetOkAction(AddThisRarepon);
             }
             return true;
         }

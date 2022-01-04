@@ -20,10 +20,9 @@ namespace PataRoad.SceneLogic.Patapolis
 
         public void Save(CommonSceneLogic.SlotDataItem slotItem)
         {
-            Common.GameDisplay.ConfirmDialog.Create("Do you want to save the data?",
-                _parentSelectorOnSave,
-                () => SaveAndUpdate(slotItem)
-                );
+            Common.GameDisplay.ConfirmDialog.Create("Do you want to save the data?")
+                .SetTargetToResume(_parentSelectorOnSave)
+                .SetOkAction(() => SaveAndUpdate(slotItem));
             slotItem.ShowHighlight();
         }
         private void SaveAndUpdate(CommonSceneLogic.SlotDataItem slotItem)

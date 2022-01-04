@@ -11,6 +11,7 @@
         public static SlotMeta[] SlotMeta => _current._slotMeta;
         public const int SlotSize = 8;
         private static SlotMetaList _current { get; set; }
+        public static bool HasSave { get; private set; }
         private SlotMetaList()
         {
             _slotMeta = new SlotMeta[SlotSize];
@@ -23,7 +24,11 @@
             {
                 result = new SlotMetaList();
             }
-            else result = UnityEngine.JsonUtility.FromJson<SlotMetaList>(data);
+            else
+            {
+                result = UnityEngine.JsonUtility.FromJson<SlotMetaList>(data);
+                HasSave = true;
+            }
             _current = result;
             return result;
         }
@@ -35,6 +40,7 @@
             UnityEngine.PlayerPrefs.SetString("Saves",
                 UnityEngine.JsonUtility.ToJson(_current)
             );
+            HasSave = true;
         }
     }
 }

@@ -106,7 +106,7 @@ namespace PataRoad.Core.Map
             System.Collections.IEnumerator WaitForNextScene()
             {
                 yield return new WaitForSeconds(9);
-                if (NextFailureStory == null) Common.SceneLoadingAction.Create("Patapolis", true);
+                if (NextFailureStory == null) Common.GameDisplay.SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene();
                 else Story.StoryLoader.LoadStory(NextFailureStory);
             }
         }

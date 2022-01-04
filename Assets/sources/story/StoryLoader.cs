@@ -1,4 +1,5 @@
-﻿using PataRoad.Story.Actions;
+﻿using PataRoad.Common.GameDisplay;
+using PataRoad.Story.Actions;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace PataRoad.Story
         }
         private void StartStory(StoryData data)
         {
-            Common.SceneLoadingAction.Create(data.SceneName, false);
+            Common.GameDisplay.SceneLoadingAction.Create(data.SceneName).ChangeScene();
             SceneManager.sceneLoaded += OnStorySceneLoaded;
             void OnStorySceneLoaded(Scene scene, LoadSceneMode mode)
             {
@@ -110,16 +111,16 @@ namespace PataRoad.Story
                 if (mapContainer != null)
                 {
                     Core.Global.GlobalData.CurrentSlot.MapInfo.Select(mapContainer);
-                    Common.SceneLoadingAction.Create("Battle", false);
+                    SceneLoadingAction.Create("Battle").ChangeScene();
                 }
                 else
                 {
-                    Common.SceneLoadingAction.Create("Patapolis", true);
+                    SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene();
                 }
             }
             else
             {
-                Common.SceneLoadingAction.Create("Patapolis", true);
+                SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene();
             }
             //-- Story done, you don't need this anymore!
             Destroy(gameObject);

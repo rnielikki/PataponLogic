@@ -63,8 +63,7 @@ namespace PataRoad.Core.Global.Slots
             var slotIndex = index.ToString();
             if (!PlayerPrefs.HasKey(slotIndex))
             {
-                return CreateNewGame();
-                //throw new MissingReferenceException("No data exist in the slot index " + slotIndex);
+                throw new MissingReferenceException("No data exist in the slot index " + slotIndex);
             }
             var slot = JsonUtility.FromJson<Slot>(
                     PlayerPrefs.GetString(slotIndex)

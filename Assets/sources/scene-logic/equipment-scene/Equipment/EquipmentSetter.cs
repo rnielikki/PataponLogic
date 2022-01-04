@@ -33,7 +33,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         public void Optimize()
         {
-            ConfirmDialog.Create("All Patapons are equipped automatically. Are you sure to proceed?", _characterGroupNavigator, OptimizeInAction);
+            ConfirmDialog.Create("All Patapons are equipped automatically. Are you sure to proceed?")
+                .SetTargetToResume(_characterGroupNavigator).SetOkAction(OptimizeInAction);
         }
         private void OptimizeInAction()
         {
@@ -45,7 +46,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         public void OptimizeGroup(Object sender, UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
-            ConfirmDialog.Create("All in this group are equipped automatically. Are you sure to proceed?", sender as CharacterNavigator, () => OptimizeGroupInAction(sender));
+            ConfirmDialog.Create("All in this group are equipped automatically. Are you sure to proceed?")
+                .SetTargetToResume(sender as CharacterNavigator)
+                .SetOkAction(() => OptimizeGroupInAction(sender));
         }
         private void OptimizeGroupInAction(Object sender)
         {

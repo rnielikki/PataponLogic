@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -45,40 +44,42 @@ namespace PataRoad.Common.GameDisplay
                 _uiCancelAction.performed += Cancel;
             }));
         }
-
-        public static ConfirmDialog Create(string text, MonoBehaviour targetToResume, UnityEngine.Events.UnityAction onConfirmed,
-            UnityEngine.Events.UnityAction onCanceled = null, bool okAsDefault = true)
-        {
-            var lastSelected = DisableParentAndGetLastSelection(targetToResume);
-            return Create(text, onConfirmed, onCanceled, okAsDefault).InitParent(targetToResume, lastSelected);
-        }
-        private static ConfirmDialog Create(string text, UnityEngine.Events.UnityAction onConfirmed, UnityEngine.Events.UnityAction onCanceled = null, bool okAsDefault = true)
+        public static ConfirmDialog Create(string content)
         {
             if (_dialogTemplate == null) _dialogTemplate = Resources.Load<GameObject>(_path);
             var dialog = Instantiate(_dialogTemplate).GetComponent<ConfirmDialog>();
-            dialog._onConfirmed = onConfirmed;
-            dialog._onCancled = onCanceled;
-            dialog._content.text = text;
-            if (okAsDefault)
-            {
-                dialog._okButton.Select();
-            }
-            else
-            {
-                dialog._cancelButton.Select();
-            }
+            dialog._okButton.Select();
+            dialog._content.text = content;
             return dialog;
         }
-        public static ConfirmDialog CreateCancelOnly(string text, MonoBehaviour targetToResume, UnityEngine.Events.UnityAction onCanceled = null)
+        public ConfirmDialog SetTargetToResume(MonoBehaviour targetToResume)
         {
             var lastSelected = DisableParentAndGetLastSelection(targetToResume);
-            return CreateCancelOnly(text, onCanceled).InitParent(targetToResume, lastSelected);
+            InitParent(targetToResume, lastSelected);
+            return this;
         }
-        public static ConfirmDialog CreateCancelOnly(string text, UnityEngine.Events.UnityAction onCanceled = null)
+
+        public ConfirmDialog SelectCancel()
         {
-            var dialog = Create(text, null, onCanceled, false);
-            dialog._okButton.gameObject.SetActive(false);
-            return dialog;
+            _cancelButton.Select();
+            return this;
+        }
+        public ConfirmDialog SetOkAction(UnityEngine.Events.UnityAction onConfirmed)
+        {
+            _onConfirmed = onConfirmed;
+            return this;
+        }
+
+        public ConfirmDialog SetCancelAction(UnityEngine.Events.UnityAction onCanceled)
+        {
+            _onCancled = onCanceled;
+            return this;
+        }
+        public ConfirmDialog HideOkButton()
+        {
+            _okButton.gameObject.SetActive(false);
+            _cancelButton.Select();
+            return this;
         }
         private static GameObject DisableParentAndGetLastSelection(MonoBehaviour targetToResume)
         {

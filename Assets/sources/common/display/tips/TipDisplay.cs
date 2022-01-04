@@ -70,7 +70,6 @@ namespace PataRoad.Common.GameDisplay
         }
         public void LoadNextScene(string sceneName)
         {
-
             StartCoroutine(WaitForScene());
             System.Collections.IEnumerator WaitForScene()
             {
@@ -96,7 +95,7 @@ namespace PataRoad.Common.GameDisplay
 
         private void OnLoadingCompleted()
         {
-            _loadingStatus.text = "Press Enter or submit to continue";
+            _loadingStatus.text = "Press submit to continue";
             _action.performed += GoToNextScene;
             _action.Enable();
 
