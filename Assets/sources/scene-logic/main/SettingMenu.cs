@@ -18,6 +18,8 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         Slider _musicSlider;
         [SerializeField]
         Slider _soundSlider;
+        [SerializeField]
+        GameObject _savingImage;
         private Core.Global.Settings.SettingModel _currentSetting;
         private bool _isOpen;
 
@@ -75,16 +77,20 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         }
         public void Close(bool apply)
         {
-            _parent.ResumeNavigation();
             if (apply)
             {
+                Core.Global.GlobalData.GlobalInputActions.DisableNavigatingInput();
+                _savingImage.SetActive(true);
                 Core.Global.GlobalData.Settings.UpdateData(_currentSetting);
+                _savingImage.SetActive(false);
+                Core.Global.GlobalData.GlobalInputActions.EnableNavigatingInput();
             }
             else if (_changed)
             {
                 Common.GameDisplay.ConfirmDialog.Create("The changed values won't be saved.\nDo you want to quit?")
                     .SetTargetToResume(this)
                     .SetOkAction(Close)
+                    .CallOkActionLater()
                     .SelectCancel();
                 return;
             }
@@ -92,6 +98,7 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         }
         private void Close()
         {
+            _parent.ResumeNavigation();
             gameObject.SetActive(false);
             _isOpen = false;
         }

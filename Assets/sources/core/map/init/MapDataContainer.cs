@@ -18,7 +18,6 @@ namespace PataRoad.Core.Map
         [SerializeField]
         private int _reachedMaxLevel; //for example difficulty hard->easy->hard scenario
 
-        [SerializeField]
         private int _level;
         public int Level => _level;
 
@@ -38,7 +37,7 @@ namespace PataRoad.Core.Map
                 var str = $"{MapData.Name} Lv. {_level}";
                 if (_level >= MapData.GetMaxLevel())
                 {
-                    str += "★";
+                    str += " *";
                 }
                 return str;
             }
@@ -78,11 +77,7 @@ namespace PataRoad.Core.Map
         {
             _mapData = LoadResource();
             _weather.LoadWeatherMap(_mapData);
-            var maxLevel = _mapData.GetMaxLevel();
-            if (maxLevel < _level)
-            {
-                _level = maxLevel;
-            }
+            _level = Mathf.Min(_mapData.GetMaxLevel(), _reachedMaxLevel);
         }
     }
 }

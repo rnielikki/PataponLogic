@@ -23,6 +23,7 @@ namespace PataRoad.Common.GameDisplay
         private InputAction _uiOkAction;
         private InputAction _uiCancelAction;
         private GameObject _lastSelected;
+        private bool _callOkActionLater;
 
         private RectTransform _rect;
 
@@ -66,7 +67,7 @@ namespace PataRoad.Common.GameDisplay
         }
         public ConfirmDialog SetTargetToResume(MonoBehaviour targetToResume)
         {
-            _lastSelected = DisableParent(targetToResume);
+            DisableParent(targetToResume);
             return this;
         }
         public ConfirmDialog SelectOk()
@@ -84,6 +85,11 @@ namespace PataRoad.Common.GameDisplay
             _onConfirmed = onConfirmed;
             return this;
         }
+        public ConfirmDialog CallOkActionLater()
+        {
+            _callOkActionLater = true;
+            return this;
+        }
 
         public ConfirmDialog SetCancelAction(UnityEngine.Events.UnityAction onCanceled)
         {
@@ -95,17 +101,17 @@ namespace PataRoad.Common.GameDisplay
             _okButton.gameObject.SetActive(false);
             return this;
         }
-        private GameObject DisableParent(MonoBehaviour targetToResume)
+        private void DisableParent(MonoBehaviour targetToResume)
         {
             _targetToResume = targetToResume;
+            _lastSelected = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
             var actionMap = targetToResume.GetComponent<Navigator.ActionEventMap>();
             if (actionMap != null) actionMap.enabled = false;
             targetToResume.enabled = false;
-            return UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
         }
         public void Confirm()
         {
-            _onConfirmed?.Invoke();
+            if (!_callOkActionLater) _onConfirmed?.Invoke();
             Close(true);
         }
         public void Cancel(InputAction.CallbackContext context) => Cancel();
@@ -128,6 +134,7 @@ namespace PataRoad.Common.GameDisplay
                 if (actionMap != null) actionMap.enabled = true;
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelected);
             }
+            if (ok && _callOkActionLater) _onConfirmed?.Invoke();
 
             if (!IsScreenChange || !ok)
             {

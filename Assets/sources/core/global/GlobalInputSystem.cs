@@ -10,6 +10,7 @@ namespace PataRoad.Core.Global
     {
         private readonly PlayerInput _input;
         private readonly InputAction[] _defaultsToWaitNextInput;
+        private readonly InputAction[] _allNavigatableInput;
         internal GlobalInputSystem(PlayerInput input)
         {
             _input = input;
@@ -17,8 +18,27 @@ namespace PataRoad.Core.Global
                 _input.actions.FindAction("UI/Submit"),
                 _input.actions.FindAction("UI/Cancel")
             };
+            _allNavigatableInput = new InputAction[]
+            {
+                _defaultsToWaitNextInput[0],
+                _defaultsToWaitNextInput[1],
+                _input.actions.FindAction("UI/Navigate")
+            };
         }
         public void EnableOkCancelInputs() => EnableInputs(_defaultsToWaitNextInput);
+        /// <summary>
+        /// Enables input, including ok/cancel/navigate.
+        /// </summary>
+        public void EnableNavigatingInput() => EnableInputs(_allNavigatableInput);
+
+        public void ResumeInput()
+        {
+            foreach (var input in _allNavigatableInput)
+            {
+                input.Enable();
+            }
+        }
+
 
         public void EnableAllInputs()
         {
@@ -37,6 +57,10 @@ namespace PataRoad.Core.Global
         }
 
         public void DisableOkCancelInputs() => DisableInputs(_defaultsToWaitNextInput);
+        /// <summary>
+        /// Disables input, including ok/cancel/navigate.
+        /// </summary>
+        public void DisableNavigatingInput() => DisableInputs(_allNavigatableInput);
 
         public void DisableAllInputs()
         {

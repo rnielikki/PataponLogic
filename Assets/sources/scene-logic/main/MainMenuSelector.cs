@@ -64,8 +64,10 @@ namespace PataRoad.SceneLogic.Main
                 Core.Global.GlobalData.Sound.PlayBeep();
                 return;
             }
+            item.MarkAsProcessing();
             Core.Global.GlobalData.SlotManager.LoadSlot(Slot.LoadSlot(item.Index));
             Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene();
+            item.MarkAsDone();
         }
         public void Exit()
         {

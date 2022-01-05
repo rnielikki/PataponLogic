@@ -37,6 +37,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         GameObject _content;
         [SerializeField]
         GameObject _textOnEmpty;
+        [SerializeField]
+        Animator _animator;
 
         UnityEngine.Events.UnityEvent<SlotDataItem> _events;
 
@@ -48,6 +50,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public void Init(SlotMeta slotMeta, ScrollList scrollList,
             int index, UnityEngine.Events.UnityEvent<SlotDataItem> selectedEvents)
         {
+            _animator.keepAnimatorControllerStateOnDisable = true;
             _rectTransform = GetComponent<RectTransform>();
             _scrollList = scrollList;
             Index = index;
@@ -55,6 +58,23 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             if (slotMeta != null) UpdateDisplay(slotMeta);
             else HideDisplay();
             _button.onClick.AddListener(() => _events.Invoke(this));
+        }
+
+        /// <summary>
+        /// Show loading animation and stops ok/cancel/navigate input.
+        /// </summary>
+        public void MarkAsProcessing()
+        {
+            _animator.Play("saving", 0, -1);
+            Core.Global.GlobalData.GlobalInputActions.DisableNavigatingInput();
+        }
+        /// <summary>
+        /// Show finished animation and resumes ok/cancel/navigate input.
+        /// </summary>
+        public void MarkAsDone()
+        {
+            _animator.Play("saved", 0, -1);
+            Core.Global.GlobalData.GlobalInputActions.EnableNavigatingInput();
         }
         public void UpdateDisplay(SlotMeta meta)
         {
@@ -84,6 +104,10 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             _highlightImage.enabled = false;
         }
         public void ShowHighlight() => _highlightImage.enabled = true;
+        private void OnEnable()
+        {
+            _animator.Play("Idle", 0, -1);
+        }
         private void OnDisable()
         {
             if (_highlightImage.enabled)

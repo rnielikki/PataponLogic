@@ -39,9 +39,11 @@ namespace PataRoad.SceneLogic.Patapolis
         }
         private void SaveAndUpdate(CommonSceneLogic.SlotDataItem slotItem)
         {
+            slotItem.MarkAsProcessing();
             var saved = Core.Global.GlobalData.SlotManager.SaveSlot(slotItem.Index);
             slotItem.UpdateDisplay(saved);
             _saved = true;
+            slotItem.MarkAsDone();
         }
         public void MarkAsUnsaved() => _saved = false;
         public void LoadMainMenu()
