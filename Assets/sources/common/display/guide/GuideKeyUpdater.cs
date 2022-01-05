@@ -7,6 +7,10 @@ namespace PataRoad.Common.GameDisplay
         [SerializeField]
         private string _bindingName;
         [SerializeField]
+        private bool _useDescription;
+        [SerializeField]
+        private string _description;
+        [SerializeField]
         private UnityEngine.UI.Text _output;
         private void Start()
         {
@@ -15,6 +19,7 @@ namespace PataRoad.Common.GameDisplay
                 gameObject.SetActive(false);
             }
             else _output.text = name;
+            if (_useDescription) _output.text += " : " + _description;
         }
     }
 }

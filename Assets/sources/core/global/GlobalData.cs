@@ -17,6 +17,9 @@ namespace PataRoad.Core.Global
         public static int TipIndex { get; set; }
         public static SlotManager SlotManager { get; set; }
         public static Slot CurrentSlot => SlotManager.CurrentSlot;
+
+        public static Settings.SettingModel Settings { get; private set; }
+
         /// <summary>
         /// Loads System data.
         /// </summary>
@@ -30,6 +33,7 @@ namespace PataRoad.Core.Global
 
             ItemLoader.LoadAll();
             Character.Patapons.Data.RareponInfo.LoadAll();
+            Settings = Global.Settings.SettingModel.Load();
 
             SlotManager = new SlotManager();
         }

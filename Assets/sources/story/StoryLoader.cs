@@ -10,23 +10,29 @@ namespace PataRoad.Story
     class StoryLoader : MonoBehaviour
     {
         private static StoryLoader _current { get; set; }
+        private UnityEngine.InputSystem.InputAction _action;
+        private Core.Map.MapData _nextMap;
         private void Start()
         {
             _current = this;
             _current.gameObject.SetActive(false);
+            _action = Core.Global.GlobalData.Input.actions.FindAction("UI/Select");
+            _action.performed += SkipStory;
         }
         public static void Init()
         {
-            _current.gameObject.SetActive(true);
-            DontDestroyOnLoad(_current);
+            var gameObj = new GameObject();
+            DontDestroyOnLoad(gameObj);
+            _current = gameObj.AddComponent<StoryLoader>();
         }
         public static void LoadStory(StoryData data)
         {
+            _current.gameObject.SetActive(true);
             _current.StartStory(data);
         }
         private void StartStory(StoryData data)
         {
-            Common.GameDisplay.SceneLoadingAction.Create(data.SceneName).ChangeScene();
+            SceneLoadingAction.Create(data.SceneName).ChangeScene();
             SceneManager.sceneLoaded += OnStorySceneLoaded;
             void OnStorySceneLoaded(Scene scene, LoadSceneMode mode)
             {
@@ -39,6 +45,7 @@ namespace PataRoad.Story
             //-- Init
             var storySceneInfo = FindObjectOfType<StorySceneInfo>();
             storySceneInfo.StartStoryScene();
+            _nextMap = data.NextMap;
 
             //-- Audio
             storySceneInfo.AudioSource.clip = data.Music;
@@ -103,11 +110,20 @@ namespace PataRoad.Story
 
             //-- Do story action
             yield return storySceneInfo.LoadStoryLines(data.StoryActions);
-
+            MoveToNext();
+        }
+        private void SkipStory(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            _action.performed -= SkipStory;
+            StopAllCoroutines();
+            MoveToNext();
+        }
+        private void MoveToNext()
+        {
             //-- Move to the next map
-            if (data.NextMap != null)
+            if (_nextMap != null)
             {
-                var mapContainer = Core.Global.GlobalData.CurrentSlot.MapInfo.GetMapByIndex(data.NextMap.Index);
+                var mapContainer = Core.Global.GlobalData.CurrentSlot.MapInfo.GetMapByIndex(_nextMap.Index);
                 if (mapContainer != null)
                 {
                     Core.Global.GlobalData.CurrentSlot.MapInfo.Select(mapContainer);
@@ -128,6 +144,7 @@ namespace PataRoad.Story
         private void OnDestroy()
         {
             _current = null;
+            _action.performed -= SkipStory;
         }
     }
 }
