@@ -2,6 +2,7 @@
 
 namespace PataRoad.Core.Global.Settings
 {
+    [System.Serializable]
     public class SettingModel
     {
         [SerializeField]

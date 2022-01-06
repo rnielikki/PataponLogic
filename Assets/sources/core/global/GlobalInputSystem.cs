@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using PataRoad.Core.Global.Settings;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,9 +12,11 @@ namespace PataRoad.Core.Global
         private readonly PlayerInput _input;
         private readonly InputAction[] _defaultsToWaitNextInput;
         private readonly InputAction[] _allNavigatableInput;
+        private const string SavedKeyName = "KeyBindings";
         internal GlobalInputSystem(PlayerInput input)
         {
             _input = input;
+            Load();
             _defaultsToWaitNextInput = new InputAction[]{
                 _input.actions.FindAction("UI/Submit"),
                 _input.actions.FindAction("UI/Cancel")
@@ -142,6 +145,42 @@ namespace PataRoad.Core.Global
             foreach (var input in inputs)
             {
                 input.Enable();
+            }
+        }
+        public void Load()
+        {
+            var raw = PlayerPrefs.GetString(SavedKeyName);
+            if (!string.IsNullOrEmpty(raw))
+            {
+                var deserializedBindings = JsonUtility.FromJson<KeymapSettingModel>(raw);
+                var bindings = deserializedBindings.Bindings;
+                for (int i = 0; i < bindings.Length; i++)
+                {
+                    var binding = bindings[i];
+                    var action = _input.actions.FindAction(binding.Binding.action);
+                    binding.SetPath();
+                    Debug.Log(binding.Binding.name + "  " + binding.Binding.action + " " + binding.Binding.ToDisplayString() + " " + binding.Binding.overridePath);
+                    action.ApplyBindingOverride(binding.Binding);
+                }
+            }
+        }
+        public void Save()
+        {
+            var result = new KeymapSettingModel();
+            foreach (var map in _input.actions.actionMaps)
+            {
+                foreach (var binding in map.bindings)
+                {
+                    if (binding.overridePath != null || binding.overrideInteractions != null || binding.overrideInteractions != null)
+                    {
+                        var copied = new InputBinding(binding.effectivePath, binding.action, binding.groups, binding.effectiveProcessors, binding.effectiveInteractions, binding.name);
+                        result.AddToList(copied, binding.path);
+                    }
+                    PlayerPrefs.SetString(
+                        SavedKeyName,
+                        JsonUtility.ToJson(result)
+                    );
+                }
             }
         }
     }

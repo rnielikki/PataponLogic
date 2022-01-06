@@ -61,19 +61,23 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         {
             if (isOn && _isOpen)
             {
-                _currentSetting.SetDifficulty(_toggleGroup.GetValueFromToggle());
-                _changed = true;
+                var newValue = _toggleGroup.GetValueFromToggle();
+                if (newValue != _currentSetting.Difficulty)
+                {
+                    _changed = true;
+                }
+                _currentSetting.SetDifficulty(newValue);
             }
         }
         public void SetMusicVolume(float volume)
         {
+            if (volume != _currentSetting.MusicVolume) _changed = true;
             _currentSetting.MusicVolume = volume;
-            _changed = true;
         }
         public void SetSoundVolume(float volume)
         {
+            if (volume != _currentSetting.SoundVolume) _changed = true;
             _currentSetting.SoundVolume = volume;
-            _changed = true;
         }
         public void Close(bool apply)
         {
@@ -101,6 +105,7 @@ namespace PataRoad.SceneLogic.Main.SettingScene
             _parent.ResumeNavigation();
             gameObject.SetActive(false);
             _isOpen = false;
+            _changed = false;
         }
     }
 }

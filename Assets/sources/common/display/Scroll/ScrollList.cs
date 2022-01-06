@@ -50,7 +50,7 @@ namespace PataRoad.Common.GameDisplay
             }
         }
         internal void ForceRebuildLayout() => UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(_rectTransform);
-        internal void Scroll(IScrollListElement element)
+        public void Scroll(IScrollListElement element)
         {
             if (element == null) SetToZero();
             else Scroll(element.RectTransform, element.Index);
