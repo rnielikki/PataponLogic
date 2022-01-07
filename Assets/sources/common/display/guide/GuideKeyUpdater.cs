@@ -12,13 +12,31 @@ namespace PataRoad.Common.GameDisplay
         private string _description;
         [SerializeField]
         private UnityEngine.UI.Text _output;
+        [SerializeField]
+        bool _isComposite;
         private void Start()
         {
-            if (!Core.Global.GlobalData.GlobalInputActions.TryGetActionBindingName(_bindingName, out string name))
+            bool gotBinding = false;
+            if (_isComposite)
             {
-                gameObject.SetActive(false);
+                gotBinding = Core.Global.GlobalData.GlobalInputActions.TryGetAllActionBindingNames(_bindingName, out var dictionary);
+                if (!gotBinding)
+                {
+                    gameObject.SetActive(false);
+                    return;
+                }
+                _output.text = string.Join('/', dictionary.Values);
             }
-            else _output.text = name;
+            else
+            {
+                gotBinding = Core.Global.GlobalData.GlobalInputActions.TryGetActionBindingName(_bindingName, out string name);
+                if (!gotBinding)
+                {
+                    gameObject.SetActive(false);
+                    return;
+                }
+                _output.text = name;
+            }
             if (_useDescription) _output.text += " : " + _description;
         }
     }

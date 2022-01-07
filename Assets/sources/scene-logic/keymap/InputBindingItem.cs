@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.KeymapSettings
 {
-    class InputBindingItem : MonoBehaviour
+    class InputBindingItem : MonoBehaviour, ISelectHandler, IDeselectHandler
     {
         [SerializeField]
         Text _text;
@@ -16,18 +17,35 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private Image _image;
         [SerializeField]
         private Color _colorWhileBinding;
+        [SerializeField]
+        private Color _newBindingColor;
+        private Button _button;
 
-        private void Start()
-        {
-            GetComponent<Button>().onClick.AddListener(ListenBinding);
-            _defaultColor = _image.color;
-        }
-        internal void Init(InputBinding binding, InputAction action)
+        private InputActionLoader _parent;
+
+        private bool _selected;
+        private bool _isNewBinding;
+
+
+        internal void Init(InputBinding binding, InputAction action, InputActionLoader parent)
         {
             _action = action;
             _binding = binding;
+            _parent = parent;
 
             _deviceName = GetDeviceName(_binding.path);
+
+            _button = GetComponent<Button>();
+            if (!string.IsNullOrEmpty(binding.groups))
+            {
+                _button.onClick.AddListener(ListenBinding);
+            }
+            else
+            {
+                _image.color = _newBindingColor;
+                _isNewBinding = true;
+            }
+            _defaultColor = _image.color;
 
             UpdateText(binding.ToDisplayString());
         }
@@ -84,6 +102,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
 
         private string GetDeviceName(string path)
         {
+            if (path == null) return string.Empty;
             int start = path.IndexOf('<');
             int end = path.IndexOf('>');
 
@@ -94,9 +113,44 @@ namespace PataRoad.SceneLogic.KeymapSettings
             }
             return path.Substring(start + 1, end - 1);
         }
+        private void RemoveBinding(InputAction.CallbackContext context)
+        {
+            if (!_selected) return;
+            if (_isNewBinding)
+            {
+                //_action.ChangeBinding(_binding).Erase();
+                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.RemoveBinding(_binding);
+                var nextTarget = _button.navigation.selectOnUp;
+                if (nextTarget != null) nextTarget.Select();
+                else _parent.Button.Select();
+                Destroy(gameObject);
+            }
+            else
+            {
+                _action.RemoveBindingOverride(_binding);
+                UpdateText(_binding.ToDisplayString());
+            }
+        }
         internal void UpdateText(string displayString)
         {
             _text.text = $"{_binding.name} {displayString.ToUpper()} ({_deviceName})";
+        }
+        private void OnDestroy()
+        {
+            _button.onClick.RemoveAllListeners();
+            Core.Global.GlobalData.GlobalInputActions.CancelAction.performed -= RemoveBinding;
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            _selected = false;
+            Core.Global.GlobalData.GlobalInputActions.CancelAction.performed -= RemoveBinding;
+        }
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            _selected = true;
+            Core.Global.GlobalData.GlobalInputActions.CancelAction.performed += RemoveBinding;
         }
     }
 }

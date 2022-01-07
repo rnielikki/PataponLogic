@@ -14,8 +14,14 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private RectTransform _attachTarget;
         [SerializeField]
         InputBindingAdder _adder;
-
         private InputAction _currentAction;
+
+        [SerializeField]
+        private UnityEngine.UI.Button _okButton;
+        public UnityEngine.UI.Button Button => _okButton;
+        [SerializeField]
+        private UnityEngine.UI.Button _resetButton;
+
         private void Start()
         {
             _firstSelect.Select();
@@ -37,15 +43,15 @@ namespace PataRoad.SceneLogic.KeymapSettings
             }
             foreach (var binding in _currentAction.bindings)
             {
-                if (!binding.isComposite)
+                if (!binding.isComposite && binding.path != null)
                 {
-                    Instantiate(_template, _attachTarget).Init(binding, _currentAction);
+                    Instantiate(_template, _attachTarget).Init(binding, _currentAction, this);
                 }
             }
         }
         internal void Attach(InputBinding newBinding)
         {
-            Instantiate(_template, _attachTarget).Init(newBinding, _currentAction);
+            Instantiate(_template, _attachTarget).Init(newBinding, _currentAction, this);
         }
         public void Save()
         {
@@ -59,6 +65,19 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private void ToMain()
         {
             Common.GameDisplay.SceneLoadingAction.Create("Main").ChangeScene();
+        }
+        public void ResetBindings()
+        {
+            Common.GameDisplay.ConfirmDialog.Create("All key binding settings are reset.\nYou can't cancel the action once after it's proceeded.\nAre you sure to proceed?")
+                .SetLastSelected(_resetButton.gameObject)
+                .SetOkAction(() =>
+                {
+                    GlobalData.Input.actions.RemoveAllBindingOverrides();
+                    GlobalData.GlobalInputActions.KeyMapModel.ClearAllBindings();
+                    Refresh();
+                })
+                .SetTargetToResume(this)
+                .SelectCancel();
         }
     }
 }

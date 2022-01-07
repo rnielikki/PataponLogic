@@ -70,6 +70,11 @@ namespace PataRoad.Common.GameDisplay
             DisableParent(targetToResume);
             return this;
         }
+        public ConfirmDialog SetLastSelected(GameObject obj)
+        {
+            _lastSelected = obj;
+            return this;
+        }
         public ConfirmDialog SelectOk()
         {
             _okButton.Select();
@@ -132,8 +137,8 @@ namespace PataRoad.Common.GameDisplay
                 _targetToResume.enabled = true;
                 var actionMap = _targetToResume.GetComponent<Navigator.ActionEventMap>();
                 if (actionMap != null) actionMap.enabled = true;
-                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelected);
             }
+            if (_lastSelected != null) UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(_lastSelected);
             if (ok && _callOkActionLater) _onConfirmed?.Invoke();
 
             if (!IsScreenChange || !ok)

@@ -70,12 +70,15 @@ namespace PataRoad.SceneLogic.KeymapSettings
             var queue = new System.Collections.Generic.Queue<(string, InputActionRebindingExtensions.RebindingOperation)>();
             queue.Enqueue(("Press Left or Up (negative) to assign", rebind0));
             queue.Enqueue(("Press Right or Down (positive) to assign", rebind1));
-            ChainListen(queue, new System.Collections.Generic.List<string>(), After1DAxis, true);
-            void After1DAxis(System.Collections.Generic.List<string> results)
+            ChainListen(queue, new System.Collections.Generic.List<InputControl>(), After1DAxis, true);
+            void After1DAxis(System.Collections.Generic.List<InputControl> results)
             {
-                _action.AddCompositeBinding("1DAxis")
-                    .With("Negative", results[0])
-                    .With("Positive", results[1]);
+                var composite = _action.AddCompositeBinding("1DAxis")
+                    .With("negative", ConvertToBindingPath(results[0].path))
+                    .With("positive", ConvertToBindingPath(results[1].path));
+                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 1]);
+                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 2]);
+                _action.AddBinding();
                 _loader.Refresh();
             }
         }
@@ -91,21 +94,25 @@ namespace PataRoad.SceneLogic.KeymapSettings
             queue.Enqueue(("Press Down Key to assign", rebindDown));
             queue.Enqueue(("Press Left Key to assign", rebindLeft));
             queue.Enqueue(("Press Right Key to assign", rebindRight));
-            ChainListen(queue, new System.Collections.Generic.List<string>(), After2DVector, true);
+            ChainListen(queue, new System.Collections.Generic.List<InputControl>(), After2DVector, true);
 
-            void After2DVector(System.Collections.Generic.List<string> results)
+            void After2DVector(System.Collections.Generic.List<InputControl> results)
             {
-                _action.AddCompositeBinding("2DVector")
-                    .With("Up", results[0])
-                    .With("Down", results[1])
-                    .With("Left", results[2])
-                    .With("Right", results[3]);
+                var composite = _action.AddCompositeBinding("2DVector")
+                    .With("up", ConvertToBindingPath(results[0].path))
+                    .With("down", ConvertToBindingPath(results[1].path))
+                    .With("left", ConvertToBindingPath(results[2].path))
+                    .With("right", ConvertToBindingPath(results[3].path));
+                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 1]);
+                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 2]);
+                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 3]);
+                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 4]);
                 _loader.Refresh();
             }
         }
         private void ChainListen(System.Collections.Generic.Queue<(string, InputActionRebindingExtensions.RebindingOperation)> operations,
-            System.Collections.Generic.List<string> results,
-            UnityEngine.Events.UnityAction<System.Collections.Generic.List<string>> callback,
+            System.Collections.Generic.List<InputControl> results,
+            UnityEngine.Events.UnityAction<System.Collections.Generic.List<InputControl>> callback,
             bool first = false)
         {
             if (!first)
@@ -113,7 +120,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
                 var (_, operation) = operations.Dequeue();
                 if (operation != null)
                 {
-                    results.Add(operation.selectedControl.path);
+                    results.Add(operation.selectedControl);
                     operation.Dispose();
                 }
             }
@@ -154,13 +161,6 @@ namespace PataRoad.SceneLogic.KeymapSettings
                 }
             }
             op.Complete();
-            /*
-            if (Core.Global.GlobalData.GlobalInputActions.KeyMapModel.DoPathExist(path))
-            {
-                op.Cancel();
-                return;
-            }
-            */
         }
 
         private void Complete(InputActionRebindingExtensions.RebindingOperation op)
@@ -168,19 +168,19 @@ namespace PataRoad.SceneLogic.KeymapSettings
             var binding = _action.GetBindingForControl(op.selectedControl);
             if (binding != null)
             {
-                Debug.Log($"Attaching {op.selectedControl.displayName} with status completed {op.completed}, canceled  {op.canceled}");
                 _loader.Attach(binding.Value);
-                /*
-                    Debug.Log(binding.Value.path + " <- path");
-                    Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(binding.Value);
-                    _loader.Attach(binding.Value);
-                */
+                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(binding.Value);
             }
             else Debug.Log($"binding is null for {op.selectedControl.displayName}, canceling");
 
             op.Dispose();
             _status.SetActive(false);
             _image.color = _defaultColor;
+        }
+        private string ConvertToBindingPath(string ControlPath)
+        {
+            var path = ControlPath.Split('/', 3);
+            return $"<{path[1]}>/{path[2]}";
         }
 
         private void Cancel(InputActionRebindingExtensions.RebindingOperation op)

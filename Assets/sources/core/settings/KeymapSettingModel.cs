@@ -4,44 +4,38 @@ using UnityEngine.InputSystem;
 
 namespace PataRoad.Core.Global.Settings
 {
+    /// <summary>
+    /// Saves key bindings which cannot be added by <see cref="InputActionAsset.FromJson(string)" />.
+    /// </summary>
     [System.Serializable]
     public class KeymapSettingModel
     {
         [SerializeField]
-        List<BindingWrapper> _bindings;
-        [SerializeField]
         List<InputBinding> _newBindings;
-        internal IEnumerable<BindingWrapper> Bindings => _bindings;
         internal IEnumerable<InputBinding> NewBindings => _newBindings;
         internal KeymapSettingModel()
         {
-            _bindings = new List<BindingWrapper>();
             _newBindings = new List<InputBinding>();
-        }
-        internal void ClearBindings()
-        {
-            _bindings.Clear();
-        }
-
-        internal void AddOverrideBinding(InputBinding binding, string path, string overridePath)
-        {
-            _bindings.Add(new BindingWrapper(binding, path, overridePath));
         }
         internal void AddNewBinding(InputBinding binding)
         {
-            _newBindings.Add(binding);
+            if (!_newBindings.Contains(binding)) _newBindings.Add(binding);
         }
-        public bool DoPathExist(string path)
+        internal void RemoveBinding(InputBinding binding)
         {
-            foreach (var binding in _bindings)
-            {
-                if (binding.OverridePath == path) return true;
-            }
+            _newBindings.Remove(binding);
+        }
+        internal void ClearAllBindings()
+        {
             foreach (var binding in _newBindings)
             {
-                if (binding.effectivePath == path) return true;
+                var action = GlobalData.Input.actions.FindAction(binding.action);
+                var wasEnabled = action.enabled;
+                action.Disable();
+                action.ChangeBinding(binding).Erase();
+                if (wasEnabled) action.Enable();
             }
-            return false;
+            _newBindings.Clear();
         }
     }
 }
