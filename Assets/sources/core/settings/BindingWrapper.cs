@@ -8,17 +8,18 @@ namespace PataRoad.Core.Global.Settings
     {
         [SerializeField]
         string _path;
+        public string Path => _path;
         [SerializeField]
         string _overridePath;
-        public string Path => _path;
+        public string OverridePath => _overridePath;
         [SerializeField]
         InputBinding _binding;
         public InputBinding Binding => _binding;
-        internal BindingWrapper(InputBinding binding, string path)
+        internal BindingWrapper(InputBinding binding, string path, string overridePath)
         {
             _path = path;
             _binding = binding;
-            _overridePath = _binding.path;
+            _overridePath = overridePath;
         }
         internal void SetPath()
         {

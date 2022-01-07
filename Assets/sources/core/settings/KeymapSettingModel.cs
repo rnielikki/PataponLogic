@@ -5,30 +5,43 @@ using UnityEngine.InputSystem;
 namespace PataRoad.Core.Global.Settings
 {
     [System.Serializable]
-    class KeymapSettingModel : ISerializationCallbackReceiver
+    public class KeymapSettingModel
     {
+        [SerializeField]
         List<BindingWrapper> _bindings;
         [SerializeField]
-        BindingWrapper[] _arr;
-        internal BindingWrapper[] Bindings => _arr;
+        List<InputBinding> _newBindings;
+        internal IEnumerable<BindingWrapper> Bindings => _bindings;
+        internal IEnumerable<InputBinding> NewBindings => _newBindings;
         internal KeymapSettingModel()
         {
             _bindings = new List<BindingWrapper>();
+            _newBindings = new List<InputBinding>();
+        }
+        internal void ClearBindings()
+        {
+            _bindings.Clear();
         }
 
-        internal void AddToList(InputBinding binding, string path)
+        internal void AddOverrideBinding(InputBinding binding, string path, string overridePath)
         {
-            _bindings.Add(new BindingWrapper(binding, path));
+            _bindings.Add(new BindingWrapper(binding, path, overridePath));
         }
-
-        public void OnBeforeSerialize()
+        internal void AddNewBinding(InputBinding binding)
         {
-            _arr = _bindings.ToArray();
+            _newBindings.Add(binding);
         }
-
-        public void OnAfterDeserialize()
+        public bool DoPathExist(string path)
         {
-            //whatever
+            foreach (var binding in _bindings)
+            {
+                if (binding.OverridePath == path) return true;
+            }
+            foreach (var binding in _newBindings)
+            {
+                if (binding.effectivePath == path) return true;
+            }
+            return false;
         }
     }
 }

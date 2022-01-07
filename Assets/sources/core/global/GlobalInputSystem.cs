@@ -13,6 +13,10 @@ namespace PataRoad.Core.Global
         private readonly InputAction[] _defaultsToWaitNextInput;
         private readonly InputAction[] _allNavigatableInput;
         private const string SavedKeyName = "KeyBindings";
+        /// <summary>
+        /// Represents only added and overriden keys. Contains empty data by default.
+        /// </summary>
+        public KeymapSettingModel KeyMapModel { get; private set; }
         internal GlobalInputSystem(PlayerInput input)
         {
             _input = input;
@@ -152,36 +156,31 @@ namespace PataRoad.Core.Global
             var raw = PlayerPrefs.GetString(SavedKeyName);
             if (!string.IsNullOrEmpty(raw))
             {
-                var deserializedBindings = JsonUtility.FromJson<KeymapSettingModel>(raw);
-                var bindings = deserializedBindings.Bindings;
-                for (int i = 0; i < bindings.Length; i++)
-                {
-                    var binding = bindings[i];
-                    var action = _input.actions.FindAction(binding.Binding.action);
-                    binding.SetPath();
-                    Debug.Log(binding.Binding.name + "  " + binding.Binding.action + " " + binding.Binding.ToDisplayString() + " " + binding.Binding.overridePath);
-                    action.ApplyBindingOverride(binding.Binding);
-                }
+                KeyMapModel = JsonUtility.FromJson<KeymapSettingModel>(raw);
+                Reload();
+            }
+            else KeyMapModel = new KeymapSettingModel();
+        }
+        public void Reload()
+        {
+            foreach (var binding in KeyMapModel.Bindings)
+            {
+                var action = _input.actions.FindAction(binding.Binding.action);
+                binding.SetPath();
+                action.ApplyBindingOverride(binding.Binding);
+            }
+            foreach (var binding in KeyMapModel.NewBindings)
+            {
+                var action = _input.actions.FindAction(binding.action);
+                action.AddBinding(binding);
             }
         }
         public void Save()
         {
-            var result = new KeymapSettingModel();
-            foreach (var map in _input.actions.actionMaps)
-            {
-                foreach (var binding in map.bindings)
-                {
-                    if (binding.overridePath != null || binding.overrideInteractions != null || binding.overrideInteractions != null)
-                    {
-                        var copied = new InputBinding(binding.effectivePath, binding.action, binding.groups, binding.effectiveProcessors, binding.effectiveInteractions, binding.name);
-                        result.AddToList(copied, binding.path);
-                    }
-                    PlayerPrefs.SetString(
-                        SavedKeyName,
-                        JsonUtility.ToJson(result)
-                    );
-                }
-            }
+            PlayerPrefs.SetString(
+                SavedKeyName,
+                JsonUtility.ToJson(KeyMapModel)
+            );
         }
     }
 }

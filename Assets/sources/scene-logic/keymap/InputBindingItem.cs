@@ -27,8 +27,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
             _action = action;
             _binding = binding;
 
-            var bindingPath = _binding.path;
-            _deviceName = bindingPath.Substring(bindingPath.IndexOf('<') + 1, bindingPath.IndexOf('>') - 1);
+            _deviceName = GetDeviceName(_binding.path);
 
             UpdateText(binding.ToDisplayString());
         }
@@ -55,10 +54,19 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private void Complete(InputActionRebindingExtensions.RebindingOperation op)
         {
             var name = op.selectedControl.displayName;
+            var overridePath = op.selectedControl.path;
+            var binding = op.bindingMask;
             op.Dispose();
-            _action.Enable();
+
+            if (binding != null)
+            {
+                _binding = binding.Value;
+                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddOverrideBinding(
+                    binding.Value, binding.Value.path, overridePath
+                    );
+                UpdateText(name);
+            }
             _image.color = _defaultColor;
-            UpdateText(name);
         }
         private void Cancel(InputActionRebindingExtensions.RebindingOperation op)
         {
@@ -66,9 +74,21 @@ namespace PataRoad.SceneLogic.KeymapSettings
             _image.color = _defaultColor;
         }
 
+        private string GetDeviceName(string path)
+        {
+            int start = path.IndexOf('<');
+            int end = path.IndexOf('>');
+
+            if (start < 0 || end < 0 || start + 2 >= end)
+            {
+                //unknown device
+                return "unknown";
+            }
+            return path.Substring(start + 1, end - 1);
+        }
         internal void UpdateText(string displayString)
         {
-            _text.text = $"{_binding.name} {displayString} ({_deviceName})";
+            _text.text = $"{_binding.name} {displayString.ToUpper()} ({_deviceName})";
         }
     }
 }

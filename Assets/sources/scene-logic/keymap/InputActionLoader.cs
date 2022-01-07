@@ -1,5 +1,6 @@
 ﻿using PataRoad.Core.Global;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PataRoad.SceneLogic.KeymapSettings
 {
@@ -11,6 +12,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private InputBindingItem _template;
         [SerializeField]
         private RectTransform _attachTarget;
+        public InputAction CurrentAction { get; private set; }
         private void Start()
         {
             _firstSelect.Select();
@@ -18,11 +20,12 @@ namespace PataRoad.SceneLogic.KeymapSettings
         }
         public void Load(string inputAction)
         {
-            foreach (Transform child in _attachTarget.transform)
+            foreach (var child in _attachTarget.GetComponentsInChildren<InputBindingItem>())
             {
                 Destroy(child.gameObject);
             }
             var action = GlobalData.Input.actions.FindAction(inputAction);
+            CurrentAction = action;
             foreach (var binding in action.bindings)
             {
                 if (!binding.isComposite)
@@ -30,6 +33,10 @@ namespace PataRoad.SceneLogic.KeymapSettings
                     Instantiate(_template, _attachTarget).Init(binding, action);
                 }
             }
+        }
+        internal void Attach(InputBinding newBinding)
+        {
+            Instantiate(_template, _attachTarget).Init(newBinding, CurrentAction);
         }
         public void Save()
         {
