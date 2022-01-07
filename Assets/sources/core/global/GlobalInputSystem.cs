@@ -156,13 +156,21 @@ namespace PataRoad.Core.Global
             var raw = PlayerPrefs.GetString(SavedKeyName);
             if (!string.IsNullOrEmpty(raw))
             {
+                _input.actions.LoadBindingOverridesFromJson(raw);
+            }
+            /*
+            var raw = PlayerPrefs.GetString(SavedKeyName);
+            if (!string.IsNullOrEmpty(raw))
+            {
                 KeyMapModel = JsonUtility.FromJson<KeymapSettingModel>(raw);
                 Reload();
             }
             else KeyMapModel = new KeymapSettingModel();
+            */
         }
         public void Reload()
         {
+            /*
             foreach (var binding in KeyMapModel.Bindings)
             {
                 var action = _input.actions.FindAction(binding.Binding.action);
@@ -174,13 +182,20 @@ namespace PataRoad.Core.Global
                 var action = _input.actions.FindAction(binding.action);
                 action.AddBinding(binding);
             }
+            */
         }
         public void Save()
         {
             PlayerPrefs.SetString(
                 SavedKeyName,
+                _input.actions.SaveBindingOverridesAsJson()
+            );
+            /*
+            PlayerPrefs.SetString(
+                SavedKeyName,
                 JsonUtility.ToJson(KeyMapModel)
             );
+            */
         }
     }
 }

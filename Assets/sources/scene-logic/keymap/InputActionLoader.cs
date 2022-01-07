@@ -12,31 +12,40 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private InputBindingItem _template;
         [SerializeField]
         private RectTransform _attachTarget;
-        public InputAction CurrentAction { get; private set; }
+        [SerializeField]
+        InputBindingAdder _adder;
+
+        private InputAction _currentAction;
         private void Start()
         {
             _firstSelect.Select();
+            _adder.Init(this);
             Load("Drum/Pata");
         }
         public void Load(string inputAction)
+        {
+            var action = GlobalData.Input.actions.FindAction(inputAction);
+            _currentAction = action;
+            _adder.SetListeningType(action);
+            Refresh();
+        }
+        internal void Refresh()
         {
             foreach (var child in _attachTarget.GetComponentsInChildren<InputBindingItem>())
             {
                 Destroy(child.gameObject);
             }
-            var action = GlobalData.Input.actions.FindAction(inputAction);
-            CurrentAction = action;
-            foreach (var binding in action.bindings)
+            foreach (var binding in _currentAction.bindings)
             {
                 if (!binding.isComposite)
                 {
-                    Instantiate(_template, _attachTarget).Init(binding, action);
+                    Instantiate(_template, _attachTarget).Init(binding, _currentAction);
                 }
             }
         }
         internal void Attach(InputBinding newBinding)
         {
-            Instantiate(_template, _attachTarget).Init(newBinding, CurrentAction);
+            Instantiate(_template, _attachTarget).Init(newBinding, _currentAction);
         }
         public void Save()
         {

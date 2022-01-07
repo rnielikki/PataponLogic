@@ -37,16 +37,23 @@ namespace PataRoad.SceneLogic.KeymapSettings
             _image.color = _colorWhileBinding;
 
             var rebind = _action.PerformInteractiveRebinding()
-            .WithBindingGroup(_binding.groups)
-            .WithBindingMask(_binding)
             .WithCancelingThrough("<Keyboard>/escape");
 
+            if (_binding.isPartOfComposite)
+            {
+                rebind.WithBindingMask(_binding);
+            }
+            else
+            {
+                rebind.WithBindingGroup(_binding.groups);
+            }
             rebind.Start().OnPotentialMatch(Match).OnComplete(Complete).OnCancel(Cancel);
         }
         private void Match(InputActionRebindingExtensions.RebindingOperation op)
         {
             if (op.selectedControl.device.name != _deviceName)
             {
+                Debug.Log($"Device name no match, {op.selectedControl.device.name} is not {_deviceName}");
                 op.Cancel();
             }
             else op.Complete();
@@ -54,18 +61,19 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private void Complete(InputActionRebindingExtensions.RebindingOperation op)
         {
             var name = op.selectedControl.displayName;
-            var overridePath = op.selectedControl.path;
-            var binding = op.bindingMask;
+            //var overridePath = op.selectedControl.path;
+            //var binding = op.bindingMask;
             op.Dispose();
-
+            /*
             if (binding != null)
             {
                 _binding = binding.Value;
                 Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddOverrideBinding(
                     binding.Value, binding.Value.path, overridePath
-                    );
-                UpdateText(name);
+                );
             }
+            */
+            UpdateText(name);
             _image.color = _defaultColor;
         }
         private void Cancel(InputActionRebindingExtensions.RebindingOperation op)
