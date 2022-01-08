@@ -166,14 +166,9 @@ namespace PataRoad.Core.Global
             if (!string.IsNullOrEmpty(rawAdded))
             {
                 KeyMapModel = JsonUtility.FromJson<KeymapSettingModel>(rawAdded);
+                KeyMapModel.LoadBindings(_input);
             }
             else KeyMapModel = new KeymapSettingModel();
-
-            foreach (var binding in KeyMapModel.NewBindings)
-            {
-                var action = _input.actions.FindAction(binding.action);
-                action.AddBinding(binding);
-            }
         }
         public void Save()
         {

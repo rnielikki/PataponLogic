@@ -12,21 +12,18 @@ namespace PataRoad.SceneLogic.KeymapSettings
         Color _listeningColor;
         Color _defaultColor;
 
-        [SerializeField]
-        GameObject _status;
-        [SerializeField]
-        UnityEngine.UI.Text _statusText;
-
         InputActionLoader _loader;
+        ActionToggleItem _currentItem;
         private UnityEngine.Events.UnityAction ListenBinding { get; set; }
         private void Start()
         {
             _defaultColor = _image.color;
         }
         public void Init(InputActionLoader loader) => _loader = loader;
-        public void SetListeningType(InputAction action)
+        public void SetListeningType(InputAction action, ActionToggleItem currentItem)
         {
             _action = action;
+            _currentItem = currentItem;
             if (action.type == InputActionType.Value)
             {
                 switch (action.expectedControlType)
@@ -55,8 +52,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
         }
         private void ListenBindingDefault()
         {
-            _status.SetActive(true);
-            _statusText.text = "Press Key to assign";
+            _loader.Instruction.SetText("Press Key to assign").Show();
             var rebind = _action.PerformInteractiveRebinding()
                 .WithRebindAddingNewBinding()
                 .WithCancelingThrough("<Keyboard>/escape");
@@ -124,17 +120,20 @@ namespace PataRoad.SceneLogic.KeymapSettings
                     operation.Dispose();
                 }
             }
-            else _status.SetActive(true);
+            else
+            {
+                _loader.Instruction.Show();
+            }
 
             if (operations.Count == 0)
             {
-                _status.SetActive(false);
+                _loader.Instruction.Hide();
                 _image.color = _defaultColor;
                 callback(results);
                 return;
             }
             var (label, current) = operations.Peek();
-            _statusText.text = label;
+            _loader.Instruction.SetText(label);
             current.Start().OnPotentialMatch(Match).OnComplete((_) => ChainListen(operations, results, callback)).OnCancel(Cancel);
         }
 
@@ -153,14 +152,15 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private void Match(InputActionRebindingExtensions.RebindingOperation op)
         {
             var path = op.selectedControl.path;
-            foreach (var control in _action.controls)
+            if (_currentItem.IsNoDuplication(ConvertToBindingPath(path)))
             {
-                if (control.path == path)
-                {
-                    op.Cancel();
-                }
+                op.Complete();
             }
-            op.Complete();
+            else
+            {
+                Core.Global.GlobalData.Sound.PlayBeep();
+                op.Cancel();
+            }
         }
 
         private void Complete(InputActionRebindingExtensions.RebindingOperation op)
@@ -174,7 +174,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
             else Debug.Log($"binding is null for {op.selectedControl.displayName}, canceling");
 
             op.Dispose();
-            _status.SetActive(false);
+            _loader.Instruction.Hide();
             _image.color = _defaultColor;
         }
         private string ConvertToBindingPath(string ControlPath)
@@ -185,8 +185,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
 
         private void Cancel(InputActionRebindingExtensions.RebindingOperation op)
         {
-            Debug.Log("canceled : " + op.selectedControl.path);
-            _status.SetActive(false);
+            _loader.Instruction.Hide();
             op.Dispose();
             _image.color = _defaultColor;
         }

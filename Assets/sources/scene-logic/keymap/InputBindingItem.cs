@@ -21,17 +21,17 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private Color _newBindingColor;
         private Button _button;
 
-        private InputActionLoader _parent;
+        private InputActionLoader _loader;
 
         private bool _selected;
         private bool _isNewBinding;
 
 
-        internal void Init(InputBinding binding, InputAction action, InputActionLoader parent)
+        internal void Init(InputBinding binding, InputAction action, InputActionLoader loader)
         {
             _action = action;
             _binding = binding;
-            _parent = parent;
+            _loader = loader;
 
             _deviceName = GetDeviceName(_binding.path);
 
@@ -71,7 +71,10 @@ namespace PataRoad.SceneLogic.KeymapSettings
         {
             if (op.selectedControl.device.name != _deviceName)
             {
-                Debug.Log($"Device name no match, {op.selectedControl.device.name} is not {_deviceName}");
+                _loader.Instruction
+                    .SetText($"You're trying to edit {_deviceName}. Please try on {op.selectedControl.device.name} or add new one.")
+                    .HideAfterTime(2);
+                Core.Global.GlobalData.Sound.PlayBeep();
                 op.Cancel();
             }
             else op.Complete();
@@ -79,18 +82,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private void Complete(InputActionRebindingExtensions.RebindingOperation op)
         {
             var name = op.selectedControl.displayName;
-            //var overridePath = op.selectedControl.path;
-            //var binding = op.bindingMask;
             op.Dispose();
-            /*
-            if (binding != null)
-            {
-                _binding = binding.Value;
-                Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddOverrideBinding(
-                    binding.Value, binding.Value.path, overridePath
-                );
-            }
-            */
             UpdateText(name);
             _image.color = _defaultColor;
         }
@@ -116,19 +108,24 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private void RemoveBinding(InputAction.CallbackContext context)
         {
             if (!_selected) return;
+            var wasEnabled = _action.enabled;
+            _action.Disable();
             if (_isNewBinding)
             {
-                //_action.ChangeBinding(_binding).Erase();
                 Core.Global.GlobalData.GlobalInputActions.KeyMapModel.RemoveBinding(_binding);
                 var nextTarget = _button.navigation.selectOnUp;
                 if (nextTarget != null) nextTarget.Select();
-                else _parent.Button.Select();
+                else _loader.Button.Select();
+
+                if (wasEnabled) _action.Enable();
                 Destroy(gameObject);
             }
             else
             {
                 _action.RemoveBindingOverride(_binding);
                 UpdateText(_binding.ToDisplayString());
+
+                if (wasEnabled) _action.Enable();
             }
         }
         internal void UpdateText(string displayString)
@@ -140,13 +137,11 @@ namespace PataRoad.SceneLogic.KeymapSettings
             _button.onClick.RemoveAllListeners();
             Core.Global.GlobalData.GlobalInputActions.CancelAction.performed -= RemoveBinding;
         }
-
         public void OnDeselect(BaseEventData eventData)
         {
             _selected = false;
             Core.Global.GlobalData.GlobalInputActions.CancelAction.performed -= RemoveBinding;
         }
-
         public void OnSelect(BaseEventData eventData)
         {
             _selected = true;

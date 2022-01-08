@@ -22,17 +22,20 @@ namespace PataRoad.SceneLogic.KeymapSettings
         [SerializeField]
         private UnityEngine.UI.Button _resetButton;
 
+        [SerializeField]
+        private InstructionWindow _instruction;
+        public InstructionWindow Instruction => _instruction;
+
         private void Start()
         {
+            GetComponentInChildren<UnityEngine.UI.Toggle>().isOn = true;
             _firstSelect.Select();
             _adder.Init(this);
-            Load("Drum/Pata");
         }
-        public void Load(string inputAction)
+        public void Load(InputAction action, ActionToggleItem currentItem)
         {
-            var action = GlobalData.Input.actions.FindAction(inputAction);
             _currentAction = action;
-            _adder.SetListeningType(action);
+            _adder.SetListeningType(action, currentItem);
             Refresh();
         }
         internal void Refresh()
