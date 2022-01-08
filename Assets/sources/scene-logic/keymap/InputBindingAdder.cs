@@ -9,6 +9,10 @@ namespace PataRoad.SceneLogic.KeymapSettings
         [SerializeField]
         UnityEngine.UI.Image _image;
         [SerializeField]
+        private AudioClip _soundOnAdded;
+        [SerializeField]
+        private AudioClip _soundOnNextInput;
+        [SerializeField]
         Color _listeningColor;
         Color _defaultColor;
 
@@ -70,12 +74,12 @@ namespace PataRoad.SceneLogic.KeymapSettings
             void After1DAxis(System.Collections.Generic.List<InputControl> results)
             {
                 var composite = _action.AddCompositeBinding("1DAxis")
-                    .With("negative", ConvertToBindingPath(results[0].path))
-                    .With("positive", ConvertToBindingPath(results[1].path));
+                    .With("negative", _loader.ConvertToBindingPath(results[0].path))
+                    .With("positive", _loader.ConvertToBindingPath(results[1].path));
                 Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 1]);
                 Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 2]);
                 _action.AddBinding();
-                _loader.Refresh();
+                _loader.Refresh(false);
             }
         }
 
@@ -95,15 +99,15 @@ namespace PataRoad.SceneLogic.KeymapSettings
             void After2DVector(System.Collections.Generic.List<InputControl> results)
             {
                 var composite = _action.AddCompositeBinding("2DVector")
-                    .With("up", ConvertToBindingPath(results[0].path))
-                    .With("down", ConvertToBindingPath(results[1].path))
-                    .With("left", ConvertToBindingPath(results[2].path))
-                    .With("right", ConvertToBindingPath(results[3].path));
+                    .With("up", _loader.ConvertToBindingPath(results[0].path))
+                    .With("down", _loader.ConvertToBindingPath(results[1].path))
+                    .With("left", _loader.ConvertToBindingPath(results[2].path))
+                    .With("right", _loader.ConvertToBindingPath(results[3].path));
                 Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 1]);
                 Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 2]);
                 Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 3]);
                 Core.Global.GlobalData.GlobalInputActions.KeyMapModel.AddNewBinding(_action.bindings[composite.bindingIndex + 4]);
-                _loader.Refresh();
+                _loader.Refresh(false);
             }
         }
         private void ChainListen(System.Collections.Generic.Queue<(string, InputActionRebindingExtensions.RebindingOperation)> operations,
@@ -129,6 +133,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
             {
                 _loader.Instruction.Hide();
                 _image.color = _defaultColor;
+                Core.Global.GlobalData.Sound.PlayInScene(_soundOnAdded);
                 callback(results);
                 return;
             }
@@ -147,17 +152,22 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private void ApplyBinding(InputActionRebindingExtensions.RebindingOperation op, string path)
         {
             //not now, for transaction
+            Core.Global.GlobalData.Sound.PlayInScene(_soundOnNextInput);
         }
 
         private void Match(InputActionRebindingExtensions.RebindingOperation op)
         {
             var path = op.selectedControl.path;
-            if (_currentItem.IsNoDuplication(ConvertToBindingPath(path)))
+            if (_currentItem.IsNoDuplication(_loader.ConvertToBindingPath(path), out var duplications))
             {
                 op.Complete();
             }
             else
             {
+                _loader.Instruction
+                    .SetText($"{op.selectedControl.displayName} is already registered for:\n{string.Join(", ", duplications)}")
+                    .Show()
+                    .HideAfterTime(2);
                 Core.Global.GlobalData.Sound.PlayBeep();
                 op.Cancel();
             }
@@ -165,6 +175,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
 
         private void Complete(InputActionRebindingExtensions.RebindingOperation op)
         {
+            Core.Global.GlobalData.Sound.PlayInScene(_soundOnAdded);
             var binding = _action.GetBindingForControl(op.selectedControl);
             if (binding != null)
             {
@@ -177,12 +188,6 @@ namespace PataRoad.SceneLogic.KeymapSettings
             _loader.Instruction.Hide();
             _image.color = _defaultColor;
         }
-        private string ConvertToBindingPath(string ControlPath)
-        {
-            var path = ControlPath.Split('/', 3);
-            return $"<{path[1]}>/{path[2]}";
-        }
-
         private void Cancel(InputActionRebindingExtensions.RebindingOperation op)
         {
             _loader.Instruction.Hide();

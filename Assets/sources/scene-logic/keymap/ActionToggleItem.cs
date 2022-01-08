@@ -46,19 +46,23 @@ namespace PataRoad.SceneLogic.KeymapSettings
             }
         }
         private InputAction FindAction(string actionName) => Core.Global.GlobalData.Input.actions.FindAction(actionName);
-        public bool IsNoDuplication(string bindingPath)
+        public bool IsNoDuplication(string bindingPath, out System.Collections.Generic.List<string> duplicates, System.Guid? bindingId = null)
         {
+            duplicates = null;
             foreach (var relatedAction in _relatedActions)
             {
                 foreach (var relatedBinding in relatedAction.bindings)
                 {
                     if (relatedBinding.effectivePath == bindingPath)
                     {
-                        return false;
+                        if (relatedBinding.id == bindingId) continue;
+                        if (duplicates == null) duplicates = new System.Collections.Generic.List<string>();
+                        duplicates.Add(relatedAction.name);
+                        break;
                     }
                 }
             }
-            return true;
+            return duplicates == null;
         }
     }
 }

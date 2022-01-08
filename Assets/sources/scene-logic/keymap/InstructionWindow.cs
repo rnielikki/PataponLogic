@@ -6,8 +6,20 @@ namespace PataRoad.SceneLogic.KeymapSettings
     {
         [SerializeField]
         UnityEngine.UI.Text _statusText;
-        public void Show() => gameObject.SetActive(true);
-        public void Hide() => gameObject.SetActive(false);
+        private bool _willBeHidden;
+        public InstructionWindow Show()
+        {
+            if (!gameObject.activeSelf) _willBeHidden = false;
+            gameObject.SetActive(true);
+            return this;
+        }
+        public InstructionWindow Hide()
+        {
+            if (_willBeHidden) return this;
+            _willBeHidden = true;
+            gameObject.SetActive(false);
+            return this;
+        }
         public InstructionWindow SetText(string text)
         {
             _statusText.text = text;
@@ -18,15 +30,21 @@ namespace PataRoad.SceneLogic.KeymapSettings
             _statusText.text += "\n" + text;
             return this;
         }
-        public void HideAfterTime(float seconds)
-            => StartCoroutine(HideAfterTimeCoroutine(seconds));
+        public InstructionWindow HideAfterTime(float seconds)
+        {
+            if (_willBeHidden) return this;
+            StartCoroutine(HideAfterTimeCoroutine(seconds));
+            return this;
+        }
         private System.Collections.IEnumerator HideAfterTimeCoroutine(float seconds)
         {
             Show();
+            _willBeHidden = true;
             Core.Global.GlobalData.GlobalInputActions.DisableNavigatingInput();
             yield return new WaitForSeconds(seconds);
-            Hide();
             Core.Global.GlobalData.GlobalInputActions.EnableNavigatingInput();
+            _willBeHidden = false;
+            Hide();
         }
     }
 }

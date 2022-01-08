@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.KeymapSettings
 {
-    class InputBindingItem : MonoBehaviour, ISelectHandler, IDeselectHandler
+    class InputBindingItem : MonoBehaviour, Common.GameDisplay.IScrollListElement, IDeselectHandler
     {
         [SerializeField]
         Text _text;
@@ -19,19 +19,35 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private Color _colorWhileBinding;
         [SerializeField]
         private Color _newBindingColor;
+        [SerializeField]
+        private RectTransform _rectTransform;
         private Button _button;
+
+        [Header("Sounds")]
+        [SerializeField]
+        private AudioClip _selectSound;
+        [SerializeField]
+        private AudioClip _rebindingSound;
+        [SerializeField]
+        private AudioClip _removedSound;
 
         private InputActionLoader _loader;
 
         private bool _selected;
         private bool _isNewBinding;
 
+        public Selectable Selectable => _button;
 
-        internal void Init(InputBinding binding, InputAction action, InputActionLoader loader)
+        public RectTransform RectTransform => _rectTransform;
+
+        public int Index { get; private set; }
+
+        internal void Init(InputBinding binding, InputAction action, InputActionLoader loader, int index)
         {
             _action = action;
             _binding = binding;
             _loader = loader;
+            Index = index;
 
             _deviceName = GetDeviceName(_binding.path);
 
@@ -67,12 +83,23 @@ namespace PataRoad.SceneLogic.KeymapSettings
             }
             rebind.Start().OnPotentialMatch(Match).OnComplete(Complete).OnCancel(Cancel);
         }
+        internal void MoveToUp() => Index--;
         private void Match(InputActionRebindingExtensions.RebindingOperation op)
         {
             if (op.selectedControl.device.name != _deviceName)
             {
                 _loader.Instruction
                     .SetText($"You're trying to edit {_deviceName}. Please try on {op.selectedControl.device.name} or add new one.")
+                    .Show()
+                    .HideAfterTime(2);
+                Core.Global.GlobalData.Sound.PlayBeep();
+                op.Cancel();
+            }
+            else if (!_loader.CurrentActionToggle.IsNoDuplication(_loader.ConvertToBindingPath(op.selectedControl.path), out var duplications, _binding.id))
+            {
+                _loader.Instruction
+                    .SetText($"{op.selectedControl.displayName} is already registered for:\n{string.Join(", ", duplications)}")
+                    .Show()
                     .HideAfterTime(2);
                 Core.Global.GlobalData.Sound.PlayBeep();
                 op.Cancel();
@@ -84,6 +111,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
             var name = op.selectedControl.displayName;
             op.Dispose();
             UpdateText(name);
+            Core.Global.GlobalData.Sound.PlayInScene(_rebindingSound);
             _image.color = _defaultColor;
         }
         private void Cancel(InputActionRebindingExtensions.RebindingOperation op)
@@ -91,7 +119,6 @@ namespace PataRoad.SceneLogic.KeymapSettings
             op.Dispose();
             _image.color = _defaultColor;
         }
-
         private string GetDeviceName(string path)
         {
             if (path == null) return string.Empty;
@@ -112,10 +139,10 @@ namespace PataRoad.SceneLogic.KeymapSettings
             _action.Disable();
             if (_isNewBinding)
             {
+                _action.ChangeBindingWithId(_binding.id).Erase();
                 Core.Global.GlobalData.GlobalInputActions.KeyMapModel.RemoveBinding(_binding);
-                var nextTarget = _button.navigation.selectOnUp;
-                if (nextTarget != null) nextTarget.Select();
-                else _loader.Button.Select();
+
+                _loader.MarkAsDeleted(this);
 
                 if (wasEnabled) _action.Enable();
                 Destroy(gameObject);
@@ -127,6 +154,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
 
                 if (wasEnabled) _action.Enable();
             }
+            Core.Global.GlobalData.Sound.PlayInScene(_removedSound);
         }
         internal void UpdateText(string displayString)
         {
@@ -146,6 +174,9 @@ namespace PataRoad.SceneLogic.KeymapSettings
         {
             _selected = true;
             Core.Global.GlobalData.GlobalInputActions.CancelAction.performed += RemoveBinding;
+
+            Core.Global.GlobalData.Sound.PlayInScene(_selectSound);
+            _loader.ScrollList.Scroll(this);
         }
     }
 }
