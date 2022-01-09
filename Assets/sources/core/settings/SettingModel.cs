@@ -3,7 +3,7 @@
 namespace PataRoad.Core.Global.Settings
 {
     [System.Serializable]
-    public class SettingModel
+    public class SettingModel : ISerializationCallbackReceiver
     {
         [SerializeField]
         Rhythm.Difficulty _difficulty;
@@ -59,6 +59,16 @@ namespace PataRoad.Core.Global.Settings
         {
             PlayerPrefs.SetString("Settings", JsonUtility.ToJson(this));
             PlayerPrefs.Save();
+        }
+
+        public void OnBeforeSerialize()
+        {
+            //Whatever
+        }
+
+        public void OnAfterDeserialize()
+        {
+            Rhythm.RhythmEnvironment.ChangeDifficulty(_difficulty);
         }
     }
 }

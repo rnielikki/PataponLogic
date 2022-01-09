@@ -102,9 +102,12 @@ namespace PataRoad.Core.Rhythm
 
             UnityEngine.InputSystem.InputSystem.settings.updateMode
                 = UnityEngine.InputSystem.InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
-            if (AutoStart) SceneManager.sceneLoaded += StartTimer;
         }
-        public void StartTimer(Scene scene, LoadSceneMode mode)
+        private void Start()
+        {
+            StartTimer();
+        }
+        public void StartTimer()
         {
             Frequency = (int)(RhythmEnvironment.InputInterval / Time.fixedDeltaTime);
             HalfFrequency = Frequency / 2;
@@ -124,8 +127,6 @@ namespace PataRoad.Core.Rhythm
                 MinEffectThresholdFrequency /= 2;
             }
             Count = 0;
-
-            if (AutoStart) SceneManager.sceneLoaded -= StartTimer;
             OnNext.AddListener(OnStart.Invoke);
         }
 

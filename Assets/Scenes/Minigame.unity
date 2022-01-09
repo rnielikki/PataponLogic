@@ -247,6 +247,7 @@ GameObject:
   - component: {fileID: 261114954}
   - component: {fileID: 261114956}
   - component: {fileID: 261114957}
+  - component: {fileID: 261114958}
   m_Layer: 5
   m_Name: Minigame.Content
   m_TagString: Music
@@ -300,7 +301,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6a3d98bf507d71847bf9d1de6b10fc88, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 242fcd112145171468721434bf93757c, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -386,6 +387,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &261114958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261114953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7e94ffaa201b741aeb199fab16cc9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _audioSource: {fileID: 261114957}
 --- !u!1 &280956881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2580,18 +2594,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 261114957}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
   _onTime:
     m_PersistentCalls:
       m_Calls: []
@@ -2633,6 +2635,7 @@ MonoBehaviour:
     rid: 0
   _minigameResultDisplay: {fileID: 888871688}
   _minimumHit: 0.15
+  _music: {fileID: 261114957}
   references:
     version: 2
     RefIds:

@@ -26,6 +26,8 @@ namespace PataRoad.SceneLogic.Minigame
         [Tooltip("Minimum hit percentage, value of 0-1 expected")]
         private float _minimumHit = 0.15f;
         private int _minimumHitFrequency;
+        [SerializeField]
+        private AudioSource _music;
 
         //--- on hit
         private MinigameDrumType _lastRequiredDrum;
@@ -49,6 +51,8 @@ namespace PataRoad.SceneLogic.Minigame
             _minimumHitFrequency = (int)(_minimumHit * RhythmTimer.HalfFrequency);
             _voicePlayer.Init(_audioSource);
             RhythmTimer.Current.OnNext.AddListener(PerformTurn);
+            if (_data.Music != null) _music.clip = _data.Music;
+            _music.Play();
         }
         private void PerformTurn()
         {
@@ -56,6 +60,8 @@ namespace PataRoad.SceneLogic.Minigame
             if (!_data.UseDonChakaGameSound) _audioSource.PlayOneShot(turn.Sound);
             int i = 0;
             int lastTiming = turn.Drums.Length > 3 ? 6 : 3;
+            int nextTiming = lastTiming > 3 ? 7 : 3;
+
             RhythmTimer.Current.OnTime.AddListener(PlayTurn);
 
             void PlayTurn()
@@ -65,10 +71,13 @@ namespace PataRoad.SceneLogic.Minigame
                     if (_data.UseDonChakaGameSound) _voicePlayer.Play(turn.Drums[i]);
                     _grids[i].Load(turn.Drums[i]);
                 }
-                if (i >= lastTiming)
+                if (i == lastTiming)
                 {
                     _voicePlayer.ClearTurn();
                     _audioSource.PlayOneShot(_endSound);
+                }
+                if (i == nextTiming)
+                {
                     RhythmTimer.Current.OnTime.RemoveListener(PlayTurn);
                     RhythmTimer.Current.OnNext.AddListener(ListenTurn);
                 }
@@ -81,17 +90,12 @@ namespace PataRoad.SceneLogic.Minigame
             ListeningInput = false;
             int i = 0;
             int lastTiming = turn.Drums.Length > 3 ? 6 : 3;
-            bool waitLong = turn.Drums.Length > 3;
+            int nextTiming = lastTiming > 3 ? 7 : 3;
             RhythmTimer.Current.OnHalfTime.AddListener(ListenThis);
 
 
             void ListenThis()
             {
-                if (waitLong)
-                {
-                    waitLong = false;
-                    return;
-                }
                 //Calculate
                 if (ListeningInput && !_gotAnyInput && _lastRequiredDrum != MinigameDrumType.Empty)
                 {
@@ -106,31 +110,42 @@ namespace PataRoad.SceneLogic.Minigame
                     _lastRequiredDrum = turn.Drums[i];
                     ListeningInput = true;
                 }
-                else if (i >= lastTiming)
+                else
                 {
-                    ListeningInput = false;
-                    _lastRequiredDrum = MinigameDrumType.Empty;
-                    _gotAnyInput = false;
-                    _lastHitIndex = -1;
-                    RhythmTimer.Current.OnHalfTime.RemoveListener(ListenThis);
-                    _currentIndex++;
-                    for (int j = 0; j < _grids.Length; j++)
+                    if (i == lastTiming)
                     {
-                        _grids[j].ClearStatus();
+                        ListeningInput = false;
+                        _lastRequiredDrum = MinigameDrumType.Empty;
+                        _gotAnyInput = false;
+                        _lastHitIndex = -1;
                     }
-                    if (_data.MinigameTurns.Length > _currentIndex)
+                    if (i == nextTiming)
                     {
-                        RhythmTimer.Current.OnNext.AddListener(PerformTurn);
-                    }
-                    else
-                    {
-                        RhythmTimer.Current.OnNext.AddListener(ShowResult);
+                        RhythmTimer.Current.OnHalfTime.RemoveListener(ListenThis);
+                        _currentIndex++;
+                        for (int j = 0; j < _grids.Length; j++)
+                        {
+                            _grids[j].ClearStatus();
+                        }
+                        if (_data.MinigameTurns.Length > _currentIndex)
+                        {
+                            RhythmTimer.Current.OnNext.AddListener(PerformTurn);
+                        }
+                        else
+                        {
+                            RhythmTimer.Current.OnNext.AddListener(ShowResult);
+                        }
                     }
                 }
                 i++;
             }
         }
-        private void ShowResult() => _minigameResultDisplay.UpdateResult(_model, _frequencyOffset.Average(offset => (1 - (float)offset / RhythmTimer.HalfFrequency)));
+        private void ShowResult()
+        {
+            _audioSource.Stop();
+            _music.Stop();
+            _minigameResultDisplay.UpdateResult(_model, _frequencyOffset.Average(offset => (1 - (float)offset / RhythmTimer.HalfFrequency)));
+        }
 
         public void CheckDrum(RhythmInputModel inputModel)
         {

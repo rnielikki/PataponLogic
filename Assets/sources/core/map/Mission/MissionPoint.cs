@@ -130,7 +130,6 @@ namespace PataRoad.Core.Map
                 foreach (var sound in _ponsSpeakingWhenMissionComplete)
                 {
                     GameSound.SpeakManager.Current.Play(sound);
-                    Global.GlobalData.Sound.PlayInScene(_missionSuccessSound);
                     yield return new WaitForSeconds(2);
                 }
                 AttachToScreen("MissionComplete");

@@ -8,6 +8,9 @@ namespace PataRoad.SceneLogic.Minigame
         [SerializeField]
         bool _useDonChakaGameSound;
         public bool UseDonChakaGameSound => _useDonChakaGameSound;
+        [SerializeField]
+        private AudioClip _music;
+        public AudioClip Music => _music;
 
         public MinigameTurn[] MinigameTurns;
     }
