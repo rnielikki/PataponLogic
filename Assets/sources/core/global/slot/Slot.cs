@@ -55,7 +55,7 @@ namespace PataRoad.Core.Global.Slots
             slot._mapInfo = MapInfo.CreateNew();
             slot._playTime = 0;
             slot._startTime = (int)Time.realtimeSinceStartup;
-            slot._almightyName = "Kamipon";
+            slot._almightyName = "";
 
             return slot;
         }
@@ -86,6 +86,10 @@ namespace PataRoad.Core.Global.Slots
             SlotMetaList.Save(slotMeta, slotIndex);
             PlayerPrefs.Save();
             return slotMeta;
+        }
+        public void SetAlmightyName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(_almightyName)) _almightyName = name;
         }
         public SlotMeta GetSlotMeta() => new SlotMeta(this);
         private void SerializeAll()

@@ -36,6 +36,17 @@
             return result;
         }
         public static bool HasDataInIndex(int index) => index >= 0 && index < SlotSize && _current._slotMeta[index] != null;
+        public static bool HasName(string name)
+        {
+            foreach (var slotMeta in _current._slotMeta)
+            {
+                if (slotMeta?.AlmightyName == name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         internal static void SetLastSlotIndex(int index) => _current._lastSlotIndex = index;
         internal static void Save(SlotMeta meta, int index)
         {
