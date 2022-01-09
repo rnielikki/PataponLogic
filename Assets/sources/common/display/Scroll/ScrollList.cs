@@ -98,10 +98,16 @@ namespace PataRoad.Common.GameDisplay
                 }
             }
         }
-        private void SetToZero()
+        internal void SetToZero()
         {
             _rectTransform.anchoredPosition = Vector2.zero;
             if (!_useIndex) UpdateIndexByPosition(0);
+        }
+        internal void SetToLastForIndexed()
+        {
+            var height = _viewportRectTransform.rect.size.y;
+            _rectTransform.anchoredPosition = Mathf.Max((_maximumScrollLength + 1) * _elementHeight - height, 0) * Vector2.up;
+            UpdateIndexByPosition(1);
         }
         private void UpdateIndexByPosition(float positionOffsetToScroll) //parameter is value of 0-1
         {

@@ -35,7 +35,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
                     case "Axis":
                         ListenBinding = ListenBindingFor1D;
                         break;
-                    case "Vector 2":
+                    case "Vector2":
                         ListenBinding = ListenBindingFor2D;
                         break;
                     default:
@@ -134,6 +134,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
                 _loader.Instruction.Hide();
                 _image.color = _defaultColor;
                 Core.Global.GlobalData.Sound.PlayInScene(_soundOnAdded);
+                _action.Enable();
                 callback(results);
                 return;
             }
@@ -185,6 +186,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
             else Debug.Log($"binding is null for {op.selectedControl.displayName}, canceling");
 
             op.Dispose();
+            _action.Enable();
             _loader.Instruction.Hide();
             _image.color = _defaultColor;
         }
@@ -192,6 +194,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
         {
             _loader.Instruction.Hide();
             op.Dispose();
+            _action.Enable();
             _image.color = _defaultColor;
         }
     }

@@ -11,6 +11,8 @@ namespace PataRoad.SceneLogic.Patapolis
 
         [SerializeField]
         CommonSceneLogic.SlotDataList _slotDataLoader;
+        [SerializeField]
+        AudioClip _savedSound;
 
         private bool _saved;
 
@@ -43,6 +45,7 @@ namespace PataRoad.SceneLogic.Patapolis
             var saved = Core.Global.GlobalData.SlotManager.SaveSlot(slotItem.Index);
             slotItem.UpdateDisplay(saved);
             _saved = true;
+            Core.Global.GlobalData.Sound.PlayInScene(_savedSound);
             slotItem.MarkAsDone();
         }
         public void MarkAsUnsaved() => _saved = false;

@@ -100,6 +100,8 @@ namespace PataRoad.Core.Rhythm
             OnNextQuarterTime = _onNextQuarterTime;
             OnNext = _onNext;
 
+            UnityEngine.InputSystem.InputSystem.settings.updateMode
+                = UnityEngine.InputSystem.InputSettings.UpdateMode.ProcessEventsInFixedUpdate;
             if (AutoStart) SceneManager.sceneLoaded += StartTimer;
         }
         public void StartTimer(Scene scene, LoadSceneMode mode)
@@ -172,6 +174,9 @@ namespace PataRoad.Core.Rhythm
             OnNext.RemoveAllListeners();
             OnNextHalfTime.RemoveAllListeners();
             OnNextQuarterTime.RemoveAllListeners();
+
+            UnityEngine.InputSystem.InputSystem.settings.updateMode
+                = UnityEngine.InputSystem.InputSettings.UpdateMode.ProcessEventsInDynamicUpdate;
         }
     }
 }

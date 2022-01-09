@@ -112,12 +112,14 @@ namespace PataRoad.SceneLogic.KeymapSettings
             op.Dispose();
             UpdateText(name);
             Core.Global.GlobalData.Sound.PlayInScene(_rebindingSound);
+            _action.Enable();
             _image.color = _defaultColor;
         }
         private void Cancel(InputActionRebindingExtensions.RebindingOperation op)
         {
             op.Dispose();
             _image.color = _defaultColor;
+            _action.Enable();
         }
         private string GetDeviceName(string path)
         {

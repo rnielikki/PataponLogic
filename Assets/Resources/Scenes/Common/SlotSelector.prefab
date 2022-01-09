@@ -1,31 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &8299854612006124410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3819894577350157283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 15
-    m_Right: 0
-    m_Top: 15
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 15
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 1
-  m_ReverseArrangement: 0
 --- !u!1 &8299854611835702505
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,6 +30,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3819894578189390359}
   m_Father: {fileID: 0}
@@ -123,6 +98,8 @@ MonoBehaviour:
   _onClosed:
     m_PersistentCalls:
       m_Calls: []
+  _openSound: {fileID: 8300000, guid: ee17a0148f4bbca44bbb777a2d20b3b0, type: 3}
+  _closeSound: {fileID: 8300000, guid: d6943bd00b2d1574bb3e8c190de2e336, type: 3}
 --- !u!114 &9216331927440104818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1743,21 +1720,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 19da3399743e52e498bb77a36d622098, type: 3}
---- !u!224 &3819894578189390359 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5056975217556482409, guid: 19da3399743e52e498bb77a36d622098, type: 3}
-  m_PrefabInstance: {fileID: 8299854612006124414}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3819894577350157283 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5056975216851720349, guid: 19da3399743e52e498bb77a36d622098, type: 3}
-  m_PrefabInstance: {fileID: 8299854612006124414}
-  m_PrefabAsset: {fileID: 0}
---- !u!224 &3819894577350157282 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5056975216851720348, guid: 19da3399743e52e498bb77a36d622098, type: 3}
-  m_PrefabInstance: {fileID: 8299854612006124414}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &3819894577350157277 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5056975216851720355, guid: 19da3399743e52e498bb77a36d622098, type: 3}
@@ -1769,3 +1731,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca63c73a90b2e244fbce91eefcd6e997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &3819894577350157282 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5056975216851720348, guid: 19da3399743e52e498bb77a36d622098, type: 3}
+  m_PrefabInstance: {fileID: 8299854612006124414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3819894577350157283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5056975216851720349, guid: 19da3399743e52e498bb77a36d622098, type: 3}
+  m_PrefabInstance: {fileID: 8299854612006124414}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8299854612006124410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819894577350157283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 15
+    m_Right: 0
+    m_Top: 15
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 15
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 1
+  m_ReverseArrangement: 0
+--- !u!224 &3819894578189390359 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5056975217556482409, guid: 19da3399743e52e498bb77a36d622098, type: 3}
+  m_PrefabInstance: {fileID: 8299854612006124414}
+  m_PrefabAsset: {fileID: 0}

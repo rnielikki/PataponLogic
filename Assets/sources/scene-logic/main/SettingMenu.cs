@@ -18,6 +18,13 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         Slider _musicSlider;
         [SerializeField]
         Slider _soundSlider;
+
+        [SerializeField]
+        AudioSource _currentMusicSource;
+        AudioSource _currentSoundSource;
+        [SerializeField]
+        AudioClip _slideSound;
+
         [SerializeField]
         GameObject _savingImage;
         private Core.Global.Settings.SettingModel _currentSetting;
@@ -28,6 +35,7 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         private void Awake()
         {
             _allSelectables = GetComponentsInChildren<Selectable>();
+            _currentSoundSource = Core.Global.GlobalData.Sound.AudioSource;
         }
         public void Open()
         {
@@ -72,11 +80,15 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         public void SetMusicVolume(float volume)
         {
             if (volume != _currentSetting.MusicVolume) _changed = true;
+            _currentSoundSource.PlayOneShot(_slideSound);
+            _currentMusicSource.volume = volume;
             _currentSetting.MusicVolume = volume;
         }
         public void SetSoundVolume(float volume)
         {
             if (volume != _currentSetting.SoundVolume) _changed = true;
+            _currentSoundSource.PlayOneShot(_slideSound);
+            _currentSoundSource.volume = volume;
             _currentSetting.SoundVolume = volume;
         }
         public void Close(bool apply)
@@ -88,17 +100,21 @@ namespace PataRoad.SceneLogic.Main.SettingScene
                 Core.Global.GlobalData.Settings.UpdateData(_currentSetting);
                 _savingImage.SetActive(false);
                 Core.Global.GlobalData.GlobalInputActions.EnableNavigatingInput();
+                Close();
             }
-            else if (_changed)
+            else
             {
-                Common.GameDisplay.ConfirmDialog.Create("The changed values won't be saved.\nDo you want to quit?")
-                    .SetTargetToResume(this)
-                    .SetOkAction(Close)
-                    .CallOkActionLater()
-                    .SelectCancel();
-                return;
+                if (_changed)
+                {
+                    Common.GameDisplay.ConfirmDialog.Create("The changed values won't be saved.\nDo you want to quit?")
+                        .SetTargetToResume(this)
+                        .SetOkAction(Close)
+                        .CallOkActionLater()
+                        .SelectCancel();
+                }
+                _currentMusicSource.volume = Core.Global.GlobalData.Settings.MusicVolume;
+                _currentSoundSource.volume = Core.Global.GlobalData.Settings.SoundVolume;
             }
-            Close();
         }
         private void Close()
         {

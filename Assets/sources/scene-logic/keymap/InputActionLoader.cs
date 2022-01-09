@@ -28,7 +28,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
         public Common.GameDisplay.ScrollList ScrollList => _scrollList;
 
         [SerializeField]
-        private UnityEngine.UI.Toggle _firstToggle;
+        private UnityEngine.UI.Selectable _firstSelect;
         [SerializeField]
         private AudioClip _soundOnLoaded;
 
@@ -43,14 +43,14 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private void Start()
         {
             _adder.Init(this);
-            _firstToggle.isOn = true;
+            _firstSelect.Select();
         }
         public void Load(InputAction action, ActionToggleItem currentItem)
         {
             _currentAction = action;
             _actionToggle = currentItem;
             _adder.SetListeningType(action, currentItem);
-            Core.Global.GlobalData.Sound.PlayInScene(_soundOnLoaded);
+            GlobalData.Sound.PlayInScene(_soundOnLoaded);
             Refresh(true);
         }
         internal void Refresh(bool selectFirst)
@@ -60,6 +60,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
             {
                 Destroy(child.gameObject);
             }
+            _scrollList.ForceRebuildLayout();
             _contentCount = 0;
             for (var i = 0; i < _currentAction.bindings.Count; i++)
             {
@@ -81,7 +82,8 @@ namespace PataRoad.SceneLogic.KeymapSettings
 
             var item = selectFirst ? _items[0] : _items[_items.Count - 1];
             _scrollList.SetMaximumScrollLength(_contentCount - 1, item);
-            item.Selectable.Select();
+            if (selectFirst) _scrollList.SetToZero();
+            else _scrollList.SetToLastForIndexed();
         }
         internal void Attach(InputBinding newBinding)
         {

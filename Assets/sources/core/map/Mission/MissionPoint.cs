@@ -10,7 +10,6 @@ namespace PataRoad.Core.Map
         [SerializeField]
         [Tooltip("True if mission complete, otherwise False.")]
         private UnityEvent<bool> OnMissionEnd = new UnityEvent<bool>();
-        private AudioSource _soundSource;
         [SerializeField]
         private AudioClip _missionSuccessSound;
         [SerializeField]
@@ -41,7 +40,6 @@ namespace PataRoad.Core.Map
         {
             IsMissionEnd = false;
             Current = this;
-            _soundSource = GameObject.FindGameObjectWithTag("Sound").GetComponent<AudioSource>();
         }
         private void Start()
         {
@@ -96,7 +94,7 @@ namespace PataRoad.Core.Map
         {
             AttachToScreen("MissionFailed");
 
-            _soundSource.PlayOneShot(_missionFailedMusic);
+            Global.GlobalData.Sound.PlayInScene(_missionFailedMusic);
             Global.GlobalData.TipIndex = Global.GlobalData.CurrentSlot.MapInfo.NextMap.MapData.TipIndexOnFail;
             Global.GlobalData.CurrentSlot.MapInfo.MissionFailed();
 
@@ -127,15 +125,16 @@ namespace PataRoad.Core.Map
             StartCoroutine(DoMissionCompleteAction());
             System.Collections.IEnumerator DoMissionCompleteAction()
             {
-                _soundSource.PlayOneShot(_missionSuccessSound);
+                Global.GlobalData.Sound.PlayInScene(_missionSuccessSound);
                 yield return new WaitForSeconds(2);
                 foreach (var sound in _ponsSpeakingWhenMissionComplete)
                 {
-                    _soundSource.PlayOneShot(sound);
+                    GameSound.SpeakManager.Current.Play(sound);
+                    Global.GlobalData.Sound.PlayInScene(_missionSuccessSound);
                     yield return new WaitForSeconds(2);
                 }
                 AttachToScreen("MissionComplete");
-                _soundSource.PlayOneShot(_missionSuccessMusic);
+                Global.GlobalData.Sound.PlayInScene(_missionSuccessMusic);
                 Camera.main.GetComponent<CameraController.CameraMover>().StopMoving();
             }
         }

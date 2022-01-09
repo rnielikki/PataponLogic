@@ -14,6 +14,10 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
 
         [SerializeField]
         UnityEngine.Events.UnityEvent _onClosed;
+        [SerializeField]
+        AudioClip _openSound;
+        [SerializeField]
+        AudioClip _closeSound;
 
         private void Start()
         {
@@ -38,6 +42,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             }
             _items[SlotMetaList.LastSlotIndex].Selectable.Select();
             _items[SlotMetaList.LastSlotIndex].OnSelect(null);
+            Core.Global.GlobalData.Sound.PlayInScene(_openSound);
         }
         private void OnDisable()
         {
@@ -50,6 +55,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         {
             _onClosed.Invoke();
             gameObject.SetActive(false);
+            Core.Global.GlobalData.Sound.PlayInScene(_closeSound);
         }
     }
 }

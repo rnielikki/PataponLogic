@@ -25,15 +25,16 @@ namespace PataRoad.Core.Global
         /// </summary>
         void Awake()
         {
-            TipIndex = -1;
             DontDestroyOnLoad(gameObject);
+
+            Settings = Global.Settings.SettingModel.Load();
+            ItemLoader.LoadAll();
+            Character.Patapons.Data.RareponInfo.LoadAll();
+
+            TipIndex = -1;
             Input = GetComponent<PlayerInput>();
             GlobalInputActions = new GlobalInputSystem(Input);
             Sound = GetComponentInChildren<GlobalSoundSystem>();
-
-            ItemLoader.LoadAll();
-            Character.Patapons.Data.RareponInfo.LoadAll();
-            Settings = Global.Settings.SettingModel.Load();
 
             SlotManager = new SlotManager();
         }

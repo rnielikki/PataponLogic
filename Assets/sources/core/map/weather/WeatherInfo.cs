@@ -20,6 +20,7 @@ namespace PataRoad.Core.Map.Weather
 
         public AudioSource AudioSource { get; private set; }
         // Start is called before the first frame update
+        private bool _wasPlaying;
         public void Init(WeatherType type)
         {
             _weatherTypeDataMap = new System.Collections.Generic.Dictionary<WeatherType, IWeatherData>()
@@ -62,6 +63,15 @@ namespace PataRoad.Core.Map.Weather
             AudioSource.Play();
         }
         internal void StopWeatherSound() => AudioSource.Stop();
+        public void PauseWeatherSound()
+        {
+            _wasPlaying = AudioSource.isPlaying;
+            AudioSource.Stop();
+        }
+        public void ResumeWeatherSound()
+        {
+            if (_wasPlaying) AudioSource.Play();
+        }
         private void OnDestroy()
         {
             Current = null;
