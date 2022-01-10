@@ -115,11 +115,22 @@ namespace PataRoad.SceneLogic.KeymapSettings
             UnityEngine.Events.UnityAction<System.Collections.Generic.List<InputControl>> callback,
             bool first = false)
         {
-            if (!first)
+            if (!first)//Do something with Already listened
             {
                 var (_, operation) = operations.Dequeue();
                 if (operation != null)
                 {
+                    foreach (var control in results) //cancel if previously used
+                    {
+                        if (control.path == operation.selectedControl.path)
+                        {
+                            _loader.Instruction
+                                .SetText($"You cannot assign same key as previously pressed")
+                                .HideAfterTime(2);
+                            Cancel(operation);
+                            return;
+                        }
+                    }
                     results.Add(operation.selectedControl);
                     operation.Dispose();
                 }
@@ -129,18 +140,21 @@ namespace PataRoad.SceneLogic.KeymapSettings
                 _loader.Instruction.Show();
             }
 
-            if (operations.Count == 0)
+            if (operations.Count == 0) //Nothing to listen
             {
                 _loader.Instruction.Hide();
                 _image.color = _defaultColor;
                 Core.Global.GlobalData.Sound.PlayInScene(_soundOnAdded);
                 _action.Enable();
                 callback(results);
-                return;
             }
-            var (label, current) = operations.Peek();
-            _loader.Instruction.SetText(label);
-            current.Start().OnPotentialMatch(Match).OnComplete((_) => ChainListen(operations, results, callback)).OnCancel(Cancel);
+            else //Listen next
+            {
+                Core.Global.GlobalData.Sound.PlayInScene(_soundOnNextInput);
+                var (label, current) = operations.Peek();
+                _loader.Instruction.SetText(label);
+                current.Start().OnPotentialMatch(Match).OnComplete((_) => ChainListen(operations, results, callback)).OnCancel(Cancel);
+            }
         }
 
         private InputActionRebindingExtensions.RebindingOperation GetOperation()
@@ -153,7 +167,6 @@ namespace PataRoad.SceneLogic.KeymapSettings
         private void ApplyBinding(InputActionRebindingExtensions.RebindingOperation op, string path)
         {
             //not now, for transaction
-            Core.Global.GlobalData.Sound.PlayInScene(_soundOnNextInput);
         }
 
         private void Match(InputActionRebindingExtensions.RebindingOperation op)
@@ -169,7 +182,6 @@ namespace PataRoad.SceneLogic.KeymapSettings
                     .SetText($"{op.selectedControl.displayName} is already registered for:\n{string.Join(", ", duplications)}")
                     .Show()
                     .HideAfterTime(2);
-                Core.Global.GlobalData.Sound.PlayBeep();
                 op.Cancel();
             }
         }
@@ -194,6 +206,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
         {
             _loader.Instruction.Hide();
             op.Dispose();
+            Core.Global.GlobalData.Sound.PlayBeep();
             _action.Enable();
             _image.color = _defaultColor;
         }
