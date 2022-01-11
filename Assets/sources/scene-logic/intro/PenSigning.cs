@@ -22,6 +22,8 @@ namespace PataRoad.SceneLogic.Intro
         UnityEngine.Events.UnityEvent _onSigned;
         [SerializeField]
         UnityEngine.Events.UnityEvent _onStarted;
+        [SerializeField]
+        Material _skyboxOnNextScene;
         private void Start()
         {
             _parent = transform.parent.GetComponent<RectTransform>();
@@ -53,9 +55,8 @@ namespace PataRoad.SceneLogic.Intro
             {
                 Core.Global.GlobalData.Sound.PlayInScene(_selectedSound);
                 _canvas.renderMode = RenderMode.WorldSpace;
-                Camera.main.GetComponent<Animator>().enabled = false;
-                Camera.main.transform.rotation = Quaternion.identity;
-                Camera.main.farClipPlane = 1000;
+                RenderSettings.skybox = _skyboxOnNextScene;
+                DynamicGI.UpdateEnvironment();
                 _onSigned.Invoke();
                 gameObject.SetActive(false);
             }
