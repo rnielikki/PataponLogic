@@ -34,14 +34,14 @@ namespace PataRoad.Core.Rhythm.Command
         /// Check if the turn is for player
         /// </summary>
         public static bool IsPlayerTurn { get; private set; } = true;
-        internal static void Start()
+        public static void Start()
         {
             TurnCount = 0;
             IsOn = true;
             IsPlayerTurn = false;
             RhythmTimer.Current.OnTime.AddListener(Count);
         }
-        internal static void Stop()
+        public static void Stop()
         {
             if (IsOn)
             {
@@ -51,7 +51,7 @@ namespace PataRoad.Core.Rhythm.Command
             IsPlayerTurn = true;
             RhythmTimer.Current?.OnTime?.RemoveListener(Count);
         }
-        internal static void Destroy()
+        public static void Destroy()
         {
             Stop();
             OnPlayerTurn.RemoveAllListeners();

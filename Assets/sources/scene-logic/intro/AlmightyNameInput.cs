@@ -11,6 +11,11 @@ namespace PataRoad.SceneLogic.Intro
         [SerializeField]
         Button _okButton;
         InputAction _navAction;
+        [SerializeField]
+        Story.StoryLineLoader _nextStory;
+        [SerializeField]
+        Image _content;
+
         private void Awake()
         {
             _navAction = Core.Global.GlobalData.Input.actions.FindAction("UI/Navigate");
@@ -73,8 +78,9 @@ namespace PataRoad.SceneLogic.Intro
         }
         private void SetName(string text)
         {
-            Core.Global.GlobalData.CurrentSlot.SetAlmightyName(text);
-            Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene();
+            //Core.Global.GlobalData.CurrentSlot.SetAlmightyName(text);
+            _content.gameObject.SetActive(false);
+            _nextStory.ReadLines();
         }
         private void OnDestroy()
         {

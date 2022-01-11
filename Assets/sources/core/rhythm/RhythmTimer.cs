@@ -85,8 +85,6 @@ namespace PataRoad.Core.Rhythm
         public UnityEvent OnNextHalfTime { get; } = new UnityEvent();
 
         [SerializeField]
-        private bool AutoStart = true;
-        [SerializeField]
         private bool UseHalfOfTime;
 
         public static RhythmTimer Current { get; private set; }
