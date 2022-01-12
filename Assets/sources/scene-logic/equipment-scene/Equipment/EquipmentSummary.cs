@@ -57,7 +57,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
             {
                 (EquipmentType equipmentType, EquipmentSummaryElement row) = (kvPair.Key, kvPair.Value);
                 var currentData = equipmentManager.GetEquipmentData(equipmentType);
-                if (currentData == null)
+                if (currentData == null ||
+                    (equipmentType == EquipmentType.Rarepon && !Core.Global.GlobalData.CurrentSlot.Progress.IsRareponOpen))
                 {
                     row.gameObject.SetActive(false);
                 }

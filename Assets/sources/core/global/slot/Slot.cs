@@ -41,7 +41,17 @@ namespace PataRoad.Core.Global.Slots
 
         [SerializeField]
         private string _almightyName;
+        /// <summary>
+        /// Name of the almighty, that defined in very first. This value is unique to the game data and shouldn't be modified after definition.
+        /// </summary>
         public string AlmightyName => _almightyName;
+
+        [SerializeReference]
+        private GameProgress _progress;
+        /// <summary>
+        /// Saved progress of the game, which determines will be some speicific things open or not, like NPCs.
+        /// </summary>
+        public GameProgress Progress => _progress;
 
         /// <summary>
         /// Loads slot with initial game status.
@@ -56,6 +66,7 @@ namespace PataRoad.Core.Global.Slots
             slot._playTime = 0;
             slot._startTime = (int)Time.realtimeSinceStartup;
             slot._almightyName = "";
+            slot._progress = new GameProgress();
 
             return slot;
         }
