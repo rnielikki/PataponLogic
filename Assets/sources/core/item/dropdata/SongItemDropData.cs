@@ -35,11 +35,13 @@ namespace PataRoad.Core.Items
                 return ev;
             }
         }
+        public UnityEngine.Events.UnityEvent OnSongComplete { get; private set; } = new UnityEngine.Events.UnityEvent();
         private void Open()
         {
             var screen = Instantiate(_tutorialScreen).GetComponent<Common.GameDisplay.SongTutorial>();
             screen.Init(_song, this);
         }
+        public void EndPractice() => OnSongComplete?.Invoke();
         void OnValidate()
         {
             if (_processingMessage.Length != Rhythm.Command.PracticingCommandListData.FullPracticeCount)

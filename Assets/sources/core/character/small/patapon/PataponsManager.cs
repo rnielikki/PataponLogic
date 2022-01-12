@@ -24,6 +24,7 @@ namespace PataRoad.Core.Character.Patapons
         /// If this is set to true, Patapons go forward, also whole Patapon position does. For PATAPATA song.
         /// </summary>
         internal static bool IsMovingForward { get; set; }
+        internal static bool AllowedToGoForward { get; set; } = true;
 
         public float DefaultWorldPosition => transform.position.x;
 
@@ -134,7 +135,7 @@ namespace PataRoad.Core.Character.Patapons
             switch (song)
             {
                 case CommandSong.Patapata:
-                    IsMovingForward = true;
+                    if (AllowedToGoForward) IsMovingForward = true;
                     break;
                 case CommandSong.Ponpata:
                     break;
@@ -262,6 +263,7 @@ namespace PataRoad.Core.Character.Patapons
         private void OnDestroy()
         {
             IsMovingForward = false;
+            AllowedToGoForward = true;
         }
     }
 }

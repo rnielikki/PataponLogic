@@ -54,21 +54,22 @@ namespace PataRoad.Core.Rhythm
             }
             else
             {
-                if (Disabled) return RhythmInputModel.Miss(DrumType.Don);
+                //if (Disabled) return RhythmInputModel.Miss(DrumType.Don);
                 int current;
                 switch (MiracleDrumCount)
                 {
                     case 1: //this is 2nd
                     case 4: //this is 5th
-                        current = Mathf.Abs((RhythmTimer.HalfFrequency - RhythmTimer.Count) % RhythmTimer.Frequency);
+                        current = Mathf.Abs((RhythmTimer.HalfFrequency - RhythmTimer.Count - RhythmTimer.FrequencyOffset) % RhythmTimer.Frequency);
                         break;
                     case 2:
                     case 3:
-                        current = RhythmTimer.Count;
+                        current = RhythmTimer.GetDrumCount();
                         break;
                     default:
                         throw new InvalidOperationException($"The {MiracleDrumCount}th miracle drum count isn't valid");
                 }
+                /*
                 if (MiracleDrumCount % 2 == 1)
                 {
                     RhythmTimer.Current.OnNextQuarterTime.AddListener(() => Disabled = false);
@@ -78,6 +79,7 @@ namespace PataRoad.Core.Rhythm
                     RhythmTimer.Current.OnNextHalfTime.AddListener(() => Disabled = false);
                 }
                 Disabled = true;
+                */
                 if (current >= _minTimerIndexes[MiracleDrumCount - 1] && current <= _maxTimerIndexes[MiracleDrumCount - 1])
                 {
                     //When the drum hit is miracle, it doesn't matter how perfect it is, really

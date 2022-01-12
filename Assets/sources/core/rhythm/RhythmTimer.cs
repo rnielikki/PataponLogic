@@ -87,6 +87,12 @@ namespace PataRoad.Core.Rhythm
         [SerializeField]
         private bool UseHalfOfTime;
 
+        /// <summary>
+        /// Offset as frequency, to keep drum in sync to music. Used for drum calculation.
+        /// </summary>
+        /// <note>This applies to all musics. Since it affects to every music, may need to change music source without touching this.</note>
+        public const int FrequencyOffset = 0; //offset to sync w music.
+
         public static RhythmTimer Current { get; private set; }
 
         private void Awake()
@@ -158,13 +164,21 @@ namespace PataRoad.Core.Rhythm
             Current = null;
         }
 
-        public static int GetTiming() => GetTiming(Count);
+        public static int GetTiming() => GetTiming(GetDrumCount());
         internal static int GetTiming(int count)
         {
             if (count < HalfFrequency) return count;
             else return Frequency - count;
         }
-        internal static int GetHalfTiming(int count) => Mathf.Abs(HalfFrequency - count);
+        /// <summary>
+        /// Gets drum frequency with offset. It helps to make sync with music.
+        /// </summary>
+        /// <returns>Offset drum value which is sync with music.</returns>
+        /// <note>If it's still not in sync with music, change <see cref="FrequencyOffset"/> or music soruce.</note>
+        public static int GetDrumCount()
+        {
+            return (RhythmTimer.Count - FrequencyOffset + Frequency) % Frequency;
+        }
         public void StopAndRemoveAllListeners()
         {
             Command.TurnCounter.Destroy();

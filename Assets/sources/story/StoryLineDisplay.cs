@@ -25,9 +25,13 @@ namespace PataRoad.Story
             _image.enabled = story.Image != null;
             _image.sprite = story.Image;
             _name.text = story.Name;
-            _content.text = story.Content;
+            _content.text = FormatContent(story.Content);
             LayoutRebuilder.ForceRebuildLayoutImmediate(_content.rectTransform);
             _scrollWindow.Refresh();
+        }
+        private string FormatContent(string original)
+        {
+            return original.Replace("%Almighty%", Core.Global.GlobalData.CurrentSlot.AlmightyName);
         }
         public void Close()
         {

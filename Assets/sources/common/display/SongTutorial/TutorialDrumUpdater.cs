@@ -28,7 +28,7 @@ namespace PataRoad.Common.GameDisplay
         {
             LoadDrums(new[] { DrumType.Don, DrumType.Don, DrumType.Don, DrumType.Don, DrumType.Don });
         }
-        private void LoadDrums(System.Collections.Generic.IEnumerable<DrumType> drums)
+        public void LoadDrums(System.Collections.Generic.IEnumerable<DrumType> drums)
         {
             _maxLength = drums.Count();
             _animators = new Animator[_maxLength];

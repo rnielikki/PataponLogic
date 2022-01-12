@@ -55,7 +55,7 @@ namespace PataRoad.Core.Rhythm
             Disabled = true;
             return new RhythmInputModel(
                             _drumType,
-                            RhythmTimer.Count
+                            RhythmTimer.GetDrumCount()
                             );
         }
         private void OnEnable() => Enable();

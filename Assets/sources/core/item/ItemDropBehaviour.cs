@@ -11,6 +11,7 @@ namespace PataRoad.Core.Items
         private const float _gap = 0.75f;
         [SerializeField]
         ItemDropData[] _dropData;
+        public ItemDropData[] DropData => _dropData;
 
         public void Drop() => DropItem(false);
         public void DropRandom() => DropItem(true);

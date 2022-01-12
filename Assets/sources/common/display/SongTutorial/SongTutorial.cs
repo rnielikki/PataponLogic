@@ -84,6 +84,7 @@ namespace PataRoad.Common.GameDisplay
             _instruction.text = _data.EndMessage;
             _command.gameObject.SetActive(false);
             _bottomText.enabled = false;
+            _data.EndPractice();
             StartCoroutine(EndInstructionOnTime());
             System.Collections.IEnumerator EndInstructionOnTime()
             {
@@ -103,6 +104,7 @@ namespace PataRoad.Common.GameDisplay
         private void OnDestroy()
         {
             RemoveListeners();
+            _data.OnSongComplete.RemoveAllListeners();
         }
     }
 }

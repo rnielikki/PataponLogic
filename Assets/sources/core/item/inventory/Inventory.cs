@@ -120,7 +120,7 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Drum", 1));
 
             //SONGS
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Song", 0));
+            //AddItem(ItemLoader.GetItem(ItemType.Key, "Song", 0));
 
             //MEMORIES
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 0));

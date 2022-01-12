@@ -78,7 +78,7 @@ namespace PataRoad.SceneLogic.Intro
         }
         private void SetName(string text)
         {
-            //Core.Global.GlobalData.CurrentSlot.SetAlmightyName(text);
+            Core.Global.GlobalData.CurrentSlot.SetAlmightyName(text);
             _content.gameObject.SetActive(false);
             _nextStory.ReadLines();
         }
