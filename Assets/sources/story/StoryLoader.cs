@@ -12,7 +12,7 @@ namespace PataRoad.Story
         private static StoryLoader _current { get; set; }
         private UnityEngine.InputSystem.InputAction _action;
         private Core.Map.MapData _nextMap;
-        private void Start()
+        private void Awake()
         {
             _current = this;
             _current.gameObject.SetActive(false);
@@ -74,12 +74,6 @@ namespace PataRoad.Story
 
             //-- Object instantiating
             var obj = Instantiate(data.gameObject, storySceneInfo.Parent);
-            if (data.UsePatapolis)
-            {
-                var pos = obj.gameObject.transform.position;
-                pos.x = data.XCameraPosition;
-                obj.gameObject.transform.position = pos;
-            }
 
             //-- Object mapping
             var fromResource = data.GetComponentsInChildren<StoryBehaviour>(true).OrderBy(s => s.Seed).ToArray();

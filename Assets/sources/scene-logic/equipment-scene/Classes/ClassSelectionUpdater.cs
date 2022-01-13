@@ -17,13 +17,13 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         Text _groupEffect;
         [SerializeField]
-        private RectTransform _statScreen;
-        [SerializeField]
         private EmptyClassSelection _emptySelection;
         private ClassSelectionInfo _current;
-
         [SerializeField]
         private GameObject _groupOfSelectables;
+        [SerializeField]
+        RectTransform _summaryTransform;
+        RectTransform _summaryParentTransform;
 
         [SerializeField]
         private UnityEvent<ClassSelectionInfo> _onUpdated;
@@ -33,6 +33,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         private bool _fullyLoaded;
 
+        private void Awake()
+        {
+            _summaryParentTransform = _summaryTransform.parent.GetComponent<RectTransform>();
+        }
         internal void UpdateDescription(ClassSelectionInfo classSelectionInfo)
         {
             if (_current != null) _current.GeneralObject.SetActive(false);
@@ -91,6 +95,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             if (firstSelect != null)
             {
                 UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstSelect.gameObject);
+                UpdateDescription(firstSelect);
             }
             else
             {
@@ -101,11 +106,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private void UpdateGeneralObject(GameObject obj)
         {
-            var pos = Camera.main.ScreenToWorldPoint(new Vector2((Screen.width - _statScreen.rect.width) / 2, Screen.height / 2));
-            pos.x -= 5;
+            var pos = Camera.main.ScreenToWorldPoint(
+                new Vector2(
+                _summaryTransform.anchoredPosition.x - _summaryParentTransform.anchoredPosition.x,
+                Screen.height / 2
+                )
+            );
             pos.z = 0;
             obj.transform.position = pos;
-
             obj.SetActive(true);
         }
         private void OnDestroy()

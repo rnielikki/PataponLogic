@@ -56,7 +56,7 @@ namespace PataRoad.Core.Map
                 if (_reachedMaxLevel < _level) _reachedMaxLevel = _level;
             }
         }
-        internal bool CanLoadNextLevel() => (MapData.HasLevel && Level >= MapData.LevelRequirementForNext) || MapData.OpenOnlyOnce;
+        internal bool CanLoadNextLevel() => !MapData.HasLevel || Level >= MapData.LevelRequirementForNext;
         private MapData LoadResource()
         {
             var mapData = Resources.Load<MapData>(MapPath + _mapDataIndex.ToString());

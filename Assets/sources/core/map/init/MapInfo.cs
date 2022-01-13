@@ -12,6 +12,8 @@ namespace PataRoad.Core.Global
         public MapDataContainer LastMap { get; private set; }
 
         private Dictionary<int, MapDataContainer> _openMaps;
+        [SerializeField]
+        private int _progress;
 
         [SerializeReference]
         private MapDataContainer[] _openMapsForSerializing;
@@ -63,6 +65,7 @@ namespace PataRoad.Core.Global
             if (NextMap.MapData.NextIndex > 0 && NextMap.CanLoadNextLevel())
             {
                 NextMap = LoadResource(NextMap.MapData.NextIndex);
+                _progress = Mathf.Max(_progress, NextMap.Index);
             }
         }
         public void Select(MapDataContainer data)

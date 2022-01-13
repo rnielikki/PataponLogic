@@ -15,7 +15,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             foreach (var classSelection in _classSelections)
             {
-                if (CharacterGroupSaver.AvailableClasses.Contains(classSelection.ClassType)) classSelection.Init();
+                if (CharacterGroupSaver.AvailableClasses.Contains(classSelection.ClassType))
+                {
+                    classSelection.Init();
+                }
             }
         }
         private void OnEnable()

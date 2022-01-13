@@ -11,11 +11,14 @@ namespace PataRoad.SceneLogic.Intro
         Camera _camera;
         [SerializeField]
         Image _transition;
+        [SerializeField]
+        AudioClip _horseSound;
         private float _opacity;
         public void GoForward()
         {
             _camera.GetComponent<Animator>().enabled = false;
             _started = true;
+            Core.Global.GlobalData.Sound.PlayInScene(_horseSound);
             StartCoroutine(WaitAndStartTransition());
             System.Collections.IEnumerator WaitAndStartTransition()
             {

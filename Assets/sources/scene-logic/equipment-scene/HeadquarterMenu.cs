@@ -11,7 +11,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private void Awake()
         {
             Init();
-            _activeNavs = GetComponentsInChildren<HeadquarterSummaryElement>(true);
+            _activeNavs = GetComponentsInChildren<HeadquarterSummaryElement>();
         }
         private void OnEnable()
         {

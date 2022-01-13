@@ -9,7 +9,7 @@ namespace PataRoad.Common
     {
         [SerializeField]
         Core.Global.Slots.GameProgressType _progressType;
-        private void Start()
+        private void Awake()
         {
             gameObject.SetActive(Core.Global.GlobalData.CurrentSlot.Progress.IsOpen(_progressType));
         }

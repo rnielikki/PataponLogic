@@ -10,6 +10,7 @@ namespace PataRoad.Story.Actions
     class StoryBehaviour : MonoBehaviour
     {
         [SerializeField]
+        [Tooltip("The unique value. also can be used to set character order.")]
         private int _uniqueSeed;
         internal int Seed => _uniqueSeed;
 
@@ -21,16 +22,21 @@ namespace PataRoad.Story.Actions
 #pragma warning restore S1450 // Private fields only used as local variables in methods should become local variables
 
         private bool _walking;
+        private bool _animatingWalking;
         private Vector2 _targetPosition;
 
         private float _walkingStep;
-        private string _walkingAnimation = "walk";
-        private const float _defaultWalkingStep = 2;
+        private const float _defaultWalkingStep = 8;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
             _walkingStep = _defaultWalkingStep;
+
+            foreach (var img in GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                img.sortingOrder = _uniqueSeed;
+            }
         }
         internal void SetInstance(StoryBehaviour instance) => _instance = instance;
 
@@ -63,15 +69,22 @@ namespace PataRoad.Story.Actions
 
         public void SetToDefaultWalkingStep() => _instance._walkingStep = _defaultWalkingStep;
         public void SetWalkingStep(float steps) => _instance._walkingStep = steps;
-        public void SetWalkingAnimation(string animationName) => _instance._walkingAnimation = animationName;
 
-        public void Walk(float steps) => _instance.WalkInReal(steps);
-        private void WalkInReal(float steps) => WalkTowardsInReal(transform.position.x + steps * transform.localScale.x);
+        public void Walk(float steps) => _instance.WalkTowardsInReal(transform.position.x + steps * transform.localScale.x);
         public void WalkTowards(float position) => _instance.WalkTowardsInReal(position);
+
+        public void Move(float steps) => _instance.MoveTowardsInReal(transform.position.x + steps * transform.localScale.x);
+        public void MoveTowards(float steps) => _instance.MoveTowardsInReal(steps);
+
         private void WalkTowardsInReal(float position)
         {
+            MoveTowardsInReal(position);
+            _animator.SetBool("walking", true);
+            _animatingWalking = true;
+        }
+        private void MoveTowardsInReal(float position)
+        {
             StopAllCoroutines();
-            _animator.Play(_walkingAnimation);
             _inturrupted = true;
             _walking = true;
             _targetPosition = position * Vector2.right;
@@ -101,8 +114,19 @@ namespace PataRoad.Story.Actions
                 if (transform.position.x == _targetPosition.x)
                 {
                     _walking = false;
-                    _animator.Play("Idle");
+                    if (_animatingWalking)
+                    {
+                        _animatingWalking = false;
+                        _animator.SetBool("walking", false);
+                    }
                 }
+            }
+        }
+        private void OnValidate()
+        {
+            if (tag == "SmallCharacter" && !GetComponent<Animator>().runtimeAnimatorController.name.StartsWith("Story"))
+            {
+                Debug.LogError($"Please use story animator for instead of [{GetComponent<Animator>().runtimeAnimatorController.name}] the character, or remove the script if it's not for not story mode.");
             }
         }
     }

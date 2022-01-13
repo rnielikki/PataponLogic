@@ -18,9 +18,6 @@ namespace PataRoad.Core.Map
         private string _description;
         public string Description => _description;
         [SerializeField]
-        private Sprite _thumbail;
-        public Sprite Thumbnail => _thumbail;
-        [SerializeField]
         private MapType _type;
         public MapType Type => _type;
         [SerializeField]

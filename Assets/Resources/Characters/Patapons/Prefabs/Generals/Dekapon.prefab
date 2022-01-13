@@ -1,34 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &7286985899125289732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2615760757173105005}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4188768b6cb67e0449f37ab5dd68bceb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _generalName: Ton Kampon
-  _generalModeSound: {fileID: 8300000, guid: 9a63124ec8ef620448944884179225bb, type: 3}
---- !u!114 &7364448579923155896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004519907774559478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfbd99464f3a2a040967ff76228aa486, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _fixedEquipment: 1
-  _hideEquipment: 0
-  _defaultEquipmentData: {fileID: 11400000, guid: 71614740c3c78c642894a32d42b4f7e1, type: 2}
 --- !u!1001 &1353475870883152980
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -164,6 +135,26 @@ PrefabInstance:
       propertyPath: _defaultStat._hitPoint
       value: 350
       objectReference: {fileID: 0}
+    - target: {fileID: 3928704230307706526, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3928704230307706526, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.253
+      objectReference: {fileID: 0}
+    - target: {fileID: 3928704230307706526, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3928704230307706526, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3928704230307706526, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3928704230307706527, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -195,13 +186,42 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4308920086941869528, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
---- !u!1 &2615760757173105005 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3928704229798589753, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
-  m_PrefabInstance: {fileID: 1353475870883152980}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2004519907774559478 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 655835726819389602, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
   m_PrefabInstance: {fileID: 1353475870883152980}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7364448579923155896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004519907774559478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbd99464f3a2a040967ff76228aa486, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fixedEquipment: 1
+  _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 11400000, guid: 71614740c3c78c642894a32d42b4f7e1, type: 2}
+--- !u!1 &2615760757173105005 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3928704229798589753, guid: 61772b4c2e83efd48a4c61c1f627f7b5, type: 3}
+  m_PrefabInstance: {fileID: 1353475870883152980}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7286985899125289732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2615760757173105005}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4188768b6cb67e0449f37ab5dd68bceb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _generalName: Ton Kampon
+  _generalModeSound: {fileID: 8300000, guid: 9a63124ec8ef620448944884179225bb, type: 3}
