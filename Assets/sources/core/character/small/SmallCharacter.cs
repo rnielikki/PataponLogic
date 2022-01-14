@@ -52,7 +52,7 @@ namespace PataRoad.Core.Character
         public StatusEffectManager StatusEffectManager { get; private set; }
         public Weapon Weapon => _data.EquipmentManager.Weapon;
         [SerializeField]
-        private UnityEvent _onAfterDeath;
+        protected UnityEvent _onAfterDeath;
         public UnityEvent OnAfterDeath => _onAfterDeath;
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9035c174e0cbd45b9597205b034da8, type: 3}
   m_Name: 2
   m_EditorClassIdentifier: 
-  _nextIndex: 2
+  _nextIndex: 3
   _name: Lost Mater Sprout
-  _description: Hazorons took Mater Sprouts. Be careful, if anyone dies, it fails!
-    Ask Tatepons to help.
+  _description: Hazorons took Mater Sprouts and Patapons need to get it back. Be
+    careful, if anyone dies, it fails! Ask Tatepons to help.
   _type: 2
-  _openOnlyOnce: 0
+  _openOnlyOnce: 1
   _defaultMusic: totechitentan
   _background: Ruins
   _maxBossSummonCount: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
   _fogWeatherChance: 0.2
   _noWindChance: 0.2
   _useMissionTower: 1
-  _filledMissionCondition: 0
+  _filledMissionCondition: 1
   _tipIndexOnFail: 1
   _tipIndexOnSuccess: 1
   _hasLevel: 0
@@ -35,5 +35,6 @@ MonoBehaviour:
   _maxLevelOnEasy: 10
   _maxLevelOnNormal: 20
   _maxLevelOnHard: 30
+  _loadStoryOnlyOnce: 0
   _nextStoryOnSuccess: {fileID: 0}
   _nextStoryOnFail: {fileID: 0}

@@ -238,7 +238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6647991442899897384
 Transform:
   m_ObjectHideFlags: 0
@@ -932,6 +932,7 @@ GameObject:
   - component: {fileID: 8858511603589215724}
   - component: {fileID: 6647991443700256611}
   - component: {fileID: 8813460397387343034}
+  - component: {fileID: 8490041543480107750}
   m_Layer: 7
   m_Name: Yariron
   m_TagString: SmallCharacter
@@ -1041,7 +1042,7 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 1
-        _hitPoint: 200
+        _hitPoint: 30
         _defenceMin: 1
         _defenceMax: 5
         _damageMin: 4
@@ -1077,6 +1078,18 @@ MonoBehaviour:
         _fireMultiplier: 1
         _iceMultiplier: 1
         _thunderMultiplier: 1
+--- !u!114 &8490041543480107750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6647991443700256610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa781bdcfdc85f4a8f360994e716d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6647991443723586382
 GameObject:
   m_ObjectHideFlags: 0

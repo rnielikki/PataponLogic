@@ -101,7 +101,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7869386981272518918
 Transform:
   m_ObjectHideFlags: 0
@@ -1340,6 +1340,7 @@ GameObject:
   - component: {fileID: 1426637395029197806}
   - component: {fileID: 7869386983148126797}
   - component: {fileID: -89148275092956204}
+  - component: {fileID: 2161317701899138293}
   m_Layer: 7
   m_Name: Kibaron
   m_TagString: SmallCharacter
@@ -1441,7 +1442,7 @@ MonoBehaviour:
   _type: 3
   _weaponData: {fileID: 11400000, guid: 2d2bb28d88b0aca4aadcf3dd31516044, type: 2}
   _protectorData: {fileID: 11400000, guid: 770e6a82b508bd24199bec328da8df81, type: 2}
-  _gemData: {fileID: 11400000, guid: 69713eb32a916424ab78c18a94ff78b9, type: 2}
+  _gemData: {fileID: 11400000, guid: b95842d0251e14945bc854d7510efe9d, type: 2}
   _attackTypeIndex: 0
   references:
     version: 2
@@ -1486,6 +1487,18 @@ MonoBehaviour:
         _fireMultiplier: 1
         _iceMultiplier: 1
         _thunderMultiplier: 1
+--- !u!114 &2161317701899138293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7869386983148126796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa781bdcfdc85f4a8f360994e716d31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7869386983215033255
 GameObject:
   m_ObjectHideFlags: 0

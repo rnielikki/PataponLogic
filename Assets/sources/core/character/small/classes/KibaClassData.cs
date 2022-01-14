@@ -47,7 +47,7 @@ namespace PataRoad.Core.Character.Class
             var closest = _character.DistanceCalculator.GetClosestForAttack();
             if (closest == null) return false;
 
-            return _character.DistanceCalculator.IsInTargetRange(closest.Value.x, _character.CharacterSize);
+            return _character.DistanceCalculator.IsInTargetRange(closest.Value.x, _character.CharacterSize + 1);
         }
     }
 }

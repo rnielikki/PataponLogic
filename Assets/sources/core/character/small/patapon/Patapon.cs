@@ -94,6 +94,11 @@ namespace PataRoad.Core.Character.Patapons
         {
             ClassData.InitLate(_realStat);
         }
+        public UnityEngine.Events.UnityEvent CreateAfterDeathEvent()
+        {
+            _onAfterDeath = new UnityEngine.Events.UnityEvent();
+            return _onAfterDeath;
+        }
 
         public void MoveOnDrum(string drumName)
         {

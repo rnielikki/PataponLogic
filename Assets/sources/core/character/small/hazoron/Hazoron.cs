@@ -14,6 +14,8 @@ namespace PataRoad.Core.Character.Hazorons
         private int _attackTypeIndex;
         public override int AttackTypeIndex => _attackTypeIndex;
 
+        private Levels.IHazoronStatModifier[] _statModifiers;
+
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
 
         private void Awake()
@@ -33,10 +35,17 @@ namespace PataRoad.Core.Character.Hazorons
                 if (_gotPosition) ClassData.Attack();
             });
             _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
+            _statModifiers = GetComponents<Levels.IHazoronStatModifier>();
+            foreach (var modifier in _statModifiers)
+            {
+                modifier.SetModifyTarget(Stat);
+            }
         }
         private void Start()
         {
             DefaultWorldPosition = transform.position.x;
+
+            CurrentHitPoint = Stat.HitPoint;
             ClassData.InitLate(Stat);
         }
 
