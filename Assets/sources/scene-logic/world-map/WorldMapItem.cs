@@ -57,6 +57,11 @@ namespace PataRoad.SceneLogic.WorldMap
             Core.Global.GlobalData.CurrentSlot.MapInfo.Select(_map);
             SceneLoadingAction.Create("EquipmentScreen").ChangeScene();
         }
+        public bool HideIfCleared()
+        {
+            gameObject.SetActive(!_map.Cleared);
+            return !_map.Cleared;
+        }
         public bool HideIfNotType(MapType mapType)
         {
             bool isType = _map.MapData.Type == mapType;

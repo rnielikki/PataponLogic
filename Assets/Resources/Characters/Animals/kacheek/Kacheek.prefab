@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.9, y: -0.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5302248165409413461}
   m_RootOrder: 2
@@ -111,6 +112,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.59, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5302248166449638159}
   - {fileID: 5302248165948827825}
@@ -222,6 +224,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2.49, y: -0.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5302248165409413461}
   m_RootOrder: 3
@@ -305,6 +308,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.76, y: -0.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5302248165409413461}
   m_RootOrder: 0
@@ -387,6 +391,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.22, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5302248165337775731}
   - {fileID: 5302248165855221457}
@@ -422,6 +427,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1.3, y: -0.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5302248165409413461}
   m_RootOrder: 1
@@ -505,6 +511,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.95, y: 2.93, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5302248165007503710}
   m_RootOrder: 1
@@ -588,6 +595,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.04, y: 3.02, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5302248165007503710}
   m_RootOrder: 0
@@ -655,7 +663,8 @@ GameObject:
   - component: {fileID: 5302248166792679164}
   - component: {fileID: 5302248166792679155}
   - component: {fileID: 3403396645998487704}
-  - component: {fileID: 6277572591942841022}
+  - component: {fileID: 8135261263674951600}
+  - component: {fileID: 8790833375732982577}
   m_Layer: 16
   m_Name: Kacheek
   m_TagString: Untagged
@@ -673,6 +682,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 1.39, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5302248165007503710}
   - {fileID: 5302248165409413461}
@@ -681,7 +691,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5302248166792679155
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -694,6 +704,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -711,23 +722,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackTypeResistance:
-    id: 0
+    rid: 0
+  _onAfterDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8135261263674951600}
+        m_TargetAssemblyTypeName: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
+        m_MethodName: Drop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _soundOnStaggered: {fileID: 8300000, guid: da462f0a04bd00c4993b9bb0736021ac, type: 3}
   _soundOnDead: {fileID: 8300000, guid: 5cbf34a1bb1daaa4bb1d3d7dbdf8540f, type: 3}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _crushMultiplier: 1
-        _slashMultiplier: 1
-        _stabMultiplier: 1
-        _soundMultiplier: 1
+        _crushMultiplier: 0.5
+        _slashMultiplier: 0.6
+        _stabMultiplier: 0.9
+        _soundMultiplier: 0.8
         _magicMultiplier: 1
         _fireMultiplier: 1
         _iceMultiplier: 1
         _thunderMultiplier: 1
---- !u!114 &6277572591942841022
+--- !u!114 &8135261263674951600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -736,11 +763,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 5302248166792679165}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 165847265fa61304f81bf42484f5b88a, type: 3}
+  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: 042d9dd45d3697147ada2e011863e631, type: 2}
+--- !u!114 &8790833375732982577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5302248166792679165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98511d8a52e54f94fbddf9b5d4bd90eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _sight: 5
-  _runningDistance: 25
+  _runningDistance: 12
   _stat:
     _isCharacterStat: 1
     _hitPoint: 200
@@ -749,7 +790,7 @@ MonoBehaviour:
     _damageMin: 4
     _damageMax: 8
     _attackSeconds: 2
-    _movementSpeed: 4
+    _movementSpeed: 2
     _critical: 0
     _stagger: 0
     _knockback: 0
@@ -769,6 +810,3 @@ MonoBehaviour:
     _infiniteSleepResistance: 0
     _sleepResistance: 0
   _soundOnFound: {fileID: 8300000, guid: e3171eff8121e4e4fbce9bc95a2f45ef, type: 3}
-  _attackCount: 2
-  _attackDistance: 2
-  _flipOnAttack: 1

@@ -82,11 +82,15 @@ namespace PataRoad.Core.Map
 
         [Header("Story")]
         [SerializeField]
+        private bool _loadStoryOnlyOnce;
+        public bool LoadStoryOnlyOnce => _loadStoryOnlyOnce;
+        [SerializeField]
         Story.StoryData _nextStoryOnSuccess;
         public Story.StoryData NextStoryOnSuccess => _nextStoryOnSuccess;
         [SerializeField]
         Story.StoryData _nextStoryOnFail;
         public Story.StoryData NextStoryOnFail => _nextStoryOnFail;
+
 
         public int GetMaxLevel()
         {

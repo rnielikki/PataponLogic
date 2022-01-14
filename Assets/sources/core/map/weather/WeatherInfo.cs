@@ -11,6 +11,7 @@ namespace PataRoad.Core.Map.Weather
         public Wind Wind => _wind;
 
         private IWeatherData _currentWeather;
+        public WeatherType CurrentWeather => _currentWeather?.Type ?? WeatherType.Clear;
 
         public static WeatherInfo Current { get; private set; }
 

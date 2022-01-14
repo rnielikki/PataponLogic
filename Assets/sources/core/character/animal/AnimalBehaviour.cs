@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 namespace PataRoad.Core.Character.Animal
 {
+    [DisallowMultipleComponent]
     class AnimalBehaviour : MonoBehaviour, ICharacter
     {
         public CharacterAnimator CharAnimator { get; private set; }
@@ -21,6 +22,9 @@ namespace PataRoad.Core.Character.Animal
         [SerializeReference]
         private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
         public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
+
+        [SerializeField]
+        private UnityEvent _onAfterDeath;
 
         public int CurrentHitPoint { get; private set; }
 
@@ -68,6 +72,14 @@ namespace PataRoad.Core.Character.Animal
             GameSound.SpeakManager.Current.Play(_soundOnDead);
             Map.MissionPoint.Current.FilledMissionCondition = true;
         }
+        /// <summary>
+        /// This is attached as animation event.
+        /// </summary>
+        public void CallAfterDeath()
+        {
+            _onAfterDeath?.Invoke();
+            Destroy(gameObject);
+        }
 
         public float GetAttackValueOffset()
         {
@@ -99,11 +111,10 @@ namespace PataRoad.Core.Character.Animal
         {
             CurrentHitPoint -= damage;
             _animalData.OnDamaged();
-
         }
         private void Update()
         {
-            if (!_animalData.PerformingAction && !IsDead && !StatusEffectManager.OnStatusEffect && DistanceCalculator.HasAttackTarget())
+            if (_animalData.CanMove() && DistanceCalculator.HasAttackTarget())
             {
                 _animalData.OnTarget();
             }

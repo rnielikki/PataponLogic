@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             else
             {
                 (int damage, bool isCritical) = GetFinalDamage(attacker, receiver, stat);
-                damage = Mathf.Max(0, damage);
+                damage = Mathf.Max(1, damage);
                 if (receiver is Bosses.Boss boss)
                 {
                     damage = (int)(damage * boss.GetBrokenPartMultiplier(target, damage));

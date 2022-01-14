@@ -14,6 +14,7 @@ namespace PataRoad.Core.Global
         private Dictionary<int, MapDataContainer> _openMaps;
         [SerializeField]
         private int _progress;
+        public int Progress => _progress;
 
         [SerializeReference]
         private MapDataContainer[] _openMapsForSerializing;
@@ -83,6 +84,7 @@ namespace PataRoad.Core.Global
             {
                 NextMap.LevelUp();
             }
+            NextMap.Cleared = true;
             LastMap = NextMap;
             OpenNext();
 

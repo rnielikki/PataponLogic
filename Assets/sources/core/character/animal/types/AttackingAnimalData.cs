@@ -9,8 +9,6 @@ namespace PataRoad.Core.Character.Animal
         int _attackCount;
         [SerializeField]
         float _attackDistance;
-        [SerializeField]
-        bool _flipOnAttack;
 
         private bool _willAttack;
 
@@ -20,9 +18,9 @@ namespace PataRoad.Core.Character.Animal
         }
         public override void OnTarget()
         {
+            if (!CanMove()) return;
             PerformingAction = true;
             _statusEffectManager.IgnoreStatusEffect = true;
-            //Flip();
             _willAttack = true;
             _animator.SetMoving(true);
         }
@@ -35,15 +33,7 @@ namespace PataRoad.Core.Character.Animal
             //damage?
             StopAttacking();
             _animator.Animator.SetBool("attacking", false);
-            //Flip();
             base.OnTarget();
-        }
-        private void Flip()
-        {
-            if (!_flipOnAttack) return;
-            var scale = transform.localScale;
-            scale.x *= -1;
-            transform.position = scale;
         }
         private void SetAttackPosition()
         {

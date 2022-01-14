@@ -43,8 +43,22 @@ namespace PataRoad.SceneLogic.WorldMap
             _current.MarkAsNonCurrent();
             _index = (_index + _menuLength + offset) % _menuLength;
             var type = _current.MarkAsCurrentAndGetFilter();
-            if (type != null) _list.Filter(type.Value);
-            else _list.ShowAll();
+            switch (type)
+            {
+                case WorldMapFilterType.All:
+                    _list.ShowAll();
+                    break;
+                case WorldMapFilterType.NotCleared:
+                    _list.ShowNotCleared();
+                    break;
+                default:
+                    var typeAsNumber = (int)type;
+                    if (System.Enum.IsDefined(typeof(Core.Map.MapType), typeAsNumber))
+                    {
+                        _list.Filter((Core.Map.MapType)typeAsNumber);
+                    }
+                    break;
+            }
         }
         public void GoToPatapolis()
         {

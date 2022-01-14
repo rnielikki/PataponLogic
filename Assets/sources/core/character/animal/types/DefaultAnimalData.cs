@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace PataRoad.Core.Character.Animal
 {
+    [DisallowMultipleComponent]
     class DefaultAnimalData : MonoBehaviour, IAnimalData
     {
         public AttackType AttackType => AttackType.Stab;
@@ -21,6 +22,7 @@ namespace PataRoad.Core.Character.Animal
         public Stat Stat => _stat;
         protected CharacterAnimator _animator;
         protected StatusEffectManager _statusEffectManager;
+        private AnimalBehaviour _behaviour;
         protected DistanceCalculator _distanceCalculator;
 
         [SerializeField]
@@ -30,12 +32,14 @@ namespace PataRoad.Core.Character.Animal
 
         public virtual void InitFromParent(AnimalBehaviour parent)
         {
+            _behaviour = parent;
             _animator = parent.CharAnimator;
             _statusEffectManager = parent.StatusEffectManager;
             _distanceCalculator = parent.DistanceCalculator;
         }
         public virtual void OnTarget()
         {
+            if (!CanMove()) return;
             PerformingAction = true;
             GameSound.SpeakManager.Current.Play(_soundOnFound);
             _statusEffectManager.IgnoreStatusEffect = true;
@@ -49,11 +53,14 @@ namespace PataRoad.Core.Character.Animal
         }
         public void OnDamaged()
         {
-            if (!PerformingAction) OnTarget();
+            if (CanMove()) OnTarget();
         }
         public virtual void StopAttacking()
         {
         }
+        public virtual bool CanMove()
+            => !PerformingAction && !_behaviour.IsDead
+                && !_behaviour.StatusEffectManager.OnStatusEffect;
         protected bool Move(bool endActionWhenMoved = true)
         {
             if (_moving)

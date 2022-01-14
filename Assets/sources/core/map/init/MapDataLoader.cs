@@ -55,8 +55,11 @@ namespace PataRoad.Core.Map
             //-- missionPoint.
             _missionPoint.FilledMissionCondition = mapData.FilledMissionCondition;
             _missionPoint.UseMissionTower = mapData.UseMissionTower;
-            _missionPoint.NextStory = mapData.NextStoryOnSuccess;
-            _missionPoint.NextFailureStory = mapData.NextStoryOnFail;
+            if (!mapData.LoadStoryOnlyOnce || !_mapDataContainer.Cleared)
+            {
+                _missionPoint.NextStory = mapData.NextStoryOnSuccess;
+                _missionPoint.NextFailureStory = mapData.NextStoryOnFail;
+            }
         }
         private void Start()
         {
@@ -68,9 +71,21 @@ namespace PataRoad.Core.Map
                 return;
             }
             var obj = Instantiate(asset, _attachTarget);
-            foreach (var havingLevel in obj.GetComponents<MonoBehaviour>().OfType<IHavingLevel>())
+            if (_mapDataContainer.MapData.HasLevel)
             {
-                havingLevel.SetLevel(_mapDataContainer.Level);
+                foreach (var havingLevel in obj.GetComponentsInChildren<IHavingLevel>())
+                {
+                    havingLevel.SetLevel(_mapDataContainer.Level);
+                }
+            }
+            int spriteIndex = 1;
+            foreach (var character in obj.GetComponentsInChildren<Character.IAttackable>())
+            {
+                foreach (var renderer in (character as MonoBehaviour).GetComponentsInChildren<SpriteRenderer>())
+                {
+                    renderer.sortingOrder = spriteIndex;
+                }
+                spriteIndex++;
             }
         }
         private void ShowError(string missingTarget)

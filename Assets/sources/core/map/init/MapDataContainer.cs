@@ -18,6 +18,14 @@ namespace PataRoad.Core.Map
         [SerializeField]
         private int _reachedMaxLevel; //for example difficulty hard->easy->hard scenario
 
+        [SerializeField]
+        private bool _cleared;
+        public bool Cleared
+        {
+            get => _cleared;
+            internal set => _cleared = value;
+        }
+
         private int _level;
         public int Level => _level;
 
@@ -50,7 +58,7 @@ namespace PataRoad.Core.Map
 
         internal void LevelUp()
         {
-            if (Level < MapData.GetMaxLevel())
+            if (MapData.HasLevel && Level < MapData.GetMaxLevel())
             {
                 _level++;
                 if (_reachedMaxLevel < _level) _reachedMaxLevel = _level;

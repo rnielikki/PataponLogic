@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6503063704793924880}
   - component: {fileID: -2731587640728505089}
+  - component: {fileID: 7448384283183978817}
   m_Layer: 0
   m_Name: 0.May-Patapolis
   m_TagString: Untagged
@@ -201,8 +202,32 @@ MonoBehaviour:
     _content: Hey, what's wrong with you folks? Not me.
   - _events:
       m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
+        m_Calls:
+        - m_Target: {fileID: 8916182721080966317}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Flip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 7448384283183978817}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryCameraMover, Assembly-CSharp
+          m_MethodName: MoveTo
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 3
     _useLine: 1
     _image: {fileID: 0}
     _name: Meden
@@ -210,6 +235,18 @@ MonoBehaviour:
       from here.
 
       Please guide our cutie slin... eh, mighty Princess for hunting!'
+--- !u!114 &7448384283183978817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532325534641892927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9623255ebe6fb3469028c7b1d37ce24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1152563371747743054
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -590,7 +627,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.55
+      value: -4.55
       objectReference: {fileID: 0}
     - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
       propertyPath: m_LocalPosition.y

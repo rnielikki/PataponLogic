@@ -73,6 +73,20 @@ namespace PataRoad.SceneLogic.WorldMap
             }
             _scrollList.SetMaximumScrollLength(index, _last);
         }
+        public void ShowNotCleared()
+        {
+            WorldMapItem _last = null;
+            int index = -1;
+            foreach (var item in _items)
+            {
+                if (item.HideIfCleared())
+                {
+                    item.Index = ++index;
+                    _last = item;
+                }
+            }
+            _scrollList.SetMaximumScrollLength(index, _last);
+        }
         public void ShowAll()
         {
             int index = -1;

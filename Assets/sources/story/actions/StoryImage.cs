@@ -98,7 +98,5 @@ namespace PataRoad.Story.Actions
                 _image.color = new Color(colorValue, colorValue, colorValue, 1);
             }
         }
-
-        //--- Add camera move (maybe need Camera.main.GetComponent?)
     }
 }

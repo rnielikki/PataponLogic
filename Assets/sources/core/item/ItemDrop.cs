@@ -74,7 +74,7 @@ namespace PataRoad.Core.Items
         protected static GameObject GetItemDropGameObject(GameObject template, Vector2 position)
         {
             var itemInstance = Instantiate(template, ItemManager.Current.ItemDropPoint);
-            itemInstance.transform.position = position;
+            itemInstance.transform.position = new Vector3(position.x, 0, 0);
             return itemInstance;
         }
         private void Update()
