@@ -558,15 +558,15 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 1
-        _hitPoint: 200
+        _hitPoint: 100
         _defenceMin: 1
-        _defenceMax: 5
+        _defenceMax: 3
         _damageMin: 4
         _damageMax: 8
         _attackSeconds: 2
-        _movementSpeed: 8
-        _critical: 0
-        _stagger: 0
+        _movementSpeed: 10
+        _critical: 0.25
+        _stagger: 0.05
         _knockback: 0
         _infiniteCriticalResistance: 0
         _criticalResistance: 0
@@ -578,11 +578,11 @@ MonoBehaviour:
         _iceRate: 0
         _sleepRate: 0
         _infiniteFireResistance: 0
-        _fireResistance: 0
+        _fireResistance: 0.1
         _infiniteIceResistance: 0
-        _iceResistance: 0
+        _iceResistance: 0.1
         _infiniteSleepResistance: 0
-        _sleepResistance: 0
+        _sleepResistance: 0.1
     - rid: 1
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:

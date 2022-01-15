@@ -62,9 +62,28 @@ namespace PataRoad.Core.Character
                 { ElementalAttackType.Ice, _slashMultiplier},
                 { ElementalAttackType.Thunder, _stabMultiplier},
             };
-
         }
         public float GetMultiplier(AttackType attackType) => _map[attackType];
         public float GetMultiplier(ElementalAttackType attackType) => _elementalMap[attackType];
+        /// <summary>
+        /// Returns applied default resistance data to Rarepons data. It multiplies each value and returns new instance.
+        /// </summary>
+        /// <param name="resistances">The data to apply.</param>
+        /// <returns>Multiplied data, as new instance.</returns>
+        /// <note>This will return same value if parameter and calling instance is exchanged.</note>
+        public AttackTypeResistance Apply(AttackTypeResistance resistances)
+        {
+            return new AttackTypeResistance()
+            {
+                _crushMultiplier = _crushMultiplier * resistances.CrushMultipler,
+                _slashMultiplier = _slashMultiplier * resistances.SlashMultipler,
+                _stabMultiplier = _stabMultiplier * resistances.StabMultipler,
+                _soundMultiplier = _soundMultiplier * resistances.SoundMultipler,
+                _magicMultiplier = _magicMultiplier * resistances.MagicMultipler,
+                _fireMultiplier = _fireMultiplier * resistances.FireMultiplier,
+                _iceMultiplier = _iceMultiplier * resistances.IceMultiplier,
+                _thunderMultiplier = _thunderMultiplier * resistances.ThunderMultiplier
+            };
+        }
     }
 }

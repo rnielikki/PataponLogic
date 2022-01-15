@@ -20,9 +20,7 @@ namespace PataRoad.Core.Character
         [Tooltip("Attack type resistance when Rarepon isn't used")]
         private AttackTypeResistance _defaultAttackTypeResistance = new AttackTypeResistance();
 
-        public AttackTypeResistance AttackTypeResistance => EquipmentManager.Rarepon?.CurrentData == null ?
-            _defaultAttackTypeResistance :
-            (EquipmentManager.Rarepon.CurrentData as Equipments.Weapons.RareponData).AttackTypeResistance;
+        public AttackTypeResistance AttackTypeResistance { get; private set; }
 
         [SerializeField]
         private Equipments.Weapons.ElementalAttackType _elementalAttackType;
@@ -52,6 +50,9 @@ namespace PataRoad.Core.Character
             InitStat();
 
             InitEquipment(GetEquipmentData());
+            AttackTypeResistance = EquipmentManager.Rarepon?.CurrentData == null ?
+            _defaultAttackTypeResistance :
+            _defaultAttackTypeResistance.Apply((EquipmentManager.Rarepon.CurrentData as Equipments.Weapons.RareponData).AttackTypeResistance);
         }
         protected abstract IEnumerable<EquipmentData> GetEquipmentData();
 
