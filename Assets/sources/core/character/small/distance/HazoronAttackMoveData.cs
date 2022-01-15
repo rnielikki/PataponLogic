@@ -9,8 +9,8 @@ namespace PataRoad.Core.Character
         private readonly DistanceCalculator _distanceCalculator;
         private readonly Hazorons.Hazoron _hazoron;
 
-        private float _min => _hazoron.DefaultWorldPosition - CharacterEnvironment.MaxAttackDistance;
-        private float _max => _hazoron.DefaultWorldPosition + CharacterEnvironment.RushAttackDistance;
+        private float _min => _hazoron.DefaultWorldPosition - CharacterEnvironment.Sight;
+        private float _max => _hazoron.DefaultWorldPosition + CharacterEnvironment.MaxAttackDistance;
         public bool WasHitLastTime { get; set; }
         public Vector2 LastHit { get; set; }
 

@@ -56,8 +56,7 @@ namespace PataRoad.Core.Rhythm.Command
             OnFeverWarning.RemoveAllListeners();
             OnFeverCanceled.RemoveAllListeners();
         }
-        //What's the condition of "keeping fever"? I don't really know... you can fix the logic if you know better
-        private bool CanKeepFever(RhythmCommandModel inputs) =>
-             inputs.BadCount < 3;
+        private bool CanKeepFever(RhythmCommandModel inputs)
+            => inputs.BadCount == 0 || inputs.PerfectCount > 0;
     }
 }

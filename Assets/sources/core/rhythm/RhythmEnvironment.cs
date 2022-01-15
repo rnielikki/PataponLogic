@@ -31,23 +31,23 @@
             {
                 case Difficulty.Easy:
                     PerfectRange = 0.15f;
-                    GoodRange = 0.2f;
+                    GoodRange = 0.15f;
                     BadRange = 0.25f;
                     MiracleRange = 0.125f;
-                    MinEffectThreshold = 0.2f;
+                    MinEffectThreshold = 0.17f;
                     FeverMaximum = 8;
                     break;
                 case Difficulty.Normal:
                     PerfectRange = 0.02f;
-                    GoodRange = 0.15f;
+                    GoodRange = 0.075f;
                     BadRange = 0.25f;
                     MiracleRange = 0.12f;
-                    MinEffectThreshold = GoodRange;
+                    MinEffectThreshold = 0.1f;
                     FeverMaximum = 10;
                     break;
                 case Difficulty.Hard:
                     PerfectRange = 0.01f;
-                    GoodRange = 0.1f;
+                    GoodRange = 0.04f;
                     BadRange = 0.25f;
                     MiracleRange = 0.1f;
                     MinEffectThreshold = GoodRange;

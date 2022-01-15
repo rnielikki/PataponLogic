@@ -10,10 +10,6 @@
         /// </summary>
         public int ComboCount { get; }
         /// <summary>
-        /// Combo sequenc, which can determine "may enter fever" status.
-        /// </summary>
-        public int SequenceCount { get; }
-        /// <summary>
         /// The (recent) command on this combo.
         /// </summary>
         public RhythmCommandModel Command { get; }
@@ -21,10 +17,9 @@
         /// Determines if it has chance to enter fever.
         /// </summary>
         public bool hasFeverChance { get; }
-        internal RhythmComboModel(RhythmCommandModel commandModel, int comboCount, int sequcneCount)
+        internal RhythmComboModel(RhythmCommandModel commandModel, int comboCount)
         {
             Command = commandModel;
-            SequenceCount = sequcneCount;
             ComboCount = comboCount;
             hasFeverChance = commandModel.ComboType != ComboStatus.NoFever;
         }

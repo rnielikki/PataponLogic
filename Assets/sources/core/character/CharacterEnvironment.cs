@@ -16,7 +16,7 @@ namespace PataRoad.Core.Character
         /// </summary>
         public static float AnimalSightMultiplier { get; set; } = 1; //This reacts to rain.
 
-        public const float MaxAttackDistance = 25;
+        public const float MaxAttackDistance = 20;
         /// <summary>
         /// Like Tatepon Ponchaka~Ponpon. This position is relative to the root Patapon position manager.
         /// </summary>

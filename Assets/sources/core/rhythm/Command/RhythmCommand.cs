@@ -23,6 +23,10 @@ namespace PataRoad.Core.Rhythm.Command
         [SerializeField]
         private AudioSource _audioSource;
 
+        [SerializeField]
+        private AnimationCurve _curve;
+        public AnimationCurve Curve => _curve;
+
         /// <summary>
         /// Invokes RIGHT AFTER the perfect command input.
         /// </summary>
@@ -30,6 +34,7 @@ namespace PataRoad.Core.Rhythm.Command
         [Header("RIGHT AFTER getting the perfect command, without delay.")]
         private UnityEvent<RhythmCommandModel> _onPerfectEnd;
 
+#pragma warning disable S1104 // Fields should not have public accessibility - I know how to wrap but it'll remove many many of current data from editor.
         /// <summary>
         /// Invokes when command is complete e.g. one "PATA PON DON CHAKA".
         /// </summary>
@@ -48,6 +53,7 @@ namespace PataRoad.Core.Rhythm.Command
 
         [SerializeReference]
         public RhythmCombo ComboManager = new RhythmCombo();
+#pragma warning restore S1104 // Fields should not have public accessibility
 
         private CommandListData _data;
 
