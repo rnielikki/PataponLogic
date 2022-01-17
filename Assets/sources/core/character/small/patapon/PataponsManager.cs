@@ -91,6 +91,14 @@ namespace PataRoad.Core.Character.Patapons
                 pon.MoveOnDrum(drumName);
             }
         }
+        public void RegisterGroup(PataponGroup group)
+        {
+            foreach (var pon in group.Patapons)
+            {
+                _patapons.Add(pon);
+            }
+            _groups.Add(group);
+        }
         public void SendGeneralMode(RhythmCommandModel model)
         {
             if (model.ComboType != ComboStatus.Fever) return;

@@ -27,18 +27,19 @@ namespace PataRoad.Core.Rhythm.Command
         /// <param name="inputs">The drum inputs, to check the drum hit status.</param>
         internal bool WillBeFeverStatus(RhythmCommandModel inputs)
         {
-            if (!CanKeepFever(inputs))
+            if (!CanKeepFever(inputs)) //hard will not warn fever end and end instantly
             {
-                if (!_isWarned)
-                {
-                    TurnCounter.OnNextTurn.AddListener(OnFeverWarning.Invoke);
-                    _isWarned = true;
-                }
-                else
+                if (RhythmEnvironment.Difficulty == Difficulty.Hard || _isWarned)
                 {
                     TurnCounter.OnNextTurn.AddListener(EndFever);
                     return false;
                 }
+                else
+                {
+                    TurnCounter.OnNextTurn.AddListener(OnFeverWarning.Invoke);
+                    _isWarned = true;
+                }
+
             }
             else _isWarned = false;
             return true;

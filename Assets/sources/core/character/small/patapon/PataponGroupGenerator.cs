@@ -49,9 +49,12 @@ namespace PataRoad.Core.Character.Patapons
             }
             return pataponGroups;
         }
+        public static GameObject GetGeneralOnlyPataponGroupInstance(ClassType classType, Transform parent, PataponsManager manager)
+        {
+            return AddPataponGroupInstance(classType, parent, manager, true, true);
+        }
 
-        // -------- ADD WEAPON LATER ----------
-        private static GameObject AddPataponGroupInstance(ClassType classType, Transform parent, PataponsManager manager, bool onMission)
+        private static GameObject AddPataponGroupInstance(ClassType classType, Transform parent, PataponsManager manager, bool onMission, bool generalOnly = false)
         {
             var group = new GameObject("PataponGroup");
             group.transform.parent = parent;
@@ -60,19 +63,21 @@ namespace PataRoad.Core.Character.Patapons
             {
                 var groupScript = group.AddComponent<PataponGroup>();
                 groupScript.ClassType = classType;
-                AddPataponsInstance(classType, group.transform, onMission);
+
+                AddPataponsInstance(classType, group.transform, onMission, generalOnly);
+
                 groupScript.Init(manager);
                 group.transform.localPosition = Vector2.zero + _pataponGroupIndex * PataponEnvironment.GroupDistance * Vector2.left;
             }
             else
             {
-                AddPataponsInstance(classType, group.transform, onMission);
+                AddPataponsInstance(classType, group.transform, onMission, generalOnly);
             }
             _pataponGroupIndex++;
             return group;
         }
 
-        private static void AddPataponsInstance(ClassType classType, Transform attachTarget, bool onMission)
+        private static void AddPataponsInstance(ClassType classType, Transform attachTarget, bool onMission, bool generalOnly = false)
         {
             GameObject general;
             GameObject patapon;
@@ -83,6 +88,11 @@ namespace PataRoad.Core.Character.Patapons
 
 
             (general, patapon) = LoadResource(classType);
+            if (generalOnly)
+            {
+                Attach(Object.Instantiate(general, attachTarget), 0);
+                return;
+            }
 
             var patapons = new GameObject[4];
             patapons[0] = Object.Instantiate(general, attachTarget);

@@ -119,6 +119,10 @@ namespace PataRoad.Core.Character.Class
         }
         public virtual void OnAction(Rhythm.Command.RhythmCommandModel model)
         {
+            PerformCommandAction(model.Song);
+        }
+        public virtual void PerformCommandAction(Rhythm.Command.CommandSong song)
+        {
         }
         public virtual void OnCanceled()
         {

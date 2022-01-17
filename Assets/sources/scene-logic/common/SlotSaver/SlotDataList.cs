@@ -27,6 +27,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             {
                 if (_items.Length <= i) break;
                 _items[i].Init(SlotMetaList.SlotMeta[i], _scrollList, i, _onEntered);
+                _items[i].OnDeselect(null);
             }
             var lastIndex = SlotMetaList.LastSlotIndex;
             _scrollList.Init(_items[lastIndex]);

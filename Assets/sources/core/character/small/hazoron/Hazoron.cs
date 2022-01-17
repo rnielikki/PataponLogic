@@ -13,13 +13,19 @@ namespace PataRoad.Core.Character.Hazorons
         private bool _animatingWalk;
         private int _attackTypeIndex;
         public override int AttackTypeIndex => _attackTypeIndex;
-
-        private Levels.IHazoronStatModifier[] _statModifiers;
+        [SerializeField]
+        private bool _charged;
+        [SerializeField]
+        private bool _notAttacking;
+        [SerializeField]
+        [Header("Valid only if not attacking")]
+        private Rhythm.Command.CommandSong _commandAction;
 
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
 
         private void Awake()
         {
+            Charged = _charged;
             OnFever = true;
             Init();
             Stat = _data.Stat;
@@ -32,11 +38,14 @@ namespace PataRoad.Core.Character.Hazorons
                 {
                     (ClassData as ToriClassData)?.FlyUp();
                 }
-                if (_gotPosition) ClassData.Attack();
+                if (_gotPosition)
+                {
+                    if (!_notAttacking) ClassData.Attack();
+                    else ClassData.PerformCommandAction(_commandAction);
+                }
             });
             _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
-            _statModifiers = GetComponents<Levels.IHazoronStatModifier>();
-            foreach (var modifier in _statModifiers)
+            foreach (var modifier in GetComponents<Levels.IHazoronStatModifier>())
             {
                 modifier.SetModifyTarget(Stat);
             }
@@ -77,7 +86,8 @@ namespace PataRoad.Core.Character.Hazorons
                 _gotPosition = true;
                 return;
             }
-            else if (!StatusEffectManager.OnStatusEffect)
+            else if (!StatusEffectManager.OnStatusEffect
+                && DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)
             {
                 if (!_animatingWalk)
                 {

@@ -42,7 +42,7 @@
                     GoodRange = 0.075f;
                     BadRange = 0.25f;
                     MiracleRange = 0.12f;
-                    MinEffectThreshold = 0.1f;
+                    MinEffectThreshold = 0.05f;
                     FeverMaximum = 10;
                     break;
                 case Difficulty.Hard:

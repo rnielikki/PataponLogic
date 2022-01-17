@@ -23,10 +23,6 @@ namespace PataRoad.Core.Rhythm.Command
         [SerializeField]
         private AudioSource _audioSource;
 
-        [SerializeField]
-        private AnimationCurve _curve;
-        public AnimationCurve Curve => _curve;
-
         /// <summary>
         /// Invokes RIGHT AFTER the perfect command input.
         /// </summary>

@@ -27,8 +27,8 @@ namespace PataRoad.Core.Character.Class
                     break;
                 case 1:
                     SetAttackMoveController();
-                    realStat.DefenceMax *= 5;
-                    realStat.DefenceMin *= 3;
+                    _character.Stat.DefenceMin *= 2;
+                    _character.Stat.DefenceMax *= 2.5f;
                     break;
             }
         }
@@ -58,13 +58,13 @@ namespace PataRoad.Core.Character.Class
             }
             _character.DistanceManager.MoveTo(0.75f, _character.Stat.MovementSpeed, true);
         }
-        public override void OnAction(RhythmCommandModel model)
+        public override void PerformCommandAction(CommandSong song)
         {
-            _shield.SetActive(model.Song == CommandSong.Chakachaka);
+            _shield.SetActive(song == CommandSong.Chakachaka);
             //"Only works with command"
-            if (model.Song == CommandSong.Chakachaka)
+            if (song == CommandSong.Chakachaka)
             {
-                if (model.ComboType == ComboStatus.Fever)
+                if (_character.OnFever)
                 {
                     _character.Stat.DefenceMin *= 2;
                     _character.Stat.DefenceMax *= 2.5f;
@@ -75,10 +75,11 @@ namespace PataRoad.Core.Character.Class
                     _character.Stat.DefenceMax *= 1.8f;
                 }
             }
-            if (model.Song == CommandSong.Patapata && _character.OnFever)
+            if (song == CommandSong.Patapata && _character.OnFever)
             {
                 _character.Stat.DefenceMin *= 1.5f;
                 _character.Stat.DefenceMax *= 2f;
+                _shield.SetActive(true);
             }
         }
         public override void OnCanceled()

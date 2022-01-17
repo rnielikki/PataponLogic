@@ -69,6 +69,14 @@ namespace PataRoad.Core.Global
                 _progress = Mathf.Max(_progress, NextMap.Index);
             }
         }
+        public void OpenInIndex(int index)
+        {
+            if (!_openMaps.ContainsKey(index))
+            {
+                NextMap = LoadResource(index);
+                _progress = Mathf.Max(_progress, index);
+            }
+        }
         public void Select(MapDataContainer data)
         {
             NextMap = data;

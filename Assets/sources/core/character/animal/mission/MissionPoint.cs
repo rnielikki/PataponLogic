@@ -83,6 +83,10 @@ namespace PataRoad.Core.Map
                 FailMission();
             }
         }
+        public void AddMissionEndAction(UnityAction<bool> action)
+        {
+            OnMissionEnd.AddListener(action);
+        }
         public void FailMissionNow()
         {
             if (IsMissionEnd) return;

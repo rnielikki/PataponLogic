@@ -47,10 +47,9 @@ namespace PataRoad.Core.Character.Class
                 _attackController.StartAttack(AttackCommandType.FeverAttack);
             }
         }
-        public override void OnAction(RhythmCommandModel model)
+        public override void PerformCommandAction(CommandSong song)
         {
-            base.OnAction(model);
-            if (model.Song == CommandSong.Ponchaka) _animator.Animate("charge");
+            if (song == CommandSong.Ponchaka) _animator.Animate("charge");
         }
         public override void Defend()
         {

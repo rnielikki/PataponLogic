@@ -57,9 +57,9 @@ namespace PataRoad.Core.Character.Class
             _animator.Animate("defend");
             _character.DistanceManager.MoveTo(0.75f, _character.Stat.MovementSpeed, true);
         }
-        public override void OnAction(RhythmCommandModel model)
+        public override void PerformCommandAction(CommandSong song)
         {
-            _shield.SetActive(model.Song == CommandSong.Chakachaka);
+            _shield.SetActive(song == CommandSong.Chakachaka);
         }
         public override void OnCanceled()
         {
