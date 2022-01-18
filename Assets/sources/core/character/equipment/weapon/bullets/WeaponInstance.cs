@@ -46,11 +46,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// <param name="forceMultiplierMin">Minimum value of force that will be thrown with. 1 is normal force, 0 is no force.</param>
         /// <param name="forceMultiplierMax">Maximum value of force that will be thrown with. 1 is normal force, 0 is no force.</param>
         /// <param name="additionalDir">Additional force to specific direction. Will need for Yaripon and Yumipon attack.</param>
-        public void Throw(float forceMultiplierMin, float forceMultiplierMax, Vector3 additionalDir = default)
+        public void Throw(float forceMultiplierMin, float forceMultiplierMax)
         {
             _stat = _holder.Stat;
             var force = Random.Range(forceMultiplierMin, forceMultiplierMax);
-            _rigidbody.AddForce((transform.up + additionalDir) * force * _rigidbody.mass);
+            _rigidbody.AddForce(transform.up * force * _rigidbody.mass);
         }
         private void Update()
         {

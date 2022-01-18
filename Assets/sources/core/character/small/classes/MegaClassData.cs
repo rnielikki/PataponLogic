@@ -7,6 +7,7 @@ namespace PataRoad.Core.Character.Class
     {
         internal MegaClassData(SmallCharacter character) : base(character)
         {
+            AdditionalSight = 3;
         }
         protected override void InitLateForClass(Stat realStat)
         {

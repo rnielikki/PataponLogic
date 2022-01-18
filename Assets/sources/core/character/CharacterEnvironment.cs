@@ -26,6 +26,6 @@ namespace PataRoad.Core.Character
         /// <summary>
         /// Max y height to scan, 0 to this value. About (a bit heigher than) Toripon height expected.
         /// </summary>
-        public const float MaxYToScan = 6;
+        public const float MaxYToScan = 8;
     }
 }

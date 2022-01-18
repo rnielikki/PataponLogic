@@ -41,7 +41,7 @@ namespace PataRoad.Core.Character
             var closest = _distanceCalculator.GetClosestForAttack();
             var front = _distanceManager.Front;
             if (closest == null) return Clamp(front - _groupOffset);
-            attackDistance = _patapon.Weapon.AdjustAttackDistanceByYPosition(attackDistance, closest.Value.y - _patapon.RootTransform.position.y);
+            attackDistance = _patapon.Weapon.AdjustAttackDistanceByYPosition(attackDistance, closest.Value.y);
             return Clamp(Mathf.Min(front, closest.Value.x - attackDistance - _patapon.CharacterSize)) - _groupOffset;
         }
 

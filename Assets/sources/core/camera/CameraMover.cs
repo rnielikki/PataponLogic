@@ -5,7 +5,7 @@ namespace PataRoad.Core.CameraController
 {
     public class CameraMover : MonoBehaviour
     {
-        public Transform Target { get; private set; }
+        public virtual Transform Target { get; protected set; }
 
         /// <summary>
         /// Camera smooth moving per second. Does nothing if <see cref="SmoothMoving" /> is <c>false</c>.

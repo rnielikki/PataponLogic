@@ -17,6 +17,11 @@ namespace PataRoad.Core.Character.Class
         protected CharacterAnimator _animator;
 
         /// <summary>
+        /// Some range attackers like Yumipon, or even Kibapon has good sense of smell.
+        /// </summary>
+        public float AdditionalSight { get; protected set; }
+
+        /// <summary>
         /// Root, which is parent of Patapon body. Default is empty, but Toripon has different root. Must add slash to end if it's not empty.
         /// </summary>
         public string RootName { get; protected set; } = "";

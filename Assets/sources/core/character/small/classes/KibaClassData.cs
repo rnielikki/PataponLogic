@@ -7,6 +7,7 @@ namespace PataRoad.Core.Character.Class
         internal KibaClassData(SmallCharacter character) : base(character)
         {
             IsMeleeUnit = true;
+            AdditionalSight = 5;
         }
         protected override void InitLateForClass(Stat realStat)
         {

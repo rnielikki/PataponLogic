@@ -5,6 +5,7 @@
         internal YumiClassData(SmallCharacter character) : base(character)
         {
             ChargeWithoutMove = true;
+            AdditionalSight = 10;
         }
         protected override void InitLateForClass(Stat realStat)
         {

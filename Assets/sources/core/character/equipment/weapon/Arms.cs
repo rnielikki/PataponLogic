@@ -23,7 +23,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 var stoneForThrowing = Instantiate(_copiedStone, transform.root.parent);
                 stoneForThrowing.GetComponent<WeaponInstance>()
                     .Initialize(this, _color, _throwMass, _stoneTransform)
-                    .Throw(650, 750, Vector3.zero);
+                    .Throw(650, 750);
             }
             else
             {

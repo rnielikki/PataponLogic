@@ -56,13 +56,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             LastAttackCommandType = attackCommandType;
         }
-        protected void SetInitialVelocity(float force, float angle, Vector2 additionalDir = default)
+        protected void SetInitialVelocity(float force, float angle)
         {
-            _initialVelocity = Time.fixedDeltaTime * force * (new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)) + additionalDir);
+            _initialVelocity = Time.fixedDeltaTime * force * (new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)));
         }
         /// <summary>
         /// Gets throwing range attack distance. It also considers wind, but doesn't consider y axis. Use <see cref="AdjustAttackDistanceByYPosition(float, float)"/> for late adjustment.
         /// </summary>
+        /// <remarks>This is calculated from physics theory for grounded attacker.</remarks>
         /// <returns>x distance for range attack.</returns>
         protected float GetThrowingAttackDistance()
         {
@@ -75,7 +76,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             if (_initialVelocity.x == 0) return 0; //No zero division
             var velocityRate = _initialVelocity.y / _initialVelocity.x;
-            return Mathf.Sqrt((yDistance + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance;
+            var yDiff = yDistance - Holder.RootTransform.position.y;
+            return Mathf.Sqrt((yDiff + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance;
         }
         internal virtual void Colorize(Color color)
         {

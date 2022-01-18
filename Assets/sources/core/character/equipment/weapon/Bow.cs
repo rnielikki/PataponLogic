@@ -13,7 +13,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// copied arrow for throwing.
         /// </summary>
         private GameObject _copiedArrow;
-        private static readonly Vector3 _throwAdditionalForce = Vector3.up;
 
         private SpriteRenderer _bowRenderer;
         private SpriteRenderer _arrowRenderer;
@@ -40,18 +39,18 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             float minForce, maxForce;
             if (attackCommandType == AttackCommandType.Defend)
             {
-                minForce = 1200;
-                maxForce = 1400;
+                minForce = 1000;
+                maxForce = 1200;
             }
             else
             {
-                minForce = 1000;
-                maxForce = 1200;
+                minForce = 1200;
+                maxForce = 1500;
             }
 
             arrowForThrowing.GetComponent<WeaponInstance>()
                 .Initialize(this, _color, _throwMass, transformOriginal: _arrowTransform)
-                .Throw(minForce, maxForce, _throwAdditionalForce);
+                .Throw(minForce, maxForce);
         }
         protected override void LoadRenderersAndImage()
         {
@@ -74,10 +73,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 case AttackCommandType.Attack:
                 case AttackCommandType.FeverAttack:
-                    SetInitialVelocity(1400, 40.461f, _throwAdditionalForce);
+                    SetInitialVelocity(1350, 60f);
                     break;
                 case AttackCommandType.Defend:
-                    SetInitialVelocity(1100, 16.785f, _throwAdditionalForce);
+                    SetInitialVelocity(1100, 45f);
                     break;
             }
         }

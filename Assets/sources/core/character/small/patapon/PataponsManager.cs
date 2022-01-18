@@ -44,7 +44,7 @@ namespace PataRoad.Core.Character.Patapons
         private AudioClip[] _pataponSpeakingOnMiss;
         int _onMissSpeakingIndex;
 
-        private CameraController.CameraMover _cameraMover;
+        private CameraController.PataponCameraMover _cameraMover;
         private CameraController.CameraZoom _cameraZoom;
         private DistanceCalculator _distanceCalculator;
         private const float _minimumPosition = -10;
@@ -56,8 +56,8 @@ namespace PataRoad.Core.Character.Patapons
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
             _groups = GetComponentsInChildren<PataponGroup>().ToList();
 
-            _cameraMover = Camera.main.GetComponent<CameraController.CameraMover>();
-            _cameraMover.SetTarget(transform, false);
+            _cameraMover = Camera.main.GetComponent<CameraController.PataponCameraMover>();
+            _cameraMover.Manager = this;
             _cameraZoom = Camera.main.GetComponent<CameraController.CameraZoom>();
             _distanceCalculator = DistanceCalculator.GetPataponManagerDistanceCalculator(this);
 

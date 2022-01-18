@@ -74,7 +74,7 @@ namespace PataRoad.Core.Character
         public ElementalAttackType ElementalAttackType { get; set; }
         public abstract int AttackTypeIndex { get; }
 
-        public float Sight => CharacterEnvironment.Sight;
+        public float Sight => CharacterEnvironment.Sight + ClassData.AdditionalSight;
 
         protected void Init()
         {
@@ -129,7 +129,8 @@ namespace PataRoad.Core.Character
                 yield return new WaitForSeconds(1);
                 AfterDie();
                 _onAfterDeath?.Invoke();
-                Destroy(gameObject);
+                //Coroutine is root of null evil bc it ignores sync
+                Rhythm.RhythmTimer.Current.OnNext.AddListener(() => Destroy(gameObject));
             }
         }
         protected virtual void BeforeDie() { }
