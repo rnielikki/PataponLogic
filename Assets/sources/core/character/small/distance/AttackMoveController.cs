@@ -183,7 +183,7 @@ namespace PataRoad.Core.Character
             transform.position = Vector2.MoveTowards(transform.position, pos * Vector2.right, _movingSpeed * Time.deltaTime);
             var movingRight = transform.position.x < savedPosition.x;
 
-            if (_movingRight != movingRight) AnimateAttack();
+            if (_movingRight != movingRight || transform.position.x == pos) AnimateAttack();
             _movingRight = movingRight;
         }
     }

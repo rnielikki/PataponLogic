@@ -126,7 +126,6 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 0));
 
             //Test
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 2));
             /*
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 0), 10);
             AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 1), 1);
