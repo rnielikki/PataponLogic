@@ -15,6 +15,28 @@ namespace PataRoad.Core.Items
 
         public void Drop() => DropItem(false);
         public void DropRandom() => DropItem(true);
+        public void DropFromChances()
+        {
+            var startPoint = transform.position;
+            startPoint.x -= _dropData.Length * _gap * 0.5f;
+            foreach (var data in _dropData)
+            {
+                if (!(_dropData[0] is ObtainableItemDropData obtainable)) continue;
+                float random = Random.Range(0, 1f);
+                float sum = 0;
+                foreach (var chance in obtainable.ItemDropChances)
+                {
+                    sum += chance.Chance;
+                    if (chance.Chance > 1) throw new System.ArgumentException("Chance sum cannot be more than 1");
+                    if (sum < random)
+                    {
+                        ItemDrop.DropItem(data, startPoint, data.DoNotDestroy, chance.Item);
+                        startPoint.x += _gap;
+                        break;
+                    }
+                }
+            }
+        }
         private void DropItem(bool random)
         {
             var startPoint = transform.position;

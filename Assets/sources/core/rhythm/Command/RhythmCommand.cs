@@ -190,7 +190,7 @@ namespace PataRoad.Core.Rhythm.Command
         public void SetCommandSong(CommandSong[] songs) => _allSongs = songs;
         public PracticingCommandListData ToPracticeMode(CommandSong song)
         {
-            OnCommandCanceled?.Invoke();
+            OnCommandCanceled.Invoke();
             var data = new PracticingCommandListData(this, _data, song);
             _data = data;
             return data;

@@ -81,7 +81,7 @@ namespace PataRoad.Core.Global
         {
             NextMap = data;
         }
-        public void MissionSucceeded()
+        public void OnMissionSucceeded()
         {
             if (NextMap.MapData.OpenOnlyOnce && !_closedMaps.Contains(NextMap.MapData.Index))
             {
@@ -100,9 +100,10 @@ namespace PataRoad.Core.Global
             GlobalData.CurrentSlot.PataponInfo.CustomMusic = null;
             RefreshAllWeathers();
         }
-        public void MissionFailed()
+        public void OnMissionFailed()
         {
             _succeededLast = false;
+            LastMap = NextMap;
             GlobalData.CurrentSlot.PataponInfo.CustomMusic = null;
         }
         public void RefreshAllWeathers()

@@ -21,11 +21,13 @@ namespace PataRoad.Core.Character.Patapons
                     {
                         input.DefenceMin *= 6;
                         input.DefenceMax *= 6.5f;
+                        input.BoostResistance(_patapon.LastPerfectionRate * 0.3f);
                     }
                     else
                     {
                         input.DefenceMin *= 2.7f;
                         input.DefenceMax *= 3;
+                        input.BoostResistance(_patapon.LastPerfectionRate * 0.15f);
                     }
                     input.DamageMin /= 5;
                     input.DamageMax /= 4;

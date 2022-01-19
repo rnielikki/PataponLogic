@@ -13,6 +13,7 @@
         public CharacterAnimator CharAnimator { get; }
         public void OnAttackMiss(UnityEngine.Vector2 point);
         public DistanceCalculator DistanceCalculator { get; }
+        public float CharacterSize { get; }
         public void StopAttacking(bool pause);
         public Equipments.Weapons.AttackType AttackType { get; }
         public Equipments.Weapons.ElementalAttackType ElementalAttackType { get; }

@@ -278,11 +278,11 @@ namespace PataRoad.Core.Character.Patapons
         internal void Heal(PataponGroup sender, int amount)
         {
             if (sender != Group) return;
-            CurrentHitPoint = Mathf.Clamp(amount, CurrentHitPoint + amount, Stat.HitPoint);
+            CurrentHitPoint = Mathf.Min(CurrentHitPoint + amount, Stat.HitPoint);
         }
         public void HealAlone(int amount)
         {
-            CurrentHitPoint = Mathf.Clamp(amount, CurrentHitPoint + amount, Stat.HitPoint);
+            CurrentHitPoint = Mathf.Min(CurrentHitPoint + amount, Stat.HitPoint);
             Group.RefreshDisplay();
         }
         public override void OnAttackHit(Vector2 point, int damage)

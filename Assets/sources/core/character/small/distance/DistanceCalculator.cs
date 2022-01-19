@@ -75,10 +75,10 @@ namespace PataRoad.Core.Character
 
 
         /// <summary>
-        /// Shoots Raycast for marching. Uses <see cref="GetTargetOnSight"/>.
+        /// Shoots Raycast for marching. Same as melee unit of <see cref="GetClosestForAttack"/>.
         /// </summary>
         /// <returns>Coordinate of collider hit. <c>null</c> if nothing is on forward sight.</returns>
-        public Vector2? GetClosest() => GetTargetOnSight(_character.Sight);
+        public Vector2? GetClosest() => GetClosestForAttack(0);
         /// <summary>
         /// Shoots RayCast to closest structure or enemy and returns the raycast hit if found.
         /// </summary>
@@ -176,6 +176,7 @@ namespace PataRoad.Core.Character
         /// </summary>
         /// <returns><c>true</c> if Patapon finds obstacle (attack) target to Patapon sight, otherwise <c>false</c>.</returns>
         public bool HasAttackTarget() => GetClosestForAttack() != null;
+        public bool HasAttackTargetOnForward() => GetClosestForAttack(0) != null;
         protected float MaxEnemyDistanceInSight(float attackDistance) => _character.DefaultWorldPosition + _xDirection * (_character.Sight + attackDistance);
     }
 }

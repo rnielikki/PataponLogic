@@ -35,8 +35,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
             else
             {
-                minVelocity = 10;
-                maxVelocity = 12;
+                minVelocity = 8;
+                maxVelocity = 10;
             }
 
             spearForThrowing.GetComponent<WeaponInstance>()
@@ -65,7 +65,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             switch (attackCommandType)
             {
                 case AttackCommandType.Attack:
-                    SetInitialVelocity(11f / Time.fixedDeltaTime, 49.586f);
+                    SetInitialVelocity(9f / Time.fixedDeltaTime, 49.586f);
                     break;
                 case AttackCommandType.FeverAttack:
                     //readjust yaripon fever attack animation Y to: (Math.Pow(force*cos(angle as radian))/2g)

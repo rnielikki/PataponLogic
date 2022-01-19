@@ -54,6 +54,8 @@ namespace PataRoad.Core.Map.Levels
 
         public float Sight => CharacterEnvironment.Sight; //doesn't matter, still...
 
+        public float CharacterSize => throw new System.NotImplementedException();
+
         private bool _ready;
 
         private void Start()

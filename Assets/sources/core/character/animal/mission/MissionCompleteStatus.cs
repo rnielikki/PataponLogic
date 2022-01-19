@@ -20,7 +20,7 @@ namespace PataRoad.Core.Map
 
         public void LoadMissionStatus()
         {
-            Destroy(Items.ItemManager.Current.ItemDropPoint.gameObject);
+            //Destroy(Items.ItemManager.Current.ItemDropPoint.gameObject);
 
             _nextStory = MissionPoint.Current.NextStory;
             if (_nextStory != null) Story.StoryLoader.Init();

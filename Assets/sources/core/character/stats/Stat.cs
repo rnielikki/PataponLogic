@@ -362,6 +362,16 @@ namespace PataRoad.Core.Character
             };
         }
         public Stat Copy() => (Stat)MemberwiseClone();
+        public Stat BoostResistance(float amount)
+        {
+            CriticalResistance += amount;
+            StaggerResistance += amount;
+            KnockbackResistance += amount;
+            FireResistance += amount;
+            IceResistance += amount;
+            SleepResistance += amount;
+            return this;
+        }
         private float GetSafeValue(float value, float min) => _isCharacterStat ? UnityEngine.Mathf.Max(min, value) : value;
     }
 }

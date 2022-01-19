@@ -41,6 +41,9 @@ namespace PataRoad.Core.Character.Animal
         public float AttackDistance => 0;
 
         public float Sight => _animalData.Sight * CharacterEnvironment.AnimalSightMultiplier;
+
+        public float CharacterSize => 0;
+
         [SerializeReference]
         AudioClip _soundOnStaggered;
         [SerializeReference]

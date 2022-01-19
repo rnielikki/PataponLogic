@@ -39,6 +39,11 @@ namespace PataRoad.Core.Character.Bosses
 
         public float Sight => CharacterEnvironment.Sight;
 
+        public float CharacterSize { get; protected set; }
+
+        [SerializeField]
+        protected UnityEvent _onAfterDeath = new UnityEvent();
+
         protected virtual void Init(BossAttackData data)
         {
             foreach (var part in GetComponentsInChildren<BreakablePart>())
@@ -71,8 +76,17 @@ namespace PataRoad.Core.Character.Bosses
             }
             StatusEffectManager.RecoverAndIgnoreEffect();
             CharAnimator.PlayDyingAnimation();
+            _onAfterDeath?.Invoke();
         }
 
+        /// <summary>
+        /// Sets max health, also fills health to full.
+        /// </summary>
+        internal void SetMaximumHitPoint(int point)
+        {
+            Stat.HitPoint = point;
+            CurrentHitPoint = point;
+        }
         public virtual float GetAttackValueOffset() => Random.Range(BossAttackData.MinLastDamageOffset, BossAttackData.MinLastDamageOffset);
         public virtual float GetDefenceValueOffset() => Random.Range(0, 1);
         public virtual void OnAttackHit(Vector2 point, int damage)

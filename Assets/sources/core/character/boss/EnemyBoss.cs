@@ -13,7 +13,7 @@ namespace PataRoad.Core.Character.Bosses
         private bool _moving;
         private bool _movingBack;
         private bool _movingBackQueued;
-        private const int _movingBackPosition = 50;
+        private static int _movingBackPosition = (int)CharacterEnvironment.Sight + 15;
         private int _phase;
 
         private Vector3 _targetPosition;
@@ -116,16 +116,19 @@ namespace PataRoad.Core.Character.Bosses
                 }
                 return;
             }
-
             //phase 1: sleeping and found in sight
-            if (_sleeping && DistanceCalculator.HasAttackTarget())
+            if (_sleeping)
             {
-                _sleeping = false;
-                AttackDistance = CalculateAttack();
+                if (DistanceCalculator.GetTargetOnSight(Sight) != null)
+                {
+                    _sleeping = false;
+                    AttackDistance = CalculateAttack();
+                }
+                else return;
             }
             //phase 2: go forward
             var closest = DistanceCalculator.GetClosestForAttack() ?? _pataponsManager.transform.position;
-            var targetPos = new Vector2(Mathf.Max(_pataponsManager.transform.position.x, closest.x), 0);
+            var targetPos = new Vector2(Mathf.Max(_pataponsManager.transform.position.x + CharacterSize, closest.x + CharacterSize), 0);
             var offset = Stat.MovementSpeed * Time.deltaTime;
 
             if (transform.position.x - targetPos.x > AttackDistance + offset)

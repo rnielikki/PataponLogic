@@ -17,12 +17,12 @@ namespace PataRoad.Core.Items
         private AudioClip _sound;
         protected UnityEngine.Events.UnityEvent _events;
 
-        protected void SetItem(ObtainableItemDropData data)
+        protected void SetItem(ObtainableItemDropData data, IItem item = null)
         {
             Init(data, true);
 
-            _item = data.Item;
-            _renderer.sprite = data.Item.Image;
+            _item = item ?? data.Item;
+            _renderer.sprite = _item.Image;
 
             if (_item.ItemType == ItemType.Equipment && _item is EquipmentData eq)
             {
@@ -50,17 +50,17 @@ namespace PataRoad.Core.Items
 
             _fullTimeToExist = _timeToExist = data.TimeToExist;
         }
-        public static bool DropItem(ItemDropData data, Vector2 position, bool noDestroy = false)
+        public static bool DropItem(ItemDropData data, Vector2 position, bool noDestroy = false, IItem replacedItem = null)
         {
             switch (data)
             {
                 case ObtainableItemDropData obtainableItemData:
-                    var item = obtainableItemData.Item;
+                    var item = replacedItem ?? obtainableItemData.Item;
                     if (item == null || item.IsUniqueItem && GlobalData.CurrentSlot.Inventory.HasItem(item))
                     {
                         return false;
                     }
-                    GetItemDropGameObject(ItemManager.Current.ItemDropTemplate, position).GetComponent<ItemDrop>().SetItem(obtainableItemData);
+                    GetItemDropGameObject(ItemManager.Current.ItemDropTemplate, position).GetComponent<ItemDrop>().SetItem(obtainableItemData, item);
                     return true;
                 case EventItemDropData eventItemData:
                     if (eventItemData.Image == null) return false;

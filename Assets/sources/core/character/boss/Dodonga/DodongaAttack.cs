@@ -35,6 +35,10 @@ namespace PataRoad.Core.Character.Bosses
         {
             CharAnimator.Animate("eat");
         }
+        internal void AnimateGrowl()
+        {
+            CharAnimator.Animate("growl");
+        }
 
         public void FireAttack()
         {
@@ -62,6 +66,13 @@ namespace PataRoad.Core.Character.Bosses
         {
             EatingMouth.StopAttacking();
         }
+        public void GrowlAttack()
+        {
+            foreach (var target in _boss.DistanceCalculator.GetAllAbsoluteTargetsOnFront())
+            {
+                Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat, target.gameObject, target.transform.position);
+            }
+        }
         public override void StopAllAttacking()
         {
             Headbutt.StopAttacking();
@@ -69,11 +80,17 @@ namespace PataRoad.Core.Character.Bosses
         }
         internal override void UpdateStatForBoss(int level)
         {
-            var multiplier = Mathf.Sqrt(level);
-            _stat.MultipleDamage(multiplier);
-            _stat.DefenceMin *= multiplier;
-            _stat.DefenceMax *= multiplier;
-            _stat.HitPoint = Mathf.RoundToInt(_stat.HitPoint * multiplier);
+            var sqrt = Mathf.Sqrt(level);
+            _stat.MultipleDamage(sqrt);
+            _stat.DefenceMin += sqrt;
+            _stat.DefenceMax += sqrt;
+            _boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * sqrt));
+            _stat.CriticalResistance += level * 0.05f;
+            _stat.StaggerResistance += level * 0.05f;
+            _stat.KnockbackResistance += level * 0.05f;
+            _stat.FireResistance += level * 0.03f;
+            _stat.IceResistance += level * 0.03f;
+            _stat.SleepResistance += level * 0.03f;
         }
     }
 }
