@@ -1,0 +1,853 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2532325534641892927
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6503063704793924880}
+  - component: {fileID: -2731587640728505089}
+  - component: {fileID: 2221699510055496769}
+  m_Layer: 0
+  m_Name: 7.Fortress-Suko
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6503063704793924880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532325534641892927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3602702238002124043}
+  - {fileID: 8879697105321809734}
+  - {fileID: 3562214981621182764}
+  - {fileID: 3092750030168514119}
+  - {fileID: 2502107796439599391}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2731587640728505089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532325534641892927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e332b66898ca34a824f313e75ba480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weather: 0
+  _randomWeather: 0
+  _randomWind: 0
+  _windType: 0
+  _usePatapolis: 1
+  _background: Ruins
+  _music: {fileID: 8300000, guid: 5ea63511ba356334b94a7314475fc3be, type: 3}
+  _xCameraPosition: -10.5
+  _time: 21
+  StoryActions:
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Pan Pakapon
+    _content: Meat, meat! Delicious meat!
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: May
+    _content: ...Eh... Hahaha.
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 21300000, guid: a02552d984695674b9dd6478411d6248, type: 3}
+    _name: Meden
+    _content: So next destination is, hmm, fortress?
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: May
+    _content: Yes! Be careful, I lost my lovely friend July there...
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 21300000, guid: a02552d984695674b9dd6478411d6248, type: 3}
+    _name: Meden
+    _content: Thank you for the advice, of course we must be careful. And Sukopon,
+      would you join the army?
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Sukopon
+    _content: Sukopon, fight, join!
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 412704307498515184}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Walk
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 3
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 412704307498515184}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Animate
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: angry
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 1
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Ton Kampon
+    _content: No! I won't allow that! Did you forget what Sukopon did?
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 588589321068741344}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Animate
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: party
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Pan Pakapon
+    _content: Hey friend, don't fight, let's party!
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2221699510055496769}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryMusicChanger, Assembly-CSharp
+          m_MethodName: StopMusic
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: May
+    _content: Hah? Did Sukopon something wrong?
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Ton Kampon
+    _content: Yes. On the cold winter, Sukopon walked away alone on the frozen river,
+      shouting something found blah blah.
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Sukopon
+    _content: It was Kacchindonga! A feroccious Kacchindonga! It's super rare!
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Pan Pakapon
+    _content: But it's a good thing! He was alive when all Patapons turned into the
+      stone! So he could help Patapons and we are there! Isn't it?
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: May
+    _content: Woah, actually, it's fabulous! So did you catch it, Sukopon?
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Sukopon
+    _content: Suko... Found... but scary... Suko, in the cave...
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Ton Kampon
+    _content: Why everyone is so dumb as hell? It left us because of the stupid boss
+      that even cannot catch! He is "disqualified" as a General!
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 21300000, guid: 152f3a2a926e94d45896c6705cea16d8, type: 3}
+    _name: Meden
+    _content: Ton Kampon, do you know that it's 10 years old story? Sukopon left
+      once about 10 years ago, and never left after that.
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Sukopon
+    _content: Suko, fight!
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 412704307498515184}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Animate
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: attack
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 2
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Ton Kampon
+    _content: Whatever. I warned you. You'll regret!
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 412704307498515184}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Flip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 412704307498515184}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Walk
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: -30
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 3
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Pan Pakapon
+    _content: Hey friend, where are you going? Take a bite of this meat! This is
+      really delicious!
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 588589321068741344}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Flip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 588589321068741344}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Animate
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: party
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 588589321068741344}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Move
+          m_Mode: 4
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: -30
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 1
+    _useLine: 0
+    _image: {fileID: 0}
+    _name: 
+    _content: 
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2221699510055496769}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryMusicChanger, Assembly-CSharp
+          m_MethodName: ChangeMusic
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 5ea63511ba356334b94a7314475fc3be, type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: May
+    _content: That's not big deal, that Dekapon is so sensitive for nothing. I hope
+      that Sukopon is okay.
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: May
+    _content: Ah, I forgot! Did you know that some Hazorons have great skill of creating
+      gems? I learnt when I was child, I can help you by creating that!
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: Meden
+    _content: Wow, May, how can I thank for you... GEMs are necessary for ELEMENTAL
+      ATTACK and creating some RAREPONS!
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 0}
+    _name: May
+    _content: Yes, but I'm still sad, because it's all about fighting against same
+      Hazorons... But I hope that Patapons won't die.
+  - _events:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7095329534554212656}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Animate
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: sad
+            m_BoolArgument: 0
+          m_CallState: 2
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 21300000, guid: d48e0424867210a40a56e388cad1f354, type: 3}
+    _name: Meden
+    _content: Oh may...
+  _nextStory: {fileID: 0}
+--- !u!114 &2221699510055496769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532325534641892927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e932ea13b9ac07b47b7f3c8907ccbc81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &298278186308287965
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6503063704793924880}
+    m_Modifications:
+    - target: {fileID: 2781808015003858113, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_Name
+      value: Megapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -20.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2781808015003858116, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ae2984f94e8e1454694f6bb2c223101b, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+--- !u!1 &2502107796439599388 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2781808015003858113, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+  m_PrefabInstance: {fileID: 298278186308287965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &588589321068741344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502107796439599388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb32174318e3d804b9fcc362f47f9813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uniqueSeed: 3
+--- !u!4 &2502107796439599391 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
+  m_PrefabInstance: {fileID: 298278186308287965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1688431262361980940
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6503063704793924880}
+    m_Modifications:
+    - target: {fileID: 4432989599371218504, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_Name
+      value: Mahopon
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4432989599371218509, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 1b6dfe08bef5c1f4694f99e18cedc0c5, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+--- !u!1 &3092750030168514116 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4432989599371218504, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+  m_PrefabInstance: {fileID: 1688431262361980940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7095329534554212656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3092750030168514116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb32174318e3d804b9fcc362f47f9813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uniqueSeed: 1
+--- !u!4 &3092750030168514119 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
+  m_PrefabInstance: {fileID: 1688431262361980940}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2034052725893850301
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6503063704793924880}
+    m_Modifications:
+    - target: {fileID: 3298102455598739888, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 1bc239387f0eb8a41bd3c3f2b6ef4db0, type: 2}
+    - target: {fileID: 3298102455598739893, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_Name
+      value: Yumipon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+--- !u!1 &3602702238002124040 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3298102455598739893, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+  m_PrefabInstance: {fileID: 2034052725893850301}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &940823246864252899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3602702238002124040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb32174318e3d804b9fcc362f47f9813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uniqueSeed: 2
+--- !u!4 &3602702238002124043 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3298102455598739894, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+  m_PrefabInstance: {fileID: 2034052725893850301}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6878696427777746472
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6503063704793924880}
+    m_Modifications:
+    - target: {fileID: 2615760757173105000, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 7a2dfda0ef26cf140b44607e82928b06, type: 2}
+    - target: {fileID: 2615760757173105005, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_Name
+      value: Dekapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -16.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+--- !u!1 &8879697105321809733 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2615760757173105005, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+  m_PrefabInstance: {fileID: 6878696427777746472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &412704307498515184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8879697105321809733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb32174318e3d804b9fcc362f47f9813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uniqueSeed: 5
+--- !u!4 &8879697105321809734 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
+  m_PrefabInstance: {fileID: 6878696427777746472}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7867207293216882253
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6503063704793924880}
+    m_Modifications:
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6647991443700256610, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+      propertyPath: m_Name
+      value: May
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+--- !u!4 &3562214981621182764 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6647991443700256609, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+  m_PrefabInstance: {fileID: 7867207293216882253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3562214981621182767 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6647991443700256610, guid: a5c4621b111d0714cb3527b20dedcdb1, type: 3}
+  m_PrefabInstance: {fileID: 7867207293216882253}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2256983784760677525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3562214981621182767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb32174318e3d804b9fcc362f47f9813, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _uniqueSeed: 6

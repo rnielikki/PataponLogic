@@ -11,7 +11,6 @@ namespace PataRoad.Story
     {
         private static StoryLoader _current { get; set; }
         private UnityEngine.InputSystem.InputAction _action;
-        private Core.Map.MapData _nextMap;
         private void Awake()
         {
             _current = this;
@@ -45,7 +44,6 @@ namespace PataRoad.Story
             //-- Init
             var storySceneInfo = FindObjectOfType<StorySceneInfo>();
             storySceneInfo.StartStoryScene();
-            _nextMap = data.NextMap;
 
             //-- Audio
             storySceneInfo.AudioSource.clip = data.Music;
@@ -104,7 +102,16 @@ namespace PataRoad.Story
 
             //-- Do story action
             yield return storySceneInfo.LoadStoryLines(data.StoryActions);
-            MoveToNext();
+
+            //-- Next or end?
+            if (data.NextStory != null)
+            {
+                _current.StartStory(data.NextStory);
+            }
+            else
+            {
+                MoveToNext();
+            }
         }
         private void SkipStory(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
@@ -115,23 +122,7 @@ namespace PataRoad.Story
         private void MoveToNext()
         {
             //-- Move to the next map
-            if (_nextMap != null)
-            {
-                var mapContainer = Core.Global.GlobalData.CurrentSlot.MapInfo.GetMapByIndex(_nextMap.Index);
-                if (mapContainer != null)
-                {
-                    Core.Global.GlobalData.CurrentSlot.MapInfo.Select(mapContainer);
-                    SceneLoadingAction.Create("Battle").ChangeScene();
-                }
-                else
-                {
-                    SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene();
-                }
-            }
-            else
-            {
-                SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene();
-            }
+            SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene();
             //-- Story done, you don't need this anymore!
             Destroy(gameObject);
         }

@@ -20,10 +20,9 @@ namespace PataRoad.Story
         private bool _usePatapolis;
         public bool UsePatapolis => _usePatapolis;
         public string SceneName => _usePatapolis ? "Patapolis" : "StoryScene";
-        [SerializeField]
-        [Tooltip("If null, goes to the Patapolis after the story")]
-        private Core.Map.MapData _nextMap;
-        public Core.Map.MapData NextMap => _nextMap;
+        // Note here. NextMap is removed because "reading story before start" is annoying.
+        // Especially when Mission fails too many times.
+        // Story must be shown AFTER the Mission.
         [Header("Map info")]
         [SerializeField]
         [Tooltip("This do nothing on Patapolis")]
@@ -44,6 +43,10 @@ namespace PataRoad.Story
 #pragma warning disable S1104 // Fields should not have public accessibility - we need AGAIN this for serialized array in inspector.
         public StoryAction[] StoryActions;
 #pragma warning restore S1104 // Fields should not have public accessibility
+        [SerializeField]
+        [Tooltip("If null, goes to the Patapolis after the story. Note: It DOESN'T CHECK RECURSION.")]
+        private StoryData _nextStory;
+        public StoryData NextStory => _nextStory;
 
         private Core.Map.Weather.WeatherType GetRandomWeather()
         {
