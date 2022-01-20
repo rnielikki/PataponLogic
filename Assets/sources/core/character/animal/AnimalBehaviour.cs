@@ -34,7 +34,7 @@ namespace PataRoad.Core.Character.Animal
 
         public bool IsDead { get; private set; }
 
-        public float DefaultWorldPosition => transform.position.x;
+        public float DefaultWorldPosition { get; private set; }
 
         public Vector2 MovingDirection => Vector2.left;
 
@@ -42,7 +42,9 @@ namespace PataRoad.Core.Character.Animal
 
         public float Sight => _animalData.Sight * CharacterEnvironment.AnimalSightMultiplier;
 
-        public float CharacterSize => 0;
+        [SerializeField]
+        private float _characterSize;
+        public float CharacterSize => _characterSize;
 
         [SerializeReference]
         AudioClip _soundOnStaggered;
@@ -54,6 +56,7 @@ namespace PataRoad.Core.Character.Animal
             _animalData = GetComponent<IAnimalData>();
             CurrentHitPoint = Stat.HitPoint;
 
+            SetCurrentAsWorldPosition();
             DistanceCalculator = DistanceCalculator.GetAnimalDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
 
@@ -62,7 +65,7 @@ namespace PataRoad.Core.Character.Animal
             charStatusManager.OnStaggered.AddListener(() => GameSound.SpeakManager.Current.Play(_soundOnStaggered));
             _animalData.InitFromParent(this);
         }
-
+        public void SetCurrentAsWorldPosition() => DefaultWorldPosition = transform.position.x;
         public void Die()
         {
             IsDead = true;

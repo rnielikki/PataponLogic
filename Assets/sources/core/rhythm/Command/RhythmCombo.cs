@@ -65,7 +65,8 @@ namespace PataRoad.Core.Rhythm.Command
             }
             else if (_comboCount > 2)
             {
-                if (inputs.PerfectCount == 4 || (_perfectDrumSum >= 10 && LoadPerfectRequirement() <= inputs.PerfectCount))
+                if ((inputs.PerfectCount == 4 && RhythmEnvironment.Difficulty == Difficulty.Easy)
+                    || (_perfectDrumSum >= 10 && LoadPerfectRequirement() <= inputs.PerfectCount))
                 {
                     StartFever();
                     return ComboStatus.Fever;

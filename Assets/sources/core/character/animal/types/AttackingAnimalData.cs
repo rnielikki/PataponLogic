@@ -7,10 +7,18 @@ namespace PataRoad.Core.Character.Animal
         [SerializeField]
         [Tooltip("How many times it will attack while on attack mode. After certain times it'll move away")]
         int _attackCount;
+        private int _currentAttackCount;
         [SerializeField]
         float _attackDistance;
+        [SerializeField]
+        private bool _flipWhenAttacking;
 
         private bool _willAttack;
+
+        [SerializeField]
+        protected UnityEngine.Events.UnityEvent _onAttack;
+        [SerializeField]
+        protected UnityEngine.Events.UnityEvent _onStopAttacking;
 
         private void Start()
         {
@@ -21,19 +29,25 @@ namespace PataRoad.Core.Character.Animal
             if (!CanMove()) return;
             PerformingAction = true;
             _statusEffectManager.IgnoreStatusEffect = true;
+            SetAttackPosition();
             _willAttack = true;
+            if (_flipWhenAttacking) Flip(true);
             _animator.SetMoving(true);
         }
-        public void Attack()
-        {
-            //damage?
-        }
+        public void StartAttack() => _onAttack.Invoke();
         public void EndAttack()
         {
-            //damage?
             StopAttacking();
-            _animator.Animator.SetBool("attacking", false);
-            base.OnTarget();
+            _currentAttackCount--;
+            if (_currentAttackCount <= 0)
+            {
+                if (_flipWhenAttacking) Flip(false);
+                _behaviour.SetCurrentAsWorldPosition();
+                PerformingAction = false;
+                base.OnTarget();
+                StartMoving();
+                _animator.Animate("move");
+            }
         }
         private void SetAttackPosition()
         {
@@ -49,27 +63,38 @@ namespace PataRoad.Core.Character.Animal
             pos.x = closest.Value.x + _attackDistance;
             _targetPosition = pos;
         }
-        public override void StopAttacking()
+        public override void StopAttacking() => _onStopAttacking.Invoke();
+        private bool CanGoForward()
         {
-            //will stop attacking! like a boss!
+            var closest = _behaviour.DistanceCalculator.GetClosest();
+            return closest == null || closest.Value.x < transform.position.x - _behaviour.CharacterSize;
+        }
+        private void Flip(bool towardsPatapons)
+        {
+            var sc = transform.localScale;
+            sc.x = towardsPatapons ? -1 : 1;
+            transform.localScale = sc;
         }
         private void Update()
         {
             if (_moving)
             {
+                //moving for attacking.
                 if (_willAttack)
                 {
-                    SetAttackPosition();
-                    if (Move(true) || _targetPosition.x > transform.position.x)
+                    if (Move(false) || !CanGoForward())
                     {
                         _moving = false;
                         _willAttack = false;
-                        _animator.Animator.SetBool("attacking", true);
+                        _animator.SetMoving(false);
+                        _currentAttackCount = _attackCount;
+                        _animator.Animate("attack");
                     }
                 }
                 else
                 {
-                    Move();
+                    //moving for moving.
+                    Move(true);
                 }
             }
         }

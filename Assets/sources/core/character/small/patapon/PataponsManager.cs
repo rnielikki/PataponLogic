@@ -47,7 +47,7 @@ namespace PataRoad.Core.Character.Patapons
         private CameraController.PataponCameraMover _cameraMover;
         private CameraController.CameraZoom _cameraZoom;
         private DistanceCalculator _distanceCalculator;
-        private const float _minimumPosition = -10;
+        public const float MinimumPosition = -10;
 
         private void Awake()
         {
@@ -203,8 +203,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             if (transform.position.x + PataponEnvironment.Steps >= Hazorons.HazoronPositionManager.GetClosestHazoronPosition()) return false;
             else if (_patapons.Count == 0) return true;
-            var firstPon = _patapons[0];
-            var closestV2 = firstPon.DistanceCalculator.GetClosest();
+            var closestV2 = _distanceCalculator.GetClosest();
             if (closestV2 == null) return true;
             var closest = closestV2.Value.x + PataponEnvironment.Steps * Time.deltaTime;
             var nextPosition = transform.position.x + PataponEnvironment.Steps * Time.deltaTime;
@@ -229,7 +228,7 @@ namespace PataRoad.Core.Character.Patapons
             if (forward != null && forward.Value < transform.position.x)
             {
                 var newPosition = forward.Value;
-                if (newPosition < _minimumPosition) return;
+                if (newPosition < MinimumPosition) return;
                 var pos = transform.position;
                 var offset = transform.position.x - newPosition; //+
                 foreach (var group in _groups)

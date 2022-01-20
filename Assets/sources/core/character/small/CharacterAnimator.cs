@@ -43,7 +43,7 @@ namespace PataRoad.Core.Character
         /// <param name="animationType">The animation name from animator.</param>
         public void Animate(string animationType)
         {
-            if (_target.StatusEffectManager.CanContinue)
+            if (!_target.IsDead && _target.StatusEffectManager.CanContinue)
             {
                 _animator.Play(animationType, -1, 0f);
             }

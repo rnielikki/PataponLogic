@@ -13,7 +13,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
         /// <param name="target">Who takes the damage.</param>
         /// <param name="point">The point where the damage hit.</param>
         /// <returns><c>true</c> if found target to deal damage, otherwise <c>false</c>.</returns>
-        public static void DealDamage(ICharacter attacker, Stat stat, GameObject target, Vector2 point)
+        public static void DealDamage(ICharacter attacker, Stat stat, GameObject target, Vector2 point, bool allowZero = false)
         {
             var receiver = target.GetComponentInParent<IAttackable>(false);
             if (receiver == null || receiver.CurrentHitPoint <= 0 || receiver.IsDead)
@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             else
             {
                 (int damage, bool isCritical) = GetFinalDamage(attacker, receiver, stat);
-                damage = Mathf.Max(1, damage);
+                damage = Mathf.Max(allowZero ? 0 : 1, damage);
                 if (receiver is Bosses.Boss boss)
                 {
                     damage = (int)(damage * boss.GetBrokenPartMultiplier(target, damage));

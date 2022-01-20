@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6407564993943891666}
   - component: {fileID: 4521996753940245466}
   - component: {fileID: 8892323527491400997}
-  m_Layer: 0
+  - component: {fileID: 2960512816351828552}
+  m_Layer: 18
   m_Name: poocheek.horn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +93,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3155835810910981642}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -116,6 +117,19 @@ PolygonCollider2D:
       - {x: -1, y: 1}
       - {x: -0.25, y: 1.5}
       - {x: -0.5, y: 0}
+--- !u!114 &2960512816351828552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3155835810910981642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1936111fdd0cc43805f7bcb98678c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attacker: {fileID: 3403396645998487704}
 --- !u!1 &5207108970985627078
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 562214364599883460}
   - component: {fileID: 3708960054142911232}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: poocheek.wing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -940,6 +954,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  _characterSize: 2
   _soundOnStaggered: {fileID: 8300000, guid: da462f0a04bd00c4993b9bb0736021ac, type: 3}
   _soundOnDead: {fileID: 8300000, guid: 5cbf34a1bb1daaa4bb1d3d7dbdf8540f, type: 3}
   references:
@@ -948,11 +963,11 @@ MonoBehaviour:
     - rid: 0
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _crushMultiplier: 0.5
+        _crushMultiplier: 1.1
         _slashMultiplier: 0.6
         _stabMultiplier: 0.9
-        _soundMultiplier: 0.8
-        _magicMultiplier: 1
+        _soundMultiplier: 1.1
+        _magicMultiplier: 0.8
         _fireMultiplier: 1
         _iceMultiplier: 1
         _thunderMultiplier: 1
@@ -982,20 +997,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 165847265fa61304f81bf42484f5b88a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sight: 0
-  _runningDistance: 0
+  _sight: 15
+  _runningDistance: 30
   _stat:
     _isCharacterStat: 1
-    _hitPoint: 300
+    _hitPoint: 150
     _defenceMin: 2
     _defenceMax: 4
-    _damageMin: 4
-    _damageMax: 8
+    _damageMin: 12
+    _damageMax: 16
     _attackSeconds: 2
-    _movementSpeed: 8
+    _movementSpeed: 4
     _critical: 0.1
     _stagger: 0.05
-    _knockback: 0.2
+    _knockback: 0.5
     _infiniteCriticalResistance: 0
     _criticalResistance: 0
     _infiniteStaggerResistance: 0
@@ -1012,5 +1027,36 @@ MonoBehaviour:
     _infiniteSleepResistance: 0
     _sleepResistance: 0
   _soundOnFound: {fileID: 8300000, guid: e3171eff8121e4e4fbce9bc95a2f45ef, type: 3}
-  _attackCount: 0
+  _attackCount: 2
   _attackDistance: 0
+  _flipWhenAttacking: 1
+  _onAttack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8892323527491400997}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+  _onStopAttacking:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8892323527491400997}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

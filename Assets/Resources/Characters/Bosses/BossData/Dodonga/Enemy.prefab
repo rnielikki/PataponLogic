@@ -131,6 +131,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 3618771868197904909, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._fireRate
+      value: 0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 3618788895267188093, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_Layer
       value: 19
@@ -149,15 +153,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: _stat._hitPoint
-      value: 250
+      value: 450
       objectReference: {fileID: 0}
     - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: managedReferences[0]._hitPoint
-      value: 250
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._damageMax
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._damageMin
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._defenceMax
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._defenceMin
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._iceResistance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._fireResistance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._sleepResistance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._staggerResistance
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._criticalResistance
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: managedReferences[0]._knockbackResistance
-      value: -0.2
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 4052185348077061767, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_SortingLayer
@@ -243,6 +283,18 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1965192439
       objectReference: {fileID: 0}
+    - target: {fileID: 7022250740197461398, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._damageMax
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022250740197461398, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._damageMin
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022250740197461398, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._knockback
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7245342895253321377, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_SortingLayer
       value: 5
@@ -319,6 +371,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 8142234962195461621, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _damageMultiplierOnBroken
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8402789636636433727, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_Layer
       value: 19
@@ -393,17 +449,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _attackTypeResistance:
     rid: 1000
+  _onAfterDeath:
+    m_PersistentCalls:
+      m_Calls: []
   references:
     version: 2
     RefIds:
     - rid: 1000
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _crushMultiplier: 1
-        _slashMultiplier: 1
-        _stabMultiplier: 1
-        _soundMultiplier: 1
+        _crushMultiplier: 1.1
+        _slashMultiplier: 1.2
+        _stabMultiplier: 1.2
+        _soundMultiplier: 1.1
         _magicMultiplier: 1
-        _fireMultiplier: 1
-        _iceMultiplier: 1
-        _thunderMultiplier: 1
+        _fireMultiplier: 0.9
+        _iceMultiplier: 0.9
+        _thunderMultiplier: 0.9

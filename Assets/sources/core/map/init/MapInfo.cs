@@ -54,7 +54,7 @@ namespace PataRoad.Core.Global
             }, 0.9f);
             return mapInfo;
         }
-        public IEnumerable<MapDataContainer> GetAllAvailableMaps() => _openMaps.Values;
+        public IEnumerable<MapDataContainer> GetAllAvailableMaps() => _openMaps.Values.OrderBy(map => map.Index);
 
         public MapDataContainer GetMapByIndex(int index)
         {

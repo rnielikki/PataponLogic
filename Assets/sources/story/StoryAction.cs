@@ -14,14 +14,27 @@
         public bool UseLine => _useLine;
         [UnityEngine.SerializeField]
         private UnityEngine.Sprite _image;
-        public UnityEngine.Sprite Image => _image;
+        public UnityEngine.Sprite Image
+        {
+            get => _image;
+            set => _image = value;
+        }
         [UnityEngine.SerializeField]
         private string _name;
-        public string Name => _name;
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
         [UnityEngine.SerializeField]
         [UnityEngine.TextArea]
         private string _content;
-        public string Content => _content;
+        public string Content
+        {
+            get => _content;
+            set => _content = value;
+        }
         internal void InvokeEvent() => _events?.Invoke();
+        public StoryAction Copy() => (StoryAction)MemberwiseClone();
     }
 }

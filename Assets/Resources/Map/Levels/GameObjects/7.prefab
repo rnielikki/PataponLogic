@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 860760564439554695}
   - component: {fileID: 8494677376486019021}
-  - component: {fileID: 7289697169573582333}
   m_Layer: 0
   m_Name: 7
   m_TagString: Untagged
@@ -59,19 +58,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dropData:
   - {fileID: 11400000, guid: c1b1073d12dd09b45ab19d7826ae97a8, type: 2}
---- !u!114 &7289697169573582333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860760564439554697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 637c2b7ee1af6724ab8ed1de4d3107d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _structure: {fileID: 0}
 --- !u!1001 &976371715524839630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -646,6 +632,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8239825889332008042, guid: 3cb8ffa31a3a2f24890c4750b6858842, type: 3}
+      propertyPath: _dropData.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8239825889332008042, guid: 3cb8ffa31a3a2f24890c4750b6858842, type: 3}
+      propertyPath: _dropData.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: b9b45cc29fe5323469d6b3516dafea7d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3cb8ffa31a3a2f24890c4750b6858842, type: 3}
 --- !u!4 &8075936368497948802 stripped
@@ -865,7 +859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5302248166792679164, guid: bb16d3d670086044a9beca0c701e0aba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.45
+      value: 39.4
       objectReference: {fileID: 0}
     - target: {fileID: 5302248166792679164, guid: bb16d3d670086044a9beca0c701e0aba, type: 3}
       propertyPath: m_LocalPosition.y

@@ -22,7 +22,7 @@ namespace PataRoad.Core.Character.Animal
         public Stat Stat => _stat;
         protected CharacterAnimator _animator;
         protected StatusEffectManager _statusEffectManager;
-        private AnimalBehaviour _behaviour;
+        protected AnimalBehaviour _behaviour;
         protected DistanceCalculator _distanceCalculator;
 
         [SerializeField]
@@ -43,7 +43,7 @@ namespace PataRoad.Core.Character.Animal
             PerformingAction = true;
             GameSound.SpeakManager.Current.Play(_soundOnFound);
             _statusEffectManager.IgnoreStatusEffect = true;
-            _targetPosition = transform.position + _runningDistance * Vector3.right;
+            _targetPosition = (_behaviour.DefaultWorldPosition + _runningDistance) * Vector3.right;
 
             _animator.SetMoving(true);
         }
@@ -61,6 +61,11 @@ namespace PataRoad.Core.Character.Animal
         public virtual bool CanMove()
             => !PerformingAction && !_behaviour.IsDead
                 && !_behaviour.StatusEffectManager.OnStatusEffect;
+        /// <summary>
+        /// Moves animal to <see cref="_targetPosition"/>.
+        /// </summary>
+        /// <param name="endActionWhenMoved"></param>
+        /// <returns><c>true</c> if animal position is same as target position, otherwise <c>false</c></returns>
         protected bool Move(bool endActionWhenMoved = true)
         {
             if (_moving)
@@ -73,10 +78,12 @@ namespace PataRoad.Core.Character.Animal
                     if (endActionWhenMoved) PerformingAction = false;
                     _animator.SetMoving(false);
                     _statusEffectManager.IgnoreStatusEffect = false;
+                    _behaviour.SetCurrentAsWorldPosition();
                     return true;
                 }
+                return false;
             }
-            return false;
+            return true;
         }
         private void Update()
         {
