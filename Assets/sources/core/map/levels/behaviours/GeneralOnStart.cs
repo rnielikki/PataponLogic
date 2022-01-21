@@ -1,5 +1,4 @@
-﻿using PataRoad.Core.Character;
-using PataRoad.Core.Character.Patapons;
+﻿using PataRoad.Core.Character.Patapons;
 using UnityEngine;
 
 namespace PataRoad.Core.Map.Levels
@@ -10,6 +9,12 @@ namespace PataRoad.Core.Map.Levels
         Character.Class.ClassType _classType;
         private void Start()
         {
+            var item = Items.ItemLoader.GetItem(Items.ItemType.Key, "Class",
+                        Character.Class.ClassData.GetItemIndexFromClass(_classType));
+            if (Global.GlobalData.CurrentSlot.Inventory.HasItem(item))
+            {
+                return;
+            }
             var pataponManager = FindObjectOfType<PataponsManager>();
             var inst = PataponGroupGenerator.GetGeneralOnlyPataponGroupInstance(_classType, pataponManager.transform, pataponManager);
             pataponManager.RegisterGroup(inst.GetComponent<PataponGroup>());
@@ -17,10 +22,7 @@ namespace PataRoad.Core.Map.Levels
             {
                 if (success)
                 {
-                    Global.GlobalData.CurrentSlot.Inventory.AddItem(
-                        Items.ItemLoader.GetItem(Items.ItemType.Key, "Class",
-                        Character.Class.ClassData.GetItemIndexFromClass(_classType))
-                    );
+                    Global.GlobalData.CurrentSlot.Inventory.AddItem(item);
                 }
             });
         }

@@ -155,6 +155,10 @@ namespace PataRoad.Core.Character
             ClassData.AttackMoveData.LastHit = point;
             ClassData.AttackMoveData.WasHitLastTime = false;
         }
+        internal void SetMaximumHitPoint(int point)
+        {
+            Stat.HitPoint = CurrentHitPoint = point;
+        }
 
         public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
     }

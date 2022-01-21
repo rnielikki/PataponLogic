@@ -13,8 +13,9 @@
         public virtual void SetLevel(int level)
         {
             _level = level;
-            _stat.MultipleDamage(_level);
-            _stat.HitPoint = (int)(_stat.HitPoint * UnityEngine.Mathf.Sqrt(_level));
+            var value = 0.8f + 0.2f * level;
+            _stat.MultipleDamage(value);
+            GetComponent<Hazoron>().SetMaximumHitPoint(UnityEngine.Mathf.RoundToInt(value * _stat.HitPoint));
         }
     }
 }

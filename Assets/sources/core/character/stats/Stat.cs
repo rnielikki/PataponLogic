@@ -22,26 +22,29 @@ namespace PataRoad.Core.Character
 
             set => _hitPoint = value;
         }
-        /// <summary>
-        /// How much can resist attack, in minimum value.
-        /// </summary>
         [UnityEngine.SerializeField]
         private float _defenceMin;
+        /// <summary>
+        /// Minimum of how much one can resist attack. It DIVIDES the original damage. Use <see cref="AttackTypeResistance"/> for individual damage taking defence.
+        /// </summary>
+        /// <remarks>This value is very sensitive so making 2 will simply reduces damage to half. Be careful when use this,</remarks>
         public float DefenceMin
         {
             get => _defenceMin;
-            set => _defenceMin = GetSafeValue(value, 0.1f);
+            set => _defenceMin = value;
         }
-        /// <summary>
-        /// How much can resist attack, in maximum value.
-        /// </summary>
         [UnityEngine.SerializeField]
         private float _defenceMax;
+        /// <summary>
+        /// Maximum of how much one can resist attack. It DIVIDES the original damage. Use <see cref="AttackTypeResistance"/> for individual damage taking defence.
+        /// </summary>
+        /// <remarks>This value is very sensitive so making 2 will simply reduces damage to half. Be careful when use this,</remarks>
         public float DefenceMax
         {
             get => _defenceMax;
-            set => _defenceMax = GetSafeValue(value, 0.1f);
+            set => _defenceMax = value;
         }
+
         /// <summary>
         /// Minimum damage value.
         /// </summary>
@@ -210,6 +213,7 @@ namespace PataRoad.Core.Character
         /// </summary>
         [UnityEngine.SerializeField]
         private float _sleepResistance;
+
         public float SleepResistance
         {
             get => _infiniteSleepResistance ? UnityEngine.Mathf.Infinity : _sleepResistance;
@@ -243,8 +247,8 @@ namespace PataRoad.Core.Character
             var stat = new Stat
             {
                 HitPoint = 200,
-                DefenceMin = 1,
-                DefenceMax = 5,
+                DefenceMin = 0.9f,
+                DefenceMax = 1.1f,
                 DamageMin = 4,
                 DamageMax = 8,
                 AttackSeconds = 2,

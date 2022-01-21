@@ -131,9 +131,9 @@ namespace PataRoad.Core.Character.Equipments.Logic
             var resistances = receiver.AttackTypeResistance;
 
             //"Elemental damage"
-            var fireProbability = (attackerStat.FireRate - receiver.Stat.FireResistance) * resistances.FireMultiplier;
-            var iceProbability = (attackerStat.IceRate - receiver.Stat.IceResistance) * resistances.IceMultiplier;
-            var thunderProbability = (attackerStat.FireRate - receiver.Stat.FireResistance) * resistances.ThunderMultiplier;
+            var fireProbability = Mathf.Max(0, attackerStat.FireRate - receiver.Stat.FireResistance) * resistances.FireMultiplier;
+            var iceProbability = Mathf.Max(0, attackerStat.IceRate - receiver.Stat.IceResistance) * resistances.IceMultiplier;
+            var thunderProbability = Mathf.Max(0, attackerStat.FireRate - receiver.Stat.FireResistance) * resistances.ThunderMultiplier;
 
             float elementalMultiplier = 1;
             switch (attacker.ElementalAttackType)
@@ -149,9 +149,15 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     break;
             }
 
+            if (defence <= 0)
+            {
+                //You give Infinity, I'll do this by myself
+                throw new System.InvalidOperationException(
+                    "defence cannot be zero or less. check stat of " + (receiver as MonoBehaviour)?.name ?? " ...oh what receiver is not MonoBehaviour WTF?");
+            }
             //a bit complicated...
             return (Mathf.RoundToInt(
-                    Mathf.Max(0,
+                    Mathf.Max(1,
                         (
                         elementalMultiplier //elemental damage
                         * resistances.GetMultiplier(attacker.AttackType) //attack type multiplier

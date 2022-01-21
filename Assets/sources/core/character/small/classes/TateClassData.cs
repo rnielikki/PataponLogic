@@ -27,8 +27,8 @@ namespace PataRoad.Core.Character.Class
                     break;
                 case 1:
                     SetAttackMoveController();
-                    _character.Stat.DefenceMin *= 2;
-                    _character.Stat.DefenceMax *= 2.5f;
+                    _character.Stat.DefenceMin *= 1.8f;
+                    _character.Stat.DefenceMax *= 2.2f;
                     break;
             }
         }
@@ -66,21 +66,20 @@ namespace PataRoad.Core.Character.Class
             {
                 if (_character.OnFever)
                 {
-                    _character.Stat.DefenceMin *= 2;
-                    _character.Stat.DefenceMax *= 2.5f;
+                    _character.Stat.DefenceMin *= 1.5f;
+                    _character.Stat.DefenceMax *= 1.8f;
                 }
                 else
                 {
-                    _character.Stat.DefenceMin *= 1.5f;
-                    _character.Stat.DefenceMax *= 1.8f;
+                    _character.Stat.DefenceMax *= 1.5f;
                 }
                 _character.Stat.CriticalResistance = UnityEngine.Mathf.Infinity;
                 _character.Stat.KnockbackResistance = UnityEngine.Mathf.Infinity;
             }
             if (song == CommandSong.Patapata && _character.OnFever)
             {
-                _character.Stat.DefenceMin *= 1.5f;
-                _character.Stat.DefenceMax *= 2f;
+                _character.Stat.DefenceMin *= 1.2f;
+                _character.Stat.DefenceMax *= 1.5f;
                 _shield.SetActive(true);
             }
         }

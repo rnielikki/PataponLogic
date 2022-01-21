@@ -21,7 +21,7 @@
             {
                 input.CriticalResistance *= 2;
                 input.DefenceMin *= 1.2f;
-                input.DefenceMax *= 1.5f;
+                input.DefenceMax *= 1.4f;
                 return input;
             }
         }

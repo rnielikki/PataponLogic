@@ -84,8 +84,7 @@ namespace PataRoad.Core.Character.Bosses
         /// </summary>
         internal void SetMaximumHitPoint(int point)
         {
-            Stat.HitPoint = point;
-            CurrentHitPoint = point;
+            Stat.HitPoint = CurrentHitPoint = point;
         }
         public virtual float GetAttackValueOffset() => Random.Range(BossAttackData.MinLastDamageOffset, BossAttackData.MinLastDamageOffset);
         public virtual float GetDefenceValueOffset() => Random.Range(0, 1);

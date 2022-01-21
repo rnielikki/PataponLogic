@@ -8,8 +8,9 @@ namespace PataRoad.Core.Character.Patapons.General
         public override void Init() => Init(3);
         public override Stat CalculateStat(Stat stat)
         {
-            stat.DefenceMin *= 5;
-            stat.DefenceMax *= 5;
+            stat.DefenceMin *= 4;
+            stat.DefenceMax *= 4;
+            stat.BoostResistance(0.3f);
             return stat;
         }
     }

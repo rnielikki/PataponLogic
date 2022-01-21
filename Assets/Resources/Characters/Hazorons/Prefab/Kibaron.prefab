@@ -1422,6 +1422,10 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+  _isOnTower: 0
+  _charged: 0
+  _defineCommandAction: 0
+  _commandAction: 0
 --- !u!114 &-89148275092956204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1452,8 +1456,8 @@ MonoBehaviour:
       data:
         _isCharacterStat: 1
         _hitPoint: 150
-        _defenceMin: 2
-        _defenceMax: 5
+        _defenceMin: 0.9
+        _defenceMax: 1.1
         _damageMin: 6
         _damageMax: 12
         _attackSeconds: 2

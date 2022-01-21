@@ -1422,8 +1422,9 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+  _isOnTower: 0
   _charged: 0
-  _notAttacking: 0
+  _defineCommandAction: 0
   _commandAction: 0
 --- !u!114 &-89148275092956204
 MonoBehaviour:
@@ -1454,11 +1455,11 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 1
-        _hitPoint: 1500
+        _hitPoint: 2000
         _defenceMin: 10
         _defenceMax: 15
-        _damageMin: 10
-        _damageMax: 20
+        _damageMin: 4
+        _damageMax: 8
         _attackSeconds: 2
         _movementSpeed: 12
         _critical: 0.1

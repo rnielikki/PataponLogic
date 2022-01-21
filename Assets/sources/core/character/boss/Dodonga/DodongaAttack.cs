@@ -80,11 +80,11 @@ namespace PataRoad.Core.Character.Bosses
         }
         internal override void UpdateStatForBoss(int level)
         {
-            var sqrt = Mathf.Sqrt(level);
-            _stat.MultipleDamage(sqrt);
-            _stat.DefenceMin += sqrt;
-            _stat.DefenceMax += sqrt;
-            _boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * sqrt));
+            var value = 0.8f + level * 0.2f;
+            _stat.MultipleDamage(value);
+            _stat.DefenceMin += (level - 1) * 0.005f;
+            _stat.DefenceMax += (level - 1) * 0.01f;
+            _boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * value));
             _stat.CriticalResistance += level * 0.05f;
             _stat.StaggerResistance += level * 0.05f;
             _stat.KnockbackResistance += level * 0.05f;

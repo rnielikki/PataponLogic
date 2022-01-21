@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -72,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1908906587
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: e3359bfdc9c339c43a39c2f66a17ecf6, type: 3}
   m_Color: {r: 0.46674338, g: 0.7924528, b: 0.0710217, a: 1}
@@ -124,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stat:
-    id: 0
+    rid: 0
   _deadImage: {fileID: 21300000, guid: da1027e1e9c2ca94e940b0f0afb9952d, type: 3}
   _colorOverHealth:
     serializedVersion: 2
@@ -155,26 +156,48 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
+  _attackTypeResistance:
+    rid: 1000
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _hitPoint: 200
-        _defence: 10
-        _damageMin: 0
-        _damageMax: 0
+        _isCharacterStat: 0
+        _hitPoint: 50
+        _defenceMin: 1
+        _defenceMax: 1
+        _damageMin: 1
+        _damageMax: 1
         _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0
         _stagger: 0
         _knockback: 0
+        _infiniteCriticalResistance: 0
         _criticalResistance: 0
+        _infiniteStaggerResistance: 0
         _staggerResistance: 0
+        _infiniteKnockbackResistance: 0
         _knockbackResistance: 0
         _fireRate: 1
         _iceRate: 1
         _sleepRate: 1
+        _infiniteFireResistance: 0
         _fireResistance: 1
+        _infiniteIceResistance: 0
         _iceResistance: 0
+        _infiniteSleepResistance: 0
         _sleepResistance: 0
+    - rid: 1000
+      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _crushMultiplier: 1
+        _slashMultiplier: 1
+        _stabMultiplier: 1
+        _soundMultiplier: 1
+        _magicMultiplier: 1
+        _fireMultiplier: 1
+        _iceMultiplier: 1
+        _thunderMultiplier: 1

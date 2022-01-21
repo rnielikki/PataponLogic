@@ -18,8 +18,6 @@ namespace PataRoad.Core.Character
         [SerializeField]
         private int _hitPoint;
         [SerializeField]
-        private float _defence;
-        [SerializeField]
         private UnityEngine.Events.UnityEvent<float> _onDamageTaken;
         public UnityEngine.Events.UnityEvent<float> OnDamageTaken => _onDamageTaken;
 
@@ -34,8 +32,8 @@ namespace PataRoad.Core.Character
             Stat = new Stat
             {
                 HitPoint = _hitPoint,
-                DefenceMin = _defence,
-                DefenceMax = _defence,
+                DefenceMin = 1,
+                DefenceMax = 1,
                 CriticalResistance = Mathf.Infinity,
                 StaggerResistance = Mathf.Infinity,
                 KnockbackResistance = Mathf.Infinity,
@@ -63,7 +61,7 @@ namespace PataRoad.Core.Character
 
         public void SetLevel(int level)
         {
-            Stat.HitPoint = Mathf.RoundToInt(Stat.HitPoint * Mathf.Sqrt(level));
+            Stat.HitPoint = CurrentHitPoint = Mathf.RoundToInt(Stat.HitPoint * (0.8f + 0.2f * level));
             Stat.FireResistance += (level - 1) * 0.02f;
         }
     }

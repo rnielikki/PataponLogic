@@ -27,11 +27,11 @@
                 switch (song)
                 {
                     case Rhythm.Command.CommandSong.Ponpon:
-                        input.MultipleDamage(charged ? 1.5f : 1.2f);
+                        input.MultipleDamage(charged ? 1.8f : 1.2f);
                         break;
                     case Rhythm.Command.CommandSong.Chakachaka:
-                        input.DefenceMin *= charged ? 2.5f : 2;
-                        input.DefenceMax *= charged ? 2.5f : 2;
+                        input.DefenceMin *= charged ? 1.8f : 1.2f;
+                        input.DefenceMax *= charged ? 1.8f : 1.2f;
                         break;
                 }
                 return input;
