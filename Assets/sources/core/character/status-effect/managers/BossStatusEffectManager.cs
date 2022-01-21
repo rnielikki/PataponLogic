@@ -6,7 +6,7 @@
         void Awake()
         {
             Init();
-            _isBigTarget = true;
+            IsBigTarget = true;
         }
         protected override void StopEverythingBeforeStatusEffect()
         {

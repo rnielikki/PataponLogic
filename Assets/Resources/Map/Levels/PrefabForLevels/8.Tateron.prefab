@@ -1341,7 +1341,6 @@ GameObject:
   - component: {fileID: 3271722343532184960}
   - component: {fileID: 4071651211414947372}
   - component: {fileID: 2385309485708838655}
-  - component: {fileID: 5458810308011765835}
   m_Layer: 7
   m_Name: 8.Tateron
   m_TagString: SmallCharacter
@@ -1424,21 +1423,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onAfterDeath:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5458810308011765835}
-        m_TargetAssemblyTypeName: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
-        m_MethodName: Drop
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
+  _isOnTower: 0
   _charged: 0
-  _notAttacking: 0
+  _defineCommandAction: 0
   _commandAction: 3
 --- !u!114 &4071651211414947372
 MonoBehaviour:
@@ -1517,20 +1505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa781bdcfdc85f4a8f360994e716d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5458810308011765835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2031253672270326856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dropData:
-  - {fileID: 11400000, guid: 19b5cb144108e6c41b5a8272933adca4, type: 2}
 --- !u!1 &2031253672337114531
 GameObject:
   m_ObjectHideFlags: 0

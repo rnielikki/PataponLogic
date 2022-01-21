@@ -2,7 +2,7 @@
 
 namespace PataRoad.Core.Character
 {
-    public class Structure : MonoBehaviour, IAttackable
+    public class Structure : MonoBehaviour, IAttackable, Map.IHavingLevel
     {
         public Stat Stat { get; private set; }
 
@@ -23,6 +23,8 @@ namespace PataRoad.Core.Character
         private UnityEngine.Events.UnityEvent<float> _onDamageTaken;
         public UnityEngine.Events.UnityEvent<float> OnDamageTaken => _onDamageTaken;
 
+        [SerializeField]
+        float _fireResistance;
         [SerializeReference]
         private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
         public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
@@ -37,12 +39,13 @@ namespace PataRoad.Core.Character
                 CriticalResistance = Mathf.Infinity,
                 StaggerResistance = Mathf.Infinity,
                 KnockbackResistance = Mathf.Infinity,
-                FireResistance = 0.25f,
+                FireResistance = _fireResistance,
                 IceResistance = Mathf.Infinity,
                 SleepResistance = Mathf.Infinity
             };
             CurrentHitPoint = _hitPoint;
             StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
+            StatusEffectManager.IsBigTarget = true;
         }
         public virtual void Die()
         {
@@ -57,5 +60,11 @@ namespace PataRoad.Core.Character
         }
 
         public float GetDefenceValueOffset() => 1;
+
+        public void SetLevel(int level)
+        {
+            Stat.HitPoint = Mathf.RoundToInt(Stat.HitPoint * Mathf.Sqrt(level));
+            Stat.FireResistance += (level - 1) * 0.02f;
+        }
     }
 }
