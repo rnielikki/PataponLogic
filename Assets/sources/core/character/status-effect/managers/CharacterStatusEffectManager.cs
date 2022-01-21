@@ -5,7 +5,6 @@ namespace PataRoad.Core.Character
     public class CharacterStatusEffectManager : StatusEffectManager
     {
         protected ICharacter _character;
-        internal UnityEngine.Events.UnityEvent OnStaggered { get; } = new UnityEngine.Events.UnityEvent();
 
         private void Awake()
         {
@@ -16,7 +15,7 @@ namespace PataRoad.Core.Character
             base.Init();
             _character = _target as ICharacter;
         }
-        protected override void StartStatusEffect()
+        protected override void StopEverythingBeforeStatusEffect()
         {
             _character.StopAttacking(false);
             (_character as MonoBehaviour)?.StopAllCoroutines();
@@ -24,14 +23,15 @@ namespace PataRoad.Core.Character
         public override void SetIce(int time)
         {
             if (!IsValidForStatusEffect(time)) return;
-            StartStatusEffect();
+            StopEverythingBeforeStatusEffect();
             LoadEffectObject(StatusEffectType.Ice);
+            base.SetIce(time);
 
             OnIce();
 
             _character.CharAnimator.Stop();
             StartCoroutine(WaitForRecovery(time));
-            OnStatusEffect = true;
+            IsOnStatusEffect = true;
         }
         /// <summary>
         /// Called when ice effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
@@ -41,7 +41,8 @@ namespace PataRoad.Core.Character
         public override void SetSleep(int time)
         {
             if (!IsValidForStatusEffect(time)) return;
-            StartStatusEffect();
+            StopEverythingBeforeStatusEffect();
+            base.SetSleep(time);
             _character.CharAnimator.Animate("Sleep");
 
             OnSleep();
@@ -51,7 +52,7 @@ namespace PataRoad.Core.Character
             _character.CharAnimator.Stop();
             StartCoroutine(WaitForRecovery(time));
 
-            OnStatusEffect = true;
+            IsOnStatusEffect = true;
         }
         /// <summary>
         /// Called when sleep effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
@@ -60,21 +61,22 @@ namespace PataRoad.Core.Character
         public override void SetStagger()
         {
             if (!IsValidForStatusEffect(1)) return;
-            StartStatusEffect();
-            OnStaggered.Invoke();
+            StopEverythingBeforeStatusEffect();
+            base.SetStagger();
             _character.CharAnimator.Animate("Stagger");
             StartCoroutine(WaitForRecovery(1));
 
-            OnStatusEffect = true;
+            IsOnStatusEffect = true;
         }
         public override void SetKnockback()
         {
-            if (IgnoreStatusEffect || OnStatusEffect || _character.IsDead) return;
+            if (IgnoreStatusEffect || IsOnStatusEffect || _character.IsDead) return;
             _character.StopAttacking(false);
             (_character as MonoBehaviour)?.StopAllCoroutines();
+            base.SetKnockback();
             OnKnockback();
 
-            OnStatusEffect = true;
+            IsOnStatusEffect = true;
         }
         /// <summary>
         /// Called when knockback effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
@@ -92,6 +94,6 @@ namespace PataRoad.Core.Character
                 target.StatusEffectManager.Tumble();
             }
         }
-        private bool IsValidForStatusEffect(int time) => !_character.IsDead && !IgnoreStatusEffect && !OnStatusEffect && time > 0;
+        private bool IsValidForStatusEffect(int time) => !_character.IsDead && !IgnoreStatusEffect && !IsOnStatusEffect && time > 0;
     }
 }

@@ -14,11 +14,14 @@ namespace PataRoad.Core.Character.Hazorons
         private int _attackTypeIndex;
         public override int AttackTypeIndex => _attackTypeIndex;
         [SerializeField]
+        private bool _isOnTower;
+        public override bool IsFixedPosition => _isOnTower;
+        [SerializeField]
         private bool _charged;
         [SerializeField]
-        private bool _notAttacking;
+        private bool _defineCommandAction;
         [SerializeField]
-        [Header("Valid only if not attacking")]
+        [Header("Valid only if Define Command Action is true")]
         private Rhythm.Command.CommandSong _commandAction;
 
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
@@ -38,9 +41,9 @@ namespace PataRoad.Core.Character.Hazorons
                 {
                     (ClassData as ToriClassData)?.FlyUp();
                 }
-                if (_gotPosition)
+                else if (_gotPosition)
                 {
-                    if (!_notAttacking) ClassData.Attack();
+                    if (!_defineCommandAction) ClassData.Attack();
                     else ClassData.PerformCommandAction(_commandAction);
                 }
             });
@@ -50,6 +53,7 @@ namespace PataRoad.Core.Character.Hazorons
                 modifier.SetModifyTarget(Stat);
             }
         }
+
         private void Start()
         {
             DefaultWorldPosition = transform.position.x;
@@ -74,10 +78,21 @@ namespace PataRoad.Core.Character.Hazorons
         private void Update()
         {
             if (_gotPosition) return;
-            else if (StatusEffectManager.OnStatusEffect && _animatingWalk)
+            else if (_isOnTower)
+            {
+                if (DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)
+                {
+                    _gotPosition = true;
+                    if (!_defineCommandAction) ClassData.Attack();
+                    else ClassData.PerformCommandAction(_commandAction);
+                }
+                return;
+            }
+            else if (StatusEffectManager.IsOnStatusEffect && _animatingWalk)
             {
                 _animatingWalk = false;
             }
+
             if (ClassData.IsInAttackDistance())
             {
                 DefaultWorldPosition = transform.position.x;
@@ -86,7 +101,7 @@ namespace PataRoad.Core.Character.Hazorons
                 _gotPosition = true;
                 return;
             }
-            else if (!StatusEffectManager.OnStatusEffect
+            else if (!StatusEffectManager.IsOnStatusEffect
                 && DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)
             {
                 if (!_animatingWalk)

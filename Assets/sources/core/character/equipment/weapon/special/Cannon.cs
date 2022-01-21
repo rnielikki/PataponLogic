@@ -23,10 +23,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             bulletScript.Holder = Holder;
             bulletScript.enabled = true;
         }
-        public override float GetAttackDistance()
-        {
-            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
-            return base.GetAttackDistance() + weatherOffset;
-        }
+        public override float GetAttackDistance() => 5;
     }
 }

@@ -60,7 +60,7 @@ namespace PataRoad.Core.Character.Animal
         }
         public virtual bool CanMove()
             => !PerformingAction && !_behaviour.IsDead
-                && !_behaviour.StatusEffectManager.OnStatusEffect;
+                && !_behaviour.StatusEffectManager.IsOnStatusEffect;
         /// <summary>
         /// Moves animal to <see cref="_targetPosition"/>.
         /// </summary>

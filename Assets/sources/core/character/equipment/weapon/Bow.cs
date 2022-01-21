@@ -54,12 +54,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         protected override void LoadRenderersAndImage()
         {
+            if (_bowRenderer != null) return;
             _bowRenderer = transform.Find("Bow").GetComponent<SpriteRenderer>();
             _arrowRenderer = transform.Find("Arrow").GetComponent<SpriteRenderer>();
             _spriteRenderers = new SpriteRenderer[] { _bowRenderer, _arrowRenderer };
         }
         protected override void ReplaceImage(EquipmentData equipmentData)
         {
+            if (_bowRenderer == null) LoadRenderersAndImage();
             _bowRenderer.sprite = equipmentData.Image;
             _arrowRenderer.sprite = (equipmentData as BowData).ArrowImage;
         }

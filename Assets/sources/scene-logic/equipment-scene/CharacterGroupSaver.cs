@@ -103,7 +103,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
                 foreach (var classType in Core.Global.GlobalData.CurrentSlot.PataponInfo.CurrentClasses)
                 {
-                    (var weaponName, var protectorName) = Core.Character.Class.ClassMetaData.GetWeaponAndProtectorName(classType);
+                    (var weaponName, var protectorName) = Core.Character.Class.ClassAttackEquipmentData.GetWeaponAndProtectorName(classType);
                     if (!isEquipped(classType, Core.Character.Equipments.EquipmentType.Weapon, weaponName))
                     {
                         window.AppendText($"[!] Can optimize {weaponName} for {classType}");

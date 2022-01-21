@@ -147,7 +147,7 @@ namespace PataRoad.Core.Character
             var raycast = GetRaycastHitOnForward(sight);
             return raycast.transform?.position;
         }
-        private RaycastHit2D GetRaycastHitOnForward(float sight) => Physics2D.BoxCast((Vector2)_target.transform.position - _boxSize.x * _direction + _boxcastYOffset, _boxSize, 0, _direction, sight, LayerMask);
+        private RaycastHit2D GetRaycastHitOnForward(float sight) => Physics2D.BoxCast(_target.transform.position.x * Vector2.right - _boxSize.x * _direction + _boxcastYOffset, _boxSize, 0, _direction, sight, LayerMask);
 
         public IEnumerable<IAttackable> GetAllGroundedTargets()
         {

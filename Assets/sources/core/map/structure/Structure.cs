@@ -13,6 +13,7 @@ namespace PataRoad.Core.Character
 
         [SerializeField]
         private UnityEngine.Events.UnityEvent _onDestroy;
+        public UnityEngine.Events.UnityEvent OnDestroy => _onDestroy;
 
         [SerializeField]
         private int _hitPoint;

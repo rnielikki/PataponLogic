@@ -13,6 +13,16 @@ namespace PataRoad.Core.Map.Levels
             var pataponManager = FindObjectOfType<PataponsManager>();
             var inst = PataponGroupGenerator.GetGeneralOnlyPataponGroupInstance(_classType, pataponManager.transform, pataponManager);
             pataponManager.RegisterGroup(inst.GetComponent<PataponGroup>());
+            MissionPoint.Current.AddMissionEndAction((success) =>
+            {
+                if (success)
+                {
+                    Global.GlobalData.CurrentSlot.Inventory.AddItem(
+                        Items.ItemLoader.GetItem(Items.ItemType.Key, "Class",
+                        Character.Class.ClassData.GetItemIndexFromClass(_classType))
+                    );
+                }
+            });
         }
     }
 }

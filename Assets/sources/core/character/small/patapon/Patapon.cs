@@ -124,7 +124,7 @@ namespace PataRoad.Core.Character.Patapons
             LastPerfectionRate = model.AccuracyRate;
 
             Stat = StatOperator.GetFinalStat(song, Charged);
-            if (!StatusEffectManager.OnStatusEffect || LastSong == CommandSong.Donchaka)
+            if (!StatusEffectManager.IsOnStatusEffect || LastSong == CommandSong.Donchaka)
             {
                 PerformCommandAction(song);
             }

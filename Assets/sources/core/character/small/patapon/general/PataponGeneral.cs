@@ -38,7 +38,7 @@ namespace PataRoad.Core.Character.Patapons.General
 
         public void ActivateGeneralMode(CommandSong song)
         {
-            if (_selfPatapon == null || _selfPatapon.StatusEffectManager.OnStatusEffect) return;
+            if (_selfPatapon == null || _selfPatapon.StatusEffectManager.IsOnStatusEffect) return;
             if (_pataponsManager == null) _pataponsManager = GetComponentInParent<PataponsManager>();
             if (song == _generalModeActivator?.GeneralModeSong)
             {

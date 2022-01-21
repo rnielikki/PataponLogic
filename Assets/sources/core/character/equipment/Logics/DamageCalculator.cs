@@ -54,7 +54,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     attacker.OnAttackHit(point, damage);
 
                     //------ status effect
-                    if (!receiver.StatusEffectManager.OnStatusEffect)
+                    if (!receiver.StatusEffectManager.IsOnStatusEffect)
                     {
                         var receiverStat = receiver.Stat;
                         if (!CalculateAndSetStagger(receiver, stat.Stagger))

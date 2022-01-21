@@ -24,19 +24,20 @@ namespace PataRoad.Core.Character
         public override void SetFire(int time)
         {
             if (time < 1) return;
-            else if (OnStatusEffect)
+            else if (IsOnStatusEffect)
             {
                 _totalTime += time;
                 return;
             }
             _totalTime = time;
-            StartStatusEffect();
-            _onFire = true;
+            StopEverythingBeforeStatusEffect();
+            _isOnFire = true;
+            OnStatusEffect?.Invoke(StatusEffectType.Fire);
 
             StartCoroutine(FireDamage());
 
             LoadEffectObject(StatusEffectType.Fire);
-            OnStatusEffect = true;
+            IsOnStatusEffect = true;
 
             SpreadFire(time / 2);
 
@@ -61,7 +62,7 @@ namespace PataRoad.Core.Character
                 .ToArray();
             foreach (var neighbour in neighbours)
             {
-                if (!neighbour.StatusEffectManager.OnStatusEffect)
+                if (!neighbour.StatusEffectManager.IsOnStatusEffect)
                 {
                     neighbour.StatusEffectManager.SetFire(
                         Equipments.Logic.DamageCalculator.GetFireDuration(_target.Stat, neighbour.Stat, time)

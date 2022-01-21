@@ -48,7 +48,7 @@ namespace PataRoad.Core.Character.Equipments
             }
             CurrentData = _defaultEquipmentData;
         }
-        protected virtual EquipmentData GetDefault() => ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, Class.ClassMetaData.GetEquipmentName(HolderData.Type, _type), 0);
+        protected virtual EquipmentData GetDefault() => ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, Class.ClassAttackEquipmentData.GetEquipmentName(HolderData.Type, _type), 0);
         internal virtual void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
             //Sometimes null but why

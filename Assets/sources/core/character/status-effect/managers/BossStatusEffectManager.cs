@@ -2,15 +2,15 @@
 {
     public class BossStatusEffectManager : CharacterStatusEffectManager
     {
-        public override bool CanContinue => base.CanContinue || _onFire;
+        public override bool CanContinue => base.CanContinue || _isOnFire;
         void Awake()
         {
             Init();
             _isBigTarget = true;
         }
-        protected override void StartStatusEffect()
+        protected override void StopEverythingBeforeStatusEffect()
         {
-            if (!_onFire)
+            if (!_isOnFire)
             {
                 _character.StopAttacking(false);
             }
@@ -18,7 +18,7 @@
 
         protected override void OnKnockback()
         {
-            StartStatusEffect();
+            StopEverythingBeforeStatusEffect();
             _character.CharAnimator.Animate("Knockback");
             StartCoroutine(WaitForRecovery(8));
         }

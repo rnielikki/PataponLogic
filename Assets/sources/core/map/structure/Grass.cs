@@ -52,15 +52,13 @@ namespace PataRoad.Core.Character
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!StatusEffectManager.OnStatusEffect || collision.tag == "Attack") return;
+            if (!StatusEffectManager.IsOnStatusEffect || collision.tag == "Attack") return;
             var attackable = collision.GetComponentInParent<IAttackable>();
             if (attackable != null &&
-                !attackable.StatusEffectManager.OnStatusEffect &&
-                attackable.Stat.FireResistance < 1)
+                !attackable.StatusEffectManager.IsOnStatusEffect)
             {
-                attackable.StatusEffectManager.SetFire(
-                    Equipments.Logic.DamageCalculator.GetFireDuration(Stat, attackable.Stat, 10)
-                );
+                Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(
+                    attackable, StatusEffectType.Fire, Stat.FireRate, Stat.FireResistance, Map.Weather.WeatherInfo.Current.FireRateMultiplier);
             }
         }
 

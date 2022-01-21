@@ -60,9 +60,14 @@ namespace PataRoad.Core.Character.Animal
             DistanceCalculator = DistanceCalculator.GetAnimalDistanceCalculator(this);
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
 
-            var charStatusManager = gameObject.AddComponent<CharacterStatusEffectManager>();
-            StatusEffectManager = charStatusManager;
-            charStatusManager.OnStaggered.AddListener(() => GameSound.SpeakManager.Current.Play(_soundOnStaggered));
+            StatusEffectManager = gameObject.AddComponent<CharacterStatusEffectManager>();
+            StatusEffectManager.OnStatusEffect.AddListener((effect) =>
+            {
+                if (effect == StatusEffectType.Stagger)
+                {
+                    GameSound.SpeakManager.Current.Play(_soundOnStaggered);
+                }
+            });
             _animalData.InitFromParent(this);
         }
         public void SetCurrentAsWorldPosition() => DefaultWorldPosition = transform.position.x;
@@ -124,10 +129,6 @@ namespace PataRoad.Core.Character.Animal
             {
                 _animalData.OnTarget();
             }
-        }
-        private void OnDestroy()
-        {
-            (StatusEffectManager as CharacterStatusEffectManager)?.OnStaggered?.RemoveAllListeners();
         }
     }
 }

@@ -7,18 +7,28 @@ namespace PataRoad.Core.Character
     public class StatusEffectManager : MonoBehaviour
     {
         protected IAttackable _target;
-        public bool OnStatusEffect { get; protected set; }
+        public bool IsOnStatusEffect { get; protected set; }
         public bool IgnoreStatusEffect { get; set; }
-        protected bool _onFire;
+        protected bool _isOnFire;
 
         protected Transform _transform;
 
         private GameObject _effectObject;
         private StatusEffectData _effectInstantiator;
-        public virtual bool CanContinue => !OnStatusEffect && !_target.IsDead;
+        public virtual bool CanContinue => !IsOnStatusEffect && !_target.IsDead;
 
         private UnityEngine.Events.UnityAction _onRecover;
         protected bool _isBigTarget;
+
+        private UnityEngine.Events.UnityEvent<StatusEffectType> _onStatusEffect;
+        public UnityEngine.Events.UnityEvent<StatusEffectType> OnStatusEffect
+        {
+            get
+            {
+                if (_onStatusEffect == null) _onStatusEffect = new UnityEngine.Events.UnityEvent<StatusEffectType>();
+                return _onStatusEffect;
+            }
+        }
 
         private void Awake()
         {
@@ -33,15 +43,16 @@ namespace PataRoad.Core.Character
         public void SetRecoverAction(UnityEngine.Events.UnityAction action) => _onRecover = action;
         public virtual void SetFire(int time)
         {
-            if (OnStatusEffect || time < 1 || IgnoreStatusEffect) return;
-            _onFire = true;
-            StartStatusEffect();
+            if (IsOnStatusEffect || time < 1 || IgnoreStatusEffect) return;
+            _isOnFire = true;
+            OnStatusEffect?.Invoke(StatusEffectType.Fire);
+            StopEverythingBeforeStatusEffect();
 
             StartCoroutine(FireDamage());
             OnFire();
 
             LoadEffectObject(StatusEffectType.Fire);
-            OnStatusEffect = true;
+            IsOnStatusEffect = true;
 
             IEnumerator FireDamage()
             {
@@ -55,7 +66,7 @@ namespace PataRoad.Core.Character
             }
         }
         /// <summary>
-        /// Called when fire effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
+        /// Called when fire effect starts, before setting <see cref="IsOnStatusEffect"/> to <c>true</c>.
         /// </summary>
         protected virtual void OnFire() { }
         /// <summary>
@@ -65,13 +76,11 @@ namespace PataRoad.Core.Character
         {
             DamageCalculator.DealDamageFromFireEffect(_target, gameObject, _transform);
         }
-        public virtual void SetIce(int time) { }
-        public virtual void SetSleep(int time)
-        {
-        }
-        public virtual void SetStagger() { }
-        public virtual void SetKnockback() { }
-        public virtual void Tumble() { }
+        public virtual void SetIce(int time) => OnStatusEffect?.Invoke(StatusEffectType.Ice);
+        public virtual void SetSleep(int time) => OnStatusEffect?.Invoke(StatusEffectType.Sleep);
+        public virtual void SetStagger() => OnStatusEffect?.Invoke(StatusEffectType.Stagger);
+        public virtual void SetKnockback() => OnStatusEffect?.Invoke(StatusEffectType.Knockback);
+        public virtual void Tumble() => OnStatusEffect?.Invoke(StatusEffectType.Tumble);
         public virtual void TumbleAttack() { }
 
         public void RecoverAndIgnoreEffect()
@@ -81,21 +90,21 @@ namespace PataRoad.Core.Character
         }
         public void Recover()
         {
-            if (!OnStatusEffect || IgnoreStatusEffect) return;
+            if (!IsOnStatusEffect || IgnoreStatusEffect) return;
             StopAllCoroutines();
-            _onFire = false;
+            _isOnFire = false;
             if (_effectObject != null)
             {
                 Destroy(_effectObject);
             }
-            OnStatusEffect = false;
+            IsOnStatusEffect = false;
             OnRecover();
 
             if (_onRecover != null) _onRecover();
         }
 
         /// <summary>
-        /// Called when being recovered, before setting <see cref="OnStatusEffect"/> to <c>false</c>.
+        /// Called when being recovered, before setting <see cref="IsOnStatusEffect"/> to <c>false</c>.
         /// </summary>
         protected virtual void OnRecover() { }
         protected void LoadEffectObject(StatusEffectType type)
@@ -103,7 +112,7 @@ namespace PataRoad.Core.Character
             //can be resized if big, I guess
             _effectObject = _effectInstantiator.AttachEffect(type, _transform, _isBigTarget);
         }
-        protected virtual void StartStatusEffect()
+        protected virtual void StopEverythingBeforeStatusEffect()
         {
             (_target as MonoBehaviour)?.StopAllCoroutines();
         }
@@ -112,6 +121,10 @@ namespace PataRoad.Core.Character
         {
             yield return new WaitForSeconds(seconds);
             Recover();
+        }
+        private void OnDestroy()
+        {
+            _onStatusEffect?.RemoveAllListeners();
         }
     }
 }

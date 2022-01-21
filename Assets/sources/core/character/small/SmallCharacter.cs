@@ -76,6 +76,8 @@ namespace PataRoad.Core.Character
 
         public float Sight => CharacterEnvironment.Sight + ClassData.AdditionalSight;
 
+        public virtual bool IsFixedPosition { get; protected set; }
+
         protected void Init()
         {
             _data = GetComponent<SmallCharacterData>();

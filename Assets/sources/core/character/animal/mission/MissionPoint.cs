@@ -98,7 +98,7 @@ namespace PataRoad.Core.Map
         {
             AttachToScreen("MissionFailed");
 
-            Global.GlobalData.Sound.PlayInScene(_missionFailedMusic);
+            GameSound.SpeakManager.Current.Play(_missionFailedMusic);
             Global.GlobalData.TipIndex = Global.GlobalData.CurrentSlot.MapInfo.NextMap.MapData.TipIndexOnFail;
             Global.GlobalData.CurrentSlot.MapInfo.OnMissionFailed();
 
@@ -137,7 +137,7 @@ namespace PataRoad.Core.Map
                     yield return new WaitForSeconds(2);
                 }
                 AttachToScreen("MissionComplete");
-                Global.GlobalData.Sound.PlayInScene(_missionSuccessMusic);
+                GameSound.SpeakManager.Current.Play(_missionSuccessMusic);
                 Camera.main.GetComponent<CameraController.CameraMover>().StopMoving();
             }
         }

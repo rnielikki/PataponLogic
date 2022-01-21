@@ -586,11 +586,11 @@ MonoBehaviour:
     - rid: 1
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _crushMultiplier: 1
-        _slashMultiplier: 1
-        _stabMultiplier: 1
-        _soundMultiplier: 1
-        _magicMultiplier: 1
+        _crushMultiplier: 0.9
+        _slashMultiplier: 1.1
+        _stabMultiplier: 0.9
+        _soundMultiplier: 0.8
+        _magicMultiplier: 0.6
         _fireMultiplier: 1
         _iceMultiplier: 1
         _thunderMultiplier: 1
@@ -1824,7 +1824,7 @@ GameObject:
   - component: {fileID: 6043826962285782238}
   m_Layer: 8
   m_Name: Arrow
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

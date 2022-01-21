@@ -166,7 +166,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private (ItemType type, string group) LoadItemType(Core.Character.PataponData data, EquipmentSummaryElement equipElement)
         {
             if (equipElement.IsGeneralMode) return (ItemType.Key, "GeneralMode");
-            else return (ItemType.Equipment, Core.Character.Class.ClassMetaData.GetEquipmentName(data.Type, equipElement.EquipmentType));
+            else return (ItemType.Equipment, Core.Character.Class.ClassAttackEquipmentData.GetEquipmentName(data.Type, equipElement.EquipmentType));
         }
         private void SetPosition(bool left)
         {

@@ -76,7 +76,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             void OptimizeOne(Core.Character.Equipments.EquipmentType type)
             {
-                var equipmentGroup = Core.Character.Class.ClassMetaData.GetEquipmentName(pataponData.Type, type);
+                var equipmentGroup = Core.Character.Class.ClassAttackEquipmentData.GetEquipmentName(pataponData.Type, type);
                 var currentData = pataponData.EquipmentManager.GetEquipmentData(type);
                 var currentIndex = currentData.Index;
                 var index = GlobalData.CurrentSlot.Inventory.GetBestEquipmentIndex(equipmentGroup);

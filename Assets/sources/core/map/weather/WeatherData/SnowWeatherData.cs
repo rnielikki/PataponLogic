@@ -26,7 +26,7 @@ namespace PataRoad.Core.Map.Weather
             var character = other.gameObject.GetComponentInParent<Character.ICharacter>();
             if (character != null
                 &&
-                !character.StatusEffectManager.OnStatusEffect
+                !character.StatusEffectManager.IsOnStatusEffect
                 &&
                 Common.Utils.RandomByProbability((1 - character.Stat.IceResistance) * 0.02f))
             {

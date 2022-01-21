@@ -68,11 +68,16 @@ namespace PataRoad.Core.Character
             {
                 throw new System.ArgumentException($"The attack animation type {attackType} is not registered.");
             }
-            if (_currentModel.AlwaysAnimate)
+
+            if (_character.IsFixedPosition)
+            {
+                AnimateAttack();
+            }
+            else if (_currentModel.AlwaysAnimate)
             {
                 _animator.Animate(_currentModel.AnimationType);
             }
-            else if (_data.WasHitLastTime && _currentModel.HasTarget())
+            else if (_data.WasHitLastTime && _currentModel.IsInAttackDistance())
             {
                 AnimateAttack();
             }
@@ -103,7 +108,6 @@ namespace PataRoad.Core.Character
                 _currentStatusFlag = 0;
             }
         }
-
         private void AnimateAttack()
         {
             _currentStatusFlag = 3;
@@ -124,7 +128,7 @@ namespace PataRoad.Core.Character
         }
         private void Update()
         {
-            if (!_character.StatusEffectManager.CanContinue || !_onAttackCommand) return;
+            if (!_character.StatusEffectManager.CanContinue || !_onAttackCommand || _character.IsFixedPosition) return;
             if (_currentModel == null)
             {
                 if (_attacking) StopAttack(false);

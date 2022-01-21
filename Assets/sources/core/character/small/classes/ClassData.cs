@@ -1,4 +1,5 @@
 ﻿using PataRoad.Core.Character.Equipments.Weapons;
+using System;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Class
@@ -8,6 +9,19 @@ namespace PataRoad.Core.Character.Class
     /// </summary>
     public abstract class ClassData
     {
+        private readonly static ClassType[] _classByItemindex = new ClassType[]
+        {
+            ClassType.Yaripon,
+            ClassType.Tatepon,
+            ClassType.Yumipon,
+            ClassType.Kibapon,
+            ClassType.Dekapon,
+            ClassType.Megapon,
+            ClassType.Toripon,
+            ClassType.Robopon,
+            ClassType.Mahopon
+        };
+
         protected readonly SmallCharacter _character;
         public bool IsMeleeUnit { get; protected set; }
         protected AttackMoveController _attackController { get; private set; }
@@ -42,6 +56,7 @@ namespace PataRoad.Core.Character.Class
             else if (_character is Hazorons.Hazoron hazoron) AttackMoveData = new HazoronAttackMoveData(hazoron);
             InitLateForClass(realStat);
         }
+
         protected abstract void InitLateForClass(Stat realStat);
         public virtual void Attack()
         {
@@ -132,5 +147,7 @@ namespace PataRoad.Core.Character.Class
         public virtual void OnCanceled()
         {
         }
+
+        public static int GetItemIndexFromClass(ClassType classType) => System.Array.IndexOf(_classByItemindex, classType);
     }
 }

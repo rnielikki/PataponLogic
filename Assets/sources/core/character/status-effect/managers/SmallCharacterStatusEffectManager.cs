@@ -29,7 +29,6 @@ namespace PataRoad.Core.Character
             _isPatapon = _smallCharacter is Patapons.Patapon;
             _rigidbody = GetComponent<Rigidbody2D>();
         }
-
         protected override void OnFire()
         {
             _smallCharacter.CharAnimator.Animate("Fire");
@@ -57,13 +56,14 @@ namespace PataRoad.Core.Character
         public override void Tumble()
         {
             //check "is grounded" but how?
-            if (OnStatusEffect || IgnoreStatusEffect) return;
-            StartStatusEffect();
+            if (IsOnStatusEffect || IgnoreStatusEffect) return;
+            StopEverythingBeforeStatusEffect();
             _smallCharacter.CharAnimator.Animate("Sleep");
+            base.Tumble();
             ActivateRigidbody();
             transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 1.2f, transform.position.z);
             _rigidbody.AddForce(1000 * Vector2.up);
-            OnStatusEffect = true;
+            IsOnStatusEffect = true;
 
             StartCoroutine(WaitForRecovery(2));
         }
@@ -85,15 +85,16 @@ namespace PataRoad.Core.Character
         }
         protected override void OnKnockback()
         {
+            if (_smallCharacter.IsFixedPosition) return;
             _smallCharacter.CharAnimator.Animate("walk");
             ActivateRigidbody();
             transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 1.2f, transform.position.z);
             _rigidbody.AddForce(new Vector2(-_xDirection * 2000, 2400));
             _onKnockback = true;
         }
-        protected override void StartStatusEffect()
+        protected override void StopEverythingBeforeStatusEffect()
         {
-            base.StartStatusEffect();
+            base.StopEverythingBeforeStatusEffect();
             _positionOnStatusEffect = transform.position;
         }
 
@@ -105,9 +106,9 @@ namespace PataRoad.Core.Character
         }
         private void Update()
         {
-            if (OnStatusEffect)
+            if (IsOnStatusEffect && !_smallCharacter.IsFixedPosition)
             {
-                if (_onFire)
+                if (_isOnFire)
                 {
                     var offset = _smallCharacter.Stat.MovementSpeed * 1.5f * Time.deltaTime * _movingDirectionOnFire;
                     var pos = transform.position + (Vector3)offset;

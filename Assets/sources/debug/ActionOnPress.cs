@@ -60,5 +60,9 @@ namespace PataRoad.AppDebug
             Story.StoryLoader.Init();
             Story.StoryLoader.LoadStory(_testData);
         }
+        public void AddClass()
+        {
+            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Class", 2));
+        }
     }
 }

@@ -6,6 +6,7 @@
         Ice,
         Sleep,
         Stagger,
-        Knockback
+        Knockback,
+        Tumble
     }
 }

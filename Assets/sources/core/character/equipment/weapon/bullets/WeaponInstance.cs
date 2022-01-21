@@ -45,7 +45,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// </summary>
         /// <param name="forceMultiplierMin">Minimum value of force that will be thrown with. 1 is normal force, 0 is no force.</param>
         /// <param name="forceMultiplierMax">Maximum value of force that will be thrown with. 1 is normal force, 0 is no force.</param>
-        /// <param name="additionalDir">Additional force to specific direction. Will need for Yaripon and Yumipon attack.</param>
         public void Throw(float forceMultiplierMin, float forceMultiplierMax)
         {
             _stat = _holder.Stat;
@@ -61,7 +60,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Logic.DamageCalculator.DealDamage(_holder, _stat, collision.gameObject, collision.ClosestPoint(transform.position));
-            Destroy(gameObject);
+            if (collision.tag != "Grass") Destroy(gameObject);
         }
     }
 }
