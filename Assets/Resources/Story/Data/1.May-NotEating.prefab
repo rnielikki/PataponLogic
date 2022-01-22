@@ -56,7 +56,6 @@ MonoBehaviour:
   _randomWind: 0
   _windType: 1
   _usePatapolis: 1
-  _nextMap: {fileID: 0}
   _background: Ruins
   _music: {fileID: 8300000, guid: 3376ba7916d98454c91df47ceff0b36f, type: 3}
   _xCameraPosition: 30
@@ -223,7 +222,7 @@ MonoBehaviour:
           m_CallState: 2
     _waitingSeconds: 3
     _useLine: 1
-    _image: {fileID: 0}
+    _image: {fileID: 21300000, guid: c57a83be3c342ad44baac9563805a5ac, type: 3}
     _name: Sukopon
     _content: Hazorons, Hazorons took Mater Tree....
   - _events:
@@ -418,6 +417,7 @@ MonoBehaviour:
     _name: Meden
     _content: Oh great %Almighty%, please remember, make sure that NOBODY'S DIE in
       the Mission.
+  _nextStory: {fileID: 0}
 --- !u!114 &7448384283183978817
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -645,6 +645,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6503063704793924880}
     m_Modifications:
+    - target: {fileID: 3298102455472563875, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9999967
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455472563875, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455472563875, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455472563875, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0025663814
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455472563875, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3298102455598739888, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
       propertyPath: m_Controller
       value: 
@@ -697,6 +717,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3298102455876752800, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455876752800, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455876752800, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455876752800, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102455876752800, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102457385680813, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102457385680813, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102457385680813, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102457385680813, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3298102457385680813, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865501498717871952, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7f800d8a7b1d7174d9369b459a6054f5, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0508216fed013744c8ded2725eeaa036, type: 3}
 --- !u!4 &9046421707982611313 stripped
