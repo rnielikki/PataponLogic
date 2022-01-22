@@ -47,9 +47,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 minForce = 1200;
                 maxForce = 1500;
             }
-
             arrowForThrowing.GetComponent<WeaponInstance>()
-                .Initialize(this, _color, _throwMass, transformOriginal: _arrowTransform)
+                .Initialize(this, _material, _throwMass, transformOriginal: _arrowTransform)
                 .Throw(minForce, maxForce);
         }
         protected override void LoadRenderersAndImage()
@@ -58,6 +57,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _bowRenderer = transform.Find("Bow").GetComponent<SpriteRenderer>();
             _arrowRenderer = transform.Find("Arrow").GetComponent<SpriteRenderer>();
             _spriteRenderers = new SpriteRenderer[] { _bowRenderer, _arrowRenderer };
+            _material = _spriteRenderers[0].material;
         }
         protected override void ReplaceImage(EquipmentData equipmentData)
         {

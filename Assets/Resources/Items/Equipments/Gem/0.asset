@@ -18,15 +18,16 @@ MonoBehaviour:
   _description: This is like a stone.
   _levelGroup: 0
   _stat:
-    id: 0
+    rid: 0
   _image: {fileID: 21300000, guid: a95438e61d8e25b4f97dce0b28b4089b, type: 3}
   _mass: 0.25
   _type: 4
   _elementalAttackType: 0
-  _weaponColor: {r: 1, g: 1, b: 1, a: 1}
+  _weaponMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0

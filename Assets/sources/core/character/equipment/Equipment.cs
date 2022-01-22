@@ -39,6 +39,7 @@ namespace PataRoad.Core.Character.Equipments
         }
         internal void Load()
         {
+            if (_spriteRenderers == null) LoadRenderersAndImage();
             if (HolderData != null && _defaultEquipmentData != null) return;
             if (Holder == null) Holder = GetComponentInParent<SmallCharacter>();
             HolderData = GetComponentInParent<SmallCharacterData>();

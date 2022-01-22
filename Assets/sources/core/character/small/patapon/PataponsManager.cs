@@ -197,7 +197,8 @@ namespace PataRoad.Core.Character.Patapons
         private bool HasEnemyOnSight() //for camera move
         {
             if (_patapons.Count == 0) return true;
-            else return _distanceCalculator.GetClosest() != null;
+            else return (FirstPatapon?.DistanceCalculator?.GetClosest() != null
+                    || _distanceCalculator.GetClosest() != null);
         }
         public bool CanGoForward()
         {
@@ -246,7 +247,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         public void CheckIfZoom()
         {
-            bool hasEnemyOnSight = HasEnemyOnSight() || (FirstPatapon.DistanceCalculator.GetClosest() != null);
+            bool hasEnemyOnSight = HasEnemyOnSight();
             if (!_hasEnemyOnSight && hasEnemyOnSight) //has enemy on sight
             {
                 _cameraZoom.ZoomOut();

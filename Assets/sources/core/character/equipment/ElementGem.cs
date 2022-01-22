@@ -8,6 +8,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         protected override void LoadRenderersAndImage()
         {
             //no renderer or image.
+            _spriteRenderers = System.Array.Empty<UnityEngine.SpriteRenderer>();
         }
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
@@ -16,7 +17,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 base.ReplaceEqupiment(equipmentData, stat);
                 if (HolderData.EquipmentManager?.Weapon != null)
                 {
-                    HolderData.EquipmentManager.Weapon.Colorize(gemData.WeaponColor);
+                    HolderData.EquipmentManager.Weapon.Colorize(gemData.WeaponMaterial);
                 }
                 HolderData.ElementalAttackType = gemData.ElementalAttackType;
             }

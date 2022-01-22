@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PataRoad.Core.Items;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
@@ -13,7 +14,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
         protected override EquipmentType _type => EquipmentType.Weapon;
         protected virtual float _throwMass => Mass;
-        protected Color _color { get; private set; } = Color.white;
+        protected Material _material { get; set; }
 
         [SerializeField]
         private AttackType _attackType;
@@ -84,14 +85,28 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             var yDiff = yDistance - Holder.RootTransform.position.y;
             return Mathf.Sqrt((yDiff + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance;
         }
-        internal virtual void Colorize(Color color)
+        internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
+        {
+            base.ReplaceEqupiment(equipmentData, stat);
+            var gem = HolderData.EquipmentManager?.ElementGem;
+            if (gem?.CurrentData != null)
+            {
+                _material = (gem.CurrentData as GemData).WeaponMaterial;
+            }
+        }
+        protected override void LoadRenderersAndImage()
+        {
+            base.LoadRenderersAndImage();
+            _material = _spriteRenderers[0].material;
+        }
+        internal virtual void Colorize(Material weaponMaterial)
         {
             if (_spriteRenderers == null) LoadRenderersAndImage();
             foreach (var renderer in _spriteRenderers)
             {
-                renderer.color = color;
+                renderer.material = weaponMaterial;
             }
-            _color = color;
+            _material = weaponMaterial;
         }
     }
 }

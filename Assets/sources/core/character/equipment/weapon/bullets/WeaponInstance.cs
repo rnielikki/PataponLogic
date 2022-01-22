@@ -23,14 +23,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// <param name="mass">Mass of the object. This will affect to Tailwind.</param>
         /// <param name="transformOriginal">Transform of the object. If not set, default value is transform of <paramref name="original"/>.</param>
         /// <returns>Self.</returns>
-        public WeaponInstance Initialize(Weapon original, Color color, float mass = -1, Transform transformOriginal = null)
+        public WeaponInstance Initialize(Weapon original, Material material, float mass = -1, Transform transformOriginal = null)
         {
             if (transformOriginal == null) transformOriginal = original.transform;
             _rigidbody.mass = (mass < 0) ? original.Mass : mass;
             _holder = original.Holder;
             var renderer = GetComponent<SpriteRenderer>();
             renderer.sprite = original.ThrowableWeaponSprite;
-            renderer.color = color;
+            renderer.material = material;
 
             transform.position = transformOriginal.position;
             transform.rotation = transformOriginal.rotation;

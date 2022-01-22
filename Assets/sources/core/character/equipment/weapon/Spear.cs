@@ -40,7 +40,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
 
             spearForThrowing.GetComponent<WeaponInstance>()
-                .Initialize(this, _color)
+                .Initialize(this, _material)
                 .Throw(minVelocity / Time.fixedDeltaTime, maxVelocity / Time.fixedDeltaTime);
         }
         public override float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance)

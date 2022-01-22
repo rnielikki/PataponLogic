@@ -18,15 +18,16 @@ MonoBehaviour:
   _description: Grants ice elemental attack.
   _levelGroup: 0
   _stat:
-    id: 0
+    rid: 0
   _image: {fileID: 21300000, guid: 20469d3ae0d7360418a59955595d2417, type: 3}
   _mass: 0.25
   _type: 4
   _elementalAttackType: 2
-  _weaponColor: {r: 0.19339621, g: 0.5035589, b: 1, a: 1}
+  _weaponMaterial: {fileID: 2100000, guid: c1e829a7e905d1f4b96a8aa6d0a5151e, type: 2}
   references:
-    version: 1
-    00000000:
+    version: 2
+    RefIds:
+    - rid: 0
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0

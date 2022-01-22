@@ -10,8 +10,8 @@ namespace PataRoad.Core.Items
         ElementalAttackType _elementalAttackType;
         public ElementalAttackType ElementalAttackType => _elementalAttackType;
         [SerializeField]
-        Color _weaponColor;
-        public Color WeaponColor => _weaponColor;
+        Material _weaponMaterial;
+        public Material WeaponMaterial => _weaponMaterial;
     }
 }
 
