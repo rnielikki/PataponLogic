@@ -29,7 +29,7 @@ namespace PataRoad.Core.Character.Class
             { ClassType.Yaripon, new ClassAttackEquipmentData("Spear",null,  new string[]{"Stab"})},
             { ClassType.Megapon, new ClassAttackEquipmentData("Horn","Cape", new string[]{"Fire on Fever", "Ice on Fever", "No Fever Attk"})},
             { ClassType.Toripon, new ClassAttackEquipmentData("Javelin","Bird", new string[]{"Stab"})},
-            { ClassType.Yumipon, new ClassAttackEquipmentData("Bow", null, new string[]{"Stab"})},
+            { ClassType.Yumipon, new ClassAttackEquipmentData("Bow", null, new string[]{"Stab", "No Cannon Attk"})},
             { ClassType.Mahopon, new ClassAttackEquipmentData("Staff","Shoes",  new string[]{"None", "Fire", "Ice", "Thunder"})},
         };
 
