@@ -142,8 +142,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 return;
             }
             var stat = Stat.GetMidValue(data.Select(data => data.Stat));
-
-            _header.text = $"{data[0].Type} - Average stat";
+            var attkIndex = Core.Global.GlobalData.CurrentSlot.PataponInfo.GetAttackTypeIndex(data[0].Type);
+            var attkType = Core.Character.Class.ClassAttackEquipmentData.Get(data[0].Type).AvailableAttackTypes[attkIndex];
+            _header.text = $"{data[0].Type} - [{attkType}]";
             if (!_onGroup)
             {
                 OnChangedToGroup();

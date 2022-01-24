@@ -43,6 +43,7 @@ namespace PataRoad.Core.Character
             _data = _character.ClassData.AttackMoveData;
             _animator = _character.CharAnimator;
             _distanceCalculator = _character.DistanceCalculator;
+            _movingRight = _character.MovingDirection.x < 0;
         }
         /// <summary>
         /// Adds model instructions for any type of future attacking command.

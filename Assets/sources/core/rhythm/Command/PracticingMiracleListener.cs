@@ -8,12 +8,13 @@ namespace PataRoad.Core.Rhythm.Command
         private MiracleListener _original;
         private RhythmCommand _command;
         private int _practicingCount;
-        public const int FullPracticingCount = 1;
+        public const int FullPracticingCount = 5;
 
         public UnityEngine.Events.UnityEvent<int> OnMiracleDrumHit { get; } = new UnityEngine.Events.UnityEvent<int>();
         public UnityEngine.Events.UnityEvent<int> OnMiraclePerformed { get; } = new UnityEngine.Events.UnityEvent<int>();
         public UnityEngine.Events.UnityEvent OnMiracleDrumMiss { get; } = new UnityEngine.Events.UnityEvent();
         public UnityEngine.Events.UnityEvent OnMiraclePracticingEnd { get; } = new UnityEngine.Events.UnityEvent();
+        public UnityEngine.Events.UnityEvent OnOtherCommandInput { get; } = new UnityEngine.Events.UnityEvent();
 
         private void Awake()
         {
@@ -27,7 +28,9 @@ namespace PataRoad.Core.Rhythm.Command
             listener.SetCurrentMiracleDrumTo(this);
             OnMiracle.AddListener(CountMiracle);
             _command.OnCommandCanceled.AddListener(ResetMiracleCount);
-            OnMiracle.AddListener(() => FindObjectOfType<Bgm.RhythmBgmSinging>().SingMiracle());
+            var singingSource = FindObjectOfType<Bgm.RhythmBgmSinging>();
+            OnMiracle.AddListener(singingSource.SingMiracle);
+            _command.OnCommandInput.AddListener(InvokeOtherCommandInput);
             return this;
         }
         internal override bool HasMiracleChance(IEnumerable<DrumType> currentDrums, RhythmInputModel input)
@@ -40,11 +43,12 @@ namespace PataRoad.Core.Rhythm.Command
             }
             return hasMiracleChance;
         }
+        private void InvokeOtherCommandInput(RhythmCommandModel model) => OnOtherCommandInput.Invoke();
         private void CountMiracle()
         {
             ResetMiracle();
             _practicingCount++;
-            if (_practicingCount > FullPracticingCount)
+            if (_practicingCount >= FullPracticingCount)
             {
                 OnMiraclePracticingEnd.Invoke();
                 CleanListeners();
@@ -74,6 +78,8 @@ namespace PataRoad.Core.Rhythm.Command
             OnMiracle.RemoveAllListeners();
             _command.OnCommandCanceled.RemoveListener(ResetMiracleCount);
             OnMiraclePracticingEnd.RemoveAllListeners();
+            OnOtherCommandInput.RemoveAllListeners();
+            _command.OnCommandInput.RemoveListener(InvokeOtherCommandInput);
         }
         private void OnDisable()
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PataRoad.Story.Actions
@@ -97,6 +98,8 @@ namespace PataRoad.Story.Actions
             scale.x *= -1;
             transform.localScale = scale;
         }
+        public void Show() => _instance.gameObject.SetActive(true);
+        public void Hide() => _instance.gameObject.SetActive(false);
 
         void WeaponAttack()
         {

@@ -13,6 +13,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
             Init();
             _activeNavs = GetComponentsInChildren<HeadquarterSummaryElement>();
         }
+        private void Start()
+        {
+            //progress layout update
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
+        }
         private void OnEnable()
         {
             MarkIndex(_index);

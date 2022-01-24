@@ -59,6 +59,10 @@ namespace PataRoad.Core.Character
         /// <param name="target">The boss, as enemy. ("from")</param>
         internal static DistanceCalculator GetBossDistanceCalculator(Bosses.EnemyBoss target) =>
             new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("patapons", "hazorons"));
+
+        internal static DistanceCalculator GetNonPataHazoDistanceCalculator(ICharacter target) =>
+            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("patapons", "hazorons"));
+
         /// <summary>
         /// <see cref="DistanceCalculator"/> for summoned boss (from left to right).
         /// </summary>

@@ -17,6 +17,8 @@ namespace PataRoad.Core.Rhythm
 
         int[] _minTimerIndexes;
         int[] _maxTimerIndexes;
+        bool _hasResetListener;
+
         private void Awake()
         {
             int newHalfGoodFrequency = (RhythmEnvironment.MiracleRange == 0) ? (int)(RhythmTimer.GoodFrequency * 0.5) : (int)(RhythmEnvironment.MiracleRange / Time.fixedDeltaTime);
@@ -28,23 +30,25 @@ namespace PataRoad.Core.Rhythm
             TurnCounter.OnTurn.AddListener(() => { if (!TurnCounter.IsPlayerTurn) ResetCounter(); });
             _minTimerIndexes = new int[]
             {
-                RhythmTimer.HalfFrequency - newGoodFrequency, //2
-                RhythmTimer.HalfFrequency - newHalfGoodFrequency, //3
-                RhythmTimer.HalfFrequency - newGoodFrequency, //4
-                RhythmTimer.HalfFrequency - newHalfGoodFrequency //5
+                -newGoodFrequency, //2
+                -newHalfGoodFrequency, //3
+                -newGoodFrequency, //4
+                -newHalfGoodFrequency //5
             };
             _maxTimerIndexes = new int[]
             {
-                RhythmTimer.HalfFrequency + newHalfGoodFrequency, //2
-                RhythmTimer.HalfFrequency + newGoodFrequency, //3
-                RhythmTimer.HalfFrequency + newHalfGoodFrequency, //4
-                RhythmTimer.HalfFrequency + newGoodFrequency //5
+                newHalfGoodFrequency, //2
+                newGoodFrequency, //3
+                newHalfGoodFrequency, //4
+                newGoodFrequency //5
             };
             Init();
         }
         protected override void SetResetTimer()
         {
+            if (_hasResetListener) return;
             RhythmTimer.Current.OnHalfTime.AddListener(SetEnable);
+            _hasResetListener = true;
         }
         protected override RhythmInputModel GetInputModel()
         {
@@ -59,11 +63,11 @@ namespace PataRoad.Core.Rhythm
                 {
                     case 1: //this is 2nd
                     case 4: //this is 5th
-                        current = Mathf.Abs((RhythmTimer.HalfFrequency - RhythmTimer.Count - RhythmTimer.FrequencyOffset) % RhythmTimer.Frequency);
+                        current = RhythmTimer.GetTimingWithDirection(RhythmTimer.GetDrumCount());
                         break;
                     case 2:
                     case 3:
-                        current = RhythmTimer.GetDrumCount();
+                        current = RhythmTimer.GetTimingWithDirection((RhythmTimer.GetDrumCount() + RhythmTimer.HalfFrequency) % RhythmTimer.Frequency);
                         break;
                     default:
                         throw new InvalidOperationException($"The {MiracleDrumCount}th miracle drum count isn't valid");
@@ -93,6 +97,7 @@ namespace PataRoad.Core.Rhythm
             {
                 EnteredMiracleHit = true;
                 RhythmTimer.Current.OnHalfTime.RemoveListener(SetEnable);
+                _hasResetListener = false;
                 MiracleDrumCount = count;
             }
             else
@@ -107,7 +112,7 @@ namespace PataRoad.Core.Rhythm
         {
             MiracleDrumCount = 0;
             if (!EnteredMiracleHit) return;
-            RhythmTimer.Current.OnHalfTime.AddListener(SetEnable);
+            SetResetTimer();
             EnteredMiracleHit = false;
             StopAllCoroutines();
         }

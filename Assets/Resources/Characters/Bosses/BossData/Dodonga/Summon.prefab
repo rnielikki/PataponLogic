@@ -187,11 +187,11 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0
-        _hitPoint: 600
+        _hitPoint: 400
         _defenceMin: 0.9
         _defenceMax: 1.1
-        _damageMin: 0
-        _damageMax: 10
+        _damageMin: 5
+        _damageMax: 15
         _attackSeconds: 2
         _movementSpeed: 4
         _critical: 0
@@ -229,7 +229,7 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
-  _connectedMapIndex: 2
+  _connectedMapIndex: 4
   references:
     version: 2
     RefIds:

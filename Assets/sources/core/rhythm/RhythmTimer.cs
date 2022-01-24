@@ -163,21 +163,33 @@ namespace PataRoad.Core.Rhythm
             StopAndRemoveAllListeners();
             Current = null;
         }
-
+        /// <summary>
+        /// Returns timing, which means smaller is better hit. This calculates automatically rhythm offset, if offset is set.
+        /// </summary>
+        /// <returns>Timing value, that can be used normally.</returns>
         public static int GetTiming() => GetTiming(GetDrumCount());
+        /// <summary>
+        /// Returns timing without absolute value. - Means earlier, + means later. This calculates automatically rhythm offset, if offset is set.
+        /// </summary>
+        /// <returns>Timing offset to the frequency, which can be plus or minus.</returns>
+        public static int GetTimingWithDirection(int count)
+        {
+            if (count < HalfFrequency) return count;
+            else return count - Frequency;
+        }
         internal static int GetTiming(int count)
         {
             if (count < HalfFrequency) return count;
             else return Frequency - count;
         }
         /// <summary>
-        /// Gets drum frequency with offset. It helps to make sync with music.
+        /// Gets drum frequency with offset. It helps to make sync with music. DON'T USE THIS FOR GETTING TIMING, use <see cref="GetTiming"/> instead.
         /// </summary>
         /// <returns>Offset drum value which is sync with music.</returns>
         /// <note>If it's still not in sync with music, change <see cref="FrequencyOffset"/> or music soruce.</note>
         public static int GetDrumCount()
         {
-            return (RhythmTimer.Count - FrequencyOffset + Frequency) % Frequency;
+            return (Count - FrequencyOffset + Frequency) % Frequency;
         }
         public void StopAndRemoveAllListeners()
         {

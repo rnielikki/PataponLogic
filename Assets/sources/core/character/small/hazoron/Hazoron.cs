@@ -24,6 +24,9 @@ namespace PataRoad.Core.Character.Hazorons
         [Header("Valid only if Define Command Action is true")]
         private Rhythm.Command.CommandSong _commandAction;
 
+        [SerializeField]
+        private bool _isDarkOne;
+
         public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
 
         private void Awake()
@@ -32,7 +35,7 @@ namespace PataRoad.Core.Character.Hazorons
             OnFever = true;
             Init();
             Stat = _data.Stat;
-            DistanceCalculator = DistanceCalculator.GetHazoronDistanceCalculator(this);
+            DistanceCalculator = _isDarkOne ? DistanceCalculator.GetNonPataHazoDistanceCalculator(this) : DistanceCalculator.GetHazoronDistanceCalculator(this);
             DistanceManager = gameObject.AddComponent<DistanceManager>();
 
             StatusEffectManager.SetRecoverAction(() =>

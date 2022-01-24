@@ -9,6 +9,7 @@ namespace PataRoad.Core.Character.Bosses
         private SummonedBoss _boss;
 
         private bool _dead;
+        public bool HasBoss { get; private set; }
 
         private int _summonCount;
         [SerializeField]
@@ -31,6 +32,7 @@ namespace PataRoad.Core.Character.Bosses
             }
             else
             {
+                HasBoss = true;
                 for (int i = 0; i < summonCount; i++)
                 {
                     var obj = Instantiate(_summonThumbnail, _summonStatus);

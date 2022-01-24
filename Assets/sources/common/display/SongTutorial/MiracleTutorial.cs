@@ -26,12 +26,17 @@ namespace PataRoad.Common.GameDisplay
 
         private RhythmCommand _rhythmCommand;
         private PracticingMiracleListener _miracleListener;
+        public UnityEngine.Events.UnityEvent OnSongComplete { get; } = new UnityEngine.Events.UnityEvent();
         void Awake()
         {
             _rhythmCommand = FindObjectOfType<RhythmCommand>();
         }
+        public void SetFailureText(string text)
+        {
+            _instruction.text = text;
+        }
 
-        private void Start()
+        public void StartTutorial()
         {
             StartCoroutine(ShowInstruction());
         }
@@ -50,12 +55,12 @@ namespace PataRoad.Common.GameDisplay
             _instruction.text = _processingMessage;
 
             _miracleListener = _rhythmCommand.ToMiraclePracticeMode();
-            _command.LoadForMiracle();
-            GameSound.SpeakManager.Current.Play(_miracleTeachingSound);
+            _command.LoadFromExsiting();
             _miracleListener.OnMiracleDrumHit.AddListener(UpdateDrumStatus);
             _miracleListener.OnMiracleDrumMiss.AddListener(ShowMissInstruction);
             _miracleListener.OnMiraclePerformed.AddListener(UpdateInstruction);
             _miracleListener.OnMiraclePracticingEnd.AddListener(EndInstruction);
+            _miracleListener.OnOtherCommandInput.AddListener(OnCommand);
 
             TurnCounter.OnTurn.RemoveListener(StartPracticing);
         }
@@ -68,6 +73,10 @@ namespace PataRoad.Common.GameDisplay
             _instruction.text = $"{_processingMessage} ({PracticingMiracleListener.FullPracticingCount - practicingCount} time(s) left)";
             _command.ResetHit();
         }
+        private void OnCommand()
+        {
+            GameSound.SpeakManager.Current.Play(_miracleTeachingSound);
+        }
 
         private void ShowMissInstruction()
         {
@@ -78,6 +87,7 @@ namespace PataRoad.Common.GameDisplay
         {
             _instruction.text = _endMessage;
             _command.gameObject.SetActive(false);
+            OnSongComplete.Invoke();
             StartCoroutine(EndInstructionOnTime());
             System.Collections.IEnumerator EndInstructionOnTime()
             {

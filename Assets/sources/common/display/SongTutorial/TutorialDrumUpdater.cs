@@ -24,10 +24,12 @@ namespace PataRoad.Common.GameDisplay
         {
             LoadDrums(commandListData.FullSong);
         }
-        internal void LoadForMiracle()
+        public void LoadFromExsiting()
         {
-            LoadDrums(new[] { DrumType.Don, DrumType.Don, DrumType.Don, DrumType.Don, DrumType.Don });
+            _animators = GetComponentsInChildren<Animator>();
+            _maxLength = _animators.Length;
         }
+
         public void LoadDrums(System.Collections.Generic.IEnumerable<DrumType> drums)
         {
             _maxLength = drums.Count();
@@ -58,6 +60,7 @@ namespace PataRoad.Common.GameDisplay
             }
             UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         }
+
         internal void PlayOnIndex(int index)
         {
             if (index == _maxIndex)

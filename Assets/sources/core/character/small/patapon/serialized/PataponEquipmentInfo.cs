@@ -59,6 +59,7 @@ namespace PataRoad.Core.Character.Patapons.Data
             _weaponIndex = GetIndex(EquipmentType.Weapon);
             _protectorIndex = GetIndex(EquipmentType.Protector);
             _rareponIndex = GetIndex(EquipmentType.Rarepon);
+            _gemIndex = GetIndex(EquipmentType.Gem);
 
             if (_rareponIndex < 1) _helmIndex = GetIndex(EquipmentType.Helm);
 

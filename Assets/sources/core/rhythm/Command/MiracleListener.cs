@@ -31,7 +31,8 @@ namespace PataRoad.Core.Rhythm.Command
             }
             else if (IsMiracleDrum(drum, currentDrums))
             {
-                _miracleDrumInput.StartCounter(currentDrums.Count());
+                var cnt = currentDrums.Count();
+                _miracleDrumInput.StartCounter(cnt);
             }
             return _miracleDrumInput.EnteredMiracleHit;
         }
