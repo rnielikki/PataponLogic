@@ -1,7 +1,5 @@
 ﻿using PataRoad.Common.GameDisplay;
-using PataRoad.Story.Actions;
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +9,8 @@ namespace PataRoad.Story
     {
         private static StoryLoader _current { get; set; }
         private UnityEngine.InputSystem.InputAction _action;
+        private bool _noDestroy;
+
         private void Awake()
         {
             _current = this;
@@ -29,12 +29,14 @@ namespace PataRoad.Story
             _current.gameObject.SetActive(true);
             _current.StartStory(data);
         }
-        private void StartStory(StoryData data)
+        internal void StartStory(StoryData data)
         {
+            _noDestroy = true;
             SceneLoadingAction.Create(data.SceneName).ChangeScene();
             SceneManager.sceneLoaded += OnStorySceneLoaded;
             void OnStorySceneLoaded(Scene scene, LoadSceneMode mode)
             {
+                _noDestroy = false;
                 SceneManager.sceneLoaded -= OnStorySceneLoaded;
                 _current.StartCoroutine(ReadStory(data));
             }
@@ -73,23 +75,7 @@ namespace PataRoad.Story
 
             //-- Do story action
             yield return storySceneInfo.LoadStoryLines(data.StoryActions);
-
-            //-- Next or end?
-            /*
-            var choiceDisplay = GetComponentInChildren<ChoiceSelector>();
-            if (choiceDisplay != null)
-            {
-                choiceDisplay.Open(storySceneInfo);
-            }
-            else */
-            if (data.NextStory != null)
-            {
-                _current.StartStory(data.NextStory);
-            }
-            else
-            {
-                MoveToNext();
-            }
+            if (!_noDestroy) MoveToNext();
         }
         private void SkipStory(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {

@@ -4,18 +4,25 @@ namespace PataRoad.Story
 {
     class ChoiceSelector : MonoBehaviour
     {
-        ChoiceItem[] _items;
 
-        public void Open(StorySceneInfo storySceneInfo)
+        public System.Collections.IEnumerator Open(StorySceneInfo storySceneInfo)
         {
             gameObject.SetActive(true);
-            _items = GetComponentsInChildren<ChoiceItem>();
-            _items[0].Button.Select();
-            foreach (var item in _items)
+            ChoiceItem[] items = GetComponentsInChildren<ChoiceItem>();
+            items[0].Button.Select();
+
+            StoryAction[] actions = null;
+            foreach (var item in items)
             {
                 item.Button.onClick.AddListener(() =>
-                StartCoroutine(storySceneInfo.LoadStoryLines(item.StoryActions)));
+                {
+                    actions = item.StoryActions;
+                    Close();
+                });
             }
+            yield return new WaitUntil(() => actions != null);
+            yield return storySceneInfo.LoadStoryLines(actions);
         }
+        private void Close() => gameObject.SetActive(false);
     }
 }

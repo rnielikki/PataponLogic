@@ -48,7 +48,7 @@ namespace PataRoad.Core.Items
         public static IItem LoadByReference(IItem item) => GetItem(item.ItemType, item.Group, item.Index);
 
         /// <summary>
-        /// Get Item
+        /// Gets item from type, group and index.
         /// </summary>
         /// <param name="group">The group that belongs to, like equipment, material, key etc.</param>
         /// <param name="index"></param>

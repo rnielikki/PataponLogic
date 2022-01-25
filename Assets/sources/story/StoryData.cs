@@ -43,10 +43,6 @@ namespace PataRoad.Story
 #pragma warning disable S1104 // Fields should not have public accessibility - we need AGAIN this for serialized array in inspector.
         public StoryAction[] StoryActions;
 #pragma warning restore S1104 // Fields should not have public accessibility
-        [SerializeField]
-        [Tooltip("If null, goes to the Patapolis after the story. Note: It DOESN'T CHECK RECURSION.")]
-        private StoryData _nextStory;
-        public StoryData NextStory => _nextStory;
 
         private Core.Map.Weather.WeatherType GetRandomWeather()
         {

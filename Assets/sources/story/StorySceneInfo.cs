@@ -31,6 +31,12 @@ namespace PataRoad.Story
         private AudioClip _nextSound;
         public void StartStoryScene() => _whenUseSceneForStory.Invoke();
         internal Transform Parent => _parent;
+        /// <summary>
+        /// Loads story lines without need to load whole environment. Also <see cref="StoryLoader"/> uses this.
+        /// </summary>
+        /// <param name="stories">The array of story action data sequence.</param>
+        /// <param name="sender">Only useful if story action contains scene changing to next story.</param>
+        /// <returns>Yield that waits until the input (or seconds).</returns>
         public IEnumerator LoadStoryLines(StoryAction[] stories)
         {
             foreach (var storyAction in stories)
@@ -38,23 +44,39 @@ namespace PataRoad.Story
                 storyAction.InvokeEvent();
                 Coroutine waitingForSeconds = null;
                 Coroutine waitingForLine = null;
-                if (storyAction.WaitingSeconds > 0)
+
+                if (storyAction.ChoiceSelector != null)
                 {
-                    waitingForSeconds = StartCoroutine(WaitForSeconds(storyAction.WaitingSeconds));
+                    _display.Close();
+                    yield return storyAction.ChoiceSelector.Open(this);
                 }
-                if (storyAction.UseLine)
+                else if (storyAction.NextStory != null)
                 {
-                    waitingForLine = StartCoroutine(_display.WaitUntilNext(storyAction));
+                    _display.Close();
+                    var storyLoader = FindObjectOfType<StoryLoader>();
+                    storyLoader.StartStory(storyAction.NextStory);
                 }
                 else
                 {
-                    _display.Close();
-                }
-                if (waitingForSeconds != null) yield return waitingForSeconds;
-                if (waitingForLine != null)
-                {
-                    yield return waitingForLine;
-                    _audioSource.PlayOneShot(_nextSound);
+
+                    if (storyAction.WaitingSeconds > 0)
+                    {
+                        waitingForSeconds = StartCoroutine(WaitForSeconds(storyAction.WaitingSeconds));
+                    }
+                    if (storyAction.UseLine)
+                    {
+                        waitingForLine = StartCoroutine(_display.WaitUntilNext(storyAction));
+                    }
+                    else
+                    {
+                        _display.Close();
+                    }
+                    if (waitingForSeconds != null) yield return waitingForSeconds;
+                    if (waitingForLine != null)
+                    {
+                        yield return waitingForLine;
+                        _audioSource.PlayOneShot(_nextSound);
+                    }
                 }
             }
             IEnumerator WaitForSeconds(float seconds)
