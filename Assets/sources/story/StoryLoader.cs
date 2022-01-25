@@ -39,10 +39,11 @@ namespace PataRoad.Story
                 _current.StartCoroutine(ReadStory(data));
             }
         }
-        private IEnumerator ReadStory(StoryData data)
+        private IEnumerator ReadStory(StoryData rawData)
         {
             //-- Init
             var storySceneInfo = FindObjectOfType<StorySceneInfo>();
+            var data = Instantiate(rawData, storySceneInfo.Parent);
             storySceneInfo.StartStoryScene();
 
             //-- Audio
@@ -70,40 +71,17 @@ namespace PataRoad.Story
                 storySceneInfo.Wind.Init(data.Wind);
             }
 
-            //-- Object instantiating
-            var obj = Instantiate(data.gameObject, storySceneInfo.Parent);
-
-            //-- Object mapping
-            var fromResource = data.GetComponentsInChildren<StoryBehaviour>(true).OrderBy(s => s.Seed).ToArray();
-            var fromInstance = obj.GetComponentsInChildren<StoryBehaviour>(true).OrderBy(s => s.Seed).ToArray();
-            if (fromResource.Length != fromInstance.Length)
-            {
-                throw new MissingReferenceException("resource and instance length doesn't match.");
-            }
-            for (int i = 0; i < fromResource.Length; i++)
-            {
-                var res = fromResource[i];
-                var inst = fromInstance[i];
-                if (res.Seed != inst.Seed)
-                {
-                    throw new MissingReferenceException("resource and instance doesn't match.");
-                }
-                res.SetInstance(inst);
-                inst.SetInstance(inst); //I don't know does really it need but in any case if they find reference on runtime...
-            }
-            var imageFromResource = data.GetComponentInChildren<StoryImage>();
-
-            if (imageFromResource != null)
-            {
-                var imageFromInstance = obj.GetComponentInChildren<StoryImage>();
-                imageFromResource.Init(imageFromInstance);
-                imageFromInstance.Init(imageFromInstance);
-            }
-
             //-- Do story action
             yield return storySceneInfo.LoadStoryLines(data.StoryActions);
 
             //-- Next or end?
+            /*
+            var choiceDisplay = GetComponentInChildren<ChoiceSelector>();
+            if (choiceDisplay != null)
+            {
+                choiceDisplay.Open(storySceneInfo);
+            }
+            else */
             if (data.NextStory != null)
             {
                 _current.StartStory(data.NextStory);

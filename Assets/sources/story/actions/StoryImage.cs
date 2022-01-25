@@ -5,6 +5,7 @@ namespace PataRoad.Story.Actions
 {
     class StoryImage : MonoBehaviour
     {
+        [SerializeField]
         private Image _image;
         [SerializeField]
         private float _fadeSpeed;
@@ -15,16 +16,12 @@ namespace PataRoad.Story.Actions
         private bool _fadingBlackIn; //avoid confliction
 
         private Sprite _imageToReplace;
-        private StoryImage _storyImage;
-        internal void Init(StoryImage storyImage)
+        void Start()
         {
-            _storyImage = storyImage;
-            _image = GetComponentInChildren<Image>();
             _image.color = new Color(1, 1, 1, 0);
             _image.enabled = false;
         }
-        public void LoadImage(Sprite image) => _storyImage.LoadImageInReal(image);
-        private void LoadImageInReal(Sprite image)
+        public void LoadImage(Sprite image)
         {
             if (!_image.enabled)
             {
@@ -41,8 +38,7 @@ namespace PataRoad.Story.Actions
                 _fadingBlackIn = false;
             }
         }
-        public void UnloadImage() => _storyImage.UnloadImageInReal();
-        private void UnloadImageInReal()
+        public void UnloadImage()
         {
             Core.Global.GlobalData.GlobalInputActions.DisableOkCancelInputs();
             _fading = true;

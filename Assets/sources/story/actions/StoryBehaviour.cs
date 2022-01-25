@@ -16,7 +16,6 @@ namespace PataRoad.Story.Actions
         internal int Seed => _uniqueSeed;
 
         private Animator _animator;
-        private StoryBehaviour _instance;
 
 #pragma warning disable S1450 // Shut up, TWO METHODS are using it
         private bool _inturrupted;
@@ -39,18 +38,15 @@ namespace PataRoad.Story.Actions
                 img.sortingOrder = _uniqueSeed;
             }
         }
-        internal void SetInstance(StoryBehaviour instance) => _instance = instance;
 
-        public void Animate(string animation) => _instance.AnimateInReal(animation);
-        private void AnimateInReal(string animation)
+        public void Animate(string animation)
         {
             _animator.Play(animation);
             StopAllCoroutines();
             _inturrupted = true;
             _walking = false;
         }
-        public void AnimateOnce(string animation) => _instance.AnimateOnceInReal(animation);
-        private void AnimateOnceInReal(string animation)
+        public void AnimateOnce(string animation)
         {
             _animator.Play(animation);
             _walking = false;
@@ -68,22 +64,19 @@ namespace PataRoad.Story.Actions
             }
         }
 
-        public void SetToDefaultWalkingStep() => _instance._walkingStep = _defaultWalkingStep;
-        public void SetWalkingStep(float steps) => _instance._walkingStep = steps;
+        public void SetToDefaultWalkingStep() => _walkingStep = _defaultWalkingStep;
+        public void SetWalkingStep(float steps) => _walkingStep = steps;
 
-        public void Walk(float steps) => _instance.WalkTowardsInReal(transform.position.x + steps * transform.localScale.x);
-        public void WalkTowards(float position) => _instance.WalkTowardsInReal(position);
+        public void Walk(float steps) => WalkTowards(transform.position.x + steps * transform.localScale.x);
+        public void Move(float steps) => MoveTowards(transform.position.x + steps * transform.localScale.x);
 
-        public void Move(float steps) => _instance.MoveTowardsInReal(transform.position.x + steps * transform.localScale.x);
-        public void MoveTowards(float steps) => _instance.MoveTowardsInReal(steps);
-
-        private void WalkTowardsInReal(float position)
+        public void WalkTowards(float position)
         {
-            MoveTowardsInReal(position);
+            MoveTowards(position);
             _animator.SetBool("walking", true);
             _animatingWalking = true;
         }
-        private void MoveTowardsInReal(float position)
+        public void MoveTowards(float position)
         {
             StopAllCoroutines();
             _inturrupted = true;
@@ -91,15 +84,14 @@ namespace PataRoad.Story.Actions
             _targetPosition = position * Vector2.right;
         }
 
-        public void Flip() => _instance.FlipInReal();
-        private void FlipInReal()
+        public void Flip()
         {
             var scale = transform.localScale;
             scale.x *= -1;
             transform.localScale = scale;
         }
-        public void Show() => _instance.gameObject.SetActive(true);
-        public void Hide() => _instance.gameObject.SetActive(false);
+        public void Show() => gameObject.SetActive(true);
+        public void Hide() => gameObject.SetActive(false);
 
         void WeaponAttack()
         {
