@@ -11,6 +11,9 @@ namespace PataRoad.Core.Character
         [SerializeReference]
         CharacterSoundsCollection _hazoronSounds = new CharacterSoundsCollection();
         public CharacterSoundsCollection HazoronSounds => _hazoronSounds;
+        [SerializeReference]
+        CharacterSoundsCollection _darkOneSounds = new CharacterSoundsCollection();
+        public CharacterSoundsCollection DarkOneSounds => _darkOneSounds;
         void Awake()
         {
             Current = this;

@@ -5,7 +5,7 @@
         private void Awake()
         {
             Init(GetComponent<DodongaAttack>());
-            CharacterSize = 10;
+            CharacterSize = 5;
         }
         protected override float CalculateAttack()
         {

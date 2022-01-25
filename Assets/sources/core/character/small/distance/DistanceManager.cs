@@ -67,7 +67,7 @@ namespace PataRoad.Core.Character
             var hit = DistanceCalculator.GetClosestForAttack();
             if (hit != null && !ignoreSafeDistance)
             {
-                x = Mathf.Max(
+                x = Mathf.Min(
                     hit.Value.x,
                     DefaultWorldPosition
                 );
@@ -136,13 +136,13 @@ namespace PataRoad.Core.Character
         protected void Update()
         {
             if (_smallCharacter.IsFixedPosition) return;
+            if (_smallCharacter.StatusEffectManager.IsOnStatusEffect)
+            {
+                _isMoving = false;
+                return;
+            }
             if (_isMoving)
             {
-                if (_smallCharacter.StatusEffectManager.IsOnStatusEffect)
-                {
-                    _isMoving = false;
-                    return;
-                }
                 var step = _movingVelocity * Time.deltaTime;
                 Vector2 target;
                 if (_isMovingAsOffset)

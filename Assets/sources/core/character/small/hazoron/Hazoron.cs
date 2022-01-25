@@ -27,7 +27,8 @@ namespace PataRoad.Core.Character.Hazorons
         [SerializeField]
         private bool _isDarkOne;
 
-        public override CharacterSoundsCollection Sounds => CharacterSoundLoader.Current.HazoronSounds;
+        public override CharacterSoundsCollection Sounds => _isDarkOne ?
+            CharacterSoundLoader.Current.DarkOneSounds : CharacterSoundLoader.Current.HazoronSounds;
 
         private void Awake()
         {
@@ -75,8 +76,8 @@ namespace PataRoad.Core.Character.Hazorons
         }
         protected override void BeforeDie()
         {
+            base.BeforeDie();
             HazoronPositionManager.Current.RemoveHazoron(this);
-            GameSound.SpeakManager.Current.Play(CharacterSoundLoader.Current.HazoronSounds.OnDead);
         }
         private void Update()
         {

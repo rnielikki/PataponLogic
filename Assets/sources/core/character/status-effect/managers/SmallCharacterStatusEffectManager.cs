@@ -88,8 +88,8 @@ namespace PataRoad.Core.Character
             if (_smallCharacter.IsFixedPosition) return;
             _smallCharacter.CharAnimator.Animate("walk");
             ActivateRigidbody();
-            transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 1.2f, transform.position.z);
-            _rigidbody.AddForce(new Vector2(-_xDirection * 2000, 2400));
+            transform.position = new Vector3(transform.position.x, Time.deltaTime * 2, transform.position.z);
+            _rigidbody.AddForce(new Vector2(-_xDirection * 2400, 2200));
             _onKnockback = true;
         }
         protected override void StopEverythingBeforeStatusEffect()
@@ -126,23 +126,30 @@ namespace PataRoad.Core.Character
                 }
                 else if (!_isRigidbodyActive)
                 {
-                    transform.position = _positionOnStatusEffect;
+                    //transform.position = _positionOnStatusEffect;
                 }
             }
         }
         private void LateUpdate()
         {
-            if (_isRigidbodyActive && transform.position.y <= 0)
+            if (_isRigidbodyActive)
             {
                 var pos = transform.position;
-                pos.y = 0;
-                _rigidbody.velocity = Vector2.zero;
-                _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-                _rigidbody.gravityScale = 0;
-                _isRigidbodyActive = false;
-                if (_onKnockback)
+                pos.x = Mathf.Clamp(pos.x,
+                    _character.DefaultWorldPosition - CharacterEnvironment.MaxAttackDistance,
+                    _character.DefaultWorldPosition + CharacterEnvironment.MaxAttackDistance);
+
+                if (transform.position.y <= 0)
                 {
-                    Recover();
+                    pos.y = 0;
+                    _rigidbody.velocity = Vector2.zero;
+                    _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+                    _rigidbody.gravityScale = 0;
+                    _isRigidbodyActive = false;
+                    if (_onKnockback)
+                    {
+                        Recover();
+                    }
                 }
                 transform.position = pos;
             }

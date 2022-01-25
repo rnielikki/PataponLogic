@@ -135,7 +135,10 @@ namespace PataRoad.Core.Character
                 Rhythm.RhythmTimer.Current.OnNext.AddListener(() => Destroy(gameObject));
             }
         }
-        protected virtual void BeforeDie() { }
+        protected virtual void BeforeDie()
+        {
+            GameSound.SpeakManager.Current.Play(Sounds.OnDead);
+        }
         protected virtual void AfterDie() { }
         protected void MarkAsDead()
         {

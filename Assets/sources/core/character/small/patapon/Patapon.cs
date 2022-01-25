@@ -83,7 +83,6 @@ namespace PataRoad.Core.Character.Patapons
                 else if (!TurnCounter.IsPlayerTurn) PerformCommandAction(LastSong);
                 else if (!TurnCounter.IsOn) DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
             });
-
             RendererInfo = new PataponRendererInfo(this, BodyName);
 
             var general = GetComponent<General.PataponGeneral>();

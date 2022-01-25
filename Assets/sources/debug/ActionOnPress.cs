@@ -15,14 +15,13 @@ namespace PataRoad.AppDebug
         private InputAction _input;
         [SerializeField]
         private UnityEvent _action;
-        private Core.Character.Patapons.Patapon FirstPon => GetComponent<Core.Character.Patapons.PataponsManager>().Groups.First().Patapons.First();
-        private Core.Character.Bosses.EnemyBoss Boss;
+        private Core.Character.Patapons.Patapon FirstPon => FindObjectOfType<Core.Character.Patapons.PataponsManager>().FirstPatapon;
+        private Core.Character.ICharacter Enemy => FindObjectOfType<Core.Character.Hazorons.Hazoron>();
         // Start is called before the first frame update
         void Awake()
         {
             _input.performed += PerformAction;
             _input.Enable();
-            Boss = FindObjectOfType<Core.Character.Bosses.EnemyBoss>();
         }
         private void OnDestroy()
         {
@@ -37,23 +36,25 @@ namespace PataRoad.AppDebug
         }
         public void SetFire()
         {
-            Boss.StatusEffectManager.SetFire(4);
+            Enemy.StatusEffectManager.SetFire(4);
         }
         public void SetIce()
         {
-            Boss.StatusEffectManager.SetIce(4);
+            Enemy.StatusEffectManager.SetIce(4);
         }
         public void SetSleep()
         {
-            Boss.StatusEffectManager.SetSleep(4);
+            Enemy.StatusEffectManager.SetSleep(4);
         }
         public void SetStagger()
         {
-            Boss.StatusEffectManager.SetStagger();
+            Enemy.StatusEffectManager.SetStagger();
         }
         public void SetKnockback()
         {
-            Boss.StatusEffectManager.SetKnockback();
+            Debug.Log("knockback!");
+            FirstPon.StatusEffectManager.SetKnockback();
+            //Enemy.StatusEffectManager.SetKnockback();
         }
         public void LoadStory()
         {
@@ -62,7 +63,8 @@ namespace PataRoad.AppDebug
         }
         public void AddClass()
         {
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Class", 2));
+            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Class", 4));
+            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 4));
         }
     }
 }
