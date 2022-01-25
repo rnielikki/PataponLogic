@@ -43,6 +43,13 @@ namespace PataRoad.Story
 #pragma warning disable S1104 // Fields should not have public accessibility - we need AGAIN this for serialized array in inspector.
         public StoryAction[] StoryActions;
 #pragma warning restore S1104 // Fields should not have public accessibility
+        [UnityEngine.SerializeField]
+        ChoiceSelector _choiceSelector;
+        internal ChoiceSelector ChoiceSelector => _choiceSelector;
+        [UnityEngine.SerializeField]
+        StoryData _nextStory;
+        internal StoryData NextStory => _nextStory;
+
 
         private Core.Map.Weather.WeatherType GetRandomWeather()
         {

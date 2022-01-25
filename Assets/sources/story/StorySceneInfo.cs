@@ -35,9 +35,10 @@ namespace PataRoad.Story
         /// Loads story lines without need to load whole environment. Also <see cref="StoryLoader"/> uses this.
         /// </summary>
         /// <param name="stories">The array of story action data sequence.</param>
-        /// <param name="sender">Only useful if story action contains scene changing to next story.</param>
+        /// <param name="choiceSelector">Choice window after stories are performed. Let as <c>null</c> if no choice will be shown.</param>
+        /// <param name="nextStory">Next story after stories are performed. Let as <c>null</c> if no next story to load. DOESN'T check recursion.</param>
         /// <returns>Yield that waits until the input (or seconds).</returns>
-        public IEnumerator LoadStoryLines(StoryAction[] stories)
+        public IEnumerator LoadStoryLines(StoryAction[] stories, ChoiceSelector choiceSelector, StoryData nextStory)
         {
             foreach (var storyAction in stories)
             {
@@ -45,40 +46,38 @@ namespace PataRoad.Story
                 Coroutine waitingForSeconds = null;
                 Coroutine waitingForLine = null;
 
-                if (storyAction.ChoiceSelector != null)
+
+                if (storyAction.WaitingSeconds > 0)
                 {
-                    _display.Close();
-                    yield return storyAction.ChoiceSelector.Open(this);
+                    waitingForSeconds = StartCoroutine(WaitForSeconds(storyAction.WaitingSeconds));
                 }
-                else if (storyAction.NextStory != null)
+                if (storyAction.UseLine)
                 {
-                    _display.Close();
-                    var storyLoader = FindObjectOfType<StoryLoader>();
-                    storyLoader.StartStory(storyAction.NextStory);
+                    waitingForLine = StartCoroutine(_display.WaitUntilNext(storyAction));
                 }
                 else
                 {
-
-                    if (storyAction.WaitingSeconds > 0)
-                    {
-                        waitingForSeconds = StartCoroutine(WaitForSeconds(storyAction.WaitingSeconds));
-                    }
-                    if (storyAction.UseLine)
-                    {
-                        waitingForLine = StartCoroutine(_display.WaitUntilNext(storyAction));
-                    }
-                    else
-                    {
-                        _display.Close();
-                    }
-                    if (waitingForSeconds != null) yield return waitingForSeconds;
-                    if (waitingForLine != null)
-                    {
-                        yield return waitingForLine;
-                        _audioSource.PlayOneShot(_nextSound);
-                    }
+                    _display.Close();
+                }
+                if (waitingForSeconds != null) yield return waitingForSeconds;
+                if (waitingForLine != null)
+                {
+                    yield return waitingForLine;
+                    _audioSource.PlayOneShot(_nextSound);
                 }
             }
+            _display.Close();
+            if (choiceSelector != null)
+            {
+                yield return choiceSelector.Open(this);
+            }
+            else if (nextStory != null)
+            {
+                _display.Close();
+                var storyLoader = FindObjectOfType<StoryLoader>();
+                storyLoader.StartStory(nextStory);
+            }
+
             IEnumerator WaitForSeconds(float seconds)
             {
                 yield return new WaitForSeconds(seconds);

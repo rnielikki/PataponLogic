@@ -39,7 +39,7 @@ namespace PataRoad.SceneLogic.Patapolis
         {
             _currentActions = LoadStoryActions();
         }
-        public void ReadLines() => StartCoroutine(_storySceneInfo.LoadStoryLines(_currentActions));
+        public void ReadLines() => StartCoroutine(_storySceneInfo.LoadStoryLines(_currentActions, null, null));
 
         private StoryAction[] LoadStoryActions()
         {

@@ -4,13 +4,6 @@
     public class StoryAction
     {
         [UnityEngine.SerializeField]
-        ChoiceSelector _choiceSelector;
-        internal ChoiceSelector ChoiceSelector => _choiceSelector;
-        [UnityEngine.SerializeField]
-        StoryData _nextStory;
-        internal StoryData NextStory => _nextStory;
-
-        [UnityEngine.SerializeField]
         UnityEngine.Events.UnityEvent _events;
         [UnityEngine.SerializeField]
         float _waitingSeconds;

@@ -183,7 +183,19 @@ MonoBehaviour:
     _content: Hah? Did Sukopon something wrong?
   - _events:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 2221699510055496769}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryMusicChanger, Assembly-CSharp
+          m_MethodName: ChangeMusic
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 8300000, guid: 0d4ab007ca4eb4c4ba3213d2baa045cb, type: 3}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     _waitingSeconds: 0
     _useLine: 1
     _image: {fileID: 21300000, guid: e9a66bbc166575e498f086f8693b4d99, type: 3}
@@ -235,7 +247,19 @@ MonoBehaviour:
     _content: Suko... Found... but scary... Suko, in the cave...
   - _events:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 2221699510055496769}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryMusicChanger, Assembly-CSharp
+          m_MethodName: StopMusic
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     _waitingSeconds: 0
     _useLine: 1
     _image: {fileID: 21300000, guid: 746fa283ab7638f489230b1974e47c00, type: 3}
@@ -424,6 +448,7 @@ MonoBehaviour:
     _image: {fileID: 21300000, guid: d48e0424867210a40a56e388cad1f354, type: 3}
     _name: Meden
     _content: Oh may...
+  _choiceSelector: {fileID: 0}
   _nextStory: {fileID: 0}
 --- !u!114 &2221699510055496769
 MonoBehaviour:

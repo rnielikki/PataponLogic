@@ -74,7 +74,7 @@ namespace PataRoad.Story
             }
 
             //-- Do story action
-            yield return storySceneInfo.LoadStoryLines(data.StoryActions);
+            yield return storySceneInfo.LoadStoryLines(data.StoryActions, data.ChoiceSelector, data.NextStory);
             if (!_noDestroy) MoveToNext();
         }
         private void SkipStory(UnityEngine.InputSystem.InputAction.CallbackContext context)
