@@ -110,7 +110,7 @@ namespace PataRoad.Core.Character.Bosses
                 {
                     _movingBack = false;
                     _sleeping = true;
-                    CharAnimator.Animate("Sleep");
+                    CharAnimator.Animate("stop");
                     _movingBackQueued = false;
                     _movingBackAnimating = false;
                 }
