@@ -59,6 +59,8 @@ namespace PataRoad.Core.Map.Weather
         private Dictionary<WindType, UnityAction> _windActions;
         private bool _isActive = true;
 
+        private int _tailwindConditions;
+
         public void Init(WindType windType)
         {
             _maxFlag = (int)GetFlag((WindType)(System.Enum.GetValues(typeof(WindType)).Length - 1));
@@ -128,18 +130,21 @@ namespace PataRoad.Core.Map.Weather
             if (!_isActive && type != 0) ActivateWind(true);
             if (prioritizedType > _windFlags)
             {
-                if (type == WindType.None) StopAllCoroutines();
                 _windActions[type]();
             }
             _windFlags |= prioritizedType;
         }
         public void StopWind(WindType type)
         {
+            if (type == WindType.TailWind && GetMaxFlag(_windFlags) == WindType.TailWind)
+            {
+                _tailwindConditions--;
+                if (_tailwindConditions > 0) return;
+            }
             var prioritizedType = GetFlag(type);
             _windFlags &= ~prioritizedType;
             if (prioritizedType > _windFlags)
             {
-                if (type == WindType.Changing) StopAllCoroutines();
                 _windActions[GetMaxFlag(_windFlags)]();
             }
         }
@@ -172,14 +177,14 @@ namespace PataRoad.Core.Map.Weather
         }
         public void StartNoWind()
         {
-            StopAllCoroutines();
             _onFixedWindDirection = true;
             UpdateWind(0);
             ActivateWind(false);
         }
         private void StartChangingWind()
         {
-            if (_onFixedWindDirection) return;
+            if (!_onFixedWindDirection) return;
+            _onFixedWindDirection = false;
             StartCoroutine(ChangeWindDirectionCoroutine());
         }
         private void StartHeadWind()
@@ -187,13 +192,15 @@ namespace PataRoad.Core.Map.Weather
             _onFixedWindDirection = true;
             UpdateWind(-_windRange);
         }
-        public void StartTailwind()
+        private void StartTailwind()
         {
             _onFixedWindDirection = true;
             UpdateWind(_windRange);
+            _tailwindConditions++;
         }
         private void UpdateWind(float value)
         {
+            if (_onFixedWindDirection) StopAllCoroutines();
             value = Mathf.Clamp(-_windRange, value, _windRange);
             _zone.windMain = value;
             _image.Visualise(value, value / _windRange);

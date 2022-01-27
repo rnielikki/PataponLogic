@@ -8,12 +8,6 @@ namespace PataRoad.Core.Character.Bosses
         private BossAttackParticle _fart;
         [SerializeField]
         private ParticleSystem _tornadoEffect;
-        [SerializeField]
-        private BossAttackCollision _tornado;
-        [SerializeField]
-        private BossAttackCollision _slam;
-        [SerializeField]
-        private BossAttackTrigger _peck;
         private Vector3 _targetPosition;
 
         internal override void UpdateStatForBoss(int level)
@@ -38,14 +32,6 @@ namespace PataRoad.Core.Character.Bosses
         {
             _tornadoEffect.Play();
         }
-        public void SlamAttack()
-        {
-            _slam.Attack();
-        }
-        public void StopSlamAttack()
-        {
-            _slam.StopAttacking();
-        }
         public void StartMoving()
         {
             _targetPosition = (_boss.DefaultWorldPosition + 20 * -_boss.MovingDirection.x) * Vector3.right;
@@ -63,7 +49,6 @@ namespace PataRoad.Core.Character.Bosses
         public override void StopAllAttacking()
         {
             //hmm...
-            StopSlamAttack();
         }
     }
 }

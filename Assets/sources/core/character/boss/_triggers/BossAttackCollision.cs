@@ -8,6 +8,8 @@ namespace PataRoad.Core.Character.Bosses
         private bool _enabled;
         [SerializeField]
         bool _enabledFromFirst;
+        [SerializeField]
+        bool _allowZeroDamage;
         private void Awake()
         {
             Init();
@@ -23,7 +25,11 @@ namespace PataRoad.Core.Character.Bosses
         }
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            if (_enabled) _boss.Attack(this, collision.gameObject, collision.GetContact(0).point);
+            if (_enabled)
+            {
+                _boss.Attack(this, collision.gameObject, collision.GetContact(0).point,
+                    _attackType, _elementalAttackType, _allowZeroDamage);
+            }
         }
     }
 }

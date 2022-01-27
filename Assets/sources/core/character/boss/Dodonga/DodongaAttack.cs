@@ -13,21 +13,15 @@ namespace PataRoad.Core.Character.Bosses
 
         public void FireAttack()
         {
-            _boss.AttackType = Equipments.Weapons.AttackType.Magic;
-            _boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Fire;
             Fire.Attack();
         }
         public void HeadbuttAttack()
         {
-            _boss.AttackType = Equipments.Weapons.AttackType.Crush;
-            _boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
             Headbutt.Attack();
         }
         public void StopHeadbuttAttack()
         {
             Headbutt.StopAttacking();
-            _boss.AttackType = Equipments.Weapons.AttackType.Neutral;
-            _boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
         }
         public void EatingAttack()
         {
@@ -39,6 +33,8 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void GrowlAttack()
         {
+            _boss.AttackType = Equipments.Weapons.AttackType.Magic;
+            _boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
             foreach (var target in _boss.DistanceCalculator.GetAllAbsoluteTargetsOnFront())
             {
                 Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat, target.gameObject, target.transform.position);

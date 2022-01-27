@@ -5,7 +5,14 @@
         private void Awake()
         {
             Init();
-            CharacterSize = 4;
+            StatusEffectManager.OnStatusEffect.AddListener(effect =>
+            {
+                if (effect == StatusEffectType.Stagger)
+                {
+                    BossTurnManager.DefineNextAction("fart");
+                }
+            });
+            CharacterSize = 4.3f;
         }
         protected override float CalculateAttack()
         {
@@ -26,44 +33,42 @@
         //Example
         private (string action, int distance) GetNextBehaviour()
         {
-            //--- just test data
-            return ("fart", 5);
-
             //Tada. depends on level, it does nothing!
-            if (Common.Utils.RandomByProbability(1f / (_level + 2)))
-            {
-                return ("nothing", 5);
-            }
             if (Common.Utils.RandomByProbability(1f / (_level + 5)))
             {
-                return ("Idle", 5);
+                return ("nothing", 1);
             }
-            var firstPon = _pataponsManager.FirstPatapon;
-            if (firstPon?.Type != Class.ClassType.Toripon &&
-                firstPon?.transform.position.x < _pataponsManager.transform.position.x) return ("fart", 20);
-            if (firstPon?.IsMeleeUnit == true || firstPon?.Type == Class.ClassType.Toripon)
+            if (Common.Utils.RandomByProbability(1f / (_level + 8)))
             {
-                if (Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 20))
+                return ("Idle", 1);
+            }
+
+            //Toripon. Any other attacks just don't work. Don't even troll the birb with birb.
+            var firstPon = _pataponsManager.FirstPatapon;
+            if (firstPon?.Type == Class.ClassType.Toripon) return ("tornado", 1);
+
+            bool isMeleeUnit = firstPon?.IsMeleeUnit ?? false;
+            if (_level >= 5 &&
+                _pataponsManager.transform.position.x > transform.position.x)
+            {
+                if (Common.Utils.RandomByProbability(isMeleeUnit ? 0.6f : 0.3f))
                 {
-                    if (_level >= 3 && Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 18))
-                    {
-                        return ("tornado", 0);
-                    }
-                    else
-                    {
-                        return ("tornado", 0);
-                    }
-                }
-                else if (_level >= 10 && Common.Utils.RandomByProbability(0.5f))
-                {
-                    return ("slam", 5);
+                    return ("tornado", 0);
                 }
                 else
                 {
-                    return ("peck", 3);
+                    return ("slam", 0);
                 }
             }
-            else return ("peck", 5);
+            var slamProbability = _pataponsManager.FirstPatapon.IsMeleeUnit ? 0.6f : 0.4f;
+            if (Common.Utils.RandomByProbability(slamProbability))
+            {
+                return ("slam", 0);
+            }
+            else
+            {
+                return ("peck", 1);
+            }
         }
     }
 }

@@ -5000,7 +5000,10 @@ MonoBehaviour:
     _sleepResistance: 0
   _damageOffsetMin: 0
   _damageOffsetMax: 1
+  _attackType: 4
+  _elementalAttackType: 0
   _enabledFromFirst: 1
+  _allowZeroDamage: 0
 --- !u!1 &1386977759109126017
 GameObject:
   m_ObjectHideFlags: 0
@@ -5318,6 +5321,110 @@ Transform:
   m_Father: {fileID: 4880434718437615897}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1869746364044726803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3956317480183968362}
+  - component: {fileID: 7283950925095238205}
+  - component: {fileID: 1793063860294278338}
+  m_Layer: 20
+  m_Name: slam-collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3956317480183968362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869746364044726803}
+  m_LocalRotation: {x: 0, y: 0, z: 0.2376859, w: 0.97134215}
+  m_LocalPosition: {x: -3.52, y: -2.02, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 294416754236516958}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 27.5}
+--- !u!61 &7283950925095238205
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869746364044726803}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2, y: 10}
+  m_EdgeRadius: 0
+--- !u!114 &1793063860294278338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1869746364044726803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8dc3428043545ff4784c8fb811f8d778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _additionalStat:
+    _isCharacterStat: 0
+    _hitPoint: 0
+    _defenceMin: 0
+    _defenceMax: 0
+    _damageMin: 45
+    _damageMax: 60
+    _attackSeconds: 0
+    _movementSpeed: 0
+    _critical: 0
+    _stagger: 0
+    _knockback: 0
+    _infiniteCriticalResistance: 0
+    _criticalResistance: 0
+    _infiniteStaggerResistance: 0
+    _staggerResistance: 0
+    _infiniteKnockbackResistance: 0
+    _knockbackResistance: 0
+    _fireRate: 0
+    _iceRate: 0
+    _sleepRate: 0
+    _infiniteFireResistance: 0
+    _fireResistance: 0
+    _infiniteIceResistance: 0
+    _iceResistance: 0
+    _infiniteSleepResistance: 0
+    _sleepResistance: 0
+  _damageOffsetMin: 0.75
+  _damageOffsetMax: 1
+  _attackType: 1
+  _elementalAttackType: 0
+  _enabledFromFirst: 1
+  _allowZeroDamage: 0
 --- !u!1 &1896005919160400236
 GameObject:
   m_ObjectHideFlags: 0
@@ -5444,9 +5551,6 @@ MonoBehaviour:
     rid: 6407466200847089666
   _fart: {fileID: 3315751748543775534}
   _tornadoEffect: {fileID: 2014733647113091665}
-  _tornado: {fileID: 0}
-  _slam: {fileID: 7305395135631646661}
-  _peck: {fileID: 7053118492687460586}
   references:
     version: 2
     RefIds:
@@ -5460,14 +5564,14 @@ MonoBehaviour:
         _damageMin: 2
         _damageMax: 4
         _attackSeconds: 2
-        _movementSpeed: 8
+        _movementSpeed: 4
         _critical: 0
         _stagger: 0
         _knockback: 0
         _infiniteCriticalResistance: 0
         _criticalResistance: 0.4
         _infiniteStaggerResistance: 0
-        _staggerResistance: 0.2
+        _staggerResistance: 0.1
         _infiniteKnockbackResistance: 1
         _knockbackResistance: 0
         _fireRate: 0
@@ -10660,6 +10764,8 @@ MonoBehaviour:
     _sleepResistance: 0
   _damageOffsetMin: 0.2
   _damageOffsetMax: 0.3
+  _attackType: 4
+  _elementalAttackType: 0
 --- !u!1 &2892303023840502305
 GameObject:
   m_ObjectHideFlags: 0
@@ -11898,7 +12004,10 @@ MonoBehaviour:
     _sleepResistance: 0
   _damageOffsetMin: 0.5
   _damageOffsetMax: 1
+  _attackType: 3
+  _elementalAttackType: 0
   _enabledFromFirst: 1
+  _allowZeroDamage: 0
 --- !u!1 &5937795064234429085
 GameObject:
   m_ObjectHideFlags: 0
@@ -12847,7 +12956,6 @@ GameObject:
   - component: {fileID: 1242495795620307044}
   - component: {fileID: 7671080503421765008}
   - component: {fileID: 6242873504671405217}
-  - component: {fileID: 7305395135631646661}
   m_Layer: 8
   m_Name: body
   m_TagString: Untagged
@@ -12875,6 +12983,7 @@ Transform:
   - {fileID: 2620805439555078786}
   - {fileID: 5232730614572331675}
   - {fileID: 7015960002277188837}
+  - {fileID: 3956317480183968362}
   m_Father: {fileID: 7651449554564006095}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12975,48 +13084,6 @@ MonoBehaviour:
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
---- !u!114 &7305395135631646661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8703617668425244109}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2ae4c383e5c5f74e9f5ed83614e449f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _additionalStat:
-    _isCharacterStat: 0
-    _hitPoint: 0
-    _defenceMin: 0
-    _defenceMax: 0
-    _damageMin: 40
-    _damageMax: 50
-    _attackSeconds: 0
-    _movementSpeed: 0
-    _critical: 0
-    _stagger: 0
-    _knockback: 0
-    _infiniteCriticalResistance: 0
-    _criticalResistance: 0
-    _infiniteStaggerResistance: 0
-    _staggerResistance: 0
-    _infiniteKnockbackResistance: 0
-    _knockbackResistance: 0
-    _fireRate: 0
-    _iceRate: 0
-    _sleepRate: 0
-    _infiniteFireResistance: 0
-    _fireResistance: 0
-    _infiniteIceResistance: 0
-    _iceResistance: 0
-    _infiniteSleepResistance: 0
-    _sleepResistance: 0
-  _damageOffsetMin: 0
-  _damageOffsetMax: 1
-  _enabledFromFirst: 0
 --- !u!1 &9005590597598578233
 GameObject:
   m_ObjectHideFlags: 0

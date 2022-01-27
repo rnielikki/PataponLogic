@@ -55,6 +55,18 @@ namespace PataRoad.Core.Character.Bosses
             if (Attacking) return;
             _actionQueue.Enqueue(actionName);
         }
+        /// <summary>
+        /// Adds action, regardless of what action was performed last time.
+        /// </summary>
+        /// <param name="actionName"></param>
+        public void DefineNextAction(string actionName)
+        {
+            _actionQueue.Clear();
+            _actionQueue.Enqueue(actionName);
+            Attacking = false;
+            StartAttack();
+        }
+
         //-- combo
         public void SetComboAttack(IEnumerable<string> actions)
         {

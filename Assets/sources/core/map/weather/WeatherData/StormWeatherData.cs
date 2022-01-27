@@ -25,7 +25,7 @@ namespace PataRoad.Core.Map.Weather
         public void OnWeatherStarted()
         {
             _rainData.OnWeatherStarted();
-            WeatherInfo.Current.Wind.StartTailwind();
+            WeatherInfo.Current.Wind.StartWind(WindType.TailWind);
             StartCoroutine(DropThunder());
         }
 

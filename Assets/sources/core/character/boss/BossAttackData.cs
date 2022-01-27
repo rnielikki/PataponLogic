@@ -28,10 +28,14 @@ namespace PataRoad.Core.Character.Bosses
         /// Clear all collider or trigger of the body in here.
         /// </summary>
         public abstract void StopAllAttacking();
-        public void Attack(BossAttackComponent component, GameObject target, Vector2 position, bool allowZero = false)
+        public void Attack(BossAttackComponent component, GameObject target, Vector2 position,
+            Equipments.Weapons.AttackType attackType, Equipments.Weapons.ElementalAttackType elementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral,
+            bool allowZero = false)
         {
             MinLastDamageOffset = component.DamageOffsetMin;
             MaxLastDamageOffset = component.DamageOffsetMax;
+            _boss.AttackType = attackType;
+            _boss.ElementalAttackType = elementalAttackType;
             Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat + component.AdditionalStat, target, position, allowZero);
         }
         public virtual void SetCustomPosition() { }

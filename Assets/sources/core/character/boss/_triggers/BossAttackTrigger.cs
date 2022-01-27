@@ -9,6 +9,8 @@ namespace PataRoad.Core.Character.Bosses
         bool _isAlreadyTrigger;
         [SerializeField]
         bool _enabledFromFirst;
+        [SerializeField]
+        bool _allowZeroDamage;
         private void Awake()
         {
             Init();
@@ -30,7 +32,11 @@ namespace PataRoad.Core.Character.Bosses
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (_enabled) _boss.Attack(this, collision.gameObject, collision.ClosestPoint(transform.position));
+            if (_enabled)
+            {
+                _boss.Attack(this, collision.gameObject, collision.ClosestPoint(transform.position),
+                    _attackType, _elementalAttackType, _allowZeroDamage);
+            }
         }
     }
 }

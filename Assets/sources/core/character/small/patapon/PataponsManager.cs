@@ -225,7 +225,9 @@ namespace PataRoad.Core.Character.Patapons
         }
         private void LateUpdate()
         {
-            var forward = FirstPatapon?.DistanceCalculator?.GetClosest()?.x;
+            var closest = FirstPatapon?.DistanceCalculator?.GetClosest();
+            if (closest != null) Debug.DrawLine(transform.position, closest.Value, Color.yellow);
+            var forward = closest?.x;
             if (forward != null && forward.Value < transform.position.x)
             {
                 var newPosition = forward.Value;

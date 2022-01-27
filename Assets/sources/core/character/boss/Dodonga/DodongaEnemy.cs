@@ -27,11 +27,11 @@
         private (string action, int distance) GetNextBehaviour()
         {
             //Tada. depends on level, it does nothing!
-            if (Common.Utils.RandomByProbability(1f / (_level + 2)))
+            if (Common.Utils.RandomByProbability(1f / (_level + 5)))
             {
                 return ("nothing", 5);
             }
-            if (Common.Utils.RandomByProbability(1f / (_level + 5)))
+            if (Common.Utils.RandomByProbability(1f / (_level + 7)))
             {
                 return ("Idle", 5);
             }

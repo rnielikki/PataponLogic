@@ -174,7 +174,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eafd937e6ef0aba48b7e554c73634f62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Dodonga
   _stat:
     rid: 0
   Fire: {fileID: 3618771868197904909}
@@ -5610,6 +5609,8 @@ MonoBehaviour:
     _sleepResistance: 0
   _damageOffsetMin: 0.2
   _damageOffsetMax: 0.3
+  _attackType: 4
+  _elementalAttackType: 1
 --- !u!1 &4080503366976372030
 GameObject:
   m_ObjectHideFlags: 0
@@ -6458,6 +6459,10 @@ MonoBehaviour:
     _sleepResistance: 0
   _damageOffsetMin: 0.8
   _damageOffsetMax: 1
+  _attackType: 1
+  _elementalAttackType: 0
+  _enabledFromFirst: 0
+  _allowZeroDamage: 0
 --- !u!60 &4850269597082295279
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -6857,6 +6862,8 @@ MonoBehaviour:
     _sleepResistance: 0
   _damageOffsetMin: 0
   _damageOffsetMax: 0
+  _attackType: 0
+  _elementalAttackType: 0
   OnPataponEaten: {fileID: 8300000, guid: 1967b8f12d935cc48abbb0a4e66908fa, type: 3}
 --- !u!114 &8142234962195461621
 MonoBehaviour:

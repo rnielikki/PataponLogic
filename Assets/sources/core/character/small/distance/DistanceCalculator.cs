@@ -104,21 +104,13 @@ namespace PataRoad.Core.Character
         protected virtual Vector2? GetClosestForAttack(Vector2 castPoint, float attackDistance)//bidirectional
         {
             var raycast = Physics2D.BoxCast(castPoint + _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, -_direction, attackDistance, LayerMask);
-            var p = ReturnInRange(raycast);
-            if (p == null)
+            if (raycast.collider == null)
             {
                 raycast = Physics2D.BoxCast(castPoint - _boxcastXOffset * _direction + _boxcastYOffset, _boxSize, 0, _direction, _character.Sight - attackDistance, LayerMask);
-                p = ReturnInRange(raycast);
-                if (p == null) return null;
+                if (raycast.collider == null) return null;
             }
             var bounds = raycast.collider.bounds;
-            return new Vector2(bounds.center.x + bounds.size.x * -_xDirection / 2, bounds.center.y - bounds.size.y / 2);
-
-            float? ReturnInRange(RaycastHit2D hit)
-            {
-                if (hit.collider == null) return null;
-                return hit.point.x;
-            }
+            return new Vector2(bounds.center.x + bounds.size.x * -_xDirection / 2, bounds.center.y);
         }
         /// <summary>
         /// Prevents overlapping or going forward from the object. Better performance than continuous collider physics.
