@@ -13,7 +13,7 @@ namespace PataRoad.Core.Character.Bosses
         public float DamageOffsetMin => _damageOffsetMin;
 
         [SerializeField]
-        private float _damageOffsetMax;
+        private float _damageOffsetMax = 1;
         public float DamageOffsetMax => _damageOffsetMax;
 
         protected BossAttackData _boss;

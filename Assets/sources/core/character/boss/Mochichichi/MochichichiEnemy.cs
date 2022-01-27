@@ -1,11 +1,11 @@
 ﻿namespace PataRoad.Core.Character.Bosses
 {
-    public class DodongaEnemy : EnemyBoss
+    class MochichichiEnemy : EnemyBoss
     {
         private void Awake()
         {
             Init();
-            CharacterSize = 7;
+            CharacterSize = 4;
         }
         protected override float CalculateAttack()
         {
@@ -37,30 +37,30 @@
             }
             var firstPon = _pataponsManager.FirstPatapon;
             if (firstPon?.Type != Class.ClassType.Toripon &&
-                firstPon?.transform.position.x < _pataponsManager.transform.position.x) return ("fire", 20);
+                firstPon?.transform.position.x < _pataponsManager.transform.position.x) return ("fart", 20);
             if (firstPon?.IsMeleeUnit == true || firstPon?.Type == Class.ClassType.Toripon)
             {
                 if (Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 20))
                 {
                     if (_level >= 3 && Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 18))
                     {
-                        return ("eat", 0);
+                        return ("tornado", 0);
                     }
                     else
                     {
-                        return ("headbutt", 0);
+                        return ("tornado", 0);
                     }
                 }
                 else if (_level >= 10 && Common.Utils.RandomByProbability(0.5f))
                 {
-                    return ("growl", 5);
+                    return ("slam", 5);
                 }
                 else
                 {
-                    return ("fire", 3);
+                    return ("peck", 3);
                 }
             }
-            else return ("fire", 5);
+            else return ("peck", 5);
         }
     }
 }

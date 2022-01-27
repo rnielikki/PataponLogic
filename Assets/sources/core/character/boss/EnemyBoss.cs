@@ -22,10 +22,10 @@ namespace PataRoad.Core.Character.Bosses
 
         protected int _level = 1; //should be loaded later!
 
-        protected override void Init(BossAttackData data)
+        protected override void Init()
         {
-            base.Init(data);
-            BossTurnManager = new BossTurnManager(data);
+            base.Init();
+            BossTurnManager = new BossTurnManager(BossAttackData);
             DefaultWorldPosition = transform.position.x;
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
             _pataponsManager = FindObjectOfType<Patapons.PataponsManager>();
@@ -127,7 +127,7 @@ namespace PataRoad.Core.Character.Bosses
                 else return;
             }
             //phase 2: go forward
-            var closest = DistanceCalculator.GetClosestForAttack() ?? _pataponsManager.transform.position;
+            var closest = DistanceCalculator.GetClosest() ?? _pataponsManager.transform.position;
             var targetPos = new Vector2(Mathf.Max(_pataponsManager.transform.position.x + CharacterSize + AttackDistance, closest.x + CharacterSize + AttackDistance), 0);
             var offset = Stat.MovementSpeed * Time.deltaTime;
 

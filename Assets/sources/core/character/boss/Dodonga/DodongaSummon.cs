@@ -4,33 +4,29 @@ namespace PataRoad.Core.Character.Bosses
 {
     internal class DodongaSummon : SummonedBoss
     {
-        private DodongaAttack _attack;
-
         protected override void Chakachaka()
         {
-            _attack.AnimateFire();
+            CharAnimator.Animate("fire");
         }
 
         protected override void ChargedChakachaka()
         {
-            _attack.AnimateFire();
+            CharAnimator.Animate("fire");
         }
 
         protected override void ChargedPonpon()
         {
-            _attack.AnimateHeadbutt();
+            CharAnimator.Animate("headbutt");
         }
 
         protected override void Ponpon()
         {
-            _attack.AnimateHeadbutt();
+            CharAnimator.Animate("headbutt");
         }
 
         private void Awake()
         {
-            _attack = GetComponent<DodongaAttack>();
-            Init(_attack);
-            _offsetFromManager = 5;
+            Init();
         }
     }
 }

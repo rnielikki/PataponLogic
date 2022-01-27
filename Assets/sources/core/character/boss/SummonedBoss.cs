@@ -19,11 +19,10 @@ namespace PataRoad.Core.Character.Bosses
         private float _lastPerfectionRate;
         private bool _charged;
         private SpriteRenderer[] _renderers;
-        protected float _offsetFromManager;
 
-        protected override void Init(BossAttackData data)
+        protected override void Init()
         {
-            base.Init(data);
+            base.Init();
             var map = Global.GlobalData.CurrentSlot.MapInfo.GetMapByIndex(_connectedMapIndex);
             BossAttackData.UpdateStatForBoss(map.Level);
             _pataponManagerTransform = FindObjectOfType<Patapons.PataponsManager>().transform;
@@ -91,7 +90,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             if ((Rhythm.Command.TurnCounter.IsPlayerTurn || !_attacking) && StatusEffectManager.CanContinue)
             {
-                var targetPosition = _manager.transform.position + _offsetFromManager * Vector3.left;
+                var targetPosition = _manager.transform.position + CharacterSize * Vector3.left;
                 var offset = Stat.MovementSpeed * Time.deltaTime;
                 if (!DistanceCalculator.IsInTargetRange(targetPosition.x, offset))
                 {

@@ -43,9 +43,9 @@ namespace PataRoad.Core.Character.Bosses
 
         [SerializeField]
         protected UnityEvent _onAfterDeath = new UnityEvent();
-
-        protected virtual void Init(BossAttackData data)
+        protected virtual void Init()
         {
+            BossAttackData = GetComponent<BossAttackData>();
             foreach (var part in GetComponentsInChildren<BreakablePart>())
             {
                 _breakableParts.Add(part.gameObject, part);
@@ -53,8 +53,7 @@ namespace PataRoad.Core.Character.Bosses
 
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
 
-            BossAttackData = data;
-            data.CharAnimator = CharAnimator;
+            BossAttackData.CharAnimator = CharAnimator;
             CurrentHitPoint = Stat.HitPoint;
             StatusEffectManager = gameObject.AddComponent<BossStatusEffectManager>();
 

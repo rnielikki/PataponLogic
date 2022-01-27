@@ -4,9 +4,6 @@ namespace PataRoad.Core.Character.Bosses
 {
     public abstract class BossAttackData : MonoBehaviour
     {
-        [SerializeField]
-        private string _name;
-        public string Name => _name;
         [SerializeReference]
         protected Stat _stat = Stat.GetAnyDefaultStatForCharacter();
         public Stat Stat => _stat;

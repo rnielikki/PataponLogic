@@ -11,35 +11,6 @@ namespace PataRoad.Core.Character.Bosses
         [SerializeField]
         private DodongaEatingComponent EatingMouth;
 
-        internal void AnimateFireBefore()
-        {
-            CharAnimator.Animate("fire-before");
-        }
-        internal void AnimateFire()
-        {
-            CharAnimator.Animate("fire");
-        }
-        internal void AnimateHeadbuttBefore()
-        {
-            CharAnimator.Animate("headbutt-before");
-        }
-        internal void AnimateHeadbutt()
-        {
-            CharAnimator.Animate("headbutt");
-        }
-        internal void AnimateEatBefore()
-        {
-            CharAnimator.Animate("eat-before");
-        }
-        internal void AnimateEat()
-        {
-            CharAnimator.Animate("eat");
-        }
-        internal void AnimateGrowl()
-        {
-            CharAnimator.Animate("growl");
-        }
-
         public void FireAttack()
         {
             _boss.AttackType = Equipments.Weapons.AttackType.Magic;
