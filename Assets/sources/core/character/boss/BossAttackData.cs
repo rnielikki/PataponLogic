@@ -10,6 +10,9 @@ namespace PataRoad.Core.Character.Bosses
         public float MinLastDamageOffset { get; protected set; } = 0;
         public float MaxLastDamageOffset { get; protected set; } = 0;
         public CharacterAnimator CharAnimator { get; set; }
+
+        public bool UseCustomDataPosition { get; protected set; }
+
         protected Boss _boss;
         private void Awake()
         {
@@ -31,5 +34,6 @@ namespace PataRoad.Core.Character.Bosses
             MaxLastDamageOffset = component.DamageOffsetMax;
             Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat + component.AdditionalStat, target, position, allowZero);
         }
+        public virtual void SetCustomPosition() { }
     }
 }

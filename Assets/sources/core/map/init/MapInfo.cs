@@ -35,6 +35,13 @@ namespace PataRoad.Core.Global
         private MapWeather _patapolisWeather;
         public MapWeather PatapolisWeather => _patapolisWeather;
 
+        [SerializeField]
+        private string _lastMapName;
+        /// <summary>
+        /// Useful only for slot meta. Shows last played map, even if it's 'only once mission' and not available anymore.
+        /// </summary>
+        public string LastMapName => _lastMapName;
+
         public MapInfo()
         {
             _openMaps = new Dictionary<int, MapDataContainer>();
@@ -44,7 +51,7 @@ namespace PataRoad.Core.Global
         {
             var mapInfo = new MapInfo();
             mapInfo.LastMap = mapInfo.NextMap = mapInfo.LoadResource(0);
-
+            mapInfo._lastMapName = mapInfo.LastMap.MapData.Name;
             mapInfo._patapolisWeather = new MapWeather(new Dictionary<Map.Weather.WeatherType, float>()
             {
                 { Map.Weather.WeatherType.Rain, 0.1f },
@@ -94,6 +101,7 @@ namespace PataRoad.Core.Global
             }
             NextMap.Cleared = true;
             LastMap = NextMap;
+            _lastMapName = LastMap.MapData.Name;
             OpenNext();
 
             _succeededLast = true;
@@ -104,6 +112,7 @@ namespace PataRoad.Core.Global
         {
             _succeededLast = false;
             LastMap = NextMap;
+            _lastMapName = LastMap.MapData.Name;
             GlobalData.CurrentSlot.PataponInfo.CustomMusic = null;
         }
         public void RefreshAllWeathers()

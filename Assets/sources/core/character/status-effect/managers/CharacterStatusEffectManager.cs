@@ -20,9 +20,9 @@ namespace PataRoad.Core.Character
             _character.StopAttacking(false);
             (_character as MonoBehaviour)?.StopAllCoroutines();
         }
-        public override void SetIce(int time)
+        public override void SetIce(float time)
         {
-            if (!IsValidForStatusEffect(time)) return;
+            if (!IsValidForStatusEffect(time) || time < 1) return;
             StopEverythingBeforeStatusEffect();
             LoadEffectObject(StatusEffectType.Ice);
             base.SetIce(time);
@@ -38,7 +38,7 @@ namespace PataRoad.Core.Character
         /// </summary>
         protected virtual void OnIce() { }
 
-        public override void SetSleep(int time)
+        public override void SetSleep(float time)
         {
             if (!IsValidForStatusEffect(time)) return;
             StopEverythingBeforeStatusEffect();
@@ -48,8 +48,6 @@ namespace PataRoad.Core.Character
             OnSleep();
 
             LoadEffectObject(StatusEffectType.Sleep);
-
-            _character.CharAnimator.Stop();
             StartCoroutine(WaitForRecovery(time));
 
             IsOnStatusEffect = true;
@@ -94,6 +92,6 @@ namespace PataRoad.Core.Character
                 target.StatusEffectManager.Tumble();
             }
         }
-        private bool IsValidForStatusEffect(int time) => !_character.IsDead && !IgnoreStatusEffect && !IsOnStatusEffect && time > 0;
+        private bool IsValidForStatusEffect(float time) => !_character.IsDead && !IgnoreStatusEffect && !IsOnStatusEffect && time > 0;
     }
 }

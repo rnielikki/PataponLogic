@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character
 {
     class GrassStatusEffectManager : StatusEffectManager
     {
-        int _totalTime;
+        float _totalTime;
         private Collider2D _collider;
         private ContactFilter2D _filter;
 
@@ -21,7 +21,7 @@ namespace PataRoad.Core.Character
             _filter.SetLayerMask(LayerMask.GetMask("grass", "structures", "bosses", "hazorons", "patapons"));
             _filter.useTriggers = true;
         }
-        public override void SetFire(int time)
+        public override void SetFire(float time)
         {
             if (time < 1) return;
             else if (IsOnStatusEffect)
@@ -52,7 +52,7 @@ namespace PataRoad.Core.Character
                 Recover();
             }
         }
-        private void SpreadFire(int time)
+        private void SpreadFire(float time)
         {
             if (time < 1) return;
             System.Collections.Generic.List<Collider2D> others = new System.Collections.Generic.List<Collider2D>();

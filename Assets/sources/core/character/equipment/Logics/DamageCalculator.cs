@@ -95,9 +95,9 @@ namespace PataRoad.Core.Character.Equipments.Logic
         /// <param name="recieverStat">Stat of damage taker.</param>
         /// <param name="time">Initial time, before calculated.</param>
         /// <returns>Calculated final time of fire effect duration.</returns>
-        public static int GetFireDuration(Stat senderStat, Stat recieverStat, int time)
+        public static float GetFireDuration(Stat senderStat, Stat recieverStat, float time)
         {
-            return (int)(CalculateStatusEffect(senderStat.FireRate, recieverStat.FireRate) * time);
+            return CalculateStatusEffect(senderStat.FireRate, recieverStat.FireRate) * time;
         }
         public static void DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform, bool displayDamage = true)
         {
@@ -193,13 +193,13 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 switch (type)
                 {
                     case StatusEffectType.Fire:
-                        receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(probability * 10 * Map.Weather.WeatherInfo.Current.FireRateMultiplier));
+                        receiver.StatusEffectManager.SetFire(2 + probability * 10 * Map.Weather.WeatherInfo.Current.FireRateMultiplier);
                         break;
                     case StatusEffectType.Ice:
-                        receiver.StatusEffectManager.SetIce(2 + Mathf.RoundToInt(probability * 10 * Map.Weather.WeatherInfo.Current.IceRateMultiplier));
+                        receiver.StatusEffectManager.SetIce(2 + probability * 10 * Map.Weather.WeatherInfo.Current.IceRateMultiplier);
                         break;
                     case StatusEffectType.Sleep:
-                        receiver.StatusEffectManager.SetSleep(2 + Mathf.RoundToInt(probability * 10));
+                        receiver.StatusEffectManager.SetSleep(4 + probability * 25);
                         break;
                     case StatusEffectType.Stagger:
                         receiver.StatusEffectManager.SetStagger();

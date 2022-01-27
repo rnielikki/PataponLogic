@@ -160,7 +160,7 @@ namespace PataRoad.Core.Character.Patapons
             Charged = false;
             StatusEffectManager.IgnoreStatusEffect = false;
             StopAttacking(false);
-            CharAnimator.Animate("Idle");
+            if (!StatusEffectManager.IsOnStatusEffect) CharAnimator.Animate("Idle");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
             ClassData.OnCanceled();
         }

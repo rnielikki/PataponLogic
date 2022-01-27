@@ -20,7 +20,8 @@ namespace PataRoad.Core.Character.Bosses
         protected bool _useWalkWhenMovingBack;
         private bool _movingBackAnimating;
 
-        protected int _level = 1; //should be loaded later!
+        protected int _level = 1;
+        private CameraController.SafeCameraZoom _zoom;
 
         protected override void Init()
         {
@@ -29,6 +30,8 @@ namespace PataRoad.Core.Character.Bosses
             DefaultWorldPosition = transform.position.x;
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
             _pataponsManager = FindObjectOfType<Patapons.PataponsManager>();
+
+            _zoom = Camera.main.GetComponent<CameraController.SafeCameraZoom>();
         }
         public override void Die()
         {
@@ -75,9 +78,11 @@ namespace PataRoad.Core.Character.Bosses
         }
         private void StartMovingBack()
         {
+            if (BossAttackData.UseCustomDataPosition) return;
             _targetPosition = Vector3.right * (DefaultWorldPosition + _movingBackPosition);
             DefaultWorldPosition = _targetPosition.x;
             _movingBack = true;
+            _zoom.enabled = true;
         }
         //When staggered or got knockback.
         public override void StopAttacking(bool pause)
@@ -95,6 +100,12 @@ namespace PataRoad.Core.Character.Bosses
         {
             //phase 0: attacking or dead
             if (BossTurnManager.Attacking || IsDead || !StatusEffectManager.CanContinue) return;
+            //phase 0.12345: don't disturb, now it's doing after-attacking gesture
+            if (BossAttackData.UseCustomDataPosition)
+            {
+                BossAttackData.SetCustomPosition();
+                return;
+            }
 
             //phase n: moving back.
             if (_movingBack)
@@ -146,6 +157,7 @@ namespace PataRoad.Core.Character.Bosses
                 CharAnimator.Animate("Idle");
                 if (BossTurnManager.IsEmpty) CalculateAttack();
                 BossTurnManager.StartAttack();
+                _zoom.enabled = false;
             }
         }
         private void OnDestroy()

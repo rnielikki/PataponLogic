@@ -38,7 +38,9 @@ namespace PataRoad.Core.Global.Slots
         {
             _playTime = slot.PlayTime;
             _squadStatus = string.Join(" / ", slot.PataponInfo.CurrentClasses.Select(cl => cl.ToString()));
-            _lastMapName = (slot.MapInfo.LastMap?.MapData?.Name ?? _lastMapName) ?? "-";
+
+            _lastMapName = slot.MapInfo.LastMapName;
+
             if (!slot.MapInfo.SuccededLast)
             {
                 _lastMapName += " (F)";

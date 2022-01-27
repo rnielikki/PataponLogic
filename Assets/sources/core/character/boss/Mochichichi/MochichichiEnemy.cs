@@ -26,6 +26,9 @@
         //Example
         private (string action, int distance) GetNextBehaviour()
         {
+            //--- just test data
+            return ("fart", 5);
+
             //Tada. depends on level, it does nothing!
             if (Common.Utils.RandomByProbability(1f / (_level + 2)))
             {

@@ -65,6 +65,7 @@ namespace PataRoad.Core.Character
         public void StartAttack(AttackCommandType attackType)
         {
             _character.Weapon.SetLastAttackCommandType(attackType);
+            if (_character.StatusEffectManager.IsOnStatusEffect) return;
             if (!_attackMoves.TryGetValue(attackType, out _currentModel))
             {
                 throw new System.ArgumentException($"The attack animation type {attackType} is not registered.");

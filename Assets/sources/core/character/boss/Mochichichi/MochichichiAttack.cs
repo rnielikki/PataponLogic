@@ -14,6 +14,7 @@ namespace PataRoad.Core.Character.Bosses
         private BossAttackCollision _slam;
         [SerializeField]
         private BossAttackTrigger _peck;
+        private Vector3 _targetPosition;
 
         internal override void UpdateStatForBoss(int level)
         {
@@ -45,7 +46,20 @@ namespace PataRoad.Core.Character.Bosses
         {
             _slam.StopAttacking();
         }
-
+        public void StartMoving()
+        {
+            _targetPosition = (_boss.DefaultWorldPosition + 20 * -_boss.MovingDirection.x) * Vector3.right;
+            UseCustomDataPosition = true;
+        }
+        public override void SetCustomPosition()
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, Time.deltaTime * _stat.MovementSpeed * 2);
+            if (_targetPosition.x == transform.position.x)
+            {
+                UseCustomDataPosition = false;
+                _boss.CharAnimator.Animate("Idle");
+            }
+        }
         public override void StopAllAttacking()
         {
             //hmm...

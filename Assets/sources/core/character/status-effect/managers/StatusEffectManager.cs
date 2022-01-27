@@ -41,7 +41,7 @@ namespace PataRoad.Core.Character
             _transform = transform;
         }
         public void SetRecoverAction(UnityEngine.Events.UnityAction action) => _onRecover = action;
-        public virtual void SetFire(int time)
+        public virtual void SetFire(float time)
         {
             if (IsOnStatusEffect || time < 1 || IgnoreStatusEffect) return;
             _isOnFire = true;
@@ -76,8 +76,8 @@ namespace PataRoad.Core.Character
         {
             DamageCalculator.DealDamageFromFireEffect(_target, gameObject, _transform);
         }
-        public virtual void SetIce(int time) => OnStatusEffect?.Invoke(StatusEffectType.Ice);
-        public virtual void SetSleep(int time) => OnStatusEffect?.Invoke(StatusEffectType.Sleep);
+        public virtual void SetIce(float time) => OnStatusEffect?.Invoke(StatusEffectType.Ice);
+        public virtual void SetSleep(float time) => OnStatusEffect?.Invoke(StatusEffectType.Sleep);
         public virtual void SetStagger() => OnStatusEffect?.Invoke(StatusEffectType.Stagger);
         public virtual void SetKnockback() => OnStatusEffect?.Invoke(StatusEffectType.Knockback);
         public virtual void Tumble() => OnStatusEffect?.Invoke(StatusEffectType.Tumble);
@@ -117,7 +117,7 @@ namespace PataRoad.Core.Character
             (_target as MonoBehaviour)?.StopAllCoroutines();
         }
 
-        protected IEnumerator WaitForRecovery(int seconds)
+        protected IEnumerator WaitForRecovery(float seconds)
         {
             yield return new WaitForSeconds(seconds);
             Recover();
