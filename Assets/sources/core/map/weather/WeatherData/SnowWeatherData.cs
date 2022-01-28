@@ -6,7 +6,7 @@ namespace PataRoad.Core.Map.Weather
     {
         public WeatherType Type => WeatherType.Snow;
 
-        public void OnWeatherStarted()
+        public void OnWeatherStarted(bool firstInit)
         {
             gameObject.SetActive(true);
             WeatherInfo.Current.StopWeatherSound();

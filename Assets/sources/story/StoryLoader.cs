@@ -69,8 +69,7 @@ namespace PataRoad.Story
             else
             {
                 storySceneInfo.Background.Init(data.Background);
-                storySceneInfo.Weather.Init(data.Weather);
-                storySceneInfo.Wind.Init(data.Wind);
+                storySceneInfo.Weather.Init(data.Weather, data.Wind);
             }
 
             //-- Do story action

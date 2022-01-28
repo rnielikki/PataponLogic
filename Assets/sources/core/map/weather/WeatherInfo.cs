@@ -22,7 +22,7 @@ namespace PataRoad.Core.Map.Weather
         public AudioSource AudioSource { get; private set; }
         // Start is called before the first frame update
         private bool _wasPlaying;
-        public void Init(WeatherType type)
+        public void Init(WeatherType type, WindType windType)
         {
             _weatherTypeDataMap = new System.Collections.Generic.Dictionary<WeatherType, IWeatherData>()
             {
@@ -40,9 +40,11 @@ namespace PataRoad.Core.Map.Weather
             Current = this;
             AudioSource = GetComponent<AudioSource>();
             _defaultWeather = type;
-            ChangeWeather(_defaultWeather);
+            Wind.Init(windType);
+            ChangeWeather(_defaultWeather, true);
         }
-        public void ChangeWeather(WeatherType type)
+        public void ChangeWeather(WeatherType type) => ChangeWeather(type, false);
+        private void ChangeWeather(WeatherType type, bool firstInit)
         {
             var weatherType = _currentWeather?.Type ?? WeatherType.Clear;
             if (weatherType == type) return;
@@ -51,10 +53,11 @@ namespace PataRoad.Core.Map.Weather
                 EndChangingWeather(type);
             }
             _currentWeather = _weatherTypeDataMap[type];
-            _currentWeather?.OnWeatherStarted();
+            _currentWeather?.OnWeatherStarted(firstInit);
         }
         public void EndChangingWeather(WeatherType type)
         {
+            if (_currentWeather.Type == type) return;
             _currentWeather?.OnWeatherStopped(type);
             ChangeWeather(_defaultWeather);
         }

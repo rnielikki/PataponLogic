@@ -61,7 +61,7 @@ namespace PataRoad.Core.Map.Weather
 
         private int _tailwindConditions;
 
-        public void Init(WindType windType)
+        internal void Init(WindType windType)
         {
             _maxFlag = (int)GetFlag((WindType)(System.Enum.GetValues(typeof(WindType)).Length - 1));
 

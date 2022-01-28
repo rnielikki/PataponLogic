@@ -16,22 +16,29 @@ namespace PataRoad.Core.Map.Weather
         private AudioClip _lightningSound;
         private GameObject _lightning;
 
+        bool _hasTailWind;
+
         private void Start()
         {
             _lightning = GetComponentInChildren<LightningContact>(true).gameObject;
             _lightning.transform.parent = transform.root.parent;
             _lightning.transform.position = WeatherInfo.Current.gameObject.transform.position;
         }
-        public void OnWeatherStarted()
+        public void OnWeatherStarted(bool firstInit)
         {
-            _rainData.OnWeatherStarted();
-            WeatherInfo.Current.Wind.StartWind(WindType.TailWind);
+            _rainData.OnWeatherStarted(firstInit);
+            if (!firstInit && !_hasTailWind) WeatherInfo.Current.Wind.StartWind(WindType.TailWind);
+            _hasTailWind = !firstInit;
             StartCoroutine(DropThunder());
         }
 
         public void OnWeatherStopped(WeatherType newType)
         {
-            WeatherInfo.Current.Wind.StopWind(WindType.TailWind);
+            if (_hasTailWind)
+            {
+                WeatherInfo.Current.Wind.StopWind(WindType.TailWind);
+                _hasTailWind = false;
+            }
             StopAllCoroutines();
             if (newType != WeatherType.Rain)
             {

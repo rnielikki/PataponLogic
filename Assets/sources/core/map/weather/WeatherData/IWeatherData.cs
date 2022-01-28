@@ -3,7 +3,7 @@
     public interface IWeatherData
     {
         public WeatherType Type { get; }
-        public void OnWeatherStarted();
+        public void OnWeatherStarted(bool firstInit);
         public void OnWeatherStopped(WeatherType newType);
     }
 }

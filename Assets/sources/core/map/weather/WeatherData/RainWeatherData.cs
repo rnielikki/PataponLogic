@@ -8,7 +8,7 @@ namespace PataRoad.Core.Map.Weather
         [SerializeField]
         public AudioClip _sound;
 
-        public void OnWeatherStarted()
+        public void OnWeatherStarted(bool firstInit)
         {
             if (gameObject.activeSelf) return;
             gameObject.SetActive(true);

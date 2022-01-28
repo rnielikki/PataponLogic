@@ -38,6 +38,7 @@ namespace PataRoad.Story.Actions
                 _fadingBlackIn = false;
             }
         }
+        public void LoadAsColor() => LoadImage(null);
         public void UnloadImage()
         {
             Core.Global.GlobalData.GlobalInputActions.DisableOkCancelInputs();

@@ -4,7 +4,6 @@
     {
         private void Start()
         {
-
             MissionPoint.Current.AddMissionEndAction((success) =>
             {
                 if (success)

@@ -20,8 +20,7 @@ namespace PataRoad.SceneLogic.Patapolis
         void Awake()
         {
             var patapolisWeather = Core.Global.GlobalData.CurrentSlot.MapInfo.PatapolisWeather;
-            _weather.Init(patapolisWeather.CurrentWeather);
-            _weather.Wind.Init(patapolisWeather.CurrentWind);
+            _weather.Init(patapolisWeather.CurrentWeather, patapolisWeather.CurrentWind);
 
             var currentHour = System.DateTime.Now.Hour;
             SetBackgroundToTime(currentHour);
