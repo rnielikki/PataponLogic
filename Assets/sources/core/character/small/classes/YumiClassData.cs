@@ -3,6 +3,7 @@
     internal class YumiClassData : ClassData
     {
         private bool _noAttack;
+        private bool _isGeneral;
         internal YumiClassData(SmallCharacter character) : base(character)
         {
             ChargeWithoutMove = true;
@@ -11,7 +12,8 @@
         }
         protected override void InitLateForClass(Stat realStat)
         {
-            _noAttack = _attackType == 1 && (_character is Patapons.Patapon patapon) && patapon.IsGeneral;
+            _isGeneral = (_character is Patapons.Patapon patapon) && patapon.IsGeneral;
+            _noAttack = _attackType == 1 && _isGeneral;
             if (!_noAttack)
             {
                 AddDefaultModelsToAttackMoveController()
@@ -25,12 +27,6 @@
             else
             {
                 if (_attackController == null) SetAttackMoveController();
-                _attackController.AddModels(
-                    new System.Collections.Generic.Dictionary<Equipments.Weapons.AttackCommandType, AttackMoveModel>()
-                    {
-                        { Equipments.Weapons.AttackCommandType.Defend, GetAttackMoveModel("defend", AttackMoveType.Defend) },
-                    }
-                    );
             }
         }
 
@@ -38,7 +34,8 @@
         {
             if (_noAttack)
             {
-                base.Defend();
+                _animator.Animate("defend");
+                _character.DistanceManager.MoveToInitialPlace(_character.Stat.MovementSpeed);
             }
             else if (!_character.OnFever && !_character.Charged)
             {
@@ -47,6 +44,15 @@
             else
             {
                 _attackController.StartAttack(Equipments.Weapons.AttackCommandType.FeverAttack);
+            }
+        }
+        public override void Defend()
+        {
+            if (!_isGeneral) base.Defend();
+            else
+            {
+                _animator.Animate("defend");
+                _character.DistanceManager.MoveToInitialPlace(_character.Stat.MovementSpeed);
             }
         }
     }

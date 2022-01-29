@@ -78,6 +78,8 @@ namespace PataRoad.Core.Character
 
         public virtual bool IsFixedPosition { get; protected set; }
 
+        public bool UseCenterAsAttackTarget => Weapon.IsTargetingCenter;
+
         protected void Init()
         {
             _data = GetComponent<SmallCharacterData>();

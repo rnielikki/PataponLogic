@@ -9,6 +9,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// </summary>
         private GameObject _copiedSpear;
         private bool _isFeverAttack;
+        public override bool IsTargetingCenter => true;
 
         private const float _feverAngle = 60;
         private void Start()

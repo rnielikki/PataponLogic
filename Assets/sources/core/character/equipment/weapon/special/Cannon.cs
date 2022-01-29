@@ -23,6 +23,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             bulletScript.Holder = Holder;
             bulletScript.enabled = true;
         }
-        public override float GetAttackDistance() => 5;
+        public override float GetAttackDistance() => 10;
     }
 }

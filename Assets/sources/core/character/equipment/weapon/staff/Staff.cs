@@ -7,6 +7,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     {
         private IStaffActions _staffAction;
         protected override float _throwMass => 0.1f;
+        public override bool IsTargetingCenter => true;
         private void Start()
         {
             Init();

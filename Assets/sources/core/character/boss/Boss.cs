@@ -41,6 +41,8 @@ namespace PataRoad.Core.Character.Bosses
 
         public float CharacterSize { get; protected set; }
 
+        public bool UseCenterAsAttackTarget => true;
+
         [SerializeField]
         protected UnityEvent _onAfterDeath = new UnityEvent();
         protected virtual void Init()

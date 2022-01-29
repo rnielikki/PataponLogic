@@ -46,6 +46,8 @@ namespace PataRoad.Core.Character.Animal
         private float _characterSize;
         public float CharacterSize => _characterSize;
 
+        public bool UseCenterAsAttackTarget => true;
+
         [SerializeReference]
         AudioClip _soundOnStaggered;
         [SerializeReference]

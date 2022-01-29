@@ -56,6 +56,8 @@ namespace PataRoad.Core.Map.Levels
 
         public float CharacterSize => throw new System.NotImplementedException();
 
+        public bool UseCenterAsAttackTarget => true;
+
         private bool _ready;
 
         private void Start()

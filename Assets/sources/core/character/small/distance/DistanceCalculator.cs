@@ -110,7 +110,14 @@ namespace PataRoad.Core.Character
                 if (raycast.collider == null) return null;
             }
             var bounds = raycast.collider.bounds;
-            return new Vector2(bounds.center.x + bounds.size.x * -_xDirection / 2, bounds.center.y);
+            if (!_character.UseCenterAsAttackTarget)
+            {
+                return new Vector2(bounds.center.x + bounds.size.x * -_xDirection / 2, bounds.center.y);
+            }
+            else
+            {
+                return bounds.center;
+            }
         }
         /// <summary>
         /// Prevents overlapping or going forward from the object. Better performance than continuous collider physics.

@@ -19,6 +19,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         [SerializeField]
         private AttackType _attackType;
         public AttackType AttackType { get; internal set; }
+        public virtual bool IsTargetingCenter { get; }
+
         private void Start()
         {
             Load();
@@ -44,7 +46,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// Sets throwable object sprite, like arrows or spears.
         /// </summary>
         protected virtual Sprite GetThrowableWeaponSprite() => GetComponent<SpriteRenderer>().sprite;
-
         /// <summary>
         /// Load corresponding weapon instance resource from Resources/Characters/Equipments/PrefabBase.
         /// </summary>

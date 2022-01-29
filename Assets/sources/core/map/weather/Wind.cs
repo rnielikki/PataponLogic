@@ -199,7 +199,7 @@ namespace PataRoad.Core.Map.Weather
         }
         private void UpdateWind(float value)
         {
-            if (_onFixedWindDirection) StopAllCoroutines();
+            StopAllCoroutines();
             value = Mathf.Clamp(-_windRange, value, _windRange);
             _zone.windMain = value;
             _image.Visualise(value, value / _windRange);

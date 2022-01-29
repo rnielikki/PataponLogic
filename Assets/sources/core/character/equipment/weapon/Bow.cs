@@ -17,6 +17,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private SpriteRenderer _bowRenderer;
         private SpriteRenderer _arrowRenderer;
         protected override float _throwMass => 0.175f;
+        public override bool IsTargetingCenter => true;
         private void Awake()
         {
             LoadRenderersAndImage();

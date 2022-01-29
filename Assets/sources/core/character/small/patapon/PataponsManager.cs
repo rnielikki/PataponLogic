@@ -34,6 +34,8 @@ namespace PataRoad.Core.Character.Patapons
 
         public float Sight => CharacterEnvironment.Sight;
 
+        public bool UseCenterAsAttackTarget => true;
+
         private float _missionEndPosition;
         private bool _useMissionTower;
 
