@@ -19,7 +19,9 @@ namespace PataRoad.Core.Items
         [SerializeField]
         private string _group;
         public string Group => _group;
-        public int Index { get; set; }
+        [SerializeField]
+        private int _index;
+        public int Index => _index;
         ///<summary>
         /// Name of the equipment, e.g. "Wooden Shield", "Divine Sword"
         /// </summary>

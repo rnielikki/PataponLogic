@@ -27,16 +27,27 @@ namespace PataRoad.Core.Global
         {
             DontDestroyOnLoad(gameObject);
 
-            Settings = Global.Settings.SettingModel.Load();
-            ItemLoader.LoadAll();
-            Character.Patapons.Data.RareponInfo.LoadAll();
+            try
+            {
+                Settings = Global.Settings.SettingModel.Load();
+                ItemLoader.LoadAll();
+                Character.Patapons.Data.RareponInfo.LoadAll();
 
-            TipIndex = -1;
-            Input = GetComponent<PlayerInput>();
-            GlobalInputActions = new GlobalInputSystem(Input);
-            Sound = GetComponentInChildren<GlobalSoundSystem>();
+                TipIndex = -1;
+                Input = GetComponent<PlayerInput>();
+                GlobalInputActions = new GlobalInputSystem(Input);
+                Sound = GetComponentInChildren<GlobalSoundSystem>();
 
-            SlotManager = new SlotManager();
+                SlotManager = new SlotManager();
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+            }
+            catch (System.Exception e)
+            {
+                var textField = FindObjectOfType<TMPro.TextMeshProUGUI>();
+                textField.text = "Failed to load System data with error:"
+                    + $"\n{e.Message}"
+                    + "\nPress Alt+F4 to close window.";
+            }
         }
     }
 }

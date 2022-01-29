@@ -1,5 +1,4 @@
-﻿using PataRoad.Common.Navigator;
-using PataRoad.SceneLogic.CommonSceneLogic;
+﻿using PataRoad.SceneLogic.CommonSceneLogic;
 using UnityEngine;
 using System.Linq;
 

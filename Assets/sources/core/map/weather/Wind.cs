@@ -183,7 +183,6 @@ namespace PataRoad.Core.Map.Weather
         }
         private void StartChangingWind()
         {
-            if (!_onFixedWindDirection) return;
             _onFixedWindDirection = false;
             StartCoroutine(ChangeWindDirectionCoroutine());
         }

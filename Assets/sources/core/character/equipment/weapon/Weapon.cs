@@ -83,7 +83,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (_initialVelocity.x == 0) return 0; //No zero division
             var velocityRate = _initialVelocity.y / _initialVelocity.x;
             var yDiff = yDistance - Holder.RootTransform.position.y;
-            return Mathf.Sqrt((yDiff + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance;
+            return Mathf.Max(Mathf.Sqrt((yDiff + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance
+                - Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Clamp01(yDistance / CharacterEnvironment.MaxYToScan), 0);
         }
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {

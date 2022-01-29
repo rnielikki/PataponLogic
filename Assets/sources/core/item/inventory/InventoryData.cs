@@ -6,6 +6,7 @@
     [System.Serializable]
     public class InventoryData
     {
+        [System.NonSerialized]
         private IItem _item;
         public IItem Item => _item;
 

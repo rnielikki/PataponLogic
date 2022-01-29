@@ -20,7 +20,6 @@ namespace PataRoad.Core.Map.Weather
         public float IceRateMultiplier { get; set; } = 1;
 
         public AudioSource AudioSource { get; private set; }
-        // Start is called before the first frame update
         private bool _wasPlaying;
         public void Init(WeatherType type, WindType windType)
         {

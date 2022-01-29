@@ -35,7 +35,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
             else
             {
-                minVelocity = 8;
+                minVelocity = 9;
                 maxVelocity = 10;
             }
 
@@ -50,8 +50,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 if (_initialVelocity.x == 0) return attackDistance / 2; //No zero division
                 var velocityRate = _initialVelocity.y / _initialVelocity.x;
                 var yDiff = Mathf.Abs(7 - yDistance);
-                return (Mathf.Sqrt((yDiff + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance)
-                    - Map.Weather.WeatherInfo.Current.Wind.Magnitude; //just approximation
+                return Mathf.Max((Mathf.Sqrt((yDiff + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance)
+                    - Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Clamp01(yDistance / CharacterEnvironment.MaxYToScan), 0); //just approximation
             }
             else
             {

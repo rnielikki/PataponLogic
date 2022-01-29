@@ -27,11 +27,17 @@ namespace PataRoad.Core.Character.Patapons.Data
             _allAvailableRarepons = new Dictionary<int, RareponData>();
             foreach (var rarepon in Resources.LoadAll<RareponData>(_resourcePath))
             {
-                if (int.TryParse(rarepon.name, out int index))
+                if (!_allAvailableRarepons.ContainsKey(rarepon.Index))
                 {
-                    rarepon.Index = index;
+                    _allAvailableRarepons.Add(rarepon.Index, rarepon);
                 }
-                _allAvailableRarepons.Add(index, rarepon);
+                else
+                {
+                    throw new ArgumentException(
+                        $"Rarepon loading error: Index {rarepon.Index} of {rarepon.Name} is already assigned for "
+                        + $"{_allAvailableRarepons[rarepon.Index].Name}"
+                    );
+                }
             }
         }
 

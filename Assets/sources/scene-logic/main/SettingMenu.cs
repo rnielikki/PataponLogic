@@ -112,8 +112,12 @@ namespace PataRoad.SceneLogic.Main.SettingScene
                         .CallOkActionLater()
                         .SelectCancel();
                 }
-                _currentMusicSource.volume = Core.Global.GlobalData.Settings.MusicVolume;
-                _currentSoundSource.volume = Core.Global.GlobalData.Settings.SoundVolume;
+                else
+                {
+                    _currentMusicSource.volume = Core.Global.GlobalData.Settings.MusicVolume;
+                    _currentSoundSource.volume = Core.Global.GlobalData.Settings.SoundVolume;
+                    Close();
+                }
             }
         }
         private void Close()

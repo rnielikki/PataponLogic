@@ -10,7 +10,8 @@ namespace PataRoad.Core.Items
     public static class ItemLoader
     {
         //"Loading everything on memory at first time will be better"
-        private static readonly Dictionary<ItemType, Dictionary<string, Dictionary<int, IItem>>> _data = new Dictionary<ItemType, Dictionary<string, Dictionary<int, IItem>>>();
+        private static readonly Dictionary<ItemType, Dictionary<string, Dictionary<int, IItem>>> _data
+            = new Dictionary<ItemType, Dictionary<string, Dictionary<int, IItem>>>();
         private static readonly Dictionary<ItemType, string[]> _groupIndexes = new Dictionary<ItemType, string[]>();
 
         public static void LoadAll()
@@ -30,11 +31,17 @@ namespace PataRoad.Core.Items
                     result.Add(data.Group, new Dictionary<int, IItem>());
                     groupIndexes.Add(data.Group);
                 }
-                if (int.TryParse(data.name, out int index))
+                if (!result[data.Group].ContainsKey(data.Index))
                 {
-                    result[data.Group].Add(index, data);
+                    result[data.Group].Add(data.Index, data);
                     data.Id = Guid.NewGuid();
-                    data.Index = index;
+                }
+                else
+                {
+                    throw new ArgumentException(
+                        $"Index {data.Index} of {data.Group}/{data.Name} is already assigned for "
+                        + $"{result[data.Group]}/{result[data.Group][data.Index].Name}"
+                    );
                 }
             }
             _groupIndexes.Add(type, groupIndexes.ToArray());

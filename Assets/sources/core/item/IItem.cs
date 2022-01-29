@@ -32,7 +32,7 @@ namespace PataRoad.Core.Items
         /// <summary>
         /// Index of the item. This can be useful for searching item data via <see cref="ItemLoader"/>.
         /// </summary>
-        public int Index { get; set; }
+        public int Index { get; }
         /// <summary>
         /// <c>true</c> if item can be obtained only once in the game. Default is <c>false</c>.
         /// </summary>
