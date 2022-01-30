@@ -9,20 +9,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07630dd1bfb8cc54280660ce4f2f085b, type: 3}
-  m_Name: 15.Shield-Divine
+  m_Script: {fileID: 11500000, guid: 0e01933c365da864b87f9849de4b4985, type: 3}
+  m_Name: 5.Bow-Bullet
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
-  _group: Shield
-  _index: 15
-  _name: Divine Shield
-  _description: The shield protects holder by bringing them to the different dimension.
-  _levelGroup: 9
+  _group: Bow
+  _index: 5
+  _name: Bullet Bow X
+  _description: Although the arrow is not sharp, the arrow is fast as bullet and
+    grants decent damage.
+  _levelGroup: 4
   _stat:
     rid: 0
-  _image: {fileID: 21300000, guid: 0b502b8abbc34ae4f88ed4614df0347e, type: 3}
-  _mass: 1
+  _image: {fileID: 21300000, guid: ac2708f110b1c7045ad6494373f7ad7a, type: 3}
+  _mass: 0.4
   _type: 0
+  _arrowImage: {fileID: 21300000, guid: f33c772a790edf443ae17322c6138e86, type: 3}
   references:
     version: 2
     RefIds:
@@ -30,28 +32,28 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0
-        _hitPoint: 100
+        _hitPoint: 0
         _defenceMin: 0
         _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
+        _damageMin: 4
+        _damageMax: 6
         _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0
         _stagger: 0
         _knockback: 0
-        _infiniteCriticalResistance: 1
-        _criticalResistance: 0.5
+        _infiniteCriticalResistance: 0
+        _criticalResistance: 0
         _infiniteStaggerResistance: 0
-        _staggerResistance: 0.5
+        _staggerResistance: 0
         _infiniteKnockbackResistance: 0
-        _knockbackResistance: 0.5
+        _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
         _infiniteFireResistance: 0
-        _fireResistance: 0.3
+        _fireResistance: 0
         _infiniteIceResistance: 0
-        _iceResistance: 0.3
+        _iceResistance: 0
         _infiniteSleepResistance: 0
-        _sleepResistance: 0.3
+        _sleepResistance: 0

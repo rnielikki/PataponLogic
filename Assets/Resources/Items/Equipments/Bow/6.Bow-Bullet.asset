@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e01933c365da864b87f9849de4b4985, type: 3}
-  m_Name: 1.Bow
+  m_Name: 6.Bow-Bullet
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
   _group: Bow
-  _index: 1
-  _name: Love bow
-  _description: This legendary bow will show the power of love.
-  _levelGroup: 0
+  _index: 6
+  _name: Bullet Bow Y
+  _description: Although the arrow is not sharp, the arrow is fast as bullet and
+    grants decent damage.
+  _levelGroup: 4
   _stat:
     rid: 0
-  _image: {fileID: 21300000, guid: fcf9f74bd6452be42a8180356ae98dd0, type: 3}
-  _mass: 0.25
+  _image: {fileID: 21300000, guid: ac2708f110b1c7045ad6494373f7ad7a, type: 3}
+  _mass: 0.4
   _type: 0
-  _arrowImage: {fileID: 21300000, guid: 554119c1a844eb0439687923904b44bf, type: 3}
+  _arrowImage: {fileID: 21300000, guid: f33c772a790edf443ae17322c6138e86, type: 3}
   references:
     version: 2
     RefIds:
@@ -34,12 +35,12 @@ MonoBehaviour:
         _hitPoint: 0
         _defenceMin: 0
         _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
-        _attackSeconds: -0.1
+        _damageMin: 2
+        _damageMax: 8
+        _attackSeconds: 0
         _movementSpeed: 0
-        _critical: 0
-        _stagger: 0
+        _critical: 0.1
+        _stagger: 0.05
         _knockback: 0
         _infiniteCriticalResistance: 0
         _criticalResistance: 0
