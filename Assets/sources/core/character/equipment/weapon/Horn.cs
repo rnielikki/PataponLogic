@@ -37,11 +37,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 case AttackCommandType.Attack:
                     //Attack is called in two times in animation, so doesn't need so many emit count.
                     startSpeed = 6 * _forceMultiplier;
-                    emitCount = 4;
+                    emitCount = 5;
                     break;
                 case AttackCommandType.Defend:
                     startSpeed = 3 * _forceMultiplier;
-                    emitCount = 3;
+                    emitCount = 5;
                     break;
                 case AttackCommandType.Charge:
                     startSpeed = 2 * _forceMultiplier;

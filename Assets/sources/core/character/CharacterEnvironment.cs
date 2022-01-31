@@ -20,7 +20,7 @@ namespace PataRoad.Core.Character
         /// <summary>
         /// Like Tatepon Ponchaka~Ponpon. This position is relative to the root Patapon position manager.
         /// </summary>
-        public const int RushAttackDistance = 15;
+        public const int RushAttackDistance = 20;
         public const int DodgeDistance = RushAttackDistance;
 
         /// <summary>

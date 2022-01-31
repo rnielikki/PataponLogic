@@ -15,8 +15,12 @@ namespace PataRoad.Core.Map
         public string Name => _name;
         [SerializeField]
         [TextArea]
-        private string _description;
-        public string Description => _description;
+        private string _descriptionBeforeClear;
+        public string DescriptionBeforeClear => _descriptionBeforeClear;
+        [SerializeField]
+        [TextArea]
+        private string _descriptionAfterClear;
+        public string DescriptionAfterClear => _descriptionAfterClear;
         [SerializeField]
         private MapType _type;
         public MapType Type => _type;

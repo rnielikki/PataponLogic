@@ -28,7 +28,7 @@ namespace PataRoad.SceneLogic.WorldMap
         private void UpdateDescription()
         {
             _title.text = _target.GetNameWithLevel();
-            _description.text = _target.MapData.Description;
+            _description.text = _target.Description;
         }
     }
 }

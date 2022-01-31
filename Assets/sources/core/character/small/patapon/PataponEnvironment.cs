@@ -7,7 +7,6 @@ namespace PataRoad.Core.Character.Patapons
     internal static class PataponEnvironment
     {
         //Marching info
-        //------- DO NOT SET SIGHT TO SHORTER THAN LONGEST RANGE (Mahopon) DISTANCE!
         /// <summary>
         /// defines walking steps for one PATAPATA song.
         /// </summary>

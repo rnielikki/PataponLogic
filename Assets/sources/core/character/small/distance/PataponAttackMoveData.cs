@@ -16,7 +16,7 @@ namespace PataRoad.Core.Character
         private readonly Transform _pataponManagerTransform;
 
         private float _min => _pataponGroupTransform.position.x - CharacterEnvironment.MaxAttackDistance;
-        private float _max => _pataponManagerTransform.position.x + CharacterEnvironment.Sight;
+        private float _max => _pataponManagerTransform.position.x + CharacterEnvironment.MaxAttackDistance;
         public bool WasHitLastTime { get; set; }
         public Vector2 LastHit { get; set; }
 

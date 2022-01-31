@@ -29,6 +29,8 @@ namespace PataRoad.Core.Map
         private int _level;
         public int Level => _level;
 
+        public string Description => Cleared ? _mapData.DescriptionAfterClear : _mapData.DescriptionBeforeClear;
+
         public const string MapPath = "Map/Levels/";
 
         internal MapDataContainer(int index)

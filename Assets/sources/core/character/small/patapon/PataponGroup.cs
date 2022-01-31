@@ -85,7 +85,7 @@ namespace PataRoad.Core.Character.Patapons
                 var target = targetX * Vector2.left;
                 while (transform.localPosition.x != targetX)
                 {
-                    transform.localPosition = Vector2.MoveTowards(transform.localPosition, target, PataponEnvironment.Steps * Time.deltaTime);
+                    transform.localPosition = Vector2.MoveTowards(transform.localPosition, target, _manager.Steps * Time.deltaTime);
                     yield return new WaitForEndOfFrame();
                 }
             }

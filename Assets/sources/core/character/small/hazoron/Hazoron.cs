@@ -19,10 +19,7 @@ namespace PataRoad.Core.Character.Hazorons
         [SerializeField]
         private bool _charged;
         [SerializeField]
-        private bool _defineCommandAction;
-        [SerializeField]
-        [Header("Valid only if Define Command Action is true")]
-        private Rhythm.Command.CommandSong _commandAction;
+        private bool _defend;
 
         [SerializeField]
         private bool _isDarkOne;
@@ -45,10 +42,10 @@ namespace PataRoad.Core.Character.Hazorons
                 {
                     (ClassData as ToriClassData)?.FlyUp();
                 }
-                else if (_gotPosition)
+                if (_gotPosition)
                 {
-                    if (!_defineCommandAction) ClassData.Attack();
-                    else ClassData.PerformCommandAction(_commandAction);
+                    if (!_defend) Attack();
+                    else Defend();
                 }
             });
             _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
@@ -64,6 +61,16 @@ namespace PataRoad.Core.Character.Hazorons
 
             CurrentHitPoint = Stat.HitPoint;
             ClassData.InitLate(Stat);
+        }
+        private void Attack()
+        {
+            ClassData.Attack();
+            ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Ponpon);
+        }
+        private void Defend()
+        {
+            ClassData.Defend();
+            ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Chakachaka);
         }
 
         public override float GetAttackValueOffset()
@@ -87,8 +94,8 @@ namespace PataRoad.Core.Character.Hazorons
                 if (DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)
                 {
                     _gotPosition = true;
-                    if (!_defineCommandAction) ClassData.Attack();
-                    else ClassData.PerformCommandAction(_commandAction);
+                    if (!_defend) Attack();
+                    else Defend();
                 }
                 return;
             }
@@ -96,12 +103,11 @@ namespace PataRoad.Core.Character.Hazorons
             {
                 _animatingWalk = false;
             }
-
             if (ClassData.IsInAttackDistance())
             {
                 DefaultWorldPosition = transform.position.x;
                 HazoronPositionManager.Current.AddHazoron(this);
-                ClassData.Attack();
+                Attack();
                 _gotPosition = true;
                 return;
             }

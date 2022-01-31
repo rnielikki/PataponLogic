@@ -8,7 +8,7 @@ namespace PataRoad.Core.Character.Patapons.General
         private float _damageMultiplier;
         public override void Init()
         {
-            Init(4);
+            Init(2);
             //what's the even point to play easy if you'll activate whole time hero mode
             switch (Rhythm.RhythmEnvironment.Difficulty)
             {
@@ -16,7 +16,7 @@ namespace PataRoad.Core.Character.Patapons.General
                     _damageMultiplier = 1.6f;
                     break;
                 case Rhythm.Difficulty.Normal:
-                    _damageMultiplier = 3;
+                    _damageMultiplier = 2.5f;
                     break;
                 case Rhythm.Difficulty.Hard:
                     _damageMultiplier = 4;

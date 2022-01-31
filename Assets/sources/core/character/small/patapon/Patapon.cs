@@ -74,8 +74,9 @@ namespace PataRoad.Core.Character.Patapons
             StatOperator = new StatOperator(_realStat);
             StatOperator.Add(new PataponStatOperation(this));
             Group = GetComponentInParent<PataponGroup>();
+            DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
             DistanceManager = gameObject.AddComponent<PataponDistanceManager>();
-            DistanceCalculator = DistanceManager.DistanceCalculator = DistanceCalculator.GetPataponDistanceCalculator(this);
+            DistanceManager.DistanceCalculator = DistanceCalculator;
 
             StatusEffectManager.AddRecoverAction(() =>
             {

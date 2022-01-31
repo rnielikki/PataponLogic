@@ -51,6 +51,10 @@ namespace PataRoad.Core.Character.Patapons
         private DistanceCalculator _distanceCalculator;
         public const float MinimumPosition = -10;
 
+        private float _minSteps = PataponEnvironment.Steps;
+        private float _maxSteps = PataponEnvironment.Steps;
+        public float Steps { get; private set; } = PataponEnvironment.Steps;
+
         private void Awake()
         {
             PataponGroupGenerator.Generate(Global.GlobalData.CurrentSlot.PataponInfo.CurrentClasses, this);
@@ -121,7 +125,16 @@ namespace PataRoad.Core.Character.Patapons
             {
                 pon.Act(model);
             }
-            Move(model.Song);
+            if (model.Song == CommandSong.Patapata && AllowedToGoForward)
+            {
+                IsMovingForward = true;
+                Steps = Mathf.Lerp(_minSteps, _maxSteps, model.AccuracyRate);
+            }
+        }
+        public void SetMinMaxStepRatio(float min, float max)
+        {
+            _minSteps = min * PataponEnvironment.Steps;
+            _maxSteps = max * PataponEnvironment.Steps;
         }
         /// <summary>
         /// Attach to <see cref="RhythmCommand.OnCommandCanceled"/>.
@@ -138,17 +151,6 @@ namespace PataRoad.Core.Character.Patapons
             foreach (var group in _groups)
             {
                 group.General?.CancelGeneralMode();
-            }
-        }
-        public void Move(CommandSong song)
-        {
-            switch (song)
-            {
-                case CommandSong.Patapata:
-                    if (AllowedToGoForward) IsMovingForward = true;
-                    break;
-                case CommandSong.Ponpata:
-                    break;
             }
         }
         public void RemovePon(Patapon patapon)
@@ -204,12 +206,12 @@ namespace PataRoad.Core.Character.Patapons
         }
         public bool CanGoForward()
         {
-            if (transform.position.x + PataponEnvironment.Steps >= Hazorons.HazoronPositionManager.GetClosestHazoronPosition()) return false;
+            if (transform.position.x + Steps >= Hazorons.HazoronPositionManager.GetClosestHazoronPosition()) return false;
             else if (_patapons.Count == 0) return true;
             var closestV2 = _distanceCalculator.GetClosest();
             if (closestV2 == null) return true;
-            var closest = closestV2.Value.x + PataponEnvironment.Steps * Time.deltaTime;
-            var nextPosition = transform.position.x + PataponEnvironment.Steps * Time.deltaTime;
+            var closest = closestV2.Value.x + Steps * Time.deltaTime;
+            var nextPosition = transform.position.x + Steps * Time.deltaTime;
             return closest > nextPosition;
         }
 
@@ -217,7 +219,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             if (IsMovingForward && CanGoForward())
             {
-                transform.position += PataponEnvironment.Steps * Vector3.right * Time.deltaTime;
+                transform.position += Steps * Vector3.right * Time.deltaTime;
                 if (_useMissionTower && transform.position.x >= _missionEndPosition)
                 {
                     Map.MissionPoint.Current.EndMission();
