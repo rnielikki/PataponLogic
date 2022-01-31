@@ -38,7 +38,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             }
             else
             {
-                (int damage, bool isCritical) = GetFinalDamage(attacker, receiver, stat);
+                (int damage, bool isCritical) = GetFinalDamage(attacker, receiver, stat, allowZero);
                 damage = Mathf.Max(allowZero ? 0 : 1, damage);
                 if (receiver is Bosses.Boss boss)
                 {
@@ -123,7 +123,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             target.TakeDamage(damage);
             target.OnDamageTaken?.Invoke((float)target.CurrentHitPoint / target.Stat.HitPoint);
         }
-        private static (int damage, bool isCritical) GetFinalDamage(ICharacter attacker, IAttackable receiver, Stat attackerStat)
+        private static (int damage, bool isCritical) GetFinalDamage(ICharacter attacker, IAttackable receiver, Stat attackerStat, bool allowZero)
         {
             var damage = GetAttackDamage(attackerStat, attacker);
             var defence = GetDefence(receiver);
@@ -157,7 +157,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             }
             //a bit complicated...
             return (Mathf.RoundToInt(
-                    Mathf.Max(1,
+                    Mathf.Max(allowZero ? 0 : 1,
                         (
                         elementalMultiplier //elemental damage
                         * resistances.GetMultiplier(attacker.AttackType) //attack type multiplier

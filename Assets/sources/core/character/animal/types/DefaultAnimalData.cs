@@ -6,7 +6,7 @@ namespace PataRoad.Core.Character.Animal
     [DisallowMultipleComponent]
     class DefaultAnimalData : MonoBehaviour, IAnimalData
     {
-        public AttackType AttackType => AttackType.Stab;
+        public AttackType AttackType { get; protected set; } = AttackType.Stab;
 
         [SerializeField]
         private float _sight;
@@ -36,6 +36,7 @@ namespace PataRoad.Core.Character.Animal
             _animator = parent.CharAnimator;
             _statusEffectManager = parent.StatusEffectManager;
             _distanceCalculator = parent.DistanceCalculator;
+            _statusEffectManager.AddRecoverAction(() => SetToIdle(true));
         }
         public virtual void OnTarget()
         {
@@ -74,16 +75,20 @@ namespace PataRoad.Core.Character.Animal
                 transform.position = Vector3.MoveTowards(transform.position, _targetPosition, offset);
                 if (transform.position.x == _targetPosition.x)
                 {
-                    _moving = false;
-                    if (endActionWhenMoved) PerformingAction = false;
-                    _animator.SetMoving(false);
+                    SetToIdle(endActionWhenMoved);
                     _statusEffectManager.IgnoreStatusEffect = false;
-                    _behaviour.SetCurrentAsWorldPosition();
                     return true;
                 }
                 return false;
             }
             return true;
+        }
+        private void SetToIdle(bool endActionWhenMoved)
+        {
+            _moving = false;
+            if (endActionWhenMoved) PerformingAction = false;
+            _animator.SetMoving(false);
+            _behaviour.SetCurrentAsWorldPosition();
         }
         private void Update()
         {

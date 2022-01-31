@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character.Hazorons
             DistanceCalculator = _isDarkOne ? DistanceCalculator.GetNonPataHazoDistanceCalculator(this) : DistanceCalculator.GetHazoronDistanceCalculator(this);
             DistanceManager = gameObject.AddComponent<DistanceManager>();
 
-            StatusEffectManager.SetRecoverAction(() =>
+            StatusEffectManager.AddRecoverAction(() =>
             {
                 if (IsFlyingUnit)
                 {

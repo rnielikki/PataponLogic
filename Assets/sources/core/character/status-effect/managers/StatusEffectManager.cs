@@ -17,7 +17,7 @@ namespace PataRoad.Core.Character
         private StatusEffectData _effectInstantiator;
         public virtual bool CanContinue => !IsOnStatusEffect && !_target.IsDead;
 
-        private UnityEngine.Events.UnityAction _onRecover;
+        private UnityEngine.Events.UnityEvent _onRecover = new UnityEngine.Events.UnityEvent();
         internal bool IsBigTarget { get; set; }
 
         private UnityEngine.Events.UnityEvent<StatusEffectType> _onStatusEffect;
@@ -40,7 +40,10 @@ namespace PataRoad.Core.Character
             _effectInstantiator = FindObjectOfType<StatusEffectData>();
             _transform = transform;
         }
-        public void SetRecoverAction(UnityEngine.Events.UnityAction action) => _onRecover = action;
+        public void AddRecoverAction(UnityEngine.Events.UnityAction action)
+        {
+            _onRecover.AddListener(action);
+        }
         public virtual void SetFire(float time)
         {
             if (IsOnStatusEffect || time < 1 || IgnoreStatusEffect) return;
@@ -100,7 +103,7 @@ namespace PataRoad.Core.Character
             IsOnStatusEffect = false;
             OnRecover();
 
-            if (_onRecover != null) _onRecover();
+            if (_onRecover != null) _onRecover.Invoke();
         }
 
         /// <summary>

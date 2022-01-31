@@ -42,6 +42,11 @@ namespace PataRoad.Core.Global
         /// </summary>
         public string LastMapName => _lastMapName;
 
+        /// <summary>
+        /// Should be opened late when called <see cref="OpenInIndex(int)"/>
+        /// </summary>
+        private MapDataContainer _reservedNextMap;
+
         public MapInfo()
         {
             _openMaps = new Dictionary<int, MapDataContainer>();
@@ -68,7 +73,7 @@ namespace PataRoad.Core.Global
             if (_openMaps.TryGetValue(index, out MapDataContainer map)) return map;
             else return null;
         }
-        public void OpenNext()
+        private void OpenNext()
         {
             if (NextMap.MapData.NextIndex > 0 && NextMap.CanLoadNextLevel())
             {
@@ -80,7 +85,7 @@ namespace PataRoad.Core.Global
         {
             if (!_openMaps.ContainsKey(index))
             {
-                NextMap = LoadResource(index);
+                _reservedNextMap = LoadResource(index);
                 _progress = Mathf.Max(_progress, index);
             }
         }
@@ -103,6 +108,11 @@ namespace PataRoad.Core.Global
             LastMap = NextMap;
             _lastMapName = LastMap.MapData.Name;
             OpenNext();
+            if (_reservedNextMap != null)
+            {
+                NextMap = _reservedNextMap;
+                _reservedNextMap = null;
+            }
 
             _succeededLast = true;
             GlobalData.CurrentSlot.PataponInfo.CustomMusic = null;

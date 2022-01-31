@@ -5062,9 +5062,9 @@ MonoBehaviour:
   _action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1032575162}
-        m_TargetAssemblyTypeName: PataRoad.AppDebug.ActionOnPress, Assembly-CSharp
-        m_MethodName: AddClass
+      - m_Target: {fileID: 1032575163}
+        m_TargetAssemblyTypeName: PataRoad.AppDebug.ItemAdder, Assembly-CSharp
+        m_MethodName: AddItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5074,6 +5074,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1032575163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032575160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 463c87b9533a32c4587d4478e63e3d56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equipments:
+  - {fileID: 11400000, guid: 42871f740cca48640a8cbd85cf33b2ed, type: 2}
+  - {fileID: 11400000, guid: 42871f740cca48640a8cbd85cf33b2ed, type: 2}
+  - {fileID: 11400000, guid: 2b989403364309d48b33f0d18150eb9f, type: 2}
+  - {fileID: 11400000, guid: c6a000a4897cb984c980c05dde628c5d, type: 2}
+  - {fileID: 11400000, guid: ca961263f52f6aa4b97b8cdae5c978f6, type: 2}
+  - {fileID: 11400000, guid: 14b93ca02440dc04582ba3812e00f3f7, type: 2}
+  - {fileID: 11400000, guid: fd34f0dc7ae3a294c90a7559e3b06767, type: 2}
+  - {fileID: 11400000, guid: fd34f0dc7ae3a294c90a7559e3b06767, type: 2}
+  - {fileID: 11400000, guid: fd34f0dc7ae3a294c90a7559e3b06767, type: 2}
 --- !u!1 &1048620584
 GameObject:
   m_ObjectHideFlags: 0

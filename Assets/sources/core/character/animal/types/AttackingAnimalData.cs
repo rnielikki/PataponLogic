@@ -24,6 +24,7 @@ namespace PataRoad.Core.Character.Animal
         {
             _attackDistance += (GetComponentInChildren<Collider2D>().bounds.size.x / 2);
         }
+        public void ChangeAttackType(Equipments.Weapons.AttackType attackType) => AttackType = attackType;
         public override void OnTarget()
         {
             if (!CanMove()) return;
