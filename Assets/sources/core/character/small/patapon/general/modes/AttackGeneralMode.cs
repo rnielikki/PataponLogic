@@ -13,13 +13,13 @@ namespace PataRoad.Core.Character.Patapons.General
             switch (Rhythm.RhythmEnvironment.Difficulty)
             {
                 case Rhythm.Difficulty.Easy:
-                    _damageMultiplier = 1.6f;
+                    _damageMultiplier = 1.2f;
                     break;
                 case Rhythm.Difficulty.Normal:
-                    _damageMultiplier = 2.5f;
+                    _damageMultiplier = 2;
                     break;
                 case Rhythm.Difficulty.Hard:
-                    _damageMultiplier = 4;
+                    _damageMultiplier = 3;
                     break;
             }
         }
