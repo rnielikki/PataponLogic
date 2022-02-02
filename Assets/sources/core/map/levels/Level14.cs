@@ -27,8 +27,8 @@ namespace PataRoad.Core.Map.Levels
         }
         private void Update()
         {
-            if (!_carriageStructure.IsDead && !MissionPoint.IsMissionEnd
-                && _pataponsManagerTransform.position.x > transform.position.x + _maxOffset)
+            if (!IsEndStatus()
+                && _pataponsManagerTransform.position.x > _carriage.position.x - _maxOffset)
             {
                 _carriage.Translate(_carriageSpeed * Time.deltaTime, 0, 0);
                 if (!_moving)
@@ -37,20 +37,18 @@ namespace PataRoad.Core.Map.Levels
                     _animator.SetBool("moving", true);
                 }
             }
-            else if (_moving)
+            else if (_moving && !IsEndStatus())
             {
                 _moving = false;
-                if (!_carriageStructure.IsDead && !MissionPoint.IsMissionEnd)
-                {
-                    _animator.SetBool("moving", false);
-                }
+                _animator.SetBool("moving", false);
             }
         }
+        private bool IsEndStatus() => _carriageStructure.IsDead || MissionPoint.IsMissionEnd;
 
         public void SetLevel(int level)
         {
-            _carriageSpeed += level * 0.05f;
-            _maxOffset = level;
+            _carriageSpeed *= 1 + (level - 1) * 0.02f;
+            _maxOffset = level * 0.5f;
         }
     }
 }

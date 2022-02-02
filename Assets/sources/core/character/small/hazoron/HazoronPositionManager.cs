@@ -35,7 +35,6 @@ namespace PataRoad.Core.Character.Hazorons
                 }
             }
             return minHazoron;
-            //return _hazorons.Aggregate((h1, h2) => h1.DefaultWorldPosition < h2.DefaultWorldPosition ? h1 : h2);
         }
         internal void AddHazoron(Hazoron hazoron)
         {

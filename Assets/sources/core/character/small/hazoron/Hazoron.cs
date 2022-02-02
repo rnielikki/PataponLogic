@@ -110,7 +110,6 @@ namespace PataRoad.Core.Character.Hazorons
                 HazoronPositionManager.Current.AddHazoron(this);
                 Attack();
                 _gotPosition = true;
-                return;
             }
             else if (!StatusEffectManager.IsOnStatusEffect
                 && DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)
@@ -125,7 +124,6 @@ namespace PataRoad.Core.Character.Hazorons
                         transform.position.x + Stat.MovementSpeed * Time.deltaTime * MovingDirection.x)
                     * Vector3.right;
             }
-            DefaultWorldPosition = transform.position.x;
         }
     }
 }
