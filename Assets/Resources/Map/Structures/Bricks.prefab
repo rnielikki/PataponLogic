@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6045221097597436735}
   - component: {fileID: 6045221097597436732}
   - component: {fileID: 6045221097597436734}
+  - component: {fileID: 4950038556333503467}
   m_Layer: 6
   m_Name: Bricks
   m_TagString: Untagged
@@ -29,6 +30,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 34.99652, y: 6.429203, z: 0}
   m_LocalScale: {x: 4.125, y: 14.596874, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6045221098767716263}
   m_Father: {fileID: 0}
@@ -93,8 +95,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9259f8cadff72144bb8ecd44c59993a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _onDestroy:
+    m_PersistentCalls:
+      m_Calls: []
   _hitPoint: 50
-  _defence: 15
+  _onDamageTaken:
+    m_PersistentCalls:
+      m_Calls: []
+  _fireResistance: 0
+  _attackTypeResistance:
+    rid: 3406254098851561473
+  _animator: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 3406254098851561473
+      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _crushMultiplier: 1
+        _slashMultiplier: 1
+        _stabMultiplier: 1
+        _soundMultiplier: 1
+        _magicMultiplier: 1
+        _fireMultiplier: 1
+        _iceMultiplier: 1
+        _thunderMultiplier: 1
+--- !u!95 &4950038556333503467
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6045221097597436720}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0c2bdcf2130c76b4285f5d3eba55a0c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6045221098767716248
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,6 +167,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6045221097597436733}
   m_RootOrder: 0
@@ -165,7 +211,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1908906587
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.27450982, g: 0.2158733, b: 0.015686274, a: 1}

@@ -25,7 +25,17 @@ namespace PataRoad.Core.Character.Hazorons
         }
         private Hazoron GetClosestHazoron()
         {
-            return _hazorons.Aggregate((h1, h2) => h1.DefaultWorldPosition < h2.DefaultWorldPosition ? h1 : h2);
+            if (_hazorons.Count == 0) return null;
+            var minHazoron = _hazorons[0];
+            foreach (var hazoron in _hazorons)
+            {
+                if (hazoron.DefaultWorldPosition < minHazoron.DefaultWorldPosition)
+                {
+                    minHazoron = hazoron;
+                }
+            }
+            return minHazoron;
+            //return _hazorons.Aggregate((h1, h2) => h1.DefaultWorldPosition < h2.DefaultWorldPosition ? h1 : h2);
         }
         internal void AddHazoron(Hazoron hazoron)
         {

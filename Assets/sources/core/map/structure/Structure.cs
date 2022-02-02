@@ -26,6 +26,10 @@ namespace PataRoad.Core.Character
         [SerializeReference]
         private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
         public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
+        private Animator _animator;
+
+        [SerializeField]
+        bool _noLevelUp;
 
         private void Awake()
         {
@@ -44,12 +48,13 @@ namespace PataRoad.Core.Character
             CurrentHitPoint = _hitPoint;
             StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
             StatusEffectManager.IsBigTarget = true;
+            _animator = GetComponent<Animator>();
         }
         public virtual void Die()
         {
             IsDead = true;
             _onDestroy.Invoke();
-            Destroy(gameObject);
+            _animator.Play("die");
         }
         public void TakeDamage(int damage)
         {
@@ -61,8 +66,10 @@ namespace PataRoad.Core.Character
 
         public void SetLevel(int level)
         {
+            if (_noLevelUp) return;
             Stat.HitPoint = CurrentHitPoint = Mathf.RoundToInt(Stat.HitPoint * (0.8f + 0.2f * level));
             Stat.FireResistance += (level - 1) * 0.02f;
         }
+        public void DestroyThis() => Destroy(gameObject);
     }
 }

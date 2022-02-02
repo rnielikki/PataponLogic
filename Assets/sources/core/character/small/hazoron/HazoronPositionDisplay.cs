@@ -35,7 +35,7 @@ namespace PataRoad.Core.Character.Hazorons
 
         internal void TrackHazoron(Hazoron hazoron)
         {
-            if (_target != hazoron)
+            if (hazoron != null && _target != hazoron)
             {
                 _target = hazoron;
                 transform.position = new Vector2(hazoron.DefaultWorldPosition, _yPos);
