@@ -12,7 +12,7 @@ namespace PataRoad.Core.Character
         internal DistanceCalculator DistanceCalculator { get; set; }
 
         protected Vector2 _defaultPosition; //relative to PATAPON GROUP
-        public virtual float DefaultWorldPosition { get; protected set; }
+        public virtual float DefaultWorldPosition => _smallCharacter.DefaultWorldPosition;
         protected float _movingVelocity; //"movement speed" per second
 
         protected Vector2 _targetPosition;
@@ -31,7 +31,7 @@ namespace PataRoad.Core.Character
         protected bool _isMovingAsOffset;
         protected bool _ignoreSafeDistance;
 
-        private void Start()
+        private void Awake()
         {
             Init();
             DistanceCalculator = _smallCharacter.DistanceCalculator;
@@ -40,8 +40,6 @@ namespace PataRoad.Core.Character
         {
             _smallCharacter = GetComponent<SmallCharacter>();
             _movingDirection = (int)_smallCharacter.MovingDirection.x;
-            _defaultPosition = transform.position;
-            DefaultWorldPosition = _defaultPosition.x;
         }
 
         /// <summary>
@@ -64,13 +62,26 @@ namespace PataRoad.Core.Character
         public virtual void MoveTo(float positionOffset, float velocity, bool ignoreSafeDistance = false)
         {
             float x = DefaultWorldPosition + positionOffset * _movingDirection;
-            var hit = DistanceCalculator.GetClosestForAttack();
-            if (hit != null && !ignoreSafeDistance)
+            if (!ignoreSafeDistance)
             {
-                x = Mathf.Min(
-                    hit.Value.x,
-                    DefaultWorldPosition
-                );
+                var hit = DistanceCalculator.GetClosest();
+                if (hit != null)
+                {
+                    if (_movingDirection < 0)
+                    {
+                        x = Mathf.Max(
+                            hit.Value.x,
+                            DefaultWorldPosition
+                        );
+                    }
+                    else
+                    {
+                        x = Mathf.Min(
+                            hit.Value.x,
+                            DefaultWorldPosition
+                        );
+                    }
+                }
             }
             MoveWithTargetPosition(x, velocity, ignoreSafeDistance);
         }

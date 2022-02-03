@@ -14,16 +14,40 @@ namespace PataRoad.Core.Map.Levels
         private bool _moving;
         Transform _pataponsManagerTransform;
         Animator _animator;
+        [SerializeField]
+        Animator _hatapon;
+        [SerializeField]
+        [Tooltip("if the level is already cleared the Hatapon animation will be replaced with this")]
+        RuntimeAnimatorController _animatorToReplace;
+        [SerializeField]
+        AudioClip _damageSound;
+        [SerializeField]
+        AudioClip _destroySound;
         private void Start()
         {
             _carriageStructure = _carriage.GetComponent<Structure>();
             _pataponsManagerTransform = FindObjectOfType<Character.Patapons.PataponsManager>().transform;
             _animator = _carriage.GetComponent<Animator>();
+            if (Global.GlobalData.CurrentSlot.MapInfo.NextMap.Cleared)
+            {
+                _hatapon.transform.Find("Weapon").gameObject.SetActive(false);
+                _hatapon.runtimeAnimatorController = _animatorToReplace;
+            }
+            else
+            {
+                Global.GlobalData.CurrentSlot.Progress.IsEquipmentMinigameOpen = true;
+            }
         }
         public void FailMission()
         {
-            Camera.main.GetComponent<CameraController.PataponCameraMover>().SetTarget(_carriage);
+            Camera.main.GetComponent<CameraController.SafeCameraZoom>().ZoomIn(_carriage);
+            GameSound.SpeakManager.Current.Play(_destroySound);
+            _hatapon.Play("sad");
             MissionPoint.Current.WaitAndFailMission(4);
+        }
+        public void PlayDamaged()
+        {
+            GameSound.SpeakManager.Current.Play(_damageSound);
         }
         private void Update()
         {
@@ -35,12 +59,14 @@ namespace PataRoad.Core.Map.Levels
                 {
                     _moving = true;
                     _animator.SetBool("moving", true);
+                    _hatapon.SetBool("walking", true);
                 }
             }
             else if (_moving && !IsEndStatus())
             {
                 _moving = false;
                 _animator.SetBool("moving", false);
+                _hatapon.SetBool("walking", false);
             }
         }
         private bool IsEndStatus() => _carriageStructure.IsDead || MissionPoint.IsMissionEnd;

@@ -22,10 +22,13 @@ namespace PataRoad.Core.Character.Patapons
         private Patapon _patapon;
         protected override Vector2 _parentPosition => _pataponGroupTransform.position;
 
-        internal void Start()
+        private void Awake()
         {
             Init();
             _patapon = _smallCharacter as Patapon;
+        }
+        private void Start()
+        {
             _pataponsManagerTransform = GetComponentInParent<PataponsManager>().transform;
             _pataponGroupTransform = GetComponentInParent<PataponGroup>().transform;
             _defaultPosition = transform.position - _pataponGroupTransform.position;
@@ -40,7 +43,7 @@ namespace PataRoad.Core.Character.Patapons
         public override void MoveTo(float positionOffset, float velocity, bool ignoreSafeDistance = false)
         {
             float x = _pataponsManagerTransform.position.x + positionOffset;
-            var hit = DistanceCalculator.GetClosestForAttack();
+            var hit = DistanceCalculator.GetClosest();
             if (hit != null && !ignoreSafeDistance)
             {
                 x = Mathf.Min(

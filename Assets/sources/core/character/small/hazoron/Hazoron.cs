@@ -24,6 +24,8 @@ namespace PataRoad.Core.Character.Hazorons
         [SerializeField]
         private bool _isDarkOne;
 
+        private bool _isReady;
+
         public override CharacterSoundsCollection Sounds => _isDarkOne ?
             CharacterSoundLoader.Current.DarkOneSounds : CharacterSoundLoader.Current.HazoronSounds;
 
@@ -31,6 +33,7 @@ namespace PataRoad.Core.Character.Hazorons
         {
             Charged = _charged;
             OnFever = true;
+            DefaultWorldPosition = transform.position.x;
             Init();
             Stat = _data.Stat;
             DistanceCalculator = _isDarkOne ? DistanceCalculator.GetNonPataHazoDistanceCalculator(this) : DistanceCalculator.GetHazoronDistanceCalculator(this);
@@ -58,18 +61,20 @@ namespace PataRoad.Core.Character.Hazorons
 
         private void Start()
         {
-            DefaultWorldPosition = transform.position.x;
-
             CurrentHitPoint = Stat.HitPoint;
             ClassData.InitLate(Stat);
+
+            _isReady = true;
         }
         private void Attack()
         {
+            if (!_isReady) return;
             ClassData.Attack();
             ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Ponpon);
         }
         private void Defend()
         {
+            if (!_isReady) return;
             ClassData.Defend();
             ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Chakachaka);
         }
@@ -89,7 +94,7 @@ namespace PataRoad.Core.Character.Hazorons
         }
         private void Update()
         {
-            if (_gotPosition) return;
+            if (_gotPosition || !_isReady) return;
             else if (_isOnTower)
             {
                 if (DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)
@@ -108,7 +113,8 @@ namespace PataRoad.Core.Character.Hazorons
             {
                 DefaultWorldPosition = transform.position.x;
                 HazoronPositionManager.Current.AddHazoron(this);
-                Attack();
+                if (!_defend) Attack();
+                else Defend();
                 _gotPosition = true;
             }
             else if (!StatusEffectManager.IsOnStatusEffect
