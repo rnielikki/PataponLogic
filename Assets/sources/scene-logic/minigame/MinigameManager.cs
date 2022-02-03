@@ -1,5 +1,4 @@
 ﻿using PataRoad.Core.Rhythm;
-using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -39,7 +38,8 @@ namespace PataRoad.SceneLogic.Minigame
         private readonly System.Collections.Generic.List<int> _frequencyOffset = new System.Collections.Generic.List<int>();
 
         private int _currentIndex;
-        private MinigameTurn _currentTurn => _data.MinigameTurns[_currentIndex];
+        private MinigameTurn[] _turns;
+        private MinigameTurn _currentTurn => _turns[_currentIndex];
 
         public static void Init(MinigameModel model)
         {
@@ -48,11 +48,22 @@ namespace PataRoad.SceneLogic.Minigame
         }
         public void LoadGame()
         {
+            if (!_data.UseRandomDrums)
+            {
+                _turns = _data.Turns;
+            }
+            else if (_data.UseDonChakaGameSound)
+            {
+                _turns = MinigameTurn.SwapDrum(_data.Turns);
+            }
+            else
+            {
+                throw new System.NotSupportedException("Random drum is only available with Donchaka game sound");
+            }
             _minimumHitFrequency = (int)(_minimumHit * RhythmTimer.HalfFrequency);
             _voicePlayer.Init(_audioSource);
             RhythmTimer.Current.OnNext.AddListener(PerformTurn);
             if (_data.Music != null) _music.clip = _data.Music;
-            _music.Play();
         }
         private void PerformTurn()
         {
@@ -63,6 +74,8 @@ namespace PataRoad.SceneLogic.Minigame
             int nextTiming = lastTiming > 3 ? 7 : 3;
 
             RhythmTimer.Current.OnTime.AddListener(PlayTurn);
+            if (_currentIndex == 0) RhythmTimer.Current.OnNextHalfTime.AddListener(() =>
+            RhythmTimer.Current.OnNext.AddListener(_music.Play));
 
             void PlayTurn()
             {
@@ -127,7 +140,7 @@ namespace PataRoad.SceneLogic.Minigame
                         {
                             _grids[j].ClearStatus();
                         }
-                        if (_data.MinigameTurns.Length > _currentIndex)
+                        if (_turns.Length > _currentIndex)
                         {
                             RhythmTimer.Current.OnNext.AddListener(PerformTurn);
                         }

@@ -9,7 +9,7 @@ namespace PataRoad.Common.Navigator
     class HorizontalNavigationGroup : MonoBehaviour
     {
         [SerializeField]
-        bool _useLateInit;
+        bool _useManualInit;
         [SerializeField]
         bool _wrapAround;
         private HorizontalNavigationButton[] _children;
@@ -17,7 +17,7 @@ namespace PataRoad.Common.Navigator
         private HorizontalNavigationGroup _nextGroup;
         private void Start()
         {
-            if (!_useLateInit) LateInit();
+            if (!_useManualInit) LateInit();
         }
         public void LateInit()
         {

@@ -23,8 +23,6 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         [SerializeField]
         private UnityEngine.UI.Button _okButton;
         [SerializeField]
-        Common.Navigator.HorizontalNavigationGroup _navGroup;
-        [SerializeField]
         [Tooltip("Although it says it's animation curve, it's not related to animation at all.")]
         AnimationCurve _estimationCurve;
         [SerializeField]
@@ -34,9 +32,18 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         [SerializeField]
         AudioClip _startSound;
         MaterialLoader[] _materialLoaders;
+        private readonly System.Collections.Generic.List<Transform> _doNotDestroy
+            = new System.Collections.Generic.List<Transform>();
 
         public MinigameData GameData => _lastSelection.MinigameData;
         private bool _opening;
+        private void Start()
+        {
+            foreach (Transform child in transform)
+            {
+                _doNotDestroy.Add(child);
+            }
+        }
 
         public void Open(MinigameSelectionWindow parent, MinigameSelectionButton button)
         {
@@ -45,14 +52,21 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             _parent = parent;
             _parent.gameObject.SetActive(false);
             gameObject.SetActive(true);
+
             Core.Global.GlobalData.Sound.PlayInScene(_openSound);
             StartCoroutine(
             Core.Global.GlobalData.GlobalInputActions.WaitForNextInput(() =>
             {
+                int index = 0;
                 foreach (var group in button.MaterialGroups)
                 {
                     var obj = Instantiate(_template, _contentTarget);
                     obj.GetComponent<MaterialLoader>().Init(group, this);
+                    obj.transform.SetSiblingIndex(index++);
+                }
+                foreach (var navGroup in GetComponentsInChildren<Common.Navigator.HorizontalNavigationGroup>())
+                {
+                    navGroup.LateInit();
                 }
                 //Canvas update ------------------
                 Canvas.ForceUpdateCanvases();
@@ -61,7 +75,6 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 _childTargetToRefresh.enabled = true;
                 _targetToRefresh.enabled = true;
 
-                _navGroup.LateInit();
                 _materialLoaders = _contentTarget.GetComponentsInChildren<MaterialLoader>();
                 foreach (var materialLoader in _materialLoaders)
                 {
@@ -80,7 +93,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             if (!ok) Core.Global.GlobalData.Sound.PlayInScene(_closeSound);
             foreach (Transform child in _contentTarget)
             {
-                Destroy(child.gameObject);
+                if (!_doNotDestroy.Contains(child)) Destroy(child.gameObject);
             }
             if (!ok)
             {
