@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace PataRoad.SceneLogic.Patapolis.Minigame
 {
-    class ClassMinigameSelectionButton : MinigameSelectionButton, UnityEngine.EventSystems.ISelectHandler
+    class ClassMinigameSelectionButton : MinigameSelectionButton, ISelectHandler
     {
         [UnityEngine.SerializeField]
         Core.Character.Equipments.EquipmentType _equipmentType;

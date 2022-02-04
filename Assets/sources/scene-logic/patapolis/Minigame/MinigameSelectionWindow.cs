@@ -17,6 +17,10 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         AudioClip _closeSound;
         private MinigameSelectionButton[] _buttons;
         private bool _opening;
+        [SerializeField]
+        [Tooltip("Although it says it's animation curve, it's not related to animation at all.")]
+        AnimationCurve _requirementCurve;
+        internal AnimationCurve RequirementCurve => _requirementCurve;
 
         private void Start()
         {

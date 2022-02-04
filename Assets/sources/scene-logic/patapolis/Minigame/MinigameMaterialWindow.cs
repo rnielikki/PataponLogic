@@ -19,12 +19,10 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         private MinigameSelectionButton _lastSelection;
         [SerializeField]
         UnityEngine.UI.Text _estimationText;
+        AnimationCurve _estimationCurve;
         private float _estimation;
         [SerializeField]
         private UnityEngine.UI.Button _okButton;
-        [SerializeField]
-        [Tooltip("Although it says it's animation curve, it's not related to animation at all.")]
-        AnimationCurve _estimationCurve;
         [SerializeField]
         AudioClip _openSound;
         [SerializeField]
@@ -50,6 +48,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             _opening = true;
             _lastSelection = button;
             _parent = parent;
+            _estimationCurve = parent.RequirementCurve;
             _parent.gameObject.SetActive(false);
             gameObject.SetActive(true);
 

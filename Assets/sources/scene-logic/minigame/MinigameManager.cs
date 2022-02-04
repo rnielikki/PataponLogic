@@ -62,8 +62,24 @@ namespace PataRoad.SceneLogic.Minigame
             }
             _minimumHitFrequency = (int)(_minimumHit * RhythmTimer.HalfFrequency);
             _voicePlayer.Init(_audioSource);
-            RhythmTimer.Current.OnNext.AddListener(PerformTurn);
             if (_data.Music != null) _music.clip = _data.Music;
+
+            int counter = 0;
+            RhythmTimer.Current.OnTime.AddListener(CountAndStart);
+            void CountAndStart()
+            {
+                switch (counter)
+                {
+                    case 0:
+                        _music.Play();
+                        break;
+                    case 7:
+                        RhythmTimer.Current.OnTime.RemoveListener(CountAndStart);
+                        PerformTurn();
+                        break;
+                }
+                counter++;
+            }
         }
         private void PerformTurn()
         {
@@ -74,8 +90,6 @@ namespace PataRoad.SceneLogic.Minigame
             int nextTiming = lastTiming > 3 ? 7 : 3;
 
             RhythmTimer.Current.OnTime.AddListener(PlayTurn);
-            if (_currentIndex == 0) RhythmTimer.Current.OnNextHalfTime.AddListener(() =>
-            RhythmTimer.Current.OnNext.AddListener(_music.Play));
 
             void PlayTurn()
             {
