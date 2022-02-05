@@ -2,9 +2,17 @@
 {
     class DogaeenEnemy : EnemyBoss
     {
+        private void Awake()
+        {
+            Init();
+            CharacterSize = 7;
+        }
+
         protected override float CalculateAttack()
         {
-            throw new System.NotImplementedException();
+            BossTurnManager
+                .SetOneAction("slam");
+            return 0.5f;
         }
     }
 }

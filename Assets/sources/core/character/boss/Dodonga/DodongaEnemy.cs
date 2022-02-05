@@ -14,7 +14,6 @@
             //from level3 it will do combo attk
             var comboCount = UnityEngine.Random.Range(1,
                 UnityEngine.Mathf.RoundToInt(UnityEngine.Mathf.Sqrt(_level)));
-
             for (int i = 0; i < comboCount; i++)
             {
                 (action, distance) = GetNextBehaviour();

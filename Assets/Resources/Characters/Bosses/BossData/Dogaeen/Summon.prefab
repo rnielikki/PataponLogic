@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7489680308901695385}
   - component: {fileID: 1160413123938889882}
-  - component: {fileID: 6456143103270383232}
   m_Layer: 8
   m_Name: arm2
   m_TagString: Untagged
@@ -86,32 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &6456143103270383232
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 261452560877134899}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -5.005}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 1}
-    oldSize: {x: 4.58, y: 10.01}
-    newSize: {x: 0.6, y: 1.12}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 3.5, y: 10.01}
-  m_EdgeRadius: 0
 --- !u!1 &900057520380906279
 GameObject:
   m_ObjectHideFlags: 0
@@ -495,7 +468,7 @@ GameObject:
   - component: {fileID: 224108772329265664}
   - component: {fileID: 500967770071488819}
   - component: {fileID: 604289276360596738}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: arm2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -639,7 +612,7 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 0
   _elementalAttackType: 0
-  _enabledFromFirst: 0
+  _enabled: 0
   _allowZeroDamage: 0
 --- !u!1 &2450189393139040566
 GameObject:
@@ -879,7 +852,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8036469882082280479}
   - component: {fileID: 1816337930056720657}
-  - component: {fileID: 9158684489927240711}
   m_Layer: 8
   m_Name: arm0.back
   m_TagString: Untagged
@@ -955,32 +927,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!61 &9158684489927240711
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2791331714356380268}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -2.245}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 1}
-    oldSize: {x: 1.6, y: 4.49}
-    newSize: {x: 1.63, y: 1.23}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.75, y: 4.49}
-  m_EdgeRadius: 0
 --- !u!1 &3424919071089655272
 GameObject:
   m_ObjectHideFlags: 0
@@ -993,7 +939,7 @@ GameObject:
   - component: {fileID: 7226109979965411553}
   - component: {fileID: 1084869199748149734}
   - component: {fileID: 942437300281094788}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: arm3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1111,7 +1057,7 @@ MonoBehaviour:
     _defenceMin: 0
     _defenceMax: 0
     _damageMin: 25
-    _damageMax: 45
+    _damageMax: 30
     _attackSeconds: 0
     _movementSpeed: 0
     _critical: 0
@@ -1136,7 +1082,7 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 0
   _elementalAttackType: 0
-  _enabledFromFirst: 0
+  _enabled: 0
   _allowZeroDamage: 0
 --- !u!1 &3427050500368560384
 GameObject:
@@ -1148,7 +1094,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3895548569530561836}
   - component: {fileID: 512122725947558265}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: arm1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1235,7 +1181,7 @@ GameObject:
   - component: {fileID: 8025013706269409522}
   - component: {fileID: 7573700476418993477}
   - component: {fileID: 3061055739948556769}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: arm0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1379,7 +1325,7 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 1
   _elementalAttackType: 0
-  _enabledFromFirst: 0
+  _enabled: 0
   _allowZeroDamage: 0
 --- !u!1 &4904364466337531977
 GameObject:

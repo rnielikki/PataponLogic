@@ -15,10 +15,6 @@ namespace PataRoad.Core.Character.Bosses
         {
             Fire.Attack();
         }
-        public void HeadbuttAttack()
-        {
-            Headbutt.Attack();
-        }
         public void StopHeadbuttAttack()
         {
             Headbutt.StopAttacking();

@@ -19,8 +19,8 @@
         protected override void OnKnockback()
         {
             StopEverythingBeforeStatusEffect();
-            IsOnStatusEffect = true;
             _character.CharAnimator.Animate("Knockback");
+            IsOnStatusEffect = true;
             StartCoroutine(WaitForRecovery(8));
         }
 

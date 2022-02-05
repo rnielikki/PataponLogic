@@ -4,46 +4,8 @@ namespace PataRoad.Core.Character.Bosses
 {
     public class DogaeenAttack : BossAttackData
     {
-        [SerializeField]
-        private BossAttackParticle Fire;
-        [SerializeField]
-        private BossAttackCollision Headbutt;
-        [SerializeField]
-        private DodongaEatingComponent EatingMouth;
-
-        public void FireAttack()
-        {
-            Fire.Attack();
-        }
-        public void HeadbuttAttack()
-        {
-            Headbutt.Attack();
-        }
-        public void StopHeadbuttAttack()
-        {
-            Headbutt.StopAttacking();
-        }
-        public void EatingAttack()
-        {
-            EatingMouth.Attack();
-        }
-        public void StopEatingAttack()
-        {
-            EatingMouth.StopAttacking();
-        }
-        public void GrowlAttack()
-        {
-            _boss.AttackType = Equipments.Weapons.AttackType.Magic;
-            _boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
-            foreach (var target in _boss.DistanceCalculator.GetAllAbsoluteTargetsOnFront())
-            {
-                Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat, target.gameObject, target.transform.position);
-            }
-        }
         public override void StopAllAttacking()
         {
-            Headbutt.StopAttacking();
-            EatingMouth.StopAttacking();
         }
         internal override void UpdateStatForBoss(int level)
         {

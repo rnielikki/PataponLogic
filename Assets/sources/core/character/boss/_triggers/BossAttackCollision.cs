@@ -1,23 +1,16 @@
-using System;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Bosses
 {
     public class BossAttackCollision : BossAttackComponent
     {
-        private bool _enabled;
         [SerializeField]
-        bool _enabledFromFirst;
+        private bool _enabled;
         [SerializeField]
         bool _allowZeroDamage;
         private void Awake()
         {
             Init();
-            _enabled = _enabledFromFirst;
-        }
-        internal void Attack()
-        {
-            _enabled = true;
         }
         public override void StopAttacking()
         {

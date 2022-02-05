@@ -52,9 +52,10 @@ namespace PataRoad.AppDebug
         }
         public void SetKnockback()
         {
-            Debug.Log("knockback!");
-            FirstPon.StatusEffectManager.SetKnockback();
+            //FirstPon.StatusEffectManager.SetKnockback();
             //Enemy.StatusEffectManager.SetKnockback();
+            FindObjectOfType<Core.Character.Bosses.Boss>().StatusEffectManager.SetKnockback();
+            Debug.Log("knockback pls!");
         }
         public void LoadStory()
         {
@@ -63,8 +64,9 @@ namespace PataRoad.AppDebug
         }
         public void AddClass()
         {
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Class", 4));
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 4));
+            //Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Class", 4));
+            //Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 4));
+            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 5));
         }
     }
 }

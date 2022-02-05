@@ -5,10 +5,9 @@ namespace PataRoad.Core.Character.Bosses
     public class BossAttackTrigger : BossAttackComponent
     {
         Collider2D _collider;
-        bool _enabled;
         bool _isAlreadyTrigger;
         [SerializeField]
-        bool _enabledFromFirst;
+        bool _enabled;
         [SerializeField]
         bool _allowZeroDamage;
         private void Awake()
@@ -16,7 +15,6 @@ namespace PataRoad.Core.Character.Bosses
             Init();
             _collider = GetComponent<Collider2D>();
             _isAlreadyTrigger = _collider.isTrigger;
-            _enabled = _enabledFromFirst;
         }
         internal void Attack()
         {
