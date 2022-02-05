@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07630dd1bfb8cc54280660ce4f2f085b, type: 3}
-  m_Name: 12.Shield-Ancient
+  m_Name: 5.Sword-Shiny
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
-  _group: Shield
-  _index: 12
-  _name: Ancient Shield X
-  _description: It protects the holder with power of the ancestors.
-  _levelGroup: 7
+  _group: Sword
+  _index: 5
+  _name: Shiny Sword X
+  _description: It reflects light enough to make one's sight lost.
+  _levelGroup: 4
   _stat:
     rid: 0
   _image: {fileID: 21300000, guid: 0b502b8abbc34ae4f88ed4614df0347e, type: 3}
-  _mass: 0.8
-  _type: 1
+  _mass: 0.9
+  _type: 0
   references:
     version: 2
     RefIds:
@@ -30,22 +30,22 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0
-        _hitPoint: 80
+        _hitPoint: 0
         _defenceMin: 0
         _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
+        _damageMin: 9
+        _damageMax: 11
         _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0
         _stagger: 0
-        _knockback: 0
+        _knockback: 0.04
         _infiniteCriticalResistance: 0
-        _criticalResistance: 0.15
+        _criticalResistance: 0
         _infiniteStaggerResistance: 0
-        _staggerResistance: 0.15
+        _staggerResistance: 0
         _infiniteKnockbackResistance: 0
-        _knockbackResistance: 0.15
+        _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
