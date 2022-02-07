@@ -29,13 +29,11 @@ namespace PataRoad.Core.Character.Bosses
 
         public UnityEvent<float> OnDamageTaken { get; private set; }
 
-        public AttackType AttackType { get; set; }
+        public AttackType AttackType { get; internal set; }
 
-        [SerializeReference]
-        private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
-        public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
+        public AttackTypeResistance AttackTypeResistance => BossAttackData.AttackTypeResistance;
 
-        public ElementalAttackType ElementalAttackType { get; set; }
+        public ElementalAttackType ElementalAttackType { get; internal set; }
 
         public float Sight => CharacterEnvironment.Sight;
 

@@ -1,37 +1,21 @@
 ﻿namespace PataRoad.Core.Character.Bosses
 {
-    class MochichichiEnemy : EnemyBoss
+    class MochichichiEnemy : EnemyBossBehaviour
     {
-        private void Awake()
+        protected override void Init()
         {
-            Init();
-            StatusEffectManager.OnStatusEffect.AddListener(effect =>
+            _boss.StatusEffectManager.OnStatusEffect.AddListener(effect =>
             {
                 if (effect == StatusEffectType.Stagger)
                 {
-                    BossTurnManager.DefineNextAction("fart");
+                    _boss.BossTurnManager.DefineNextAction("fart");
                 }
             });
+            _boss.UseWalkingBackAnimation();
             CharacterSize = 4.3f;
         }
-        protected override float CalculateAttack()
-        {
-            string action;
-            int distance = 0;
-            //from level3 it will do combo attk
-            var comboCount = UnityEngine.Random.Range(1,
-                UnityEngine.Mathf.RoundToInt(UnityEngine.Mathf.Sqrt(_level)));
-
-            for (int i = 0; i < comboCount; i++)
-            {
-                (action, distance) = GetNextBehaviour();
-                BossTurnManager
-                    .SetOneAction(action);
-            }
-            return distance;
-        }
         //Example
-        private (string action, int distance) GetNextBehaviour()
+        protected override (string action, float distance) GetNextBehaviour()
         {
             //Tada. depends on level, it does nothing!
             if (Common.Utils.RandomByProbability(1f / (_level + 5)))

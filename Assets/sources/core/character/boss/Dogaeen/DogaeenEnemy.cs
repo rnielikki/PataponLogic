@@ -1,18 +1,80 @@
 ﻿namespace PataRoad.Core.Character.Bosses
 {
-    class DogaeenEnemy : EnemyBoss
+    class DogaeenEnemy : EnemyBossBehaviour
     {
-        private void Awake()
+        private bool _usedLaser;
+        private float __prob = -1;
+        private float _probabilityFromLevel
         {
-            Init();
-            CharacterSize = 7;
+            get
+            {
+                if (__prob < 0) __prob = UnityEngine.Mathf.Log10(_level) * 0.5f;
+                return __prob;
+            }
+        }
+        protected override void Init()
+        {
+            _boss.UseWalkingBackAnimation();
+            CharacterSize = 15;
         }
 
-        protected override float CalculateAttack()
+        protected override (string action, float distance) GetNextBehaviour()
         {
-            BossTurnManager
-                .SetOneAction("slam");
-            return 0.5f;
+            var firstPon = _pataponsManager.FirstPatapon;
+            var closest = _boss.DistanceCalculator.GetClosest();
+
+            if (firstPon != null && firstPon.Type != Class.ClassType.Toripon)
+            {
+                //oh this is nightmare...
+                if (closest != null && (
+                    (transform.position.x - closest.Value.x <= 1 && Common.Utils.RandomByProbability(0.7f))
+                    || (_pataponsManager.transform.position.x - closest.Value.x <= 2 && Common.Utils.RandomByProbability(0.6f))
+                    ))
+                {
+                    _usedLaser = false;
+                    return ("repel", 1);
+                }
+                else
+                {
+                    if (closest == null)
+                    {
+                        if (!_usedLaser && Common.Utils.RandomByProbability(1 - __prob))
+                        {
+                            _usedLaser = true;
+                            return ("laser", 3);
+                        }
+                        else return SlamOrSlam(0.9f);
+                    }
+                    var distance = transform.position.x - closest.Value.x;
+                    if (distance > 10)
+                    {
+                        if (!_usedLaser && Common.Utils.RandomByProbability(1 - __prob))
+                        {
+                            _usedLaser = true;
+                            return ("laser", 2);
+                        }
+                        else
+                        {
+                            return SlamOrSlam(0.8f);
+                        }
+                    }
+                    return SlamOrSlam(0.1f);
+                }
+            }
+            else
+            {
+                return SlamOrSlam(0.4f);
+            }
+        }
+        private (string, float) SlamOrSlam(float probability)
+        {
+            _usedLaser = false;
+            var pro = UnityEngine.Mathf.Max(_probabilityFromLevel, probability);
+            if (Common.Utils.RandomByProbability(pro))
+            {
+                return ("slam", 1);
+            }
+            else return ("bodyslam", 1);
         }
     }
 }

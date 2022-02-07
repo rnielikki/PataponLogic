@@ -123,6 +123,7 @@ namespace PataRoad.Core.Rhythm.Command
         private void OnDisable()
         {
             ComboManager.EndComboImmediately();
+            OnCommandCanceled.Invoke();
             OnCommandCanceled.RemoveListener(TurnCounter.Stop);
             OnCommandCanceled.RemoveListener(_miracleListener.ResetMiracle);
 

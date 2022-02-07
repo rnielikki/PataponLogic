@@ -71,10 +71,11 @@ namespace PataRoad.Core.Map.Levels
         }
         private bool IsEndStatus() => _carriageStructure.IsDead || MissionPoint.IsMissionEnd;
 
-        public void SetLevel(int level)
+        public void SetLevel(int level, int absoluteMaxLevel)
         {
-            _carriageSpeed *= 1 + (level - 1) * 0.02f;
-            _maxOffset = level * 0.5f;
+            var offset = (float)(level - 1) / (absoluteMaxLevel - 1);
+            _carriageSpeed *= Mathf.Lerp(1, 5, offset);
+            _maxOffset = Mathf.Lerp(0.5f, 10, offset);
         }
     }
 }

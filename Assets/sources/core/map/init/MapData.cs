@@ -84,6 +84,11 @@ namespace PataRoad.Core.Map
         [SerializeField]
         int _maxLevelOnHard;
 
+        /// <summary>
+        /// Gets real maximum level, it's equal as difficulty hard max level.
+        /// </summary>
+        public int AbsoluteMaxLevel => _maxLevelOnHard;
+
         [Header("Story")]
         [SerializeField]
         private bool _loadStoryOnlyOnce;

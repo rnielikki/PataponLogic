@@ -4,6 +4,12 @@ namespace PataRoad.Core.Character.Bosses
 {
     public class DogaeenAttack : BossAttackData
     {
+        [SerializeField]
+        DogaeenRepel _repel;
+        public void RepelAttack()
+        {
+            _repel.Repel();
+        }
         public override void StopAllAttacking()
         {
         }

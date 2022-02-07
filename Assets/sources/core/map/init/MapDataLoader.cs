@@ -74,7 +74,7 @@ namespace PataRoad.Core.Map
             {
                 foreach (var havingLevel in obj.GetComponentsInChildren<IHavingLevel>())
                 {
-                    havingLevel.SetLevel(_mapDataContainer.Level);
+                    havingLevel.SetLevel(_mapDataContainer.Level, _mapDataContainer.MapData.AbsoluteMaxLevel);
                 }
             }
             int spriteIndex = 1;

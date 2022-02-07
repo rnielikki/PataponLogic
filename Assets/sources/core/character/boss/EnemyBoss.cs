@@ -2,7 +2,7 @@
 
 namespace PataRoad.Core.Character.Bosses
 {
-    public abstract class EnemyBoss : Boss, Map.IHavingLevel
+    public class EnemyBoss : Boss, Map.IHavingLevel
     {
         public override Vector2 MovingDirection { get; } = Vector2.left;
         public BossTurnManager BossTurnManager { get; private set; }
@@ -20,18 +20,27 @@ namespace PataRoad.Core.Character.Bosses
         protected bool _useWalkWhenMovingBack;
         private bool _movingBackAnimating;
 
-        protected int _level = 1;
+        public int Level { get; private set; }
         private CameraController.SafeCameraZoom _zoom;
+        private EnemyBossBehaviour _behaviour;
 
-        protected override void Init()
+        void Awake()
         {
-            base.Init();
+            Init();
             BossTurnManager = new BossTurnManager(BossAttackData);
             DefaultWorldPosition = transform.position.x;
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
             _pataponsManager = FindObjectOfType<Patapons.PataponsManager>();
 
             _zoom = Camera.main.GetComponent<CameraController.SafeCameraZoom>();
+
+            _behaviour = GetComponent<EnemyBossBehaviour>();
+            _behaviour.Init(this, _pataponsManager);
+            CharacterSize = _behaviour.CharacterSize;
+        }
+        internal void UseWalkingBackAnimation()
+        {
+            _useWalkWhenMovingBack = true;
         }
         public override void Die()
         {
@@ -90,12 +99,12 @@ namespace PataRoad.Core.Character.Bosses
             BossTurnManager.End();
             base.StopAttacking(pause);
         }
-        public void SetLevel(int level)
+        public void SetLevel(int level, int absoluteMaxLevel)
         {
-            _level = level;
+            Level = level;
             BossAttackData.UpdateStatForBoss(level);
         }
-        protected abstract float CalculateAttack();
+        protected float CalculateAttack() => _behaviour.CalculateAttack();
         private void Update()
         {
             //phase 0: attacking or dead

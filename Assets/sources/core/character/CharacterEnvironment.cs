@@ -21,7 +21,7 @@ namespace PataRoad.Core.Character
         /// Like Tatepon Ponchaka~Ponpon. This position is relative to the root Patapon position manager.
         /// </summary>
         public const int RushAttackDistance = 20;
-        public const int DodgeDistance = RushAttackDistance;
+        public const int DodgeDistance = 25;
 
         /// <summary>
         /// Max y height to scan, 0 to this value. About (a bit heigher than) Toripon height expected.

@@ -24,8 +24,8 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 924822029841379601, guid: d01a3f04156291f42870aae0acd259d7, type: 3}
-      propertyPath: managedReferences[3406254138298990592]._knockbackResistance
-      value: -999
+      propertyPath: managedReferences[3406254138298990592]._hitPoint
+      value: 10000
       objectReference: {fileID: 0}
     - target: {fileID: 1108907217911481769, guid: d01a3f04156291f42870aae0acd259d7, type: 3}
       propertyPath: m_Layer
@@ -223,22 +223,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f215e994464f484ab035c86bc146468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackTypeResistance:
-    rid: 3406254161097916416
+--- !u!114 &122221499481725520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5343331495407648903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 764a98214c3103744b2d65b079ea8648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 3406254161097916416
-      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _crushMultiplier: 2.1
-        _slashMultiplier: 0.9
-        _stabMultiplier: 0.8
-        _soundMultiplier: 0.6
-        _magicMultiplier: 0.8
-        _fireMultiplier: 1.05
-        _iceMultiplier: 0.8
-        _thunderMultiplier: 0.8

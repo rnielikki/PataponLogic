@@ -6,6 +6,10 @@ namespace PataRoad.Core.Character.Bosses
     {
         [SerializeReference]
         protected Stat _stat = Stat.GetAnyDefaultStatForCharacter();
+
+        [SerializeReference]
+        private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
+        public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
         public Stat Stat => _stat;
         public float MinLastDamageOffset { get; protected set; } = 0;
         public float MaxLastDamageOffset { get; protected set; } = 0;
@@ -27,7 +31,10 @@ namespace PataRoad.Core.Character.Bosses
         /// <summary>
         /// Clear all collider or trigger of the body in here.
         /// </summary>
-        public abstract void StopAllAttacking();
+        public virtual void StopAllAttacking()
+        {
+            StopIgnoringStatusEffect();
+        }
         public void Attack(BossAttackComponent component, GameObject target, Vector2 position,
             Equipments.Weapons.AttackType attackType, Equipments.Weapons.ElementalAttackType elementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral,
             bool allowZero = false)
@@ -39,5 +46,13 @@ namespace PataRoad.Core.Character.Bosses
             Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat + component.AdditionalStat, target, position, allowZero);
         }
         public virtual void SetCustomPosition() { }
+        public void IgnoreStatusEffect()
+        {
+            _boss.StatusEffectManager.IgnoreStatusEffect = true;
+        }
+        public void StopIgnoringStatusEffect()
+        {
+            _boss.StatusEffectManager.IgnoreStatusEffect = false;
+        }
     }
 }

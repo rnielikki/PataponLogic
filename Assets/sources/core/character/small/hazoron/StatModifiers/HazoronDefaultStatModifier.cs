@@ -10,7 +10,7 @@
         {
             _stat = stat;
         }
-        public virtual void SetLevel(int level)
+        public void SetLevel(int level, int absoluteMaxLevel)
         {
             _level = level;
             var value = 0.8f + 0.2f * level;

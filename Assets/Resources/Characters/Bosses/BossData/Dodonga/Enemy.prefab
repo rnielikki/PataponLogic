@@ -439,22 +439,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6b67fa23633e1f4ea9aacbfcf850e37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackTypeResistance:
-    rid: 1000
+--- !u!114 &6538036850698346347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8779183453842958733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 764a98214c3103744b2d65b079ea8648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
-  references:
-    version: 2
-    RefIds:
-    - rid: 1000
-      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _crushMultiplier: 1.1
-        _slashMultiplier: 1.2
-        _stabMultiplier: 1.2
-        _soundMultiplier: 1.1
-        _magicMultiplier: 1
-        _fireMultiplier: 0.9
-        _iceMultiplier: 0.9
-        _thunderMultiplier: 0.9

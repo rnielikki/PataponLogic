@@ -2,6 +2,6 @@
 {
     interface IHavingLevel
     {
-        public void SetLevel(int level);
+        public void SetLevel(int level, int absoluteMaxLevel);
     }
 }

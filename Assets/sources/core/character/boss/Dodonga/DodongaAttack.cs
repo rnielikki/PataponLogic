@@ -29,6 +29,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void GrowlAttack()
         {
+            StopIgnoringStatusEffect();
             _boss.AttackType = Equipments.Weapons.AttackType.Magic;
             _boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
             foreach (var target in _boss.DistanceCalculator.GetAllAbsoluteTargetsOnFront())
@@ -38,6 +39,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         public override void StopAllAttacking()
         {
+            base.StopAllAttacking();
             Headbutt.StopAttacking();
             EatingMouth.StopAttacking();
         }

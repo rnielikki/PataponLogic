@@ -9,7 +9,7 @@ namespace PataRoad.Core.Character.Patapons
     /// <summary>
     /// Gets command and drum status and sends message to Patapons.
     /// </summary>
-    public class PataponsManager : MonoBehaviour, IDistanceCalculatable
+    public class PataponsManager : MonoBehaviour, IDistanceCalculatable, Map.IHavingLevel
     {
         private System.Collections.Generic.List<Patapon> _patapons;
         private System.Collections.Generic.List<PataponGroup> _groups;
@@ -54,6 +54,8 @@ namespace PataRoad.Core.Character.Patapons
         private float _minSteps = PataponEnvironment.Steps;
         private float _maxSteps = PataponEnvironment.Steps;
         public float Steps { get; private set; } = PataponEnvironment.Steps;
+        //--- Adjusted By Level
+        public static float DodgeSpeedMinimumMultiplier { get; private set; } = 1;
 
         private void Awake()
         {
@@ -277,6 +279,11 @@ namespace PataRoad.Core.Character.Patapons
         {
             IsMovingForward = false;
             AllowedToGoForward = true;
+        }
+        public void SetLevel(int level, int absoluteMaxLevel)
+        {
+            var offset = (float)(level - 1) / (absoluteMaxLevel - 1);
+            DodgeSpeedMinimumMultiplier = Mathf.Lerp(0.8f, 1, 1 - offset);
         }
     }
 }

@@ -176,6 +176,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stat:
     rid: 0
+  _attackTypeResistance:
+    rid: 1000
   Fire: {fileID: 3618771868197904909}
   Headbutt: {fileID: 7022250740197461398}
   EatingMouth: {fileID: 2150409896095738561}
@@ -211,6 +213,17 @@ MonoBehaviour:
         _iceResistance: 0
         _infiniteSleepResistance: 0
         _sleepResistance: 0
+    - rid: 1000
+      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _crushMultiplier: 1.1
+        _slashMultiplier: 1.2
+        _stabMultiplier: 1.2
+        _soundMultiplier: 1.1
+        _magicMultiplier: 1
+        _fireMultiplier: 0.9
+        _iceMultiplier: 0.9
+        _thunderMultiplier: 0.9
 --- !u!114 &8854638042480719555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,26 +236,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f592ec08dc3d2940a68d49dc2f52b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackTypeResistance:
-    rid: 0
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
   _connectedMapIndex: 4
-  references:
-    version: 2
-    RefIds:
-    - rid: 0
-      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _crushMultiplier: 1
-        _slashMultiplier: 1
-        _stabMultiplier: 1
-        _soundMultiplier: 1
-        _magicMultiplier: 1
-        _fireMultiplier: 1
-        _iceMultiplier: 1
-        _thunderMultiplier: 1
 --- !u!1 &2035742127555425651
 GameObject:
   m_ObjectHideFlags: 0
@@ -6461,7 +6458,7 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 1
   _elementalAttackType: 0
-  _enabledFromFirst: 0
+  _enabled: 0
   _allowZeroDamage: 0
 --- !u!60 &4850269597082295279
 PolygonCollider2D:

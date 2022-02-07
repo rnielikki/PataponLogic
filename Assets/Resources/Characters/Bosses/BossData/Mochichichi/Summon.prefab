@@ -5549,11 +5549,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _stat:
     rid: 6407466200847089666
+  _attackTypeResistance:
+    rid: 1000
   _fart: {fileID: 3315751748543775534}
   _tornadoEffect: {fileID: 2014733647113091665}
   references:
     version: 2
     RefIds:
+    - rid: 1000
+      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _crushMultiplier: 1.8
+        _slashMultiplier: 1.2
+        _stabMultiplier: 1
+        _soundMultiplier: 1.5
+        _magicMultiplier: 1
+        _fireMultiplier: 1
+        _iceMultiplier: 1.5
+        _thunderMultiplier: 1.5
     - rid: 6407466200847089666
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
@@ -5595,26 +5608,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5878f0bdcee86d41b22b0e8f633cef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackTypeResistance:
-    rid: 6407466200847089667
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
   _connectedMapIndex: 10
-  references:
-    version: 2
-    RefIds:
-    - rid: 6407466200847089667
-      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
-      data:
-        _crushMultiplier: 1
-        _slashMultiplier: 1
-        _stabMultiplier: 1
-        _soundMultiplier: 1
-        _magicMultiplier: 1
-        _fireMultiplier: 1
-        _iceMultiplier: 1
-        _thunderMultiplier: 1
 --- !u!1 &2041827155853894981
 GameObject:
   m_ObjectHideFlags: 0

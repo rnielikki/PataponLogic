@@ -30,6 +30,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void TornadoAttack()
         {
+            StopIgnoringStatusEffect();
             _tornadoEffect.Play();
         }
         public void StartMoving()
@@ -45,10 +46,6 @@ namespace PataRoad.Core.Character.Bosses
                 UseCustomDataPosition = false;
                 _boss.CharAnimator.Animate("Idle");
             }
-        }
-        public override void StopAllAttacking()
-        {
-            //hmm...
         }
     }
 }
