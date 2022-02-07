@@ -41,7 +41,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             //from level3 it will do combo attk
             var comboCount = UnityEngine.Random.Range(1,
-                UnityEngine.Mathf.RoundToInt(UnityEngine.Mathf.Sqrt(_level)));
+                UnityEngine.Mathf.RoundToInt(UnityEngine.Mathf.Sqrt(_level)) + 1);
 
             return SetComboAttack(comboCount);
         }
@@ -73,7 +73,7 @@ namespace PataRoad.Core.Character.Bosses
             var leftComboCount = count;
             while (leftComboCount > 0)
             {
-                if (leftComboCount < _predefinedComboLengthIndexed[0])
+                if (_predefinedComboLengthIndexed.Length < 1 || leftComboCount < _predefinedComboLengthIndexed[0])
                 {
                     return SetMultipleAttacksOneByOne(count);
                 }

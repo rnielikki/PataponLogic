@@ -32,7 +32,7 @@
                     ))
                 {
                     _usedLaser = false;
-                    return ("repel", 1);
+                    return ("repel", 0);
                 }
                 else
                 {
@@ -72,9 +72,9 @@
             var pro = UnityEngine.Mathf.Max(_probabilityFromLevel, probability);
             if (Common.Utils.RandomByProbability(pro))
             {
-                return ("slam", 1);
+                return ("slam", 0);
             }
-            else return ("bodyslam", 1);
+            else return ("bodyslam", 0);
         }
     }
 }
