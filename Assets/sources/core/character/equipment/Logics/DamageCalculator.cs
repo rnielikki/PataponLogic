@@ -13,7 +13,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
         /// <param name="target">Who takes the damage.</param>
         /// <param name="point">The point where the damage hit.</param>
         /// <returns><c>true</c> if found target to deal damage, otherwise <c>false</c>.</returns>
-        public static void DealDamage(ICharacter attacker, Stat stat, GameObject target, Vector2 point, bool allowZero = false)
+        public static void DealDamage(IAttacker attacker, Stat stat, GameObject target, Vector2 point, bool allowZero = false)
         {
             var receiver = target.GetComponentInParent<IAttackable>(false);
             if (receiver == null || receiver.CurrentHitPoint <= 0 || receiver.IsDead)
@@ -123,7 +123,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             target.TakeDamage(damage);
             target.OnDamageTaken?.Invoke((float)target.CurrentHitPoint / target.Stat.HitPoint);
         }
-        private static (int damage, bool isCritical) GetFinalDamage(ICharacter attacker, IAttackable receiver, Stat attackerStat, bool allowZero)
+        private static (int damage, bool isCritical) GetFinalDamage(IAttacker attacker, IAttackable receiver, Stat attackerStat, bool allowZero)
         {
             var damage = GetAttackDamage(attackerStat, attacker);
             var defence = GetDefence(receiver);
@@ -219,7 +219,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             if (attackRatio == 0 || resistance == Mathf.Infinity) return 0;
             else return Mathf.Clamp01(attackRatio - resistance) * additionalMultiplier;
         }
-        private static int GetAttackDamage(Stat stat, ICharacter character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());
+        private static int GetAttackDamage(Stat stat, IAttacker character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());
         private static float GetDefence(IAttackable attackable) => GetFinalValue(attackable.Stat.DefenceMin, attackable.Stat.DefenceMax, attackable.GetDefenceValueOffset());
         private static int GetFinalValue(int min, int max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
         private static float GetFinalValue(float min, float max, float offset) => Mathf.Lerp(min, max, offset);

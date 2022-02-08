@@ -64,7 +64,7 @@ namespace PataRoad.Core.Character
 
         public float GetDefenceValueOffset() => 1;
 
-        public void SetLevel(int level, int absoluteMaxLevel)
+        public virtual void SetLevel(int level, int absoluteMaxLevel)
         {
             if (_noLevelUp) return;
             Stat.HitPoint = CurrentHitPoint = Mathf.RoundToInt(Stat.HitPoint * (0.8f + 0.2f * level));
