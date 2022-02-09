@@ -22,5 +22,13 @@
         {
             Init();
         }
+        private void Start()
+        {
+            Map.Weather.WeatherInfo.Current.ChangeWeather(Map.Weather.WeatherType.Storm);
+        }
+        private void OnDestroy()
+        {
+            Map.Weather.WeatherInfo.Current?.EndChangingWeather();
+        }
     }
 }

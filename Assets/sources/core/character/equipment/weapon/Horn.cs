@@ -107,7 +107,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             self.attachedRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
             self.attachedRigidbody.gravityScale = 0;
             self.transform.rotation = Quaternion.identity;
-            self.transform.Translate(transform.up * -0.5f);
+            self.transform.position += transform.up * -0.5f;
         }
         //Charge Defence bullet
         private void StopBulletOnGround(Collider2D self)

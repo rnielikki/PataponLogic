@@ -47,18 +47,17 @@ namespace PataRoad.Core.Map.Weather
         {
             var weatherType = _currentWeather?.Type ?? WeatherType.Clear;
             if (weatherType == type) return;
-            if (weatherType != WeatherType.Clear)
+            if (!firstInit)
             {
-                EndChangingWeather(type);
+                _currentWeather?.OnWeatherStopped(_defaultWeather);
             }
             _currentWeather = _weatherTypeDataMap[type];
             _currentWeather?.OnWeatherStarted(firstInit);
         }
-        public void EndChangingWeather(WeatherType type)
+        public void EndChangingWeather()
         {
-            if (_currentWeather.Type == type) return;
-            _currentWeather?.OnWeatherStopped(type);
-            ChangeWeather(_defaultWeather);
+            if (_defaultWeather == (_currentWeather?.Type ?? WeatherType.Clear)) return;
+            ChangeWeather(_defaultWeather, false);
         }
         internal void SetWeatherSound(AudioClip clip)
         {
