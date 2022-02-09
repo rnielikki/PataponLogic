@@ -54,7 +54,7 @@ namespace PataRoad.Core.Character.Class
         }
         public override void Defend()
         {
-            _attackController.StartAttack(_character.Charged ? "defend-charge" : "defend");
+            _attackController.StartAttack(_character.Charged ? AttackCommandType.ChargeDefend : AttackCommandType.Defend);
         }
     }
 }

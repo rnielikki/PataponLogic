@@ -41,7 +41,7 @@ namespace PataRoad.Core.Character.Class
             }
             if (_character.Charged)
             {
-                _attackController.StartAttack("attack-charge");
+                _attackController.StartAttack(AttackCommandType.ChargeAttack);
             }
             else base.Attack();
         }

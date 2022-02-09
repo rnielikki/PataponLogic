@@ -66,6 +66,7 @@ namespace PataRoad.AppDebug
             //Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Class", 4));
             //Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 4));
             Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 3));
+            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 4));
             Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 5));
         }
     }

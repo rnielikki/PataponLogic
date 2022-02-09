@@ -19,11 +19,6 @@ namespace PataRoad.Core.Character
         private AttackMoveModel _currentModel;
         private readonly Dictionary<AttackCommandType, AttackMoveModel> _attackMoves = new Dictionary<AttackCommandType, AttackMoveModel>();
 
-        internal void StartAttack(object feverAttack)
-        {
-            throw new System.NotImplementedException();
-        }
-
         private bool _moving;
 
         private byte _currentStatusFlag; //0: not assigned, 1: no target, 2: moving to target, 3: attacking

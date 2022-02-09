@@ -8,38 +8,60 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     internal class WeaponInstance : MonoBehaviour
     {
         Rigidbody2D _rigidbody;
-        ICharacter _holder;
+        IAttacker _holder;
         Stat _stat;
+        private static GameObject _resource;
 
         private void Awake()
         {
             _rigidbody = gameObject.GetComponent<Rigidbody2D>();
         }
-
+        /// <summary>
+        /// Gets resource of the weapon instance. Note that it's NOT INSTANTIATED yet.
+        /// </summary>
+        /// <returns>the weapon instance resource.</returns>
+        public static GameObject GetResource()
+        {
+            if (_resource == null) _resource = Resources.Load("Characters/Equipments/PrefabBase/WeaponInstance") as GameObject;
+            return _resource;
+        }
         /// <summary>
         /// Initialize values from WeaponObject.
         /// </summary>
         /// <param name="original">The original weapon object, which is copied from.</param>
         /// <param name="mass">Mass of the object. This will affect to Tailwind.</param>
         /// <param name="transformOriginal">Transform of the object. If not set, default value is transform of <paramref name="original"/>.</param>
-        /// <returns>Self.</returns>
+        /// <returns>Self, as initialized.</returns>
         public WeaponInstance Initialize(Weapon original, Material material, float mass = -1, Transform transformOriginal = null)
         {
             if (transformOriginal == null) transformOriginal = original.transform;
+
             _rigidbody.mass = (mass < 0) ? original.Mass : mass;
-            _holder = original.Holder;
+
+            return Initialize(original.Holder, original.ThrowableWeaponSprite, material, original.gameObject.layer,
+                (mass < 0) ? original.Mass : mass, transformOriginal);
+        }
+        /// <summary>
+        /// Initialize values from WeaponObject without weapon but just by holder.
+        /// </summary>
+        /// <param name="holder">The holder of this weapon, attacker.</param>
+        /// <param name="mass">Mass of the object. This will affect to Tailwind.</param>
+        /// <param name="transformOriginal">Transform of the object. If not set, default value is transform of <paramref name="original"/>.</param>
+        /// <returns>Self, as initialized.</returns>
+        public WeaponInstance Initialize(IAttacker holder, Sprite sprite, Material material, int layer, float mass, Transform transformOriginal)
+        {
+            _rigidbody.mass = mass;
+            _holder = holder;
             var renderer = GetComponent<SpriteRenderer>();
-            renderer.sprite = original.ThrowableWeaponSprite;
+            renderer.sprite = sprite;
             renderer.material = material;
 
             transform.position = transformOriginal.position;
             transform.rotation = transformOriginal.rotation;
 
-            gameObject.layer = original.gameObject.layer;
-
+            gameObject.layer = layer;
             return this;
         }
-
         /// <summary>
         /// Start throwing this instance.
         /// </summary>

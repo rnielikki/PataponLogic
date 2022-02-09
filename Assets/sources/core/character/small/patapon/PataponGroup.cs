@@ -17,7 +17,7 @@ namespace PataRoad.Core.Character.Patapons
         private Display.PataponsHitPointDisplay _pataponsHitPointDisplay;
         public Class.ClassType ClassType { get; internal set; }
 
-        private PataponsManager _manager;
+        internal PataponsManager Manager { get; private set; }
 
         internal void Init(PataponsManager manager)
         {
@@ -25,7 +25,7 @@ namespace PataRoad.Core.Character.Patapons
             General = GetComponentInChildren<General.PataponGeneral>();
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
 
-            _manager = manager;
+            Manager = manager;
 
             _pataponsHitPointDisplay = Display.PataponsHitPointDisplay.Add(this);
         }
@@ -41,7 +41,7 @@ namespace PataRoad.Core.Character.Patapons
             _pataponsHitPointDisplay.OnDead(patapon, _patapons);
             if (patapon.IsGeneral) General = null;
             _patapons.RemoveAt(index);
-            _manager.RemovePon(patapon);
+            Manager.RemovePon(patapon);
         }
         /// <summary>
         /// Removes the *Whole group* if it's empty.
@@ -51,7 +51,7 @@ namespace PataRoad.Core.Character.Patapons
             if (_patapons.Count == 0)
             {
                 StopAllCoroutines();
-                _manager.RemoveGroup(this);
+                Manager.RemoveGroup(this);
             }
         }
         public void UpdateHitPoint(Patapon patapon)
@@ -85,7 +85,7 @@ namespace PataRoad.Core.Character.Patapons
                 var target = targetX * Vector2.left;
                 while (transform.localPosition.x != targetX)
                 {
-                    transform.localPosition = Vector2.MoveTowards(transform.localPosition, target, _manager.Steps * Time.deltaTime);
+                    transform.localPosition = Vector2.MoveTowards(transform.localPosition, target, Manager.Steps * Time.deltaTime);
                     yield return new WaitForEndOfFrame();
                 }
             }

@@ -26,7 +26,7 @@ namespace PataRoad.Core.Character
         [SerializeReference]
         private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
         public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
-        private Animator _animator;
+        protected Animator _animator;
 
         [SerializeField]
         bool _noLevelUp;

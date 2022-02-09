@@ -17,7 +17,7 @@ namespace PataRoad.Core.Character
         private StatusEffectData _effectInstantiator;
         public virtual bool CanContinue => !IsOnStatusEffect && !_target.IsDead;
 
-        private UnityEngine.Events.UnityEvent _onRecover = new UnityEngine.Events.UnityEvent();
+        private readonly UnityEngine.Events.UnityEvent _onRecover = new UnityEngine.Events.UnityEvent();
         internal bool IsBigTarget { get; set; }
 
         private UnityEngine.Events.UnityEvent<StatusEffectType> _onStatusEffect;

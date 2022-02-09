@@ -294,5 +294,13 @@ namespace PataRoad.Core.Character.Patapons
                 Group.HealAllInGroup((int)(damage * 0.1f));
             }
         }
+        private void Update()
+        {
+            if (PataponsManager.IsMovingForward && !StatusEffectManager.CanContinue)
+            {
+                //Go back lol.
+                transform.position -= Group.Manager.Steps * Vector3.right * Time.deltaTime;
+            }
+        }
     }
 }

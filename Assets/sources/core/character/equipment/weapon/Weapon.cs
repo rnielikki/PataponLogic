@@ -51,8 +51,9 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// </summary>
         /// <param name="name">The name of instance (from the resource path).</param>
         /// <returns>The loaded game object from resource.</returns>
-        protected GameObject GetWeaponInstance(string name = "WeaponInstance")
+        protected GameObject GetWeaponInstance(string name = null)
         {
+            if (name == null) return WeaponInstance.GetResource();
             return Resources.Load("Characters/Equipments/PrefabBase/" + name) as GameObject;
         }
         /// <summary>

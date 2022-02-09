@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7374676734716300732}
   - component: {fileID: 2930489920119281896}
   - component: {fileID: 7675198260978773834}
+  - component: {fileID: 7503483201787221320}
   m_Layer: 6
   m_Name: dark.door
   m_TagString: Untagged
@@ -109,6 +110,7 @@ MonoBehaviour:
   _fireResistance: 0
   _attackTypeResistance:
     rid: 6407466133968650258
+  _noLevelUp: 0
   _spawnTarget:
   - {fileID: 739656370224071424, guid: 61019b27f16555b479a3ed935c439656, type: 3}
   - {fileID: 3459556231461429071, guid: d27c5f765e613214e9e58869a36bea58, type: 3}
@@ -154,6 +156,26 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 18}
   m_EdgeRadius: 0
+--- !u!95 &7503483201787221320
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3162705365336997444}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0c2bdcf2130c76b4285f5d3eba55a0c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &7957445737132807378
 GameObject:
   m_ObjectHideFlags: 0

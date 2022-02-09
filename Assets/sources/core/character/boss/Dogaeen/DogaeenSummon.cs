@@ -18,5 +18,9 @@
         {
             CharAnimator.Animate("bodyslam");
         }
+        private void Awake()
+        {
+            Init();
+        }
     }
 }
