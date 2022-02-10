@@ -16,9 +16,12 @@ namespace PataRoad.Core.Character
         float _minAngle = 15;
         [SerializeField]
         float _maxAngle = 45;
+        [SerializeField]
+        float _rotateSpeed = 10;
         float _targetAngle;
-        float _currentAngle = 359;
+        float _currentAngle = 90;
         private bool _changingAngle;
+        private bool _attackAfterLooking = true;
         /// <summary>
         /// Use animator for updating angle.
         /// </summary>
@@ -28,6 +31,8 @@ namespace PataRoad.Core.Character
         float _minPower = 2;
         [SerializeField]
         float _maxPower = 2.4f;
+        [SerializeField]
+        bool _repeatAttack = true;
 
         [SerializeField]
         private AttackType _attackType;
@@ -57,18 +62,23 @@ namespace PataRoad.Core.Character
         }
         private void ReadyForAttack()
         {
-            _targetAngle = 360 - Random.Range(_minAngle, _maxAngle);
+            _targetAngle = 90 - Random.Range(_minAngle, _maxAngle);
+            _attackAfterLooking = true;
             _changingAngle = true;
         }
         private void Attack()
         {
-            _animator.SetBool("attacking", false);
-            _animator.Play("attacking");
             var instantiated = Instantiate(_weaponInstanceResource);
             instantiated.GetComponent<WeaponInstance>()
                 .Initialize(this, _bullet.sprite, _bullet.material, _bullet.gameObject.layer, 2, _bullet.transform)
                 .Throw(_minPower, _maxPower);
-            StartCoroutine(AnimateAttack());
+            if (_repeatAttack) StartCoroutine(AnimateAttack());
+            else
+            {
+                _targetAngle = 90;
+                _attackAfterLooking = false;
+                _changingAngle = true;
+            }
         }
         public void OnAttackHit(Vector2 point, int damage)
         {
@@ -102,12 +112,12 @@ namespace PataRoad.Core.Character
             if (_changingAngle)
             {
                 float angle = _currentAngle;
-                if (_targetAngle > angle) angle = Mathf.Min(angle + Time.deltaTime * 10, _targetAngle);
-                else if (_targetAngle < angle) angle = Mathf.Max(angle - Time.deltaTime * 10, _targetAngle);
+                if (_targetAngle > angle) angle = Mathf.Min(angle + Time.deltaTime * _rotateSpeed, _targetAngle);
+                else if (_targetAngle < angle) angle = Mathf.Max(angle - Time.deltaTime * _rotateSpeed, _targetAngle);
                 else
                 {
                     _changingAngle = false;
-                    _animator.SetBool("attacking", true);
+                    if (_attackAfterLooking) _animator.Play("attack");
                 }
                 _currentAngle = angle;
             }

@@ -5,63 +5,45 @@ using UnityEngine;
 
 namespace PataRoad.Core.Map.Levels.Level17Door
 {
-    class Level17DoorAttack : Structure, IAttacker
+    class Level17DoorAttack : Spawn, IAttacker
     {
         CannonStructure _cannon;
         ParticleDamaging[] _bullets;
-        private int _layerMask;
 
         public AttackType AttackType { get; private set; }
         public ElementalAttackType ElementalAttackType { get; private set; }
         private bool _attacking;
+        private int _index;
+        private UnityEngine.Events.UnityAction[] _actions;
+
+        [SerializeField]
+        private int _cannonDamage;
+        [SerializeField]
+        private int _bulletDamage;
+        [SerializeField]
+        private int _pikeDamage;
 
         private void Start()
         {
             _cannon = GetComponentInChildren<CannonStructure>();
             _bullets = GetComponentsInChildren<ParticleDamaging>();
+            _actions = new UnityEngine.Events.UnityAction[]
+            {
+                PikeAttack,
+                BulletAttack,
+                CannonAttack
+            };
 
             RhythmTimer.Current.OnTime.AddListener(AutoAttack);
             Rhythm.Command.TurnCounter.OnTurn.AddListener(SetTurn);
-            _layerMask = LayerMask.GetMask("patapons");
+
+            FindObjectOfType<Rhythm.Command.RhythmCommand>().OnCommandCanceled.AddListener(StopAttacking);
         }
         private void CalculateAttack()
         {
             _attacking = true;
-            var raycast = Physics2D.BoxCast(transform.position, Vector2.one * 2, 0, Vector2.left);
-            var collider = raycast.collider;
-            float pikeChance = 0;
-            float bulletChance = 0;
-            if (collider == null)
-            {
-                pikeChance = 0;
-                bulletChance = 0.1f;
-            }
-            else
-            {
-                var distance = collider.ClosestPoint(transform.position).x - transform.position.x;
-                if (distance <= 5.5f)
-                {
-                    pikeChance = 0.6f;
-                    bulletChance = 0.6f;
-                }
-                else
-                {
-                    pikeChance = 0.05f;
-                    bulletChance = 0.6f;
-                }
-            }
-            if (Common.Utils.RandomByProbability(pikeChance))
-            {
-                PikeAttack();
-            }
-            else if (Common.Utils.RandomByProbability(bulletChance))
-            {
-                BulletAttack();
-            }
-            else
-            {
-                CannonAttack();
-            }
+            _actions[_index]();
+            _index = (_index + 1) % _actions.Length;
         }
         private void AutoAttack()
         {
@@ -91,6 +73,8 @@ namespace PataRoad.Core.Map.Levels.Level17Door
         {
             AttackType = AttackType.Magic;
             ElementalAttackType = ElementalAttackType.Ice;
+            Stat.DamageMax = _bulletDamage;
+
             _animator.Play("bullet");
         }
         public void ShootBullets()
@@ -104,12 +88,16 @@ namespace PataRoad.Core.Map.Levels.Level17Door
         {
             AttackType = AttackType.Stab;
             ElementalAttackType = ElementalAttackType.Neutral;
+            Stat.DamageMax = _pikeDamage;
+
             _animator.Play("pike");
         }
         private void CannonAttack()
         {
             AttackType = AttackType.Crush;
             ElementalAttackType = ElementalAttackType.Fire;
+            Stat.DamageMax = _cannonDamage;
+
             _cannon.IsAnimatorUpdatingAngle = true;
             _animator.Play("cannon");
         }
