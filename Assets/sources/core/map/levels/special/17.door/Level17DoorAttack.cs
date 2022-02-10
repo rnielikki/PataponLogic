@@ -38,6 +38,7 @@ namespace PataRoad.Core.Map.Levels.Level17Door
             Rhythm.Command.TurnCounter.OnTurn.AddListener(SetTurn);
 
             FindObjectOfType<Rhythm.Command.RhythmCommand>().OnCommandCanceled.AddListener(StopAttacking);
+            StartCoroutine(SpawnEnemy());
         }
         private void CalculateAttack()
         {

@@ -17,7 +17,7 @@ namespace PataRoad.Core.Character
         {
             StartCoroutine(SpawnEnemy());
         }
-        System.Collections.IEnumerator SpawnEnemy()
+        protected System.Collections.IEnumerator SpawnEnemy()
         {
             while (!IsDead)
             {
