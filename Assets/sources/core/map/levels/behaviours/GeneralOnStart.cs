@@ -7,6 +7,8 @@ namespace PataRoad.Core.Map.Levels
     {
         [SerializeField]
         Character.Class.ClassType _classType;
+        [SerializeField]
+        bool _doNotAddAfterClear;
         private void Start()
         {
             var item = Items.ItemLoader.GetItem(Items.ItemType.Key, "Class",
@@ -18,13 +20,16 @@ namespace PataRoad.Core.Map.Levels
             var pataponManager = FindObjectOfType<PataponsManager>();
             var inst = PataponGroupGenerator.GetGeneralOnlyPataponGroupInstance(_classType, pataponManager.transform, pataponManager);
             pataponManager.RegisterGroup(inst.GetComponent<PataponGroup>());
-            MissionPoint.Current.AddMissionEndAction((success) =>
+            if (!_doNotAddAfterClear)
             {
-                if (success)
+                MissionPoint.Current.AddMissionEndAction((success) =>
                 {
-                    Global.GlobalData.CurrentSlot.Inventory.AddItem(item);
-                }
-            });
+                    if (success)
+                    {
+                        Global.GlobalData.CurrentSlot.Inventory.AddItem(item);
+                    }
+                });
+            }
         }
     }
 }

@@ -4,8 +4,7 @@ namespace PataRoad.Core.Character.Animal
 {
     class AttackCollision : MonoBehaviour
     {
-        [SerializeField]
-        AnimalBehaviour _attacker;
+        IAttacker _attacker;
         [SerializeField]
         bool _useAdditionalStat;
         [SerializeField]
@@ -13,6 +12,7 @@ namespace PataRoad.Core.Character.Animal
         private Stat _stat;
         private void Start()
         {
+            _attacker = GetComponentInParent<IAttacker>();
             _stat = _attacker.Stat;
             if (_useAdditionalStat) _stat += _additionalStat;
         }

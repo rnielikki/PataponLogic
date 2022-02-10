@@ -5,7 +5,6 @@ namespace PataRoad.Core.Character
 {
     class CannonStructure : Structure, IAttacker
     {
-        public float CharacterSize { get; private set; }
         private GameObject _weaponInstanceResource;
         private bool _started;
 
@@ -20,6 +19,10 @@ namespace PataRoad.Core.Character
         float _targetAngle;
         float _currentAngle = 359;
         private bool _changingAngle;
+        /// <summary>
+        /// Use animator for updating angle.
+        /// </summary>
+        public bool IsAnimatorUpdatingAngle { get; set; }
 
         [SerializeField]
         float _minPower = 2;
@@ -34,7 +37,6 @@ namespace PataRoad.Core.Character
         private ElementalAttackType _elementalAttackType;
         public ElementalAttackType ElementalAttackType => _elementalAttackType;
 
-
         [SerializeField]
         private int _damage;
 
@@ -46,6 +48,15 @@ namespace PataRoad.Core.Character
         private System.Collections.IEnumerator AnimateAttack()
         {
             yield return new WaitForSeconds(2);
+            ReadyForAttack();
+        }
+        public void StartAttack()
+        {
+            IsAnimatorUpdatingAngle = false;
+            ReadyForAttack();
+        }
+        private void ReadyForAttack()
+        {
             _targetAngle = 360 - Random.Range(_minAngle, _maxAngle);
             _changingAngle = true;
         }
@@ -74,14 +85,20 @@ namespace PataRoad.Core.Character
             base.SetLevel(level, absoluteMaxLevel);
             Stat.DamageMax += level * 2;
         }
+        public void StopAttacking()
+        {
+            IsAnimatorUpdatingAngle = true;
+            StopAllCoroutines();
+            _animator.Play("Idle");
+        }
         public override void Die()
         {
-            StopAllCoroutines();
+            StopAttacking();
             base.Die();
         }
         private void LateUpdate()
         {
-            if (IsDead) return;
+            if (IsDead || IsAnimatorUpdatingAngle) return;
             if (_changingAngle)
             {
                 float angle = _currentAngle;

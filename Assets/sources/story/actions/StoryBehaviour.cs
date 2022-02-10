@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PataRoad.Story.Actions
 {
@@ -75,6 +73,18 @@ namespace PataRoad.Story.Actions
             MoveTowards(position);
             _animator.SetBool("walking", true);
             _animatingWalking = true;
+        }
+        public void Place(float position)
+        {
+            if (_walking)
+            {
+                _walking = false;
+                _animatingWalking = false;
+                _animator.SetBool("walking", false);
+            }
+            var pos = transform.position;
+            pos.x = position;
+            transform.position = pos;
         }
         public void MoveTowards(float position)
         {
