@@ -25,7 +25,7 @@ namespace PataRoad.Core.Character
                 while (_currentCount < _spawnAmount)
                 {
                     yield return new WaitForSeconds(_spawnInterval);
-                    var spawnedObject = Instantiate(_spawnTarget[_index]);
+                    var spawnedObject = Instantiate(_spawnTarget[_index], transform.parent);
                     spawnedObject.transform.position = transform.position;
 
                     var spawned = spawnedObject.GetComponent<Hazorons.Hazoron>();

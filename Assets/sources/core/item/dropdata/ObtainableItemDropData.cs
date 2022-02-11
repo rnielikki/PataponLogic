@@ -10,9 +10,10 @@ namespace PataRoad.Core.Items
         [SerializeField]
         private bool _dropRandomItem;
         [SerializeReference]
-        ItemType _itemType;
+        protected ItemType _itemType;
         [SerializeReference]
         string _itemGroup;
+        protected virtual string ItemGroup => _itemGroup;
         [SerializeReference]
         int _itemIndex;
         [SerializeReference]
@@ -21,7 +22,6 @@ namespace PataRoad.Core.Items
         [SerializeField] //Hey do not change to serializereference
         private ItemDropChances[] _itemDropChances;
         public System.Collections.Generic.IEnumerable<ItemDropChances> ItemDropChances => _itemDropChances;
-
-        public IItem Item => (_dropRandomItem) ? ItemLoader.GetRandomItem(_itemType, _itemIndex, _maxItemIndex) : ItemLoader.GetItem(_itemType, _itemGroup, _itemIndex);
+        public IItem Item => (_dropRandomItem) ? ItemLoader.GetRandomItem(_itemType, _itemIndex, _maxItemIndex) : ItemLoader.GetItem(_itemType, ItemGroup, _itemIndex);
     }
 }

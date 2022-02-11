@@ -32,6 +32,9 @@ namespace PataRoad.SceneLogic.KeymapSettings
         [SerializeField]
         private AudioClip _soundOnLoaded;
 
+        [SerializeField]
+        private UnityEngine.UI.Toggle _resetToggle;
+
         public InstructionWindow Instruction => _instruction;
         private ActionToggleItem _actionToggle;
         public ActionToggleItem CurrentActionToggle => _actionToggle;
@@ -116,16 +119,15 @@ namespace PataRoad.SceneLogic.KeymapSettings
         }
         public void ResetBindings()
         {
-            Common.GameDisplay.ConfirmDialog.Create("All key binding settings are reset.\nYou can't cancel the action once after it's proceeded.\nAre you sure to proceed?")
-                .SetLastSelected(_resetButton.gameObject)
-                .SetOkAction(() =>
-                {
-                    GlobalData.Input.actions.RemoveAllBindingOverrides();
-                    GlobalData.GlobalInputActions.KeyMapModel.ClearAllBindings();
-                    Refresh(true);
-                })
-                .SetTargetToResume(this)
-                .SelectCancel();
+            GlobalData.GlobalInputActions.KeyMapModel.ClearAllBindings();
+
+            if (_resetToggle.isOn) GlobalData.GlobalInputActions.LoadRightPreset();
+            else GlobalData.GlobalInputActions.LoadLeftPreset();
+
+            GlobalData.Input.actions.RemoveAllBindingOverrides();
+
+            Refresh(true);
+            _resetButton.interactable = false;
         }
     }
 }

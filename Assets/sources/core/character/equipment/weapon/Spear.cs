@@ -52,7 +52,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 var velocityRate = _initialVelocity.y / _initialVelocity.x;
                 var yDiff = Mathf.Abs(7 - yDistance);
                 return Mathf.Max((Mathf.Sqrt((yDiff + 0.25f * velocityRate * Mathf.Pow(attackDistance, 2)) / velocityRate) + 0.5f * attackDistance)
-                    - Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Clamp01(yDistance / CharacterEnvironment.MaxYToScan), 0); //just approximation
+                    - (Map.Weather.WeatherInfo.Current.Wind.Magnitude / 3) * Mathf.Clamp01(yDistance / CharacterEnvironment.MaxYToScan), 0); //just approximation
             }
             else
             {

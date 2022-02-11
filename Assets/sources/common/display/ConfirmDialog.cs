@@ -59,6 +59,16 @@ namespace PataRoad.Common.GameDisplay
             dialog._content.text = content;
             return dialog;
         }
+        public ConfirmDialog SetOkButtonText(string text)
+        {
+            _okButton.GetComponentInChildren<Text>().text = text;
+            return this;
+        }
+        public ConfirmDialog SetCancelButtonText(string text)
+        {
+            _cancelButton.GetComponentInChildren<Text>().text = text;
+            return this;
+        }
         public ConfirmDialog AppendText(string content)
         {
             _content.text += "\n" + content;

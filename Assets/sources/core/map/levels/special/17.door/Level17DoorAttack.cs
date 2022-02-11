@@ -13,7 +13,7 @@ namespace PataRoad.Core.Map.Levels.Level17Door
         public AttackType AttackType { get; private set; }
         public ElementalAttackType ElementalAttackType { get; private set; }
         private bool _attacking;
-        private int _index;
+        private int _attackIndex;
         private UnityEngine.Events.UnityAction[] _actions;
 
         [SerializeField]
@@ -38,13 +38,14 @@ namespace PataRoad.Core.Map.Levels.Level17Door
             Rhythm.Command.TurnCounter.OnTurn.AddListener(SetTurn);
 
             FindObjectOfType<Rhythm.Command.RhythmCommand>().OnCommandCanceled.AddListener(StopAttacking);
+            OnDestroy.AddListener(() => MissionPoint.Current.EndMission());
             StartCoroutine(SpawnEnemy());
         }
         private void CalculateAttack()
         {
             _attacking = true;
-            _actions[_index]();
-            _index = (_index + 1) % _actions.Length;
+            _actions[_attackIndex]();
+            _attackIndex = (_attackIndex + 1) % _actions.Length;
         }
         private void AutoAttack()
         {
@@ -111,6 +112,10 @@ namespace PataRoad.Core.Map.Levels.Level17Door
         public override void Die()
         {
             StopAttacking();
+            foreach (var enemy in transform.parent.GetComponentsInChildren<Character.Hazorons.Hazoron>())
+            {
+                enemy.DieWithoutInvoking();
+            }
             base.Die();
         }
 

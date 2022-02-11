@@ -117,7 +117,9 @@ namespace PataRoad.Core.Character
             ClassData.StopAttack(pause);
         }
 
-        public virtual void Die()
+        public virtual void Die() => Die(true);
+        public void DieWithoutInvoking() => Die(false);
+        private void Die(bool invokeAfterDeath)
         {
             if (IsDead) return;
             MarkAsDead();
@@ -132,9 +134,9 @@ namespace PataRoad.Core.Character
                 CharAnimator.PlayDyingAnimation();
                 yield return new WaitForSeconds(1);
                 AfterDie();
-                _onAfterDeath?.Invoke();
                 //Coroutine is root of null evil bc it ignores sync
                 Rhythm.RhythmTimer.Current.OnNext.AddListener(() => Destroy(gameObject));
+                if (invokeAfterDeath) _onAfterDeath?.Invoke();
             }
         }
         protected virtual void BeforeDie()

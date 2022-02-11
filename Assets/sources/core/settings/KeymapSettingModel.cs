@@ -13,6 +13,15 @@ namespace PataRoad.Core.Global.Settings
         [SerializeField]
         List<InputBinding> _newBindings;
         internal IEnumerable<InputBinding> NewBindings => _newBindings;
+
+        [SerializeField]
+        private bool _useLeftPreset;
+        internal bool UseLeftPreset
+        {
+            get => _useLeftPreset;
+            set => _useLeftPreset = value;
+        }
+
         internal KeymapSettingModel()
         {
             _newBindings = new List<InputBinding>();

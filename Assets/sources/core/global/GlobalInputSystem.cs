@@ -20,9 +20,15 @@ namespace PataRoad.Core.Global
         public KeymapSettingModel KeyMapModel { get; private set; }
         public InputAction OkAction { get; }
         public InputAction CancelAction { get; }
-        internal GlobalInputSystem(PlayerInput input)
+
+        private readonly InputActionAsset _leftInputs;
+        private readonly InputActionAsset _rightInputs;
+
+        internal GlobalInputSystem(PlayerInput input, InputActionAsset leftPresets, InputActionAsset rightPresets)
         {
             _input = input;
+            _leftInputs = leftPresets;
+            _rightInputs = rightPresets;
             Load();
             OkAction = _input.actions.FindAction("UI/Submit");
             CancelAction = _input.actions.FindAction("UI/Cancel");
@@ -166,9 +172,17 @@ namespace PataRoad.Core.Global
             if (!string.IsNullOrEmpty(rawAdded))
             {
                 KeyMapModel = JsonUtility.FromJson<KeymapSettingModel>(rawAdded);
+                if (KeyMapModel.UseLeftPreset) _input.actions = _leftInputs;
                 KeyMapModel.LoadBindings(_input);
             }
             else KeyMapModel = new KeymapSettingModel();
+        }
+        public void LoadLeftPreset() => LoadPreset(_leftInputs, false);
+        public void LoadRightPreset() => LoadPreset(_rightInputs, true);
+        private void LoadPreset(InputActionAsset asset, bool right)
+        {
+            _input.actions = asset;
+            KeyMapModel.UseLeftPreset = !right;
         }
         public void Save()
         {

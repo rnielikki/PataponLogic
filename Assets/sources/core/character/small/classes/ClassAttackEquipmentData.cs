@@ -46,6 +46,17 @@ namespace PataRoad.Core.Character.Class
             _nameByEquipmentType.Add(EquipmentType.Gem, "Gem");
         }
         public string GetEquipmentName(EquipmentType type) => _nameByEquipmentType[type];
+        public static string GetRandomEquipmentName(ClassType[] types)
+        {
+            var randomClassIndex = UnityEngine.Random.Range(0, types.Length);
+            var classType = types[randomClassIndex];
+            var data = _map[classType];
+            if (data.ProtectorName == null) return data.WeaponName;
+            else
+            {
+                return (UnityEngine.Random.Range(0, 2) == 0) ? data.WeaponName : data.ProtectorName;
+            }
+        }
         public static (string weapon, string protector) GetWeaponAndProtectorName(ClassType type) => (_map[type].WeaponName, _map[type].ProtectorName);
     }
 }

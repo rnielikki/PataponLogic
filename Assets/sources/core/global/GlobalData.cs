@@ -20,6 +20,12 @@ namespace PataRoad.Core.Global
 
         public static Settings.SettingModel Settings { get; private set; }
 
+        [SerializeField]
+        InputActionAsset _leftInputs;
+        [SerializeField]
+        InputActionAsset _rightInputs;
+
+
         /// <summary>
         /// Loads System data.
         /// </summary>
@@ -35,7 +41,7 @@ namespace PataRoad.Core.Global
 
                 TipIndex = -1;
                 Input = GetComponent<PlayerInput>();
-                GlobalInputActions = new GlobalInputSystem(Input);
+                GlobalInputActions = new GlobalInputSystem(Input, _leftInputs, _rightInputs);
                 Sound = GetComponentInChildren<GlobalSoundSystem>();
 
                 SlotManager = new SlotManager();
