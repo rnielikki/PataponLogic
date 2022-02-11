@@ -26,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2532325534641892927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.14, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8140032568625615674}
@@ -236,18 +236,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 8378003935365819563}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
     _waitingSeconds: 3
     _useLine: 0
     _image: {fileID: 0}
@@ -256,18 +244,6 @@ MonoBehaviour:
   - _events:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8378003935365819563}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 2657574044920147368}
           m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
           m_MethodName: Animate
@@ -324,25 +300,13 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 8378003935365819563}
           m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: angry
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 8378003935365819563}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
           m_MethodName: Walk
           m_Mode: 4
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
-            m_FloatArgument: -30
+            m_FloatArgument: 30
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
@@ -388,6 +352,18 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: Idle
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 8378003935365819563}
+          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
+          m_MethodName: Flip
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
         - m_Target: {fileID: 745066767860951397}
@@ -502,11 +478,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.65
+      value: 12.16
       objectReference: {fileID: 0}
     - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -707,11 +683,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
       propertyPath: m_LocalScale.x
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 13.58
+      value: -1.38
       objectReference: {fileID: 0}
     - target: {fileID: 2615760757173105006, guid: 658000e4b04a7dc4fa87b24b24b56b2c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -952,7 +928,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[2]._content
-      value: Waah... Go away! I'll cry out to the Earthend! And Ton. Chin, Kan will
+      value: Waah... Go away! I'll cry out to the Earthend! And Ton, Chin, Kan will
         prove my innocense!
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
@@ -1927,11 +1903,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
       propertyPath: m_LocalScale.x
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.65
+      value: -5.3100004
       objectReference: {fileID: 0}
     - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
       propertyPath: m_LocalPosition.y
