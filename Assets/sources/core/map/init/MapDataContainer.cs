@@ -33,12 +33,20 @@ namespace PataRoad.Core.Map
 
         public const string MapPath = "Map/Levels/";
 
-        internal MapDataContainer(int index)
+        private MapDataContainer()
         {
-            _mapDataIndex = index;
-            _mapData = LoadResource();
-            _reachedMaxLevel = _level = 1;
-            _weather = new MapWeather(_mapData);
+        }
+        internal static MapDataContainer Create(int index)
+        {
+            var mapData = LoadResource(index);
+            if (mapData == null) return null;
+
+            var mapDataContainer = new MapDataContainer();
+            mapDataContainer._mapData = mapData;
+            mapDataContainer._mapDataIndex = index;
+            mapDataContainer._reachedMaxLevel = mapDataContainer._level = 1;
+            mapDataContainer._weather = new MapWeather(mapData);
+            return mapDataContainer;
         }
         public string GetNameWithLevel()
         {
@@ -67,11 +75,11 @@ namespace PataRoad.Core.Map
             }
         }
         internal bool CanLoadNextLevel() => !MapData.HasLevel || Level >= MapData.LevelRequirementForNext;
-        private MapData LoadResource()
+        private static MapData LoadResource(int index)
         {
-            var mapData = Resources.Load<MapData>(MapPath + _mapDataIndex.ToString());
+            var mapData = Resources.Load<MapData>(MapPath + index.ToString());
             if (mapData == null) return null;
-            mapData.Index = _mapDataIndex;
+            mapData.Index = index;
 
             return mapData;
         }
@@ -85,7 +93,7 @@ namespace PataRoad.Core.Map
         }
         public void LoadDataAfterDeserialization()
         {
-            _mapData = LoadResource();
+            _mapData = LoadResource(_mapDataIndex);
             _weather.LoadWeatherMap(_mapData);
             _level = Mathf.Min(_mapData.GetMaxLevel(), _reachedMaxLevel);
         }

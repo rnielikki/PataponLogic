@@ -67,7 +67,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             newStat.DamageMin *= 3;
             newStat.DamageMax *= 3;
             CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, null, newStat, (_ifFire) ? Color.red : Color.blue)
-                .AddForce(Holder.MovingDirection * 5 * _feverPonponForceMultiplier);
+                .AddForce(Holder.MovingDirection * 15 * _feverPonponForceMultiplier);
         }
         private void ChargeDefend()
         {
@@ -77,7 +77,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 .AddForce(Holder.MovingDirection * 1000 * _forceMultiplier);
         }
         private Rigidbody2D CreateBulletInstance(GameObject targetObject,
-            UnityEngine.Events.UnityAction<Collider2D> groundAction,
+            UnityEngine.Events.UnityAction<Collider2D, Vector2> groundAction,
             UnityEngine.Events.UnityAction<Collider2D> collidingAction,
             Stat stat, Color color)
         {
@@ -101,21 +101,21 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             return instance.GetComponent<Rigidbody2D>();
         }
         //Fever Attack bullet
-        private void MoveBulletOnGround(Collider2D self)
+        private static void MoveBulletOnGround(Collider2D self, Vector2 direction)
         {
-            self.attachedRigidbody.AddForce(Holder.MovingDirection * 200);
+            self.transform.rotation = Quaternion.identity;
+            self.transform.position += Vector3.up * -0.5f;
+            self.attachedRigidbody.AddForce(direction * 200);
             self.attachedRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
             self.attachedRigidbody.gravityScale = 0;
-            self.transform.rotation = Quaternion.identity;
-            self.transform.position += transform.up * -0.5f;
         }
         //Charge Defence bullet
-        private void StopBulletOnGround(Collider2D self)
+        private static void StopBulletOnGround(Collider2D self, Vector2 vector2)
         {
             self.attachedRigidbody.gravityScale = 0;
             self.attachedRigidbody.Sleep();
         }
-        private void PushBack(Collider2D other)
+        private static void PushBack(Collider2D other)
         {
             other.GetComponentInParent<SmallCharacter>()?.StatusEffectManager?.SetKnockback();
         }

@@ -83,7 +83,7 @@ namespace PataRoad.Core.Global
         }
         public void OpenInIndex(int index)
         {
-            if (!_openMaps.ContainsKey(index))
+            if (!_openMaps.ContainsKey(index) && !_closedMaps.Contains(index))
             {
                 _reservedNextMap = LoadResource(index);
                 _progress = Mathf.Max(_progress, index);
@@ -142,8 +142,8 @@ namespace PataRoad.Core.Global
             if (_closedMaps.Contains(index)) return LastMap;
             if (!_openMaps.TryGetValue(index, out MapDataContainer map))
             {
-                map = new MapDataContainer(index);
-                if (map.MapData != null)
+                map = MapDataContainer.Create(index);
+                if (map != null)
                 {
                     _openMaps.Add(index, map);
                 }

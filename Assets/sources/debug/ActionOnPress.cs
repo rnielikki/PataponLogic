@@ -61,6 +61,14 @@ namespace PataRoad.AppDebug
             Story.StoryLoader.Init();
             Story.StoryLoader.LoadStory(_testData);
         }
+        public void OpenAllMaps()
+        {
+            var mapInfo = Core.Global.GlobalData.CurrentSlot.MapInfo;
+            for (int i = 0; i < mapInfo.Progress; i++)
+            {
+                mapInfo.OpenInIndex(i);
+            }
+        }
         public void AddClass()
         {
             //Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Class", 4));

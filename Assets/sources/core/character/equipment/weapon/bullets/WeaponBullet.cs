@@ -20,13 +20,19 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// Defines behaviour when the bullet is grounded. Don't define any destroy instruction, it's on <see cref="_destroyTime"/>
         /// </summary>
         /// <remarks>Collider2D represents the bullet's own collider - ground collider shouldn't affect anything.</remarks>
-        public UnityAction<Collider2D> GroundAction { get; set; }
+        public UnityAction<Collider2D, Vector2> GroundAction { get; set; }
         public UnityAction<Collider2D> CollidingAction { get; internal set; }
+        private Vector2 _direction;
 
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _collider = GetComponent<Collider2D>();
+        }
+        private void SetHolder(SmallCharacter holder)
+        {
+            Holder = holder;
+            _direction = holder.MovingDirection;
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -36,7 +42,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 if (other.tag == "Ground")
                 {
                     _grounded = true;
-                    GroundAction(_collider);
+                    GroundAction(_collider, _direction);
                     StartCoroutine(DestroyAfterTime());
                 }
                 else

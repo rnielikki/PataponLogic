@@ -20,9 +20,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             bullet.transform.position = _startTransform.position;
             bullet.layer = gameObject.layer;
             var bulletScript = bullet.GetComponent<WeaponCannonBullet>();
-            bulletScript.Holder = Holder;
-            bulletScript.enabled = true;
+            bulletScript.Init(Holder);
         }
-        public override float GetAttackDistance() => 10;
+        public override float GetAttackDistance() => 15;
     }
 }

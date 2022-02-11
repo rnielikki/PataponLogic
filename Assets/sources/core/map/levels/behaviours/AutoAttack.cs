@@ -85,10 +85,7 @@ namespace PataRoad.Core.Map.Levels
             var bulletPos = bullet.transform.position;
             bulletPos.x = transform.position.x;
             bullet.transform.position = bulletPos;
-            var bulletScript = bullet.GetComponent<Character.Equipments.Weapons.WeaponCannonBullet>();
-            bulletScript.Holder = this;
-            bulletScript.enabled = true;
-
+            bullet.Init(this);
         }
         private void Update()
         {

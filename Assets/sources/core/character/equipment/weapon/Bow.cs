@@ -36,21 +36,9 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         public override void Attack(AttackCommandType attackCommandType)
         {
             var arrowForThrowing = Instantiate(_copiedArrow, transform.root.parent);
-
-            float minForce, maxForce;
-            if (attackCommandType == AttackCommandType.Defend)
-            {
-                minForce = 1000;
-                maxForce = 1200;
-            }
-            else
-            {
-                minForce = 1200;
-                maxForce = 1500;
-            }
             arrowForThrowing.GetComponent<WeaponInstance>()
                 .Initialize(this, _material, _throwMass, transformOriginal: _arrowTransform)
-                .Throw(minForce, maxForce);
+                .Throw(1200, 1500);
         }
         protected override void LoadRenderersAndImage()
         {

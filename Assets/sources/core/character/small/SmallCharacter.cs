@@ -127,17 +127,12 @@ namespace PataRoad.Core.Character
             {
                 CharAnimator.AnimateFrom("tori-fly-stop");
             }
-            StartCoroutine(WaitUntilDie());
             StatusEffectManager.RecoverAndIgnoreEffect();
-            System.Collections.IEnumerator WaitUntilDie()
-            {
-                CharAnimator.PlayDyingAnimation();
-                yield return new WaitForSeconds(1);
-                AfterDie();
-                //Coroutine is root of null evil bc it ignores sync
-                Rhythm.RhythmTimer.Current.OnNext.AddListener(() => Destroy(gameObject));
-                if (invokeAfterDeath) _onAfterDeath?.Invoke();
-            }
+            CharAnimator.PlayDyingAnimation();
+            Destroy(gameObject, 1);
+
+            AfterDie();
+            if (invokeAfterDeath) _onAfterDeath?.Invoke();
         }
         protected virtual void BeforeDie()
         {

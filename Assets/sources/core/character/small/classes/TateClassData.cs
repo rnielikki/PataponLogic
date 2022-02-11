@@ -56,7 +56,7 @@ namespace PataRoad.Core.Character.Class
             {
                 _animator.Animate("defend-fever");
             }
-            _character.DistanceManager.MoveTo(0.75f, _character.Stat.MovementSpeed, true);
+            _character.DistanceManager.MoveTo(1.5f, _character.Stat.MovementSpeed, true);
         }
         public override void PerformCommandAction(CommandSong song)
         {
