@@ -10,19 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07630dd1bfb8cc54280660ce4f2f085b, type: 3}
-  m_Name: 15
+  m_Name: 15.Helm-Divine
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
   _group: Helm
   _index: 15
-  _name: Divine Mantle
-  _description: The wearer of this is ultimate ruler of the world.
+  _name: Divine Helm
+  _description: The wearer of this helm, the most-honored crown, is ultimate ruler
+    of the world.
   _levelGroup: 9
   _stat:
     rid: 0
   _image: {fileID: 21300000, guid: 0b502b8abbc34ae4f88ed4614df0347e, type: 3}
-  _mass: 0.75
-  _type: 1
+  _mass: 0.8
+  _type: 2
   references:
     version: 2
     RefIds:
@@ -30,7 +31,7 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0
-        _hitPoint: 120
+        _hitPoint: 270
         _defenceMin: 0
         _defenceMax: 0
         _damageMin: 0
@@ -38,20 +39,20 @@ MonoBehaviour:
         _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0
-        _stagger: 0
+        _stagger: 0.2
         _knockback: 0
         _infiniteCriticalResistance: 0
-        _criticalResistance: 0.5
+        _criticalResistance: 0.6
         _infiniteStaggerResistance: 1
         _staggerResistance: 0.5
         _infiniteKnockbackResistance: 0
-        _knockbackResistance: 0.5
+        _knockbackResistance: 0.6
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
-        _infiniteFireResistance: 1
-        _fireResistance: 0.8
+        _infiniteFireResistance: 0
+        _fireResistance: 0.6
         _infiniteIceResistance: 0
-        _iceResistance: 0.8
+        _iceResistance: 0.6
         _infiniteSleepResistance: 0
-        _sleepResistance: 0.8
+        _sleepResistance: 0.6
