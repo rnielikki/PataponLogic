@@ -15,6 +15,9 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         DifficultySettingToggleGroup _toggleGroup;
 
         [SerializeField]
+        Toggle _useMetronome;
+
+        [SerializeField]
         Slider _musicSlider;
         [SerializeField]
         Slider _soundSlider;
@@ -28,8 +31,8 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         [SerializeField]
         GameObject _savingImage;
         private Core.Global.Settings.SettingModel _currentSetting;
-        private bool _isOpen;
 
+        private bool _isOpen;
         private bool _changed;
 
         private void Awake()
@@ -42,6 +45,7 @@ namespace PataRoad.SceneLogic.Main.SettingScene
             gameObject.SetActive(true);
             _currentSetting = Core.Global.GlobalData.Settings.Copy();
             _toggleGroup.Init(_currentSetting);
+            _useMetronome.isOn = _currentSetting.UseMetronome;
             _musicSlider.value = _currentSetting.MusicVolume;
             _soundSlider.value = _currentSetting.SoundVolume;
             _isOpen = true;
@@ -76,6 +80,10 @@ namespace PataRoad.SceneLogic.Main.SettingScene
                 }
                 _currentSetting.SetDifficulty(newValue);
             }
+        }
+        public void SetMetronome(bool isOn)
+        {
+            _currentSetting.UseMetronome = isOn;
         }
         public void SetMusicVolume(float volume)
         {

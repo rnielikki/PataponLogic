@@ -14,6 +14,9 @@ namespace PataRoad.Core.Global.Settings
         [SerializeField]
         float _soundVolume;
         public float SoundVolume { get => _soundVolume; set => _soundVolume = value; }
+        [SerializeField]
+        bool _useMetronome;
+        public bool UseMetronome { get => _useMetronome; set => _useMetronome = value; }
 
         /// <summary>
         /// Loads default values. For loading existing values, Use <see cref="Load"/> instead.
@@ -21,6 +24,7 @@ namespace PataRoad.Core.Global.Settings
         private SettingModel Init()
         {
             SetDifficulty(Rhythm.Difficulty.Normal);
+            _useMetronome = true;
             MusicVolume = 0.75f;
             SoundVolume = 1;
             return this;
@@ -43,6 +47,7 @@ namespace PataRoad.Core.Global.Settings
             {
                 SetDifficulty(model.Difficulty);
             }
+            UseMetronome = model.UseMetronome;
             MusicVolume = model.MusicVolume;
             SoundVolume = model.SoundVolume;
             Save();

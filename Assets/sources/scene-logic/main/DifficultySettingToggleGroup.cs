@@ -39,23 +39,12 @@ namespace PataRoad.SceneLogic.Main.SettingScene
             var toggle = GetToggle(setting.Difficulty);
             GetToggle(setting.Difficulty).SwitchOn(true);
             SetCheckedToggle(toggle);
+            toggle.ResetTextColor();
         }
 
         internal void SetCheckedToggle(DifficultySettingToggle difficultySettingToggle)
         {
             _current = difficultySettingToggle;
-            foreach (var selectable in _elementsOnUp)
-            {
-                var nav = selectable.navigation;
-                nav.selectOnDown = _current.Selectable;
-                selectable.navigation = nav;
-            }
-            foreach (var selectable in _elementsOnDown)
-            {
-                var nav = selectable.navigation;
-                nav.selectOnUp = _current.Selectable;
-                selectable.navigation = nav;
-            }
         }
 
         private DifficultySettingToggle GetToggle(Core.Rhythm.Difficulty difficulty) =>

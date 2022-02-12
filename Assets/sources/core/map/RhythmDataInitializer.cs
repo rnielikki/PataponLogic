@@ -8,6 +8,8 @@ namespace PataRoad.Core.Map
         [SerializeField]
         Rhythm.Command.RhythmCommand _command;
         [SerializeField]
+        Rhythm.RhythmMetronome _metronome;
+        [SerializeField]
         GameObject _songGuideParent;
         [Header("drum guides")]
         [SerializeField]
@@ -32,6 +34,7 @@ namespace PataRoad.Core.Map
                     guide.gameObject.SetActive(false);
                 }
             }
+            if (Global.GlobalData.Settings.UseMetronome) _metronome.StartMetronome();
         }
         void Start()
         {
