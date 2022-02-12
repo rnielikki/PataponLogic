@@ -86,6 +86,11 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     }
                     //--- status effect end
                 }
+                else
+                {
+                    //Dead, no target to attack there anymore, which means considered as "attack miss"
+                    attacker.OnAttackMiss(point);
+                }
             }
         }
         /// <summary>

@@ -36,9 +36,16 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         public override void Attack(AttackCommandType attackCommandType)
         {
             var arrowForThrowing = Instantiate(_copiedArrow, transform.root.parent);
+            float minThrowDistance = 1600;
+            float maxThrowDistance = 1850;
+            if (attackCommandType == AttackCommandType.Defend)
+            {
+                minThrowDistance = 1400;
+                maxThrowDistance = 1700;
+            }
             arrowForThrowing.GetComponent<WeaponInstance>()
                 .Initialize(this, _material, _throwMass, transformOriginal: _arrowTransform)
-                .Throw(1200, 1500);
+                .Throw(minThrowDistance, maxThrowDistance);
         }
         protected override void LoadRenderersAndImage()
         {
@@ -64,10 +71,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 case AttackCommandType.Attack:
                 case AttackCommandType.FeverAttack:
-                    SetInitialVelocity(1350, 60f);
+                    SetInitialVelocity(1550, 60f);
                     break;
                 case AttackCommandType.Defend:
-                    SetInitialVelocity(1100, 45f);
+                    SetInitialVelocity(1200, 45f);
                     break;
             }
         }

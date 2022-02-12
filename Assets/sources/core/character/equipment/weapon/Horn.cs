@@ -36,15 +36,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                     return;
                 case AttackCommandType.Attack:
                     //Attack is called in two times in animation, so doesn't need so many emit count.
-                    startSpeed = 6 * _forceMultiplier;
+                    startSpeed = 11 * _forceMultiplier;
                     emitCount = 5;
                     break;
                 case AttackCommandType.Defend:
-                    startSpeed = 3 * _forceMultiplier;
-                    emitCount = 5;
+                    startSpeed = 10 * _forceMultiplier;
+                    emitCount = 4;
                     break;
                 case AttackCommandType.Charge:
-                    startSpeed = 2 * _forceMultiplier;
+                    startSpeed = 3 * _forceMultiplier;
                     emitCount = 2;
                     break;
                 case AttackCommandType.ChargeDefend:
@@ -67,7 +67,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             newStat.DamageMin *= 3;
             newStat.DamageMax *= 3;
             CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, null, newStat, (_ifFire) ? Color.red : Color.blue)
-                .AddForce(Holder.MovingDirection * 15 * _feverPonponForceMultiplier);
+                .AddForce(Holder.MovingDirection * 50 * _feverPonponForceMultiplier);
         }
         private void ChargeDefend()
         {
@@ -103,11 +103,12 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         //Fever Attack bullet
         private static void MoveBulletOnGround(Collider2D self, Vector2 direction)
         {
-            self.transform.rotation = Quaternion.identity;
-            self.transform.position += Vector3.up * -0.5f;
-            self.attachedRigidbody.AddForce(direction * 200);
             self.attachedRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
             self.attachedRigidbody.gravityScale = 0;
+            self.attachedRigidbody.AddForce(direction * 1000);
+
+            self.transform.rotation = Quaternion.identity;
+            self.transform.position += Vector3.up * -0.5f;
         }
         //Charge Defence bullet
         private static void StopBulletOnGround(Collider2D self, Vector2 vector2)
@@ -130,10 +131,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 case AttackCommandType.Charge:
                 case AttackCommandType.Attack:
-                    return 17.5f + _savedWindValue * 0.5f;
+                    return 15 + _savedWindValue * 0.5f;
                 case AttackCommandType.FeverAttack:
                 case AttackCommandType.Defend:
-                    return 15 + _savedWindValue * 0.5f;
+                    return 10 + _savedWindValue * 0.5f;
                 default:
                     return 0;
             }

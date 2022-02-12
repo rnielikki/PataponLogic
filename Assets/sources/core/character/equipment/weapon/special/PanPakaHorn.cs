@@ -6,8 +6,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     {
         private void Awake()
         {
-            _forceMultiplier = 3;
-            _feverPonponForceMultiplier = 20;
+            _forceMultiplier = 1.5f;
+            _feverPonponForceMultiplier = 2;
         }
     }
 }
