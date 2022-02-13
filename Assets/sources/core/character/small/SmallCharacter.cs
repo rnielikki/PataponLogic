@@ -44,7 +44,8 @@ namespace PataRoad.Core.Character
         public virtual Vector2 MovingDirection { get; }
 
         public string RootName => ClassData.RootName;
-        internal string BodyName => ClassData.RootName + "Patapon-body";
+        public const string CharacterBodyName = "Patapon-body";
+        internal string BodyName => ClassData.RootName + CharacterBodyName;
         public Transform RootTransform { get; private set; }
 
         public bool IsFlyingUnit => ClassData.IsFlyingUnit;

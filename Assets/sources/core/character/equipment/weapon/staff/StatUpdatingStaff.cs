@@ -1,21 +1,23 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
     abstract class StatUpdatingStaff : MonoBehaviour, IStaffActions
     {
-        SmallCharacter _holder;
+        protected Patapons.Patapon _holder { get; private set; }
         bool _isValidPatapon;
-        private Patapons.PataponsManager _manager;
+        protected Patapons.PataponsManager _manager { get; private set; }
         [SerializeField]
-        GameObject _prefabForActivation;
-        private readonly List<Animator> _activationPrefabs = new List<Animator>();
+        protected GameObject _prefabForActivation;
         private bool _performedInThisTurn;
         public void Initialize(SmallCharacter holder)
         {
-            _isValidPatapon = holder is Patapons.Patapon;
-            if (!_isValidPatapon) return;
+            if (holder is Patapons.Patapon patapon)
+            {
+                _holder = patapon;
+                _isValidPatapon = true;
+            }
+            else return;
             _manager = GameObject.FindGameObjectWithTag("Player").GetComponent<Patapons.PataponsManager>();
             if (_manager == null)
             {
@@ -30,9 +32,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 {
                     foreach (var patapon in pataponGroup.Patapons)
                     {
-                        var prefab = Instantiate(_prefabForActivation, patapon.RootTransform);
-                        _activationPrefabs.Add(prefab.GetComponent<Animator>());
-                        prefab.gameObject.SetActive(false);
                         InitEach(patapon);
                     }
                 }
@@ -41,7 +40,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                     if (Rhythm.Command.TurnCounter.IsPlayerTurn)
                     {
                         _performedInThisTurn = false;
-                        OnPerformEnd();
                     }
                 });
             }
@@ -49,10 +47,9 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         protected virtual void InitEach(Patapons.Patapon patapon)
         {
         }
-        protected virtual void OnPerformEnd() { }
         protected void PerformAction()
         {
-            if (!_isValidPatapon || _performedInThisTurn) return;
+            if (!CanPerform()) return;
             _performedInThisTurn = true;
             foreach (var pataponGroup in _manager.Groups)
             {
@@ -61,14 +58,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                     PerformActionEach(patapon);
                 }
             }
-            foreach (var anim in _activationPrefabs)
-            {
-                if (anim?.gameObject == null) continue;
-                anim.gameObject.SetActive(true);
-                anim.Play("Flash");
-            }
+            PerformAnimation();
         }
+        protected virtual void PerformAnimation() { }
         protected abstract void PerformActionEach(Patapons.Patapon patapon);
+        protected bool CanPerform() => _isValidPatapon && !_performedInThisTurn;
         public virtual void NormalAttack()
         {
             PerformAction();

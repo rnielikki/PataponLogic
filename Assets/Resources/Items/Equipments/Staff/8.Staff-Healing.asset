@@ -10,20 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83c7fc9c139ee0446920549ab36b823f, type: 3}
-  m_Name: 0.Staff
+  m_Name: 8.Staff-Healing
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
   _group: Staff
-  _index: 0
-  _name: Staff
-  _description: It does literally nothing, but mahopon just holds it for no reason.
-  _levelGroup: 0
+  _index: 8
+  _name: Healing Staff Y
+  _description: The staff consoles every exhausted soul and cures it. Still normal
+    attack won't do anything with this staff.
+  _levelGroup: 5
   _stat:
     rid: 0
-  _image: {fileID: 21300000, guid: 7f90b48f657d0aa42b4f07424552a009, type: 3}
+  _image: {fileID: 21300000, guid: 4f858478a0b371f4d86ee08e7cd7d9ba, type: 3}
   _mass: 1.2
   _type: 0
-  _additionalPrefab: {fileID: 1450022475118442342, guid: 5cc278e0d04c0bf479c65fd2a10cfe90, type: 3}
+  _additionalPrefab: {fileID: 914274779421459474, guid: 21ecda0cd5c22bf46912f8d89b926222, type: 3}
   references:
     version: 2
     RefIds:
@@ -34,9 +35,9 @@ MonoBehaviour:
         _hitPoint: 0
         _defenceMin: 0
         _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
-        _attackSeconds: 0
+        _damageMin: 3
+        _damageMax: 7
+        _attackSeconds: 0.1
         _movementSpeed: 0
         _critical: 0
         _stagger: 0
