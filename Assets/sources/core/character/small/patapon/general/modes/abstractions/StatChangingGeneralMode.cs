@@ -80,6 +80,7 @@ namespace PataRoad.Core.Character.Patapons.General
             _leftActiveTurnCount = 0;
             foreach (var group in _groups)
             {
+                if (group?.gameObject == null) continue;
                 foreach (var patapon in group.Patapons)
                 {
                     patapon.StatOperator.Remove(_operation);

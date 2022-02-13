@@ -2,12 +2,18 @@
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    public abstract class AttackCollisionStaff : MonoBehaviour, IStaffActions
+    public class AttackCollisionStaff : MonoBehaviour, IStaffActions
     {
         private SmallCharacter _holder;
         private Collider2D _collider;
-        private SpriteRenderer _image;
+        protected SpriteRenderer _image;
         private Stat _stat;
+        [SerializeField]
+        float _minRandomOffset;
+        [SerializeField]
+        float _maxRandomOffset;
+
+        protected float _attackSeconds => Mathf.Min(_stat.AttackSeconds, Rhythm.RhythmEnvironment.TurnSeconds);
 
         public virtual void Initialize(SmallCharacter holder)
         {
@@ -33,19 +39,19 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             PerformAttack();
         }
-        public void SetElementalColor(Color color)
+        public virtual void SetElementalColor(Color color)
         {
             var c = color;
             c.a = _image.color.a;
             _image.color = c;
         }
-        private void PerformAttack()
+        protected virtual void PerformAttack()
         {
             var pos = _holder?.DistanceCalculator?.GetClosestForAttack();
             if (pos == null) return;
             var position = pos.Value;
 
-            position.x += Random.Range(-0.5f, 4.5f);
+            position.x += Random.Range(_minRandomOffset, _maxRandomOffset);
             transform.position = position;
             gameObject.SetActive(true);
 
@@ -53,7 +59,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
             System.Collections.IEnumerator DisappearAfterTime()
             {
-                yield return new WaitForSeconds(Mathf.Min(_stat.AttackSeconds, Rhythm.RhythmEnvironment.TurnSeconds));
+                yield return new WaitForSeconds(_attackSeconds);
                 gameObject.SetActive(false);
             }
         }

@@ -1352,9 +1352,9 @@ MonoBehaviour:
   _hideEquipment: 0
   _defaultEquipmentData: {fileID: 0}
   _attackType: 4
-  _fireColor: {r: 1, g: 0.33636326, b: 0, a: 0}
-  _iceColor: {r: 0.020692414, g: 0.37893465, b: 0.8773585, a: 0}
-  _thunderColor: {r: 1, g: 0.7863294, b: 0, a: 0}
+  _fireColor: {r: 1, g: 0.33636326, b: 0, a: 1}
+  _iceColor: {r: 0.1273585, g: 0.4734321, b: 1, a: 1}
+  _thunderColor: {r: 1, g: 0.7863294, b: 0, a: 1}
 --- !u!1 &6919078307185967884
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,6 +1364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6919078307185967885}
+  - component: {fileID: 4560245982514492242}
   m_Layer: 8
   m_Name: Patapon-body
   m_TagString: Untagged
@@ -1389,6 +1390,21 @@ Transform:
   m_Father: {fileID: 6919078306599530068}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4560245982514492242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6919078307185967884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42950a673da3f334eb46fa41dcbdfce1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fixedEquipment: 0
+  _hideEquipment: 0
+  _defaultEquipmentData: {fileID: 11400000, guid: b95842d0251e14945bc854d7510efe9d, type: 2}
 --- !u!1 &6919078307519388441
 GameObject:
   m_ObjectHideFlags: 0

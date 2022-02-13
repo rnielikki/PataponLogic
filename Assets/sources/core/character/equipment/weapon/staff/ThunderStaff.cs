@@ -14,7 +14,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         public override void Initialize(SmallCharacter holder)
         {
             _particleSystem = GetComponent<ParticleSystem>();
-            transform.parent = transform.root;
             base.Initialize(holder);
         }
         public override void NormalAttack()

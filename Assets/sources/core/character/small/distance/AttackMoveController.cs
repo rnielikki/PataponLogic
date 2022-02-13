@@ -167,7 +167,7 @@ namespace PataRoad.Core.Character
                 {
                     _currentStatusFlag = 2;
                     _moving = true;
-                    StopAttack(false, true);
+                    StopAttack(true, true);
                     _animator.Animate("walk");
                 }
                 MoveTowards(_distanceCalculator.GetSafeForwardPosition(_currentModel.GetPosition()));
