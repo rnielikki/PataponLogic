@@ -6,5 +6,6 @@
         public void NormalAttack();
         public void ChargeAttack();
         public void Defend();
+        public void SetElementalColor(UnityEngine.Color color);
     }
 }

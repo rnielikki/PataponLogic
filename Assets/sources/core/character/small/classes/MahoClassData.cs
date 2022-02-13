@@ -6,7 +6,6 @@ namespace PataRoad.Core.Character.Class
     {
         internal MahoClassData(SmallCharacter character) : base(character)
         {
-            ChargeWithoutMove = true;
             AdditionalSight = 7;
         }
         protected override void InitLateForClass(Stat realStat)

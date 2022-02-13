@@ -19,6 +19,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             Init();
             _targetTransform = transform.Find("Attack");
             _attackParticles = _targetTransform.GetComponent<ParticleDamaging>();
+            _attackParticles.Init(Holder);
             _feverAttackObject = GetWeaponInstance("Mega-FeverAttack");
             _chargeDefenceObject = GetWeaponInstance("Mega-ChargeDefence");
 

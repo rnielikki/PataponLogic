@@ -2,27 +2,21 @@
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
-    public class EyeStaff : MonoBehaviour, IStaffActions
+    public class EyeStaff : AttackCollisionStaff
     {
-        private SmallCharacter _holder;
-        private EyeStaffDamaging _damaging;
-        public void Initialize(SmallCharacter holder)
-        {
-            _holder = holder;
-            _damaging = transform.parent.GetComponentInChildren<EyeStaffDamaging>(true);
-        }
-        public void ChargeAttack()
-        {
-            NormalAttack();
-        }
+        private ParticleSystem _particles;
 
-        public void Defend()
+        public override void Initialize(SmallCharacter holder)
         {
+            _particles = GetComponent<ParticleSystem>();
+            base.Initialize(holder);
         }
-
-        public void NormalAttack()
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            _damaging.Copy(_holder);
+            if (AttackOnTrigger(collision))
+            {
+                _particles.Play();
+            }
         }
     }
 }

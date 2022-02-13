@@ -7,7 +7,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     class StaffData : EquipmentData
     {
         [SerializeField]
-        private GameObject[] _additionalPrefabs;
-        public GameObject[] AdditionalPrefabs => _additionalPrefabs;
+        private GameObject _additionalPrefab;
+        public GameObject AdditionalPrefab => _additionalPrefab;
     }
 }

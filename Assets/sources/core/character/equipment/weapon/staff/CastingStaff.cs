@@ -9,55 +9,44 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     public class CastingStaff : MonoBehaviour, IStaffActions
     {
         private ParticleDamaging _particles;
-        private SmallCharacter _holder;
+        protected SmallCharacter _holder;
+        [Header("EmitAmount info")]
         [SerializeField]
-        Color _fireColor;
+        int _emitAmountOnAttack;
         [SerializeField]
-        Color _iceColor;
+        int _emitSpeedOnAttack;
         [SerializeField]
-        Color _thunderColor;
-        public void Initialize(SmallCharacter holder)
+        int _emitAmountOnChargeAttack;
+        [SerializeField]
+        int _emitSpeedOnChargeAttack;
+        public virtual void Initialize(SmallCharacter holder)
         {
             _particles = GetComponent<ParticleDamaging>();
+            _particles.Init(holder);
             _holder = holder;
+
+            var collision = GetComponent<ParticleSystem>().collision;
+            collision.collidesWith = CharacterTypeDataCollection.GetCharacterDataByType(_holder).AttackTargetLayerMask;
         }
-        private void Start()
+        public virtual void NormalAttack()
         {
-            if (_holder != null) ChangeElementalType(_holder.ElementalAttackType);
+            _particles.Emit(_emitAmountOnAttack, _emitSpeedOnAttack);
         }
-        public void NormalAttack()
+        public virtual void ChargeAttack()
         {
-            _particles.Emit(1, 15);
-        }
-        public void ChargeAttack()
-        {
-            _particles.Emit(3, 20);
+            _particles.Emit(_emitAmountOnChargeAttack, _emitSpeedOnChargeAttack);
         }
 
-        public void Defend()
+        public virtual void Defend()
         {
+            //nothing.
         }
 
-        private void ChangeElementalType(ElementalAttackType attackType)
+        public void SetElementalColor(Color color)
         {
             var particleSystem = GetComponent<ParticleSystem>();
             var main = particleSystem.main;
-
-            switch (attackType)
-            {
-                case ElementalAttackType.Fire:
-                    main.startColor = new ParticleSystem.MinMaxGradient(_fireColor);
-                    break;
-                case ElementalAttackType.Ice:
-                    main.startColor = new ParticleSystem.MinMaxGradient(_iceColor);
-                    break;
-                case ElementalAttackType.Thunder:
-                    main.startColor = new ParticleSystem.MinMaxGradient(_thunderColor);
-                    break;
-                default:
-                    main.startColor = Color.white;
-                    break;
-            }
+            main.startColor = new ParticleSystem.MinMaxGradient(color);
         }
     }
 }

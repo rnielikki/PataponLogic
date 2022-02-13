@@ -15,11 +15,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private ParticleSystem _particleSystem;
         private Stat _stat;
         private System.Collections.Generic.List<ParticleCollisionEvent> _collisionEvents;
-        void Start()
+        public void Init(IAttacker holder)
         {
             _collisionEvents = new System.Collections.Generic.List<ParticleCollisionEvent>();
             _particleSystem = GetComponent<ParticleSystem>();
-            _holder = GetComponentInParent<IAttacker>();
+            _holder = holder;
         }
         public void Emit(int count, float startSpeed)
         {

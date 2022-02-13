@@ -40,42 +40,40 @@ namespace PataRoad.Core.Character
             _boxcastXOffset = _boxSize.x * 0.6f;
         }
         internal static DistanceCalculator GetPataponManagerDistanceCalculator(Patapons.PataponsManager pataponsManager) =>
-            new DistanceCalculator(pataponsManager, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
+            new DistanceCalculator(pataponsManager, CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon).RaycastLayerMask);
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Patapon (also from left to right).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         internal static DistanceCalculator GetPataponDistanceCalculator(Patapons.Patapon target) =>
-            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon).RaycastLayerMask);
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Hazoron (also from right to left).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         internal static DistanceCalculator GetHazoronDistanceCalculator(Hazorons.Hazoron target) =>
-            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("patapons", "bosses"));
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Hazoron).RaycastLayerMask);
         /// <summary>
         /// <see cref="DistanceCalculator"/> for enemy boss (from right to left). Enemy boss represents boss in normal boss killing mission.
         /// </summary>
         /// <param name="target">The boss, as enemy. ("from")</param>
         internal static DistanceCalculator GetBossDistanceCalculator(Bosses.EnemyBoss target) =>
-            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("patapons", "hazorons"));
-
-        internal static DistanceCalculator GetNonPataHazoDistanceCalculator(ICharacter target) =>
-            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("patapons", "hazorons"));
-
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others).RaycastLayerMask);
         /// <summary>
         /// <see cref="DistanceCalculator"/> for summoned boss (from left to right).
         /// </summary>
         /// <param name="target">The summoned boss. ("from")</param>
         internal static DistanceCalculator GetBossDistanceCalculator(Bosses.SummonedBoss target) =>
-            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("structures", "hazorons", "bosses"));
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon).RaycastLayerMask);
+        internal static DistanceCalculator GetNonPataHazoDistanceCalculator(ICharacter target) =>
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others).RaycastLayerMask);
 
         /// <summary>
         /// <see cref="DistanceCalculator"/> for huntable animal (move direction changing).
         /// </summary>
         /// <param name="target">The animal that can hunt.</param>
         internal static DistanceCalculator GetAnimalDistanceCalculator(Animal.AnimalBehaviour target) =>
-            new DistanceCalculator(target, UnityEngine.LayerMask.GetMask("patapons", "hazorons"));
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others).RaycastLayerMask);
 
 
         /// <summary>

@@ -8,6 +8,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private IStaffActions _staffAction;
         protected override float _throwMass => 0.1f;
         public override bool IsTargetingCenter => true;
+
+        [SerializeField]
+        Color _fireColor;
+        [SerializeField]
+        Color _iceColor;
+        [SerializeField]
+        Color _thunderColor;
+
         private void Start()
         {
             Init();
@@ -15,7 +23,13 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 _staffAction = GetComponentInChildren<IStaffActions>();
             }
-            if (Holder != null) _staffAction.Initialize(Holder);
+            if (Holder != null)
+            {
+                _staffAction.Initialize(Holder);
+                _staffAction.SetElementalColor(LoadElementalColor(Holder.ElementalAttackType));
+            }
+            (_staffAction as MonoBehaviour).gameObject.layer
+                = CharacterTypeDataCollection.GetCharacterDataByType(Holder).AttackLayer;
         }
         public override void Attack(AttackCommandType attackCommandType)
         {
@@ -43,15 +57,20 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
             _staffAction = null;
 
-            foreach (var gameObj in (equipmentData as StaffData).AdditionalPrefabs)
-            {
-                var ins = Instantiate(gameObj, transform);
-                var staffData = ins.GetComponent<IStaffActions>();
-                //GetComponentInChldren<> doesn't work in some reason...
-                if (staffData != null) _staffAction = staffData;
-            }
+            var ins = Instantiate((equipmentData as StaffData).AdditionalPrefab, transform);
+            var staffData = ins.GetComponent<IStaffActions>();
+            //GetComponentInChldren<> doesn't work in some reason...
+            if (staffData != null) _staffAction = staffData;
+
             if (Holder != null) _staffAction?.Initialize(Holder);
         }
+        private Color LoadElementalColor(ElementalAttackType elementalAttack) => elementalAttack switch
+        {
+            ElementalAttackType.Fire => _fireColor,
+            ElementalAttackType.Ice => _iceColor,
+            ElementalAttackType.Thunder => _thunderColor,
+            _ => Color.white
+        };
         public override float GetAttackDistance() => 22;
     }
 }

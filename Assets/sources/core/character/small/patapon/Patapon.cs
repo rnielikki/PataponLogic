@@ -103,7 +103,11 @@ namespace PataRoad.Core.Character.Patapons
         public void MoveOnDrum(string drumName)
         {
             StopAttacking(true);
-            if (LastSong != CommandSong.Ponpon && LastSong != CommandSong.Chakachaka) DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
+            if (LastSong != CommandSong.Ponpon && LastSong != CommandSong.Chakachaka
+                && !Charged)
+            {
+                DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
+            }
             CharAnimator.Animate(drumName);
         }
 
@@ -231,10 +235,6 @@ namespace PataRoad.Core.Character.Patapons
         protected void Charge()
         {
             CharAnimator.Animate("charge");
-            if (!ClassData.ChargeWithoutMove)
-            {
-                DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
-            }
         }
 
         /// <summary>

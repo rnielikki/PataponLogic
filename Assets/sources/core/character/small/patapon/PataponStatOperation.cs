@@ -44,7 +44,8 @@ namespace PataRoad.Core.Character.Patapons
             }
             if (charged)
             {
-                input.MovementSpeed *= 1.5f;
+                input.MovementSpeed = 18;
+                input.AttackSeconds = UnityEngine.Mathf.Min(2, input.AttackSeconds);
             }
             return input;
         }

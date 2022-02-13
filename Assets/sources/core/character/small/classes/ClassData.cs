@@ -40,7 +40,6 @@ namespace PataRoad.Core.Character.Class
         /// </summary>
         public string RootName { get; protected set; } = "";
         public bool IsFlyingUnit { get; protected set; }
-        public bool ChargeWithoutMove { get; protected set; }
 
         protected int _attackType;
 

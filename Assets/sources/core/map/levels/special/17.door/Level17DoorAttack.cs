@@ -27,6 +27,7 @@ namespace PataRoad.Core.Map.Levels.Level17Door
         {
             _cannon = GetComponentInChildren<CannonStructure>();
             _bullets = GetComponentsInChildren<ParticleDamaging>();
+            foreach (var bullet in _bullets) bullet.Init(this);
             _actions = new UnityEngine.Events.UnityAction[]
             {
                 PikeAttack,
