@@ -251,7 +251,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         protected void Party()
         {
-            StatusEffectManager.Recover();
+            StatusEffectManager.RecoverAndIgnoreEffect();
             CharAnimator.Animate("party");
             DistanceManager.MoveToInitialPlace(Stat.MovementSpeed);
         }

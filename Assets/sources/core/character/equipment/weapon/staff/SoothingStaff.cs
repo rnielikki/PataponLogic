@@ -16,7 +16,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
         protected override void PerformActionEach(Patapon patapon)
         {
-            patapon.StatusEffectManager.Recover();
+            patapon.StatusEffectManager.RecoverAndIgnoreEffect();
         }
         protected override void PerformAnimation()
         {

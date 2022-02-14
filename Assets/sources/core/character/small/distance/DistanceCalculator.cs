@@ -12,6 +12,7 @@ namespace PataRoad.Core.Character
         protected readonly IDistanceCalculatable _character;
         protected readonly GameObject _target;
         public int LayerMask { get; }
+        public int AttackLayerMask { get; }
         protected readonly Vector2 _direction;
         protected readonly float _xDirection;
         private readonly float _size;
@@ -26,54 +27,55 @@ namespace PataRoad.Core.Character
         /// </summary>
         /// <param name="character">The target character. ("from")</param>
         /// <param name="layerMask">Masks of layers to detect. ("to") Get this value using <see cref="UnityEngine.LayerMask"/>.</param>
-        private DistanceCalculator(IDistanceCalculatable character, int layerMask)
+        private DistanceCalculator(IDistanceCalculatable character, CharacterTypeData data)
         {
             _character = character;
             _size = (character as SmallCharacter)?.CharacterSize ?? 0;
             _target = (character as MonoBehaviour)?.gameObject;
             _direction = _character.MovingDirection;
             _xDirection = _direction.x;
-            LayerMask = layerMask;
+            LayerMask = data.RaycastLayerMask;
+            AttackLayerMask = data.AttackTargetLayerMask;
 
             _boxSize = new Vector2(0.001f, CharacterEnvironment.MaxYToScan);
             _boxcastYOffset = (_boxSize.y / 2) * Vector2.up;
             _boxcastXOffset = _boxSize.x * 0.6f;
         }
         internal static DistanceCalculator GetPataponManagerDistanceCalculator(Patapons.PataponsManager pataponsManager) =>
-            new DistanceCalculator(pataponsManager, CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon).RaycastLayerMask);
+            new DistanceCalculator(pataponsManager, CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Patapon (also from left to right).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         internal static DistanceCalculator GetPataponDistanceCalculator(Patapons.Patapon target) =>
-            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon).RaycastLayerMask);
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for Hazoron (also from right to left).
         /// </summary>
         /// <param name="target">The target game object. ("from")</param>
         internal static DistanceCalculator GetHazoronDistanceCalculator(Hazorons.Hazoron target) =>
-            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Hazoron).RaycastLayerMask);
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Hazoron));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for enemy boss (from right to left). Enemy boss represents boss in normal boss killing mission.
         /// </summary>
         /// <param name="target">The boss, as enemy. ("from")</param>
         internal static DistanceCalculator GetBossDistanceCalculator(Bosses.EnemyBoss target) =>
-            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others).RaycastLayerMask);
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others));
         /// <summary>
         /// <see cref="DistanceCalculator"/> for summoned boss (from left to right).
         /// </summary>
         /// <param name="target">The summoned boss. ("from")</param>
         internal static DistanceCalculator GetBossDistanceCalculator(Bosses.SummonedBoss target) =>
-            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon).RaycastLayerMask);
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon));
         internal static DistanceCalculator GetNonPataHazoDistanceCalculator(ICharacter target) =>
-            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others).RaycastLayerMask);
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others));
 
         /// <summary>
         /// <see cref="DistanceCalculator"/> for huntable animal (move direction changing).
         /// </summary>
         /// <param name="target">The animal that can hunt.</param>
         internal static DistanceCalculator GetAnimalDistanceCalculator(Animal.AnimalBehaviour target) =>
-            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others).RaycastLayerMask);
+            new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others));
 
 
         /// <summary>
@@ -153,19 +155,19 @@ namespace PataRoad.Core.Character
         public IEnumerable<IAttackable> GetAllGroundedTargets()
         {
             var all = Physics2D.BoxCastAll(
-                (Vector2)_target.transform.position - CharacterEnvironment.OriginalSight * Vector2.right,
-                new Vector2(0.1f, 1), 0, Vector2.right,
-                CharacterEnvironment.OriginalSight * 2, LayerMask);
+                (Vector2)_target.transform.position - CharacterEnvironment.OriginalSight * Vector2.right - 3 * Vector2.up,
+                new Vector2(0.1f, 7), 0, Vector2.right,
+                CharacterEnvironment.OriginalSight * 2, AttackLayerMask);
             return all.Select(res => res.collider.GetComponentInParent<IAttackable>()).Where(value => value != null);
         }
         public IEnumerable<Collider2D> GetAllAbsoluteTargetsOnFront()
         {
-            var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, CharacterEnvironment.OriginalSight, LayerMask);
+            var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, CharacterEnvironment.OriginalSight, AttackLayerMask);
             return all.Select(res => res.collider).Where(value => value?.gameObject != null);
         }
         public IEnumerable<Collider2D> GetAllTargetsOnFront()
         {
-            var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, _character.Sight, LayerMask);
+            var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, _character.Sight, AttackLayerMask);
             return all.Select(res => res.collider).Where(value => value?.gameObject != null);
         }
 
