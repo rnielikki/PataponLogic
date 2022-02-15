@@ -8,9 +8,9 @@
             Init();
             IsBigTarget = true;
         }
-        protected override void StopEverythingBeforeStatusEffect()
+        protected override void StopEverythingBeforeStatusEffect(StatusEffectType type)
         {
-            if (!_isOnFire)
+            if (type != StatusEffectType.Fire)
             {
                 _character.StopAttacking(false);
             }
@@ -28,7 +28,7 @@
 
         protected override void OnKnockback()
         {
-            StopEverythingBeforeStatusEffect();
+            StopEverythingBeforeStatusEffect(StatusEffectType.Knockback);
             _character.CharAnimator.Animate("Knockback");
             CurrentStatusEffect = StatusEffectType.Knockback;
             StartCoroutine(WaitForRecovery(8));

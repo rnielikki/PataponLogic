@@ -15,7 +15,7 @@ namespace PataRoad.Core.Character
             base.Init();
             _character = _target as ICharacter;
         }
-        protected override void StopEverythingBeforeStatusEffect()
+        protected override void StopEverythingBeforeStatusEffect(StatusEffectType type)
         {
             _character.StopAttacking(false);
             (_character as MonoBehaviour)?.StopAllCoroutines();
@@ -23,7 +23,7 @@ namespace PataRoad.Core.Character
         public override void SetIce(float time)
         {
             if (!IsValidForStatusEffect(time) || time < 1) return;
-            StopEverythingBeforeStatusEffect();
+            StopEverythingBeforeStatusEffect(StatusEffectType.Ice);
             LoadEffectObject(StatusEffectType.Ice);
             base.SetIce(time);
 
@@ -41,7 +41,7 @@ namespace PataRoad.Core.Character
         public override void SetSleep(float time)
         {
             if (!IsValidForStatusEffect(time)) return;
-            StopEverythingBeforeStatusEffect();
+            StopEverythingBeforeStatusEffect(StatusEffectType.Sleep);
             base.SetSleep(time);
             _character.CharAnimator.Animate("Sleep");
 
@@ -59,7 +59,7 @@ namespace PataRoad.Core.Character
         public override void SetStagger()
         {
             if (!IsValidForStatusEffect(1)) return;
-            StopEverythingBeforeStatusEffect();
+            StopEverythingBeforeStatusEffect(StatusEffectType.Stagger);
             base.SetStagger();
             _character.CharAnimator.Animate("Stagger");
             StartCoroutine(WaitForRecovery(1));

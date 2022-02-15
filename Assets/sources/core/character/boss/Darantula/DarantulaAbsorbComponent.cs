@@ -35,9 +35,11 @@ namespace PataRoad.Core.Character.Bosses
                 var patapon = collision.gameObject.GetComponentInParent<Patapons.Patapon>();
                 if (patapon != null)
                 {
+                    _darantula.Heal(patapon.CurrentHitPoint);
                     patapon.BeTaken();
                     GameSound.SpeakManager.Current.Play(patapon.Sounds.OnDead);
-                    patapon.transform.parent = transform;
+                    patapon.transform.SetParent(transform);
+                    patapon.transform.localPosition = new Vector3(3, -1, 0);
                     _pataponEaten = true;
 
                     _darantula.SetAbsorbHit();

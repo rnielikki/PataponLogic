@@ -30,7 +30,7 @@ namespace PataRoad.Core.Character
                 return;
             }
             _totalTime = time;
-            StopEverythingBeforeStatusEffect();
+            StopEverythingBeforeStatusEffect(StatusEffectType.Fire);
             OnStatusEffect?.Invoke(StatusEffectType.Fire);
 
             StartCoroutine(FireDamage());

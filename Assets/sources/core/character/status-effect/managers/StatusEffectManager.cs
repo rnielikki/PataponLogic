@@ -7,7 +7,7 @@ namespace PataRoad.Core.Character
     public class StatusEffectManager : MonoBehaviour
     {
         protected IAttackable _target;
-        public bool IsOnStatusEffect => CurrentStatusEffect == StatusEffectType.None;
+        public bool IsOnStatusEffect => CurrentStatusEffect != StatusEffectType.None;
         public bool IgnoreStatusEffect { get; set; }
         protected bool _isOnFire => CurrentStatusEffect == StatusEffectType.Fire;
 
@@ -50,7 +50,7 @@ namespace PataRoad.Core.Character
         {
             if (IsOnStatusEffect || time < 1 || IgnoreStatusEffect) return;
             OnStatusEffect?.Invoke(StatusEffectType.Fire);
-            StopEverythingBeforeStatusEffect();
+            StopEverythingBeforeStatusEffect(StatusEffectType.Fire);
 
             StartCoroutine(FireDamage());
             OnFire();
@@ -116,7 +116,7 @@ namespace PataRoad.Core.Character
             //can be resized if big, I guess
             _effectObject = _effectInstantiator.AttachEffect(type, _transform, IsBigTarget);
         }
-        protected virtual void StopEverythingBeforeStatusEffect()
+        protected virtual void StopEverythingBeforeStatusEffect(StatusEffectType type)
         {
             (_target as MonoBehaviour)?.StopAllCoroutines();
         }

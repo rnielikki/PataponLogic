@@ -14,6 +14,8 @@ namespace PataRoad.Core.Character.Patapons
         private System.Collections.Generic.List<Patapon> _patapons;
         private System.Collections.Generic.List<PataponGroup> _groups;
         public System.Collections.Generic.IEnumerable<PataponGroup> Groups => _groups;
+        private readonly System.Collections.Generic.List<Class.ClassType> _classes = new System.Collections.Generic.List<Class.ClassType>();
+        public System.Collections.Generic.IEnumerable<Class.ClassType> CurrentClasses => _classes;
         //--- this should be general but temp value for position and patapata test
         private bool _isAlreadyIdle;
         public int PataponCount => _patapons.Count;
@@ -106,6 +108,7 @@ namespace PataRoad.Core.Character.Patapons
                 _patapons.Add(pon);
             }
             _groups.Add(group);
+            _classes.Add(group.ClassType);
         }
         public void SendGeneralMode(RhythmCommandModel model)
         {
@@ -180,6 +183,28 @@ namespace PataRoad.Core.Character.Patapons
                 }
             }
         }
+        public bool IsAllMelee()
+        {
+            foreach (var group in _groups)
+            {
+                var firstPon = group.FirstPon;
+                if (firstPon == null) continue;
+                if (!group.FirstPon.IsMeleeUnit) return false;
+            }
+            return true;
+        }
+        public bool ContainsClass(Class.ClassType type)
+        {
+            foreach (var group in _groups)
+            {
+                if (group.ClassType == type) return true;
+            }
+            return false;
+        }
+        public bool ContainsClassOnly(Class.ClassType type)
+        {
+            return _groups.Count == 1 && _groups[0].ClassType == type;
+        }
         public void RemoveGroup(PataponGroup group)
         {
             var index = _groups.IndexOf(group);
@@ -197,6 +222,7 @@ namespace PataRoad.Core.Character.Patapons
                     _groups[i].MoveTo(i - 1, index > 0);
                 }
                 _groups.Remove(group);
+                _classes.Remove(group.ClassType);
                 Destroy(group.gameObject);
             }
         }

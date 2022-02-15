@@ -84,6 +84,11 @@ namespace PataRoad.Core.Character.Bosses
         {
             Stat.HitPoint = CurrentHitPoint = point;
         }
+        public void Heal(int amount)
+        {
+            CurrentHitPoint = Mathf.Min(CurrentHitPoint + amount, Stat.HitPoint);
+            OnDamageTaken.Invoke(CurrentHitPoint);
+        }
         public virtual float GetAttackValueOffset() => Random.Range(BossAttackData.MinLastDamageOffset, BossAttackData.MinLastDamageOffset);
         public virtual float GetDefenceValueOffset() => Random.Range(0, 1);
         public virtual void OnAttackHit(Vector2 point, int damage)

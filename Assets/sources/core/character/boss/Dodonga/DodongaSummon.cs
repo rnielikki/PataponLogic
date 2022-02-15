@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace PataRoad.Core.Character.Bosses
+﻿namespace PataRoad.Core.Character.Bosses
 {
     internal class DodongaSummon : SummonedBoss
     {

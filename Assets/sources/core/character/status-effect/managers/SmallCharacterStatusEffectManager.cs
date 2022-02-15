@@ -57,7 +57,7 @@ namespace PataRoad.Core.Character
         {
             //check "is grounded" but how?
             if (IsOnStatusEffect || IgnoreStatusEffect) return;
-            StopEverythingBeforeStatusEffect();
+            StopEverythingBeforeStatusEffect(StatusEffectType.Tumble);
             _smallCharacter.CharAnimator.Animate("Sleep");
             base.Tumble();
             ActivateRigidbody();
@@ -92,9 +92,9 @@ namespace PataRoad.Core.Character
             _rigidbody.AddForce(new Vector2(-_xDirection * 2400, 2200));
             _onKnockback = true;
         }
-        protected override void StopEverythingBeforeStatusEffect()
+        protected override void StopEverythingBeforeStatusEffect(StatusEffectType type)
         {
-            base.StopEverythingBeforeStatusEffect();
+            base.StopEverythingBeforeStatusEffect(type);
             _positionOnStatusEffect = transform.position;
         }
 
@@ -106,27 +106,20 @@ namespace PataRoad.Core.Character
         }
         private void Update()
         {
-            if (IsOnStatusEffect && !_smallCharacter.IsFixedPosition)
+            if (IsOnStatusEffect && !_smallCharacter.IsFixedPosition && _isOnFire)
             {
-                if (_isOnFire)
-                {
-                    var offset = _smallCharacter.Stat.MovementSpeed * 1.5f * Time.deltaTime * _movingDirectionOnFire;
-                    var pos = transform.position + (Vector3)offset;
+                var offset = _smallCharacter.Stat.MovementSpeed * 1.5f * Time.deltaTime * _movingDirectionOnFire;
+                var pos = transform.position + (Vector3)offset;
 
-                    if (_xDirection * _positionOnStatusEffect.x - CharacterEnvironment.DodgeDistance > _xDirection * pos.x
-                        || _xDirection * _positionOnStatusEffect.x < _xDirection * pos.x)
-                    {
-                        _movingDirectionOnFire = -_movingDirectionOnFire;
-                        transform.position -= (Vector3)offset;
-                    }
-                    else
-                    {
-                        transform.position = pos;
-                    }
-                }
-                else if (!_isRigidbodyActive)
+                if (_xDirection * _positionOnStatusEffect.x - CharacterEnvironment.DodgeDistance > _xDirection * pos.x
+                    || _xDirection * _positionOnStatusEffect.x < _xDirection * pos.x)
                 {
-                    //transform.position = _positionOnStatusEffect;
+                    _movingDirectionOnFire = -_movingDirectionOnFire;
+                    transform.position -= (Vector3)offset;
+                }
+                else
+                {
+                    transform.position = pos;
                 }
             }
         }
