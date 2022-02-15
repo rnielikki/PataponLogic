@@ -1,32 +1,32 @@
 ﻿using UnityEngine;
 
-namespace PataRoad.Core.Character.Animal
+namespace PataRoad.Core.Character.Bosses
 {
-    class ParticleAttackCollision : MonoBehaviour
+    class BossParticleCollision : BossAttackComponent
     {
-        private ICharacter _attacker;
         private ParticleSystem _particleSystem;
-        private Stat _stat;
-        [SerializeField]
-        private bool _useAdditionalStat;
-        [SerializeField]
-        private Stat _additionalStat;
         private System.Collections.Generic.List<ParticleCollisionEvent> _collisionEvents;
+        private void Awake()
+        {
+            Init();
+            _particleSystem = GetComponent<ParticleSystem>();
+            _collisionEvents = new System.Collections.Generic.List<ParticleCollisionEvent>();
+        }
         void Start()
         {
             _collisionEvents = new System.Collections.Generic.List<ParticleCollisionEvent>();
             _particleSystem = GetComponent<ParticleSystem>();
-            _attacker = GetComponentInParent<ICharacter>();
-
-            _stat = _attacker.Stat;
-            if (_useAdditionalStat) _stat += _additionalStat;
+        }
+        public void Attack()
+        {
+            _particleSystem.Play();
         }
         private void OnParticleCollision(GameObject other)
         {
             int collisionCount = _particleSystem.GetCollisionEvents(other, _collisionEvents);
             for (int i = 0; i < collisionCount; i++)
             {
-                Equipments.Logic.DamageCalculator.DealDamage(_attacker, _stat, other, _collisionEvents[i].intersection, true);
+                _boss.Attack(this, other, _collisionEvents[i].intersection, _attackType, _elementalAttackType, false);
             }
         }
     }

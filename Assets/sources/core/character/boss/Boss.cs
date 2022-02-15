@@ -69,6 +69,7 @@ namespace PataRoad.Core.Character.Bosses
         public virtual void Die()
         {
             IsDead = true;
+            BossAttackData.StopAllAttacking();
             foreach (var component in GetComponentsInChildren<Collider2D>())
             {
                 component.enabled = false;

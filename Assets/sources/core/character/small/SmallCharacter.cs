@@ -120,7 +120,7 @@ namespace PataRoad.Core.Character
         public void TumbleAttack() => StatusEffectManager.TumbleAttack();
         public virtual void Die() => Die(true);
         public void DieWithoutInvoking() => Die(false);
-        protected void Die(bool invokeAfterDeath, bool animate = true, int delay = 1)
+        protected void Die(bool invokeAfterDeath, bool animate = true, float delay = 1)
         {
             if (IsDead) return;
             MarkAsDead();

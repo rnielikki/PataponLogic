@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character.Bosses
     class DarantulaAttack : BossAttackData
     {
         [SerializeField]
-        private BossAttackParticle Poison;
+        private BossParticleCollision Poison;
         [SerializeField]
         private DarantulaAbsorbComponent Absorber;
 
@@ -23,8 +23,8 @@ namespace PataRoad.Core.Character.Bosses
         }
         public override void StopAllAttacking()
         {
-            base.StopAllAttacking();
             Absorber.StopAttacking();
+            base.StopAllAttacking();
         }
         internal override void UpdateStatForBoss(int level)
         {

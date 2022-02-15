@@ -21,5 +21,17 @@
         {
             CharAnimator.Animate("tailwhip");
         }
+        private void Awake()
+        {
+            Init();
+        }
+        private void Start()
+        {
+            Map.Weather.WeatherInfo.Current.ChangeWeather(Map.Weather.WeatherType.Fog);
+        }
+        private void OnDestroy()
+        {
+            Map.Weather.WeatherInfo.Current?.EndChangingWeather();
+        }
     }
 }

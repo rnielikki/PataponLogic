@@ -147,7 +147,7 @@ namespace PataRoad.Core.Character
         protected void Update()
         {
             if (_smallCharacter.IsFixedPosition) return;
-            if (_smallCharacter.StatusEffectManager.IsOnStatusEffect)
+            if (_smallCharacter.StatusEffectManager.IsOnStatusEffect || _smallCharacter.IsDead)
             {
                 _isMoving = false;
                 return;

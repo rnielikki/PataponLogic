@@ -17,22 +17,15 @@
         {
             if (_pataponsManager.ContainsClassOnly(Class.ClassType.Toripon))
             {
-                return ("tailwhip", 10);
-            }
-            if (_level >= 10)
-            {
-                if (Common.Utils.RandomByProbability(_level * 0.05f))
-                {
-                    return ("tailslide", 0);
-                }
-                else if (Common.Utils.RandomByProbability(1 - _level * 0.05f))
-                {
-                    return ("tailwhip", 0);
-                }
-            }
-            if (_pataponsManager.IsAllMelee() || Common.Utils.RandomByProbability(0.4f + _level * 0.05f))
-            {
                 return ("tailwhip", 0);
+            }
+            if (_pataponsManager.IsAllMelee())
+            {
+                return (WhipOrSlide(), 0);
+            }
+            if (Common.Utils.RandomByProbability(0.2f + _level * 0.05f))
+            {
+                return ("absorb", 0);
             }
             if (Common.Utils.RandomByProbability(0.2f - _level * 0.04f))
             {
@@ -40,7 +33,22 @@
             }
             else
             {
-                return ("absorb", 0);
+                return (WhipOrSlide(), 0);
+            }
+        }
+        private string WhipOrSlide()
+        {
+            if (_level < 10) return "tailwhip";
+            else
+            {
+                if (Common.Utils.RandomByProbability(_level * 0.035f))
+                {
+                    return "tailslide";
+                }
+                else
+                {
+                    return "tailwhip";
+                }
             }
         }
 

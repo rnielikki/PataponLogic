@@ -106,7 +106,7 @@ namespace PataRoad.Core.Character
         }
         private void Update()
         {
-            if (IsOnStatusEffect && !_smallCharacter.IsFixedPosition && _isOnFire)
+            if (IsOnStatusEffect && !_smallCharacter.IsFixedPosition && _isOnFire && !_character.IsDead)
             {
                 var offset = _smallCharacter.Stat.MovementSpeed * 1.5f * Time.deltaTime * _movingDirectionOnFire;
                 var pos = transform.position + (Vector3)offset;
@@ -125,7 +125,7 @@ namespace PataRoad.Core.Character
         }
         private void LateUpdate()
         {
-            if (_isRigidbodyActive)
+            if (_isRigidbodyActive && !_character.IsDead)
             {
                 var pos = transform.position;
                 pos.x = Mathf.Clamp(pos.x,

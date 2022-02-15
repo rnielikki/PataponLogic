@@ -50,7 +50,7 @@ namespace PataRoad.Core.Character.Patapons
         public void BeTaken()
         {
             Eaten = true;
-            Die(true, false, 1);
+            Die(true, false, 1.5f);
         }
 
         protected override void BeforeDie()

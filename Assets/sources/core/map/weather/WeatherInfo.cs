@@ -18,6 +18,7 @@ namespace PataRoad.Core.Map.Weather
         private System.Collections.Generic.Dictionary<WeatherType, IWeatherData> _weatherTypeDataMap;
         public float FireRateMultiplier { get; set; } = 1;
         public float IceRateMultiplier { get; set; } = 1;
+        public UnityEngine.Events.UnityEvent<WeatherType> OnWeatherChanged { get; } = new UnityEngine.Events.UnityEvent<WeatherType>();
 
         public AudioSource AudioSource { get; private set; }
         private bool _wasPlaying;
@@ -53,6 +54,7 @@ namespace PataRoad.Core.Map.Weather
             }
             _currentWeather = _weatherTypeDataMap[type];
             _currentWeather?.OnWeatherStarted(firstInit);
+            OnWeatherChanged.Invoke(type);
         }
         public void EndChangingWeather()
         {
