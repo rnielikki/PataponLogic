@@ -7,9 +7,9 @@ namespace PataRoad.Core.Character
     public class StatusEffectManager : MonoBehaviour
     {
         protected IAttackable _target;
-        public bool IsOnStatusEffect { get; protected set; }
+        public bool IsOnStatusEffect => CurrentStatusEffect == StatusEffectType.None;
         public bool IgnoreStatusEffect { get; set; }
-        protected bool _isOnFire;
+        protected bool _isOnFire => CurrentStatusEffect == StatusEffectType.Fire;
 
         protected Transform _transform;
 
@@ -21,6 +21,8 @@ namespace PataRoad.Core.Character
         internal bool IsBigTarget { get; set; }
 
         private UnityEngine.Events.UnityEvent<StatusEffectType> _onStatusEffect;
+        public StatusEffectType CurrentStatusEffect { get; protected set; }
+
         public UnityEngine.Events.UnityEvent<StatusEffectType> OnStatusEffect
         {
             get
@@ -47,7 +49,6 @@ namespace PataRoad.Core.Character
         public virtual void SetFire(float time)
         {
             if (IsOnStatusEffect || time < 1 || IgnoreStatusEffect) return;
-            _isOnFire = true;
             OnStatusEffect?.Invoke(StatusEffectType.Fire);
             StopEverythingBeforeStatusEffect();
 
@@ -55,7 +56,7 @@ namespace PataRoad.Core.Character
             OnFire();
 
             LoadEffectObject(StatusEffectType.Fire);
-            IsOnStatusEffect = true;
+            CurrentStatusEffect = StatusEffectType.Fire;
 
             IEnumerator FireDamage()
             {
@@ -91,19 +92,19 @@ namespace PataRoad.Core.Character
             Recover();
             IgnoreStatusEffect = true;
         }
-        public void Recover()
+        public void Recover() => Recover(true);
+        protected void Recover(bool invokeOnRecover)
         {
             if (!IsOnStatusEffect || IgnoreStatusEffect) return;
             StopAllCoroutines();
-            _isOnFire = false;
             if (_effectObject != null)
             {
                 Destroy(_effectObject);
             }
-            IsOnStatusEffect = false;
+            CurrentStatusEffect = StatusEffectType.None;
             OnRecover();
 
-            if (_onRecover != null) _onRecover.Invoke();
+            if (invokeOnRecover && _onRecover != null) _onRecover.Invoke();
         }
 
         /// <summary>

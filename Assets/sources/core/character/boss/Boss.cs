@@ -77,7 +77,6 @@ namespace PataRoad.Core.Character.Bosses
             CharAnimator.PlayDyingAnimation();
             _onAfterDeath?.Invoke();
         }
-
         /// <summary>
         /// Sets max health, also fills health to full.
         /// </summary>

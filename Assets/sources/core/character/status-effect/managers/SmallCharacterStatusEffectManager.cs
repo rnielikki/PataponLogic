@@ -63,7 +63,7 @@ namespace PataRoad.Core.Character
             ActivateRigidbody();
             transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 1.2f, transform.position.z);
             _rigidbody.AddForce(1000 * Vector2.up);
-            IsOnStatusEffect = true;
+            CurrentStatusEffect = StatusEffectType.Tumble;
 
             StartCoroutine(WaitForRecovery(2));
         }

@@ -2,7 +2,7 @@
 {
     public class BossStatusEffectManager : CharacterStatusEffectManager
     {
-        public override bool CanContinue => base.CanContinue || _isOnFire;
+        public override bool CanContinue => base.CanContinue || _isOnFire || CurrentStatusEffect == StatusEffectType.Ice;
         void Awake()
         {
             Init();
@@ -15,12 +15,22 @@
                 _character.StopAttacking(false);
             }
         }
+        //allows staggering while knockback
+        public override void SetStagger()
+        {
+            if (CurrentStatusEffect == StatusEffectType.Knockback)
+            {
+                if (_character.IsDead || IgnoreStatusEffect) return;
+                Recover(false);
+            }
+            base.SetStagger();
+        }
 
         protected override void OnKnockback()
         {
             StopEverythingBeforeStatusEffect();
             _character.CharAnimator.Animate("Knockback");
-            IsOnStatusEffect = true;
+            CurrentStatusEffect = StatusEffectType.Knockback;
             StartCoroutine(WaitForRecovery(8));
         }
 

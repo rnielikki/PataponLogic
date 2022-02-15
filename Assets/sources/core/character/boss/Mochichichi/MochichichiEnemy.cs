@@ -54,5 +54,6 @@
                 return ("peck", 1);
             }
         }
+        protected override string GetNextBehaviourOnIce() => "peck";
     }
 }

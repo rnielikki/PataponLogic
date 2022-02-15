@@ -120,17 +120,17 @@ namespace PataRoad.Core.Character
         public void TumbleAttack() => StatusEffectManager.TumbleAttack();
         public virtual void Die() => Die(true);
         public void DieWithoutInvoking() => Die(false);
-        private void Die(bool invokeAfterDeath)
+        protected void Die(bool invokeAfterDeath, bool animate = true, int delay = 1)
         {
             if (IsDead) return;
             MarkAsDead();
             if (IsFlyingUnit)
             {
-                CharAnimator.AnimateFrom("tori-fly-stop");
+                CharAnimator.Animate("tori-fly-stop");
             }
             StatusEffectManager.RecoverAndIgnoreEffect();
-            CharAnimator.PlayDyingAnimation();
-            Destroy(gameObject, 1);
+            if (animate) CharAnimator.PlayDyingAnimation();
+            Destroy(gameObject, delay);
 
             AfterDie();
             if (invokeAfterDeath) _onAfterDeath?.Invoke();

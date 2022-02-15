@@ -11,9 +11,11 @@ namespace PataRoad.Core.Character.Bosses
         [SerializeField]
         float _damageMultiplierOnBroken;
         SpriteRenderer _renderer;
+        EnemyBossBehaviour _parent;
         private void Awake()
         {
             _renderer = GetComponent<SpriteRenderer>();
+            _parent = GetComponentInParent<EnemyBossBehaviour>();
         }
         // Start is called before the first frame update
         /// <summary>
@@ -26,6 +28,10 @@ namespace PataRoad.Core.Character.Bosses
             else if (_health <= damage)
             {
                 _renderer.sprite = _imageOnBroken;
+                if (_parent != null)
+                {
+                    _parent.MarkAsPartBroken();
+                }
             }
             _health -= damage;
             return 1;

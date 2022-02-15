@@ -32,7 +32,7 @@
                     ))
                 {
                     _usedLaser = false;
-                    return ("repel", 0);
+                    return PartBroken ? ("repel", 0) : ("bodyslam", 0);
                 }
                 else
                 {
@@ -69,12 +69,19 @@
         private (string, float) SlamOrSlam(float probability)
         {
             _usedLaser = false;
+            if (PartBroken) return ("bodyslam", 0);
             var pro = UnityEngine.Mathf.Max(_probabilityFromLevel, probability);
             if (Common.Utils.RandomByProbability(pro))
             {
                 return ("slam", 0);
             }
             else return ("bodyslam", 0);
+        }
+
+        protected override string GetNextBehaviourOnIce()
+        {
+            _usedLaser = true;
+            return "laser";
         }
     }
 }

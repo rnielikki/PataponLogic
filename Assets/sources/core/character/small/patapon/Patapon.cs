@@ -44,20 +44,19 @@ namespace PataRoad.Core.Character.Patapons
         public void BeEaten()
         {
             Eaten = true;
-            Die();
+            Die(true, false, 0);
         }
 
         public void BeTaken()
         {
             Eaten = true;
-            MarkAsDead();
-            Die();
-            Group.RemoveIfEmpty();
+            Die(true, false, 1);
         }
 
         protected override void BeforeDie()
         {
             Group.RemovePon(this);
+            if (!Eaten) base.BeforeDie();
         }
         protected override void AfterDie()
         {

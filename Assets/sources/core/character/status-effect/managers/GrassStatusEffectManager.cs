@@ -31,13 +31,12 @@ namespace PataRoad.Core.Character
             }
             _totalTime = time;
             StopEverythingBeforeStatusEffect();
-            _isOnFire = true;
             OnStatusEffect?.Invoke(StatusEffectType.Fire);
 
             StartCoroutine(FireDamage());
 
             LoadEffectObject(StatusEffectType.Fire);
-            IsOnStatusEffect = true;
+            CurrentStatusEffect = StatusEffectType.Fire;
 
             SpreadFire(time / 2);
 

@@ -31,7 +31,7 @@ namespace PataRoad.Core.Character
 
             _character.CharAnimator.Stop();
             StartCoroutine(WaitForRecovery(time));
-            IsOnStatusEffect = true;
+            CurrentStatusEffect = StatusEffectType.Ice;
         }
         /// <summary>
         /// Called when ice effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
@@ -50,7 +50,7 @@ namespace PataRoad.Core.Character
             LoadEffectObject(StatusEffectType.Sleep);
             StartCoroutine(WaitForRecovery(time));
 
-            IsOnStatusEffect = true;
+            CurrentStatusEffect = StatusEffectType.Sleep;
         }
         /// <summary>
         /// Called when sleep effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
@@ -64,7 +64,7 @@ namespace PataRoad.Core.Character
             _character.CharAnimator.Animate("Stagger");
             StartCoroutine(WaitForRecovery(1));
 
-            IsOnStatusEffect = true;
+            CurrentStatusEffect = StatusEffectType.Stagger;
         }
         public override void SetKnockback()
         {
@@ -74,7 +74,7 @@ namespace PataRoad.Core.Character
             base.SetKnockback();
             OnKnockback();
 
-            IsOnStatusEffect = true;
+            CurrentStatusEffect = StatusEffectType.Knockback;
         }
         /// <summary>
         /// Called when knockback effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.

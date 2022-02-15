@@ -11,6 +11,8 @@ namespace PataRoad.Core.Character.Bosses
         public float CharacterSize { get; protected set; }
         protected int _level => _boss.Level;
 
+        public bool PartBroken { get; private set; }
+
         protected readonly List<string> _attackCombos =
             new List<string>();
 
@@ -45,6 +47,14 @@ namespace PataRoad.Core.Character.Bosses
 
             return SetComboAttack(comboCount);
         }
+        public virtual void CalculateAttackOnIce()
+        {
+            _turnManager.SetOneAction(GetNextBehaviourOnIce());
+        }
+        public void MarkAsPartBroken()
+        {
+            PartBroken = true;
+        }
 
         protected float SetComboAttack(int count)
         {
@@ -68,6 +78,7 @@ namespace PataRoad.Core.Character.Bosses
             }
         }
         protected abstract (string action, float distance) GetNextBehaviour();
+        protected abstract string GetNextBehaviourOnIce();
         protected virtual float SetMultipleAttacks(int count)
         {
             var leftComboCount = count;

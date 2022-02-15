@@ -44,5 +44,11 @@
             }
             else return ("fire", 5);
         }
+
+        protected override string GetNextBehaviourOnIce()
+        {
+            if (_level < 10) return "nothing";
+            else return "growl";
+        }
     }
 }

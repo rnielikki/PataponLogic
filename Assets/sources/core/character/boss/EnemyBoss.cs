@@ -104,7 +104,10 @@ namespace PataRoad.Core.Character.Bosses
             Level = level;
             BossAttackData.UpdateStatForBoss(level);
         }
-        protected float CalculateAttack() => _behaviour.CalculateAttack();
+        protected float CalculateAttack() =>
+            _behaviour.CalculateAttack();
+        protected float CalculateAttackOnIce() =>
+            _behaviour.CalculateAttack();
         private void Update()
         {
             //phase 0: attacking or dead
@@ -115,8 +118,16 @@ namespace PataRoad.Core.Character.Bosses
                 BossAttackData.SetCustomPosition();
                 return;
             }
+            //phase -1 : On Ice. No moving, just ATTACK
+            if (StatusEffectManager.CurrentStatusEffect == StatusEffectType.Ice)
+            {
+                CharAnimator.Animate("Idle");
+                BossTurnManager.End();
+                CalculateAttackOnIce();
+                BossTurnManager.StartAttack();
+            }
 
-            //phase n: moving back.
+            //phase 0: moving back.
             if (_movingBack)
             {
                 var backOffset = Stat.MovementSpeed * 3 * Time.deltaTime;

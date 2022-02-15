@@ -2,6 +2,7 @@
 {
     public enum StatusEffectType
     {
+        None,
         Fire,
         Ice,
         Sleep,
