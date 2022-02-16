@@ -41,30 +41,22 @@ namespace PataRoad.Core.Character
         private float _thunderMultiplier = 1;
         public float ThunderMultiplier => _thunderMultiplier;
 
-        private Dictionary<AttackType, float> _map;
-        private Dictionary<ElementalAttackType, float> _elementalMap;
-
-        public AttackTypeResistance()
+        public float GetMultiplier(AttackType attackType) => attackType switch
         {
-            _map = new Dictionary<AttackType, float>()
-            {
-                { AttackType.Neutral, 1},
-                { AttackType.Crush, _crushMultiplier},
-                { AttackType.Slash, _slashMultiplier},
-                { AttackType.Stab, _stabMultiplier},
-                { AttackType.Sound, _soundMultiplier},
-                { AttackType.Magic, _magicMultiplier},
-            };
-            _elementalMap = new Dictionary<ElementalAttackType, float>()
-            {
-                { ElementalAttackType.Neutral, 1},
-                { ElementalAttackType.Fire, _crushMultiplier},
-                { ElementalAttackType.Ice, _slashMultiplier},
-                { ElementalAttackType.Thunder, _stabMultiplier},
-            };
-        }
-        public float GetMultiplier(AttackType attackType) => _map[attackType];
-        public float GetMultiplier(ElementalAttackType attackType) => _elementalMap[attackType];
+            AttackType.Crush => _crushMultiplier,
+            AttackType.Slash => _slashMultiplier,
+            AttackType.Stab => _stabMultiplier,
+            AttackType.Sound => _soundMultiplier,
+            AttackType.Magic => _magicMultiplier,
+            _ => 1
+        };
+        public float GetMultiplier(ElementalAttackType attackType) => attackType switch
+        {
+            ElementalAttackType.Fire => _fireMultiplier,
+            ElementalAttackType.Ice => _iceMultiplier,
+            ElementalAttackType.Thunder => _thunderMultiplier,
+            _ => 1
+        };
         /// <summary>
         /// Returns applied default resistance data to Rarepons data. It multiplies each value and returns new instance.
         /// </summary>
