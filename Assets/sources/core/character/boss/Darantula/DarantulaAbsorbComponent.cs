@@ -4,7 +4,6 @@ namespace PataRoad.Core.Character.Bosses
 {
     class DarantulaAbsorbComponent : BossAttackComponent
     {
-        private bool _enabled;
         private bool _pataponEaten;
         private Collider2D _collider;
         private DarantulaEnemy _darantula;

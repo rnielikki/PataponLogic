@@ -7,8 +7,6 @@ namespace PataRoad.Core.Character.Bosses
         Collider2D _collider;
         bool _isAlreadyTrigger;
         [SerializeField]
-        bool _enabled;
-        [SerializeField]
         bool _allowZeroDamage;
         private void Awake()
         {

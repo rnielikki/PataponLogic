@@ -99,7 +99,7 @@ namespace PataRoad.Core.Character.Bosses
             BossTurnManager.End();
             base.StopAttacking(pause);
         }
-        public void SetLevel(int level, int absoluteMaxLevel)
+        public virtual void SetLevel(int level, int absoluteMaxLevel)
         {
             Level = level;
             BossAttackData.UpdateStatForBoss(level);

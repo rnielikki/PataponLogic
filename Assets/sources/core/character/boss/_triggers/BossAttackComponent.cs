@@ -4,6 +4,10 @@ namespace PataRoad.Core.Character.Bosses
 {
     public abstract class BossAttackComponent : MonoBehaviour
     {
+
+        [SerializeField]
+        protected bool _enabled;
+
         [SerializeField]
         private Stat _additionalStat;
         public Stat AdditionalStat => _additionalStat;
@@ -30,6 +34,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             _boss = GetComponentInParent<BossAttackData>();
         }
+        public void SetDisable() => _enabled = false;
         public virtual void StopAttacking() { }
     }
 }

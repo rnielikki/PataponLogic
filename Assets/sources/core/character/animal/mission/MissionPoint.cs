@@ -116,7 +116,7 @@ namespace PataRoad.Core.Map
         {
             MissionCompleteTime = (int)Time.timeSinceLevelLoad;
             IsMissionSuccess = true;
-            OnMissionEnd.Invoke(true);
+            OnMissionEnd.Invoke(true); //must be called before mapinfo changes next map data
             Global.GlobalData.CurrentSlot.MapInfo.OnMissionSucceeded();
             Global.GlobalData.TipIndex = Global.GlobalData.CurrentSlot.MapInfo.NextMap.MapData.TipIndexOnSuccess;
 

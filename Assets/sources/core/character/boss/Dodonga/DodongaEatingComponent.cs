@@ -4,7 +4,6 @@ namespace PataRoad.Core.Character.Bosses
 {
     public class DodongaEatingComponent : BossAttackComponent
     {
-        private bool _enabled;
         private bool _pataponEaten;
         private Collider2D _collider;
         [SerializeField]

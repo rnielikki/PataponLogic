@@ -5,8 +5,6 @@ namespace PataRoad.Core.Character.Bosses
     public class BossAttackCollision : BossAttackComponent
     {
         [SerializeField]
-        private bool _enabled;
-        [SerializeField]
         bool _allowZeroDamage;
         private void Awake()
         {

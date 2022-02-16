@@ -177,6 +177,11 @@ namespace PataRoad.Core.Character.Patapons
             else
             {
                 IsMovingForward = true;
+                //Get the item!
+                if (!Global.GlobalData.CurrentSlot.MapInfo.NextMap.MapData.UseMissionTower)
+                {
+                    Steps *= 1.25f;
+                }
                 foreach (var pon in _patapons)
                 {
                     pon.DoMissionCompleteGesture();

@@ -17,7 +17,7 @@ namespace PataRoad.Core.Character.Bosses
 
         public Stat Stat => BossAttackData.Stat;
 
-        public int CurrentHitPoint { get; private set; }
+        public int CurrentHitPoint { get; protected set; }
 
         public StatusEffectManager StatusEffectManager { get; private set; }
         public bool IsDead { get; private set; }
@@ -70,9 +70,13 @@ namespace PataRoad.Core.Character.Bosses
         {
             IsDead = true;
             BossAttackData.StopAllAttacking();
-            foreach (var component in GetComponentsInChildren<Collider2D>())
+            foreach (var component in GetComponentsInChildren<Collider2D>(true))
             {
                 component.enabled = false;
+            }
+            foreach (var component in GetComponentsInChildren<BossAttackComponent>(true))
+            {
+                component.SetDisable();
             }
             StatusEffectManager.RecoverAndIgnoreEffect();
             CharAnimator.PlayDyingAnimation();
