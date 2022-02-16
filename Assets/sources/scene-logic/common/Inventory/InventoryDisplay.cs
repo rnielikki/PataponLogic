@@ -62,7 +62,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 var amount = inventoryData.Amount;
                 if (isEquipments)
                 {
-                    amount -= Core.Global.GlobalData.CurrentSlot.PataponInfo.GetEquippedCount(inventoryData.Item as EquipmentData);
+                    amount -= Core.Global.GlobalData.CurrentSlot.PataponInfo.GetEquippedCountInCurrentSquad(inventoryData.Item as EquipmentData);
                 }
                 display.Init(inventoryData.Item, amount);
             }

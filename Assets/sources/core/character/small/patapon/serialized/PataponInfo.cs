@@ -26,7 +26,6 @@ namespace PataRoad.Core.Character.Patapons.Data
         public const int MaxPataponGroup = 3;
 
         Dictionary<Class.ClassType, PataponClassInfo> _classInfoMap = new Dictionary<Class.ClassType, PataponClassInfo>();
-        Dictionary<IItem, int> _amountMap = new Dictionary<IItem, int>();
         [SerializeReference]
         PataponClassInfo[] _classInfoForSerialization;
 
@@ -82,29 +81,32 @@ namespace PataRoad.Core.Character.Patapons.Data
 
         internal bool ContainsClass(Class.ClassType type) => _currentClasses.Contains(type);
 
-        public int GetEquippedCount(IItem item)
+        public int GetEquippedCount(EquipmentData item)
         {
-            if (item != null && _amountMap.TryGetValue(item, out var res)) return res;
-            else return 0;
+            var equipped = 0;
+            foreach (Class.ClassType cl in Enum.GetValues(typeof(Class.ClassType)))
+            {
+                equipped += _classInfoMap[cl].GetAllHolders(item).Count;
+            }
+            return equipped;
         }
+        public int GetEquippedCountInCurrentSquad(EquipmentData item)
+        {
+            var equipped = 0;
+            foreach (var cl in _currentClasses)
+            {
+                equipped += _classInfoMap[cl].GetAllHolders(item).Count;
+            }
+            return equipped;
+        }
+
         public void UpdateClassEquipmentStatus(PataponData data, EquipmentData equipmentData)
         {
             var type = equipmentData.Type;
             var oldEquipment = data.EquipmentManager.GetEquipmentData(type);
             if (oldEquipment == equipmentData) return;
 
-            if (type == Equipments.EquipmentType.Rarepon && (oldEquipment == null || oldEquipment.Index == 0))
-            {
-                var helm = data.EquipmentManager.GetEquipmentData(Equipments.EquipmentType.Helm);
-                RemoveFromAmountMapData(helm);
-            }
-            else
-            {
-                RemoveFromAmountMapData(oldEquipment);
-            }
-
             data.Equip(equipmentData);
-            AddToAmountMapData(equipmentData);
 
             GetClassInfo(data.Type).SetEquipmentInIndex(data.IndexInGroup, equipmentData);
         }
@@ -167,25 +169,6 @@ namespace PataRoad.Core.Character.Patapons.Data
 
             newHolder.Equip(equipmentData);
             GetClassInfo(newHolder.Type).SetEquipmentInIndex(newHolder.IndexInGroup, equipmentData);
-        }
-        private void RemoveFromAmountMapData(EquipmentData equipmentData)
-        {
-            if (equipmentData == null || equipmentData.Index == 0) return;
-            //well amountMap must contain the equipment and data.
-            _amountMap[equipmentData]--;
-            if (_amountMap[equipmentData] == 0) _amountMap.Remove(equipmentData);
-        }
-        private void AddToAmountMapData(EquipmentData equipmentData)
-        {
-            if (equipmentData == null || equipmentData.Index == 0) return;
-            if (_amountMap.ContainsKey(equipmentData))
-            {
-                _amountMap[equipmentData]++;
-            }
-            else
-            {
-                _amountMap.Add(equipmentData, 1);
-            }
         }
         public GeneralModeData GetGeneralMode(Class.ClassType type) => GetClassInfo(type).GeneralModeData;
         public bool HasGeneralMode(GeneralModeData generalModeData, out Class.ClassType classType)
@@ -251,11 +234,6 @@ namespace PataRoad.Core.Character.Patapons.Data
             }
             if (_summonIndex != -1) BossToSummon = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Boss", _summonIndex);
             if (_musicIndex != -1) CustomMusic = ItemLoader.GetItem<StringKeyItemData>(ItemType.Key, "Music", _musicIndex);
-
-            foreach (var equipmentData in _classInfoForSerialization.SelectMany(item => item.GetAllEquipments()))
-            {
-                AddToAmountMapData(equipmentData);
-            }
         }
     }
 }

@@ -29,6 +29,7 @@ namespace PataRoad.Core.Character.Animal
         protected AudioClip _soundOnFound;
 
         public bool PerformingAction { get; protected set; }
+        protected bool _useFixedTargetPosition;
 
         public virtual void InitFromParent(AnimalBehaviour parent)
         {
@@ -61,7 +62,7 @@ namespace PataRoad.Core.Character.Animal
         }
         public virtual bool CanMove()
             => !PerformingAction && !_behaviour.IsDead
-                && !_behaviour.StatusEffectManager.IsOnStatusEffect;
+                && !_behaviour.StatusEffectManager.IsOnStatusEffect && !_useFixedTargetPosition;
         /// <summary>
         /// Moves animal to <see cref="_targetPosition"/>.
         /// </summary>
@@ -78,6 +79,11 @@ namespace PataRoad.Core.Character.Animal
                     SetToIdle(endActionWhenMoved);
                     _statusEffectManager.IgnoreStatusEffect = false;
                     return true;
+                }
+                else if (!_useFixedTargetPosition && transform.position.x > Map.MissionPoint.Current.MissionPointPosition.x)
+                {
+                    _targetPosition.x = Map.MissionPoint.Current.MissionPointPosition.x + 99;
+                    _useFixedTargetPosition = true;
                 }
                 return false;
             }
