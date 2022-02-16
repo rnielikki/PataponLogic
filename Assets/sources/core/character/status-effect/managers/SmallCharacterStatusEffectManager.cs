@@ -37,6 +37,7 @@ namespace PataRoad.Core.Character
         protected override void OnFireInterval()
         {
             GameSound.SpeakManager.Current.Play(_soundCollection.OnFire);
+            base.OnFireInterval();
         }
         protected override void OnIce()
         {
@@ -111,8 +112,8 @@ namespace PataRoad.Core.Character
                 var offset = _smallCharacter.Stat.MovementSpeed * 1.5f * Time.deltaTime * _movingDirectionOnFire;
                 var pos = transform.position + (Vector3)offset;
 
-                if (_xDirection * _positionOnStatusEffect.x - CharacterEnvironment.DodgeDistance > _xDirection * pos.x
-                    || _xDirection * _positionOnStatusEffect.x < _xDirection * pos.x)
+                if (_xDirection * _character.DefaultWorldPosition - CharacterEnvironment.DodgeDistance > _xDirection * pos.x
+                    || _xDirection * _character.DefaultWorldPosition < _xDirection * pos.x)
                 {
                     _movingDirectionOnFire = -_movingDirectionOnFire;
                     transform.position -= (Vector3)offset;

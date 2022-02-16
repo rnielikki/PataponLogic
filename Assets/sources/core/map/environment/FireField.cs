@@ -10,7 +10,7 @@ namespace PataRoad.Core.Map.Environment
         ParticleSystem _particle;
         [SerializeField]
         SpriteRenderer _hotImage;
-        private bool _enabled = true;
+        private bool _enabled;
         private readonly List<Character.ICharacter> _characters = new List<Character.ICharacter>();
         private void Start()
         {
@@ -27,7 +27,13 @@ namespace PataRoad.Core.Map.Environment
                 var particleColor = _particle.colorOverLifetime;
                 particleColor.enabled = false;
                 Rhythm.RhythmTimer.Current.OnTime.RemoveListener(UpdateStatusEffect);
-                foreach (var character in _characters) character.StatusEffectManager.Recover();
+                foreach (var character in _characters)
+                {
+                    if (character.StatusEffectManager.CurrentStatusEffect == Character.StatusEffectType.Fire)
+                    {
+                        character.StatusEffectManager.Recover();
+                    }
+                }
             }
             else if (!_enabled)
             {

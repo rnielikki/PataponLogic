@@ -298,7 +298,6 @@ namespace PataRoad.Core.Character.Patapons
             if (PataponsManager.IsMovingForward &&
                 !(StatusEffectManager.CanContinue || StatusEffectManager.CurrentStatusEffect == StatusEffectType.Fire))
             {
-                //Go back lol.
                 transform.position -= Group.Manager.Steps * Vector3.right * Time.deltaTime;
             }
         }
