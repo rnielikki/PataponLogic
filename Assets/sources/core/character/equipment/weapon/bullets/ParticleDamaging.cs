@@ -20,6 +20,12 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _collisionEvents = new System.Collections.Generic.List<ParticleCollisionEvent>();
             _particleSystem = GetComponent<ParticleSystem>();
             _holder = holder;
+
+            if (holder != null)
+            {
+                var collision = _particleSystem.collision;
+                collision.collidesWith = CharacterTypeDataCollection.GetCharacterDataByType(_holder).AttackTargetLayerMask;
+            }
         }
         public void Emit(int count, float startSpeed)
         {

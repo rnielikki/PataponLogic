@@ -83,7 +83,7 @@ namespace PataRoad.Core.Map.Environment
             {
                 if (!receiver.StatusEffectManager.IsOnStatusEffect)
                 {
-                    Character.Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(receiver, Character.StatusEffectType.Fire, 5, receiver.Stat.FireResistance);
+                    Character.Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(receiver, Character.StatusEffectType.Fire, 1, receiver.Stat.FireResistance);
                 }
             }
         }

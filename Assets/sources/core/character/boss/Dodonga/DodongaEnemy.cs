@@ -20,20 +20,21 @@
             var firstPon = _pataponsManager.FirstPatapon;
             if (firstPon?.Type != Class.ClassType.Toripon &&
                 firstPon?.transform.position.x < _pataponsManager.transform.position.x) return ("fire", 20);
-            if (firstPon?.IsMeleeUnit == true || firstPon?.Type == Class.ClassType.Toripon)
+            if ((firstPon?.IsMeleeUnit == true || firstPon?.Type == Class.ClassType.Toripon)
+                && Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 20))
             {
-                if (Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 20))
+                if (_level >= 3 && Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 18))
                 {
-                    if (_level >= 3 && Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 18))
-                    {
-                        return ("eat", 0);
-                    }
-                    else
-                    {
-                        return ("headbutt", 0);
-                    }
+                    return ("eat", 0);
                 }
-                else if (_level >= 10 && Common.Utils.RandomByProbability(0.5f))
+                else
+                {
+                    return ("headbutt", 0);
+                }
+            }
+            else
+            {
+                if (_level >= 10 && Common.Utils.RandomByProbability(0.5f))
                 {
                     return ("growl", 5);
                 }
@@ -42,7 +43,6 @@
                     return ("fire", 3);
                 }
             }
-            else return ("fire", 5);
         }
 
         protected override string GetNextBehaviourOnIce()

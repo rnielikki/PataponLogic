@@ -12,7 +12,7 @@ namespace PataRoad.Core.Character
                 { CharacterType.Others, new CharacterTypeData(CharacterType.Others) },
             };
         internal static CharacterTypeData GetCharacterData(CharacterType type) => _indexes[type];
-        internal static CharacterTypeData GetCharacterDataByType(ICharacter character) => character switch
+        internal static CharacterTypeData GetCharacterDataByType(IAttacker character) => character switch
         {
             Patapons.Patapon => _indexes[CharacterType.Patapon],
             Hazorons.Hazoron => _indexes[CharacterType.Hazoron],

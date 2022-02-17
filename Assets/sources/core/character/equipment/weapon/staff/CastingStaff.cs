@@ -24,9 +24,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _particles = GetComponent<ParticleDamaging>();
             _particles.Init(holder);
             _holder = holder;
-
-            var collision = GetComponent<ParticleSystem>().collision;
-            collision.collidesWith = CharacterTypeDataCollection.GetCharacterDataByType(_holder).AttackTargetLayerMask;
         }
         public virtual void NormalAttack()
         {
