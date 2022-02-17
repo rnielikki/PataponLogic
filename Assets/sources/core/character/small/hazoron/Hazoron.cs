@@ -8,7 +8,9 @@ namespace PataRoad.Core.Character.Hazorons
     {
         public override float AttackDistance => Weapon.GetAttackDistance();
 
-        public override Vector2 MovingDirection => Vector2.left;
+        [SerializeField]
+        bool _inverseDirection;
+        public override Vector2 MovingDirection => _inverseDirection ? Vector2.right : Vector2.left;
         private bool _gotPosition;
         private bool _animatingWalk;
         private int _attackTypeIndex;
@@ -23,6 +25,7 @@ namespace PataRoad.Core.Character.Hazorons
 
         [SerializeField]
         private bool _isDarkOne;
+        public bool IsDarkOne => _isDarkOne;
 
         private bool _isReady;
 

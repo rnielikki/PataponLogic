@@ -15,7 +15,7 @@ namespace PataRoad.Core.Character
         internal static CharacterTypeData GetCharacterDataByType(IAttacker character) => character switch
         {
             Patapons.Patapon => _indexes[CharacterType.Patapon],
-            Hazorons.Hazoron => _indexes[CharacterType.Hazoron],
+            Hazorons.Hazoron hazoron => hazoron.IsDarkOne ? _indexes[CharacterType.Others] : _indexes[CharacterType.Hazoron],
             _ => _indexes[CharacterType.Others]
         };
     }
