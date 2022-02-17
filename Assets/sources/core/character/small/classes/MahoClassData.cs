@@ -32,7 +32,6 @@ namespace PataRoad.Core.Character.Class
                     _character.ElementalAttackType = ElementalAttackType.Thunder;
                     break;
             }
-            var weapon = _character.EquipmentManager.Weapon as Staff;
         }
 
         public override void Attack()

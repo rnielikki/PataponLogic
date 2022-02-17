@@ -25,9 +25,9 @@ namespace PataRoad.Core.Map.Levels
         AudioClip _destroySound;
         private void Start()
         {
-            _carriageStructure = _carriage.GetComponent<Structure>();
+            _carriageStructure = _carriage.GetComponentInChildren<Structure>();
             _pataponsManagerTransform = FindObjectOfType<Character.Patapons.PataponsManager>().transform;
-            _animator = _carriage.GetComponent<Animator>();
+            _animator = _carriageStructure.GetComponent<Animator>();
             if (Global.GlobalData.CurrentSlot.MapInfo.NextMap.Cleared)
             {
                 _hatapon.transform.Find("Weapon").gameObject.SetActive(false);

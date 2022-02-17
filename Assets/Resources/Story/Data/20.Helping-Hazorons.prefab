@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6503063704793924880}
   - component: {fileID: -2731587640728505089}
   - component: {fileID: 2967304811666973360}
+  - component: {fileID: 273340005826199832}
   m_Layer: 0
   m_Name: 20.Helping-Hazorons
   m_TagString: Untagged
@@ -352,7 +353,22 @@ MonoBehaviour:
     _content: Hey, hey, are you ignoring because I'm Junior? I'm the only Hatapon
       now!
   _choiceSelector: {fileID: 0}
-  _nextStory: {fileID: 0}
+  _nextStory: {fileID: -2731587640728505089, guid: 2d5f324f9d0473d42a64d3d0f7ae04ed, type: 3}
+  _onStoryStarted:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 273340005826199832}
+        m_TargetAssemblyTypeName: PataRoad.Story.NextStoryWithItemCondition, Assembly-CSharp
+        m_MethodName: CheckAndKeepNextStory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2967304811666973360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -365,6 +381,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e932ea13b9ac07b47b7f3c8907ccbc81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &273340005826199832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2532325534641892927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de0eff750a6f84b47964d4600e1884af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _item:
+    _type: 2
+    _group: Class
+    _index: 5
+  _storyData: {fileID: -2731587640728505089}
+  _nextStoryIfHasItem: 0
+  _addItemIfNotExist: 1
 --- !u!1001 &1271949281872732246
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -43,13 +43,15 @@ namespace PataRoad.Story
 #pragma warning disable S1104 // Fields should not have public accessibility - we need AGAIN this for serialized array in inspector.
         public StoryAction[] StoryActions;
 #pragma warning restore S1104 // Fields should not have public accessibility
-        [UnityEngine.SerializeField]
+        [SerializeField]
         ChoiceSelector _choiceSelector;
         internal ChoiceSelector ChoiceSelector => _choiceSelector;
-        [UnityEngine.SerializeField]
+        [SerializeField]
         StoryData _nextStory;
         internal StoryData NextStory => _nextStory;
-
+        [SerializeField]
+        [Header("This is called before skipping is possible, which makes sure to be called at least once")]
+        UnityEngine.Events.UnityEvent _onStoryStarted;
 
         private Core.Map.Weather.WeatherType GetRandomWeather()
         {
@@ -61,5 +63,7 @@ namespace PataRoad.Story
             var winds = System.Enum.GetValues(typeof(Core.Map.Weather.WindType));
             return (Core.Map.Weather.WindType)Random.Range(0, winds.Length);
         }
+        internal void InvokeBeforeStart() => _onStoryStarted?.Invoke();
+        public void SkipNextStory() => _nextStory = null;
     }
 }

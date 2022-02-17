@@ -31,6 +31,11 @@ namespace PataRoad.Core.Character
         [SerializeField]
         bool _noLevelUp;
 
+        [SerializeField]
+        private Gradient _colorOverHealth;
+
+        System.Collections.Generic.List<SpriteRenderer> _sprites = new System.Collections.Generic.List<SpriteRenderer>();
+
         private void Awake()
         {
             Stat = new Stat
@@ -50,6 +55,10 @@ namespace PataRoad.Core.Character
             StatusEffectManager.IsBigTarget = true;
             _animator = GetComponent<Animator>();
         }
+        private void Start()
+        {
+            SetSprites(transform);
+        }
         public virtual void Die()
         {
             IsDead = true;
@@ -60,6 +69,21 @@ namespace PataRoad.Core.Character
         {
             //Can attach health status or change sprite etc.
             CurrentHitPoint -= damage;
+            var percent = Mathf.Clamp01((float)CurrentHitPoint / Stat.HitPoint);
+            foreach (var sprite in _sprites)
+            {
+                sprite.color = _colorOverHealth.Evaluate(percent);
+            }
+        }
+        private void SetSprites(Transform tr)
+        {
+            foreach (Transform child in tr)
+            {
+                if (child.GetComponent<ICharacter>() != null) continue;
+                var sprite = child.GetComponent<SpriteRenderer>();
+                if (sprite != null) _sprites.Add(sprite);
+                SetSprites(child);
+            }
         }
 
         public float GetDefenceValueOffset() => 1;

@@ -9,6 +9,7 @@ namespace PataRoad.Story
     {
         private static StoryLoader _current { get; set; }
         private UnityEngine.InputSystem.InputAction _action;
+        private bool _skipActionAdded;
         private bool _noDestroy;
 
         private void Awake()
@@ -16,7 +17,6 @@ namespace PataRoad.Story
             _current = this;
             _current.gameObject.SetActive(false);
             _action = Core.Global.GlobalData.Input.actions.FindAction("UI/Select");
-            _action.performed += SkipStory;
         }
         public static void Init()
         {
@@ -47,6 +47,12 @@ namespace PataRoad.Story
             var storySceneInfo = FindObjectOfType<StorySceneInfo>();
             var data = Instantiate(rawData, storySceneInfo.Parent);
             storySceneInfo.StartStoryScene();
+            data.InvokeBeforeStart();
+            if (!_skipActionAdded)
+            {
+                _current._action.performed += _current.SkipStory;
+                _skipActionAdded = true;
+            }
 
             //-- Audio
             storySceneInfo.AudioSource.clip = data.Music;
