@@ -18,15 +18,11 @@
         {
             CharAnimator.Animate("bodyslam");
         }
-        private void Awake()
-        {
-            Init();
-        }
-        private void Start()
+        protected override void OnStarted()
         {
             Map.Weather.WeatherInfo.Current.ChangeWeather(Map.Weather.WeatherType.Storm);
         }
-        private void OnDestroy()
+        protected override void OnDead()
         {
             Map.Weather.WeatherInfo.Current?.EndChangingWeather();
         }

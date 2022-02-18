@@ -25,6 +25,7 @@ namespace PataRoad.Core.Character.Animal
 
         [SerializeField]
         private UnityEvent _onAfterDeath;
+        public UnityEvent OnAfterDeath => _onAfterDeath;
 
         public int CurrentHitPoint { get; private set; }
 

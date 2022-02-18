@@ -40,6 +40,7 @@ namespace PataRoad.Core.Map.Weather
                 _hasTailWind = false;
             }
             StopAllCoroutines();
+            _lightning.SetActive(false);
             if (newType != WeatherType.Rain)
             {
                 _rainData.OnWeatherStopped(newType);

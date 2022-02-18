@@ -43,7 +43,8 @@ namespace PataRoad.Core.Character.Bosses
 
         [SerializeField]
         protected UnityEvent _onAfterDeath = new UnityEvent();
-        protected virtual void Init()
+        public UnityEvent OnAfterDeath => _onAfterDeath;
+        public virtual void Init()
         {
             BossAttackData = GetComponent<BossAttackData>();
             foreach (var part in GetComponentsInChildren<BreakablePart>())

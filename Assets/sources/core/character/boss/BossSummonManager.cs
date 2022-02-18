@@ -62,13 +62,17 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void SummonBoss()
         {
-            if (_summonCount > 0 && _dead)
+            if (_summonCount > 0)
             {
+                bool reborn = !_dead && _boss != null;
+                if (reborn) _boss.Die(true);
                 _summonCount--;
                 var boss = Instantiate(_resource, transform);
                 boss.transform.position += CharacterEnvironment.OriginalSight * Vector3.left;
-                boss.SetActive(true);
+
                 _boss = boss.GetComponent<SummonedBoss>();
+                _boss.Init(reborn);
+                boss.SetActive(true);
                 _boss.SetManager(this);
                 Destroy(_summonStatus.GetChild(0).gameObject);
                 _dead = false;

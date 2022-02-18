@@ -9,5 +9,6 @@
         public DistanceCalculator DistanceCalculator { get; }
         public float CharacterSize { get; }
         public void StopAttacking(bool pause);
+        public UnityEngine.Events.UnityEvent OnAfterDeath { get; }
     }
 }

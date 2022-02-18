@@ -12,12 +12,15 @@ namespace PataRoad.Core.Character.Hazorons
         [SerializeField]
         HazoronPositionDisplay _display;
         internal static HazoronPositionManager Current { get; private set; }
+        private Transform _pataponsTransform = null;
+        private readonly System.Collections.Generic.List<Hazoron> _listToClean = new System.Collections.Generic.List<Hazoron>();
         // Start is called before the first frame update
         void Awake()
         {
             _display.gameObject.SetActive(false);
             Current = this;
         }
+        internal void Init(Transform pataponsTransform) => _pataponsTransform = pataponsTransform;
         public static float GetClosestHazoronPosition()
         {
             if (Current == null || Current._hazorons.Count == 0) return Mathf.Infinity;
@@ -26,14 +29,28 @@ namespace PataRoad.Core.Character.Hazorons
         private Hazoron GetClosestHazoron()
         {
             if (_hazorons.Count == 0) return null;
-            var minHazoron = _hazorons[0];
+            Hazoron minHazoron = null;
+
             foreach (var hazoron in _hazorons)
             {
-                if (hazoron.DefaultWorldPosition < minHazoron.DefaultWorldPosition)
+                if (hazoron.IsDead)
+                {
+                    _listToClean.Add(hazoron);
+                }
+                else if (minHazoron == null || hazoron.DefaultWorldPosition < minHazoron.DefaultWorldPosition)
                 {
                     minHazoron = hazoron;
                 }
             }
+            if (_listToClean.Count > 0)
+            {
+                foreach (Hazoron hazoron in _listToClean)
+                {
+                    RemoveHazoron(hazoron);
+                }
+                _listToClean.Clear();
+            }
+            //has sometimes bug that hazoron won't remove
             return minHazoron;
         }
         internal void AddHazoron(Hazoron hazoron)

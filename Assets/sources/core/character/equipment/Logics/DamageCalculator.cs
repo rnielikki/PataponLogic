@@ -104,21 +104,30 @@ namespace PataRoad.Core.Character.Equipments.Logic
         {
             return CalculateStatusEffect(senderStat.FireRate, recieverStat.FireRate) * time;
         }
-        public static void DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform, bool displayDamage = true)
+        /// <summary>
+        /// Deals damage from fire effect (non-direct damage)
+        /// </summary>
+        /// <param name="attackable">The target that gets fire damage.</param>
+        /// <param name="targetObject">The target game object, expected to the one who contains <paramref name="attackable"/>.</param>
+        /// <param name="objectTransform">Position to display damage.</param>
+        /// <param name="displayDamage">Shows damage from fire effect. If e.g. grass, it's expected not to show fire damage.</param>
+        /// <returns><c>true</c> if character is died, otherwise <c>false</c>.</returns>
+        /// <note>It DOESN'T KILL because it's expected inside coroutine. You must KILL the target MANUALLY with sync coroutine.</note>
+        public static bool DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform, bool displayDamage = true)
         {
             //--- add fire resistance to fire damage taking!
             var damage = Mathf.Max(1, (int)(attackable.Stat.HitPoint * 0.05f));
             SendDamage(attackable, damage);
             if (displayDamage) _damageDisplay.DisplayDamage(damage, objectTransform.position, false, false);
-            CheckIfDie(attackable, targetObject);
+            return CheckIfDie(attackable, targetObject, false);
         }
-        private static bool CheckIfDie(IAttackable target, GameObject targetObject)
+        private static bool CheckIfDie(IAttackable target, GameObject targetObject, bool instantKill = true)
         {
             if (target.CurrentHitPoint <= 0)
             {
                 foreach (var collider in targetObject.GetComponentsInChildren<Collider2D>()) collider.enabled = false;
                 //do destroy action.
-                target.Die();
+                if (instantKill) target.Die();
                 return true;
             }
             else return false;

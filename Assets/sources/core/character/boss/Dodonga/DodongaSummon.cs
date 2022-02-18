@@ -16,15 +16,15 @@
         {
             CharAnimator.Animate("headbutt");
         }
-
         protected override void Ponpon()
         {
             CharAnimator.Animate("headbutt");
         }
-
-        private void Awake()
+        protected override void OnStarted()
         {
-            Init();
+        }
+        protected override void OnDead()
+        {
         }
     }
 }

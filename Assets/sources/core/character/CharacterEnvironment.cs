@@ -24,7 +24,7 @@ namespace PataRoad.Core.Character
         public const int DodgeDistance = 25;
 
         /// <summary>
-        /// Max y height to scan, 0 to this value. About (a bit heigher than) Toripon height expected.
+        /// Max y height to scan, from 0 to this value. About (a bit heigher than) Toripon height expected.
         /// </summary>
         public const float MaxYToScan = 8;
     }

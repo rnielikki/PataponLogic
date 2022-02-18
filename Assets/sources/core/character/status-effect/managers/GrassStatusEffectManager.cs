@@ -44,8 +44,13 @@ namespace PataRoad.Core.Character
             {
                 while (_totalTime > 0)
                 {
-                    Equipments.Logic.DamageCalculator.DealDamageFromFireEffect(_target, gameObject, _transform, false);
-                    yield return new WaitForSeconds(1);
+                    if (Equipments.Logic.DamageCalculator.DealDamageFromFireEffect(_target, gameObject, _transform, false))
+                    {
+                        yield return new WaitForEndOfFrame();
+                        _target.Die();
+                        break;
+                    }
+                    else yield return new WaitForSeconds(1);
                     _totalTime--;
                 }
                 Recover();

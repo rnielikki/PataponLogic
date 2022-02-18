@@ -51,6 +51,7 @@ namespace PataRoad.Core.Character.Animal
         public bool UseCenterAsAttackTarget => false;
 
         public UnityEvent<float> OnDamageTaken => null;
+        public UnityEvent OnAfterDeath => null;
 
         private Transform _pataponsManagerTransform;
 

@@ -9,15 +9,21 @@ namespace PataRoad.Core.Character.Hazorons
         public override float AttackDistance => Weapon.GetAttackDistance();
 
         [SerializeField]
+        UnityEngine.Events.UnityEvent _onBeforeDeath;
+        [SerializeField]
         bool _inverseDirection;
         public override Vector2 MovingDirection => _inverseDirection ? Vector2.right : Vector2.left;
         private bool _gotPosition;
+        private bool _fullyGotPosition;
         private bool _animatingWalk;
         private int _attackTypeIndex;
         public override int AttackTypeIndex => _attackTypeIndex;
+        [Header("Position status")]
         [SerializeField]
         private bool _isOnTower;
         public override bool IsFixedPosition => _isOnTower;
+
+        [Header("Attack status")]
         [SerializeField]
         private bool _charged;
         [SerializeField]
@@ -92,21 +98,39 @@ namespace PataRoad.Core.Character.Hazorons
         }
         protected override void BeforeDie()
         {
-            base.BeforeDie();
+            _onBeforeDeath?.Invoke();
             HazoronPositionManager.Current.RemoveHazoron(this);
+            base.BeforeDie();
         }
+        private bool IsInPataponsSight(float pos)
+        {
+            return pos > Patapons.PataponsManager.Current.transform.position.x
+                &&
+                pos < Patapons.PataponsManager.Current.transform.position.x + CharacterEnvironment.Sight;
+        }
+        private void Register()
+        {
+            HazoronPositionManager.Current.AddHazoron(this);
+            _fullyGotPosition = true;
+        }
+
         private void Update()
         {
-            if (_gotPosition || !_isReady) return;
+            if (_fullyGotPosition || !_isReady) return;
             else if (_isOnTower)
             {
                 if (DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)
                 {
                     _gotPosition = true;
+                    _fullyGotPosition = true;
                     if (!_defend) Attack();
                     else Defend();
                 }
                 return;
+            }
+            else if (_gotPosition && IsInPataponsSight(transform.position.x))
+            {
+                Register();
             }
             else if (StatusEffectManager.IsOnStatusEffect && _animatingWalk)
             {
@@ -115,10 +139,10 @@ namespace PataRoad.Core.Character.Hazorons
             if (ClassData.IsInAttackDistance())
             {
                 DefaultWorldPosition = transform.position.x;
-                HazoronPositionManager.Current.AddHazoron(this);
                 if (!_defend) Attack();
                 else Defend();
                 _gotPosition = true;
+                if (IsInPataponsSight(transform.position.x)) Register();
             }
             else if (!StatusEffectManager.IsOnStatusEffect
                 && DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)

@@ -58,6 +58,8 @@ namespace PataRoad.Core.Map.Levels
 
         public bool UseCenterAsAttackTarget => true;
 
+        public UnityEvent OnAfterDeath => null;
+
         private bool _ready;
 
         private void Start()

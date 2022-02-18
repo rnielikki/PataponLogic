@@ -62,8 +62,13 @@ namespace PataRoad.Core.Character
             {
                 while (time > 0)
                 {
-                    OnFireInterval();
-                    yield return new WaitForSeconds(1);
+                    if (OnFireInterval())
+                    {
+                        yield return new WaitForEndOfFrame();
+                        _target.Die();
+                        break;
+                    }
+                    else yield return new WaitForSeconds(1);
                     time--;
                 }
                 Recover();
@@ -76,10 +81,9 @@ namespace PataRoad.Core.Character
         /// <summary>
         /// Every time on fire interval. Usually it's "when damage taken from fire" (which is impelemented in base)
         /// </summary>
-        protected virtual void OnFireInterval()
-        {
+        protected virtual bool OnFireInterval() =>
             DamageCalculator.DealDamageFromFireEffect(_target, gameObject, _transform);
-        }
+
         public virtual void SetIce(float time) => OnStatusEffect?.Invoke(StatusEffectType.Ice);
         public virtual void SetSleep(float time) => OnStatusEffect?.Invoke(StatusEffectType.Sleep);
         public virtual void SetStagger() => OnStatusEffect?.Invoke(StatusEffectType.Stagger);

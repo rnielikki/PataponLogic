@@ -58,9 +58,11 @@ namespace PataRoad.Core.Character.Patapons
         public float Steps { get; private set; } = PataponEnvironment.Steps;
         //--- Adjusted By Level
         public static float DodgeSpeedMinimumMultiplier { get; private set; } = 1;
+        public static PataponsManager Current { get; private set; }
 
         private void Awake()
         {
+            Current = this;
             PataponGroupGenerator.Generate(Global.GlobalData.CurrentSlot.PataponInfo.CurrentClasses, this);
 
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
@@ -82,6 +84,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             _useMissionTower = Map.MissionPoint.Current.UseMissionTower;
             if (_useMissionTower) _missionEndPosition = Map.MissionPoint.Current.MissionPointPosition.x;
+            Hazorons.HazoronPositionManager.Current?.Init(transform);
         }
         /// <summary>
         /// Attach to <see cref="RhythmInput.OnDrumHit"/>.
@@ -310,6 +313,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             IsMovingForward = false;
             AllowedToGoForward = true;
+            Current = null;
         }
         public void SetLevel(int level, int absoluteMaxLevel)
         {

@@ -20,7 +20,8 @@ namespace PataRoad.Core.Character.Bosses
         private bool _charged;
         private SpriteRenderer[] _renderers;
 
-        protected override void Init()
+        public override void Init() => Init(false);
+        public void Init(bool reborn)
         {
             base.Init();
             var map = Global.GlobalData.CurrentSlot.MapInfo.GetMapByIndex(_connectedMapIndex);
@@ -28,6 +29,7 @@ namespace PataRoad.Core.Character.Bosses
             _pataponManagerTransform = FindObjectOfType<Patapons.PataponsManager>().transform;
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
             _renderers = GetComponentsInChildren<SpriteRenderer>();
+            if (!reborn) OnStarted();
         }
         internal void SetManager(BossSummonManager bossSummonManager) => _manager = bossSummonManager;
         public override float GetAttackValueOffset() => _lastPerfectionRate;
@@ -79,13 +81,16 @@ namespace PataRoad.Core.Character.Bosses
 
             return false;
         }
-        public override void Die()
+        public override void Die() => Die(false);
+        internal void Die(bool reborn)
         {
             _manager.MarkAsDead();
             base.Die();
             transform.parent = transform.root.parent;
+            if (!reborn) OnDead();
         }
-
+        protected abstract void OnStarted();
+        protected abstract void OnDead();
         private void Update()
         {
             if ((Rhythm.Command.TurnCounter.IsPlayerTurn || !_attacking) && StatusEffectManager.CanContinue)

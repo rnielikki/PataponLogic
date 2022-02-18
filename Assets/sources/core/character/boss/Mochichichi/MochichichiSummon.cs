@@ -2,10 +2,6 @@
 {
     class MochichichiSummon : SummonedBoss
     {
-        private void Start()
-        {
-            Map.Weather.WeatherInfo.Current.Wind.StartWind(Map.Weather.WindType.TailWind);
-        }
         protected override void Ponpon()
         {
             CharAnimator.Animate("peck");
@@ -22,11 +18,11 @@
         {
             CharAnimator.Animate("tornado");
         }
-        private void Awake()
+        protected override void OnStarted()
         {
-            Init();
+            Map.Weather.WeatherInfo.Current.Wind.StartWind(Map.Weather.WindType.TailWind);
         }
-        private void OnDestroy()
+        protected override void OnDead()
         {
             Map.Weather.WeatherInfo.Current?.Wind?.StopWind(Map.Weather.WindType.TailWind);
         }
