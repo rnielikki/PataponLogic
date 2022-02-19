@@ -147,6 +147,6 @@ namespace PataRoad.Core.Character.Class
         {
         }
 
-        public static int GetItemIndexFromClass(ClassType classType) => System.Array.IndexOf(_classByItemindex, classType);
+        public static int GetClassMemoryItemIndex(ClassType classType) => Array.IndexOf(_classByItemindex, classType);
     }
 }

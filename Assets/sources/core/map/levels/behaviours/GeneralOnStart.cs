@@ -12,7 +12,7 @@ namespace PataRoad.Core.Map.Levels
         private void Start()
         {
             var item = Items.ItemLoader.GetItem(Items.ItemType.Key, "Class",
-                        Character.Class.ClassData.GetItemIndexFromClass(_classType));
+                        Character.Class.ClassData.GetClassMemoryItemIndex(_classType));
             if (Global.GlobalData.CurrentSlot.Inventory.HasItem(item))
             {
                 return;

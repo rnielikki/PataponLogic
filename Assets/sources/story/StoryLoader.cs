@@ -66,7 +66,6 @@ namespace PataRoad.Story
                 Camera.main.transform.position = pos;
 
                 storySceneInfo.Weather.ChangeWeather(data.Weather);
-                storySceneInfo.Wind.StartNoWind();
                 storySceneInfo.Wind.StartWind(data.Wind);
 
                 var time = data.Time < 0 ? System.DateTime.Now.Hour : data.Time;

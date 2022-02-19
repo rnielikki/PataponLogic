@@ -132,6 +132,10 @@ namespace PataRoad.Core.Map.Weather
             {
                 _windActions[type]();
             }
+            if (type == WindType.TailWind)
+            {
+                _tailwindConditions++;
+            }
             _windFlags |= prioritizedType;
         }
         public void StopWind(WindType type)
@@ -142,7 +146,8 @@ namespace PataRoad.Core.Map.Weather
                 if (_tailwindConditions > 0) return;
             }
             var prioritizedType = GetFlag(type);
-            _windFlags &= ~prioritizedType;
+            var defaultStatus = GetFlag(_defaultStatus);
+            _windFlags = (PrioritizedWindType)Mathf.Max((int)(_windFlags & ~prioritizedType), (int)defaultStatus);
             if (prioritizedType > _windFlags)
             {
                 _windActions[GetMaxFlag(_windFlags)]();
@@ -175,31 +180,33 @@ namespace PataRoad.Core.Map.Weather
             }
             _isActive = on;
         }
-        public void StartNoWind()
+        private void StartNoWind()
         {
             _onFixedWindDirection = true;
+            StopAllCoroutines();
             UpdateWind(0);
             ActivateWind(false);
         }
         private void StartChangingWind()
         {
             _onFixedWindDirection = false;
+            StopAllCoroutines();
             StartCoroutine(ChangeWindDirectionCoroutine());
         }
         private void StartHeadWind()
         {
             _onFixedWindDirection = true;
+            StopAllCoroutines();
             UpdateWind(-_windRange);
         }
         private void StartTailwind()
         {
             _onFixedWindDirection = true;
+            StopAllCoroutines();
             UpdateWind(_windRange);
-            _tailwindConditions++;
         }
         private void UpdateWind(float value)
         {
-            StopAllCoroutines();
             value = Mathf.Clamp(-_windRange, value, _windRange);
             _zone.windMain = value;
             _image.Visualise(value, value / _windRange);

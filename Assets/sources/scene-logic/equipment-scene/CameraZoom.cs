@@ -64,7 +64,7 @@ namespace PataRoad.Core.CameraController
         }
         protected virtual void AfterZoomIn() { }
         protected virtual void AfterZoomOut() { }
-        protected void Update()
+        private void Update()
         {
             UpdateZoom();
         }

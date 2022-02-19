@@ -16,10 +16,12 @@ namespace PataRoad.Core.Map.Background
 {
     public class BackgroundLoader : MonoBehaviour
     {
+        public const string DesertName = "Desert";
         const string _path = "Map/Backgrounds/";
-        // Start is called before the first frame update
+        public static string CurrentTheme { get; private set; }
         public void Init(string theme)
         {
+            CurrentTheme = theme;
             var txt = Resources.Load<TextAsset>(_path + theme + "/colour");
             Camera.main.backgroundColor = ParseColor(txt.text);
 
@@ -57,6 +59,10 @@ namespace PataRoad.Core.Map.Background
             {
                 throw new System.ArgumentException("colour.txt in backgorund: Format is invalid. Make sure that it contains 6-digit HEX without any space!");
             }
+        }
+        private void OnDestroy()
+        {
+            CurrentTheme = null;
         }
     }
 }
