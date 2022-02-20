@@ -75,7 +75,7 @@ namespace PataRoad.Core.Character.Equipments
             stat.Subtract(Stat);
             HolderData.AddMass(-Mass);
         }
-        protected void AddDataToStat(Stat stat)
+        protected virtual void AddDataToStat(Stat stat)
         {
             stat.Add(Stat);
             HolderData.AddMass(Mass);

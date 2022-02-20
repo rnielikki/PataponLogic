@@ -40,7 +40,26 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
             base.ReplaceEqupiment(equipmentData, stat);
         }
-
+        protected override void AddDataToStat(Stat stat)
+        {
+            //Adds less damage if the holder has rapid attack.
+            float multiplier = 1;
+            switch (HolderData.Type)
+            {
+                case Class.ClassType.Kibapon:
+                    multiplier = 0.27f;
+                    break;
+                case Class.ClassType.Megapon:
+                case Class.ClassType.Yumipon:
+                    multiplier = 0.35f;
+                    break;
+                case Class.ClassType.Toripon:
+                    multiplier = 0.5f;
+                    break;
+            }
+            stat.Add(Stat, multiplier);
+            HolderData.AddMass(Mass);
+        }
         protected override void ReplaceImage(EquipmentData equipmentData)
         {
             base.ReplaceImage(equipmentData);
