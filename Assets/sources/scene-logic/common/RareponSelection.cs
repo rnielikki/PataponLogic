@@ -16,8 +16,6 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         [SerializeField]
         Image _image;
         [SerializeField]
-        Text _text;
-        [SerializeField]
         Image _helmImage;
         [SerializeField]
         Image _bodyImage;
@@ -97,7 +95,6 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                     target.enabled = true;
                 }
             }
-            _text.text = data.Name;
             _isOpen = true;
         }
         public bool ConfirmToCreateRarepon()

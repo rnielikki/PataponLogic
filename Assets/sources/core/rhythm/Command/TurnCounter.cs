@@ -78,10 +78,11 @@ namespace PataRoad.Core.Rhythm.Command
                     }
                     break;
                 case 3:
-                    RhythmTimer.Current.OnNextHalfTime.AddListener(() => IsPlayerTurn = !IsPlayerTurn);
+                    RhythmTimer.Current.OnNextHalfTime.AddListener(SwitchTurn);
                     break;
             }
             TurnCount = (TurnCount + 1) % 4;
         }
+        private static void SwitchTurn() => IsPlayerTurn = !IsPlayerTurn;
     }
 }

@@ -26,6 +26,10 @@ namespace PataRoad.Core.Rhythm.Display
                 { CommandSong.Patachaka, Resources.Load<Sprite>(_sourcePath + "patachaka")}
             };
             Hide();
+            TurnCounter.OnTurn.AddListener(() =>
+            {
+                if (TurnCounter.IsPlayerTurn) Hide();
+            });
         }
         public void SetImage(RhythmCommandModel command)
         {
@@ -43,5 +47,19 @@ namespace PataRoad.Core.Rhythm.Display
             _image.enabled = true;
         public void Hide() =>
             _image.enabled = false;
+        private void Update()
+        {
+            if (_image.enabled)
+            {
+                var clr = _image.color;
+                clr.a = 1 - (float)RhythmTimer.Count / RhythmTimer.Frequency;
+                if (clr.a == 1 && TurnCounter.TurnCount == 0)
+                {
+                    Hide();
+                    return;
+                }
+                _image.color = clr;
+            }
+        }
     }
 }
