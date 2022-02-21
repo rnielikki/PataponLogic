@@ -8,7 +8,6 @@ namespace PataRoad.Core.Character.Bosses
         protected EnemyBoss _boss;
         protected Patapons.PataponsManager _pataponsManager;
         protected BossTurnManager _turnManager { get; private set; }
-        public float CharacterSize { get; protected set; }
         protected int _level => _boss.Level;
 
         public bool PartBroken { get; private set; }
@@ -38,7 +37,7 @@ namespace PataRoad.Core.Character.Bosses
             _predefinedComboLengthIndexed = _predefinedCombosIndexed.Keys.OrderBy(index => index).ToArray();
             Init();
         }
-        protected abstract void Init();
+        protected virtual void Init() { }
         public virtual float CalculateAttack()
         {
             //from level3 it will do combo attk

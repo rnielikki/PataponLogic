@@ -85,11 +85,16 @@ namespace PataRoad.Core.Character
             _character.CharAnimator.Resume();
             if (!_character.IsDead) _character.CharAnimator.Animate("Idle");
         }
-        public override void TumbleAttack()
+        public override void TumbleAttack(bool hasDamage = false)
         {
             foreach (var target in _character.DistanceCalculator.GetAllGroundedTargets())
             {
                 target.StatusEffectManager.Tumble();
+                if (target is MonoBehaviour targetBehaviour && hasDamage)
+                {
+                    Equipments.Logic.DamageCalculator.DealDamage(
+                        _character, _target.Stat, targetBehaviour.gameObject, targetBehaviour.transform.position, true);
+                }
             }
         }
         private bool IsValidForStatusEffect(float time) => !_character.IsDead && !IgnoreStatusEffect && !IsOnStatusEffect && time > 0;

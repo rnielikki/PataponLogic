@@ -2,10 +2,6 @@
 {
     class DodongaEnemy : EnemyBossBehaviour
     {
-        protected override void Init()
-        {
-            CharacterSize = 7;
-        }
         protected override (string action, float distance) GetNextBehaviour()
         {
             //Tada. depends on level, it does nothing!

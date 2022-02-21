@@ -9,6 +9,11 @@ namespace PataRoad.Core.Character.Bosses
         [SerializeField]
         private DarantulaAbsorbComponent Absorber;
 
+        protected override void Init()
+        {
+            CharacterSize = 10;
+            base.Init();
+        }
         public void PoisoinAttack()
         {
             Poison.Attack();

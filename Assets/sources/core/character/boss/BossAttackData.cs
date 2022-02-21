@@ -18,11 +18,13 @@ namespace PataRoad.Core.Character.Bosses
         public bool UseCustomDataPosition { get; protected set; }
 
         protected Boss _boss;
+        public float CharacterSize { get; protected set; }
+
         private void Awake()
         {
             Init();
         }
-        protected void Init()
+        protected virtual void Init()
         {
             _boss = GetComponent<Boss>();
         }

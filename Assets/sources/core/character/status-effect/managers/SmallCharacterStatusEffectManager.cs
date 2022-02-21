@@ -56,7 +56,6 @@ namespace PataRoad.Core.Character
         }
         public override void Tumble()
         {
-            //check "is grounded" but how?
             if (IsOnStatusEffect || IgnoreStatusEffect) return;
             StopEverythingBeforeStatusEffect(StatusEffectType.Tumble);
             _smallCharacter.CharAnimator.Animate("Sleep");

@@ -12,7 +12,6 @@
                 }
             });
             _boss.UseWalkingBackAnimation();
-            CharacterSize = 4.3f;
         }
         //Example
         protected override (string action, float distance) GetNextBehaviour()

@@ -117,7 +117,7 @@ namespace PataRoad.Core.Character
             StopWeaponAttacking();
             ClassData.StopAttack(pause);
         }
-        public void TumbleAttack() => StatusEffectManager.TumbleAttack();
+        public void TumbleStatusAttack() => StatusEffectManager.TumbleAttack();
         public virtual void Die() => Die(true);
         public void DieWithoutInvoking() => Die(false);
         protected void Die(bool invokeAfterDeath, bool animate = true, float delay = 1)

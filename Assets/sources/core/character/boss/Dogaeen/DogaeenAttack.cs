@@ -6,13 +6,16 @@ namespace PataRoad.Core.Character.Bosses
     {
         [SerializeField]
         DogaeenRepel _repel;
+        protected override void Init()
+        {
+            CharacterSize = 15;
+            base.Init();
+        }
         public void RepelAttack()
         {
             _repel.Repel();
         }
-        public override void StopAllAttacking()
-        {
-        }
+
         internal override void UpdateStatForBoss(int level)
         {
             var value = 0.8f + level * 0.2f;

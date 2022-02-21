@@ -10,6 +10,11 @@ namespace PataRoad.Core.Character.Bosses
         private ParticleSystem _tornadoEffect;
         private Vector3 _targetPosition;
 
+        protected override void Init()
+        {
+            CharacterSize = 4.3f;
+            base.Init();
+        }
         internal override void UpdateStatForBoss(int level)
         {
             var value = 0.8f + level * 0.2f;

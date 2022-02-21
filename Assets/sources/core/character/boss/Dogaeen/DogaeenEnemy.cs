@@ -15,7 +15,6 @@
         protected override void Init()
         {
             _boss.UseWalkingBackAnimation();
-            CharacterSize = 15;
         }
 
         protected override (string action, float distance) GetNextBehaviour()

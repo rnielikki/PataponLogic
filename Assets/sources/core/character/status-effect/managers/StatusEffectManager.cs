@@ -89,7 +89,7 @@ namespace PataRoad.Core.Character
         public virtual void SetStagger() => OnStatusEffect?.Invoke(StatusEffectType.Stagger);
         public virtual void SetKnockback() => OnStatusEffect?.Invoke(StatusEffectType.Knockback);
         public virtual void Tumble() => OnStatusEffect?.Invoke(StatusEffectType.Tumble);
-        public virtual void TumbleAttack() { }
+        public virtual void TumbleAttack(bool hasDamage = false) { }
 
         public void RecoverAndIgnoreEffect()
         {

@@ -47,6 +47,7 @@ namespace PataRoad.Core.Character.Bosses
         public virtual void Init()
         {
             BossAttackData = GetComponent<BossAttackData>();
+            CharacterSize = BossAttackData.CharacterSize;
             foreach (var part in GetComponentsInChildren<BreakablePart>())
             {
                 _breakableParts.Add(part.gameObject, part);

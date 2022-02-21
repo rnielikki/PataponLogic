@@ -36,7 +36,6 @@ namespace PataRoad.Core.Character.Bosses
 
             _behaviour = GetComponent<EnemyBossBehaviour>();
             _behaviour.Init(this, _pataponsManager);
-            CharacterSize = _behaviour.CharacterSize;
         }
         internal void UseWalkingBackAnimation()
         {

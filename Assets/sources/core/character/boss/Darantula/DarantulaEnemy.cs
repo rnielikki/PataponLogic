@@ -8,6 +8,10 @@
             new string[]{ "poison", "tailwhip" },
             new string[]{ "poison", "tailslide" }
         };
+        protected override void Init()
+        {
+            _boss.UseWalkingBackAnimation();
+        }
         public void SetAbsorbHit()
         {
             _boss.CharAnimator.Animate("absorbing");
@@ -58,11 +62,5 @@
             return GetNextBehaviour().action;
         }
         internal void Heal(int amount) => _boss.Heal(amount);
-
-        protected override void Init()
-        {
-            _boss.UseWalkingBackAnimation();
-            CharacterSize = 10;
-        }
     }
 }

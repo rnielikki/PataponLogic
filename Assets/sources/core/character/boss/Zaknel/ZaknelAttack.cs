@@ -1,32 +1,19 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PataRoad.Core.Character.Bosses
 {
-    public class DodongaAttack : BossAttackData
+    class ZaknelAttack : BossAttackData
     {
         [SerializeField]
         private BossAttackParticle Fire;
-        [SerializeField]
-        private BossAttackCollision Headbutt;
-        [SerializeField]
-        private DodongaEatingComponent EatingMouth;
 
-        protected override void Init()
-        {
-            CharacterSize = 7;
-            base.Init();
-        }
         public void FireAttack()
         {
             Fire.Attack();
         }
-        public void EatingAttack()
+        public void EarthquakeAttack()
         {
-            EatingMouth.Attack();
-        }
-        public void StopEatingAttack()
-        {
-            EatingMouth.StopAttacking();
+            _boss.StatusEffectManager.TumbleAttack(true);
         }
         public void GrowlAttack()
         {
@@ -37,12 +24,6 @@ namespace PataRoad.Core.Character.Bosses
             {
                 Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat, target.gameObject, target.transform.position);
             }
-        }
-        public override void StopAllAttacking()
-        {
-            base.StopAllAttacking();
-            Headbutt.StopAttacking();
-            EatingMouth.StopAttacking();
         }
         internal override void UpdateStatForBoss(int level)
         {
