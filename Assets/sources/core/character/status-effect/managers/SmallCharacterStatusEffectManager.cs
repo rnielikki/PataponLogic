@@ -7,7 +7,7 @@ namespace PataRoad.Core.Character
         private CharacterSoundsCollection _soundCollection;
 
         private Vector2 _movingDirectionOnFire;
-        private Vector2 _positionOnStatusEffect;
+        private float _defaultYPosition; //for rigidbody position
         private bool _isPatapon;
         protected SmallCharacter _smallCharacter;
         private Rigidbody2D _rigidbody;
@@ -17,6 +17,7 @@ namespace PataRoad.Core.Character
         private void Awake()
         {
             Init();
+            _defaultYPosition = transform.position.y;
             IsBigTarget = false;
         }
         protected override void Init()
@@ -85,19 +86,13 @@ namespace PataRoad.Core.Character
         }
         protected override void OnKnockback()
         {
-            if (_smallCharacter.IsFixedPosition) return;
+            if (_smallCharacter.IsFixedPosition || _defaultYPosition > 0) return;
             _smallCharacter.CharAnimator.Animate("walk");
             ActivateRigidbody();
             transform.position = new Vector3(transform.position.x, Time.deltaTime * 2, transform.position.z);
             _rigidbody.AddForce(new Vector2(-_xDirection * 2400, 2200));
             _onKnockback = true;
         }
-        protected override void StopEverythingBeforeStatusEffect(StatusEffectType type)
-        {
-            base.StopEverythingBeforeStatusEffect(type);
-            _positionOnStatusEffect = transform.position;
-        }
-
         private void ActivateRigidbody()
         {
             _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -132,9 +127,9 @@ namespace PataRoad.Core.Character
                     _character.DefaultWorldPosition - CharacterEnvironment.MaxAttackDistance,
                     _character.DefaultWorldPosition + CharacterEnvironment.MaxAttackDistance);
 
-                if (transform.position.y <= 0)
+                if (transform.position.y <= _defaultYPosition)
                 {
-                    pos.y = 0;
+                    pos.y = _defaultYPosition;
                     _rigidbody.velocity = Vector2.zero;
                     _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
                     _rigidbody.gravityScale = 0;

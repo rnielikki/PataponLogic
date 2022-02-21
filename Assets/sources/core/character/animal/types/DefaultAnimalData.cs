@@ -37,7 +37,7 @@ namespace PataRoad.Core.Character.Animal
             _animator = parent.CharAnimator;
             _statusEffectManager = parent.StatusEffectManager;
             _distanceCalculator = parent.DistanceCalculator;
-            _statusEffectManager.AddRecoverAction(() => SetToIdle(true));
+            _statusEffectManager.AddRecoverAction(DoRecoverAction);
         }
         public virtual void OnTarget()
         {
@@ -89,6 +89,7 @@ namespace PataRoad.Core.Character.Animal
             }
             return true;
         }
+        protected virtual void DoRecoverAction() => SetToIdle(true);
         private void SetToIdle(bool endActionWhenMoved)
         {
             _moving = false;

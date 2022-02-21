@@ -32,6 +32,10 @@ namespace PataRoad.Core.Character.Animal
                 _useFixedTargetPosition = true;
             }
         }
+        protected override void DoRecoverAction()
+        {
+            //actually nothing!
+        }
         private void Update()
         {
             if (_behaviour.StatusEffectManager.CurrentStatusEffect != StatusEffectType.Stagger)
