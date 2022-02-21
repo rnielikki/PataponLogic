@@ -88,7 +88,6 @@ namespace PataRoad.Core.Rhythm.Bgm
         }
         private void ChangeMusicWithIntro(RhythmBgmIndex introMusicIndex, RhythmBgmIndex musicIndex, AudioSource source)
         {
-
             var introMusic = _audioClips[introMusicIndex];
             source.clip = _audioClips[musicIndex];
             _bgmShotSource.PlayOneShot(introMusic);
