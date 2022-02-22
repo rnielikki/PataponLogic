@@ -8,11 +8,11 @@
             {
                 if (Common.Utils.RandomByProbability(0.5f - 0.02f * _level))
                 {
-                    return new BossAttackMoveSegment("fire", 2, 20);
+                    return new BossAttackMoveSegment("fire", 1, 5);
                 }
                 else
                 {
-                    return new BossAttackMoveSegment("slam", 0, 15);
+                    return new BossAttackMoveSegment("slam", 0, 2);
                 }
             }
             else if (_level >= 10
@@ -32,7 +32,7 @@
                 }
                 else
                 {
-                    return new BossAttackMoveSegment("slam", 0, 10);
+                    return new BossAttackMoveSegment("slam", 0, 0);
                 }
             }
             else
@@ -45,11 +45,11 @@
                 }
                 else if (Common.Utils.RandomByProbability(meleeCount > 0 ? 0.3f : 0.6f - 0.01f * _level))
                 {
-                    return new BossAttackMoveSegment("fire", 2, 15);
+                    return new BossAttackMoveSegment("fire", 2, 5);
                 }
                 else if (Common.Utils.RandomByProbability(0.5f + 0.01f * _level))
                 {
-                    return new BossAttackMoveSegment("slam", 0, 10);
+                    return new BossAttackMoveSegment("slam", 0, 0);
                 }
                 else
                 {

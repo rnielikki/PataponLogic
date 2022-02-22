@@ -32,6 +32,8 @@ namespace PataRoad.Core.Character.Hazorons
         [SerializeField]
         private bool _isDarkOne;
         public bool IsDarkOne => _isDarkOne;
+        [SerializeField]
+        private bool _manualDeath;
 
         private bool _isReady;
 
@@ -88,7 +90,10 @@ namespace PataRoad.Core.Character.Hazorons
             ClassData.Defend();
             ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Chakachaka);
         }
-
+        public override void TakeDamage(int damage)
+        {
+            if (!_manualDeath) base.TakeDamage(damage);
+        }
         public override float GetAttackValueOffset()
         {
             return Random.Range(0, 1f);

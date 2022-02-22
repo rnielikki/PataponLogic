@@ -9,7 +9,7 @@ namespace PataRoad.Core.Character.Bosses
 
         protected override void Init()
         {
-            CharacterSize = 10;
+            CharacterSize = 5;
             base.Init();
         }
         public void FireAttack()
