@@ -17,7 +17,7 @@
             _boss.UseWalkingBackAnimation();
         }
 
-        protected override (string action, float distance) GetNextBehaviour()
+        protected override BossAttackMoveSegment GetNextBehaviour()
         {
             var firstPon = _pataponsManager.FirstPatapon;
             var closest = _boss.DistanceCalculator.GetClosest();
@@ -31,7 +31,9 @@
                     ))
                 {
                     _usedLaser = false;
-                    return PartBroken ? ("repel", 0) : ("bodyslam", 0);
+                    return PartBroken ?
+                        new BossAttackMoveSegment("repel", 0) :
+                        new BossAttackMoveSegment("bodyslam", 0);
                 }
                 else
                 {
@@ -40,7 +42,7 @@
                         if (!_usedLaser && Common.Utils.RandomByProbability(1 - __prob))
                         {
                             _usedLaser = true;
-                            return ("laser", 3);
+                            return new BossAttackMoveSegment("laser", 3);
                         }
                         else return SlamOrSlam(0.9f);
                     }
@@ -50,7 +52,7 @@
                         if (!_usedLaser && Common.Utils.RandomByProbability(1 - __prob))
                         {
                             _usedLaser = true;
-                            return ("laser", 2);
+                            return new BossAttackMoveSegment("laser", 2);
                         }
                         else
                         {
@@ -65,16 +67,16 @@
                 return SlamOrSlam(0.4f);
             }
         }
-        private (string, float) SlamOrSlam(float probability)
+        private BossAttackMoveSegment SlamOrSlam(float probability)
         {
             _usedLaser = false;
-            if (PartBroken) return ("bodyslam", 0);
+            if (PartBroken) return new BossAttackMoveSegment("bodyslam", 0);
             var pro = UnityEngine.Mathf.Max(_probabilityFromLevel, probability);
             if (Common.Utils.RandomByProbability(pro))
             {
-                return ("slam", 0);
+                return new BossAttackMoveSegment("slam", 0);
             }
-            else return ("bodyslam", 0);
+            else return new BossAttackMoveSegment("bodyslam", 0);
         }
 
         protected override string GetNextBehaviourOnIce()

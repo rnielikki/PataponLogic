@@ -13,6 +13,7 @@ namespace PataRoad.Core.Map.Environment
         private bool _enabled;
         private readonly List<Character.ICharacter> _characters = new List<Character.ICharacter>();
         private readonly HashSet<Character.ICharacter> _enteredCharacters = new HashSet<Character.ICharacter>();
+        private readonly List<Character.ICharacter> _deadCharacters = new List<Character.ICharacter>();
         private void Start()
         {
             WeatherInfo.Current.OnWeatherChanged.AddListener(ShowIfNoRain);
@@ -83,7 +84,8 @@ namespace PataRoad.Core.Map.Environment
                 var receiver = collision.gameObject.GetComponentInParent<Character.ICharacter>();
                 if (receiver != null && _characters.Contains(receiver))
                 {
-                    _characters.Remove(receiver);
+                    if (!receiver.IsDead) _characters.Remove(receiver);
+                    else _deadCharacters.Add(receiver);
                     if (_characters.Count == 0)
                     {
                         _hotImage.enabled = false;
@@ -98,8 +100,21 @@ namespace PataRoad.Core.Map.Environment
             {
                 if (!receiver.StatusEffectManager.IsOnStatusEffect)
                 {
-                    Character.Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(receiver, Character.StatusEffectType.Fire, 1, receiver.Stat.FireResistance);
+                    Character.Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(receiver, Character.StatusEffectType.Fire, 0.2f, receiver.Stat.FireResistance);
+                    if (receiver is MonoBehaviour mono)
+                    {
+                        Character.Equipments.Logic.DamageCalculator.DealDamageFromFireEffect(receiver, mono.gameObject, mono.transform);
+                    }
                 }
+            }
+            //collection shouldn't be changed while iterating
+            if (_deadCharacters.Count > 0)
+            {
+                foreach (var character in _deadCharacters)
+                {
+                    _characters.Remove(character);
+                }
+                _deadCharacters.Clear();
             }
         }
     }

@@ -7,12 +7,19 @@ namespace PataRoad.Core.Character.Bosses
         [SerializeField]
         private BossAttackParticle Fire;
 
+        protected override void Init()
+        {
+            CharacterSize = 10;
+            base.Init();
+        }
         public void FireAttack()
         {
             Fire.Attack();
         }
         public void EarthquakeAttack()
         {
+            _boss.AttackType = Equipments.Weapons.AttackType.Crush;
+            _boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
             _boss.StatusEffectManager.TumbleAttack(true);
         }
         public void GrowlAttack()

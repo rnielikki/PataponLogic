@@ -17,27 +17,27 @@
             _boss.CharAnimator.Animate("absorbing");
         }
 
-        protected override (string action, float distance) GetNextBehaviour()
+        protected override BossAttackMoveSegment GetNextBehaviour()
         {
             if (_pataponsManager.ContainsClassOnly(Class.ClassType.Toripon))
             {
-                return ("tailwhip", 0);
+                return new BossAttackMoveSegment("tailwhip", 0);
             }
             if (_pataponsManager.IsAllMelee())
             {
-                return (WhipOrSlide(), 0);
+                return new BossAttackMoveSegment(WhipOrSlide(), 0);
             }
             if (Common.Utils.RandomByProbability(0.2f + _level * 0.05f))
             {
-                return ("absorb", 0);
+                return new BossAttackMoveSegment("absorb", 0);
             }
             if (Common.Utils.RandomByProbability(0.2f - _level * 0.04f))
             {
-                return ("poison", 0);
+                return new BossAttackMoveSegment("poison", 0);
             }
             else
             {
-                return (WhipOrSlide(), 0);
+                return new BossAttackMoveSegment(WhipOrSlide(), 0);
             }
         }
         private string WhipOrSlide()
@@ -59,7 +59,7 @@
         protected override string GetNextBehaviourOnIce()
         {
             //It doesn't attk with feet
-            return GetNextBehaviour().action;
+            return GetNextBehaviour().Action;
         }
         internal void Heal(int amount) => _boss.Heal(amount);
     }

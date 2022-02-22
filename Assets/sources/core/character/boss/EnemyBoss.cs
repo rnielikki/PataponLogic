@@ -24,6 +24,8 @@ namespace PataRoad.Core.Character.Bosses
         private CameraController.SafeCameraZoom _zoom;
         private EnemyBossBehaviour _behaviour;
 
+        private float MaxAttackDistance = -1;
+
         void Awake()
         {
             Init();
@@ -103,9 +105,9 @@ namespace PataRoad.Core.Character.Bosses
             Level = level;
             BossAttackData.UpdateStatForBoss(level);
         }
-        protected float CalculateAttack() =>
+        protected (float distance, float maxDistance) CalculateAttack() =>
             _behaviour.CalculateAttack();
-        protected float CalculateAttackOnIce() =>
+        protected (float distance, float maxDistance) CalculateAttackOnIce() =>
             _behaviour.CalculateAttack();
         private void Update()
         {
@@ -152,9 +154,15 @@ namespace PataRoad.Core.Character.Bosses
                 if (DistanceCalculator.GetTargetOnSight(Sight) != null)
                 {
                     _sleeping = false;
-                    AttackDistance = CalculateAttack();
+                    (AttackDistance, MaxAttackDistance) = CalculateAttack();
                 }
                 else return;
+            }
+            //phase 3.???: attack if out of max distance. WELL DONE KIBAPONS!!!
+            if (MaxAttackDistance > 0 && _pataponsManager.transform.position.x + MaxAttackDistance <= transform.position.x - CharacterSize)
+            {
+                StartAttackingMode();
+                return;
             }
             //phase 2: go forward
             var closest = DistanceCalculator.GetClosest() ?? _pataponsManager.transform.position;
@@ -172,12 +180,16 @@ namespace PataRoad.Core.Character.Bosses
             }
             else //phase 3: now enemy's on forward.
             {
-                _moving = false;
-                CharAnimator.Animate("Idle");
-                if (BossTurnManager.IsEmpty) CalculateAttack();
-                BossTurnManager.StartAttack();
-                _zoom.enabled = false;
+                StartAttackingMode();
             }
+        }
+        private void StartAttackingMode()
+        {
+            _moving = false;
+            CharAnimator.Animate("Idle");
+            if (BossTurnManager.IsEmpty) CalculateAttack();
+            BossTurnManager.StartAttack();
+            _zoom.enabled = false;
         }
         private void OnDestroy()
         {

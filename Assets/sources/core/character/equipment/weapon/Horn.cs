@@ -23,7 +23,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _feverAttackObject = GetWeaponInstance("Mega-FeverAttack");
             _chargeDefenceObject = GetWeaponInstance("Mega-ChargeDefence");
 
-            if (Holder != null) _ifFire = Holder.AttackTypeIndex == 0;
+            if (Holder != null)
+            {
+                _ifFire = Holder.AttackTypeIndex == 0;
+                transform.localScale = new Vector3(Holder.MovingDirection.x, 1, 1);
+            }
         }
 
         public override void Attack(AttackCommandType attackCommandType)
@@ -37,15 +41,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                     return;
                 case AttackCommandType.Attack:
                     //Attack is called in two times in animation, so doesn't need so many emit count.
-                    startSpeed = 11 * _forceMultiplier;
+                    startSpeed = 11 * _forceMultiplier * Holder.MovingDirection.x;
                     emitCount = 5;
                     break;
                 case AttackCommandType.Defend:
-                    startSpeed = 10 * _forceMultiplier;
+                    startSpeed = 10 * _forceMultiplier * Holder.MovingDirection.x;
                     emitCount = 4;
                     break;
                 case AttackCommandType.Charge:
-                    startSpeed = 3 * _forceMultiplier;
+                    startSpeed = 3 * _forceMultiplier * Holder.MovingDirection.x;
                     emitCount = 2;
                     break;
                 case AttackCommandType.ChargeDefend:

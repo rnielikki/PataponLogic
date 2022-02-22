@@ -48,6 +48,7 @@ namespace PataRoad.Core.Character.Hazorons
             DistanceCalculator = _isDarkOne ? DistanceCalculator.GetNonPataHazoDistanceCalculator(this) : DistanceCalculator.GetHazoronDistanceCalculator(this);
             DistanceManager = gameObject.AddComponent<DistanceManager>();
             DistanceManager.DistanceCalculator = DistanceCalculator;
+            if (_isOnTower) Stat.KnockbackResistance = Mathf.Infinity;
 
             StatusEffectManager.AddRecoverAction(() =>
             {
@@ -128,9 +129,15 @@ namespace PataRoad.Core.Character.Hazorons
                 }
                 return;
             }
-            else if (_gotPosition && IsInPataponsSight(transform.position.x))
+            else if (_gotPosition)
             {
-                Register();
+                if (IsInPataponsSight(transform.position.x)) Register();
+                else if (!ClassData.IsInAttackDistance())
+                {
+                    StopAttacking(false);
+                    _gotPosition = false;
+                }
+                else DefaultWorldPosition = transform.position.x;
             }
             else if (StatusEffectManager.IsOnStatusEffect && _animatingWalk)
             {

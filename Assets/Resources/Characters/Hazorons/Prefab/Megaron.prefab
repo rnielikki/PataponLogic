@@ -1325,6 +1325,10 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+  _onBeforeDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _inverseDirection: 0
   _isOnTower: 0
   _charged: 0
   _defend: 0
@@ -1754,11 +1758,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2995590056205638528, guid: e8f7609268222244ba654933ebc73f94, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.594
       objectReference: {fileID: 0}
     - target: {fileID: 2995590056205638528, guid: e8f7609268222244ba654933ebc73f94, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.125
       objectReference: {fileID: 0}
     - target: {fileID: 2995590056205638528, guid: e8f7609268222244ba654933ebc73f94, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1799,10 +1803,6 @@ PrefabInstance:
     - target: {fileID: 2995590056205638529, guid: e8f7609268222244ba654933ebc73f94, type: 3}
       propertyPath: m_Layer
       value: 11
-      objectReference: {fileID: 0}
-    - target: {fileID: 2995590056205638530, guid: e8f7609268222244ba654933ebc73f94, type: 3}
-      propertyPath: ShapeModule.m_Rotation.z
-      value: 135
       objectReference: {fileID: 0}
     - target: {fileID: 2995590056205638530, guid: e8f7609268222244ba654933ebc73f94, type: 3}
       propertyPath: CollisionModule.collidesWith.m_Bits

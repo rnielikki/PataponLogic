@@ -23,7 +23,7 @@ namespace PataRoad.Core.Character.Bosses
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.tag != "SmallCharacter") return;
-            var character = collision.GetComponent<SmallCharacter>();
+            var character = collision.GetComponentInParent<SmallCharacter>();
             if (!character.StatusEffectManager.IsOnStatusEffect)
             {
                 character.StatusEffectManager.SetKnockback();
@@ -35,7 +35,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             if (_enabled)
             {
-                transform.position = Vector3.MoveTowards(transform.position, _wheelTargetPosition, Time.deltaTime * 4);
+                _boss.transform.position = Vector3.MoveTowards(_boss.transform.position, _wheelTargetPosition, Time.deltaTime * 15);
             }
         }
     }

@@ -33,7 +33,7 @@ namespace PataRoad.Core.Character
         protected override void OnFire()
         {
             _smallCharacter.CharAnimator.Animate("Fire");
-            _movingDirectionOnFire = -_smallCharacter.MovingDirection;
+            _movingDirectionOnFire = _smallCharacter.MovingDirection;
         }
         protected override bool OnFireInterval()
         {
@@ -104,10 +104,15 @@ namespace PataRoad.Core.Character
             if (IsOnStatusEffect && !_smallCharacter.IsFixedPosition && _isOnFire && !_character.IsDead)
             {
                 var offset = _smallCharacter.Stat.MovementSpeed * 1.5f * Time.deltaTime * _movingDirectionOnFire;
-                var pos = transform.position + (Vector3)offset;
-
+                Vector3 pos = transform.position + (Vector3)offset;
+                float xBeforeClamp = pos.x;
+                if (_smallCharacter.MovingDirection.x == _movingDirectionOnFire.x)
+                {
+                    pos.x = _smallCharacter.DistanceCalculator.GetSafeForwardPosition(pos.x);
+                }
                 if (_xDirection * _character.DefaultWorldPosition - CharacterEnvironment.DodgeDistance > _xDirection * pos.x
-                    || _xDirection * _character.DefaultWorldPosition < _xDirection * pos.x)
+                    || _xDirection * _character.DefaultWorldPosition < _xDirection * pos.x
+                    || pos.x != xBeforeClamp)
                 {
                     _movingDirectionOnFire = -_movingDirectionOnFire;
                     transform.position -= (Vector3)offset;

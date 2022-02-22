@@ -306,7 +306,7 @@ namespace PataRoad.Core.Character
             StaggerResistance += other.StaggerResistance;
             FireRate += other.FireRate;
             FireResistance += other.FireResistance;
-            IceRate += other.IceResistance;
+            IceRate += other.IceRate;
             IceResistance += other.IceResistance;
             SleepRate += other.SleepRate;
             SleepResistance += other.SleepResistance;
@@ -334,7 +334,7 @@ namespace PataRoad.Core.Character
             StaggerResistance -= other.StaggerResistance;
             FireRate -= other.FireRate;
             FireResistance -= other.FireResistance;
-            IceRate -= other.IceResistance;
+            IceRate -= other.IceRate;
             IceResistance -= other.IceResistance;
             SleepRate -= other.SleepRate;
             SleepResistance -= other.SleepResistance;

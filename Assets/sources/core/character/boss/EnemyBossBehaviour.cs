@@ -38,7 +38,7 @@ namespace PataRoad.Core.Character.Bosses
             Init();
         }
         protected virtual void Init() { }
-        public virtual float CalculateAttack()
+        public virtual (float distance, float maxDistance) CalculateAttack()
         {
             //from level3 it will do combo attk
             var comboCount = UnityEngine.Random.Range(1,
@@ -55,18 +55,18 @@ namespace PataRoad.Core.Character.Bosses
             PartBroken = true;
         }
 
-        protected float SetComboAttack(int count)
+        protected (float distance, float maxDistance) SetComboAttack(int count)
         {
             if (count <= 0)
             {
                 _turnManager.SetOneAction("nothing");
-                return 5;
+                return (5, -1);
             }
             else if (count == 1)
             {
                 var next = GetNextBehaviour();
-                _turnManager.SetOneAction(next.action);
-                return next.distance;
+                _turnManager.SetOneAction(next.Action);
+                return (next.Distance, next.MaxDistance);
             }
             else
             {
@@ -76,9 +76,9 @@ namespace PataRoad.Core.Character.Bosses
                 return distance;
             }
         }
-        protected abstract (string action, float distance) GetNextBehaviour();
+        protected abstract BossAttackMoveSegment GetNextBehaviour();
         protected abstract string GetNextBehaviourOnIce();
-        protected virtual float SetMultipleAttacks(int count)
+        protected virtual (float distance, float maxDistance) SetMultipleAttacks(int count)
         {
             var leftComboCount = count;
             while (leftComboCount > 0)
@@ -104,19 +104,23 @@ namespace PataRoad.Core.Character.Bosses
                 }
                 leftComboCount = count - _attackCombos.Count;
             }
-            return 1;
-
+            return (1, -1);
         }
-        protected virtual float SetMultipleAttacksOneByOne(int count)
+        protected virtual (float distance, float maxDistance) SetMultipleAttacksOneByOne(int count)
         {
             float distance = UnityEngine.Mathf.Infinity;
+            float maxDistance = -1;
             for (int i = 0; i < count; i++)
             {
                 var next = GetNextBehaviour();
-                _attackCombos.Add(next.action);
-                distance = UnityEngine.Mathf.Min(next.distance, distance);
+                _attackCombos.Add(next.Action);
+                distance = UnityEngine.Mathf.Min(next.Distance, distance);
+                if (next.MaxDistance >= 0)
+                {
+                    maxDistance = UnityEngine.Mathf.Max(maxDistance, next.MaxDistance);
+                }
             }
-            return distance;
+            return (distance, maxDistance);
         }
     }
 }

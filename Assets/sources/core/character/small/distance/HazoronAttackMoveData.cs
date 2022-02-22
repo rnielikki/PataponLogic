@@ -8,15 +8,17 @@ namespace PataRoad.Core.Character
 
         private readonly DistanceCalculator _distanceCalculator;
         private readonly Hazorons.Hazoron _hazoron;
+        private readonly bool _movingLeft;
 
-        private float _min => _hazoron.DefaultWorldPosition - CharacterEnvironment.MaxAttackDistance;
-        private float _max => _hazoron.DefaultWorldPosition + CharacterEnvironment.MaxAttackDistance - 5;
+        private float _min => _hazoron.DefaultWorldPosition - CharacterEnvironment.MaxAttackDistance - (_movingLeft ? 0 : 5);
+        private float _max => _hazoron.DefaultWorldPosition + CharacterEnvironment.MaxAttackDistance - (_movingLeft ? 5 : 0);
         public bool WasHitLastTime { get; set; }
         public Vector2 LastHit { get; set; }
 
         public HazoronAttackMoveData(Hazorons.Hazoron hazoron)
         {
             _hazoron = hazoron;
+            _movingLeft = _hazoron.MovingDirection.x < 0;
             _distanceCalculator = hazoron.DistanceCalculator;
         }
         public float GetAttackPosition()
@@ -40,12 +42,12 @@ namespace PataRoad.Core.Character
         private float GetAttackPositionNonClamp()
         {
             var attackDistance = _hazoron.AttackDistance;
-            if (attackDistance < 0) attackDistance = _hazoron.AttackDistance;
+
             var closest = _distanceCalculator.GetClosestForAttack();
             if (closest == null) return _hazoron.DefaultWorldPosition;
             attackDistance = _hazoron.Weapon.AdjustAttackDistanceByYPosition(attackDistance, closest.Value.y);
 
-            return closest.Value.x + attackDistance + _hazoron.CharacterSize;
+            return closest.Value.x + attackDistance - _hazoron.CharacterSize * _hazoron.MovingDirection.x;
         }
         private float Clamp(float value) => Mathf.Clamp(value, _min, _max);
     }

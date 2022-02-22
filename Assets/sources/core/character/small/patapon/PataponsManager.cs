@@ -201,6 +201,15 @@ namespace PataRoad.Core.Character.Patapons
             }
             return true;
         }
+        public int GetMeleeCount()
+        {
+            int count = 0;
+            foreach (var group in _groups)
+            {
+                if (group.FirstPon.IsMeleeUnit) count++;
+            }
+            return count;
+        }
         public bool ContainsClass(Class.ClassType type)
         {
             foreach (var group in _groups)
