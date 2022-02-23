@@ -26,7 +26,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (Holder != null)
             {
                 _ifFire = Holder.AttackTypeIndex == 0;
-                transform.localScale = new Vector3(Holder.MovingDirection.x, 1, 1);
+                _attackParticles.transform.localScale = new Vector3(Holder.MovingDirection.x, 1, 1);
             }
         }
 
@@ -116,9 +116,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             self.transform.position += Vector3.up * -0.5f;
         }
         //Charge Defence bullet
-        private static void StopBulletOnGround(Collider2D self, Vector2 vector2)
+        private static void StopBulletOnGround(Collider2D self, Vector2 direction)
         {
             self.attachedRigidbody.gravityScale = 0;
+            self.attachedRigidbody.AddForce(direction * 100);
             self.attachedRigidbody.Sleep();
         }
         private static void PushBack(Collider2D other)

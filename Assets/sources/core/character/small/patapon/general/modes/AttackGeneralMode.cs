@@ -16,10 +16,10 @@ namespace PataRoad.Core.Character.Patapons.General
                     _damageMultiplier = 1.2f;
                     break;
                 case Rhythm.Difficulty.Normal:
-                    _damageMultiplier = 2;
+                    _damageMultiplier = 1.75f;
                     break;
                 case Rhythm.Difficulty.Hard:
-                    _damageMultiplier = 3;
+                    _damageMultiplier = 2f;
                     break;
             }
         }

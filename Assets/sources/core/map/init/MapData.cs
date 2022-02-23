@@ -12,7 +12,11 @@ namespace PataRoad.Core.Map
         [Header("Basic Informations")]
         [SerializeField]
         private string _name;
+        [SerializeField]
+        [Tooltip("Optional. If empty, it should use the default name.")]
+        private string _nameBeforeClear;
         public string Name => _name;
+        public string NameBeforeClear => string.IsNullOrWhiteSpace(_nameBeforeClear) ? _name : _nameBeforeClear;
         [SerializeField]
         [TextArea]
         private string _descriptionBeforeClear;

@@ -56,7 +56,7 @@ namespace PataRoad.Core.Global
         {
             var mapInfo = new MapInfo();
             mapInfo.LastMap = mapInfo.NextMap = mapInfo.LoadResource(0);
-            mapInfo._lastMapName = mapInfo.LastMap.MapData.Name;
+            mapInfo._lastMapName = mapInfo.LastMap.Name;
             mapInfo._patapolisWeather = new MapWeather(new Dictionary<Map.Weather.WeatherType, float>()
             {
                 { Map.Weather.WeatherType.Rain, 0.1f },
@@ -106,7 +106,7 @@ namespace PataRoad.Core.Global
             }
             NextMap.Cleared = true;
             LastMap = NextMap;
-            _lastMapName = LastMap.MapData.Name;
+            _lastMapName = LastMap.Name;
             OpenNext();
             if (_reservedNextMap != null)
             {
@@ -122,7 +122,7 @@ namespace PataRoad.Core.Global
         {
             _succeededLast = false;
             LastMap = NextMap;
-            _lastMapName = LastMap.MapData.Name;
+            _lastMapName = LastMap.Name;
             GlobalData.CurrentSlot.PataponInfo.CustomMusic = null;
         }
         public void RefreshAllWeathers()

@@ -10,6 +10,7 @@ namespace PataRoad.Core.Map
         [SerializeField]
         private int _mapDataIndex;
         public int Index => _mapDataIndex;
+        public string Name => Cleared ? MapData.Name : MapData.NameBeforeClear;
 
         [SerializeReference]
         private MapWeather _weather;
@@ -52,7 +53,7 @@ namespace PataRoad.Core.Map
         {
             if (_level > 1)
             {
-                var str = $"{MapData.Name} Lv. {_level}";
+                var str = $"{Name} Lv. {_level}";
                 if (_level >= MapData.GetMaxLevel())
                 {
                     str += " *";
@@ -61,7 +62,7 @@ namespace PataRoad.Core.Map
             }
             else
             {
-                return MapData.Name;
+                return Name;
             }
         }
         internal void ChangeWeather() => _weather.ChangeWeather();
