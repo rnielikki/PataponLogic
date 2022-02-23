@@ -26,9 +26,9 @@ namespace PataRoad.Core.Character.Hazorons
             if (Current == null || Current._hazorons.Count == 0) return Mathf.Infinity;
             return Current._hazorons.Min(h => h.DefaultWorldPosition);
         }
-        private Hazoron GetClosestHazoron()
+        private void TrackClosestHazoron()
         {
-            if (_hazorons.Count == 0) return null;
+            if (_hazorons.Count == 0) return;
             Hazoron minHazoron = null;
 
             foreach (var hazoron in _hazorons)
@@ -50,8 +50,7 @@ namespace PataRoad.Core.Character.Hazorons
                 }
                 _listToClean.Clear();
             }
-            //has sometimes bug that hazoron won't remove
-            return minHazoron;
+            _display.TrackHazoron(minHazoron);
         }
         internal void AddHazoron(Hazoron hazoron)
         {
@@ -62,7 +61,7 @@ namespace PataRoad.Core.Character.Hazorons
                 {
                     _display.gameObject.SetActive(true);
                 }
-                _display.TrackHazoron(GetClosestHazoron());
+                TrackClosestHazoron();
             }
         }
         internal void RemoveHazoron(Hazoron hazoron)
@@ -75,7 +74,7 @@ namespace PataRoad.Core.Character.Hazorons
             }
             else
             {
-                _display.TrackHazoron(GetClosestHazoron());
+                TrackClosestHazoron();
             }
         }
         private void OnDestroy()

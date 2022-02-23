@@ -140,7 +140,7 @@ namespace PataRoad.Core.Map.Weather
         }
         public void StopWind(WindType type)
         {
-            if (type == WindType.TailWind && GetMaxFlag(_windFlags) == WindType.TailWind)
+            if (type == WindType.TailWind && GetMaxFlag(_windFlags) == WindType.TailWind && _tailwindConditions > 0)
             {
                 _tailwindConditions--;
                 if (_tailwindConditions > 0) return;
@@ -166,7 +166,7 @@ namespace PataRoad.Core.Map.Weather
                 flag >>= 1;
             }
             //Square root
-            return (flag == 0) ? 0 : (WindType)((flag >> 2) + 1);
+            return (flag == 0) ? 0 : (WindType)((flag >> 1) + 1);
         }
         /// <summary>
         /// Activate or disactivate wind.

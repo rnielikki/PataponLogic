@@ -95,7 +95,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             if ((Rhythm.Command.TurnCounter.IsPlayerTurn || !_attacking) && StatusEffectManager.CanContinue)
             {
-                var targetPosition = _manager.transform.position + CharacterSize * Vector3.left;
+                var targetPosition = _manager.transform.position;
                 var offset = Stat.MovementSpeed * Time.deltaTime;
                 if (!DistanceCalculator.IsInTargetRange(targetPosition.x, offset))
                 {

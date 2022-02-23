@@ -3,7 +3,7 @@ using PataRoad.Core.Character.Equipments.Weapons;
 using PataRoad.Core.Rhythm;
 using UnityEngine;
 
-namespace PataRoad.Core.Map.Levels.Level17Door
+namespace PataRoad.Core.Map.Levels
 {
     class Level17DoorAttack : Spawn, IAttacker
     {
@@ -23,8 +23,9 @@ namespace PataRoad.Core.Map.Levels.Level17Door
         [SerializeField]
         private int _pikeDamage;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             _cannon = GetComponentInChildren<CannonStructure>();
             _bullets = GetComponentsInChildren<ParticleDamaging>();
             foreach (var bullet in _bullets) bullet.Init(this);

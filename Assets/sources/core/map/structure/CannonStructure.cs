@@ -45,8 +45,9 @@ namespace PataRoad.Core.Character
         [SerializeField]
         private int _damage;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             _weaponInstanceResource = WeaponInstance.GetResource();
             Stat.DamageMax += _damage;
         }

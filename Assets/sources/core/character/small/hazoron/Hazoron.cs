@@ -36,6 +36,7 @@ namespace PataRoad.Core.Character.Hazorons
         private bool _manualDeath;
 
         private bool _isReady;
+        private bool _isAttacking;
 
         public override CharacterSoundsCollection Sounds => _isDarkOne ?
             CharacterSoundLoader.Current.DarkOneSounds : CharacterSoundLoader.Current.HazoronSounds;
@@ -80,13 +81,15 @@ namespace PataRoad.Core.Character.Hazorons
         }
         private void Attack()
         {
-            if (!_isReady) return;
+            if (!_isReady || _isAttacking) return;
+            _isAttacking = true;
             ClassData.Attack();
             ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Ponpon);
         }
         private void Defend()
         {
-            if (!_isReady) return;
+            if (!_isReady || _isAttacking) return;
+            _isAttacking = true;
             ClassData.Defend();
             ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Chakachaka);
         }
@@ -118,6 +121,11 @@ namespace PataRoad.Core.Character.Hazorons
         {
             HazoronPositionManager.Current.AddHazoron(this);
             _fullyGotPosition = true;
+        }
+        public override void StopAttacking(bool pause)
+        {
+            _isAttacking = false;
+            base.StopAttacking(pause);
         }
 
         private void Update()

@@ -13,8 +13,11 @@ namespace PataRoad.Core.Character
         int _currentCount;
 
         int _index;
-        private void Start()
+        private int _level;
+        private int _maxLevel;
+        protected override void Start()
         {
+            base.Start();
             StartCoroutine(SpawnEnemy());
         }
         protected System.Collections.IEnumerator SpawnEnemy()
@@ -29,12 +32,26 @@ namespace PataRoad.Core.Character
                     spawnedObject.transform.position = transform.position;
 
                     var spawned = spawnedObject.GetComponent<Hazorons.Hazoron>();
-                    spawned?.OnAfterDeath?.AddListener(() => _currentCount--);
-                    _currentCount++;
+                    if (spawned != null)
+                    {
+                        spawned.OnAfterDeath.AddListener(() => _currentCount--);
+                        _currentCount++;
 
+                        var statModifier = spawned.GetComponent<Map.IHavingLevel>();
+                        if (statModifier != null)
+                        {
+                            statModifier.SetLevel(_level, _maxLevel);
+                        }
+                    }
                     _index = (_index + 1) % _spawnTarget.Length;
                 }
             }
+        }
+        public override void SetLevel(int level, int absoluteMaxLevel)
+        {
+            base.SetLevel(level, absoluteMaxLevel);
+            _level = level;
+            _maxLevel = absoluteMaxLevel;
         }
         public override void Die()
         {

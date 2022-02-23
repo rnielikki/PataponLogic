@@ -28,7 +28,7 @@ namespace PataRoad.Core.Character.Animal
             if (CanMove())
             {
                 base.OnTarget();
-                _targetPosition.x = Map.MissionPoint.Current.MissionPointPosition.x;
+                _targetPosition.x = Map.MissionPoint.Current.MissionPointPosition.x + 200;
                 _useFixedTargetPosition = true;
             }
         }

@@ -1,21 +1,17 @@
 ﻿using PataRoad.Core.Map.Weather;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PataRoad.Core.Map.Environment
 {
-    class FireField : MonoBehaviour
+    class FireField : TriggerZone
     {
         [SerializeField]
         ParticleSystem _particle;
         [SerializeField]
         SpriteRenderer _hotImage;
-        private bool _enabled;
-        private readonly List<Character.ICharacter> _characters = new List<Character.ICharacter>();
-        private readonly HashSet<Character.ICharacter> _enteredCharacters = new HashSet<Character.ICharacter>();
-        private readonly List<Character.ICharacter> _deadCharacters = new List<Character.ICharacter>();
         private void Start()
         {
+            Init();
             WeatherInfo.Current.OnWeatherChanged.AddListener(ShowIfNoRain);
             ShowIfNoRain(WeatherInfo.Current.CurrentWeather);
         }
@@ -25,96 +21,60 @@ namespace PataRoad.Core.Map.Environment
             if ((type == WeatherType.Rain || type == WeatherType.Storm || type == WeatherType.Snow)
                 && _enabled)
             {
-                _enabled = false;
-                var particleColor = _particle.colorOverLifetime;
-                particleColor.enabled = false;
-                Rhythm.RhythmTimer.Current.OnTime.RemoveListener(UpdateStatusEffect);
-                foreach (var character in _characters)
-                {
-                    if (character.StatusEffectManager.CurrentStatusEffect == Character.StatusEffectType.Fire)
-                    {
-                        character.StatusEffectManager.Recover();
-                    }
-                }
+                SetDisable();
             }
             else if (!_enabled)
             {
-                _enabled = true;
-                var particleColor = _particle.colorOverLifetime;
-                particleColor.enabled = true;
-                WeatherInfo.Current.FireRateMultiplier = 1.5f;
-                WeatherInfo.Current.IceRateMultiplier = 0.1f;
-                if (_characters.Count > 0)
-                {
-                    _hotImage.enabled = true;
-                }
-                Rhythm.RhythmTimer.Current.OnTime.AddListener(UpdateStatusEffect);
+                SetEnable();
             }
         }
-        private void OnTriggerEnter2D(Collider2D collision)
+        protected override void OnFirstEnter()
         {
-            if (collision.gameObject.tag == "SmallCharacter")
-            {
-                var receiver = collision.gameObject.GetComponentInParent<Character.ICharacter>();
-                if (receiver != null && !_characters.Contains(receiver))
-                {
-                    if (_characters.Count == 0)
-                    {
-                        _hotImage.enabled = true;
-                    }
-                    _characters.Add(receiver);
-                    if (receiver.OnAfterDeath != null && !_enteredCharacters.Contains(receiver))
-                    {
-                        _enteredCharacters.Add(receiver);
-                        receiver.OnAfterDeath.AddListener(() =>
-                        {
-                            if (_characters.Contains(receiver))
-                            {
-                                _characters.Remove(receiver);
-                            }
-                        });
-                    }
-                }
-            }
+            _hotImage.enabled = true;
         }
-        private void OnTriggerExit2D(Collider2D collision)
+
+        protected override void OnLastExit()
         {
-            if (collision.gameObject.tag == "SmallCharacter")
-            {
-                var receiver = collision.gameObject.GetComponentInParent<Character.ICharacter>();
-                if (receiver != null && _characters.Contains(receiver))
-                {
-                    if (!receiver.IsDead) _characters.Remove(receiver);
-                    else _deadCharacters.Add(receiver);
-                    if (_characters.Count == 0)
-                    {
-                        _hotImage.enabled = false;
-                    }
-                }
-            }
+            _hotImage.enabled = false;
         }
-        private void UpdateStatusEffect()
+        protected override void OnStay(System.Collections.Generic.IEnumerable<Character.ICharacter> currentStayingCharacters)
         {
-            if (!_enabled) return;
-            foreach (var receiver in _characters)
+            foreach (var receiver in currentStayingCharacters)
             {
                 if (!receiver.StatusEffectManager.IsOnStatusEffect)
                 {
                     Character.Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(receiver, Character.StatusEffectType.Fire, 0.2f, receiver.Stat.FireResistance);
                     if (receiver is MonoBehaviour mono)
                     {
-                        Character.Equipments.Logic.DamageCalculator.DealDamageFromFireEffect(receiver, mono.gameObject, mono.transform);
+                        if (Character.Equipments.Logic.DamageCalculator.DealDamageFromFireEffect(receiver, mono.gameObject, mono.transform))
+                        {
+                            receiver.Die();
+                        }
                     }
                 }
             }
-            //collection shouldn't be changed while iterating
-            if (_deadCharacters.Count > 0)
+        }
+
+        protected override void OnStarted(System.Collections.Generic.IEnumerable<Character.ICharacter> currentStayingCharacters)
+        {
+            WeatherInfo.Current.FireRateMultiplier = 1.5f;
+            WeatherInfo.Current.IceRateMultiplier = 0.1f;
+
+            var particleColor = _particle.colorOverLifetime;
+            particleColor.enabled = true;
+        }
+
+        protected override void OnEnded(System.Collections.Generic.IEnumerable<Character.ICharacter> currentStayingCharacters)
+        {
+            var particleColor = _particle.colorOverLifetime;
+            particleColor.enabled = false;
+
+            foreach (var character in currentStayingCharacters)
             {
-                foreach (var character in _deadCharacters)
+                if (character.StatusEffectManager.CurrentStatusEffect == Character.StatusEffectType.Fire)
                 {
-                    _characters.Remove(character);
+                    character.StatusEffectManager.Recover();
                 }
-                _deadCharacters.Clear();
             }
         }
     }

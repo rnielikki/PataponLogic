@@ -4,7 +4,7 @@ namespace PataRoad.Core.Character
 {
     public class Structure : MonoBehaviour, IAttackable, Map.IHavingLevel
     {
-        public Stat Stat { get; private set; }
+        public Stat Stat { get; protected set; }
 
         public int CurrentHitPoint { get; set; }
         public StatusEffectManager StatusEffectManager { get; private set; }
@@ -24,7 +24,7 @@ namespace PataRoad.Core.Character
         [SerializeField]
         float _fireResistance;
         [SerializeReference]
-        private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
+        protected AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
         public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
         protected Animator _animator;
 
@@ -36,7 +36,7 @@ namespace PataRoad.Core.Character
 
         System.Collections.Generic.List<SpriteRenderer> _sprites = new System.Collections.Generic.List<SpriteRenderer>();
 
-        private void Awake()
+        protected virtual void Awake()
         {
             Stat = new Stat
             {
@@ -55,7 +55,7 @@ namespace PataRoad.Core.Character
             StatusEffectManager.IsBigTarget = true;
             _animator = GetComponent<Animator>();
         }
-        private void Start()
+        protected virtual void Start()
         {
             SetSprites(transform);
         }
@@ -63,9 +63,9 @@ namespace PataRoad.Core.Character
         {
             IsDead = true;
             _onDestroy.Invoke();
-            _animator.Play("die");
+            _animator?.Play("die");
         }
-        public void TakeDamage(int damage)
+        public virtual void TakeDamage(int damage)
         {
             //Can attach health status or change sprite etc.
             CurrentHitPoint -= damage;
@@ -83,6 +83,13 @@ namespace PataRoad.Core.Character
                 var sprite = child.GetComponent<SpriteRenderer>();
                 if (sprite != null) _sprites.Add(sprite);
                 SetSprites(child);
+            }
+        }
+        internal void RemoveSprites(Transform tr)
+        {
+            foreach (var sprite in tr.GetComponentsInChildren<SpriteRenderer>())
+            {
+                _sprites.Remove(sprite);
             }
         }
 
