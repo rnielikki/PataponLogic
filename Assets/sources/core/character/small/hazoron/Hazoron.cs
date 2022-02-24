@@ -28,6 +28,8 @@ namespace PataRoad.Core.Character.Hazorons
         private bool _charged;
         [SerializeField]
         private bool _defend;
+        [SerializeField]
+        private bool _doNothing;
 
         [SerializeField]
         private bool _isDarkOne;
@@ -53,16 +55,16 @@ namespace PataRoad.Core.Character.Hazorons
             DistanceManager.DistanceCalculator = DistanceCalculator;
             if (_isOnTower) Stat.KnockbackResistance = Mathf.Infinity;
 
+            if (_doNothing) _isAttacking = true;
             StatusEffectManager.AddRecoverAction(() =>
             {
                 if (IsFlyingUnit)
                 {
                     (ClassData as ToriClassData)?.FlyUp();
                 }
-                if (_gotPosition)
+                if (_gotPosition && !_doNothing)
                 {
-                    if (!_defend) Attack();
-                    else Defend();
+                    Attack();
                 }
             });
             _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
@@ -83,15 +85,16 @@ namespace PataRoad.Core.Character.Hazorons
         {
             if (!_isReady || _isAttacking) return;
             _isAttacking = true;
-            ClassData.Attack();
-            ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Ponpon);
-        }
-        private void Defend()
-        {
-            if (!_isReady || _isAttacking) return;
-            _isAttacking = true;
-            ClassData.Defend();
-            ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Chakachaka);
+            if (_defend)
+            {
+                ClassData.Defend();
+                ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Chakachaka);
+            }
+            else
+            {
+                ClassData.Attack();
+                ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Ponpon);
+            }
         }
         public override void TakeDamage(int damage)
         {
@@ -137,8 +140,7 @@ namespace PataRoad.Core.Character.Hazorons
                 {
                     _gotPosition = true;
                     _fullyGotPosition = true;
-                    if (!_defend) Attack();
-                    else Defend();
+                    Attack();
                 }
                 return;
             }
@@ -159,8 +161,7 @@ namespace PataRoad.Core.Character.Hazorons
             if (ClassData.IsInAttackDistance())
             {
                 DefaultWorldPosition = transform.position.x;
-                if (!_defend) Attack();
-                else Defend();
+                Attack();
                 _gotPosition = true;
                 if (IsInPataponsSight(transform.position.x)) Register();
             }

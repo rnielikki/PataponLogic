@@ -26,7 +26,6 @@ namespace PataRoad.Core.Map
             get => _cleared;
             internal set => _cleared = value;
         }
-
         private int _level;
         public int Level => _level;
 

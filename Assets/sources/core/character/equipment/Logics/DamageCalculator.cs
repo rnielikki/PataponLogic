@@ -116,7 +116,11 @@ namespace PataRoad.Core.Character.Equipments.Logic
         public static bool DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform, bool displayDamage = true)
         {
             //--- add fire resistance to fire damage taking!
-            var damage = Mathf.Max(1, (int)(attackable.Stat.HitPoint * 0.05f));
+            var damage = Mathf.Max(1, (int)(
+                Mathf.Min(attackable.Stat.HitPoint * 0.06f, 200)
+                * (1 - attackable.Stat.FireResistance)
+                * attackable.AttackTypeResistance.FireMultiplier
+                ));
             SendDamage(attackable, damage);
             if (displayDamage) _damageDisplay.DisplayDamage(damage, objectTransform.position, false, false);
             return CheckIfDie(attackable, targetObject, false);

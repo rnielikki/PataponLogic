@@ -162,7 +162,6 @@ namespace PataRoad.Core.Character
         {
             Stat.HitPoint = CurrentHitPoint = point;
         }
-
         public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
     }
 }

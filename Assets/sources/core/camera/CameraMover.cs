@@ -63,7 +63,7 @@ namespace PataRoad.Core.CameraController
                 if (pos.x == transform.position.x && _inputMoveOffset == 0) SmoothMoving = false;
             }
         }
-        public void SetTarget(Transform targetTransform, bool smooth = true)
+        public virtual void SetTarget(Transform targetTransform, bool smooth = true)
         {
             SmoothMoving = smooth;
             Target = targetTransform;

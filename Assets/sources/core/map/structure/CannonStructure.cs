@@ -33,6 +33,8 @@ namespace PataRoad.Core.Character
         float _maxPower = 2.4f;
         [SerializeField]
         bool _repeatAttack = true;
+        [SerializeField]
+        bool _autoAttack;
 
         [SerializeField]
         private AttackType _attackType;
@@ -50,6 +52,7 @@ namespace PataRoad.Core.Character
             base.Start();
             _weaponInstanceResource = WeaponInstance.GetResource();
             Stat.DamageMax += _damage;
+            if (_autoAttack) SetAttack();
         }
         private System.Collections.IEnumerator AnimateAttack()
         {
@@ -96,6 +99,11 @@ namespace PataRoad.Core.Character
             base.SetLevel(level, absoluteMaxLevel);
             Stat.DamageMax += level * 2;
         }
+        public void SetAttack()
+        {
+            _started = true;
+            StartCoroutine(AnimateAttack());
+        }
         public void StopAttacking()
         {
             IsAnimatorUpdatingAngle = true;
@@ -127,8 +135,7 @@ namespace PataRoad.Core.Character
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (_started || collision.tag != "Ground") return;
-            _started = true;
-            StartCoroutine(AnimateAttack());
+            SetAttack();
         }
     }
 }
