@@ -14,9 +14,9 @@ namespace PataRoad.Core.Map
         private string _name;
         [SerializeField]
         [Tooltip("Optional. If empty, it should use the default name.")]
-        private string _nameBeforeClear;
+        private string _nameAfterClear;
         public string Name => _name;
-        public string NameBeforeClear => string.IsNullOrWhiteSpace(_nameBeforeClear) ? _name : _nameBeforeClear;
+        public string NameAfterClear => string.IsNullOrWhiteSpace(_nameAfterClear) ? _name : _nameAfterClear;
         [SerializeField]
         [TextArea]
         private string _descriptionBeforeClear;

@@ -10,7 +10,7 @@ namespace PataRoad.Core.Map
         [SerializeField]
         private int _mapDataIndex;
         public int Index => _mapDataIndex;
-        public string Name => Cleared ? MapData.Name : MapData.NameBeforeClear;
+        public string Name => Cleared ? MapData.NameAfterClear : MapData.Name;
 
         [SerializeReference]
         private MapWeather _weather;

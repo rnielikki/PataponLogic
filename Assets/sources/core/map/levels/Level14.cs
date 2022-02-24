@@ -17,6 +17,8 @@ namespace PataRoad.Core.Map.Levels
         [SerializeField]
         Animator _hatapon;
         [SerializeField]
+        GameObject _hataFlag;
+        [SerializeField]
         [Tooltip("if the level is already cleared the Hatapon animation will be replaced with this")]
         RuntimeAnimatorController _animatorToReplace;
         [SerializeField]
@@ -30,7 +32,7 @@ namespace PataRoad.Core.Map.Levels
             _animator = _carriageStructure.GetComponent<Animator>();
             if (Global.GlobalData.CurrentSlot.MapInfo.NextMap.Cleared)
             {
-                _hatapon.transform.Find("Weapon").gameObject.SetActive(false);
+                _hataFlag.gameObject.SetActive(false);
                 _hatapon.runtimeAnimatorController = _animatorToReplace;
             }
             else
