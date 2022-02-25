@@ -39,7 +39,7 @@ namespace PataRoad.Core.Map.Levels
             });
             StatusEffectManager.AddRecoverAction(() =>
             {
-                _animator.Play("Idle");
+                if (!IsDead) _animator.Play("Idle");
             });
 
             CurrentHitPoint = _stat.HitPoint;

@@ -25,6 +25,8 @@ namespace PataRoad.Core.Map.Levels
         AudioClip _damageSound;
         [SerializeField]
         AudioClip _destroySound;
+        [SerializeField]
+        MissionController _missionController;
         private void Start()
         {
             _carriageStructure = _carriage.GetComponentInChildren<Structure>();
@@ -42,10 +44,9 @@ namespace PataRoad.Core.Map.Levels
         }
         public void FailMission()
         {
-            Camera.main.GetComponent<CameraController.SafeCameraZoom>().ZoomIn(_carriage);
             GameSound.SpeakManager.Current.Play(_destroySound);
             _hatapon.Play("sad");
-            MissionPoint.Current.WaitAndFailMission(4);
+            _missionController.Fail(_carriage);
         }
         public void PlayDamaged()
         {

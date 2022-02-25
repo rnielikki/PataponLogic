@@ -1,13 +1,17 @@
 ﻿using PataRoad.Core.Character;
+using PataRoad.Core.Character.Patapons;
 using UnityEngine;
 
 namespace PataRoad.Core.Map.Levels
 {
+    /// <summary>
+    /// !!-- PLACE AFTER <see cref="StepByPerfection"/>. ---!!
+    /// </summary>
     class Level25 : MonoBehaviour, IHavingLevel
     {
         [SerializeField]
         Transform _carriage;
-        Character.Structure _carriageStructure;
+        Structure _carriageStructure;
         [SerializeField]
         float _carriageSpeed;
         Animator _animator;
@@ -20,6 +24,9 @@ namespace PataRoad.Core.Map.Levels
         AudioClip _destroySound;
         [SerializeField]
         CannonStructure _cannon;
+        [SerializeField]
+        MissionController _missionController;
+        bool _keepMoving;
         private void Start()
         {
             _carriageStructure = _carriage.GetComponentInChildren<Structure>();
@@ -52,16 +59,27 @@ namespace PataRoad.Core.Map.Levels
                 }
                 _hataponCharacter.StatusEffectManager.RecoverAndIgnoreEffect();
             });
+
+            //weather-
+            Weather.WeatherInfo.Current.OnWeatherChanged.AddListener(ChangeStepsOnWeather);
+        }
+        public void ChangeStepsOnWeather(Weather.WeatherType weatherType)
+        {
+            if (weatherType == Weather.WeatherType.Snow)
+            {
+                PataponsManager.Current.SetMinMaxStepRatio(0.2f, 0.5f);
+            }
+            else
+            {
+                PataponsManager.Current.SetMinMaxStepRatio(0.6f, 1);
+            }
         }
         public void SuccessMission()
         {
             GameSound.SpeakManager.Current.Play(_destroySound);
         }
-        public void FailMission()
-        {
-            Camera.main.GetComponent<CameraController.SafeCameraZoom>().ZoomIn(_carriage);
-            MissionPoint.Current.WaitAndFailMission(4);
-        }
+        public void FailMission() => _missionController.Fail(_carriage);
+
         private bool IsEndStatus() => _carriageStructure.IsDead || MissionPoint.IsMissionEnd;
 
         public void SetLevel(int level, int absoluteMaxLevel)
@@ -72,12 +90,13 @@ namespace PataRoad.Core.Map.Levels
 
         private void Update()
         {
-            if (!IsEndStatus())
+            if (!IsEndStatus() || _keepMoving)
             {
                 _carriage.Translate(_carriageSpeed * Time.deltaTime, 0, 0);
                 if (_carriage.position.x > MissionPoint.Current.MissionPointPosition.x)
                 {
                     FailMission();
+                    _keepMoving = true;
                 }
             }
         }

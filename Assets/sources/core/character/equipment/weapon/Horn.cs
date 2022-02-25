@@ -26,7 +26,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (Holder != null)
             {
                 _ifFire = Holder.AttackTypeIndex == 0;
-                _attackParticles.transform.localScale = new Vector3(Holder.MovingDirection.x, 1, 1);
             }
         }
 
@@ -41,15 +40,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                     return;
                 case AttackCommandType.Attack:
                     //Attack is called in two times in animation, so doesn't need so many emit count.
-                    startSpeed = 11 * _forceMultiplier * Holder.MovingDirection.x;
+                    startSpeed = 11 * _forceMultiplier;
                     emitCount = 5;
                     break;
                 case AttackCommandType.Defend:
-                    startSpeed = 10 * _forceMultiplier * Holder.MovingDirection.x;
+                    startSpeed = 10 * _forceMultiplier;
                     emitCount = 4;
                     break;
                 case AttackCommandType.Charge:
-                    startSpeed = 3 * _forceMultiplier * Holder.MovingDirection.x;
+                    startSpeed = 3 * _forceMultiplier;
                     emitCount = 2;
                     break;
                 case AttackCommandType.ChargeDefend:

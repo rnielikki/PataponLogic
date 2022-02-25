@@ -5269,9 +5269,9 @@ MonoBehaviour:
   _action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1032575163}
-        m_TargetAssemblyTypeName: PataRoad.AppDebug.EquipmentAdder, Assembly-CSharp
-        m_MethodName: AddAllEquipments
+      - m_Target: {fileID: 1032575162}
+        m_TargetAssemblyTypeName: PataRoad.AppDebug.ActionOnPress, Assembly-CSharp
+        m_MethodName: OpenAllMaps
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5314,7 +5314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _metas:
   - _type: 2
-    _group: Boss
+    _group: Class
     _index: 8
 --- !u!1 &1048620584
 GameObject:
@@ -6749,7 +6749,8 @@ MonoBehaviour:
         protect the tower, so now you know what to do, right?
   - _lines:
     - _image: {fileID: 0}
-      _content: The place is muddy, so remember to march perfectly.
+      _content: The place is muddy, and snow is annoying. Maybe you need to stop
+        snow to march, otherwise it's too slow!
     - _image: {fileID: 0}
       _content: But why do you need Hatapon anymore? All Generals can communicate
         with %Almighty%, so Hatapon don't need to go to the battle. what's the point?

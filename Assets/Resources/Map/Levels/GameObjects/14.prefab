@@ -61,6 +61,7 @@ Transform:
   - {fileID: 6377389101760180134}
   - {fileID: 847389940383831601}
   - {fileID: 2251573584982636823}
+  - {fileID: 6890341826996130748}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -110,6 +111,52 @@ MonoBehaviour:
   _animatorToReplace: {fileID: 9100000, guid: ae2984f94e8e1454694f6bb2c223101b, type: 2}
   _damageSound: {fileID: 8300000, guid: d6a922ef331d4ca47ac6788dfa377ee3, type: 3}
   _destroySound: {fileID: 8300000, guid: 610b85fef5751f3409e1d4101b9d8c10, type: 3}
+  _missionController: {fileID: 299332210641900493}
+--- !u!1 &8096608252332179574
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6890341826996130748}
+  - component: {fileID: 299332210641900493}
+  m_Layer: 0
+  m_Name: MissionController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6890341826996130748
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096608252332179574}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 860760564439554695}
+  m_RootOrder: 30
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &299332210641900493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8096608252332179574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d435f45ae14ae2f46bb15823e1ce7731, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeToWait: 4
 --- !u!1001 &117355390560791737
 PrefabInstance:
   m_ObjectHideFlags: 0
