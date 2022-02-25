@@ -41,13 +41,7 @@ namespace PataRoad.Core.Character.Animal
         }
         public virtual void OnTarget()
         {
-            if (!CanMove()) return;
-            PerformingAction = true;
-            GameSound.SpeakManager.Current.Play(_soundOnFound);
-            _statusEffectManager.IgnoreStatusEffect = true;
-            _targetPosition = (_behaviour.DefaultWorldPosition + _runningDistance) * Vector3.right;
-
-            _animator.SetMoving(true);
+            SetTarget((_behaviour.DefaultWorldPosition + _runningDistance) * Vector3.right);
         }
         public void StartMoving()
         {
@@ -88,6 +82,16 @@ namespace PataRoad.Core.Character.Animal
                 return false;
             }
             return true;
+        }
+        protected void SetTarget(Vector3 position)
+        {
+            if (!CanMove()) return;
+            PerformingAction = true;
+            GameSound.SpeakManager.Current.Play(_soundOnFound);
+            _statusEffectManager.IgnoreStatusEffect = true;
+            _targetPosition = position;
+
+            _animator.SetMoving(true);
         }
         protected virtual void DoRecoverAction() => SetToIdle(true);
         private void SetToIdle(bool endActionWhenMoved)

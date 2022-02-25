@@ -76,7 +76,7 @@ namespace PataRoad.Core.Character.Animal
             sc.x = towardsPatapons ? -1 : 1;
             transform.localScale = sc;
         }
-        private void Update()
+        protected virtual void Update()
         {
             if (_moving)
             {
