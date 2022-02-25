@@ -6,9 +6,10 @@ namespace PataRoad.Core.Map.Levels
     {
         [SerializeField]
         float _timeToWait;
+        public void FillMissionCondition() => MissionPoint.Current.FilledMissionCondition = true;
         public void Success(bool fillMissionCondition)
         {
-            if (fillMissionCondition) MissionPoint.Current.FilledMissionCondition = true;
+            if (fillMissionCondition) FillMissionCondition();
             MissionPoint.Current.EndMission();
         }
         public void Fail(Transform sender)

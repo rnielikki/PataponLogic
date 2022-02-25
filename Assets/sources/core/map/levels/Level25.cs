@@ -77,6 +77,8 @@ namespace PataRoad.Core.Map.Levels
         public void SuccessMission()
         {
             GameSound.SpeakManager.Current.Play(_destroySound);
+            MissionPoint.Current.FilledMissionCondition = true;
+            MissionPoint.Current.EndMission();
         }
         public void FailMission() => _missionController.Fail(_carriage);
 

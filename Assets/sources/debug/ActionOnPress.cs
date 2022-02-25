@@ -71,6 +71,13 @@ namespace PataRoad.AppDebug
             }
             */
         }
+        public void SuccessMission()
+        {
+            var current = Core.Map.MissionPoint.Current;
+            if (current == null) return;
+            current.FilledMissionCondition = true;
+            current.EndMission();
+        }
         public void AddClass()
         {
             //Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Class", 4));
