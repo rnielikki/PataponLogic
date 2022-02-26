@@ -1,4 +1,4 @@
-﻿using PataRoad.Core.Character.Equipments.Weapons;
+﻿using PataRoad.Core.Character.Equipments;
 using PataRoad.SceneLogic.EquipmentScene;
 using System.Linq;
 using UnityEngine;
@@ -15,6 +15,9 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         UnityEvent<RareponSelection> _onClicked;
         [SerializeField]
         UnityEvent _onClosed;
+        [SerializeField]
+        AudioClip _levelUpSound;
+        public AudioClip LevelUpSound => _levelUpSound;
         [SerializeField]
         AudioClip _newRareponSound;
         public AudioClip NewRareponSound => _newRareponSound;
@@ -104,7 +107,11 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 CreateRarepon(selection);
             }
         }
-        private void CreateRarepon(RareponSelection selection) => selection.ConfirmToCreateRarepon();
+        private void CreateRarepon(RareponSelection selection) => selection.ConfirmToUpgradeRarepon();
+        public void LevelUp(RareponSelection selection)
+        {
+            selection.LevelUp();
+        }
 
         public void Close()
         {

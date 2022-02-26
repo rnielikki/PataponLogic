@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fefff2b6cbbbe944383d4a9c19a0253f, type: 3}
-  m_Name: 2.Rare-frog
+  m_Name: 1.2.Rare-meow
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
   _group: Rarepon
-  _index: 2
-  _name: Frog
-  _description: No, the green eyes are not Patapons
-  _levelGroup: 0
+  _index: 1
+  _name: Meow.2
+  _description: Meowwww....
+  _levelGroup: 2
   _stat:
     rid: 0
-  _image: {fileID: 21300000, guid: b0cc6b73607230045816e5ab5dfa6691, type: 3}
+  _image: {fileID: 21300000, guid: ec09e91c81900f14ab00d44638a664f7, type: 3}
   _mass: 0
   _type: 3
-  _color: {r: 0.8784314, g: 0.91764706, b: 0.4392157, a: 1}
+  _level: 2
+  _color: {r: 0.9137255, g: 0.827451, b: 0.5568628, a: 1}
   _attackTypeResistance:
-    rid: 6407466249736683520
+    rid: 1
   references:
     version: 2
     RefIds:
@@ -58,14 +59,14 @@ MonoBehaviour:
         _iceResistance: 0
         _infiniteSleepResistance: 0
         _sleepResistance: 0
-    - rid: 6407466249736683520
+    - rid: 1
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _crushMultiplier: 1
-        _slashMultiplier: 1
-        _stabMultiplier: 1
-        _soundMultiplier: 1
-        _magicMultiplier: 1
-        _fireMultiplier: 1
-        _iceMultiplier: 1
+        _crushMultiplier: 0.8
+        _slashMultiplier: 1.1
+        _stabMultiplier: 1.2
+        _soundMultiplier: 1.2
+        _magicMultiplier: 0.5
+        _fireMultiplier: 0.8
+        _iceMultiplier: 0.8
         _thunderMultiplier: 1

@@ -66,6 +66,10 @@ namespace PataRoad.Core.Character.Patapons.Data
         {
             return _info.Max(i => i.GetEquipmentLevel(equipmentType));
         }
+        internal void RefreshRarepons(Equipments.RareponDataContainer container)
+        {
+            foreach (var equipmentInfo in _info) equipmentInfo.RefreshRarepon(container);
+        }
 
         public void OnBeforeSerialize()
         {

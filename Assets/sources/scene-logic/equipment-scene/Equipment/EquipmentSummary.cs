@@ -43,6 +43,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private void HideHelmIfRarepon(EquipmentManager equipmentManager)
         {
+            if (!Core.Global.GlobalData.CurrentSlot.Progress.IsRareponOpen) return;
             if (equipmentManager.Rarepon != null && equipmentManager.Rarepon.CurrentData.Index != 0)
             {
                 _helmElement.gameObject.SetActive(false);

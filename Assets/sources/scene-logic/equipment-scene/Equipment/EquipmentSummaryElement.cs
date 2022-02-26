@@ -17,6 +17,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         void Awake()
         {
+            if (_equipmentType == EquipmentType.Rarepon && !Core.Global.GlobalData.CurrentSlot.Progress.IsRareponOpen)
+            {
+                gameObject.SetActive(false);
+                return;
+            }
             Init();
         }
         public void SetItem(Core.Items.IItem item)

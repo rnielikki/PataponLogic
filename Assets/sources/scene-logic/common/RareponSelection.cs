@@ -1,4 +1,4 @@
-﻿using PataRoad.Core.Character.Equipments.Weapons;
+﻿using PataRoad.Core.Character.Equipments;
 using PataRoad.Core.Items;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +21,11 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         Image _bodyImage;
         [SerializeField]
         Image _questionImage;
-        RareponData _data;
+        RareponData _data => _container?.Data;
+
         bool _isOpen;
         public RareponData RareponData => _isOpen ? _data : null;
+        private RareponDataContainer _container;
         [SerializeField]
         private Button _button;
         [SerializeField]
@@ -46,21 +48,20 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public void Init(RareponSelector parent)
         {
             if (_data != null) return;
-            var data = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.GetFromOpenRarepon(Index);
+            _container = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.GetFromOpenRarepon(Index);
             _parent = parent;
-            if (data != null)
+            if (_container != null)
             {
-                SetRarepon(data);
+                SetRarepon();
                 _available = true;
             }
             else
             {
-                _data = Core.Character.Patapons.Data.RareponInfo.LoadResourceWithoutOpen(Index);
                 ShowImages(false);
                 _available = false;
                 _button.enabled = false;
-                _totalRequirements = ((ItemRequirement[])_materialRequirements).Concat(_gemRequirements).ToArray();
             }
+            _totalRequirements = ((ItemRequirement[])_materialRequirements).Concat(_gemRequirements).ToArray();
         }
         public void EnableIfAvailable()
         {
@@ -76,16 +77,15 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void Select() => _button.Select();
 
-        private void SetRarepon(RareponData data)
+        private void SetRarepon()
         {
-            _data = data;
             ShowImages(true);
-            if (data.Index != 0)
+            if (_data.Index != 0)
             {
                 _helmImage.enabled = false;
-                _bodyImage.color = data.Color;
-                _image.sprite = data.Image;
-                _image.color = data.Color;
+                _bodyImage.color = _data.Color;
+                _image.sprite = _data.Image;
+                _image.color = _data.Color;
             }
             if (_nextEnableTarget.Length > 0)
             {
@@ -97,20 +97,22 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             }
             _isOpen = true;
         }
-        public bool ConfirmToCreateRarepon()
+        public bool ConfirmToUpgradeRarepon()
         {
-            if (_totalRequirements == null)
+            if (_container != null && !_container.CanLevelUp())
             {
                 Core.Global.GlobalData.Sound.PlayBeep();
                 return false;
             }
 
+            bool isLevelingUp = _container != null;
+            int multiplier = (_container?.Level ?? 0) + 1;
             //check condition example. And...
             bool itemExists = true;
             List<ItemRequirement> itemRequirements = new List<ItemRequirement>();
             foreach (var itemPair in _totalRequirements)
             {
-                if (!Core.Global.GlobalData.CurrentSlot.Inventory.HasAmountOfItem(itemPair.Item, itemPair.Amount))
+                if (!Core.Global.GlobalData.CurrentSlot.Inventory.HasAmountOfItem(itemPair.Item, itemPair.Amount * multiplier))
                 {
                     itemExists = false;
                     itemRequirements.Add(itemPair);
@@ -119,7 +121,9 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             if (!itemExists)
             {
                 Core.Global.GlobalData.Sound.PlayBeep();
-                var status = string.Join("\n", itemRequirements.Select(req => $"{req.Item.Name} ({Core.Global.GlobalData.CurrentSlot.Inventory.GetAmount(req.Item)}/{req.Amount})"));
+                var status = string.Join(
+                    "\n", itemRequirements.Select(req => $"{req.Item.Name} ({Core.Global.GlobalData.CurrentSlot.Inventory.GetAmount(req.Item)}/{req.Amount * multiplier})"));
+
                 Common.GameDisplay.ConfirmDialog.Create("The follow items are not enough:\n" + status)
                     .HideOkButton()
                     .SetTargetToResume(_parent)
@@ -129,26 +133,42 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             else
             {
                 _parent.enabled = false;
-                Common.GameDisplay.ConfirmDialog.Create("Create?")
+                Common.GameDisplay.ConfirmDialog.Create((isLevelingUp) ? $"Level up to {_container.Level + 1}?" : "Create?")
                     .SetTargetToResume(_parent)
-                    .SetOkAction(AddThisRarepon)
+                    .SetOkAction(() => AddThisRarepon(isLevelingUp, multiplier))
                     .SelectOk();
             }
             return true;
         }
-        private void AddThisRarepon()
+        private void AddThisRarepon(bool levelingUp, int multiplier)
         {
-            var rarepon = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.OpenNewRarepon(Index);
-            if (rarepon != null)
+            bool updated = false;
+            if (!levelingUp)
             {
-                SetRarepon(rarepon);
-                Core.Global.GlobalData.Sound.PlayInScene(_parent.NewRareponSound);
+                _container = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.OpenNewRarepon(Index);
+                updated = _container != null;
+            }
+            else if (_container.CanLevelUp())
+            {
+                _container.LevelUp();
+                updated = true;
+            }
+            if (updated)
+            {
+                SetRarepon();
+                Core.Global.GlobalData.Sound.PlayInScene((levelingUp) ? _parent.LevelUpSound : _parent.NewRareponSound);
                 foreach (var item in _totalRequirements)
                 {
                     Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(item.Item, item.Amount);
                 }
                 _parent.InventoryRefresher?.Refresh();
             }
+        }
+        internal void LevelUp()
+        {
+            if (!_container.CanLevelUp()) return;
+            _container.LevelUp();
+            SetRarepon();
         }
         public void OnSelect(BaseEventData eventData)
         {

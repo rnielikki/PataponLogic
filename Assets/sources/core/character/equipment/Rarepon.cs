@@ -1,7 +1,7 @@
 ﻿using PataRoad.Core.Items;
 using UnityEngine;
 
-namespace PataRoad.Core.Character.Equipments.Weapons
+namespace PataRoad.Core.Character.Equipments
 {
     public class Rarepon : Equipment
     {
@@ -19,7 +19,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             Load();
         }
-        protected override EquipmentData GetDefault() => Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.GetFromOpenRarepon(0);
+        protected override EquipmentData GetDefault() => Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.DefaultRarepon.Data;
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
             if (HolderData == null) Load();

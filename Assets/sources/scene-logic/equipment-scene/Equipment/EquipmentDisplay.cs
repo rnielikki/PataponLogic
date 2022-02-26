@@ -1,7 +1,6 @@
 using PataRoad.Common.Navigator;
 using PataRoad.Core.Items;
 using PataRoad.SceneLogic.CommonSceneLogic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -56,12 +55,11 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 var elem = characterNavigator.EquipmentSummary.Current;
                 characterNavigator.EquipmentSummary.SetInactive();
 
-                if (elem.Item is Core.Character.Equipments.Weapons.RareponData rarepon)
+                if (elem.Item is Core.Character.Equipments.RareponData rarepon)
                 {
                     _rareponSelector.Open(_nav, _currentPataponData, rarepon);
                     return;
                 }
-
                 var itemGroup = LoadItemType(_currentPataponData, elem);
 
                 bool isEquipment = itemGroup.type == ItemType.Equipment;

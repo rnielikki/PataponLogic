@@ -50,6 +50,14 @@ namespace PataRoad.Core.Character.Patapons.Data
                 _map.Add(data.Type, data);
             }
         }
+        internal void RefreshRarepon(RareponDataContainer container)
+        {
+            if (_rareponIndex == container.RareponIndex)
+            {
+                Equip(container.Data);
+                _rareponIndex = container.RareponIndex;
+            }
+        }
         public IEnumerable<EquipmentData> GetAllEquipments() => _map.Values;
         public bool HasEquipment(EquipmentData data) => _map.ContainsKey(data.Type) && _map[data.Type] == data;
         public int GetEquipmentLevel(EquipmentType equipmentType) => _map.ContainsKey(equipmentType) ? _map[equipmentType].LevelGroup : -1;
@@ -85,7 +93,13 @@ namespace PataRoad.Core.Character.Patapons.Data
             }
             if (!_isGeneral && _rareponIndex >= 0)
             {
-                _map.Add(EquipmentType.Rarepon, RareponInfo.LoadResourceWithoutOpen(_rareponIndex));
+                var dataContainer = Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.GetFromOpenRarepon(_rareponIndex);
+                if (dataContainer == null)
+                {
+                    _rareponIndex = 0;
+                    dataContainer = Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.DefaultRarepon;
+                }
+                _map.Add(EquipmentType.Rarepon, dataContainer.Data);
             }
             if (_rareponIndex <= 0 && _helmIndex >= 0)
             {

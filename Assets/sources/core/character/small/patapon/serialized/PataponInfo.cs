@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace PataRoad.Core.Character.Patapons.Data
 {
+    /// <summary>
+    /// Contains all Patapon class and equipment, in data level (that expected to find in equipment scene).
+    /// </summary>
     [Serializable]
     public class PataponInfo : Global.Slots.IPlayerData
     {
@@ -202,6 +205,13 @@ namespace PataRoad.Core.Character.Patapons.Data
         public IEnumerable<EquipmentData> GetCurrentEquipments(PataponData data)
         {
             return GetClassInfo(data.Type).GetEquipmentInIndex(data.IndexInGroup);
+        }
+        internal void RefreshRarepons(Equipments.RareponDataContainer container)
+        {
+            foreach (var classInfo in _classInfoMap.Values)
+            {
+                classInfo.RefreshRarepons(container);
+            }
         }
         public int GetAttackTypeIndex(Class.ClassType classType) =>
             GetClassInfo(classType).AttackTypeIndex;
