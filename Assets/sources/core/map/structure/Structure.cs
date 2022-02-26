@@ -72,7 +72,10 @@ namespace PataRoad.Core.Character
             var percent = Mathf.Clamp01((float)CurrentHitPoint / Stat.HitPoint);
             foreach (var sprite in _sprites)
             {
-                sprite.color = _colorOverHealth.Evaluate(percent);
+                if (sprite != null)
+                {
+                    sprite.color = _colorOverHealth.Evaluate(percent);
+                }
             }
         }
         private void SetSprites(Transform tr)

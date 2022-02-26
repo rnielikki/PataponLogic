@@ -49,7 +49,8 @@ namespace PataRoad.Core.Character.Bosses
                 for (int j = 0; j < _trigger.colliderCount; j++)
                 {
                     var collider = _trigger.GetCollider(j)?.GetComponent<Collider2D>();
-                    if (collider?.gameObject != null)
+                    //note: this checks "component is destroyed" so don't use ?.
+                    if (collider != null && collider.gameObject != null)
                     {
                         if (collider.gameObject.tag == "Shield") particle.remainingLifetime = 0;
                         else _boss.Attack(this, collider.gameObject, collider.ClosestPoint(particle.position),
