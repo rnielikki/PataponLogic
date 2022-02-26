@@ -102,16 +102,12 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void CreateNewRarepon(RareponSelection selection)
         {
-            if (selection.RareponData == null)
+            if (selection.CanLevelUp)
             {
                 CreateRarepon(selection);
             }
         }
         private void CreateRarepon(RareponSelection selection) => selection.ConfirmToUpgradeRarepon();
-        public void LevelUp(RareponSelection selection)
-        {
-            selection.LevelUp();
-        }
 
         public void Close()
         {

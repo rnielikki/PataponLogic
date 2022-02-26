@@ -37,7 +37,7 @@
         {
             if (!CanLevelUp()) return Data;
             var level = _level + 1;
-            var data = Patapons.Data.RareponInfo.GetRareponData(_rareponIndex, _level);
+            var data = Patapons.Data.RareponInfo.GetRareponData(_rareponIndex, level);
             if (data != null)
             {
                 Data = data;

@@ -23,7 +23,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         {
             _templates = GetComponentsInChildren<RareponRequirementItem>(true);
         }
-        public void ShowRequirements(Core.Items.ItemRequirement[] requirements, RectTransform attachTarget, Vector2 pivot)
+        public void ShowRequirements(Core.Items.ItemRequirement[] requirements, int multiplier, RectTransform attachTarget, Vector2 pivot)
         {
             HideRequirements();
 
@@ -38,7 +38,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             bool available = true;
             for (int i = 0; i < requirements.Length; i++)
             {
-                var isAvailable = _templates[i].SetValues(requirements[i], _availableColor, _notAvailableColor);
+                var isAvailable = _templates[i].SetValues(requirements[i], multiplier, _availableColor, _notAvailableColor);
                 available = available && isAvailable;
             }
             if (!available) _backgroundImage.color = _notAvailableBackgroundColor;

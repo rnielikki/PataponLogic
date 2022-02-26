@@ -21,7 +21,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         Image _bodyImage;
         [SerializeField]
         Image _questionImage;
-        RareponData _data => _container?.Data;
+        RareponData _data;
 
         bool _isOpen;
         public RareponData RareponData => _isOpen ? _data : null;
@@ -44,6 +44,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public GemItemRequirement[] _gemRequirements;
         private ItemRequirement[] _totalRequirements;
         private bool _available;
+        public bool CanLevelUp => _container == null || _container.CanLevelUp();
+        private int _requirementMultiplier => (_container?.Level ?? 0) + 1;
 
         public void Init(RareponSelector parent)
         {
@@ -58,6 +60,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             else
             {
                 ShowImages(false);
+                _data = Core.Character.Patapons.Data.RareponInfo.GetRareponData(Index, 1);
                 _button.enabled = false;
             }
             _totalRequirements = ((ItemRequirement[])_materialRequirements).Concat(_gemRequirements).ToArray();
@@ -78,6 +81,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
 
         private void SetRarepon()
         {
+            _data = _container.Data;
             ShowImages(true);
             if (_data.Index != 0)
             {
@@ -103,9 +107,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 Core.Global.GlobalData.Sound.PlayBeep();
                 return false;
             }
-
             bool isLevelingUp = _container != null;
-            int multiplier = (_container?.Level ?? 0) + 1;
+            int multiplier = _requirementMultiplier;
             //check condition example. And...
             bool itemExists = true;
             List<ItemRequirement> itemRequirements = new List<ItemRequirement>();
@@ -132,7 +135,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             else
             {
                 _parent.enabled = false;
-                Common.GameDisplay.ConfirmDialog.Create((isLevelingUp) ? $"Level up to {_container.Level + 1}?" : "Create?")
+                Common.GameDisplay.ConfirmDialog.Create((isLevelingUp) ? $"Level up to {multiplier}?" : "Create?")
                     .SetTargetToResume(_parent)
                     .SetOkAction(() => AddThisRarepon(isLevelingUp, multiplier))
                     .SelectOk();
@@ -145,6 +148,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             if (!levelingUp)
             {
                 _container = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.OpenNewRarepon(Index);
+                _data = _container.Data;
                 updated = _container != null;
             }
             else if (_container.CanLevelUp())
@@ -158,7 +162,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 Core.Global.GlobalData.Sound.PlayInScene((levelingUp) ? _parent.LevelUpSound : _parent.NewRareponSound);
                 foreach (var item in _totalRequirements)
                 {
-                    Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(item.Item, item.Amount);
+                    Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(item.Item, item.Amount * multiplier);
                 }
                 _parent.InventoryRefresher?.Refresh();
             }
@@ -171,11 +175,11 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void OnSelect(BaseEventData eventData)
         {
-            if (_data == null) return;
+            if (!_available) return;
             _parent.UpdateText(_data);
-            if (_available && !_isOpen)
+            if (CanLevelUp)
             {
-                _parent.RareponRequirementWindow.ShowRequirements(_totalRequirements, _rectTransform, _requirementWindowPivot);
+                _parent.RareponRequirementWindow.ShowRequirements(_totalRequirements, _requirementMultiplier, _rectTransform, _requirementWindowPivot);
             }
             else if (_parent.RareponRequirementWindow.gameObject.activeSelf)
             {
