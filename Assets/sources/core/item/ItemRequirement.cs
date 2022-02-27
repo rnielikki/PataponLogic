@@ -13,8 +13,15 @@ namespace PataRoad.Core.Items
         [SerializeField]
         protected int _amount;
         public int Amount => _amount;
-        public abstract void Init();
-        public abstract void SetRequirementByLevel(int level);
+        private int _defaultAmount;
+        public virtual void Init()
+        {
+            _defaultAmount = Amount;
+        }
+        public virtual void SetRequirementByLevel(int level)
+        {
+            _amount = _defaultAmount + level - 1;
+        }
 
         public void OnBeforeSerialize()
         {
