@@ -30,6 +30,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 GlobalData.CurrentSlot.PataponInfo.UpdateClassEquipmentStatus(pataponData, equipment);
             }
         }
+        public void ApplySameRareponForClass(Core.Character.Class.ClassType classType,
+            Core.Character.Equipments.RareponData rarepon)
+        {
+            foreach (PataponData data in _characterGroupSaver.GetGroup(classType).GetComponentsInChildren<PataponData>())
+            {
+                SetEquipment(data, rarepon);
+            }
+        }
 
         public void Optimize()
         {

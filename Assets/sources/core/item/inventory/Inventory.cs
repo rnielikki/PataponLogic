@@ -19,7 +19,7 @@ namespace PataRoad.Core.Items
         [SerializeReference]
         private InventoryData[] _serializableData;
 
-        const int _maxValue = 999;
+        public const int MaxAmount = 999;
         internal static Inventory CreateNew()
         {
             var inventory = new Inventory();
@@ -206,7 +206,7 @@ namespace PataRoad.Core.Items
             }
             else
             {
-                dataByItemGroup[item.Index].Amount = Mathf.Min(dataByItemGroup[item.Index].Amount + amount, _maxValue);
+                dataByItemGroup[item.Index].Amount = Mathf.Min(dataByItemGroup[item.Index].Amount + amount, MaxAmount);
             }
         }
         private void SetNewAmountFromItemIndexes(IItem item, int newAmount)

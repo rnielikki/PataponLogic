@@ -45,7 +45,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         private ItemRequirement[] _totalRequirements;
         private bool _available;
         public bool CanLevelUp => _container == null || _container.CanLevelUp();
-        private int _requirementMultiplier => (_container?.Level ?? 0) + 1;
+        private int _nextLevel => (_container?.Level ?? 0) + 1;
 
         public void Init(RareponSelector parent)
         {
@@ -108,13 +108,12 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 return false;
             }
             bool isLevelingUp = _container != null;
-            int multiplier = _requirementMultiplier;
             //check condition example. And...
             bool itemExists = true;
             List<ItemRequirement> itemRequirements = new List<ItemRequirement>();
             foreach (var itemPair in _totalRequirements)
             {
-                if (!Core.Global.GlobalData.CurrentSlot.Inventory.HasAmountOfItem(itemPair.Item, itemPair.Amount * multiplier))
+                if (!Core.Global.GlobalData.CurrentSlot.Inventory.HasAmountOfItem(itemPair.Item, itemPair.Amount))
                 {
                     itemExists = false;
                     itemRequirements.Add(itemPair);
@@ -124,7 +123,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             {
                 Core.Global.GlobalData.Sound.PlayBeep();
                 var status = string.Join(
-                    "\n", itemRequirements.Select(req => $"{req.Item.Name} ({Core.Global.GlobalData.CurrentSlot.Inventory.GetAmount(req.Item)}/{req.Amount * multiplier})"));
+                    "\n", itemRequirements.Select(req => $"{req.Item.Name} ({Core.Global.GlobalData.CurrentSlot.Inventory.GetAmount(req.Item)}/{req.Amount})"));
 
                 Common.GameDisplay.ConfirmDialog.Create("The follow items are not enough:\n" + status)
                     .HideOkButton()
@@ -135,14 +134,14 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             else
             {
                 _parent.enabled = false;
-                Common.GameDisplay.ConfirmDialog.Create((isLevelingUp) ? $"Level up to {multiplier}?" : "Create?")
+                Common.GameDisplay.ConfirmDialog.Create((isLevelingUp) ? $"Level up to {_nextLevel}?" : "Create?")
                     .SetTargetToResume(_parent)
-                    .SetOkAction(() => AddThisRarepon(isLevelingUp, multiplier))
+                    .SetOkAction(() => AddThisRarepon(isLevelingUp))
                     .SelectOk();
             }
             return true;
         }
-        private void AddThisRarepon(bool levelingUp, int multiplier)
+        private void AddThisRarepon(bool levelingUp)
         {
             bool updated = false;
             if (!levelingUp)
@@ -162,8 +161,9 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 Core.Global.GlobalData.Sound.PlayInScene((levelingUp) ? _parent.LevelUpSound : _parent.NewRareponSound);
                 foreach (var item in _totalRequirements)
                 {
-                    Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(item.Item, item.Amount * multiplier);
+                    Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(item.Item, item.Amount);
                 }
+                UpdateRequirements();
                 _parent.InventoryRefresher?.Refresh();
             }
         }
@@ -173,13 +173,21 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             _container.LevelUp();
             SetRarepon();
         }
+        private void UpdateRequirements()
+        {
+            foreach (var requirement in _totalRequirements)
+            {
+                requirement.SetRequirementByLevel(_nextLevel);
+            }
+        }
         public void OnSelect(BaseEventData eventData)
         {
             if (!_available) return;
             _parent.UpdateText(_data);
+            if (!_parent.ShowRequirements) return;
             if (CanLevelUp)
             {
-                _parent.RareponRequirementWindow.ShowRequirements(_totalRequirements, _requirementMultiplier, _rectTransform, _requirementWindowPivot);
+                _parent.RareponRequirementWindow.ShowRequirements(_totalRequirements, _rectTransform, _requirementWindowPivot);
             }
             else if (_parent.RareponRequirementWindow.gameObject.activeSelf)
             {

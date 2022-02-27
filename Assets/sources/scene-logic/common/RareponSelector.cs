@@ -41,6 +41,9 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         private Text _descriptionTitle;
         [SerializeField]
         private Text _descriptionContent;
+        [SerializeField]
+        private bool _showRequirements;
+        public bool ShowRequirements => _showRequirements;
 
         private void Init()
         {
@@ -90,13 +93,27 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void Apply(RareponSelection selection)
         {
-            if (selection.RareponData == null)
-            {
-                CreateRarepon(selection);
-            }
-            else
+            if (selection.RareponData != null)
             {
                 _equipmentSetter.SetEquipment(_targetPatapon, selection.RareponData);
+                Close();
+            }
+            else Core.Global.GlobalData.Sound.PlayBeep();
+        }
+        public void ApplyAll()
+        {
+            var selection = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject?.GetComponent<RareponSelection>();
+            if (selection?.RareponData != null)
+            {
+                Common.GameDisplay.ConfirmDialog.Create($"Do you want to set all Patapons in current class with {selection.RareponData.Name}?")
+                    .SetTargetToResume(this)
+                    .SetOkAction(ApplyAllRarepons)
+                    .SelectCancel();
+            }
+            else Core.Global.GlobalData.Sound.PlayBeep();
+            void ApplyAllRarepons()
+            {
+                _equipmentSetter.ApplySameRareponForClass(_targetPatapon.Type, selection.RareponData);
                 Close();
             }
         }

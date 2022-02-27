@@ -9,7 +9,6 @@ namespace PataRoad.Core.Items
         public int Amount { get; private set; }
         private GameObject _textContainer;
         public IItem Item { get; private set; }
-        // Start is called before the first frame update
         void Awake()
         {
             _text = GetComponentInChildren<Text>(true);
@@ -27,8 +26,12 @@ namespace PataRoad.Core.Items
             {
                 _textContainer.SetActive(true);
             }
-            Amount++;
-            _text.text = Amount.ToString();
+            //holy moly you get more than 999 same items from a level
+            else if (Amount < Inventory.MaxAmount)
+            {
+                Amount++;
+                _text.text = Amount.ToString();
+            }
         }
     }
 }
