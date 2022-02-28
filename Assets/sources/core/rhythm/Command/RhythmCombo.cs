@@ -76,6 +76,7 @@ namespace PataRoad.Core.Rhythm.Command
                     _hasFeverChance = true;
                 }
             }
+            if (!_hasFeverChance) _perfectDrumSum = 0;
             TurnCounter.OnNextTurn.AddListener(() => OnCombo.Invoke(new RhythmComboModel(inputs, _comboCount)));
             return (_hasFeverChance) ? ComboStatus.MayFever : ComboStatus.NoFever;
         }

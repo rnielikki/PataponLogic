@@ -46,7 +46,7 @@ namespace PataRoad.Core.Character.Hazorons
             {
                 foreach (Hazoron hazoron in _listToClean)
                 {
-                    RemoveHazoron(hazoron);
+                    RemoveHazoron(hazoron, false);
                 }
                 _listToClean.Clear();
             }
@@ -64,7 +64,8 @@ namespace PataRoad.Core.Character.Hazorons
                 TrackClosestHazoron();
             }
         }
-        internal void RemoveHazoron(Hazoron hazoron)
+        internal void RemoveHazoron(Hazoron hazoron) => RemoveHazoron(hazoron, true);
+        private void RemoveHazoron(Hazoron hazoron, bool refresh)
         {
             _display.StopTracking(hazoron);
             _hazorons.Remove(hazoron);
@@ -72,7 +73,7 @@ namespace PataRoad.Core.Character.Hazorons
             {
                 _display.gameObject.SetActive(false);
             }
-            else
+            else if (refresh)
             {
                 TrackClosestHazoron();
             }

@@ -6,7 +6,7 @@ namespace PataRoad.Core.Character
     class CannonStructure : Structure, IAttacker
     {
         private GameObject _weaponInstanceResource;
-        private bool _started;
+        protected bool _started;
 
         [SerializeField]
         private Transform _pipe;
@@ -31,6 +31,8 @@ namespace PataRoad.Core.Character
         float _minPower = 2;
         [SerializeField]
         float _maxPower = 2.4f;
+        [SerializeField]
+        float _bulletMass = 2;
         [SerializeField]
         bool _repeatAttack = true;
         [SerializeField]
@@ -70,12 +72,9 @@ namespace PataRoad.Core.Character
             _attackAfterLooking = true;
             _changingAngle = true;
         }
-        private void Attack()
+        protected virtual void Attack()
         {
-            var instantiated = Instantiate(_weaponInstanceResource);
-            instantiated.GetComponent<WeaponInstance>()
-                .Initialize(this, _bullet.sprite, _bullet.material, _bullet.gameObject.layer, 2, _bullet.transform)
-                .Throw(_minPower, _maxPower);
+            ThrowBullet();
             if (_repeatAttack) StartCoroutine(AnimateAttack());
             else
             {
@@ -83,6 +82,13 @@ namespace PataRoad.Core.Character
                 _attackAfterLooking = false;
                 _changingAngle = true;
             }
+        }
+        protected void ThrowBullet()
+        {
+            var instantiated = Instantiate(_weaponInstanceResource);
+            instantiated.GetComponent<WeaponInstance>()
+                .Initialize(this, _bullet.sprite, _bullet.material, _bullet.gameObject.layer, _bulletMass, _bullet.transform)
+                .Throw(_minPower, _maxPower);
         }
         public void OnAttackHit(Vector2 point, int damage)
         {
@@ -99,7 +105,7 @@ namespace PataRoad.Core.Character
             base.SetLevel(level, absoluteMaxLevel);
             Stat.DamageMax += level * 2;
         }
-        public void SetAttack()
+        public virtual void SetAttack()
         {
             _started = true;
             StartCoroutine(AnimateAttack());
