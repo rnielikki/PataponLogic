@@ -6,26 +6,47 @@ namespace PataRoad.Core.Character.Animal
     {
         bool _isBeforeAttack;
         Vector3 _firstStepPoint;
+        private float _defaultSight;
+        private float _currentSight;
+        public override float Sight => _currentSight;
+        private bool _idle;
         private void Start()
         {
-            var point = Map.MissionPoint.Current.transform.position;
-            point.x += 10;
+            var point = Map.MissionPoint.Current.MissionPointPosition;
+            point.x--;
             _firstStepPoint = point;
+            _idle = true;
+            _currentSight = _defaultSight = _sight;
         }
         public override void OnTarget()
         {
-            _isBeforeAttack = true;
-            SetTarget(_firstStepPoint);
+            if (!CanMove() || !_idle) return;
+            if (_isBeforeAttack) // 3
+            {
+                base.OnTarget();
+                _isBeforeAttack = false;
+                _currentSight = _defaultSight;
+            }
+            else // 1
+            {
+                SetTarget(_firstStepPoint);
+                _isBeforeAttack = true;
+                _willAttack = false;
+            }
+            _idle = false;
         }
+        public void EnterIdle() => _idle = true;
         protected override void Update()
         {
-            base.Update();
+            if (!_moving) return;
             if (_isBeforeAttack)
             {
-                if (Move(true))
+                if (Move(true)) // 2
                 {
-                    _isBeforeAttack = false;
-                    base.OnTarget();
+                    _currentSight = CharacterEnvironment.Sight;
+                    _idle = false;
+                    _moving = false;
+                    _animator.SetMoving(false);
                 }
             }
             else

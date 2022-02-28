@@ -9,8 +9,8 @@ namespace PataRoad.Core.Character.Animal
         public AttackType AttackType { get; protected set; } = AttackType.Stab;
 
         [SerializeField]
-        private float _sight;
-        public float Sight => _sight;
+        protected float _sight;
+        public virtual float Sight => _sight;
         [SerializeField]
         private float _runningDistance;
 
@@ -97,9 +97,12 @@ namespace PataRoad.Core.Character.Animal
         private void SetToIdle(bool endActionWhenMoved)
         {
             _moving = false;
-            if (endActionWhenMoved) PerformingAction = false;
+            if (endActionWhenMoved)
+            {
+                PerformingAction = false;
+                _behaviour.SetCurrentAsWorldPosition();
+            }
             _animator.SetMoving(false);
-            _behaviour.SetCurrentAsWorldPosition();
         }
         private void Update()
         {

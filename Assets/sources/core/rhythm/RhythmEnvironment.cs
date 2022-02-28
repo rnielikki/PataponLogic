@@ -51,7 +51,7 @@
                     BadRange = 0.25f;
                     MiracleRange = 0.1f;
                     MinEffectThreshold = GoodRange;
-                    FeverMaximum = 15;
+                    FeverMaximum = 10;
                     break;
             }
         }

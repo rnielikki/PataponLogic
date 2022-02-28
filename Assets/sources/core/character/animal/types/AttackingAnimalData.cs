@@ -13,7 +13,7 @@ namespace PataRoad.Core.Character.Animal
         [SerializeField]
         private bool _flipWhenAttacking;
 
-        private bool _willAttack;
+        protected bool _willAttack;
 
         [SerializeField]
         protected UnityEngine.Events.UnityEvent _onAttack;
