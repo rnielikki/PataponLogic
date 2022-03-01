@@ -5203,7 +5203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f83958cf6d945dd42a51a5286b64decd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _testData: {fileID: -2731587640728505089, guid: c1a65516003904940ae4071805b3fdc1, type: 3}
+  _testData: {fileID: -2731587640728505089, guid: 04fc00d2b095b1e4589d07d9f96b8a91, type: 3}
   _input:
     m_Name: Input
     m_Type: 0
@@ -6765,6 +6765,13 @@ MonoBehaviour:
     - _image: {fileID: 0}
       _content: By the way, I heard the Hatapon is Toriron now. The air force can
         ignore completely some ground attacks on fever.
+  - _lines:
+    - _image: {fileID: 0}
+      _content: Beware of the combo attack with ice. Once Patapons are frozen, they
+        cannot do anything.
+    - _image: {fileID: 0}
+      _content: I hope that Meden doesn't make food anymore from Manboroth's fang.
+        Even Rah Gashapon gave up making food with it, so what the hell?
 --- !u!1 &1242097461
 GameObject:
   m_ObjectHideFlags: 0
@@ -9391,7 +9398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClosed.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onOpen.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -9416,7 +9423,7 @@ PrefabInstance:
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClosed.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1032575158}
+      objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -9463,7 +9470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClosed.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: ChangeDisplay
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -9487,7 +9494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClosed.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: PataRoad.Common.GameDisplay.GuideDisplayManager, Assembly-CSharp
+      value: UnityEngine.Behaviour, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -9508,7 +9515,7 @@ PrefabInstance:
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClosed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1032575159}
+      objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onOpen.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
@@ -9523,7 +9530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClosed.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: PataRoad.Common.GameDisplay.GuideDisplay, Assembly-CSharp
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8544532995383734313, guid: 58fda9bb522880344bfb5652d6f8252a, type: 3}
       propertyPath: _onClicked.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
