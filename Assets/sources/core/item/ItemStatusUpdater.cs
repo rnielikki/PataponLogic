@@ -27,7 +27,7 @@ namespace PataRoad.Core.Items
                 _textContainer.SetActive(true);
             }
             //holy moly you get more than 999 same items from a level
-            else if (Amount < Inventory.MaxAmount)
+            if (Amount < Inventory.MaxAmount)
             {
                 Amount++;
                 _text.text = Amount.ToString();

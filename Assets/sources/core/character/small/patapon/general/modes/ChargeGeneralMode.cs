@@ -9,7 +9,7 @@ namespace PataRoad.Core.Character.Patapons.General
 
         public override void Init()
         {
-            Init(1);
+            Init(2);
             switch (Rhythm.RhythmEnvironment.Difficulty)
             {
                 case Rhythm.Difficulty.Easy:
