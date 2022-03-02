@@ -120,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5340037431911056338}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7540208000617571742}
   - component: {fileID: 8797613372949949891}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: eye2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3688851536168414461}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,7 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3465452216177920780}
   - component: {fileID: 2637521962657601365}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: bone_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5600953400221676547}
   - component: {fileID: 7053615454709700802}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: bone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6120207512062124044}
   - component: {fileID: 2374302231741981704}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: eyelid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -628,7 +628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3380671454158233449}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -744,7 +744,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7805297680684593679}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: bone_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -777,7 +777,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3628637718131452491}
   - component: {fileID: 4701412360515021995}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: eye1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -974,7 +974,7 @@ GameObject:
   - component: {fileID: 6868564560119394942}
   - component: {fileID: 1154537325839998477}
   - component: {fileID: 3618771868197904909}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: ice
   m_TagString: Attack
   m_Icon: {fileID: 0}
@@ -5828,7 +5828,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3843986696094949944}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: bone_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5860,7 +5860,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6648388291783242968}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5892,7 +5892,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5588652939382419573}
-  m_Layer: 0
+  - component: {fileID: 586464488977628706}
+  m_Layer: 8
   m_Name: bone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5915,6 +5916,32 @@ Transform:
   m_Father: {fileID: 3688851536168414461}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 4.978}
+--- !u!61 &586464488977628706
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5936010951012691048}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 11, y: 5}
+  m_EdgeRadius: 0
 --- !u!1 &5995203154448372513
 GameObject:
   m_ObjectHideFlags: 0
@@ -5938,9 +5965,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5995203154448372513}
-  m_LocalRotation: {x: -0, y: -0, z: -0.33154917, w: 0.94343793}
-  m_LocalPosition: {x: 0.71412706, y: -2.2452707, z: 0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.3515767, w: 0.93615913}
+  m_LocalPosition: {x: 0.5667841, y: -2.1222801, z: 0.5}
+  m_LocalScale: {x: 1.0000002, y: 1.0000002, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5381534540249062752}
@@ -5957,7 +5984,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5928302746391108756}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6101,7 +6128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2231730623163668061}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: bone_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6133,7 +6160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1671701536420077179}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6166,7 +6193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8674292898034286690}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6198,7 +6225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6326014738376283556}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: bone_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6232,7 +6259,7 @@ GameObject:
   - component: {fileID: 615290018753771378}
   - component: {fileID: 6610958482632373140}
   - component: {fileID: 6000582797454445427}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6435,7 +6462,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.57, y: 4.75}
+    oldSize: {x: 3.58, y: 4.75}
     newSize: {x: 2.13, y: 2.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -6454,7 +6481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2886731299899435888}
   - component: {fileID: 2171704634277316789}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: bone_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6546,7 +6573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6299419155679731971}
   - component: {fileID: 4052185348077061767}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: eye0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6632,7 +6659,7 @@ GameObject:
   m_Component:
   - component: {fileID: 323782639902048187}
   - component: {fileID: 3654933101307533416}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: eye3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6716,7 +6743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 701755469810581542}
   - component: {fileID: 1490161991862810571}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6755,7 +6782,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -7, y: 2.5}
+  m_Offset: {x: -5, y: 5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -6766,7 +6793,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 12, y: 16}
+  m_Size: {x: 8, y: 10}
   m_EdgeRadius: 0
 --- !u!1 &8654176318926162859
 GameObject:
@@ -6793,7 +6820,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8654176318926162859}
   m_LocalRotation: {x: -0, y: -0, z: -0.6624584, w: 0.7490987}
-  m_LocalPosition: {x: 1.2970402, y: 3.3889837, z: -5}
+  m_LocalPosition: {x: 1.2970402, y: 3.388984, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7065,7 +7092,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.57, y: 4.75}
+    oldSize: {x: 3.58, y: 4.75}
     newSize: {x: 2.13, y: 2.6}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -7086,7 +7113,7 @@ GameObject:
   - component: {fileID: 6327868520506776931}
   - component: {fileID: 6735453987408860989}
   - component: {fileID: 3287289930932852769}
-  m_Layer: 20
+  m_Layer: 8
   m_Name: fang
   m_TagString: Untagged
   m_Icon: {fileID: 0}
