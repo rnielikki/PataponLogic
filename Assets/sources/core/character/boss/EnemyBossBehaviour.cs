@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace PataRoad.Core.Character.Bosses
 {
-    internal abstract class EnemyBossBehaviour : UnityEngine.MonoBehaviour
+    public abstract class EnemyBossBehaviour : UnityEngine.MonoBehaviour
     {
         protected EnemyBoss _boss;
         protected Patapons.PataponsManager _pataponsManager;
@@ -11,6 +11,7 @@ namespace PataRoad.Core.Character.Bosses
         protected int _level => _boss.Level;
 
         public bool PartBroken { get; private set; }
+        protected int _minCombo = 1;
 
         protected readonly List<string> _attackCombos =
             new List<string>();
@@ -42,7 +43,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             //from level3 it will do combo attk
             var comboCount = UnityEngine.Random.Range(1,
-                UnityEngine.Mathf.RoundToInt(UnityEngine.Mathf.Sqrt(_level)) + 1);
+                UnityEngine.Mathf.Max(UnityEngine.Mathf.RoundToInt(UnityEngine.Mathf.Sqrt(_level)) + 1, _minCombo));
 
             return SetComboAttack(comboCount);
         }

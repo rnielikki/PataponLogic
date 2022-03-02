@@ -21,6 +21,7 @@ namespace PataRoad.Core.Character.Patapons
         public int PataponCount => _patapons.Count;
         public int PataponGroupCount => _groups.Count;
         public Patapon FirstPatapon => _patapons.Count > 0 ? _patapons[0] : null;
+        public System.Collections.Generic.IEnumerable<Patapon> Patapons => _patapons;
 
         /// <summary>
         /// If this is set to true, Patapons go forward, also whole Patapon position does. For PATAPATA song.

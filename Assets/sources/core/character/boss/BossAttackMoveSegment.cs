@@ -1,6 +1,6 @@
 ﻿namespace PataRoad.Core.Character
 {
-    struct BossAttackMoveSegment
+    public struct BossAttackMoveSegment
     {
         internal string Action { get; }
         internal float Distance { get; }

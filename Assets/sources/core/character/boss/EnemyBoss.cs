@@ -8,7 +8,7 @@ namespace PataRoad.Core.Character.Bosses
         public BossTurnManager BossTurnManager { get; private set; }
         protected Patapons.PataponsManager _pataponsManager { get; set; }
         protected bool _noTarget = true;
-        private bool _sleeping = true;
+        protected bool _sleeping = true;
 
         private bool _moving;
         private bool _movingBack;
@@ -22,7 +22,7 @@ namespace PataRoad.Core.Character.Bosses
 
         public int Level { get; private set; }
         private CameraController.SafeCameraZoom _zoom;
-        private EnemyBossBehaviour _behaviour;
+        protected EnemyBossBehaviour _behaviour;
 
         private float MaxAttackDistance = -1;
 
@@ -86,7 +86,7 @@ namespace PataRoad.Core.Character.Bosses
                 return phase != _phase;
             }
         }
-        private void StartMovingBack()
+        protected virtual void StartMovingBack()
         {
             if (BossAttackData.UseCustomDataPosition) return;
             _targetPosition = Vector3.right * (DefaultWorldPosition + _movingBackPosition);
@@ -109,10 +109,11 @@ namespace PataRoad.Core.Character.Bosses
             _behaviour.CalculateAttack();
         protected (float distance, float maxDistance) CalculateAttackOnIce() =>
             _behaviour.CalculateAttack();
-        private void Update()
+        protected virtual bool CanContinue() => !BossTurnManager.Attacking && !IsDead && StatusEffectManager.CanContinue;
+        protected void Update()
         {
             //phase 0: attacking or dead
-            if (BossTurnManager.Attacking || IsDead || !StatusEffectManager.CanContinue) return;
+            if (!CanContinue()) return;
             //phase 0.12345: don't disturb, now it's doing after-attacking gesture
             if (BossAttackData.UseCustomDataPosition)
             {
@@ -127,7 +128,6 @@ namespace PataRoad.Core.Character.Bosses
                 CalculateAttackOnIce();
                 BossTurnManager.StartAttack();
             }
-
             //phase 0: moving back.
             if (_movingBack)
             {
@@ -184,7 +184,7 @@ namespace PataRoad.Core.Character.Bosses
                 StartAttackingMode();
             }
         }
-        private void StartAttackingMode()
+        protected void StartAttackingMode()
         {
             _moving = false;
             CharAnimator.Animate("Idle");
