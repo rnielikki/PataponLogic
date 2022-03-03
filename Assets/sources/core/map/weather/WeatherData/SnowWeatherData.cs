@@ -22,16 +22,7 @@ namespace PataRoad.Core.Map.Weather
         }
         private void OnParticleCollision(GameObject other)
         {
-            if (other.tag != "SmallCharacter") return;
-            var character = other.gameObject.GetComponentInParent<Character.ICharacter>();
-            if (character != null
-                &&
-                !character.StatusEffectManager.IsOnStatusEffect
-                &&
-                Common.Utils.RandomByProbability((1 - character.Stat.IceResistance) * 0.02f))
-            {
-                character.StatusEffectManager.SetIce(4);
-            }
+            other.GetComponent<IWeatherReceiver>()?.ReceiveWeather(WeatherType.Snow);
         }
     }
 }

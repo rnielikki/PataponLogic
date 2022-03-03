@@ -38,6 +38,14 @@ namespace PataRoad.Core.Character
 
         protected virtual void Awake()
         {
+            InitStat();
+            CurrentHitPoint = _hitPoint;
+            StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
+            StatusEffectManager.IsBigTarget = true;
+            _animator = GetComponent<Animator>();
+        }
+        protected virtual void InitStat()
+        {
             Stat = new Stat
             {
                 HitPoint = _hitPoint,
@@ -50,10 +58,6 @@ namespace PataRoad.Core.Character
                 IceResistance = Mathf.Infinity,
                 SleepResistance = Mathf.Infinity
             };
-            CurrentHitPoint = _hitPoint;
-            StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
-            StatusEffectManager.IsBigTarget = true;
-            _animator = GetComponent<Animator>();
         }
         protected virtual void Start()
         {

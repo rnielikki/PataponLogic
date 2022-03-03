@@ -26,5 +26,23 @@ namespace PataRoad.Core.Map.Weather
 
             gameObject.SetActive(false);
         }
+        public void StartListen(LayerMask layerMask)
+        {
+            var particleSystem = GetComponent<ParticleSystem>();
+            var collision = particleSystem.collision;
+            collision.enabled = true;
+            collision.type = ParticleSystemCollisionType.World;
+            collision.mode = ParticleSystemCollisionMode.Collision2D;
+            collision.bounce = 0;
+            collision.lifetimeLoss = 1;
+            collision.enableDynamicColliders = true;
+            collision.collidesWith = layerMask;
+            collision.sendCollisionMessages = true;
+        }
+
+        private void OnParticleCollision(GameObject other)
+        {
+            other.GetComponent<IWeatherReceiver>()?.ReceiveWeather(WeatherType.Rain);
+        }
     }
 }

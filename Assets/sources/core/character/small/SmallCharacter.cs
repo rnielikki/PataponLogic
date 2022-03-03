@@ -8,7 +8,7 @@ namespace PataRoad.Core.Character
     /// <summary>
     /// Represents small character, including Patapon and its enemy (Hazoron).
     /// </summary>
-    public abstract class SmallCharacter : MonoBehaviour, ICharacter
+    public abstract class SmallCharacter : MonoBehaviour, ICharacter, Map.Weather.IWeatherReceiver
     {
 
         protected SmallCharacterData _data;
@@ -163,5 +163,16 @@ namespace PataRoad.Core.Character
             Stat.HitPoint = CurrentHitPoint = point;
         }
         public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
+
+        public void ReceiveWeather(Map.Weather.WeatherType weatherType)
+        {
+            if (weatherType != Map.Weather.WeatherType.Snow) return;
+            if (!StatusEffectManager.IsOnStatusEffect
+                &&
+                Common.Utils.RandomByProbability((1 - Stat.IceResistance) * 0.02f))
+            {
+                StatusEffectManager.SetIce(4);
+            }
+        }
     }
 }

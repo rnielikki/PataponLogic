@@ -14,7 +14,6 @@ namespace PataRoad.Core.Map.Weather
             {
                 Character.Equipments.Logic.DamageCalculator.CalculateAndSetStagger(target, 0.5f);
             }
-
         }
     }
 }
