@@ -32,6 +32,7 @@ namespace PataRoad.Core.Map.Levels
                 .StartListen(
                 CharacterTypeDataCollection.GetCharacterData(CharacterType.Patapon).SelfLayerMask
                 );
+            _animator = null;
         }
         private void Update()
         {
@@ -41,8 +42,8 @@ namespace PataRoad.Core.Map.Levels
         }
         public override void Die()
         {
-            base.Die();
             _particles.Stop();
+            base.Die();
         }
         public override void TakeDamage(int damage)
         {
