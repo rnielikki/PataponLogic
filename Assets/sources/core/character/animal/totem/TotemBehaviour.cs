@@ -115,6 +115,7 @@ namespace PataRoad.Core.Character.Animal
                 sprite.sortingOrder = 50;
             }
 
+            Map.Weather.WeatherInfo.Current.SetDefaultWeather(Map.Weather.WeatherType.Rain);
             Map.Weather.WeatherInfo.Current.ChangeWeather(Map.Weather.WeatherType.Rain);
         }
 

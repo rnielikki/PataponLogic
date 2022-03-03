@@ -48,7 +48,6 @@ namespace PataRoad.Core.Character.Bosses
                 }
             }
             BossAttackData.IgnoreStatusEffect();
-            StatusEffectManager.IgnoreStatusEffect = true;
         }
         protected override bool CanContinue() => base.CanContinue() && !_frozen && !_changingPhase;
         protected override void StartMovingBack()
@@ -68,7 +67,6 @@ namespace PataRoad.Core.Character.Bosses
                     if (_frozen)
                     {
                         BossAttackData.StopIgnoringStatusEffect();
-                        CharAnimator.Animate("Idle");
                         _frozen = false;
                     }
                     if (_currentIceHitPoint <= 0)

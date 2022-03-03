@@ -7,7 +7,7 @@ namespace PataRoad.Core.Character.Bosses
         [SerializeField]
         ParticleSystem _iceInhaleParticles;
         [SerializeField]
-        ParticleSystem _iceExhaleParticles;
+        BossAttackParticle _attackParticles;
         protected override void Init()
         {
             CharacterSize = 7;
@@ -19,7 +19,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void ExhaleIce()
         {
-            _iceExhaleParticles.Play();
+            _attackParticles.Attack();
         }
         internal override void UpdateStatForBoss(int level)
         {

@@ -19,6 +19,7 @@ namespace PataRoad.Core.Character.Bosses
         protected virtual string[][] _predefinedCombos { get; set; } = new string[][] { };
         private readonly Dictionary<int, List<string[]>> _predefinedCombosIndexed = new Dictionary<int, List<string[]>>();
         private int[] _predefinedComboLengthIndexed;
+        private int _maxCombo = -1;
 
         internal void Init(EnemyBoss boss, Patapons.PataponsManager pataponsManager)
         {
@@ -41,9 +42,12 @@ namespace PataRoad.Core.Character.Bosses
         protected virtual void Init() { }
         public virtual (float distance, float maxDistance) CalculateAttack()
         {
+            if (_maxCombo < 0)
+            {
+                _maxCombo = UnityEngine.Mathf.Max(UnityEngine.Mathf.RoundToInt(UnityEngine.Mathf.Sqrt(_level)), _minCombo) + 1;
+            }
             //from level3 it will do combo attk
-            var comboCount = UnityEngine.Random.Range(1,
-                UnityEngine.Mathf.Max(UnityEngine.Mathf.RoundToInt(UnityEngine.Mathf.Sqrt(_level)) + 1, _minCombo));
+            var comboCount = UnityEngine.Random.Range(1, _maxCombo);
 
             return SetComboAttack(comboCount);
         }

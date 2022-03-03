@@ -44,6 +44,7 @@ namespace PataRoad.Core.Map.Weather
             ChangeWeather(_defaultWeather, true);
         }
         public void ChangeWeather(WeatherType type) => ChangeWeather(type, false);
+        public void SetDefaultWeather(WeatherType type) => _defaultWeather = type;
         private void ChangeWeather(WeatherType type, bool firstInit)
         {
             var weatherType = _currentWeather?.Type ?? WeatherType.Clear;

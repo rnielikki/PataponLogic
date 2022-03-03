@@ -271,7 +271,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3465452216177920780}
   - component: {fileID: 2637521962657601365}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: bone_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -304,7 +304,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 1.5, y: 0}
@@ -330,7 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5600953400221676547}
   - component: {fileID: 7053615454709700802}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: bone_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +363,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 2, y: 0}
@@ -474,7 +474,7 @@ MonoBehaviour:
   _attackTypeResistance:
     rid: 5776631841288880129
   _iceInhaleParticles: {fileID: 5907181947624189747}
-  _iceExhaleParticles: {fileID: 6868564560119394942}
+  _attackParticles: {fileID: 3618771868197904909}
   references:
     version: 2
     RefIds:
@@ -743,7 +743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7805297680684593679}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: bone_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -973,7 +973,7 @@ GameObject:
   - component: {fileID: 6868564560119394942}
   - component: {fileID: 1154537325839998477}
   - component: {fileID: 3618771868197904909}
-  m_Layer: 18
+  m_Layer: 20
   m_Name: ice
   m_TagString: Attack
   m_Icon: {fileID: 0}
@@ -1623,14 +1623,14 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 1
-    type: 10
+    type: 12
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
-    m_Rotation: {x: 0, y: 0, z: -22.5}
+    m_Rotation: {x: 0, y: 0, z: -90}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
@@ -1712,7 +1712,7 @@ ParticleSystem:
     radius:
       value: 1
       mode: 0
-      spread: 1
+      spread: 0
       speed:
         serializedVersion: 2
         minMaxState: 0
@@ -1767,7 +1767,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
     arc:
-      value: 22.5
+      value: 24
       mode: 0
       spread: 0
       speed:
@@ -4762,7 +4762,7 @@ ParticleSystem:
     enter: 2
     exit: 0
     colliderQueryMode: 2
-    radiusScale: 1
+    radiusScale: 3
     primitives: []
   SubModule:
     serializedVersion: 2
@@ -5786,7 +5786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 628f23eefab27b84b9e860fca6b21d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enabled: 0
+  _enabled: 1
   _additionalStat:
     _isCharacterStat: 0
     _hitPoint: 0
@@ -5798,7 +5798,7 @@ MonoBehaviour:
     _movementSpeed: 0
     _critical: 0.2
     _stagger: 0
-    _knockback: 0.5
+    _knockback: 0.7
     _infiniteCriticalResistance: 0
     _criticalResistance: 0
     _infiniteStaggerResistance: 0
@@ -5806,7 +5806,7 @@ MonoBehaviour:
     _infiniteKnockbackResistance: 0
     _knockbackResistance: 0
     _fireRate: 0
-    _iceRate: 0.4
+    _iceRate: 0.75
     _sleepRate: 0
     _infiniteFireResistance: 0
     _fireResistance: 0
@@ -5814,8 +5814,8 @@ MonoBehaviour:
     _iceResistance: 0
     _infiniteSleepResistance: 0
     _sleepResistance: 0
-  _damageOffsetMin: 0.2
-  _damageOffsetMax: 0.3
+  _damageOffsetMin: 0.5
+  _damageOffsetMax: 1
   _attackType: 4
   _elementalAttackType: 2
 --- !u!1 &4307873706552883834
@@ -5827,7 +5827,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3843986696094949944}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: bone_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5892,7 +5892,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4659162821037852365}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 2
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -5901,7 +5901,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 0
   startDelay:
@@ -10940,7 +10940,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2231730623163668061}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: bone_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11071,7 +11071,7 @@ GameObject:
   - component: {fileID: 615290018753771378}
   - component: {fileID: 6610958482632373140}
   - component: {fileID: 6000582797454445427}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11339,7 +11339,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2886731299899435888}
   - component: {fileID: 2171704634277316789}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: bone_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11372,7 +11372,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 1.3677852, y: 0}
@@ -12017,7 +12017,7 @@ GameObject:
   - component: {fileID: 6327868520506776931}
   - component: {fileID: 3287289930932852769}
   - component: {fileID: 7744588542666821975}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: fang
   m_TagString: Untagged
   m_Icon: {fileID: 0}
