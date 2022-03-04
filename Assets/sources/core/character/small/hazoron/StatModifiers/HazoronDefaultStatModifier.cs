@@ -12,6 +12,14 @@
         }
         public void SetLevel(int level, int absoluteMaxLevel)
         {
+            if (_stat == null)
+            {
+                _stat = GetComponent<IAttackable>()?.Stat;
+                if (_stat == null)
+                {
+                    throw new System.InvalidOperationException("Can't find stat to change!");
+                }
+            }
             _level = level;
             var value = 0.8f + 0.2f * level;
             _stat.MultipleDamage(value);
