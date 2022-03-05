@@ -10,13 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fefff2b6cbbbe944383d4a9c19a0253f, type: 3}
-  m_Name: 2.2.Rare-frog
+  m_Name: 3.2.Rare-kisuk
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
   _group: Rarepon
-  _index: 2
-  _name: Frog.2
-  _description: Okay it maybe is three Patapons...
+  _index: 3
+  _name: Kisuk
+  _description: The small tree has nice hit point and staggering rate, but still
+    weak against fire.
   _levelGroup: 2
   _stat:
     rid: 0
@@ -34,15 +35,15 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0
-        _hitPoint: 0
+        _hitPoint: 160
         _defenceMin: 0
         _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
+        _damageMin: 3
+        _damageMax: 9
         _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0
-        _stagger: 0
+        _stagger: 0.8
         _knockback: 0
         _infiniteCriticalResistance: 0
         _criticalResistance: 0
@@ -54,7 +55,7 @@ MonoBehaviour:
         _iceRate: 0
         _sleepRate: 0
         _infiniteFireResistance: 0
-        _fireResistance: 0
+        _fireResistance: -0.7
         _infiniteIceResistance: 0
         _iceResistance: 0
         _infiniteSleepResistance: 0
@@ -63,10 +64,10 @@ MonoBehaviour:
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _crushMultiplier: 1
-        _slashMultiplier: 1
-        _stabMultiplier: 1
-        _soundMultiplier: 1
-        _magicMultiplier: 1
-        _fireMultiplier: 1
+        _slashMultiplier: 1.6
+        _stabMultiplier: 0.8
+        _soundMultiplier: 0.5
+        _magicMultiplier: 0.6
+        _fireMultiplier: 2
         _iceMultiplier: 1
-        _thunderMultiplier: 1
+        _thunderMultiplier: 1.5

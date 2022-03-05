@@ -10,23 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fefff2b6cbbbe944383d4a9c19a0253f, type: 3}
-  m_Name: 0.3.Rare-normal 1
+  m_Name: 3.3.Rare-moriussoo
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
   _group: Rarepon
-  _index: 0
-  _name: Normal++
-  _description: This is the ultimate true Patapon-looking Patapon.
+  _index: 3
+  _name: Moriussoo
+  _description: Now it's fully grown tree! It has excellent health and stagger rate,
+    but still it doesn't like fire.
   _levelGroup: 3
   _stat:
     rid: 0
-  _image: {fileID: 0}
+  _image: {fileID: 21300000, guid: b0cc6b73607230045816e5ab5dfa6691, type: 3}
   _mass: 0
   _type: 3
   _level: 3
-  _color: {r: 1, g: 1, b: 1, a: 1}
+  _color: {r: 0.8784314, g: 0.91764706, b: 0.4392157, a: 1}
   _attackTypeResistance:
-    rid: 6407466249736683521
+    rid: 6407466249736683520
   references:
     version: 2
     RefIds:
@@ -34,39 +35,39 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0
-        _hitPoint: 100
+        _hitPoint: 360
         _defenceMin: 0
         _defenceMax: 0
-        _damageMin: 2
-        _damageMax: 3
+        _damageMin: 10
+        _damageMax: 15
         _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0
-        _stagger: 0
+        _stagger: 1.5
         _knockback: 0
         _infiniteCriticalResistance: 0
-        _criticalResistance: 0.2
+        _criticalResistance: 0
         _infiniteStaggerResistance: 0
-        _staggerResistance: 0.2
+        _staggerResistance: 0
         _infiniteKnockbackResistance: 0
-        _knockbackResistance: 0.2
+        _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
         _infiniteFireResistance: 0
-        _fireResistance: 0.4
+        _fireResistance: -0.5
         _infiniteIceResistance: 0
-        _iceResistance: 0.4
+        _iceResistance: 0
         _infiniteSleepResistance: 0
-        _sleepResistance: 0.4
-    - rid: 6407466249736683521
+        _sleepResistance: 0
+    - rid: 6407466249736683520
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _crushMultiplier: 0.8
-        _slashMultiplier: 0.8
+        _crushMultiplier: 1
+        _slashMultiplier: 1.6
         _stabMultiplier: 0.8
-        _soundMultiplier: 0.8
-        _magicMultiplier: 0.8
-        _fireMultiplier: 0.8
-        _iceMultiplier: 0.8
-        _thunderMultiplier: 0.8
+        _soundMultiplier: 0.5
+        _magicMultiplier: 0.6
+        _fireMultiplier: 2
+        _iceMultiplier: 1
+        _thunderMultiplier: 1.5

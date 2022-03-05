@@ -15,7 +15,7 @@ MonoBehaviour:
   _isUniqueItem: 0
   _group: Rarepon
   _index: 0
-  _name: Normal.2
+  _name: Normal+
   _description: This looks like real patapon's nature but a bit stronger.
   _levelGroup: 2
   _stat:
@@ -34,39 +34,39 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0
-        _hitPoint: 0
+        _hitPoint: 50
         _defenceMin: 0
         _defenceMax: 0
-        _damageMin: 0
-        _damageMax: 0
+        _damageMin: 2
+        _damageMax: 3
         _attackSeconds: 0
         _movementSpeed: 0
         _critical: 0
         _stagger: 0
         _knockback: 0
         _infiniteCriticalResistance: 0
-        _criticalResistance: 0
+        _criticalResistance: 0.1
         _infiniteStaggerResistance: 0
-        _staggerResistance: 0
+        _staggerResistance: 0.1
         _infiniteKnockbackResistance: 0
-        _knockbackResistance: 0
+        _knockbackResistance: 0.1
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
         _infiniteFireResistance: 0
-        _fireResistance: 0
+        _fireResistance: 0.2
         _infiniteIceResistance: 0
-        _iceResistance: 0
+        _iceResistance: 0.2
         _infiniteSleepResistance: 0
-        _sleepResistance: 0
+        _sleepResistance: 0.2
     - rid: 6407466249736683521
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _crushMultiplier: 1
-        _slashMultiplier: 1
-        _stabMultiplier: 1
-        _soundMultiplier: 1
-        _magicMultiplier: 1
-        _fireMultiplier: 1
-        _iceMultiplier: 1
-        _thunderMultiplier: 1
+        _crushMultiplier: 0.9
+        _slashMultiplier: 0.9
+        _stabMultiplier: 0.9
+        _soundMultiplier: 0.9
+        _magicMultiplier: 0.9
+        _fireMultiplier: 0.9
+        _iceMultiplier: 0.9
+        _thunderMultiplier: 0.9
