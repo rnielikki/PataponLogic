@@ -55,13 +55,11 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             foreach (var rarepon in _rareponSelections)
             {
                 rarepon.EnableIfAvailable();
-                rarepon.Button
-                    .onClick
-                    .AddListener(() => _onClicked.Invoke(rarepon));
             }
             _rareponRequirementWindow.Init();
         }
 
+        internal void InvokeOnClicked(RareponSelection rarepon) => _onClicked.Invoke(rarepon);
         public void Open(Common.Navigator.SpriteNavigator beforeSelect, Core.Character.PataponData pataponData, RareponData data)
         {
             if (_rareponSelections == null) Init();

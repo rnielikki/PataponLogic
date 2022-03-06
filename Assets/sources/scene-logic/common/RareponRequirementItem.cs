@@ -3,6 +3,9 @@ using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.CommonSceneLogic
 {
+    /// <summary>
+    /// Summary window content of Rarepon requirement, inside <see cref="RareponRequirementWindow"/>.
+    /// </summary>
     class RareponRequirementItem : MonoBehaviour
     {
         [SerializeField]

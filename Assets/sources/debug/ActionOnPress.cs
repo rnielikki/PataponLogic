@@ -86,5 +86,19 @@ namespace PataRoad.AppDebug
             Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 4));
             Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 5));
         }
+        public void AddAllMaterials()
+        {
+            string[] materials = new string[] { "Alloy", "Bone", "Fang", "Hide", "Liquid", "Meat", "Mineral", "Seed", "Tree", "Vegetable" };
+            foreach (var material in materials)
+            {
+                for (int i = 0; i < 5; i++)
+                {
+                    Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Material, material, i), 99);
+                }
+            }
+            Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Equipment, "Gem", 1), 99);
+            Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Equipment, "Gem", 2), 99);
+            Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Equipment, "Gem", 3), 99);
+        }
     }
 }

@@ -46,6 +46,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         private bool _available;
         public bool CanLevelUp => _container == null || _container.CanLevelUp();
         private int _nextLevel => (_container?.Level ?? 0) + 1;
+        private bool _invokingParentAdded;
 
         public void Init(RareponSelector parent)
         {
@@ -67,7 +68,14 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void EnableIfAvailable()
         {
-            if (_available && !_button.enabled) _button.enabled = true;
+            if (!_available) return;
+            if (!_button.enabled) _button.enabled = true;
+            if (!_invokingParentAdded)
+            {
+                Button.onClick
+                    .AddListener(() => _parent.InvokeOnClicked(this));
+                _invokingParentAdded = true;
+            }
         }
         private void OnEnable()
         {
@@ -90,13 +98,11 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 _image.sprite = _data.Image;
                 _image.color = _data.Color;
             }
-            if (_nextEnableTarget.Length > 0)
+            foreach (var target in _nextEnableTarget)
             {
-                foreach (var target in _nextEnableTarget)
-                {
-                    target._available = true;
-                    target.enabled = true;
-                }
+                target._available = true;
+                target.enabled = true;
+                target.EnableIfAvailable();
             }
             _isOpen = true;
         }
