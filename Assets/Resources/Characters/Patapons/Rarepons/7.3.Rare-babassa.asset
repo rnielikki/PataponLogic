@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fefff2b6cbbbe944383d4a9c19a0253f, type: 3}
-  m_Name: 4.2.Rare-mashuriro
+  m_Name: 7.3.Rare-babassa
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
   _group: Rarepon
-  _index: 4
-  _name: Mashuriro
-  _description: The toxic fungus makes enemies sleep or being knockbacked! But it's
-    still weak against fire.
+  _index: 7
+  _name: Babassa
+  _description: Now this bird has crazy critical rae! Also, it can't sleep.
   _levelGroup: 3
   _stat:
     rid: 0
@@ -35,16 +34,16 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 0
-        _hitPoint: 320
+        _hitPoint: 120
         _defenceMin: 0
         _defenceMax: 0
-        _damageMin: 13
-        _damageMax: 14
+        _damageMin: 20
+        _damageMax: 40
         _attackSeconds: 0
-        _movementSpeed: 0
-        _critical: 0
+        _movementSpeed: 3
+        _critical: 4
         _stagger: 0
-        _knockback: 0.6
+        _knockback: 0
         _infiniteCriticalResistance: 0
         _criticalResistance: 0
         _infiniteStaggerResistance: 0
@@ -53,21 +52,21 @@ MonoBehaviour:
         _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
-        _sleepRate: 1.5
+        _sleepRate: 0
         _infiniteFireResistance: 0
-        _fireResistance: -0.4
+        _fireResistance: 0
         _infiniteIceResistance: 0
         _iceResistance: 0
         _infiniteSleepResistance: 1
-        _sleepResistance: 1
+        _sleepResistance: 0
     - rid: 6407466249736683520
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _crushMultiplier: 1.1
+        _crushMultiplier: 1.8
         _slashMultiplier: 1.6
-        _stabMultiplier: 0.6
-        _soundMultiplier: 0.5
-        _magicMultiplier: 0.5
-        _fireMultiplier: 1.8
-        _iceMultiplier: 1
+        _stabMultiplier: 1.6
+        _soundMultiplier: 1.4
+        _magicMultiplier: 1
+        _fireMultiplier: 1.2
+        _iceMultiplier: 1.6
         _thunderMultiplier: 1.5

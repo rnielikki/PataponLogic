@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fefff2b6cbbbe944383d4a9c19a0253f, type: 3}
-  m_Name: 1.2.Rare-pyokora
+  m_Name: 13.2.Rare-gekoroth
   m_EditorClassIdentifier: 
   _isUniqueItem: 0
   _group: Rarepon
-  _index: 1
-  _name: Pyokora
-  _description: The snow-rabbit natured rabbit has excellent movement speed. Also
-    it's strong against ice.
+  _index: 13
+  _name: Gekoroth
+  _description: This froglet has great potential to resist elemental status effect.
+    Also it's a bit fast.
   _levelGroup: 2
   _stat:
     rid: 0
-  _image: {fileID: 21300000, guid: ec09e91c81900f14ab00d44638a664f7, type: 3}
+  _image: {fileID: 21300000, guid: b0cc6b73607230045816e5ab5dfa6691, type: 3}
   _mass: 0
   _type: 3
   _level: 2
-  _color: {r: 0.9137255, g: 0.827451, b: 0.5568628, a: 1}
+  _color: {r: 0.8784314, g: 0.91764706, b: 0.4392157, a: 1}
   _attackTypeResistance:
-    rid: 1
+    rid: 6407466249736683520
   references:
     version: 2
     RefIds:
@@ -38,13 +38,13 @@ MonoBehaviour:
         _hitPoint: 50
         _defenceMin: 0
         _defenceMax: 0
-        _damageMin: 11
-        _damageMax: 12
-        _attackSeconds: -0.1
-        _movementSpeed: 3
-        _critical: 0.1
-        _stagger: 0.1
-        _knockback: 0.1
+        _damageMin: 12
+        _damageMax: 40
+        _attackSeconds: -0.4
+        _movementSpeed: 1.5
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
         _infiniteCriticalResistance: 0
         _criticalResistance: 0
         _infiniteStaggerResistance: 0
@@ -55,19 +55,19 @@ MonoBehaviour:
         _iceRate: 0
         _sleepRate: 0
         _infiniteFireResistance: 0
-        _fireResistance: 0
+        _fireResistance: 0.5
         _infiniteIceResistance: 0
-        _iceResistance: 0.5
+        _iceResistance: 0.3
         _infiniteSleepResistance: 0
-        _sleepResistance: 0
-    - rid: 1
+        _sleepResistance: 0.3
+    - rid: 6407466249736683520
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
-        _crushMultiplier: 1
-        _slashMultiplier: 1.1
-        _stabMultiplier: 1.2
-        _soundMultiplier: 1.2
+        _crushMultiplier: 0.7
+        _slashMultiplier: 1.3
+        _stabMultiplier: 1.6
+        _soundMultiplier: 0.6
         _magicMultiplier: 0.6
-        _fireMultiplier: 1.1
-        _iceMultiplier: 0.6
-        _thunderMultiplier: 1.1
+        _fireMultiplier: 0.5
+        _iceMultiplier: 0.3
+        _thunderMultiplier: 0.5
