@@ -1,25 +1,11 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace PataRoad.Core.Character.Equipments.Logic
 {
     internal static class DamageCalculator
     {
-        private static DamageDisplay _displayInstance;
-        private static DamageDisplay _damageDisplay
-        {
-            get
-            {
-                SceneManager.sceneUnloaded += Reset;
-                return _displayInstance ??= new DamageDisplay();
-            }
-        }
+        private static DamageDisplay _damageDisplay = new DamageDisplay();
 
-        private static void Reset(Scene _)
-        {
-            SceneManager.sceneUnloaded -= Reset;
-            _displayInstance = null;
-        }
         /// <summary>
         /// Calculates damage, while BEING ATTACKED. Doesn't calculate status effect damage (like fire).
         /// </summary>
