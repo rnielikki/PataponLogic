@@ -78,13 +78,57 @@ namespace PataRoad.AppDebug
             current.FilledMissionCondition = true;
             current.EndMission();
         }
-        public void AddClass()
+        public void AddCommands()
         {
-            //Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Class", 4));
-            //Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 4));
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 3));
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 4));
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Key, "Song", 5));
+            for (int i = 0; i < 8; i++)
+            {
+                AddKeyItemBy("Song", i);
+            }
+        }
+        public void AddDrums()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                AddKeyItemBy("Drum", i);
+            }
+        }
+        public void AddClasses()
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                AddKeyItemBy("Class", i);
+            }
+        }
+        private void AddKeyItemBy(string group, int index) => AddItemBy(Core.Items.ItemType.Key, group, index, 1);
+        private void AddItemBy(Core.Items.ItemType itemType, string group, int index, int amount)
+        {
+            Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(
+                Core.Items.ItemLoader.GetItem(itemType, group, index), amount);
+        }
+        public void AddAllGems()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                AddItemBy(Core.Items.ItemType.Equipment, "Gem", i, 99);
+            }
+        }
+        public void AddAlEquipments()
+        {
+            foreach (Core.Character.Class.ClassType classType in System.Enum.GetValues(typeof(Core.Character.Class.ClassType)))
+            {
+                var weaponAndProtector = Core.Character.Class.ClassAttackEquipmentData.GetWeaponAndProtectorName(classType);
+                AddEquipment(weaponAndProtector.weapon);
+                if (weaponAndProtector.protector != null) AddEquipment(weaponAndProtector.protector);
+            }
+            AddEquipment("Helm");
+
+            void AddEquipment(string name)
+            {
+                for (int i = 0; i < 15; i++)
+                {
+                    AddItemBy(Core.Items.ItemType.Equipment, name, i, 50);
+                }
+            }
         }
         public void AddAllMaterials()
         {
@@ -93,12 +137,9 @@ namespace PataRoad.AppDebug
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Material, material, i), 99);
+                    AddItemBy(Core.Items.ItemType.Material, material, i, 99);
                 }
             }
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Equipment, "Gem", 1), 99);
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Equipment, "Gem", 2), 99);
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(Core.Items.ItemLoader.GetItem(Core.Items.ItemType.Equipment, "Gem", 3), 99);
         }
     }
 }
