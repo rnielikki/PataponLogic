@@ -1,10 +1,25 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace PataRoad.Core.Character.Equipments.Logic
 {
     internal static class DamageCalculator
     {
-        private static readonly DamageDisplay _damageDisplay = new DamageDisplay();
+        private static DamageDisplay _displayInstance;
+        private static DamageDisplay _damageDisplay
+        {
+            get
+            {
+                SceneManager.sceneUnloaded += Reset;
+                return _displayInstance ??= new DamageDisplay();
+            }
+        }
+
+        private static void Reset(Scene _)
+        {
+            SceneManager.sceneUnloaded -= Reset;
+            _displayInstance = null;
+        }
         /// <summary>
         /// Calculates damage, while BEING ATTACKED. Doesn't calculate status effect damage (like fire).
         /// </summary>
@@ -20,7 +35,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             {
                 attacker.OnAttackMiss(point);
             }
-            else if (target.tag == "Grass")
+            else if (target.CompareTag("Grass"))
             {
                 var fireRateMultiplier = Map.Weather.WeatherInfo.Current.FireRateMultiplier;
                 var probability = CalculateStatusEffect(stat.FireRate, (1 - (float)receiver.CurrentHitPoint / receiver.Stat.HitPoint), fireRateMultiplier);
