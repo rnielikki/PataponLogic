@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PataRoad.Common;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
@@ -76,13 +77,24 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void Update()
         {
             var velo = _rigidbody.velocity;
-            transform.eulerAngles = Vector3.back * Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg;
+            transform.eulerAngles = Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg * Vector3.back;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             Logic.DamageCalculator.DealDamage(_holder, _stat, collision.gameObject, collision.ClosestPoint(transform.position));
-            if (collision.tag != "Grass") Destroy(gameObject);
+            if (!collision.CompareTag("Grass"))
+            {
+                var rel = gameObject.GetComponent<ReleaseToPool>();
+                if (rel != null)
+                {
+                    rel.ReleaseThisObject();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+            }
         }
     }
 }

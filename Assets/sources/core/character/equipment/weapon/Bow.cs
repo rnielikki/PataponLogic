@@ -5,14 +5,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     class Bow : Weapon
     {
+
         /// <summary>
         /// An arrow "transform" with animation, before shooting.
         /// </summary>
         private Transform _arrowTransform;
-        /// <summary>
-        /// copied arrow for throwing.
-        /// </summary>
-        private GameObject _copiedArrow;
 
         private SpriteRenderer _bowRenderer;
         private SpriteRenderer _arrowRenderer;
@@ -27,7 +24,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             _arrowTransform = transform.Find("Arrow");
             Init();
-            _copiedArrow = GetWeaponInstance();
         }
         protected override Sprite GetThrowableWeaponSprite() => _arrowTransform.GetComponent<SpriteRenderer>().sprite;
         /// <summary>
@@ -35,7 +31,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// </summary>
         public override void Attack(AttackCommandType attackCommandType)
         {
-            var arrowForThrowing = Instantiate(_copiedArrow, transform.root.parent);
+            var arrowForThrowing = _objectPool.Get();
+            arrowForThrowing.transform.SetParent(transform.root.parent);
             float minThrowDistance = 1600;
             float maxThrowDistance = 1850;
             if (attackCommandType == AttackCommandType.Defend)

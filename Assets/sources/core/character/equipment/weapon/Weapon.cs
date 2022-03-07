@@ -1,10 +1,19 @@
-﻿using PataRoad.Core.Items;
+﻿using PataRoad.Commom;
+using PataRoad.Core.Items;
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
     public abstract class Weapon : Equipment
     {
+        /// <summary>
+        /// Gameobject containing pooled gameobjects
+        /// </summary>
+        protected IObjectPool<GameObject> _objectPool;
+        protected string resourcePath = "Characters/Equipments/PrefabBase/WeaponInstance";
+        protected int poolInitialSize = 30;
+        protected int poolMaxSize = 100;
         /// <summary>
         /// Sprite of THROWABLE object, like arrows or spears.
         /// </summary>
@@ -32,6 +41,13 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             AttackType = _attackType;
             Holder = GetComponentInParent<SmallCharacter>();
             ThrowableWeaponSprite = GetThrowableWeaponSprite();
+            var poolObject = GameObject.Find(nameof(GameObjectPool));
+            if (poolObject != null)
+            {
+                _objectPool = poolObject
+                .GetComponent<GameObjectPool>()
+                .GetPool(resourcePath, poolInitialSize, poolMaxSize);
+            }
         }
         public virtual float GetAttackDistance() => 0;
         /// <summary>

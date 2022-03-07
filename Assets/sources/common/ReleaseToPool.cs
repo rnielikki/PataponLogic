@@ -1,4 +1,3 @@
-using PataRoad.Core.Character.Equipments.Logic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -13,6 +12,12 @@ namespace PataRoad.Common
         /// <summary>
         /// Releases "this" object to pool (the one which has this script).
         /// </summary>
-        public void ReleaseThisObject() => Pool.Release(gameObject);
+        public void ReleaseThisObject()
+        {
+            if (Pool != null)
+            {
+                Pool.Release(gameObject);
+            }
+        }
     }
 }
