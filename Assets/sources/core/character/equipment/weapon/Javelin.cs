@@ -4,14 +4,9 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     class Javelin : Weapon
     {
-        /// <summary>
-        /// copied spear for throwing.
-        /// </summary>
-        private GameObject _copiedJavelin;
         private void Start()
         {
             Init();
-            _copiedJavelin = GetWeaponInstance();
         }
         /// <summary>
         /// Throws spear, from CURRENT spear position and rotation FROM ANIMATION.
@@ -34,9 +29,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
             void ThrowWeaponInstance(float minForce, float maxForce, int angle = 0)
             {
-                var instance = Instantiate(_copiedJavelin, transform.root.parent);
-                if (angle != 0) instance.transform.Rotate(Vector3.forward * angle);
-                instance.GetComponent<WeaponInstance>()
+                var javelinForThrowing = _objectPool.Get();
+                javelinForThrowing.transform.SetParent(transform.root.parent);
+                if (angle != 0) javelinForThrowing.transform.Rotate(Vector3.forward * angle);
+                javelinForThrowing.GetComponent<WeaponInstance>()
                     .Initialize(this, _material)
                     .Throw(minForce, maxForce);
             }

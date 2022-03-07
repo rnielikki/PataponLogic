@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             if (_collider.attachedRigidbody != null)
             {
-                if (other.tag == "Ground")
+                if (other.CompareTag("Ground"))
                 {
                     _grounded = true;
                     GroundAction(_collider, _direction);
@@ -61,7 +61,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             if (!_rotateOverTime || _grounded) return;
             var velo = _rigidbody.velocity;
-            transform.eulerAngles = Vector3.back * Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg;
+            transform.eulerAngles = Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg * Vector3.back;
         }
     }
 }

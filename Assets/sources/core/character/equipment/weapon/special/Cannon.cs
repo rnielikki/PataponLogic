@@ -4,19 +4,20 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     class Cannon : Weapon
     {
-        private GameObject _bullet;
         private Transform _startTransform;
 
         private void Start()
         {
+            resourcePath = "Characters/Equipments/PrefabBase/Suko-Bullet";
+            poolInitialSize = 3;
+            poolMaxSize = 10;
             Init();
-            _bullet = GetWeaponInstance("Suko-Bullet");
             _startTransform = transform.Find("Bullet-Position");
         }
 
         public override void Attack(AttackCommandType attackCommandType)
         {
-            var bullet = Instantiate(_bullet, transform.root.parent);
+            var bullet = _objectPool.Get();
             bullet.transform.position = _startTransform.position;
             bullet.layer = gameObject.layer;
             var bulletScript = bullet.GetComponent<WeaponCannonBullet>();

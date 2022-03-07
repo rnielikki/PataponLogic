@@ -4,10 +4,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     class Spear : Weapon
     {
-        /// <summary>
-        /// copied spear for throwing.
-        /// </summary>
-        private GameObject _copiedSpear;
         private bool _isFeverAttack;
         public override bool IsTargetingCenter => true;
 
@@ -15,14 +11,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void Start()
         {
             Init();
-            _copiedSpear = GetWeaponInstance();
         }
         /// <summary>
         /// Throws spear, from CURRENT spear position and rotation FROM ANIMATION.
         /// </summary>
         public override void Attack(AttackCommandType attackCommandType)
         {
-            var spearForThrowing = Instantiate(_copiedSpear, transform.root.parent);
+            var spearForThrowing = _objectPool.Get();
+            spearForThrowing.transform.SetParent(transform.root.parent);
             float minVelocity, maxVelocity;
             if (attackCommandType == AttackCommandType.Defend)
             {
