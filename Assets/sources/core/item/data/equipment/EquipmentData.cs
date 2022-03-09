@@ -64,7 +64,6 @@ namespace PataRoad.Core.Items
         private float _mass;
         public float Mass => _mass;
 
-
         [SerializeField]
         protected EquipmentType _type;
         public EquipmentType Type => _type;

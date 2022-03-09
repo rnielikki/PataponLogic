@@ -120,7 +120,6 @@ namespace PataRoad.SceneLogic.Minigame
             int nextTiming = lastTiming > 3 ? 7 : 3;
             RhythmTimer.Current.OnHalfTime.AddListener(ListenThis);
 
-
             void ListenThis()
             {
                 //Calculate

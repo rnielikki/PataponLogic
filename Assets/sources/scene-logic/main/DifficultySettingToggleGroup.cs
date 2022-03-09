@@ -59,4 +59,3 @@ namespace PataRoad.SceneLogic.Main.SettingScene
         internal Core.Rhythm.Difficulty GetValueFromToggle() => _current.Difficulty;
     }
 }
-

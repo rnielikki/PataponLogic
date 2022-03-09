@@ -141,6 +141,5 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             Core.Global.GlobalData.Sound.PlayGlobal(sound);
         }
-
     }
 }

@@ -19,7 +19,6 @@ namespace PataRoad.Core.Character.Class
                         .AddModels(
                     new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                     {
-
                         { AttackCommandType.FeverAttack, GetAttackMoveModel("attack-fever") },
                         { AttackCommandType.ChargeDefend, GetAttackMoveModel("defend-charge", AttackMoveType.Defend) },
                     }

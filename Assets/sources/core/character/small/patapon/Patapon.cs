@@ -87,7 +87,6 @@ namespace PataRoad.Core.Character.Patapons
 
             var general = GetComponent<General.PataponGeneral>();
             if (general != null) IsGeneral = true;
-
         }
         private void Start()
         {

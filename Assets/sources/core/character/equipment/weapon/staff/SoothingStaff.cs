@@ -26,6 +26,5 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 anim.Play();
             }
         }
-
     }
 }

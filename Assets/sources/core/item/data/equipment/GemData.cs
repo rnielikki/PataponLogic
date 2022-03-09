@@ -14,4 +14,3 @@ namespace PataRoad.Core.Items
         public Material WeaponMaterial => _weaponMaterial;
     }
 }
-

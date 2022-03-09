@@ -27,7 +27,6 @@ namespace PataRoad.Core.Map.Levels
         [SerializeField]
         private Character.Equipments.Weapons.AttackType _attackType;
 
-
         public Character.Equipments.Weapons.AttackType AttackType => _attackType;
 
         public Character.Equipments.Weapons.ElementalAttackType ElementalAttackType => _pataponData.ElementalAttackType;

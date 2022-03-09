@@ -29,7 +29,6 @@ namespace PataRoad.AppDebug
             {
                 for (int i = 1; i < 15; i++)
                 {
-
                     Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(
                         ItemLoader.GetItem(ItemType.Equipment, name, i)
                     );

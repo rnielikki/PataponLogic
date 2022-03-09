@@ -44,4 +44,3 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
     }
 }
-

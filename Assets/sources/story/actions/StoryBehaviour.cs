@@ -5,7 +5,6 @@ namespace PataRoad.Story.Actions
     /// <summary>
     /// Adds behaviour to the story. Also used for mapping, see more on <see cref="StoryResourceMapper"/>.
     /// </summary>
-
     class StoryBehaviour : MonoBehaviour
     {
         [SerializeField]

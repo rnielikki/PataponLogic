@@ -86,7 +86,6 @@ namespace PataRoad.Core.Character.Patapons
             var idleDistance = PataponEnvironment.PataponIdleDistance;
             if (!onMission) idleDistance *= 1.5f;
 
-
             (general, patapon) = LoadResource(classType);
             if (generalOnly)
             {
@@ -126,7 +125,6 @@ namespace PataRoad.Core.Character.Patapons
 
                 ponInstance.transform.localPosition = Vector2.zero + (((offset * idleDistance) + generalOffset) * Vector2.left);
             }
-
         }
         private static (GameObject general, GameObject patapon) LoadResource(ClassType classType)
         {

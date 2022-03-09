@@ -22,7 +22,6 @@ namespace PataRoad.Core.Character.Patapons.General
                     _adder = 1f;
                     break;
             }
-
         }
         public override Stat CalculateStat(Stat stat)
         {

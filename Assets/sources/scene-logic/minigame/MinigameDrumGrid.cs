@@ -42,4 +42,3 @@ namespace PataRoad.SceneLogic.Minigame
         public void ClearStatus() => _current?.ResetStatus();
     }
 }
-

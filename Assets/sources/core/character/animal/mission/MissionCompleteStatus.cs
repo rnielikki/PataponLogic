@@ -69,7 +69,6 @@ namespace PataRoad.Core.Map
             }
             _spriteMaterial.color = Color.white;
             Character.Patapons.PataponsManager.IsMovingForward = false;
-
         }
         void LoadPatapolis(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {

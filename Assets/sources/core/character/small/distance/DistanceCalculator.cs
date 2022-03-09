@@ -77,7 +77,6 @@ namespace PataRoad.Core.Character
         internal static DistanceCalculator GetAnimalDistanceCalculator(Animal.AnimalBehaviour target) =>
             new DistanceCalculator(target, CharacterTypeDataCollection.GetCharacterData(CharacterType.Others));
 
-
         /// <summary>
         /// Shoots Raycast for marching. Same as melee unit of <see cref="GetClosestForAttack"/>.
         /// </summary>
@@ -170,7 +169,6 @@ namespace PataRoad.Core.Character
             var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, _character.Sight, AttackLayerMask);
             return all.Select(res => res.collider).Where(value => value?.gameObject != null);
         }
-
 
         public bool IsInTargetRange(float targetX, float offset) => IsInTargetRange(_target.transform.position.x, targetX, offset);
         public bool IsInTargetRange(float x, float targetX, float offset) => targetX - offset < x && x < targetX + offset;

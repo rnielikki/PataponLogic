@@ -49,7 +49,6 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 SendDamage(receiver, damage);
                 _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon, isCritical);
 
-
                 if (!CheckIfDie(receiver, target))
                 {
                     attacker.OnAttackHit(point, damage);

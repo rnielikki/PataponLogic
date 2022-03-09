@@ -8,7 +8,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
 {
     public class CharacterGroupNavigator : SpriteNavigator
     {
-
         private Core.CameraController.CameraZoom _cameraZoom;
         private CharacterGroupSaver _groupSaver;
         private Vector2[] _navPositions;
@@ -94,7 +93,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     ReOrderIndex();
 
                     Core.Global.GlobalData.Sound.PlayInScene(_soundIn);
-
                 }
                 else
                 {

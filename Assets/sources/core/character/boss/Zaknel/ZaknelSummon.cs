@@ -29,6 +29,5 @@
         {
             Map.Weather.WeatherInfo.Current.ChangeWeather(Map.Weather.WeatherType.Clear);
         }
-
     }
 }

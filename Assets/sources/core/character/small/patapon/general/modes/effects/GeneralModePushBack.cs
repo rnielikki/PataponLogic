@@ -37,6 +37,5 @@ namespace PataRoad.Core.Character.Patapons.General
                 Time.deltaTime);
             }
         }
-
     }
 }

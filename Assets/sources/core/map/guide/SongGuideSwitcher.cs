@@ -36,6 +36,5 @@ namespace PataRoad.Core.Map
             _action.canceled -= HideCommands;
             _action.Disable();
         }
-
     }
 }

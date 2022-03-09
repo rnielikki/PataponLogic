@@ -22,6 +22,5 @@ namespace PataRoad.AppDebug
                 }
             }
         }
-
     }
 }

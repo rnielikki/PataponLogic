@@ -5,7 +5,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     class Bow : Weapon
     {
-
         /// <summary>
         /// An arrow "transform" with animation, before shooting.
         /// </summary>

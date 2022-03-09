@@ -48,6 +48,5 @@ namespace PataRoad.SceneLogic.Intro
                 }
             }
         }
-
     }
 }
