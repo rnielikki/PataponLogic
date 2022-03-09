@@ -126,12 +126,5 @@ namespace PataRoad.Story.Actions
                 }
             }
         }
-        private void OnValidate()
-        {
-            if (CompareTag("SmallCharacter") && !GetComponent<Animator>().runtimeAnimatorController.name.StartsWith("Story"))
-            {
-                Debug.LogError($"Please use story animator for instead of [{GetComponent<Animator>().runtimeAnimatorController.name}] the character, or remove the script if it's not for not story mode.");
-            }
-        }
     }
 }
