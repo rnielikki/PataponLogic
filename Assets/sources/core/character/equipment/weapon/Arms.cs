@@ -4,7 +4,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 {
     class Arms : Weapon
     {
-        private GameObject _copiedStone;
         private Transform _stoneTransform;
         private ArmTrigger[] _armTriggers;
         protected override float _throwMass => 1;
@@ -12,7 +11,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             _stoneTransform = transform.Find("Stone");
             Init();
-            _copiedStone = GetWeaponInstance();
             _armTriggers = GetComponentsInChildren<ArmTrigger>();
         }
         protected override Sprite GetThrowableWeaponSprite() => _stoneTransform.GetComponent<SpriteRenderer>().sprite;
@@ -20,7 +18,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             if (attackCommandType == AttackCommandType.ChargeAttack)
             {
-                var stoneForThrowing = Instantiate(_copiedStone, transform.root.parent);
+                var stoneForThrowing = _objectPool.Get();
+                stoneForThrowing.transform.SetParent(transform.root.parent);
                 stoneForThrowing.GetComponent<WeaponInstance>()
                     .Initialize(this, _material, _throwMass, _stoneTransform)
                     .Throw(650, 750);
