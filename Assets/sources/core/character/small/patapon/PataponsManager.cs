@@ -85,7 +85,10 @@ namespace PataRoad.Core.Character.Patapons
         {
             _useMissionTower = Map.MissionPoint.Current.UseMissionTower;
             if (_useMissionTower) _missionEndPosition = Map.MissionPoint.Current.MissionPointPosition.x;
-            Hazorons.HazoronPositionManager.Current?.Init(transform);
+            if (Hazorons.HazoronPositionManager.Current != null)
+            {
+                Hazorons.HazoronPositionManager.Current.Init(transform);
+            }
         }
         /// <summary>
         /// Attach to <see cref="RhythmInput.OnDrumHit"/>.
@@ -117,9 +120,9 @@ namespace PataRoad.Core.Character.Patapons
         public void SendGeneralMode(RhythmCommandModel model)
         {
             if (model.ComboType != ComboStatus.Fever) return;
-            foreach (var group in _groups)
+            foreach (var group in _groups.Where(g => g.General != null))
             {
-                group.General?.ActivateGeneralMode(model.Song);
+                group.General.ActivateGeneralMode(model.Song);
             }
         }
         /// <summary>
@@ -157,9 +160,9 @@ namespace PataRoad.Core.Character.Patapons
             {
                 pon.PlayIdle();
             }
-            foreach (var group in _groups)
+            foreach (var group in _groups.Where(g => g.General != null))
             {
-                group.General?.CancelGeneralMode();
+                group.General.CancelGeneralMode();
             }
         }
         public void RemovePon(Patapon patapon)
@@ -247,8 +250,14 @@ namespace PataRoad.Core.Character.Patapons
         private bool HasEnemyOnSight() //for camera move
         {
             if (_patapons.Count == 0) return true;
-            else return (FirstPatapon?.DistanceCalculator?.GetClosest() != null
-                    || _distanceCalculator.GetClosest() != null);
+            else
+            {
+                if (FirstPatapon != null && FirstPatapon.DistanceCalculator != null && FirstPatapon.DistanceCalculator.GetClosest() != null)
+                {
+                    return true;
+                }
+                return _distanceCalculator.GetClosest() != null;
+            }
         }
         public bool CanGoForward()
         {
@@ -275,9 +284,9 @@ namespace PataRoad.Core.Character.Patapons
         }
         private void LateUpdate()
         {
-            var closest = FirstPatapon?.DistanceCalculator?.GetClosest();
+            var closest = FirstPatapon == null ? null : FirstPatapon.DistanceCalculator?.GetClosest();
             var forward = closest?.x;
-            if (forward != null && forward.Value < transform.position.x)
+            if (forward < transform.position.x)
             {
                 var newPosition = forward.Value;
                 if (newPosition < MinimumPosition) return;

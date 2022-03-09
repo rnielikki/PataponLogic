@@ -19,7 +19,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         private void Awake()
         {
-            if (!string.IsNullOrEmpty(_bindingName) && Core.Global.GlobalData.GlobalInputActions.TryGetActionBindingName(_bindingName, out string result))
+            if (!string.IsNullOrEmpty(_bindingName)
+                && Core.Global.GlobalData.GlobalInputActions.TryGetActionBindingName(_bindingName, out string result))
             {
                 GetComponentInChildren<Text>().text += $" ({result})";
             }

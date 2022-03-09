@@ -79,7 +79,8 @@ namespace PataRoad.Core.Character.Patapons.Data
 
         public void OnAfterDeserialize()
         {
-            if (_generalModeDataIndex != -1) GeneralModeData = Items.ItemLoader.GetItem<Items.GeneralModeData>(Items.ItemType.Key, "GeneralMode", _generalModeDataIndex);
+            if (_generalModeDataIndex != -1) GeneralModeData = Items.ItemLoader
+                .GetItem<Items.GeneralModeData>(Items.ItemType.Key, "GeneralMode", _generalModeDataIndex);
             AttackTypeIndex = _attackTypeIndex;
         }
     }

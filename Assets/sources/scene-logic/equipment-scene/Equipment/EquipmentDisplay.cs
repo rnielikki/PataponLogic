@@ -101,7 +101,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
             Core.Global.GlobalData.Sound.PlayInScene(_soundOpen);
             _inventoryDisplay.SelectLast(
-                _inventoryDisplay.LoadData(Core.Global.GlobalData.CurrentSlot.Inventory.GetItemsByType(type, itemGroup), currentItem, isEquipments)
+                _inventoryDisplay.LoadData(
+                    Core.Global.GlobalData.CurrentSlot.Inventory.GetItemsByType(type, itemGroup),
+                    currentItem,
+                    isEquipments)
             );
         }
         public void HideEquipment() => HideEquipment(_currentPataponData != null);
@@ -141,7 +144,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 else if (item != null)
                 {
                     //general mode update!
-                    Core.Global.GlobalData.CurrentSlot.PataponInfo.UpdateGeneralEquipmentStatus(_currentPataponData.Type, item as GeneralModeData);
+                    Core.Global.GlobalData.CurrentSlot.PataponInfo
+                        .UpdateGeneralEquipmentStatus(_currentPataponData.Type, item as GeneralModeData);
                 }
                 wasFromEquipmentSummary = true;
             }
@@ -164,7 +168,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private (ItemType type, string group) LoadItemType(Core.Character.PataponData data, EquipmentSummaryElement equipElement)
         {
             if (equipElement.IsGeneralMode) return (ItemType.Key, "GeneralMode");
-            else return (ItemType.Equipment, Core.Character.Class.ClassAttackEquipmentData.GetEquipmentName(data.Type, equipElement.EquipmentType));
+            else return (ItemType.Equipment, Core.Character.Class.ClassAttackEquipmentData
+                .GetEquipmentName(data.Type, equipElement.EquipmentType));
         }
         private void SetPosition(bool left)
         {

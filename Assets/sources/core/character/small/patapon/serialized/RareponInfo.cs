@@ -106,7 +106,8 @@ namespace PataRoad.Core.Character.Patapons.Data
         /// <returns>Data of the Rarepon with corresponding index and level. <c>null</c> if it doesn't exist.</returns>
         internal static RareponData GetRareponData(int rareponIndex, int level)
         {
-            if (!IsValidLevel(level)) throw new ArgumentException($"LEVEL {level} (for {rareponIndex}) is incorrect. Level must be range of 1-3.");
+            if (!IsValidLevel(level)) throw new ArgumentException(
+                $"LEVEL {level} (for {rareponIndex}) is incorrect. Level must be range of 1-3.");
             if (_allAvailableRarepons.TryGetValue(rareponIndex, out RareponData[] data))
             {
                 return data[level - 1];

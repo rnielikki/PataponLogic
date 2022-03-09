@@ -82,7 +82,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         protected void SetInitialVelocity(float force, float angle)
         {
-            _initialVelocity = Time.fixedDeltaTime * force * (new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)));
+            _initialVelocity = Time.fixedDeltaTime * force
+                * (new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)));
         }
         /// <summary>
         /// Gets throwing range attack distance. It also considers wind, but doesn't consider y axis. Use <see cref="AdjustAttackDistanceByYPosition(float, float)"/> for late adjustment.
@@ -92,7 +93,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         protected float GetThrowingAttackDistance()
         {
             return ((2 * _initialVelocity.x * _initialVelocity.y) / -Physics2D.gravity.y)
-                + (2 * Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Pow(_initialVelocity.y, 2) / Mathf.Pow(Physics2D.gravity.y, 2));
+                + (2 * Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Pow(_initialVelocity.y, 2)
+                    / Mathf.Pow(Physics2D.gravity.y, 2));
         }
         // Parabola approximation
         public virtual float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance) => attackDistance;
@@ -101,14 +103,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (_initialVelocity.x == 0) return 0; //No zero division
             var velocityRate = _initialVelocity.y / _initialVelocity.x;
             var yDiff = yDistance - Holder.RootTransform.position.y;
-            return Mathf.Max(Mathf.Sqrt((yDiff + (0.25f * velocityRate * Mathf.Pow(attackDistance, 2))) / velocityRate) + (0.5f * attackDistance)
+            return Mathf.Max(Mathf.Sqrt((yDiff + (0.25f * velocityRate * Mathf.Pow(attackDistance, 2))) / velocityRate)
+                + (0.5f * attackDistance)
                 - (Map.Weather.WeatherInfo.Current.Wind.Magnitude * Mathf.Clamp01(yDistance / CharacterEnvironment.MaxYToScan)), 0);
         }
         internal override void ReplaceEqupiment(EquipmentData equipmentData, Stat stat)
         {
             base.ReplaceEqupiment(equipmentData, stat);
             var gem = HolderData.EquipmentManager?.ElementGem;
-            if (gem?.CurrentData != null)
+            if (gem != null && gem.CurrentData != null)
             {
                 _material = (gem.CurrentData as GemData).WeaponMaterial;
             }

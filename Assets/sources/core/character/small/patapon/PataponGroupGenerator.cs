@@ -54,7 +54,12 @@ namespace PataRoad.Core.Character.Patapons
             return AddPataponGroupInstance(classType, parent, manager, true, true);
         }
 
-        private static GameObject AddPataponGroupInstance(ClassType classType, Transform parent, PataponsManager manager, bool onMission, bool generalOnly = false)
+        private static GameObject AddPataponGroupInstance(
+            ClassType classType,
+            Transform parent,
+            PataponsManager manager,
+            bool onMission,
+            bool generalOnly = false)
         {
             var group = new GameObject("PataponGroup");
             group.transform.parent = parent;

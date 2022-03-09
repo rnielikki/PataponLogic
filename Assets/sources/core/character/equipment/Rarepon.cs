@@ -27,7 +27,10 @@ namespace PataRoad.Core.Character.Equipments
 
             if (equipmentData.Index != 0)
             {
-                helm?.HideEqupiment(stat);
+                if (helm != null)
+                {
+                    helm.HideEqupiment(stat);
+                }
                 if (_spriteToHideOnRarepon != null) _spriteToHideOnRarepon.enabled = false;
             }
             else if (helm != null)

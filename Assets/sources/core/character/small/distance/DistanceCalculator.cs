@@ -102,10 +102,22 @@ namespace PataRoad.Core.Character
 
         protected virtual Vector2? GetClosestForAttack(Vector2 castPoint, float attackDistance)//bidirectional
         {
-            var raycast = Physics2D.BoxCast(castPoint + (_boxcastXOffset * _direction) + _boxcastYOffset, _boxSize, 0, -_direction, attackDistance, LayerMask);
+            var raycast = Physics2D.BoxCast(
+                castPoint + (_boxcastXOffset * _direction) + _boxcastYOffset,
+                _boxSize,
+                0,
+                -_direction,
+                attackDistance,
+                LayerMask);
             if (raycast.collider == null)
             {
-                raycast = Physics2D.BoxCast(castPoint - (_boxcastXOffset * _direction) + _boxcastYOffset, _boxSize, 0, _direction, _character.Sight - attackDistance, LayerMask);
+                raycast = Physics2D.BoxCast(
+                    castPoint - (_boxcastXOffset * _direction) + _boxcastYOffset,
+                    _boxSize,
+                    0,
+                    _direction,
+                    _character.Sight - attackDistance,
+                    LayerMask);
                 if (raycast.collider == null) return null;
             }
             var bounds = raycast.collider.bounds;
@@ -149,7 +161,8 @@ namespace PataRoad.Core.Character
             var raycast = GetRaycastHitOnForward(sight);
             return raycast.transform?.position;
         }
-        private RaycastHit2D GetRaycastHitOnForward(float sight) => Physics2D.BoxCast((_target.transform.position.x * Vector2.right) - (_boxSize.x * _direction) + _boxcastYOffset, _boxSize, 0, _direction, sight, LayerMask);
+        private RaycastHit2D GetRaycastHitOnForward(
+            float sight) => Physics2D.BoxCast((_target.transform.position.x * Vector2.right) - (_boxSize.x * _direction) + _boxcastYOffset, _boxSize, 0, _direction, sight, LayerMask);
 
         public IEnumerable<IAttackable> GetAllGroundedTargets()
         {
@@ -161,7 +174,13 @@ namespace PataRoad.Core.Character
         }
         public IEnumerable<Collider2D> GetAllAbsoluteTargetsOnFront()
         {
-            var all = Physics2D.BoxCastAll(_target.transform.position, _boxSize, 0, _direction, CharacterEnvironment.OriginalSight, AttackLayerMask);
+            var all = Physics2D.BoxCastAll(
+                _target.transform.position,
+                _boxSize,
+                0,
+                _direction,
+                CharacterEnvironment.OriginalSight,
+                AttackLayerMask);
             return all.Select(res => res.collider).Where(value => value?.gameObject != null);
         }
         public IEnumerable<Collider2D> GetAllTargetsOnFront()
@@ -178,6 +197,7 @@ namespace PataRoad.Core.Character
         /// <returns><c>true</c> if Patapon finds obstacle (attack) target to Patapon sight, otherwise <c>false</c>.</returns>
         public bool HasAttackTarget() => GetClosestForAttack() != null;
         public bool HasAttackTargetOnForward() => GetClosestForAttack(0) != null;
-        protected float MaxEnemyDistanceInSight(float attackDistance) => _character.DefaultWorldPosition + (_xDirection * (_character.Sight + attackDistance));
+        protected float MaxEnemyDistanceInSight(float attackDistance)
+            => _character.DefaultWorldPosition + (_xDirection * (_character.Sight + attackDistance));
     }
 }

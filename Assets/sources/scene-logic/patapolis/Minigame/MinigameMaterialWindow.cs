@@ -155,7 +155,8 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
 
         public void LoadPracticeGame()
         {
-            Common.GameDisplay.ConfirmDialog.Create("You're play as PRACTICE.\nThere will be NO REWARD, but item WILL NOT LOST.\nAre you sure to play in this mode?")
+            Common.GameDisplay.ConfirmDialog
+                .Create("You're play as PRACTICE.\nThere will be NO REWARD, but item WILL NOT LOST.\nAre you sure to play in this mode?")
                 .SetTargetToResume(this)
                 .SetOkAction(() =>
                 {

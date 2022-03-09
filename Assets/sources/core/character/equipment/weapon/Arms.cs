@@ -49,11 +49,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         public override float GetAttackDistance() => IsThrowing() ? GetThrowingAttackDistance() : 0;
         public override float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance) =>
-            IsThrowing() ? AdjustThrowingAttackDistanceByYPosition(attackDistance, yDistance) : base.AdjustAttackDistanceByYPosition(attackDistance, yDistance);
+            IsThrowing()
+                ? AdjustThrowingAttackDistanceByYPosition(attackDistance, yDistance)
+                : base.AdjustAttackDistanceByYPosition(attackDistance, yDistance);
         private bool IsThrowing()
         {
             if (Holder == null) return false;
-            return LastAttackCommandType == AttackCommandType.ChargeAttack || (Holder.AttackTypeIndex == 1 && LastAttackCommandType == AttackCommandType.Attack);
+            return LastAttackCommandType == AttackCommandType.ChargeAttack
+                || (Holder.AttackTypeIndex == 1 && LastAttackCommandType == AttackCommandType.Attack);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

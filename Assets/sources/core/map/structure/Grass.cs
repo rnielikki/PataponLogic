@@ -58,7 +58,8 @@ namespace PataRoad.Core.Character
                 !attackable.StatusEffectManager.IsOnStatusEffect)
             {
                 Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(
-                    attackable, StatusEffectType.Fire, Stat.FireRate, Stat.FireResistance, Map.Weather.WeatherInfo.Current.FireRateMultiplier);
+                    attackable, StatusEffectType.Fire, Stat.FireRate, Stat.FireResistance, Map.Weather.WeatherInfo.Current
+                        .FireRateMultiplier);
             }
         }
 

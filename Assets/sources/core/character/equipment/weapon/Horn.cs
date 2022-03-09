@@ -122,7 +122,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         private static void PushBack(Collider2D other)
         {
-            other.GetComponentInParent<SmallCharacter>()?.StatusEffectManager?.SetKnockback();
+            var character = other.GetComponentInParent<SmallCharacter>();
+            if (character != null && character.StatusEffectManager != null)
+            {
+                character.StatusEffectManager.SetKnockback();
+            }
         }
         internal override void SetLastAttackCommandType(AttackCommandType attackCommandType)
         {

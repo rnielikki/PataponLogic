@@ -265,7 +265,8 @@ namespace PataRoad.Core.Character.Patapons
         {
             if (damage < 0)
             {
-                throw new System.ArgumentException("Damage cannot be less than zero for Patapons. Use Group.HealAllINGroup() or HealAlone() to heal.");
+                throw new System.ArgumentException(
+                    "Damage cannot be less than zero for Patapons. Use Group.HealAllINGroup() or HealAlone() to heal.");
             }
             base.TakeDamage(damage);
             Group.UpdateHitPoint(this);

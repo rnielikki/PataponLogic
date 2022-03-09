@@ -130,7 +130,10 @@ namespace PataRoad.Core.Character.Patapons.Data
             resultnPataponMeta = GetPataponMetaFrom(currentClassWrap, data, currentPataponData);
             return resultnPataponMeta.Value;
         }
-        public bool IsEquippedOutside(IEnumerable<Class.ClassType> allAvailableClasses, EquipmentData data, out (Class.ClassType type, int index) result)
+        public bool IsEquippedOutside(
+            IEnumerable<Class.ClassType> allAvailableClasses,
+            EquipmentData data,
+            out (Class.ClassType type, int index) result)
         {
             var res = GetPataponMetaFrom(allAvailableClasses.Except(_currentClasses), data);
             if (res != null)
@@ -148,7 +151,10 @@ namespace PataRoad.Core.Character.Patapons.Data
             return _classInfoMap[classType].GetMaxEquipmentLevel(equipmentType) >= LevelGroup;
         }
 
-        private (Class.ClassType type, int index)? GetPataponMetaFrom(IEnumerable<Class.ClassType> classes, EquipmentData equipmentData, PataponData pataponData = null)
+        private (Class.ClassType type, int index)? GetPataponMetaFrom(
+            IEnumerable<Class.ClassType> classes,
+            EquipmentData equipmentData,
+            PataponData pataponData = null)
         {
             foreach (var classType in classes)
             {
@@ -232,8 +238,8 @@ namespace PataRoad.Core.Character.Patapons.Data
         public void Serialize()
         {
             _classInfoForSerialization = _classInfoMap.Values.ToArray();
-            _summonIndex = BossToSummon?.Index ?? -1;
-            _musicIndex = CustomMusic?.Index ?? -1;
+            _summonIndex = BossToSummon == null ? -1 : BossToSummon.Index;
+            _musicIndex = CustomMusic == null ? -1 : CustomMusic.Index;
         }
         public void Deserialize()
         {

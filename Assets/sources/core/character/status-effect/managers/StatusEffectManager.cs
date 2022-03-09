@@ -122,7 +122,11 @@ namespace PataRoad.Core.Character
         }
         protected virtual void StopEverythingBeforeStatusEffect(StatusEffectType type)
         {
-            (_target as MonoBehaviour)?.StopAllCoroutines();
+            var mono = _target as MonoBehaviour;
+            if (mono != null)
+            {
+                mono.StopAllCoroutines();
+            }
         }
 
         protected IEnumerator WaitForRecovery(float seconds)

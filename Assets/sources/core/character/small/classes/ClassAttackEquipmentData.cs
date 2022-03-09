@@ -27,7 +27,9 @@ namespace PataRoad.Core.Character.Class
             { ClassType.Robopon, new ClassAttackEquipmentData("Arms",null, new string[]{"Melee","Throw"})},
             { ClassType.Kibapon, new ClassAttackEquipmentData("Lance","Horse", new string[]{"Stab"})},
             { ClassType.Yaripon, new ClassAttackEquipmentData("Spear",null,  new string[]{"Stab"})},
-            { ClassType.Megapon, new ClassAttackEquipmentData("Horn","Cape", new string[]{"Fire on Fever", "Ice on Fever", "No Fever Attk"})},
+            {
+                ClassType.Megapon,
+                new ClassAttackEquipmentData("Horn","Cape", new string[]{"Fire on Fever", "Ice on Fever", "No Fever Attk"})},
             { ClassType.Toripon, new ClassAttackEquipmentData("Javelin","Bird", new string[]{"Stab"})},
             { ClassType.Yumipon, new ClassAttackEquipmentData("Bow", null, new string[]{"Stab", "No Cannon Attk"})},
             { ClassType.Mahopon, new ClassAttackEquipmentData("Staff","Shoes",  new string[]{"None", "Fire", "Ice", "Thunder"})},
@@ -57,6 +59,7 @@ namespace PataRoad.Core.Character.Class
                 return (UnityEngine.Random.Range(0, 2) == 0) ? data.WeaponName : data.ProtectorName;
             }
         }
-        public static (string weapon, string protector) GetWeaponAndProtectorName(ClassType type) => (_map[type].WeaponName, _map[type].ProtectorName);
+        public static (string weapon, string protector) GetWeaponAndProtectorName(ClassType type)
+            => (_map[type].WeaponName, _map[type].ProtectorName);
     }
 }

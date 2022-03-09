@@ -133,7 +133,10 @@ namespace PataRoad.Core.Character
             }
             else if (_currentModel.AlwaysAnimate)
             {
-                transform.position = Vector2.MoveTowards(transform.position, _distanceCalculator.GetSafeForwardPosition(_currentModel.GetPosition()) * Vector2.right, _currentModel.MovingSpeed * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(
+                    transform.position,
+                    _distanceCalculator.GetSafeForwardPosition(_currentModel.GetPosition()) * Vector2.right,
+                    _currentModel.MovingSpeed * Time.deltaTime);
                 return;
             }
             else if (_attacking) return;

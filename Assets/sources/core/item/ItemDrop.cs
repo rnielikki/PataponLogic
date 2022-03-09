@@ -60,7 +60,8 @@ namespace PataRoad.Core.Items
                     {
                         return false;
                     }
-                    GetItemDropGameObject(ItemManager.Current.ItemDropTemplate, position).GetComponent<ItemDrop>().SetItem(obtainableItemData, item);
+                    GetItemDropGameObject(ItemManager.Current.ItemDropTemplate, position).GetComponent<ItemDrop>()
+                        .SetItem(obtainableItemData, item);
                     return true;
                 case EventItemDropData eventItemData:
                     if (eventItemData.Image == null) return false;
@@ -92,7 +93,10 @@ namespace PataRoad.Core.Items
             }
             else
             {
-                transform.position = Vector2.MoveTowards(transform.position, Camera.main.ViewportToWorldPoint(Vector2.one), 30 * Time.deltaTime);
+                transform.position = Vector2.MoveTowards(
+                    transform.position,
+                    Camera.main.ViewportToWorldPoint(Vector2.one),
+                    30 * Time.deltaTime);
                 _renderer.color = color;
             }
         }

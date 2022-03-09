@@ -48,7 +48,7 @@ namespace PataRoad.Core.Character.Bosses
                 ParticleSystem.Particle particle = enteredParticles[i];
                 for (int j = 0; j < _trigger.colliderCount; j++)
                 {
-                    var collider = _trigger.GetCollider(j)?.GetComponent<Collider2D>();
+                    var collider = _trigger.GetCollider(j) == null ? null : _trigger.GetCollider(j).GetComponent<Collider2D>();
                     //note: this checks "component is destroyed" so don't use ?.
                     if (collider != null && collider.gameObject != null)
                     {

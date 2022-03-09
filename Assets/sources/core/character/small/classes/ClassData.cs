@@ -115,7 +115,11 @@ namespace PataRoad.Core.Character.Class
         /// <param name="movingSpeed">Moving speed MULTIPLIER. It automatically multiplies to <see cref="Stat.MovementSpeed"/>.</param>
         /// <param name="attackSpeedMultiplier">Attack speed multiplier, default is 1. Yumipon fever attack is expected to 3.</param>
         /// <returns>Attack Move Model for <see cref="AttackMoveController"/>.</returns>
-        protected AttackMoveModel GetAttackMoveModel(string animationType, AttackMoveType type = AttackMoveType.Attack, float movingSpeed = 1, float attackSpeedMultiplier = 1)
+        protected AttackMoveModel GetAttackMoveModel(
+            string animationType,
+            AttackMoveType type = AttackMoveType.Attack,
+            float movingSpeed = 1,
+            float attackSpeedMultiplier = 1)
         {
             movingSpeed *= _character.Stat.MovementSpeed;
             return new AttackMoveModel(

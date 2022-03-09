@@ -95,7 +95,8 @@ namespace PataRoad.SceneLogic.KeymapSettings
                 Core.Global.GlobalData.Sound.PlayBeep();
                 op.Cancel();
             }
-            else if (!_loader.CurrentActionToggle.IsNoDuplication(_loader.ConvertToBindingPath(op.selectedControl.path), out var duplications, _binding.id))
+            else if (!_loader.CurrentActionToggle
+                .IsNoDuplication(_loader.ConvertToBindingPath(op.selectedControl.path), out var duplications, _binding.id))
             {
                 _loader.Instruction
                     .SetText($"{op.selectedControl.displayName} is already registered for:\n{string.Join(", ", duplications)}")

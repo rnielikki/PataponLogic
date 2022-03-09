@@ -86,7 +86,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         {
             var index = data.Index;
             StartCoroutine(
-                Core.Global.GlobalData.GlobalInputActions.WaitForNextInput(() => _rareponSelections.SingleOrDefault(s => s.Index == index)?.Select())
+                Core.Global.GlobalData.GlobalInputActions
+                    .WaitForNextInput(() => _rareponSelections.SingleOrDefault(s => s.Index == index)?.Select())
                 );
         }
         public void Apply(RareponSelection selection)
@@ -103,7 +104,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             var selection = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject?.GetComponent<RareponSelection>();
             if (selection?.RareponData != null)
             {
-                Common.GameDisplay.ConfirmDialog.Create($"Do you want to set all Patapons in current class with {selection.RareponData.Name}?")
+                Common.GameDisplay.ConfirmDialog
+                    .Create($"Do you want to set all Patapons in current class with {selection.RareponData.Name}?")
                     .SetTargetToResume(this)
                     .SetOkAction(ApplyAllRarepons)
                     .SelectCancel();
