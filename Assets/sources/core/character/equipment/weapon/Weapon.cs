@@ -63,16 +63,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// </summary>
         protected virtual Sprite GetThrowableWeaponSprite() => GetComponent<SpriteRenderer>().sprite;
         /// <summary>
-        /// Load corresponding weapon instance resource from Resources/Characters/Equipments/PrefabBase.
-        /// </summary>
-        /// <param name="name">The name of instance (from the resource path).</param>
-        /// <returns>The loaded game object from resource.</returns>
-        protected GameObject GetWeaponInstance(string name = null)
-        {
-            if (name == null) return WeaponInstance.GetResource();
-            return Resources.Load("Characters/Equipments/PrefabBase/" + name) as GameObject;
-        }
-        /// <summary>
         /// "Prewarms" before attacking. Useful for throwing weapons' attack distance calculation.
         /// </summary>
         /// <param name="attackCommandType">The attack command type that may determine e.g. initial velocity.</param>

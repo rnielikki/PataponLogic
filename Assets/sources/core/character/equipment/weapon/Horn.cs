@@ -1,13 +1,15 @@
-﻿using UnityEngine;
+﻿using PataRoad.Commom;
+using UnityEngine;
+using UnityEngine.Pool;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
     class Horn : Weapon
     {
+        private IObjectPool<GameObject> _feverAttackPool;
+        private IObjectPool<GameObject> _chargeDefencePool;
         private Transform _targetTransform; //transform of the bullet object when fired
         private ParticleDamaging _attackParticles;
-        private GameObject _feverAttackObject;
-        private GameObject _chargeDefenceObject;
         protected float _forceMultiplier = 1;
         protected float _feverPonponForceMultiplier = 1;
         private float _savedWindValue;
@@ -20,8 +22,18 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _targetTransform = transform.Find("Attack");
             _attackParticles = _targetTransform.GetComponent<ParticleDamaging>();
             _attackParticles.Init(Holder);
-            _feverAttackObject = GetWeaponInstance("Mega-FeverAttack");
-            _chargeDefenceObject = GetWeaponInstance("Mega-ChargeDefence");
+
+            var poolObject = GameObject.Find(nameof(GameObjectPool));
+            if (poolObject != null)
+            {
+                _feverAttackPool = poolObject
+                .GetComponent<GameObjectPool>()
+                .GetPool("Characters/Equipments/PrefabBase/Mega-FeverAttack", poolInitialSize, poolMaxSize);
+
+                _chargeDefencePool = poolObject
+                .GetComponent<GameObjectPool>()
+                .GetPool("Characters/Equipments/PrefabBase/Mega-ChargeDefence", poolInitialSize, poolMaxSize);
+            }
 
             if (Holder != null)
             {
@@ -70,22 +82,23 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
             newStat.DamageMin *= 3;
             newStat.DamageMax *= 3;
-            CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, null, newStat, (_ifFire) ? Color.red : Color.blue)
+            CreateBulletInstance(_feverAttackPool, MoveBulletOnGround, null, newStat, (_ifFire) ? Color.red : Color.blue)
                 .AddForce(_feverPonponForceMultiplier * 50 * Holder.MovingDirection);
         }
         private void ChargeDefend()
         {
             var newStat = Holder.Stat.Copy();
             newStat.Knockback = 0; //Knockback independent.
-            CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, PushBack, newStat, default)
+            CreateBulletInstance(_chargeDefencePool, StopBulletOnGround, PushBack, newStat, default)
                 .AddForce(_forceMultiplier * 1000 * Holder.MovingDirection);
         }
-        private Rigidbody2D CreateBulletInstance(GameObject targetObject,
+        private Rigidbody2D CreateBulletInstance(IObjectPool<GameObject> targetObjectPool,
             UnityEngine.Events.UnityAction<Collider2D, Vector2> groundAction,
             UnityEngine.Events.UnityAction<Collider2D> collidingAction,
             Stat stat, Color color)
         {
-            var instance = Instantiate(targetObject, transform.root.parent);
+            var instance = targetObjectPool.Get();
+            instance.transform.SetParent(transform.root.parent);
             instance.transform.position = _targetTransform.position;
             instance.layer = gameObject.layer;
 

@@ -37,7 +37,7 @@ namespace PataRoad.Commom
 
         private GameObject InstantiateObjectWithReleaseToPool(GameObject gObject, ObjectPool<GameObject> pool)
         {
-            var obj = Instantiate(gObject);
+            var obj = Instantiate(gObject, gameObject.transform);
             var rel = obj.AddComponent<ReleaseToPool>();
             rel.Pool = pool;
             return obj;
