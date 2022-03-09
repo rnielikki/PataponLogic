@@ -9,6 +9,8 @@ namespace PataRoad.Story.Actions
         private Image _image;
         [SerializeField]
         private float _fadeSpeed;
+        [SerializeField]
+        private bool _preloaded;
         private bool _fading;
         private bool _fadingIn;
 
@@ -18,8 +20,11 @@ namespace PataRoad.Story.Actions
         private Sprite _imageToReplace;
         void Start()
         {
-            _image.color = new Color(1, 1, 1, 0);
-            _image.enabled = false;
+            if (!_preloaded)
+            {
+                _image.color = new Color(1, 1, 1, 0);
+                _image.enabled = false;
+            }
         }
         public void LoadImage(Sprite image)
         {
