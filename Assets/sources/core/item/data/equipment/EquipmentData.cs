@@ -75,6 +75,6 @@ namespace PataRoad.Core.Items
         /// Add this value to the sprite position, to put it center.
         /// </summary>
         /// <returns>Pivot offset from center.</returns>
-        public Vector2 GetPivotOffset() => new Vector2(Image.pivot.x / Image.rect.width - 0.5f, Image.pivot.y / Image.rect.height - 0.5f);
+        public Vector2 GetPivotOffset() => new Vector2((Image.pivot.x / Image.rect.width) - 0.5f, (Image.pivot.y / Image.rect.height) - 0.5f);
     }
 }

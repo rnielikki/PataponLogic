@@ -22,7 +22,7 @@ namespace PataRoad.Core.Map.Levels
         }
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.tag == "SmallCharacter")
+            if (other.CompareTag("SmallCharacter"))
             {
                 MissionPoint.Current.FilledMissionCondition = true;
                 _following = true;

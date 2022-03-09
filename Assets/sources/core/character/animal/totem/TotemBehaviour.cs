@@ -35,9 +35,9 @@ namespace PataRoad.Core.Character.Animal
 
         public bool IsDead { get; private set; }
 
-        public float DefaultWorldPosition => _pataponsManagerTransform.position.x + _moveDistance / 2;
-        public float MinimumWorldPosition => _pataponsManagerTransform.position.x + CharacterSize / 2;
-        public float MaximumWorldPosition => _pataponsManagerTransform.position.x + _moveDistance / 2;
+        public float DefaultWorldPosition => _pataponsManagerTransform.position.x + (_moveDistance / 2);
+        public float MinimumWorldPosition => _pataponsManagerTransform.position.x + (CharacterSize / 2);
+        public float MaximumWorldPosition => _pataponsManagerTransform.position.x + (_moveDistance / 2);
 
         public Vector2 MovingDirection => Vector2.left;
         private bool _movingLeft;
@@ -161,7 +161,7 @@ namespace PataRoad.Core.Character.Animal
                 var pos = transform.position;
                 var min = MinimumWorldPosition;
                 var max = MaximumWorldPosition;
-                pos.x = Mathf.Clamp(transform.position.x + _stat.MovementSpeed * Time.deltaTime * (_movingLeft ? -1 : 1),
+                pos.x = Mathf.Clamp(transform.position.x + (_stat.MovementSpeed * Time.deltaTime * (_movingLeft ? -1 : 1)),
                     min, max);
                 transform.position = pos;
                 if (pos.x <= min)

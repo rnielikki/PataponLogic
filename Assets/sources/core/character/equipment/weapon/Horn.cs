@@ -71,14 +71,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             newStat.DamageMin *= 3;
             newStat.DamageMax *= 3;
             CreateBulletInstance(_feverAttackObject, MoveBulletOnGround, null, newStat, (_ifFire) ? Color.red : Color.blue)
-                .AddForce(Holder.MovingDirection * 50 * _feverPonponForceMultiplier);
+                .AddForce(_feverPonponForceMultiplier * 50 * Holder.MovingDirection);
         }
         private void ChargeDefend()
         {
             var newStat = Holder.Stat.Copy();
             newStat.Knockback = 0; //Knockback independent.
             CreateBulletInstance(_chargeDefenceObject, StopBulletOnGround, PushBack, newStat, default)
-                .AddForce(Holder.MovingDirection * 1000 * _forceMultiplier);
+                .AddForce(_forceMultiplier * 1000 * Holder.MovingDirection);
         }
         private Rigidbody2D CreateBulletInstance(GameObject targetObject,
             UnityEngine.Events.UnityAction<Collider2D, Vector2> groundAction,
@@ -111,8 +111,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             self.attachedRigidbody.gravityScale = 0;
             self.attachedRigidbody.AddForce(direction * 1000);
 
-            self.transform.rotation = Quaternion.identity;
-            self.transform.position += Vector3.up * -0.5f;
+            self.transform.SetPositionAndRotation(Vector3.up * -0.5f, Quaternion.identity);
         }
         //Charge Defence bullet
         private static void StopBulletOnGround(Collider2D self, Vector2 direction)
@@ -136,10 +135,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 case AttackCommandType.Charge:
                 case AttackCommandType.Attack:
-                    return 15 + _savedWindValue * 0.5f;
+                    return 15 + (_savedWindValue * 0.5f);
                 case AttackCommandType.FeverAttack:
                 case AttackCommandType.Defend:
-                    return 10 + _savedWindValue * 0.5f;
+                    return 10 + (_savedWindValue * 0.5f);
                 default:
                     return 0;
             }

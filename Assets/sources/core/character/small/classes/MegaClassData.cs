@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character.Class
 
         public override void Attack()
         {
-            if (!_character.OnFever && !_character.Charged || _attackType == 2)
+            if ((!_character.OnFever && !_character.Charged) || _attackType == 2)
             {
                 base.Attack();
             }

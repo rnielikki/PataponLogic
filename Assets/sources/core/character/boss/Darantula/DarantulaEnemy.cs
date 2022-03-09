@@ -27,11 +27,11 @@
             {
                 return new BossAttackMoveSegment(WhipOrSlide(), 0);
             }
-            if (Common.Utils.RandomByProbability(0.2f + _level * 0.05f))
+            if (Common.Utils.RandomByProbability(0.2f + (_level * 0.05f)))
             {
                 return new BossAttackMoveSegment("absorb", 0, 10);
             }
-            if (Common.Utils.RandomByProbability(0.2f - _level * 0.04f))
+            if (Common.Utils.RandomByProbability(0.2f - (_level * 0.04f)))
             {
                 return new BossAttackMoveSegment("poison", 0);
             }

@@ -105,7 +105,7 @@ namespace PataRoad.Core.Character
         public virtual void SetLevel(int level, int absoluteMaxLevel)
         {
             if (_noLevelUp) return;
-            Stat.HitPoint = CurrentHitPoint = Mathf.RoundToInt(Stat.HitPoint * (0.8f + 0.2f * level));
+            Stat.HitPoint = CurrentHitPoint = Mathf.RoundToInt(Stat.HitPoint * (0.8f + (0.2f * level)));
             Stat.FireResistance += (level - 1) * 0.02f;
         }
         public void DestroyThis() => Destroy(gameObject);

@@ -256,8 +256,8 @@ namespace PataRoad.Core.Character.Patapons
             else if (_patapons.Count == 0) return true;
             var closestV2 = _distanceCalculator.GetClosest();
             if (closestV2 == null) return true;
-            var closest = closestV2.Value.x + Steps * Time.deltaTime;
-            var nextPosition = transform.position.x + Steps * Time.deltaTime;
+            var closest = closestV2.Value.x + (Steps * Time.deltaTime);
+            var nextPosition = transform.position.x + (Steps * Time.deltaTime);
             return closest > nextPosition;
         }
 
@@ -265,7 +265,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             if (IsMovingForward && CanGoForward())
             {
-                transform.position += Steps * Vector3.right * Time.deltaTime;
+                transform.position += Steps * Time.deltaTime * Vector3.right;
                 if (_useMissionTower && transform.position.x >= _missionEndPosition)
                 {
                     Map.MissionPoint.Current.EndMission();

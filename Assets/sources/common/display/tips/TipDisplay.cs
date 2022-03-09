@@ -86,7 +86,7 @@ namespace PataRoad.Common.GameDisplay
                     }
                     else if (loading.progress < 0.9f)
                     {
-                        _loadingStatus.text = _op.progress * 100 + "% loaded...";
+                        _loadingStatus.text = (_op.progress * 100) + "% loaded...";
                     }
                     yield return null;
                 }

@@ -62,7 +62,7 @@ namespace PataRoad.Core.Character
             _smallCharacter.CharAnimator.Animate("Sleep");
             base.Tumble();
             ActivateRigidbody();
-            transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * 1.2f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, transform.position.y + (Time.deltaTime * 1.2f), transform.position.z);
             _rigidbody.AddForce(1000 * Vector2.up);
             CurrentStatusEffect = StatusEffectType.Tumble;
 
@@ -110,7 +110,7 @@ namespace PataRoad.Core.Character
                 {
                     pos.x = _smallCharacter.DistanceCalculator.GetSafeForwardPosition(pos.x);
                 }
-                if (_xDirection * _character.DefaultWorldPosition - CharacterEnvironment.DodgeDistance > _xDirection * pos.x
+                if ((_xDirection * _character.DefaultWorldPosition) - CharacterEnvironment.DodgeDistance > _xDirection * pos.x
                     || _xDirection * _character.DefaultWorldPosition < _xDirection * pos.x
                     || pos.x != xBeforeClamp)
                 {

@@ -50,7 +50,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             if (_updatingLaser)
             {
-                SetLineWidth(_width + Time.deltaTime * 1 / _attackSeconds + 0.1f);
+                SetLineWidth(_width + (Time.deltaTime * 1 / _attackSeconds) + 0.1f);
                 SetImageColor(_width);
                 if (_width == 1)
                 {

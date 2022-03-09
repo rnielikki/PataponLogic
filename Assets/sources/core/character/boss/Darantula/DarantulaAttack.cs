@@ -33,7 +33,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         internal override void UpdateStatForBoss(int level)
         {
-            var value = 0.8f + level * 0.25f;
+            var value = 0.8f + (level * 0.25f);
             _stat.MultipleDamage(value);
             _stat.DefenceMin += (level - 1) * 0.005f;
             _stat.DefenceMax += (level - 1) * 0.01f;

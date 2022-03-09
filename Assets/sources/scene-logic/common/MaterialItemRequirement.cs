@@ -36,7 +36,7 @@
                 case RequirementIncrementalType.One:
                     return UnityEngine.Mathf.Clamp(0, _defaultIndex + level - 1, 4);
                 case RequirementIncrementalType.Even:
-                    return (level < 2) ? 0 : ((level - 1) * 2 - 1);
+                    return (level < 2) ? 0 : (((level - 1) * 2) - 1);
                 case RequirementIncrementalType.Odd:
                     return (level - 1) * 2;
                 default:

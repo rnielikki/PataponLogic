@@ -52,7 +52,7 @@ namespace PataRoad.Core.Character.Bosses
                     //note: this checks "component is destroyed" so don't use ?.
                     if (collider != null && collider.gameObject != null)
                     {
-                        if (collider.gameObject.tag == "Shield") particle.remainingLifetime = 0;
+                        if (collider.gameObject.CompareTag("Shield")) particle.remainingLifetime = 0;
                         else _boss.Attack(this, collider.gameObject, collider.ClosestPoint(particle.position),
                             _attackType, _elementalAttackType, true);
                     }

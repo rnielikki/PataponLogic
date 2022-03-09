@@ -24,7 +24,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             else if (target.CompareTag("Grass"))
             {
                 var fireRateMultiplier = Map.Weather.WeatherInfo.Current.FireRateMultiplier;
-                var probability = CalculateStatusEffect(stat.FireRate, (1 - (float)receiver.CurrentHitPoint / receiver.Stat.HitPoint), fireRateMultiplier);
+                var probability = CalculateStatusEffect(stat.FireRate, (1 - ((float)receiver.CurrentHitPoint / receiver.Stat.HitPoint)), fireRateMultiplier);
                 if (Common.Utils.RandomByProbability(probability))
                 {
                     receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(probability * 10 * fireRateMultiplier));
@@ -178,12 +178,12 @@ namespace PataRoad.Core.Character.Equipments.Logic
             return (Mathf.RoundToInt(
                     Mathf.Max(allowZero ? 0 : 1,
                         (
-                        elementalMultiplier //elemental damage
+                        (elementalMultiplier //elemental damage
                         * resistances.GetMultiplier(attacker.AttackType) //attack type multiplier
                         * resistances.GetMultiplier(attacker.ElementalAttackType) //elemental attack type multiplier
                         * Mathf.Max(0.1f, damage) //actual damage
-                        * (critical + 1) //critical
-                        + (fireProbability + iceProbability + thunderProbability) * (critical + 1) * Mathf.Max(0.1f, damage)
+                        * (critical + 1)) //critical
+                        + ((fireProbability + iceProbability + thunderProbability) * (critical + 1) * Mathf.Max(0.1f, damage))
                         )
                         / defence //defence
                     )
@@ -212,13 +212,13 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 switch (type)
                 {
                     case StatusEffectType.Fire:
-                        receiver.StatusEffectManager.SetFire(2 + probability * 10 * Map.Weather.WeatherInfo.Current.FireRateMultiplier);
+                        receiver.StatusEffectManager.SetFire(2 + (probability * 10 * Map.Weather.WeatherInfo.Current.FireRateMultiplier));
                         break;
                     case StatusEffectType.Ice:
-                        receiver.StatusEffectManager.SetIce(2 + probability * 10 * Map.Weather.WeatherInfo.Current.IceRateMultiplier);
+                        receiver.StatusEffectManager.SetIce(2 + (probability * 10 * Map.Weather.WeatherInfo.Current.IceRateMultiplier));
                         break;
                     case StatusEffectType.Sleep:
-                        receiver.StatusEffectManager.SetSleep(4 + probability * 25);
+                        receiver.StatusEffectManager.SetSleep(4 + (probability * 25));
                         break;
                     case StatusEffectType.Stagger:
                         receiver.StatusEffectManager.SetStagger();

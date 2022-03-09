@@ -21,7 +21,7 @@
                 }
             }
             _level = level;
-            var value = 0.8f + 0.2f * level;
+            var value = 0.8f + (0.2f * level);
             _stat.MultipleDamage(value);
             GetComponent<Hazoron>().SetMaximumHitPoint(UnityEngine.Mathf.RoundToInt(value * _stat.HitPoint));
         }

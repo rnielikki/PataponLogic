@@ -175,7 +175,7 @@ namespace PataRoad.Core.Character.Hazorons
                 }
                 transform.position =
                     DistanceCalculator.GetSafeForwardPosition(
-                        transform.position.x + Stat.MovementSpeed * Time.deltaTime * MovingDirection.x)
+                        transform.position.x + (Stat.MovementSpeed * Time.deltaTime * MovingDirection.x))
                     * Vector3.right;
             }
         }

@@ -17,7 +17,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         internal override void UpdateStatForBoss(int level)
         {
-            var value = 0.8f + level * 0.2f;
+            var value = 0.8f + (level * 0.2f);
             _stat.MultipleDamage(value);
             _stat.DefenceMin += (level - 1) * 0.01f;
             _stat.DefenceMax += (level - 1) * 0.015f;
@@ -40,7 +40,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void StartMoving()
         {
-            _targetPosition = (_boss.DefaultWorldPosition + 20 * -_boss.MovingDirection.x) * Vector3.right;
+            _targetPosition = (_boss.DefaultWorldPosition + (20 * -_boss.MovingDirection.x)) * Vector3.right;
             UseCustomDataPosition = true;
         }
         public override void SetCustomPosition()

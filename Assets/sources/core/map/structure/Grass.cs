@@ -52,7 +52,7 @@ namespace PataRoad.Core.Character
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!StatusEffectManager.IsOnStatusEffect || collision.tag == "Attack") return;
+            if (!StatusEffectManager.IsOnStatusEffect || collision.CompareTag("Attack")) return;
             var attackable = collision.GetComponentInParent<IAttackable>();
             if (attackable != null &&
                 !attackable.StatusEffectManager.IsOnStatusEffect)

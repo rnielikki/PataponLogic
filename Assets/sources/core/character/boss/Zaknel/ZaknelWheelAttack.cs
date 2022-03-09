@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character.Bosses
     class ZaknelWheelAttack : BossAttackComponent
     {
         Transform _pataponsTransform;
-        Vector3 _wheelTargetPosition => _pataponsTransform.position + _boss.CharacterSize * Vector3.right;
+        Vector3 _wheelTargetPosition => _pataponsTransform.position + (_boss.CharacterSize * Vector3.right);
 
         private void Start()
         {
@@ -22,7 +22,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.tag != "SmallCharacter") return;
+            if (!collision.CompareTag("SmallCharacter")) return;
             var character = collision.GetComponentInParent<SmallCharacter>();
             if (!character.StatusEffectManager.IsOnStatusEffect)
             {

@@ -35,7 +35,7 @@ namespace PataRoad.SceneLogic.Intro
         {
             if (_started)
             {
-                transform.position += Time.deltaTime * transform.forward * 10;
+                transform.position += 10 * Time.deltaTime * transform.forward;
                 _camera.transform.Translate(0, Time.deltaTime * 2, Time.deltaTime * -20);
             }
             if (_startedTransition)
