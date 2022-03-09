@@ -30,7 +30,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             Init();
         }
-        protected void Init()
+        protected virtual void Init()
         {
             _boss = GetComponentInParent<BossAttackData>();
         }

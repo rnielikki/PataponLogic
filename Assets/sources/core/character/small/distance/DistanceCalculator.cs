@@ -155,9 +155,9 @@ namespace PataRoad.Core.Character
         public IEnumerable<IAttackable> GetAllGroundedTargets()
         {
             var all = Physics2D.BoxCastAll(
-                (Vector2)_target.transform.position - CharacterEnvironment.OriginalSight * Vector2.right - 3 * Vector2.up,
+                (Vector2)_target.transform.position - CharacterEnvironment.OriginalSight * 1.5f * Vector2.right - 3 * Vector2.up,
                 new Vector2(0.1f, 7), 0, Vector2.right,
-                CharacterEnvironment.OriginalSight * 2, AttackLayerMask);
+                CharacterEnvironment.OriginalSight * 3, AttackLayerMask);
             return all.Select(res => res.collider.GetComponentInParent<IAttackable>()).Where(value => value != null);
         }
         public IEnumerable<Collider2D> GetAllAbsoluteTargetsOnFront()

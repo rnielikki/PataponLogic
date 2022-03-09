@@ -4958,6 +4958,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3704716499644861484}
+  - component: {fileID: 4745554732163833939}
+  - component: {fileID: 527511110036272374}
   m_Layer: 10
   m_Name: gano-bomb
   m_TagString: Untagged
@@ -4981,6 +4983,74 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4745554732163833939
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5129935111880882129}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7dadc94c3b7aab640b73f574acabc605, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &527511110036272374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5129935111880882129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3583ba12f16aa94eb21dfae715051b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enabled: 1
+  _additionalStat:
+    _isCharacterStat: 0
+    _hitPoint: 0
+    _defenceMin: 0
+    _defenceMax: 0
+    _damageMin: 15
+    _damageMax: 25
+    _attackSeconds: 0
+    _movementSpeed: 0
+    _critical: 0
+    _stagger: 0
+    _knockback: 0
+    _infiniteCriticalResistance: 0
+    _criticalResistance: 0
+    _infiniteStaggerResistance: 0
+    _staggerResistance: 0
+    _infiniteKnockbackResistance: 0
+    _knockbackResistance: 0
+    _fireRate: 0.5
+    _iceRate: 1
+    _sleepRate: 0.5
+    _infiniteFireResistance: 0
+    _fireResistance: 0
+    _infiniteIceResistance: 0
+    _iceResistance: 0
+    _infiniteSleepResistance: 0
+    _sleepResistance: 0
+  _damageOffsetMin: 0
+  _damageOffsetMax: 1
+  _attackType: 1
+  _elementalAttackType: 2
+  _animator: {fileID: 4745554732163833939}
+  _bomb: {fileID: 7370157153131695556}
+  _particle: {fileID: 543258504046355333}
+  _startTransform: {fileID: 0}
 --- !u!1 &6063336390220329646
 GameObject:
   m_ObjectHideFlags: 0
@@ -4991,8 +5061,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2557997011256313441}
   - component: {fileID: 7370157153131695556}
-  - component: {fileID: 5062704455650993782}
-  - component: {fileID: 3181784575210507618}
   m_Layer: 10
   m_Name: gano-bomb
   m_TagString: Untagged
@@ -5068,69 +5136,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &5062704455650993782
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6063336390220329646}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7dadc94c3b7aab640b73f574acabc605, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &3181784575210507618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6063336390220329646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3583ba12f16aa94eb21dfae715051b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enabled: 1
-  _additionalStat:
-    _isCharacterStat: 0
-    _hitPoint: 0
-    _defenceMin: 0
-    _defenceMax: 0
-    _damageMin: 15
-    _damageMax: 25
-    _attackSeconds: 0
-    _movementSpeed: 0
-    _critical: 0
-    _stagger: 0
-    _knockback: 0
-    _infiniteCriticalResistance: 0
-    _criticalResistance: 0
-    _infiniteStaggerResistance: 0
-    _staggerResistance: 0
-    _infiniteKnockbackResistance: 0
-    _knockbackResistance: 0
-    _fireRate: 0.5
-    _iceRate: 1
-    _sleepRate: 0.5
-    _infiniteFireResistance: 0
-    _fireResistance: 0
-    _infiniteIceResistance: 0
-    _iceResistance: 0
-    _infiniteSleepResistance: 0
-    _sleepResistance: 0
-  _damageOffsetMin: 0
-  _damageOffsetMax: 1
-  _attackType: 0
-  _elementalAttackType: 0
-  _animator: {fileID: 0}
-  _bomb: {fileID: 7370157153131695556}
