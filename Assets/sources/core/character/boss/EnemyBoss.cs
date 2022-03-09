@@ -167,7 +167,9 @@ namespace PataRoad.Core.Character.Bosses
                 return;
             }
             //phase 2: go forward
-            var targetPos = new Vector2(Mathf.Max(_pataponsManager.transform.position.x + CharacterSize + AttackDistance, closest.x + CharacterSize + AttackDistance), 0);
+            var targetPos = new Vector2(Mathf.Max(
+                _pataponsManager.transform.position.x + CharacterSize + AttackDistance,
+                closest.x + CharacterSize + AttackDistance), 0);
             var offset = Stat.MovementSpeed * Time.deltaTime;
 
             if (Mathf.Abs(transform.position.x - targetPos.x) > offset)

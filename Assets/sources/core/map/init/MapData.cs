@@ -104,7 +104,6 @@ namespace PataRoad.Core.Map
         Story.StoryData _nextStoryOnFail;
         public Story.StoryData NextStoryOnFail => _nextStoryOnFail;
 
-
         public int GetMaxLevel()
         {
             if (_hasLevel) return CheckMaxLevel();
@@ -131,6 +130,5 @@ namespace PataRoad.Core.Map
                 Debug.LogWarning("No wind chance must be range of [0-1], otherwise it won't work correctly");
             }
         }
-
     }
 }

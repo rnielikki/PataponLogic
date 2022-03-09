@@ -45,7 +45,12 @@ namespace PataRoad.SceneLogic.WorldMap
             foreach (var map in Core.Global.GlobalData.CurrentSlot.MapInfo.GetAllAvailableMaps())
             {
                 var mapItem = Instantiate(_listElement, transform).GetComponent<WorldMapItem>();
-                mapItem.Init(map, this, _scrollList, GetColorForMap(map.MapData.Type), GetSpriteImageForWeather(map.Weather.CurrentWeather));
+                mapItem.Init(
+                    map,
+                    this,
+                    _scrollList,
+                    GetColorForMap(map.MapData.Type),
+                    GetSpriteImageForWeather(map.Weather.CurrentWeather));
                 _items.Add(mapItem);
                 if (!_selected && map == nextMission)
                 {

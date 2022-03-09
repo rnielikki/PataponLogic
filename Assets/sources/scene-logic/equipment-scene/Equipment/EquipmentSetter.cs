@@ -76,7 +76,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             foreach (var equipmentType in pataponData.EquipmentManager.GetAvailableEquipmentTypes)
             {
-                if (!(equipmentType == Core.Character.Equipments.EquipmentType.Rarepon || equipmentType == Core.Character.Equipments.EquipmentType.Gem) &&
+                if (!(equipmentType == Core.Character.Equipments.EquipmentType.Rarepon
+                    || equipmentType == Core.Character.Equipments.EquipmentType.Gem) &&
                     !(equipmentType == Core.Character.Equipments.EquipmentType.Helm && !pataponData.EquipmentManager.CanEquipHelm())
                         )
                     OptimizeOne(equipmentType);
@@ -91,7 +92,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 while (index > currentIndex)
                 {
                     var item = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, equipmentGroup, index);
-                    var availableAmount = GlobalData.CurrentSlot.Inventory.GetAmount(item) - GlobalData.CurrentSlot.PataponInfo.GetEquippedCount(item);
+                    var availableAmount = GlobalData.CurrentSlot.Inventory.GetAmount(item)
+                        - GlobalData.CurrentSlot.PataponInfo.GetEquippedCount(item);
                     if (item.LevelGroup <= currentData.LevelGroup)
                     {
                         return;
@@ -101,7 +103,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
                         GlobalData.CurrentSlot.PataponInfo.UpdateClassEquipmentStatus(pataponData, item);
                         return;
                     }
-                    else if (GlobalData.CurrentSlot.PataponInfo.IsEquippedOutside(CharacterGroupSaver.AvailableClasses, item, out var result))
+                    else if (GlobalData.CurrentSlot.PataponInfo
+                        .IsEquippedOutside(CharacterGroupSaver.AvailableClasses, item, out var result))
                     {
                         var oldPataponData = _characterGroupSaver.GetPataponDataInIndex(result.type, result.index);
                         GlobalData.CurrentSlot.PataponInfo.ExchangeClassEquipmentStatus(oldPataponData, pataponData, item);
@@ -114,7 +117,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private void Exchange(PataponData pataponData, EquipmentData equipment)
         {
             //1. Load meta.
-            var data = GlobalData.CurrentSlot.PataponInfo.GetExchangablePataponMetaData(CharacterGroupSaver.AvailableClasses, pataponData, equipment);
+            var data = GlobalData.CurrentSlot.PataponInfo
+                .GetExchangablePataponMetaData(CharacterGroupSaver.AvailableClasses, pataponData, equipment);
             //2. Get Patapon data from meta.
             var oldPataponData = _characterGroupSaver.GetPataponDataInIndex(data.type, data.index);
             //3. Exchange!

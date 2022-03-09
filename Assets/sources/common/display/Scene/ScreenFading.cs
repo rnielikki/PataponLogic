@@ -47,7 +47,7 @@ namespace PataRoad.Common.GameDisplay
             if (_activated)
             {
                 var clr = _image.color;
-                clr.a = Mathf.Clamp01(clr.a + _speed * _direction * Time.deltaTime);
+                clr.a = Mathf.Clamp01(clr.a + (_speed * _direction * Time.deltaTime));
                 _image.color = clr;
                 if ((clr.a == 0 && _direction < 0) || (clr.a == 1 && _direction > 0))
                 {

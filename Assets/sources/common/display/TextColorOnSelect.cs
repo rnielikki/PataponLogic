@@ -1,6 +1,9 @@
 ﻿namespace PataRoad.Common.GameDisplay
 {
-    public class TextColorOnSelect : UnityEngine.MonoBehaviour, UnityEngine.EventSystems.ISelectHandler, UnityEngine.EventSystems.IDeselectHandler
+    public class TextColorOnSelect :
+        UnityEngine.MonoBehaviour,
+        UnityEngine.EventSystems.ISelectHandler,
+        UnityEngine.EventSystems.IDeselectHandler
     {
         [UnityEngine.SerializeField]
         private UnityEngine.UI.Text _text;

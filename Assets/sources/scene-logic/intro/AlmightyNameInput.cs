@@ -53,7 +53,8 @@ namespace PataRoad.SceneLogic.Intro
             }
             else if (Core.Global.Slots.SlotMetaList.HasName(name))
             {
-                Common.GameDisplay.ConfirmDialog.Create($"There's another save that uses same Almighty name:\n{name}\nPlease select another name.")
+                Common.GameDisplay.ConfirmDialog
+                    .Create($"There's another save that uses same Almighty name:\n{name}\nPlease select another name.")
                     .SetTargetToResume(this)
                     .HideOkButton()
                     .SelectCancel();

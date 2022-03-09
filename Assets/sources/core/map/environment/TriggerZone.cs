@@ -27,7 +27,7 @@ namespace PataRoad.Core.Map.Environment
         {
             var collider = GetComponent<Collider2D>();
             _center = collider.bounds.center;
-            _size = collider.bounds.size + Vector3.one * 0.5f;
+            _size = collider.bounds.size + (Vector3.one * 0.5f);
             _layerMask = LayerMask.GetMask(_layerMaskNames);
         }
         protected void SetEnable()
@@ -41,7 +41,7 @@ namespace PataRoad.Core.Map.Environment
                 _characters.Clear();
                 foreach (var target in targets)
                 {
-                    if (target.tag != "SmallCharacter") continue;
+                    if (!target.CompareTag("SmallCharacter")) continue;
                     var character = target.GetComponentInParent<Character.ICharacter>();
                     if (character != null) _characters.Add(character);
                 }
@@ -62,7 +62,7 @@ namespace PataRoad.Core.Map.Environment
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (!_enabled || (_layerMask & (1 << collision.gameObject.layer)) != 0) return;
-            if (collision.gameObject.tag == "SmallCharacter")
+            if (collision.gameObject.CompareTag("SmallCharacter"))
             {
                 var receiver = collision.gameObject.GetComponentInParent<Character.ICharacter>();
                 if (receiver != null && !_characters.Contains(receiver))
@@ -89,7 +89,7 @@ namespace PataRoad.Core.Map.Environment
         private void OnTriggerExit2D(Collider2D collision)
         {
             if (!_enabled) return;
-            if (collision.gameObject.tag == "SmallCharacter")
+            if (collision.gameObject.CompareTag("SmallCharacter"))
             {
                 var receiver = collision.gameObject.GetComponentInParent<Character.ICharacter>();
                 if (receiver != null && _characters.Contains(receiver))
@@ -122,4 +122,3 @@ namespace PataRoad.Core.Map.Environment
         }
     }
 }
-

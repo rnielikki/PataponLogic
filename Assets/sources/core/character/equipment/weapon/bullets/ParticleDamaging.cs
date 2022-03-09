@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     /// <summary>
     /// Attach this to <see cref="ParticleSystem"/> to attack, like Megapon non-fever attack.
     /// </summary>
-    /// <note> 
+    /// <note>
     /// * IMPORTANT: Particle System Component -> Collision -> *** Send Collision Messages *** on! Otherwise it won't work!
     /// * Make sure that the holder is somewhere in parent.
     /// </note>

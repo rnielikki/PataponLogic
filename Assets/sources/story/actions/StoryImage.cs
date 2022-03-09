@@ -52,7 +52,7 @@ namespace PataRoad.Story.Actions
                 var color = _image.color;
                 if (_fadingIn)
                 {
-                    color.a = Mathf.Min(1, color.a + _fadeSpeed * Time.deltaTime);
+                    color.a = Mathf.Min(1, color.a + (_fadeSpeed * Time.deltaTime));
                     if (color.a == 1)
                     {
                         _fading = false;
@@ -61,7 +61,7 @@ namespace PataRoad.Story.Actions
                 }
                 else
                 {
-                    color.a = Mathf.Max(0, color.a - _fadeSpeed * Time.deltaTime);
+                    color.a = Mathf.Max(0, color.a - (_fadeSpeed * Time.deltaTime));
                     if (color.a == 0)
                     {
                         _fading = false;
@@ -77,7 +77,7 @@ namespace PataRoad.Story.Actions
                 float colorValue;
                 if (_fadingBlackIn)
                 {
-                    colorValue = Mathf.Min(1, color.r + _fadeSpeed * Time.deltaTime);
+                    colorValue = Mathf.Min(1, color.r + (_fadeSpeed * Time.deltaTime));
                     if (colorValue == 1)
                     {
                         _fadingBlack = false;
@@ -85,7 +85,7 @@ namespace PataRoad.Story.Actions
                 }
                 else
                 {
-                    colorValue = Mathf.Max(0, color.r - _fadeSpeed * Time.deltaTime);
+                    colorValue = Mathf.Max(0, color.r - (_fadeSpeed * Time.deltaTime));
                     if (colorValue == 0)
                     {
                         _fadingBlackIn = true;

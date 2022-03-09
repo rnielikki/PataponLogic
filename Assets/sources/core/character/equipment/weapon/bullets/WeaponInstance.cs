@@ -57,8 +57,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             renderer.sprite = sprite;
             renderer.material = material;
 
-            transform.position = transformOriginal.position;
-            transform.rotation = transformOriginal.rotation;
+            transform.SetPositionAndRotation(transformOriginal.position, transformOriginal.rotation);
 
             gameObject.layer = layer;
             return this;
@@ -72,7 +71,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             _stat = _holder.Stat;
             var force = Random.Range(forceMultiplierMin, forceMultiplierMax);
-            _rigidbody.AddForce(transform.up * force * _rigidbody.mass);
+            _rigidbody.AddForce(_rigidbody.mass * force * transform.up);
         }
         private void Update()
         {

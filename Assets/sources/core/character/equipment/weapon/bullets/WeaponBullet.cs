@@ -1,3 +1,4 @@
+using PataRoad.Common;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -54,7 +55,16 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             System.Collections.IEnumerator DestroyAfterTime()
             {
                 yield return new WaitForSeconds(_destroyTime);
-                Destroy(gameObject);
+
+                var rel = gameObject.GetComponent<ReleaseToPool>();
+                if (rel != null)
+                {
+                    rel.ReleaseThisObject();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
         private void Update()

@@ -40,6 +40,5 @@ namespace PataRoad.SceneLogic.WorldMap
                 EventSystem.current.SetSelectedGameObject(_lastButton.gameObject);
             }
         }
-
     }
 }

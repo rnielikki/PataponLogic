@@ -15,13 +15,13 @@ namespace PataRoad.Core.Character
         }
         protected virtual void OnCollisionStay2D(Collision2D collision)
         {
-            if (collision.gameObject.tag != "SmallCharacter") return;
+            if (!collision.gameObject.CompareTag("SmallCharacter")) return;
             var character = collision.gameObject.GetComponentInParent<SmallCharacter>();
             if (character != null)
             {
                 character.transform.position = Vector2.MoveTowards(
                 character.transform.position,
-                transform.position - (_size + character.CharacterSize) * (Vector3)character.MovingDirection,
+                transform.position - ((_size + character.CharacterSize) * (Vector3)character.MovingDirection),
                 Time.deltaTime);
             }
         }

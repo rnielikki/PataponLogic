@@ -56,4 +56,3 @@ namespace PataRoad.SceneLogic.Patapolis
         internal void Perform() => _onPerformed?.Invoke();
     }
 }
-

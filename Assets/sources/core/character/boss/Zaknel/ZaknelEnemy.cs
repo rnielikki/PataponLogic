@@ -6,7 +6,7 @@
         {
             if (_pataponsManager.ContainsClassOnly(Class.ClassType.Toripon))
             {
-                if (Common.Utils.RandomByProbability(0.5f - 0.02f * _level))
+                if (Common.Utils.RandomByProbability(0.5f - (0.02f * _level)))
                 {
                     return new BossAttackMoveSegment("fire", 1, 5);
                 }
@@ -22,11 +22,11 @@
             }
             else if (_pataponsManager.IsAllMelee())
             {
-                if (_level >= 10 && Common.Utils.RandomByProbability(0.1f + 0.02f * _level))
+                if (_level >= 10 && Common.Utils.RandomByProbability(0.1f + (0.02f * _level)))
                 {
                     return new BossAttackMoveSegment("wheel", 15, 15);
                 }
-                else if (Common.Utils.RandomByProbability(0.5f - 0.02f * _level))
+                else if (Common.Utils.RandomByProbability(0.5f - (0.02f * _level)))
                 {
                     return new BossAttackMoveSegment("earthquake", 2, 5);
                 }
@@ -39,15 +39,15 @@
             {
                 int meleeCount = _pataponsManager.GetMeleeCount();
                 if (_level >= 10
-                    && Common.Utils.RandomByProbability(meleeCount > 1 ? 0.15f : 0.05f + 0.02f * _level))
+                    && Common.Utils.RandomByProbability(meleeCount > 1 ? 0.15f : 0.05f + (0.02f * _level)))
                 {
                     return new BossAttackMoveSegment("wheel", 15, 15);
                 }
-                else if (Common.Utils.RandomByProbability(meleeCount > 0 ? 0.3f : 0.6f - 0.01f * _level))
+                else if (Common.Utils.RandomByProbability(meleeCount > 0 ? 0.3f : 0.6f - (0.01f * _level)))
                 {
                     return new BossAttackMoveSegment("fire", 2, 5);
                 }
-                else if (Common.Utils.RandomByProbability(0.5f + 0.01f * _level))
+                else if (Common.Utils.RandomByProbability(0.5f + (0.01f * _level)))
                 {
                     return new BossAttackMoveSegment("slam", 0, 0);
                 }

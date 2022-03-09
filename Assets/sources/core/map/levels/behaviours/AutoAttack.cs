@@ -27,7 +27,6 @@ namespace PataRoad.Core.Map.Levels
         [SerializeField]
         private Character.Equipments.Weapons.AttackType _attackType;
 
-
         public Character.Equipments.Weapons.AttackType AttackType => _attackType;
 
         public Character.Equipments.Weapons.ElementalAttackType ElementalAttackType => _pataponData.ElementalAttackType;
@@ -77,7 +76,7 @@ namespace PataRoad.Core.Map.Levels
             StatusEffectManager = null;
 
             _pataponsManager = FindObjectOfType<Character.Patapons.PataponsManager>();
-            transform.position = _pataponsManager.transform.position + 25 * Vector3.left;
+            transform.position = _pataponsManager.transform.position + (25 * Vector3.left);
             _offsetX = Character.Patapons.PataponEnvironment.GroupDistance * 2;
             _animator = GetComponent<Animator>();
         }
@@ -91,7 +90,7 @@ namespace PataRoad.Core.Map.Levels
         }
         private void Update()
         {
-            var targetPosition = _pataponsManager.transform.position + _offsetX * Vector3.left;
+            var targetPosition = _pataponsManager.transform.position + (_offsetX * Vector3.left);
             if (transform.position.x != targetPosition.x && !_walking)
             {
                 _walking = true;

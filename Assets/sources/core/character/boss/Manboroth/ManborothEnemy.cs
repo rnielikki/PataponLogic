@@ -20,14 +20,14 @@
             bool onlyToripon = _pataponsManager.ContainsClassOnly(Class.ClassType.Toripon);
             var meleeCount = _pataponsManager.GetMeleeCount();
 
-            if (!_blowAsLastMove && !onlyToripon && Common.Utils.RandomByProbability(0.6f - meleeCount * 0.1f - _level * 0.02f))
+            if (!_blowAsLastMove && !onlyToripon && Common.Utils.RandomByProbability(0.6f - (meleeCount * 0.1f) - (_level * 0.02f)))
             {
                 _blowAsLastMove = true;
                 return new BossAttackMoveSegment("blow", 2, 4);
             }
             else
             {
-                if (Common.Utils.RandomByProbability(0.5f + _level * 0.01f))
+                if (Common.Utils.RandomByProbability(0.5f + (_level * 0.01f)))
                 {
                     return new BossAttackMoveSegment("tackle", 0, 5);
                 }

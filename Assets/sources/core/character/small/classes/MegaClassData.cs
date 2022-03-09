@@ -19,7 +19,6 @@ namespace PataRoad.Core.Character.Class
                         .AddModels(
                     new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
                     {
-
                         { AttackCommandType.FeverAttack, GetAttackMoveModel("attack-fever") },
                         { AttackCommandType.ChargeDefend, GetAttackMoveModel("defend-charge", AttackMoveType.Defend) },
                     }
@@ -39,7 +38,7 @@ namespace PataRoad.Core.Character.Class
 
         public override void Attack()
         {
-            if (!_character.OnFever && !_character.Charged || _attackType == 2)
+            if ((!_character.OnFever && !_character.Charged) || _attackType == 2)
             {
                 base.Attack();
             }

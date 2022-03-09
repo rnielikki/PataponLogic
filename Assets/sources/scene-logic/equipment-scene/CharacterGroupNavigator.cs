@@ -8,7 +8,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
 {
     public class CharacterGroupNavigator : SpriteNavigator
     {
-
         private Core.CameraController.CameraZoom _cameraZoom;
         private CharacterGroupSaver _groupSaver;
         private Vector2[] _navPositions;
@@ -94,7 +93,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     ReOrderIndex();
 
                     Core.Global.GlobalData.Sound.PlayInScene(_soundIn);
-
                 }
                 else
                 {
@@ -167,7 +165,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private void ReOrderIndex(int classTypeAsNumber)
         {
             int i;
-            Dictionary<SpriteSelectable, (int oldIndex, int newIndex)> indexMap = new Dictionary<SpriteSelectable, (int oldIndex, int newIndex)>();
+            Dictionary<SpriteSelectable, (int oldIndex, int newIndex)> indexMap
+                = new Dictionary<SpriteSelectable, (int oldIndex, int newIndex)>();
             int currentType = classTypeAsNumber;
 
             var indexOfCurrent = _index;
@@ -221,7 +220,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
             {
                 while (targetTransform.position != newPosition)
                 {
-                    targetTransform.position = Vector3.MoveTowards(targetTransform.position, newPosition, speedOffset * 15 * Time.deltaTime);
+                    targetTransform.position = Vector3.MoveTowards(
+                        targetTransform.position,
+                        newPosition,
+                        speedOffset * 15 * Time.deltaTime);
                     yield return new WaitForEndOfFrame();
                 }
                 waiting--;

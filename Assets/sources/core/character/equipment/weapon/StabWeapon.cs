@@ -7,7 +7,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     /// </summary>
     public class StabWeapon : MeleeWeapon
     {
-        private readonly System.Collections.Generic.Dictionary<Collider2D, Coroutine> _colliderCoroutineMap = new System.Collections.Generic.Dictionary<Collider2D, Coroutine>();
+        private readonly System.Collections.Generic.Dictionary<Collider2D, Coroutine> _colliderCoroutineMap
+            = new System.Collections.Generic.Dictionary<Collider2D, Coroutine>();
         private float _damageSeconds;
         private void Start()
         {
@@ -16,7 +17,9 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!_colliderCoroutineMap.ContainsKey(collision)) _colliderCoroutineMap.Add(collision, StartCoroutine(DamageOnTime(collision)));
+            if (!_colliderCoroutineMap.ContainsKey(collision)) _colliderCoroutineMap.Add(
+                collision,
+                StartCoroutine(DamageOnTime(collision)));
         }
         private void OnTriggerExit2D(Collider2D collision)
         {

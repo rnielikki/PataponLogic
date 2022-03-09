@@ -40,12 +40,14 @@ namespace PataRoad.Core.Map
             }
 
             //-- music.
-            string musicName = Global.GlobalData.CurrentSlot.PataponInfo.CustomMusic?.Data;
+            string musicName = Global.GlobalData.CurrentSlot.PataponInfo.CustomMusic == null
+                ? null
+                : Global.GlobalData.CurrentSlot.PataponInfo.CustomMusic.Data;
             if (musicName == null) musicName = mapData.DefaultMusic;
             _bgmPlayer.MusicTheme = musicName;
 
             //-- background.
-            _backgroundLoader.Init(mapData?.BackgroundName ?? "Ruins");
+            _backgroundLoader.Init(mapData.BackgroundName ?? "Ruins");
 
             //-- weather.
             _weatherInfo.Init(_mapDataContainer.Weather.CurrentWeather, _mapDataContainer.Weather.CurrentWind);

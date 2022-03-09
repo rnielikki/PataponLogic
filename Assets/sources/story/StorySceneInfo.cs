@@ -46,7 +46,6 @@ namespace PataRoad.Story
                 Coroutine waitingForSeconds = null;
                 Coroutine waitingForLine = null;
 
-
                 if (storyAction.WaitingSeconds > 0)
                 {
                     waitingForSeconds = StartCoroutine(WaitForSeconds(storyAction.WaitingSeconds));
@@ -83,6 +82,5 @@ namespace PataRoad.Story
                 yield return new WaitForSeconds(seconds);
             }
         }
-
     }
 }

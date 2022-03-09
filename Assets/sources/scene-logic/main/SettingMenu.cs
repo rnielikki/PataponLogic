@@ -50,7 +50,6 @@ namespace PataRoad.SceneLogic.Main.SettingScene
             _soundSlider.value = _currentSetting.SoundVolume;
             _isOpen = true;
             OnEnable();
-
         }
         private void OnEnable()
         {

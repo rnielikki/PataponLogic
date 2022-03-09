@@ -22,6 +22,8 @@ namespace PataRoad.Core.Items
         [SerializeField] //Hey do not change to serializereference
         private ItemDropChances[] _itemDropChances;
         public System.Collections.Generic.IEnumerable<ItemDropChances> ItemDropChances => _itemDropChances;
-        public IItem Item => (_dropRandomItem) ? ItemLoader.GetRandomItem(_itemType, _itemIndex, _maxItemIndex) : ItemLoader.GetItem(_itemType, ItemGroup, _itemIndex);
+        public IItem Item => (_dropRandomItem)
+            ? ItemLoader.GetRandomItem(_itemType, _itemIndex, _maxItemIndex)
+            : ItemLoader.GetItem(_itemType, ItemGroup, _itemIndex);
     }
 }

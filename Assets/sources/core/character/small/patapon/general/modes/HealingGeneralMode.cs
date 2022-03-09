@@ -21,7 +21,6 @@ namespace PataRoad.Core.Character.Patapons.General
                     _healAmount = 60;
                     break;
             }
-
         }
         public override void Activate(PataponGroup group)
         {

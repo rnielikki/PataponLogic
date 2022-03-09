@@ -37,7 +37,6 @@ namespace PataRoad.Core.Character.Patapons.Display
 
         void Awake()
         {
-
             _bg = transform.Find("Image").GetComponent<Image>();
             _bg.color = _bgOnGeneral;
 

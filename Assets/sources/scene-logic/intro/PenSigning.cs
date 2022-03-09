@@ -41,7 +41,7 @@ namespace PataRoad.SceneLogic.Intro
         }
         private void Move(InputAction.CallbackContext context)
         {
-            _direction = context.ReadValue<Vector2>() * speed * Time.deltaTime;
+            _direction = speed * Time.deltaTime * context.ReadValue<Vector2>();
             _moving = true;
         }
         private void StopMoving(InputAction.CallbackContext context)
@@ -64,7 +64,7 @@ namespace PataRoad.SceneLogic.Intro
         private bool IsOnButton()
         {
             var pos = _signField.RectTransform.rect.center
-                + _signField.RectTransform.anchoredPosition + Vector2.right * _parent.rect.size.x / 2;
+                + _signField.RectTransform.anchoredPosition + (Vector2.right * _parent.rect.size.x / 2);
             var scale = _signField.RectTransform.rect.size / 2;
 
             return (_self.anchoredPosition.x > pos.x - scale.x)

@@ -10,8 +10,10 @@ namespace PataRoad.Core.CameraController
         [SerializeField]
         CameraMover _cameraMover;
         Vector3 _firstPosition;
-        protected override Vector3 _defaultPosition => new Vector3(_cameraMover.Target.transform.position.x, _firstPosition.y, _firstPosition.z);
-        protected override Vector3 _zoomInPosition => new Vector3(_cameraMover.Target.transform.position.x, _firstPosition.y, _firstPosition.z) + _positionOffset;
+        protected override Vector3 _defaultPosition
+            => new Vector3(_cameraMover.Target.transform.position.x, _firstPosition.y, _firstPosition.z);
+        protected override Vector3 _zoomInPosition
+            => new Vector3(_cameraMover.Target.transform.position.x, _firstPosition.y, _firstPosition.z) + _positionOffset;
 
         private void Start()
         {

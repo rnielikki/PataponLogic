@@ -119,7 +119,7 @@ namespace PataRoad.Core.Character.Bosses
                 foreach (var renderer in _renderers)
                 {
                     var color = renderer.color;
-                    var a = color.a - 0.2f * Time.deltaTime;
+                    var a = color.a - (0.2f * Time.deltaTime);
                     if (a > 0)
                     {
                         color.a = a;

@@ -27,7 +27,7 @@ namespace PataRoad.SceneLogic.Patapolis
         }
         public void SetBackgroundToTime(int currentHour)
         {
-            var current = (float)Mathf.Abs(currentHour * 60 + System.DateTime.Now.Minute - 720) / 720;
+            var current = (float)Mathf.Abs((currentHour * 60) + System.DateTime.Now.Minute - 720) / 720;
             _camera.backgroundColor = _backgroundOverTime.Evaluate(current);
             _backgroundImage.color = _backgroundImageOverTime.Evaluate(current);
             if (Core.Global.GlobalData.CurrentSlot.MapInfo.PatapolisWeather.CurrentWeather == Core.Map.Weather.WeatherType.Clear

@@ -69,7 +69,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 _current = null;
             }
             _onUpdated.Invoke(classSelectionInfo);
-
         }
         public void Close(bool save) => _closingEvent.Invoke(_current, save);
         public void RemoveArmy() => _closingEvent.Invoke(null, true);

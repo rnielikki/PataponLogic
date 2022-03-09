@@ -7,7 +7,6 @@ namespace PataRoad.Core.Map
 
     public class MapWeather : ISerializationCallbackReceiver
     {
-
         [SerializeField]
         private Weather.WeatherType _currentWeather;
         public Weather.WeatherType CurrentWeather => _currentWeather;

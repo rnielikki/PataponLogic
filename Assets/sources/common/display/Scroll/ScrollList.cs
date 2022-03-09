@@ -106,7 +106,7 @@ namespace PataRoad.Common.GameDisplay
         internal void SetToLastForIndexed()
         {
             var height = _viewportRectTransform.rect.size.y;
-            _rectTransform.anchoredPosition = Mathf.Max((_maximumScrollLength + 1) * _elementHeight - height, 0) * Vector2.up;
+            _rectTransform.anchoredPosition = Mathf.Max(((_maximumScrollLength + 1) * _elementHeight) - height, 0) * Vector2.up;
             UpdateIndexByPosition(1);
         }
         private void UpdateIndexByPosition(float positionOffsetToScroll) //parameter is value of 0-1

@@ -120,7 +120,6 @@ namespace PataRoad.SceneLogic.Minigame
             int nextTiming = lastTiming > 3 ? 7 : 3;
             RhythmTimer.Current.OnHalfTime.AddListener(ListenThis);
 
-
             void ListenThis()
             {
                 //Calculate
@@ -171,7 +170,9 @@ namespace PataRoad.SceneLogic.Minigame
         {
             _audioSource.Stop();
             _music.Stop();
-            _minigameResultDisplay.UpdateResult(_model, _frequencyOffset.Average(offset => (1 - (float)offset / RhythmTimer.HalfFrequency)));
+            _minigameResultDisplay.UpdateResult(
+                _model,
+                _frequencyOffset.Average(offset => (1 - ((float)offset / RhythmTimer.HalfFrequency))));
         }
 
         public void CheckDrum(RhythmInputModel inputModel)

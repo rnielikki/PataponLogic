@@ -59,7 +59,10 @@ namespace PataRoad.Core.CameraController
             }
             else
             {
-                transform.position = Vector3.MoveTowards(transform.position, pos, (_cameraMoveSensitivity + Mathf.Abs(_inputMoveOffset) * _inputTurnSpeed) * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(
+                    transform.position,
+                    pos,
+                    (_cameraMoveSensitivity + (Mathf.Abs(_inputMoveOffset) * _inputTurnSpeed)) * Time.deltaTime);
                 if (pos.x == transform.position.x && _inputMoveOffset == 0) SmoothMoving = false;
             }
         }

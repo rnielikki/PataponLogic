@@ -20,7 +20,7 @@ namespace PataRoad.Core.Character
         protected int _movingDirection;
 
         public float Offset { get; protected set; }
-        public float AttackDistanceWithOffset => _smallCharacter.AttackDistance + Offset * _movingDirection;
+        public float AttackDistanceWithOffset => _smallCharacter.AttackDistance + (Offset * _movingDirection);
 
         /// <summary>
         /// Returns current x value of <see cref="PataponsManager"/>.
@@ -61,7 +61,7 @@ namespace PataRoad.Core.Character
         /// <param name="velocity">Speed, how much will move per second. ALWAYS +.</param>
         public virtual void MoveTo(float positionOffset, float velocity, bool ignoreSafeDistance = false)
         {
-            float x = DefaultWorldPosition + positionOffset * _movingDirection;
+            float x = DefaultWorldPosition + (positionOffset * _movingDirection);
             if (!ignoreSafeDistance)
             {
                 var hit = DistanceCalculator.GetClosest();
@@ -101,7 +101,7 @@ namespace PataRoad.Core.Character
                 _isMoving = false;
                 return;
             }
-            _targetPosition = new Vector2(targetX - Offset * _movingDirection, 0);
+            _targetPosition = new Vector2(targetX - (Offset * _movingDirection), 0);
             _movingVelocity = velocity;
             _isMovingAsOffset = false;
             _isMoving = true;
@@ -138,7 +138,7 @@ namespace PataRoad.Core.Character
         /// <param name="velocity">Speed, how much will move per second.</param>
         protected void MoveAsOffset(float offset, float velocity)
         {
-            _targetPosition = _defaultPosition + offset * Vector2.right * _movingDirection;
+            _targetPosition = _defaultPosition + (_movingDirection * offset * Vector2.right);
             _movingVelocity = velocity;
             _isMovingAsOffset = true;
             _isMoving = true;

@@ -1,6 +1,6 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Linq;
 
 namespace PataRoad.Core.Map
 {
@@ -63,13 +63,12 @@ namespace PataRoad.Core.Map
             while (screenBackground.color.a < 1)
             {
                 var clr = screenBackground.color;
-                clr.a = Mathf.Clamp01(clr.a + 0.5f * Time.deltaTime);
+                clr.a = Mathf.Clamp01(clr.a + (0.5f * Time.deltaTime));
                 screenBackground.color = clr;
                 yield return new WaitForEndOfFrame();
             }
             _spriteMaterial.color = Color.white;
             Character.Patapons.PataponsManager.IsMovingForward = false;
-
         }
         void LoadPatapolis(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {

@@ -127,8 +127,8 @@ namespace PataRoad.Core.Character
             if (_changingAngle)
             {
                 float angle = _currentAngle;
-                if (_targetAngle > angle) angle = Mathf.Min(angle + Time.deltaTime * _rotateSpeed, _targetAngle);
-                else if (_targetAngle < angle) angle = Mathf.Max(angle - Time.deltaTime * _rotateSpeed, _targetAngle);
+                if (_targetAngle > angle) angle = Mathf.Min(angle + (Time.deltaTime * _rotateSpeed), _targetAngle);
+                else if (_targetAngle < angle) angle = Mathf.Max(angle - (Time.deltaTime * _rotateSpeed), _targetAngle);
                 else
                 {
                     _changingAngle = false;
@@ -140,7 +140,7 @@ namespace PataRoad.Core.Character
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (_started || collision.tag != "Ground") return;
+            if (_started || !collision.CompareTag("Ground")) return;
             SetAttack();
         }
     }

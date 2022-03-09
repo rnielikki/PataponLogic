@@ -10,7 +10,6 @@ namespace PataRoad.Core.Character
     /// </summary>
     public abstract class SmallCharacter : MonoBehaviour, ICharacter, Map.Weather.IWeatherReceiver
     {
-
         protected SmallCharacterData _data;
         public Stat Stat { get; protected set; }
         public Equipments.EquipmentManager EquipmentManager => _data.EquipmentManager;

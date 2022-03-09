@@ -25,7 +25,6 @@ namespace PataRoad.Common.Navigator
                     bg = new GameObject("selectingSprite");
                     _renderer = bg.AddComponent<SpriteRenderer>();
                     _renderer.sprite = background;
-
                 }
                 else
                 {
@@ -38,7 +37,6 @@ namespace PataRoad.Common.Navigator
                 _firstInit = false;
             }
             InitCommon(navigator, navigator.OnSelected);
-
         }
         private void InitCommon(SpriteNavigator spriteNavigator, UnityEvent<SpriteSelectable> onSelected)
         {

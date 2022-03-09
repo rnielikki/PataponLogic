@@ -24,7 +24,10 @@ namespace PataRoad.Core.Character.Equipments.Logic
             else if (target.CompareTag("Grass"))
             {
                 var fireRateMultiplier = Map.Weather.WeatherInfo.Current.FireRateMultiplier;
-                var probability = CalculateStatusEffect(stat.FireRate, (1 - (float)receiver.CurrentHitPoint / receiver.Stat.HitPoint), fireRateMultiplier);
+                var probability = CalculateStatusEffect(
+                    stat.FireRate,
+                    (1 - ((float)receiver.CurrentHitPoint / receiver.Stat.HitPoint)),
+                    fireRateMultiplier);
                 if (Common.Utils.RandomByProbability(probability))
                 {
                     receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(probability * 10 * fireRateMultiplier));
@@ -48,7 +51,6 @@ namespace PataRoad.Core.Character.Equipments.Logic
 
                 SendDamage(receiver, damage);
                 _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon, isCritical);
-
 
                 if (!CheckIfDie(receiver, target))
                 {
@@ -114,7 +116,11 @@ namespace PataRoad.Core.Character.Equipments.Logic
         /// <param name="displayDamage">Shows damage from fire effect. If e.g. grass, it's expected not to show fire damage.</param>
         /// <returns><c>true</c> if character is died, otherwise <c>false</c>.</returns>
         /// <note>It DOESN'T KILL because it's expected inside coroutine. You must KILL the target MANUALLY with sync coroutine.</note>
-        public static bool DealDamageFromFireEffect(IAttackable attackable, GameObject targetObject, Transform objectTransform, bool displayDamage = true)
+        public static bool DealDamageFromFireEffect(
+            IAttackable attackable,
+            GameObject targetObject,
+            Transform objectTransform,
+            bool displayDamage = true)
         {
             //--- add fire resistance to fire damage taking!
             var damage = Mathf.Max(1, (int)(
@@ -142,7 +148,11 @@ namespace PataRoad.Core.Character.Equipments.Logic
             target.TakeDamage(damage);
             target.OnDamageTaken?.Invoke((float)target.CurrentHitPoint / target.Stat.HitPoint);
         }
-        private static (int damage, bool isCritical) GetFinalDamage(IAttacker attacker, IAttackable receiver, Stat attackerStat, bool allowZero)
+        private static (int damage, bool isCritical) GetFinalDamage(
+            IAttacker attacker,
+            IAttackable receiver,
+            Stat attackerStat,
+            bool allowZero)
         {
             var damage = GetAttackDamage(attackerStat, attacker);
             var defence = GetDefence(receiver);
@@ -170,20 +180,23 @@ namespace PataRoad.Core.Character.Equipments.Logic
 
             if (defence <= 0)
             {
+                var mono = receiver as MonoBehaviour;
                 //You give Infinity, I'll do this by myself
                 throw new System.InvalidOperationException(
-                    "defence cannot be zero or less. check stat of " + (receiver as MonoBehaviour)?.name ?? " ...oh what receiver is not MonoBehaviour WTF?");
+                    "defence cannot be zero or less. check stat of " + mono != null
+                        ? mono.name
+                        : " ...oh what receiver is not MonoBehaviour WTF?");
             }
             //a bit complicated...
             return (Mathf.RoundToInt(
                     Mathf.Max(allowZero ? 0 : 1,
                         (
-                        elementalMultiplier //elemental damage
+                        (elementalMultiplier //elemental damage
                         * resistances.GetMultiplier(attacker.AttackType) //attack type multiplier
                         * resistances.GetMultiplier(attacker.ElementalAttackType) //elemental attack type multiplier
                         * Mathf.Max(0.1f, damage) //actual damage
-                        * (critical + 1) //critical
-                        + (fireProbability + iceProbability + thunderProbability) * (critical + 1) * Mathf.Max(0.1f, damage)
+                        * (critical + 1)) //critical
+                        + ((fireProbability + iceProbability + thunderProbability) * (critical + 1) * Mathf.Max(0.1f, damage))
                         )
                         / defence //defence
                     )
@@ -202,7 +215,12 @@ namespace PataRoad.Core.Character.Equipments.Logic
             CalculateAndSetStatusEffect(receiver, StatusEffectType.Stagger, staggerRate, receiver.Stat.StaggerResistance, 0.1f);
         public static bool CalculateAndSetKnockback(IAttackable receiver, float knockback) =>
             CalculateAndSetStatusEffect(receiver, StatusEffectType.Knockback, knockback, receiver.Stat.KnockbackResistance, 0.1f);
-        public static bool CalculateAndSetStatusEffect(IAttackable receiver, StatusEffectType type, float attackRatio, float resistance, float additionalMultiplier = 1) =>
+        public static bool CalculateAndSetStatusEffect(
+            IAttackable receiver,
+            StatusEffectType type,
+            float attackRatio,
+            float resistance,
+            float additionalMultiplier = 1) =>
             SetStatusEffect(receiver, type, CalculateStatusEffect(attackRatio, resistance, additionalMultiplier));
 
         private static bool SetStatusEffect(IAttackable receiver, StatusEffectType type, float probability)
@@ -212,13 +230,13 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 switch (type)
                 {
                     case StatusEffectType.Fire:
-                        receiver.StatusEffectManager.SetFire(2 + probability * 10 * Map.Weather.WeatherInfo.Current.FireRateMultiplier);
+                        receiver.StatusEffectManager.SetFire(2 + (probability * 10 * Map.Weather.WeatherInfo.Current.FireRateMultiplier));
                         break;
                     case StatusEffectType.Ice:
-                        receiver.StatusEffectManager.SetIce(2 + probability * 10 * Map.Weather.WeatherInfo.Current.IceRateMultiplier);
+                        receiver.StatusEffectManager.SetIce(2 + (probability * 10 * Map.Weather.WeatherInfo.Current.IceRateMultiplier));
                         break;
                     case StatusEffectType.Sleep:
-                        receiver.StatusEffectManager.SetSleep(4 + probability * 25);
+                        receiver.StatusEffectManager.SetSleep(4 + (probability * 25));
                         break;
                     case StatusEffectType.Stagger:
                         receiver.StatusEffectManager.SetStagger();
@@ -238,8 +256,10 @@ namespace PataRoad.Core.Character.Equipments.Logic
             if (attackRatio == 0 || resistance == Mathf.Infinity) return 0;
             else return Mathf.Clamp01(attackRatio - resistance) * additionalMultiplier;
         }
-        private static int GetAttackDamage(Stat stat, IAttacker character) => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());
-        private static float GetDefence(IAttackable attackable) => GetFinalValue(attackable.Stat.DefenceMin, attackable.Stat.DefenceMax, attackable.GetDefenceValueOffset());
+        private static int GetAttackDamage(Stat stat, IAttacker character)
+            => GetFinalValue(stat.DamageMin, stat.DamageMax, character.GetAttackValueOffset());
+        private static float GetDefence(IAttackable attackable)
+            => GetFinalValue(attackable.Stat.DefenceMin, attackable.Stat.DefenceMax, attackable.GetDefenceValueOffset());
         private static int GetFinalValue(int min, int max, float offset) => Mathf.RoundToInt(Mathf.Lerp(min, max, offset));
         private static float GetFinalValue(float min, float max, float offset) => Mathf.Lerp(min, max, offset);
     }

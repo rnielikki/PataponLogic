@@ -1,3 +1,4 @@
+using PataRoad.Common;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
@@ -32,7 +33,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             transform.Translate(_bulletSpeed * Time.deltaTime, 0, 0);
             if (_destroyDistance <= transform.position.x)
             {
-                Destroy(gameObject);
+                var rel = gameObject.GetComponent<ReleaseToPool>();
+                if (rel != null)
+                {
+                    rel.ReleaseThisObject();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
         }
         private void OnTriggerEnter2D(Collider2D collision)

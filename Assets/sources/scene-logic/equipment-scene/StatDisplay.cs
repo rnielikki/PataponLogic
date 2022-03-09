@@ -1,8 +1,8 @@
+using PataRoad.Common.Navigator;
 using PataRoad.Core.Character;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using PataRoad.Common.Navigator;
-using System.Linq;
 
 namespace PataRoad.SceneLogic.EquipmentScene
 {
@@ -101,7 +101,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
                     .SetFormatGetter((stat)=> $"{stat.AttackSeconds.ToString(_format)}s ({Core.Rhythm.RhythmEnvironment.TurnSeconds / stat.AttackSeconds:G2}/cmd)")
                     .SetNegativeIsBetter(),
                 new StatDisplayMap(_movementSpeed, _format).SetValueGetter((stat) => stat.MovementSpeed)
-                    .SetFormatGetter((stat)=>$"{stat.MovementSpeed.ToString(_format)}s ({(stat.MovementSpeed / 8).ToString(_percentFormat)})"),
+                    .SetFormatGetter(
+                        (stat)=>$"{stat.MovementSpeed.ToString(_format)}s ({(stat.MovementSpeed / 8).ToString(_percentFormat)})"),
 
                 new StatDisplayMap(_critical, _percentFormat).SetValueGetter((stat) => stat.Critical),
                 new StatDisplayMap(_criticalResistance, _percentFormat).SetValueGetter((stat) => stat.CriticalResistance),
@@ -207,13 +208,14 @@ namespace PataRoad.SceneLogic.EquipmentScene
             if (equipmentData != null && equipmentData.Type != Core.Character.Equipments.EquipmentType.Rarepon)
             {
                 var oldEquipment = _lastData.EquipmentManager.GetEquipmentData(equipmentData.Type);
-                var oldEquipmentStat = oldEquipment?.Stat ?? new Stat();
+                var oldEquipmentStat = oldEquipment == null ? new Stat() : oldEquipment.Stat;
                 var newEquipmentStat = equipmentData.Stat;
                 foreach (var display in _displayMaps)
                 {
                     display.CompareOneByOne(_lastData.Stat, oldEquipmentStat, newEquipmentStat);
                 }
-                _massDisplay.CompareValue(_lastData.Rigidbody.mass, oldEquipment?.Mass ?? 0, equipmentData.Mass);
+                var mass = oldEquipment == null ? 0 : oldEquipment.Mass;
+                _massDisplay.CompareValue(_lastData.Rigidbody.mass, mass, equipmentData.Mass);
             }
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         }

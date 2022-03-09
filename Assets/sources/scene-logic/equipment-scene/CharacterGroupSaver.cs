@@ -23,7 +23,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 .GetKeyItems<Core.Items.ClassMemoryData>("Class")
                 .Select(item => item.Class).ToArray();
             _groupObjects = Core.Character.Patapons.PataponGroupGenerator.Generate(transform, AvailableClasses);
-            _pataponDataMap = _groupObjects.ToDictionary(kv => kv.Value, kv => kv.Value.GetComponentsInChildren<PataponData>().OrderBy(data => data.IndexInGroup).ToArray());
+            _pataponDataMap = _groupObjects.ToDictionary(
+                kv => kv.Value,
+                kv => kv.Value.GetComponentsInChildren<PataponData>().OrderBy(data => data.IndexInGroup).ToArray());
 
             foreach (var obj in _groupObjects.Values)
             {
@@ -103,7 +105,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
                 foreach (var classType in Core.Global.GlobalData.CurrentSlot.PataponInfo.CurrentClasses)
                 {
-                    (var weaponName, var protectorName) = Core.Character.Class.ClassAttackEquipmentData.GetWeaponAndProtectorName(classType);
+                    (var weaponName, var protectorName) = Core.Character.Class.ClassAttackEquipmentData
+                        .GetWeaponAndProtectorName(classType);
                     if (!isEquipped(classType, Core.Character.Equipments.EquipmentType.Weapon, weaponName))
                     {
                         window.AppendText($"[!] Can optimize {weaponName} for {classType}");
@@ -116,13 +119,18 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 }
                 yield return null;
             }
-            bool isEquipped(Core.Character.Class.ClassType classType, Core.Character.Equipments.EquipmentType equipmentType, string equipmentName)
+            bool isEquipped(
+                Core.Character.Class.ClassType classType,
+                Core.Character.Equipments.EquipmentType equipmentType,
+                string equipmentName)
             {
                 if (equipmentName == null) return true;
                 var bestEquipmentIndex = Core.Global.GlobalData.CurrentSlot.Inventory.GetBestEquipmentIndex(equipmentName);
                 if (bestEquipmentIndex < 1) return true;
-                var bestEquipment = Core.Items.ItemLoader.GetItem<Core.Items.EquipmentData>(Core.Items.ItemType.Equipment, equipmentName, bestEquipmentIndex);
-                return Core.Global.GlobalData.CurrentSlot.PataponInfo.HasBestEquipmentInside(classType, equipmentType, bestEquipment.LevelGroup);
+                var bestEquipment = Core.Items.ItemLoader
+                    .GetItem<Core.Items.EquipmentData>(Core.Items.ItemType.Equipment, equipmentName, bestEquipmentIndex);
+                return Core.Global.GlobalData.CurrentSlot.PataponInfo
+                    .HasBestEquipmentInside(classType, equipmentType, bestEquipment.LevelGroup);
             }
         }
         public void GoBack()
@@ -141,6 +149,5 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             Core.Global.GlobalData.Sound.PlayGlobal(sound);
         }
-
     }
 }

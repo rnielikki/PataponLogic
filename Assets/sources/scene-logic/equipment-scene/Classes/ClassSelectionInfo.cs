@@ -8,7 +8,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
 {
     public class ClassSelectionInfo : MonoBehaviour, ISelectHandler
     {
-
         [SerializeField]
         CharacterGroupSaver _groupDataSaver;
         public GameObject GroupObject { get; private set; }

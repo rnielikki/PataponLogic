@@ -32,6 +32,19 @@ dotnet_diagnostic.UNT0002.severity = warning
 dotnet_diagnostic.UNT0004.severity = warning
 dotnet_diagnostic.UNT0005.severity = warning
 
+# RCS1146: Use conditional access.
+dotnet_diagnostic.RCS1146.severity = silent
+csharp_style_conditional_delegate_call = true:suggestion
+dotnet_diagnostic.UNT0007.severity = warning
+dotnet_diagnostic.UNT0008.severity = warning
+dotnet_diagnostic.UNT0023.severity = warning
+
+# RCS1128: Use coalesce expression.
+dotnet_diagnostic.RCS1128.severity = silent
+
+# RCS1173: Use coalesce expression instead of 'if'.
+dotnet_diagnostic.RCS1173.severity = silent
+
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line
 tab_width = 4
@@ -44,7 +57,7 @@ dotnet_style_prefer_auto_properties = true:silent
 dotnet_style_object_initializer = true:suggestion
 dotnet_style_collection_initializer = true:suggestion
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
-dotnet_style_prefer_conditional_expression_over_assignment = true:silent
+dotnet_style_prefer_conditional_expression_over_assignment = false:silent
 dotnet_style_prefer_conditional_expression_over_return = true:silent
 dotnet_style_explicit_tuple_names = true:suggestion
 dotnet_style_prefer_inferred_tuple_names = true:suggestion
@@ -101,3 +114,11 @@ dotnet_naming_style.pascal_case.word_separator =
 dotnet_naming_style.pascal_case.capitalization = pascal_case
 dotnet_style_allow_multiple_blank_lines_experimental = true:silent
 dotnet_style_allow_statement_immediately_after_block_experimental = true:silent
+
+
+
+# IDE0045: Convert to conditional expression
+dotnet_diagnostic.IDE0045.severity = silent
+
+# Enable line length with default 125
+dotnet_diagnostic.RCS0056.severity = warning

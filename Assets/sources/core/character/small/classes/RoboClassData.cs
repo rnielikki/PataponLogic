@@ -38,7 +38,6 @@ namespace PataRoad.Core.Character.Class
                     realStat.DamageMin = Mathf.Max(1, realStat.DamageMax - 20);
                     break;
             }
-
         }
         public override void Attack()
         {

@@ -65,7 +65,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             if (directionY < -0.5 || directionY > 0.5)
             {
                 int dir = directionY < 0 ? -1 : 1;
-                index = (index + dir * -1 + _activeNavs.Length) % _activeNavs.Length;
+                index = (index + (dir * -1) + _activeNavs.Length) % _activeNavs.Length;
                 Core.Global.GlobalData.Sound.PlayInScene(_selectSound);
             }
             MarkIndex(index);

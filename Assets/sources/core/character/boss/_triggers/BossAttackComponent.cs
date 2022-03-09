@@ -4,7 +4,6 @@ namespace PataRoad.Core.Character.Bosses
 {
     public abstract class BossAttackComponent : MonoBehaviour
     {
-
         [SerializeField]
         protected bool _enabled;
 

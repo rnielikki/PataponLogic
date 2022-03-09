@@ -87,7 +87,6 @@ namespace PataRoad.Core.Character.Patapons
 
             var general = GetComponent<General.PataponGeneral>();
             if (general != null) IsGeneral = true;
-
         }
         private void Start()
         {
@@ -266,7 +265,8 @@ namespace PataRoad.Core.Character.Patapons
         {
             if (damage < 0)
             {
-                throw new System.ArgumentException("Damage cannot be less than zero for Patapons. Use Group.HealAllINGroup() or HealAlone() to heal.");
+                throw new System.ArgumentException(
+                    "Damage cannot be less than zero for Patapons. Use Group.HealAllINGroup() or HealAlone() to heal.");
             }
             base.TakeDamage(damage);
             Group.UpdateHitPoint(this);
@@ -298,7 +298,7 @@ namespace PataRoad.Core.Character.Patapons
             if (PataponsManager.IsMovingForward &&
                 !(StatusEffectManager.CanContinue || StatusEffectManager.CurrentStatusEffect == StatusEffectType.Fire))
             {
-                transform.position -= Group.Manager.Steps * Vector3.right * Time.deltaTime;
+                transform.position -= Group.Manager.Steps * Time.deltaTime * Vector3.right;
             }
         }
     }

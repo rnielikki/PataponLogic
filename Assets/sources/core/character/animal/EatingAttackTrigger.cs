@@ -10,7 +10,7 @@ namespace PataRoad.Core.Character.Animal
         AudioClip _eatenSound;
         private void OnTriggerEnter2D(Collider2D collider)
         {
-            if (_ate || collider.gameObject.tag != "SmallCharacter") return;
+            if (_ate || !collider.gameObject.CompareTag("SmallCharacter")) return;
             var patapon = collider.GetComponentInParent<Patapons.Patapon>();
             if (patapon != null)
             {

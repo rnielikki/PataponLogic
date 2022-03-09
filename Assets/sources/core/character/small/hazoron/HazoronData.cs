@@ -35,6 +35,5 @@ namespace PataRoad.Core.Character
                 throw new System.ArgumentException("Element Gem should be type of gem but it's " + _gemData.Type);
             }
         }
-
     }
 }

@@ -36,8 +36,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             size.y = requirements.Length * _heightForUnit;
             _parentField.sizeDelta = size;
 
-            _parentField.anchoredPosition = new Vector3(attachTarget.transform.position.x + 50 - 100 * pivot.x,
-                attachTarget.transform.position.y - _canvasTransform.transform.position.y * 2 + 50 - 100 * pivot.y, 0);
+            _parentField.anchoredPosition = new Vector3(attachTarget.transform.position.x + 50 - (100 * pivot.x),
+                attachTarget.transform.position.y - (_canvasTransform.transform.position.y * 2) + 50 - (100 * pivot.y), 0);
             _parentField.pivot = pivot;
 
             gameObject.SetActive(true);

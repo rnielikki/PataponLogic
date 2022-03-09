@@ -46,7 +46,10 @@ namespace PataRoad.SceneLogic.KeymapSettings
             }
         }
         private InputAction FindAction(string actionName) => Core.Global.GlobalData.Input.actions.FindAction(actionName);
-        public bool IsNoDuplication(string bindingPath, out System.Collections.Generic.List<string> duplicates, System.Guid? bindingId = null)
+        public bool IsNoDuplication(
+            string bindingPath,
+            out System.Collections.Generic.List<string> duplicates,
+            System.Guid? bindingId = null)
         {
             duplicates = null;
             foreach (var relatedAction in _relatedActions)

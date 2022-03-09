@@ -5,7 +5,6 @@ namespace PataRoad.Story.Actions
     /// <summary>
     /// Adds behaviour to the story. Also used for mapping, see more on <see cref="StoryResourceMapper"/>.
     /// </summary>
-
     class StoryBehaviour : MonoBehaviour
     {
         [SerializeField]
@@ -65,8 +64,8 @@ namespace PataRoad.Story.Actions
         public void SetToDefaultWalkingStep() => _walkingStep = _defaultWalkingStep;
         public void SetWalkingStep(float steps) => _walkingStep = steps;
 
-        public void Walk(float steps) => WalkTowards(transform.position.x + steps * transform.localScale.x);
-        public void Move(float steps) => MoveTowards(transform.position.x + steps * transform.localScale.x);
+        public void Walk(float steps) => WalkTowards(transform.position.x + (steps * transform.localScale.x));
+        public void Move(float steps) => MoveTowards(transform.position.x + (steps * transform.localScale.x));
 
         public void WalkTowards(float position)
         {
@@ -129,7 +128,7 @@ namespace PataRoad.Story.Actions
         }
         private void OnValidate()
         {
-            if (tag == "SmallCharacter" && !GetComponent<Animator>().runtimeAnimatorController.name.StartsWith("Story"))
+            if (CompareTag("SmallCharacter") && !GetComponent<Animator>().runtimeAnimatorController.name.StartsWith("Story"))
             {
                 Debug.LogError($"Please use story animator for instead of [{GetComponent<Animator>().runtimeAnimatorController.name}] the character, or remove the script if it's not for not story mode.");
             }
