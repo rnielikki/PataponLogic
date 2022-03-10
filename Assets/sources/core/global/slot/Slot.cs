@@ -17,6 +17,13 @@ namespace PataRoad.Core.Global.Slots
         /// </summary>
         public PataponInfo PataponInfo => _pataponInfo;
 
+        [SerializeReference]
+        RareponInfo _rareponInfo;
+        /// <summary>
+        /// Information of Rarepons. Separated from PataponInfo for avoiding serialization problem.
+        /// </summary>
+        public RareponInfo RareponInfo => _rareponInfo;
+
         [SerializeField]
         private Inventory _inventory;
         /// <summary>
@@ -60,7 +67,8 @@ namespace PataRoad.Core.Global.Slots
         {
             var slot = new Slot();
             //---------------------------------- Not serialized.
-            slot._pataponInfo = PataponInfo.CreateNew();
+            slot._rareponInfo = RareponInfo.CreateNew();
+            slot._pataponInfo = PataponInfo.CreateNew(slot._rareponInfo);
             slot._inventory = Inventory.CreateNew(); //must be loaded after item loader init
             slot._mapInfo = MapInfo.CreateNew();
             slot._playTime = 0;
@@ -105,13 +113,16 @@ namespace PataRoad.Core.Global.Slots
         public SlotMeta GetSlotMeta() => new SlotMeta(this);
         private void SerializeAll()
         {
+            _rareponInfo.Serialize();
             _pataponInfo.Serialize();
             _inventory.Serialize();
             _mapInfo.Serialize();
         }
         private void DeserializeAll()
         {
+            _rareponInfo.Deserialize();
             _pataponInfo.Deserialize();
+            _pataponInfo.SetRareponInfo(_rareponInfo);
             _inventory.Deserialize();
             _mapInfo.Deserialize();
         }

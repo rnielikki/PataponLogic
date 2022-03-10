@@ -11,7 +11,7 @@ namespace PataRoad.SceneLogic.Patapolis
         {
             StartCoroutine(Core.Global.GlobalData.GlobalInputActions.WaitForNextInput(() =>
             {
-                _rareponSelector.Open(Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.DefaultRarepon.Data);
+                _rareponSelector.Open(Core.Global.GlobalData.CurrentSlot.RareponInfo.DefaultRarepon.Data);
             }));
         }
     }

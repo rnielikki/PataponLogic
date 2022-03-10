@@ -23,6 +23,7 @@ namespace PataRoad.Core.Character.Bosses
         public int Level { get; private set; }
         private CameraController.SafeCameraZoom _zoom;
         protected EnemyBossBehaviour _behaviour;
+        public override bool IsAttacking => BossTurnManager.Attacking;
 
         private float MaxAttackDistance = -1;
 

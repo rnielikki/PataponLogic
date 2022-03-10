@@ -32,10 +32,6 @@ namespace PataRoad.Core.Character.Patapons.Data
         [SerializeReference]
         PataponClassInfo[] _classInfoForSerialization;
 
-        [SerializeReference]
-        RareponInfo _rareponInfo;
-        public RareponInfo RareponInfo => _rareponInfo;
-
         public StringKeyItemData BossToSummon { get; set; }
         public StringKeyItemData CustomMusic { get; set; }
 
@@ -44,7 +40,7 @@ namespace PataRoad.Core.Character.Patapons.Data
         [SerializeField]
         int _musicIndex;
 
-        internal static PataponInfo CreateNew()
+        internal static PataponInfo CreateNew(RareponInfo rareponInfo)
         {
             var pataponInfo = new PataponInfo();
             //Not serialized --
@@ -57,9 +53,19 @@ namespace PataRoad.Core.Character.Patapons.Data
             {
                 Class.ClassType.Yaripon
             };
-            pataponInfo._rareponInfo = new RareponInfo().Init();
             pataponInfo.Order();
+            foreach (var classInfo in pataponInfo._classInfoMap.Values)
+            {
+                classInfo.SetRareponInfo(rareponInfo);
+            }
             return pataponInfo;
+        }
+        internal void SetRareponInfo(RareponInfo rareponInfo)
+        {
+            foreach (var classInfo in _classInfoForSerialization)
+            {
+                classInfo.SetRareponInfo(rareponInfo);
+            }
         }
         public void ReplaceClass(Class.ClassType from, Class.ClassType to)
         {

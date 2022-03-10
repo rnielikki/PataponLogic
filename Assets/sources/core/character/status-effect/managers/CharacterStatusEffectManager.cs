@@ -5,6 +5,7 @@ namespace PataRoad.Core.Character
     public class CharacterStatusEffectManager : StatusEffectManager
     {
         protected ICharacter _character;
+        public bool WasAttacking { get; private set; }
 
         private void Awake()
         {
@@ -17,8 +18,12 @@ namespace PataRoad.Core.Character
         }
         protected override void StopEverythingBeforeStatusEffect(StatusEffectType type)
         {
+            WasAttacking = _character.IsAttacking;
             _character.StopAttacking(false);
-            (_character as MonoBehaviour)?.StopAllCoroutines();
+            if (_character is MonoBehaviour mono)
+            {
+                mono.StopAllCoroutines();
+            }
         }
         public override void SetIce(float time)
         {

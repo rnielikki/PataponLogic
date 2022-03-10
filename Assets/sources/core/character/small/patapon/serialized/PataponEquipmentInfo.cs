@@ -30,6 +30,8 @@ namespace PataRoad.Core.Character.Patapons.Data
         private int _gemIndex = -1;
         [SerializeField]
         private bool _isGeneral;
+        [System.NonSerialized]
+        private RareponInfo _rareponInfo;
 
         public PataponEquipmentInfo(Class.ClassType classType, bool isGeneral)
         {
@@ -62,6 +64,11 @@ namespace PataRoad.Core.Character.Patapons.Data
         public bool HasEquipment(EquipmentData data) => _map.ContainsKey(data.Type) && _map[data.Type] == data;
         public int GetEquipmentLevel(EquipmentType equipmentType) => _map.ContainsKey(equipmentType) ? _map[equipmentType].LevelGroup : -1;
 
+        internal void SetRareponInfo(RareponInfo rareponInfo)
+        {
+            _rareponInfo = rareponInfo;
+            LoadRarepons();
+        }
         private void Serialize()
         {
             _weaponIndex = GetIndex(EquipmentType.Weapon);
@@ -91,13 +98,20 @@ namespace PataRoad.Core.Character.Patapons.Data
             {
                 _map.Add(EquipmentType.Protector, LoadEquipment(_protectorType, _protectorIndex));
             }
+            if (!_isGeneral && _gemIndex >= 0)
+            {
+                _map.Add(EquipmentType.Gem, LoadEquipment("Gem", _gemIndex));
+            }
+        }
+        private void LoadRarepons()
+        {
             if (!_isGeneral && _rareponIndex >= 0)
             {
-                var dataContainer = Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.GetFromOpenRarepon(_rareponIndex);
+                var dataContainer = _rareponInfo.GetFromOpenRarepon(_rareponIndex);
                 if (dataContainer == null)
                 {
                     _rareponIndex = 0;
-                    dataContainer = Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.DefaultRarepon;
+                    dataContainer = Global.GlobalData.CurrentSlot.RareponInfo.DefaultRarepon;
                 }
                 _map.Add(EquipmentType.Rarepon, dataContainer.Data);
             }
@@ -105,10 +119,7 @@ namespace PataRoad.Core.Character.Patapons.Data
             {
                 _map.Add(EquipmentType.Helm, LoadEquipment("Helm", _helmIndex));
             }
-            if (!_isGeneral && _gemIndex >= 0)
-            {
-                _map.Add(EquipmentType.Gem, LoadEquipment("Gem", _gemIndex));
-            }
+
         }
         private EquipmentData LoadEquipment(string group, int index) =>
             ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, group, index);

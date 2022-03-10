@@ -14,7 +14,6 @@ namespace PataRoad.Core.Character.Bosses
         private BossSummonManager _manager;
         private bool _animatingWalking;
         private bool _animatingIdle = true;
-        private bool _attacking;
 
         private float _lastPerfectionRate;
         private bool _charged;
@@ -46,8 +45,8 @@ namespace PataRoad.Core.Character.Bosses
 
             if (StatusEffectManager.CanContinue)
             {
-                _attacking = PerformCommandAction(song);
-                if (_attacking)
+                IsAttacking = PerformCommandAction(song);
+                if (IsAttacking)
                 {
                     _animatingWalking = false;
                     _animatingIdle = false;
@@ -93,7 +92,7 @@ namespace PataRoad.Core.Character.Bosses
         protected abstract void OnDead();
         private void Update()
         {
-            if ((Rhythm.Command.TurnCounter.IsPlayerTurn || !_attacking) && StatusEffectManager.CanContinue)
+            if ((Rhythm.Command.TurnCounter.IsPlayerTurn || !IsAttacking) && StatusEffectManager.CanContinue)
             {
                 var targetPosition = _manager.transform.position;
                 var offset = Stat.MovementSpeed * Time.deltaTime;

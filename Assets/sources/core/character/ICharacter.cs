@@ -10,5 +10,6 @@
         public float CharacterSize { get; }
         public void StopAttacking(bool pause);
         public UnityEngine.Events.UnityEvent OnAfterDeath { get; }
+        public bool IsAttacking { get; }
     }
 }

@@ -51,7 +51,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public void Init(RareponSelector parent)
         {
             if (_data != null) return;
-            _container = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.GetFromOpenRarepon(Index);
+            _container = Core.Global.GlobalData.CurrentSlot.RareponInfo.GetFromOpenRarepon(Index);
             _parent = parent;
             if (_container != null)
             {
@@ -153,7 +153,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             bool updated = false;
             if (!levelingUp)
             {
-                _container = Core.Global.GlobalData.CurrentSlot.PataponInfo.RareponInfo.OpenNewRarepon(Index);
+                _container = Core.Global.GlobalData.CurrentSlot.RareponInfo.OpenNewRarepon(Index);
                 _data = _container.Data;
                 updated = _container != null;
             }

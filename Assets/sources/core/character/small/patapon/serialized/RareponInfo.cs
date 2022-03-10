@@ -9,8 +9,9 @@ namespace PataRoad.Core.Character.Patapons.Data
     /// <summary>
     /// Manages all Rarepon data, including open Rarepons and not-yet-opened Rarepons.
     /// </summary>
+    /// <remarks>This comes BEFORE <see cref="PataponInfo"></remarks>
     [Serializable]
-    public class RareponInfo : ISerializationCallbackReceiver
+    public class RareponInfo : Global.Slots.IPlayerData
     {
         [SerializeField]
         private List<RareponDataContainer> _openRareponsForSerialization;
@@ -24,11 +25,12 @@ namespace PataRoad.Core.Character.Patapons.Data
         /// Initialises self for FIRST SAVE DATA.
         /// </summary>
         /// <returns>Self.</returns>
-        internal RareponInfo Init()
+        internal static RareponInfo CreateNew()
         {
-            _openRarepons = new Dictionary<int, RareponDataContainer>();
-            OpenNewRarepon(0);
-            return this;
+            var data = new RareponInfo();
+            data._openRarepons = new Dictionary<int, RareponDataContainer>();
+            data.OpenNewRarepon(0);
+            return data;
         }
         /// <summary>
         /// Loads and indexes all Rarepon data. Expected to be called in VERY FIRST INITIALISATION.
@@ -56,18 +58,6 @@ namespace PataRoad.Core.Character.Patapons.Data
                     throw new ArgumentException(
                         $"Rarepon ({rarepon.Name}/{rarepon.Index}) level ({rarepon.Level}) is incorrect. It must be range of 1-3.");
                 }
-            }
-        }
-        /// <summary>
-        /// Deserialises saved rarepon data to indexed data. Called when the save data is loaded.
-        /// </summary>
-        private void Deserialize()
-        {
-            _openRarepons = new Dictionary<int, RareponDataContainer>();
-            foreach (var container in _openRareponsForSerialization)
-            {
-                container.LoadData();
-                _openRarepons.Add(container.RareponIndex, container);
             }
         }
         /// <summary>
@@ -115,14 +105,22 @@ namespace PataRoad.Core.Character.Patapons.Data
             else return null;
         }
 
-        public void OnBeforeSerialize()
+        public void Serialize()
         {
             _openRareponsForSerialization = _openRarepons.Values.ToList();
         }
 
-        public void OnAfterDeserialize()
+        /// <summary>
+        /// Deserialises saved rarepon data to indexed data. Called when the save data is loaded.
+        /// </summary>
+        public void Deserialize()
         {
-            Deserialize();
+            _openRarepons = new Dictionary<int, RareponDataContainer>();
+            foreach (var container in _openRareponsForSerialization)
+            {
+                container.LoadData();
+                _openRarepons.Add(container.RareponIndex, container);
+            }
         }
         private static bool IsValidLevel(int level) => level >= 1 && level <= 3;
     }

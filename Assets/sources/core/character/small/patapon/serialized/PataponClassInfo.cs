@@ -32,6 +32,10 @@ namespace PataRoad.Core.Character.Patapons.Data
                 new PataponEquipmentInfo(type, false)
             };
         }
+        internal void SetRareponInfo(RareponInfo rareponInfo)
+        {
+            foreach (var info in _info) info.SetRareponInfo(rareponInfo);
+        }
         internal IEnumerable<Items.EquipmentData> GetAllEquipments() => _info.SelectMany(info => info.GetAllEquipments());
         internal IEnumerable<Items.EquipmentData> GetEquipmentInIndex(int index)
         {
@@ -73,7 +77,7 @@ namespace PataRoad.Core.Character.Patapons.Data
 
         public void OnBeforeSerialize()
         {
-            _generalModeDataIndex = GeneralModeData?.Index ?? -1;
+            _generalModeDataIndex = GeneralModeData != null ? GeneralModeData.Index : -1;
             _attackTypeIndex = AttackTypeIndex;
         }
 

@@ -1,6 +1,6 @@
-using UnityEngine;
 using PataRoad.Core.Character.Class;
 using PataRoad.Core.Character.Equipments.Weapons;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Hazorons
 {
@@ -16,29 +16,28 @@ namespace PataRoad.Core.Character.Hazorons
         private bool _gotPosition;
         private bool _fullyGotPosition;
         private bool _animatingWalk;
-        private int _attackTypeIndex;
+        [SerializeField]
+        protected int _attackTypeIndex;
         public override int AttackTypeIndex => _attackTypeIndex;
         [Header("Position status")]
         [SerializeField]
         private bool _isOnTower;
+
         public override bool IsFixedPosition => _isOnTower;
 
         [Header("Attack status")]
         [SerializeField]
-        private bool _charged;
+        protected bool _charged;
         [SerializeField]
-        private bool _defend;
-        [SerializeField]
-        private bool _doNothing;
+        protected bool _defend;
 
         [SerializeField]
-        private bool _isDarkOne;
+        protected bool _isDarkOne;
         public bool IsDarkOne => _isDarkOne;
         [SerializeField]
         private bool _manualDeath;
 
         private bool _isReady;
-        private bool _isAttacking;
 
         public override CharacterSoundsCollection Sounds => _isDarkOne ?
             CharacterSoundLoader.Current.DarkOneSounds : CharacterSoundLoader.Current.HazoronSounds;
@@ -57,14 +56,14 @@ namespace PataRoad.Core.Character.Hazorons
             DistanceManager.DistanceCalculator = DistanceCalculator;
             if (_isOnTower) Stat.KnockbackResistance = Mathf.Infinity;
 
-            if (_doNothing) _isAttacking = true;
             StatusEffectManager.AddRecoverAction(() =>
             {
+                IsAttacking = false;
                 if (IsFlyingUnit)
                 {
                     (ClassData as ToriClassData)?.FlyUp();
                 }
-                if (_gotPosition && !_doNothing)
+                if (_gotPosition)
                 {
                     Attack();
                 }
@@ -83,10 +82,10 @@ namespace PataRoad.Core.Character.Hazorons
 
             _isReady = true;
         }
-        private void Attack()
+        protected void Attack()
         {
-            if (!_isReady || _isAttacking) return;
-            _isAttacking = true;
+            if (!_isReady || IsAttacking) return;
+            IsAttacking = true;
             if (_defend)
             {
                 ClassData.Defend();
@@ -129,7 +128,7 @@ namespace PataRoad.Core.Character.Hazorons
         }
         public override void StopAttacking(bool pause)
         {
-            _isAttacking = false;
+            IsAttacking = false;
             base.StopAttacking(pause);
         }
 
@@ -156,9 +155,10 @@ namespace PataRoad.Core.Character.Hazorons
                 }
                 else DefaultWorldPosition = transform.position.x;
             }
-            else if (StatusEffectManager.IsOnStatusEffect && _animatingWalk)
+            else if (!StatusEffectManager.CanContinue)
             {
                 _animatingWalk = false;
+                return;
             }
             if (ClassData.IsInAttackDistance())
             {

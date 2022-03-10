@@ -53,6 +53,8 @@ namespace PataRoad.Core.Character.Animal
         public UnityEvent<float> OnDamageTaken => null;
         public UnityEvent OnAfterDeath => null;
 
+        public bool IsAttacking => false;
+
         private Transform _pataponsManagerTransform;
 
         private bool _moving;

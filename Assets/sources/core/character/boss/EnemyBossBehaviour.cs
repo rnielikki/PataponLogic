@@ -82,6 +82,7 @@ namespace PataRoad.Core.Character.Bosses
             }
         }
         protected abstract BossAttackMoveSegment GetNextBehaviour();
+        protected virtual BossAttackMoveSegment GetNextBehaviourForCombo(int index, int comboCount) => GetNextBehaviour();
         protected abstract string GetNextBehaviourOnIce();
         protected virtual (float distance, float maxDistance) SetMultipleAttacks(int count)
         {
@@ -117,7 +118,7 @@ namespace PataRoad.Core.Character.Bosses
             float maxDistance = -1;
             for (int i = 0; i < count; i++)
             {
-                var next = GetNextBehaviour();
+                var next = GetNextBehaviourForCombo(i, count);
                 _attackCombos.Add(next.Action);
                 distance = UnityEngine.Mathf.Min(next.Distance, distance);
                 if (next.MaxDistance >= 0)

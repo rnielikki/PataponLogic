@@ -44,6 +44,9 @@ namespace PataRoad.Core.Character.Bosses
         [SerializeField]
         protected UnityEvent _onAfterDeath = new UnityEvent();
         public UnityEvent OnAfterDeath => _onAfterDeath;
+
+        public virtual bool IsAttacking { get; protected set; }
+
         public virtual void Init()
         {
             BossAttackData = GetComponent<BossAttackData>();

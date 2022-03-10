@@ -59,6 +59,8 @@ namespace PataRoad.Core.Map.Levels
 
         public UnityEvent OnAfterDeath => null;
 
+        public bool IsAttacking { get; protected set; }
+
         private bool _ready;
 
         private void Start()
@@ -94,6 +96,7 @@ namespace PataRoad.Core.Map.Levels
             if (transform.position.x != targetPosition.x && !_walking)
             {
                 _walking = true;
+                IsAttacking = false;
                 _animator.Play("walk");
             }
             else if (transform.position.x == targetPosition.x && _walking)
@@ -102,6 +105,7 @@ namespace PataRoad.Core.Map.Levels
                 if (!_ready)
                 {
                     _ready = true;
+                    IsAttacking = true;
                     GameSound.SpeakManager.Current.Play(_startSound);
                 }
                 _animator.Play("attack");

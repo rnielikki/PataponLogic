@@ -214,11 +214,19 @@ namespace PataRoad.Core.Character.Patapons
         /// <summary>
         /// PONPON Input
         /// </summary>
-        protected void Attack() => ClassData.Attack();
+        protected void Attack()
+        {
+            IsAttacking = true;
+            ClassData.Attack();
+        }
         /// <summary>
         /// CHAKACHAKA Input
         /// </summary>
-        protected void Defend() => ClassData.Defend();
+        protected void Defend()
+        {
+            IsAttacking = true;
+            ClassData.Defend();
+        }
         /// <summary>
         /// PONPATA Input
         /// </summary>

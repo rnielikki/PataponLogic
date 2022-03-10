@@ -67,7 +67,7 @@ namespace PataRoad.Core.Character
         {
             IsDead = true;
             _onDestroy.Invoke();
-            _animator?.Play("die");
+            if (_animator != null) _animator.Play("die");
         }
         public virtual void TakeDamage(int damage)
         {

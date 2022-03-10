@@ -80,6 +80,7 @@ namespace PataRoad.Core.Character
 
         public bool UseCenterAsAttackTarget => Weapon.IsTargetingCenter;
 
+        public bool IsAttacking { get; protected set; }
         protected void Init()
         {
             _data = GetComponent<SmallCharacterData>();
@@ -113,6 +114,7 @@ namespace PataRoad.Core.Character
 
         public virtual void StopAttacking(bool pause)
         {
+            IsAttacking = false;
             StopWeaponAttacking();
             ClassData.StopAttack(pause);
         }
