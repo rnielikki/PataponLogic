@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -59,7 +58,7 @@ namespace PataRoad.AppDebug
         public void LoadStory()
         {
             Story.StoryLoader.Init();
-            Story.StoryLoader.LoadStory(_testData);
+            Story.StoryLoader.LoadStory(_testData.name);
         }
         public void OpenAllMaps()
         {

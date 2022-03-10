@@ -98,11 +98,13 @@ namespace PataRoad.Core.Map
         private bool _loadStoryOnlyOnce;
         public bool LoadStoryOnlyOnce => _loadStoryOnlyOnce;
         [SerializeField]
-        Story.StoryData _nextStoryOnSuccess;
-        public Story.StoryData NextStoryOnSuccess => _nextStoryOnSuccess;
+        string _nextStoryNameOnSuccess;
+        public string NextStoryOnSuccess =>
+            string.IsNullOrWhiteSpace(_nextStoryNameOnSuccess) ? null : _nextStoryNameOnSuccess;
         [SerializeField]
-        Story.StoryData _nextStoryOnFail;
-        public Story.StoryData NextStoryOnFail => _nextStoryOnFail;
+        string _nextStoryNameOnFail;
+        public string NextStoryOnFail =>
+            string.IsNullOrWhiteSpace(_nextStoryNameOnFail) ? null : _nextStoryNameOnFail;
 
         public int GetMaxLevel()
         {
@@ -123,7 +125,9 @@ namespace PataRoad.Core.Map
             if (RainWeatherChance + StormWeatherChance + FogWeatherChance + SnowWeatherChance > 1)
             {
                 var chance = RainWeatherChance + StormWeatherChance + FogWeatherChance + SnowWeatherChance;
-                Debug.LogWarning($"Weather sum is [{chance}], more than 1, the weather probability won't work correctly.\nThe probability of each weather must be range of [0-1] and their sum must be 1 or less.");
+                Debug.LogWarning($"Weather sum is [{chance}], more than 1," +
+                    $"the weather probability won't work correctly.\n"
+                    + "The probability of each weather must be range of [0-1] and their sum must be 1 or less.");
             }
             if (_noWindChance > 1 || _noWindChance < 0)
             {

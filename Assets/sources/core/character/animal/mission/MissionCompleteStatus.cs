@@ -16,12 +16,10 @@ namespace PataRoad.Core.Map
         [SerializeField]
         Material _spriteMaterial;
         private UnityEngine.InputSystem.InputAction _submitAction;
-        private Story.StoryData _nextStory;
+        private string _nextStory;
 
         public void LoadMissionStatus()
         {
-            //Destroy(Items.ItemManager.Current.ItemDropPoint.gameObject);
-
             _nextStory = MissionPoint.Current.NextStory;
             if (_nextStory != null) Story.StoryLoader.Init();
 

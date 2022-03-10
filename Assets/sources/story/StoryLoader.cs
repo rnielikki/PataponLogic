@@ -11,6 +11,7 @@ namespace PataRoad.Story
         private UnityEngine.InputSystem.InputAction _action;
         private bool _skipActionAdded;
         private bool _noDestroy;
+        private const string _storyPath = "Story/Data/";
 
         private void Awake()
         {
@@ -24,9 +25,14 @@ namespace PataRoad.Story
             DontDestroyOnLoad(gameObj);
             _current = gameObj.AddComponent<StoryLoader>();
         }
-        public static void LoadStory(StoryData data)
+        public static void LoadStory(string dataName)
         {
             _current.gameObject.SetActive(true);
+            var data = Resources.Load<StoryData>(_storyPath + dataName);
+            if (data == null)
+            {
+                throw new MissingReferenceException("The story data " + dataName + " doesn't exist!");
+            }
             _current.StartStory(data);
         }
         internal void StartStory(StoryData data)

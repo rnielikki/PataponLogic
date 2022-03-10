@@ -33,8 +33,8 @@ namespace PataRoad.Core.Map
         public static MissionPoint Current { get; private set; }
 
         public Vector2 MissionPointPosition { get; private set; }
-        public Story.StoryData NextStory { get; internal set; }
-        public Story.StoryData NextFailureStory { get; internal set; }
+        public string NextStory { get; internal set; }
+        public string NextFailureStory { get; internal set; }
 
         void Awake()
         {
