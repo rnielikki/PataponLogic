@@ -31,7 +31,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         public override void Attack(AttackCommandType attackCommandType)
         {
             var arrowForThrowing = _objectPool.Get();
-            arrowForThrowing.transform.SetParent(transform.root.parent);
             float minThrowDistance = 1600;
             float maxThrowDistance = 1850;
             if (attackCommandType == AttackCommandType.Defend)

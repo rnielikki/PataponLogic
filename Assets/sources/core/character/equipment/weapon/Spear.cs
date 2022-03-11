@@ -18,7 +18,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         public override void Attack(AttackCommandType attackCommandType)
         {
             var spearForThrowing = _objectPool.Get();
-            spearForThrowing.transform.SetParent(transform.root.parent);
             float minVelocity, maxVelocity;
             if (attackCommandType == AttackCommandType.Defend)
             {

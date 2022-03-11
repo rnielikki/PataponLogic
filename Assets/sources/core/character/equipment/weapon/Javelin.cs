@@ -30,7 +30,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             void ThrowWeaponInstance(float minForce, float maxForce, int angle = 0)
             {
                 var javelinForThrowing = _objectPool.Get();
-                javelinForThrowing.transform.SetParent(transform.root.parent);
                 if (angle != 0) javelinForThrowing.transform.Rotate(Vector3.forward * angle);
                 javelinForThrowing.GetComponent<WeaponInstance>()
                     .Initialize(this, _material)

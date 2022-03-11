@@ -15,21 +15,25 @@ namespace PataRoad.Common
                 return pool;
             }
 
+            void OnRelease(GameObject obj)
+            {
+                obj.SetActive(false);
+                var rigidBody = obj.GetComponent<Rigidbody2D>();
+                // Megapon attacks
+                if (rigidBody != null)
+                {
+                    rigidBody.constraints = RigidbodyConstraints2D.None;
+                    rigidBody.gravityScale = 1;
+                    rigidBody.WakeUp();
+                }
+            }
+
             var gObject = Resources.Load<GameObject>(resourcePath);
             ObjectPool<GameObject> newPool = null;
             newPool = new ObjectPool<GameObject>(
                 () => InstantiateObjectWithReleaseToPool(gObject, newPool),
                 (obj) => obj.SetActive(true),
-                (obj) =>
-                {
-                    var rigidbody = obj.GetComponent<Rigidbody2D>();
-                    if (rigidbody != null)
-                    {
-                        rigidbody.velocity = Vector2.zero;
-                        rigidbody.angularVelocity = 0;
-                    }
-                    obj.SetActive(false);
-                },
+                OnRelease,
                 (obj) => Destroy(obj),
                 false,
                 initialSize,

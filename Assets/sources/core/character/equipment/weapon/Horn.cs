@@ -98,7 +98,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             Stat stat, Color color)
         {
             var instance = targetObjectPool.Get();
-            instance.transform.SetParent(transform.root.parent);
             instance.transform.position = _targetTransform.position;
             instance.layer = gameObject.layer;
 
@@ -124,7 +123,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             self.attachedRigidbody.gravityScale = 0;
             self.attachedRigidbody.AddForce(direction * 1000);
 
-            self.transform.SetPositionAndRotation(Vector3.up * -0.5f, Quaternion.identity);
+            self.transform.SetPositionAndRotation(Vector3.up * -0.5f + self.transform.position, Quaternion.identity);
         }
         //Charge Defence bullet
         private static void StopBulletOnGround(Collider2D self, Vector2 direction)

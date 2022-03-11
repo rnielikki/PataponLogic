@@ -19,7 +19,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (attackCommandType == AttackCommandType.ChargeAttack)
             {
                 var stoneForThrowing = _objectPool.Get();
-                stoneForThrowing.transform.SetParent(transform.root.parent);
                 stoneForThrowing.GetComponent<WeaponInstance>()
                     .Initialize(this, _material, _throwMass, _stoneTransform)
                     .Throw(650, 750);
