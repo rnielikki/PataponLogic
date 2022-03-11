@@ -41,6 +41,7 @@ namespace PataRoad.Core.Character.Hazorons
 
         public override CharacterSoundsCollection Sounds => _isDarkOne ?
             CharacterSoundLoader.Current.DarkOneSounds : CharacterSoundLoader.Current.HazoronSounds;
+        private float _maxAttackSight;
 
         private void Awake()
         {
@@ -79,6 +80,7 @@ namespace PataRoad.Core.Character.Hazorons
         {
             CurrentHitPoint = Stat.HitPoint;
             ClassData.InitLate(Stat);
+            _maxAttackSight = IsMeleeUnit ? CharacterEnvironment.MaxAttackDistance : Sight;
 
             _isReady = true;
         }
@@ -144,14 +146,49 @@ namespace PataRoad.Core.Character.Hazorons
 
         private void Update()
         {
-            if (_fullyGotPosition || !_isReady) return;
-            else if (_isOnTower)
+            if ((_fullyGotPosition && _isOnTower) || !_isReady) return;
+            if (!StatusEffectManager.CanContinue)
+            {
+                _animatingWalk = false;
+                return;
+            }
+            if (_isOnTower)
             {
                 if (DistanceCalculator.GetTargetOnSight(Sight) != null)
                 {
                     _gotPosition = true;
                     _fullyGotPosition = true;
                     Attack();
+                }
+                return;
+            }
+            else if (_fullyGotPosition)
+            {
+                var hasEnemyOnSight = DistanceCalculator.HasSightFromWorldDefault(_maxAttackSight);
+                if (IsAttacking && !hasEnemyOnSight)
+                {
+                    StopAttacking(false);
+                    if (!_animatingWalk)
+                    {
+                        _animatingWalk = true;
+                        CharAnimator.Animate("walk");
+                    }
+                }
+                else if (!IsAttacking && hasEnemyOnSight)
+                {
+                    _animatingWalk = false;
+                    Attack();
+                }
+                if (_animatingWalk)
+                {
+                    transform.position
+                        = Vector3.MoveTowards(
+                            transform.position, DefaultWorldPosition * Vector3.right, Stat.MovementSpeed * Time.deltaTime);
+                    if (transform.position.x == DefaultWorldPosition)
+                    {
+                        CharAnimator.Animate("Idle");
+                        _animatingWalk = false;
+                    }
                 }
                 return;
             }
@@ -164,11 +201,6 @@ namespace PataRoad.Core.Character.Hazorons
                     _gotPosition = false;
                 }
                 else DefaultWorldPosition = transform.position.x;
-            }
-            else if (!StatusEffectManager.CanContinue)
-            {
-                _animatingWalk = false;
-                return;
             }
             if (ClassData.IsInAttackDistance())
             {

@@ -159,11 +159,24 @@ namespace PataRoad.Core.Character
         public Vector2? GetTargetOnSight(float sight)
         {
             var raycast = GetRaycastHitOnForward(sight);
-            return raycast.transform?.position;
+            return raycast.transform != null ? raycast.transform.position : null;
         }
-        private RaycastHit2D GetRaycastHitOnForward(
-            float sight) => Physics2D.BoxCast(
-                (_target.transform.position.x * Vector2.right) - (_boxSize.x * _direction) + _boxcastYOffset,
+        /// <summary>
+        /// For Hazorons, if enemies are too far away, they must stop attacking and go to the world position
+        /// </summary>
+        /// <param name="sight">the sight of the character.</param>
+        /// <returns><c>true</c> if the enemy is in sight, otherwise <c>false</c>.</returns>
+        public bool HasSightFromWorldDefault(float sight)
+        {
+            float start;
+            if (_xDirection < 0) start = Mathf.Min(_character.DefaultWorldPosition, _target.transform.position.x);
+            else start = Mathf.Max(_character.DefaultWorldPosition, _target.transform.position.x);
+            return GetRaycastHitOnForward(sight, start).transform != null;
+        }
+        private RaycastHit2D GetRaycastHitOnForward(float sight) => GetRaycastHitOnForward(sight, _target.transform.position.x);
+        private RaycastHit2D GetRaycastHitOnForward(float sight, float startPosition)
+            => Physics2D.BoxCast(
+                (startPosition * Vector2.right) - (_boxSize.x * _direction) + _boxcastYOffset,
                 _boxSize,
                 0,
                 _direction,
