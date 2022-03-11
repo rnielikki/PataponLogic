@@ -42,9 +42,20 @@ namespace PataRoad.Core.Map.Levels
         }
         void ConnectHP(Character.Hazorons.Hazoron hazoron)
         {
+            _aliveCount++;
             var statusBar = hazoron.GetComponentInChildren<Character.HealthDisplay>();
             hazoron.OnDamageTaken = new UnityEngine.Events.UnityEvent<float>();
             hazoron.OnDamageTaken.AddListener(statusBar.UpdateBar);
+            hazoron.OnAfterDeath.AddListener(MarkAsDead);
+        }
+        void MarkAsDead()
+        {
+            _aliveCount--;
+            if (_aliveCount < 1)
+            {
+                MissionPoint.Current.FilledMissionCondition = true;
+                MissionPoint.Current.EndMission();
+            }
         }
     }
 }

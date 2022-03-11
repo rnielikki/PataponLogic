@@ -37,11 +37,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
         }
         public override float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance) =>
-            AdjustThrowingAttackDistanceByYPosition(attackDistance, yDistance);
-        public override float GetAttackDistance()
-        {
-            var weatherOffset = (Map.Weather.WeatherInfo.Current.Wind?.Magnitude ?? 0);
-            return base.GetAttackDistance() + weatherOffset;
-        }
+            attackDistance + 0.4f * Mathf.Max(0, Holder.RootTransform.position.y - yDistance);
     }
 }

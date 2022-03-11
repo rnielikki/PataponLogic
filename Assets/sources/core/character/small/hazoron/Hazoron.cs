@@ -147,7 +147,7 @@ namespace PataRoad.Core.Character.Hazorons
             if (_fullyGotPosition || !_isReady) return;
             else if (_isOnTower)
             {
-                if (DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)
+                if (DistanceCalculator.GetTargetOnSight(Sight) != null)
                 {
                     _gotPosition = true;
                     _fullyGotPosition = true;
@@ -178,7 +178,7 @@ namespace PataRoad.Core.Character.Hazorons
                 if (IsInPataponsSight(transform.position.x)) Register();
             }
             else if (!StatusEffectManager.IsOnStatusEffect
-                && DistanceCalculator.GetTargetOnSight(CharacterEnvironment.Sight) != null)
+                && DistanceCalculator.GetTargetOnSight(Sight) != null)
             {
                 if (!_animatingWalk)
                 {
