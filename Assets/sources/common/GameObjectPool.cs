@@ -1,9 +1,8 @@
-using PataRoad.Common;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace PataRoad.Commom
+namespace PataRoad.Common
 {
     public class GameObjectPool : MonoBehaviour
     {
@@ -21,7 +20,16 @@ namespace PataRoad.Commom
             newPool = new ObjectPool<GameObject>(
                 () => InstantiateObjectWithReleaseToPool(gObject, newPool),
                 (obj) => obj.SetActive(true),
-                (obj) => obj.SetActive(false),
+                (obj) =>
+                {
+                    var rigidbody = obj.GetComponent<Rigidbody2D>();
+                    if (rigidbody != null)
+                    {
+                        rigidbody.velocity = Vector2.zero;
+                        rigidbody.angularVelocity = 0;
+                    }
+                    obj.SetActive(false);
+                },
                 (obj) => Destroy(obj),
                 false,
                 initialSize,

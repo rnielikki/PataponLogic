@@ -1,4 +1,4 @@
-﻿using PataRoad.Commom;
+﻿using PataRoad.Common;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments.Logic

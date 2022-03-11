@@ -1,4 +1,4 @@
-﻿using PataRoad.Commom;
+﻿using PataRoad.Common;
 using UnityEngine;
 using UnityEngine.Pool;
 

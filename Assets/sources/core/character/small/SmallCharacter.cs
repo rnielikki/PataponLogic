@@ -60,7 +60,7 @@ namespace PataRoad.Core.Character
         public bool IsDead { get; private set; }
         public bool IsMeleeUnit => ClassData.IsMeleeUnit;
 
-        public UnityEvent<float> OnDamageTaken => null;
+        public UnityEvent<float> OnDamageTaken { get; set; } = null;
 
         // ----------- data from Patapon but for class data.
         /// <summary>
@@ -81,6 +81,9 @@ namespace PataRoad.Core.Character
         public bool UseCenterAsAttackTarget => Weapon.IsTargetingCenter;
 
         public bool IsAttacking { get; protected set; }
+        [SerializeField]
+        private bool _ignoreTumble;
+        public bool IgnoreTumble => _ignoreTumble;
         protected void Init()
         {
             _data = GetComponent<SmallCharacterData>();

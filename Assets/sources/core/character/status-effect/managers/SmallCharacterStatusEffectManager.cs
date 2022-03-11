@@ -57,7 +57,10 @@ namespace PataRoad.Core.Character
         }
         public override void Tumble()
         {
-            if (IsOnStatusEffect || IgnoreStatusEffect) return;
+            if (IsOnStatusEffect || IgnoreStatusEffect || _smallCharacter.IgnoreTumble)
+            {
+                return;
+            }
             StopEverythingBeforeStatusEffect(StatusEffectType.Tumble);
             _smallCharacter.CharAnimator.Animate("Sleep");
             base.Tumble();

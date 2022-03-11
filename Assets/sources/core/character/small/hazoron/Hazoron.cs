@@ -97,6 +97,16 @@ namespace PataRoad.Core.Character.Hazorons
                 ClassData.PerformCommandAction(Rhythm.Command.CommandSong.Ponpon);
             }
         }
+        public void ChangeAttackStatus()
+        {
+            _defend = !_defend;
+            if (IsAttacking)
+            {
+                //reset attack status.
+                StopAttacking(false);
+                Attack();
+            }
+        }
         public override void TakeDamage(int damage)
         {
             if (!_manualDeath) base.TakeDamage(damage);
