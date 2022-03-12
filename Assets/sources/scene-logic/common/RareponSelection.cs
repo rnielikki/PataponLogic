@@ -15,6 +15,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public int Index => _index;
         [SerializeField]
         Image _image;
+        RectTransform _imageRect;
         [SerializeField]
         Image _helmImage;
         [SerializeField]
@@ -51,6 +52,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public void Init(RareponSelector parent)
         {
             if (_data != null) return;
+            _imageRect = _image.GetComponent<RectTransform>();
             _container = Core.Global.GlobalData.CurrentSlot.RareponInfo.GetFromOpenRarepon(Index);
             _parent = parent;
             if (_container != null)
@@ -95,7 +97,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             {
                 _helmImage.enabled = false;
                 _bodyImage.color = _data.Color;
-                _image.sprite = _data.Image;
+                SetPivotAndUpdateImage(_data.Image);
                 _image.color = _data.Color;
             }
             foreach (var target in _nextEnableTarget)
@@ -171,7 +173,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                     Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(item.Item, item.Amount);
                 }
                 UpdateRequirements();
-                _parent.InventoryRefresher?.Refresh();
+                if (_parent.InventoryRefresher != null) _parent.InventoryRefresher.Refresh();
             }
         }
         internal void LevelUp()
@@ -207,6 +209,15 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             _bodyImage.enabled = show;
             _image.enabled = show;
             _questionImage.enabled = !show;
+        }
+        private void SetPivotAndUpdateImage(Sprite sprite)
+        {
+            _image.sprite = sprite;
+            _imageRect.sizeDelta = sprite.rect.size / 2;
+            _imageRect.anchoredPosition = new Vector2(
+                (sprite.rect.width / 2 - sprite.pivot.x) / 2,
+                -sprite.pivot.y + 8
+                );
         }
     }
 }
