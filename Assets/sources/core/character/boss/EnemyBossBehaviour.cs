@@ -128,5 +128,13 @@ namespace PataRoad.Core.Character.Bosses
             }
             return (distance, maxDistance);
         }
+        protected virtual void OnStatusEffect(StatusEffectType type)
+        {
+            if (type == StatusEffectType.Stagger || type == StatusEffectType.Knockback
+                || type == StatusEffectType.Sleep || type == StatusEffectType.Ice)
+            {
+                _boss.BossTurnManager.ClearActions();
+            }
+        }
     }
 }

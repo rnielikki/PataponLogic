@@ -44,8 +44,11 @@ namespace PataRoad.Core.Character.Bosses
         public void End()
         {
             _actionQueue.Clear();
-            RhythmTimer.Current?.OnTime?.RemoveListener(CountSingleTurn);
-            RhythmTimer.Current?.OnTime?.RemoveListener(CountComboTurn);
+            if (RhythmTimer.Current != null)
+            {
+                RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
+                RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
+            }
             Rhythm.Command.TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
             Attacking = false;
         }
@@ -65,6 +68,14 @@ namespace PataRoad.Core.Character.Bosses
             _actionQueue.Enqueue(actionName);
             Attacking = false;
             StartAttack();
+        }
+        /// <summary>
+        /// Cancel all actions. It also clears combo actin.
+        /// </summary>
+        public void ClearActions()
+        {
+            _actionQueue.Clear();
+            Attacking = false;
         }
 
         //-- combo

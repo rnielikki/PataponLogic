@@ -4,13 +4,6 @@
     {
         protected override void Init()
         {
-            _boss.StatusEffectManager.OnStatusEffect.AddListener(effect =>
-            {
-                if (effect == StatusEffectType.Stagger)
-                {
-                    _boss.BossTurnManager.DefineNextAction("fart");
-                }
-            });
             _boss.UseWalkingBackAnimation();
         }
         //Example
@@ -28,9 +21,16 @@
 
             //Toripon. Any other attacks just don't work. Don't even troll the birb with birb.
             var firstPon = _pataponsManager.FirstPatapon;
-            if (firstPon?.Type == Class.ClassType.Toripon) return new BossAttackMoveSegment("tornado", 1);
+            bool isMeleeUnit = false;
+            if (firstPon != null)
+            {
+                isMeleeUnit = firstPon.IsMeleeUnit;
+                if (firstPon.Type == Class.ClassType.Toripon)
+                {
+                    return new BossAttackMoveSegment("tornado", 1);
+                }
+            }
 
-            bool isMeleeUnit = firstPon?.IsMeleeUnit ?? false;
             if (_level >= 5 &&
                 _pataponsManager.transform.position.x > transform.position.x)
             {
@@ -54,5 +54,13 @@
             }
         }
         protected override string GetNextBehaviourOnIce() => "peck";
+        protected override void OnStatusEffect(StatusEffectType type)
+        {
+            if (type == StatusEffectType.Stagger)
+            {
+                _boss.BossTurnManager.DefineNextAction("fart");
+            }
+            else base.OnStatusEffect(type);
+        }
     }
 }
