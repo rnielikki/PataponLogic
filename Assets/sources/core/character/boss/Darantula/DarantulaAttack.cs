@@ -28,11 +28,10 @@ namespace PataRoad.Core.Character.Bosses
         }
         public override void StopAllAttacking()
         {
-            UseCustomDataPosition = false;
             _absorber.StopAttacking();
             base.StopAllAttacking();
         }
-        public void StartAbsorbing()
+        public void StartEating()
         {
             _absorber.StartAbsorbing();
         }

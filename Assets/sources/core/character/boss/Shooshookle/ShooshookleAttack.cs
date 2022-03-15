@@ -6,14 +6,38 @@ namespace PataRoad.Core.Character.Bosses
     {
         [SerializeField]
         private BossAttackParticle _spore;
+        [SerializeField]
+        private AbsorbComponent[] _absorbers;
         protected override void Init()
         {
             CharacterSize = 5;
+            _absorbers = GetComponentsInChildren<AbsorbComponent>();
             base.Init();
         }
         public void SporeAttack()
         {
             _spore.Attack();
+        }
+        public void StartEating()
+        {
+            foreach (var absorber in _absorbers)
+            {
+                absorber.StartAbsorbing();
+            }
+        }
+        internal void AbsorberAttack(int index) => _absorbers[index].Attack();
+        internal void StopAbsorberAttack(int index) => _absorbers[index].DisableAttacker();
+        public void StopEating()
+        {
+            foreach (var absorber in _absorbers)
+            {
+                absorber.StopAttacking();
+            }
+        }
+        public override void StopAllAttacking()
+        {
+            StopEating();
+            base.StopAllAttacking();
         }
         internal override void UpdateStatForBoss(int level)
         {

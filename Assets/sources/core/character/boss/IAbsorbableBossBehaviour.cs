@@ -4,5 +4,6 @@
     {
         public void SetAbsorbHit();
         public void Heal(int amount);
+        void StopAbsorbing();
     }
 }

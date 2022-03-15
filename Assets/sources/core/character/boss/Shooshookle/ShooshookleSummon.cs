@@ -1,29 +1,26 @@
 ﻿namespace PataRoad.Core.Character.Bosses
 {
-    class DarantulaSummon : SummonedBoss
+    public class ShooshookleSummon : SummonedBoss
     {
         protected override void Chakachaka()
         {
-            CharAnimator.Animate("poison");
+            CharAnimator.Animate("slam");
         }
-
         protected override void ChargedChakachaka()
         {
-            CharAnimator.Animate("poison");
+            CharAnimator.Animate("spore");
         }
-
-        protected override void ChargedPonpon()
-        {
-            CharAnimator.Animate("tailslide");
-        }
-
         protected override void Ponpon()
         {
-            CharAnimator.Animate("tailwhip");
+            CharAnimator.Animate("slam");
+        }
+        protected override void ChargedPonpon()
+        {
+            CharAnimator.Animate("sprout");
         }
         protected override void OnStarted()
         {
-            Map.Weather.WeatherInfo.Current.ChangeWeather(Map.Weather.WeatherType.Fog);
+            Map.Weather.WeatherInfo.Current.ChangeWeather(Map.Weather.WeatherType.Rain);
         }
         protected override void OnDead()
         {

@@ -25,28 +25,32 @@ namespace PataRoad.Core.Character.Bosses
         internal void Attack()
         {
             if (_absorber == null) return; //won't activate if it isn't enemy boss
-            _pataponToEat = null;
             _enabled = true;
             _collider.isTrigger = true;
         }
         public override void StopAttacking()
         {
+            DisableAttacker();
+            CancelAbsorbing();
+        }
+        public void DisableAttacker()
+        {
             _enabled = false;
             _collider.isTrigger = false;
-            CancelAbsorbing();
         }
         private void OnTriggerStay2D(Collider2D collision)
         {
             if (_enabled && _pataponToEat == null)
             {
                 var patapon = collision.gameObject.GetComponentInParent<Patapon>();
-                if (patapon != null)
+                if (patapon != null && !patapon.IsDead)
                 {
                     _pataponToEat = patapon;
                     patapon.BeTaken();
-                    if (_playDyingSoundBeforeDeath) PlayDyingSound(patapon);
                     patapon.transform.SetParent(transform);
                     patapon.transform.localPosition = _pataponOffset;
+
+                    if (_playDyingSoundBeforeDeath) PlayDyingSound(patapon);
 
                     _boss.UseCustomDataPosition = true;
                     (_boss.Boss as EnemyBoss).BossTurnManager.End(false);
@@ -66,8 +70,10 @@ namespace PataRoad.Core.Character.Bosses
         private void CancelAbsorbing()
         {
             if (_absorber == null || _pataponToEat == null) return;
+            _absorber.StopAbsorbing();
             _pataponToEat.CancelDeath();
             _pataponToEat = null;
+            _boss.UseCustomDataPosition = false;
         }
         private void PlayDyingSound(Patapon patapon) =>
             GameSound.SpeakManager.Current.Play(

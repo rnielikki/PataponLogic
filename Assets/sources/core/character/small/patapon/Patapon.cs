@@ -135,6 +135,7 @@ namespace PataRoad.Core.Character.Patapons
 
         public void MoveOnDrum(string drumName)
         {
+            if (IsDead) return;
             StopAttacking(true);
             if (LastSong != CommandSong.Ponpon && LastSong != CommandSong.Chakachaka
                 && !Charged)
@@ -150,6 +151,7 @@ namespace PataRoad.Core.Character.Patapons
         /// <param name="model">The command model, expected to be recieved from <see cref="PataponsManager"/>.</param>
         public void Act(RhythmCommandModel model)
         {
+            if (IsDead) return;
             var song = model.Song;
             OnFever = model.ComboType == ComboStatus.Fever;
             if (LastSong != song)

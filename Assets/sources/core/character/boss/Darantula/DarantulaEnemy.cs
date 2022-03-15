@@ -19,8 +19,6 @@
 
         protected override BossAttackMoveSegment GetNextBehaviour()
         {
-            return new BossAttackMoveSegment("absorb", 0, 10);
-
             if (_pataponsManager.ContainsClassOnly(Class.ClassType.Toripon))
             {
                 return new BossAttackMoveSegment("tailwhip", 0);
@@ -62,6 +60,10 @@
         {
             //It doesn't attk with feet
             return GetNextBehaviour().Action;
+        }
+        public void StopAbsorbing()
+        {
+            //sorry for boilerplate, but it's warm
         }
         public void Heal(int amount) => Boss.Heal(amount);
     }

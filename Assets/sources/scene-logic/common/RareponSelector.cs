@@ -101,12 +101,15 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void ApplyAll()
         {
-            var selection = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject?.GetComponent<RareponSelection>();
-            if (selection?.RareponData != null)
+            var currentObj = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            RareponSelection selection = null;
+            if (currentObj != null) selection = currentObj.GetComponent<RareponSelection>();
+            if (selection != null && selection.RareponData != null)
             {
                 Common.GameDisplay.ConfirmDialog
                     .Create($"Do you want to set all Patapons in current class with {selection.RareponData.Name}?")
                     .SetTargetToResume(this)
+                    .CallOkActionLater()
                     .SetOkAction(ApplyAllRarepons)
                     .SelectCancel();
             }
@@ -131,7 +134,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             _actionEventMap.enabled = false;
             gameObject.SetActive(false);
             Core.Global.GlobalData.Sound.PlaySelected();
-            _lastSelectNavigator?.Defrost();
+            if (_lastSelectNavigator != null) _lastSelectNavigator.Defrost();
             _onClosed?.Invoke();
         }
     }
