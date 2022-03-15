@@ -181,10 +181,10 @@ namespace PataRoad.Core.Character.Patapons.Display
             _renderer.Init(_currentFocus, renderTexture);
         }
         //Make sure to set always right value, even in Coroutine. Patapons in group are max 4 so it shouldn't take long
-        private void UpdateText() => _text.text = _group.Patapons.Count(pon => !pon.IsDead).ToString();
+        private void UpdateText() => _text.text = _group.Patapons.Count(pon => !pon.IsReallyDead).ToString();
         private void Update()
         {
-            if (_currentFocus.IsDead && _group != null)
+            if (_currentFocus.IsReallyDead && _group != null)
             {
                 Refresh(_group.Patapons);
                 UpdateText();

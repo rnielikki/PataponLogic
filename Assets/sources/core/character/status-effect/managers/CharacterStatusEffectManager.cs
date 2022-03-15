@@ -75,7 +75,7 @@ namespace PataRoad.Core.Character
         {
             if (IgnoreStatusEffect || IsOnStatusEffect || _character.IsDead) return;
             _character.StopAttacking(false);
-            (_character as MonoBehaviour)?.StopAllCoroutines();
+            if (_character is MonoBehaviour mono) mono.StopAllCoroutines();
             base.SetKnockback();
             OnKnockback();
 

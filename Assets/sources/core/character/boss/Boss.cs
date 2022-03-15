@@ -25,7 +25,7 @@ namespace PataRoad.Core.Character.Bosses
         public CharacterAnimator CharAnimator { get; private set; }
         public BossAttackData BossAttackData { get; private set; }
 
-        private readonly Dictionary<GameObject, BreakablePart> _breakableParts = new Dictionary<GameObject, BreakablePart>();
+        private readonly Dictionary<GameObject, IBossPart> _breakableParts = new Dictionary<GameObject, IBossPart>();
 
         public UnityEvent<float> OnDamageTaken { get; private set; }
 
@@ -51,9 +51,9 @@ namespace PataRoad.Core.Character.Bosses
         {
             BossAttackData = GetComponent<BossAttackData>();
             CharacterSize = BossAttackData.CharacterSize;
-            foreach (var part in GetComponentsInChildren<BreakablePart>())
+            foreach (var part in GetComponentsInChildren<IBossPart>())
             {
-                _breakableParts.Add(part.gameObject, part);
+                _breakableParts.Add((part as MonoBehaviour).gameObject, part);
             }
 
             CharAnimator = new CharacterAnimator(GetComponent<Animator>(), this);
@@ -81,6 +81,7 @@ namespace PataRoad.Core.Character.Bosses
             }
             foreach (var component in GetComponentsInChildren<BossAttackComponent>(true))
             {
+                component.StopAttacking();
                 component.SetDisable();
             }
             StatusEffectManager.RecoverAndIgnoreEffect();
@@ -97,7 +98,7 @@ namespace PataRoad.Core.Character.Bosses
         public void Heal(int amount)
         {
             CurrentHitPoint = Mathf.Min(CurrentHitPoint + amount, Stat.HitPoint);
-            OnDamageTaken.Invoke(CurrentHitPoint);
+            OnDamageTaken.Invoke((float)CurrentHitPoint / Stat.HitPoint);
         }
         public virtual float GetAttackValueOffset() => Random.Range(BossAttackData.MinLastDamageOffset, BossAttackData.MinLastDamageOffset);
         public virtual float GetDefenceValueOffset() => Random.Range(0, 1);
@@ -121,9 +122,9 @@ namespace PataRoad.Core.Character.Bosses
         }
         public float GetBrokenPartMultiplier(GameObject part, int damage)
         {
-            if (_breakableParts.TryGetValue(part, out BreakablePart breakable))
+            if (_breakableParts.TryGetValue(part, out IBossPart bossPart))
             {
-                return breakable.TakeDamage(damage);
+                return bossPart.TakeDamage(damage);
             }
             else return 1;
         }

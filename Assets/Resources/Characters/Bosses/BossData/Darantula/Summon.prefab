@@ -101,6 +101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6601569746055719832}
   - component: {fileID: 2725430199812183824}
+  - component: {fileID: 4551076814779088419}
   m_Layer: 8
   m_Name: bone_5
   m_TagString: Untagged
@@ -149,6 +150,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7.110373, y: 2.2492893}
   m_EdgeRadius: 0
+--- !u!114 &4551076814779088419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008553752332657824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14f734855debbe48924278aa27add4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _multiplier: 0.6
 --- !u!1 &1057240472089978989
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,8 +412,7 @@ MonoBehaviour:
     rid: 3406254390363553792
   _attackTypeResistance:
     rid: 3406254390363553793
-  Poison: {fileID: 6465251338826845758}
-  Absorber: {fileID: 6079826813928093092}
+  _poison: {fileID: 0}
   references:
     version: 2
     RefIds:
@@ -535,7 +548,7 @@ GameObject:
   - component: {fileID: 5184335593057980422}
   - component: {fileID: 1090700183900038332}
   - component: {fileID: 8565119698210216726}
-  - component: {fileID: 6079826813928093092}
+  - component: {fileID: 711748083052090179}
   m_Layer: 20
   m_Name: darantula-tail-end
   m_TagString: Untagged
@@ -676,7 +689,7 @@ MonoBehaviour:
   _imageOnBroken: {fileID: 21300000, guid: a90b8f3f40155f9478597a7e1a0db8ee, type: 3}
   _health: 4000
   _damageMultiplierOnBroken: 2
---- !u!114 &6079826813928093092
+--- !u!114 &711748083052090179
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -720,6 +733,8 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 0
   _elementalAttackType: 0
+  _onDeadSound: {fileID: 0}
+  _pataponOffset: {x: 3, y: -1, z: 0}
 --- !u!1 &2450189393139040566
 GameObject:
   m_ObjectHideFlags: 0
@@ -7072,6 +7087,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6378015983996762435}
   - component: {fileID: 5395269818166166152}
+  - component: {fileID: 1920942309456246143}
   m_Layer: 8
   m_Name: bone_5
   m_TagString: Untagged
@@ -7120,6 +7136,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.5, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1920942309456246143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6701096614743134947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14f734855debbe48924278aa27add4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _multiplier: 0.6
 --- !u!1 &7326687823530982241
 GameObject:
   m_ObjectHideFlags: 0
@@ -7226,6 +7255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8419742137754429671}
   - component: {fileID: 6537427969034064911}
+  - component: {fileID: 2034462679783766354}
   m_Layer: 8
   m_Name: bone_5
   m_TagString: Untagged
@@ -7274,6 +7304,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.8001223, y: 1.795557}
   m_EdgeRadius: 0
+--- !u!114 &2034462679783766354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7978803855844543860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14f734855debbe48924278aa27add4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _multiplier: 0.6
 --- !u!1 &8103714140174132085
 GameObject:
   m_ObjectHideFlags: 0
@@ -7586,6 +7629,7 @@ GameObject:
   - component: {fileID: 2039708863196489703}
   - component: {fileID: 8575121151244463084}
   - component: {fileID: 1927615462719970324}
+  - component: {fileID: 8226638977999944551}
   m_Layer: 8
   m_Name: head
   m_TagString: Untagged
@@ -7719,6 +7763,19 @@ MonoBehaviour:
   m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
+--- !u!114 &8226638977999944551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8650196513363990745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14f734855debbe48924278aa27add4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _multiplier: 1.5
 --- !u!1 &8703617668425244109
 GameObject:
   m_ObjectHideFlags: 0

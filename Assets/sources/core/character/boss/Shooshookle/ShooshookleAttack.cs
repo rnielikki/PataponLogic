@@ -2,24 +2,18 @@
 
 namespace PataRoad.Core.Character.Bosses
 {
-    class ManborothAttack : BossAttackData
+    public class ShooshookleAttack : BossAttackData
     {
         [SerializeField]
-        ParticleSystem _iceInhaleParticles;
-        [SerializeField]
-        BossAttackParticle _attackParticles;
+        private BossAttackParticle _spore;
         protected override void Init()
         {
-            CharacterSize = 7;
+            CharacterSize = 5;
             base.Init();
         }
-        public void InhaleIce()
+        public void SporeAttack()
         {
-            _iceInhaleParticles.Play();
-        }
-        public void ExhaleIce()
-        {
-            _attackParticles.Attack();
+            _spore.Attack();
         }
         internal override void UpdateStatForBoss(int level)
         {
@@ -30,10 +24,9 @@ namespace PataRoad.Core.Character.Bosses
             Boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * value));
             _stat.CriticalResistance += level * 0.05f;
             _stat.StaggerResistance += level * 0.05f;
-            _stat.KnockbackResistance += level * 0.05f;
-            _stat.FireResistance += level * 0.03f;
-            _stat.IceResistance += level * 0.03f;
-            _stat.SleepResistance += level * 0.03f;
+            _stat.FireResistance += level * 0.05f;
+            _stat.IceResistance += level * 0.05f;
+
         }
     }
 }

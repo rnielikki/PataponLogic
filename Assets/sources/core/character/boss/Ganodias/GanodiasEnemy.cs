@@ -7,7 +7,7 @@ namespace PataRoad.Core.Character.Bosses
         private bool _firstAttackDone;
         protected override void Init()
         {
-            _boss.UseWalkingBackAnimation();
+            Boss.UseWalkingBackAnimation();
         }
         protected override BossAttackMoveSegment GetNextBehaviour()
         {

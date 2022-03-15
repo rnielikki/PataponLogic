@@ -5,10 +5,10 @@ namespace PataRoad.Core.Character.Bosses
 {
     public abstract class EnemyBossBehaviour : UnityEngine.MonoBehaviour
     {
-        protected EnemyBoss _boss;
+        public EnemyBoss Boss { get; protected set; }
         protected Patapons.PataponsManager _pataponsManager;
         protected BossTurnManager _turnManager { get; private set; }
-        protected int _level => _boss.Level;
+        protected int _level => Boss.Level;
 
         public bool PartBroken { get; private set; }
         protected int _minCombo = 1;
@@ -21,12 +21,14 @@ namespace PataRoad.Core.Character.Bosses
         private int[] _predefinedComboLengthIndexed;
         private int _maxCombo = -1;
 
+        public bool UseCustomDataPosition { get; protected set; }
+
         internal void Init(EnemyBoss boss, Patapons.PataponsManager pataponsManager)
         {
-            if (_boss != null || boss == null) return;
-            _boss = boss;
+            if (Boss != null || boss == null) return;
+            Boss = boss;
             _pataponsManager = pataponsManager;
-            _turnManager = _boss.BossTurnManager;
+            _turnManager = Boss.BossTurnManager;
             foreach (var combo in _predefinedCombos)
             {
                 var length = combo.Length;
@@ -37,6 +39,7 @@ namespace PataRoad.Core.Character.Bosses
                 _predefinedCombosIndexed[length].Add(combo);
             }
             _predefinedComboLengthIndexed = _predefinedCombosIndexed.Keys.OrderBy(index => index).ToArray();
+            Boss.StatusEffectManager.OnStatusEffect.AddListener(OnStatusEffect);
             Init();
         }
         protected virtual void Init() { }
@@ -133,7 +136,7 @@ namespace PataRoad.Core.Character.Bosses
             if (type == StatusEffectType.Stagger || type == StatusEffectType.Knockback
                 || type == StatusEffectType.Sleep || type == StatusEffectType.Ice)
             {
-                _boss.BossTurnManager.ClearActions();
+                Boss.BossTurnManager.End();
             }
         }
     }

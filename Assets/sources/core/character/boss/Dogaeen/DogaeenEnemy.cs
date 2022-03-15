@@ -14,13 +14,13 @@
         }
         protected override void Init()
         {
-            _boss.UseWalkingBackAnimation();
+            Boss.UseWalkingBackAnimation();
         }
 
         protected override BossAttackMoveSegment GetNextBehaviour()
         {
             var firstPon = _pataponsManager.FirstPatapon;
-            var closest = _boss.DistanceCalculator.GetClosest();
+            var closest = Boss.DistanceCalculator.GetClosest();
 
             if (firstPon != null && firstPon.Type != Class.ClassType.Toripon)
             {

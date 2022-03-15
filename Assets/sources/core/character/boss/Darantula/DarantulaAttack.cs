@@ -5,31 +5,36 @@ namespace PataRoad.Core.Character.Bosses
     class DarantulaAttack : BossAttackData
     {
         [SerializeField]
-        private BossParticleCollision Poison;
-        [SerializeField]
-        private DarantulaAbsorbComponent Absorber;
+        private BossParticleCollision _poison;
+        private AbsorbComponent _absorber;
 
         protected override void Init()
         {
             CharacterSize = 10;
+            _absorber = GetComponentInChildren<AbsorbComponent>();
             base.Init();
         }
         public void PoisoinAttack()
         {
-            Poison.Attack();
+            _poison.Attack();
         }
         public void EatingAttack()
         {
-            Absorber.Attack();
+            _absorber.Attack();
         }
         public void StopEatingAttack()
         {
-            Absorber.StopAttacking();
+            _absorber.StopAttacking();
         }
         public override void StopAllAttacking()
         {
-            Absorber.StopAttacking();
+            UseCustomDataPosition = false;
+            _absorber.StopAttacking();
             base.StopAllAttacking();
+        }
+        public void StartAbsorbing()
+        {
+            _absorber.StartAbsorbing();
         }
         internal override void UpdateStatForBoss(int level)
         {
@@ -37,7 +42,7 @@ namespace PataRoad.Core.Character.Bosses
             _stat.MultipleDamage(value);
             _stat.DefenceMin += (level - 1) * 0.005f;
             _stat.DefenceMax += (level - 1) * 0.01f;
-            _boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * value));
+            Boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * value));
             _stat.CriticalResistance += level * 0.05f;
             _stat.StaggerResistance += level * 0.05f;
             _stat.FireResistance += level * 0.03f;

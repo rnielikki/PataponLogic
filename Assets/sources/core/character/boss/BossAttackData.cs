@@ -15,9 +15,9 @@ namespace PataRoad.Core.Character.Bosses
         public float MaxLastDamageOffset { get; protected set; } = 0;
         public CharacterAnimator CharAnimator { get; set; }
 
-        public bool UseCustomDataPosition { get; protected set; }
+        public bool UseCustomDataPosition { get; internal set; }
 
-        protected Boss _boss;
+        public Boss Boss { get; protected set; }
         public float CharacterSize { get; protected set; }
 
         private void Awake()
@@ -26,7 +26,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         protected virtual void Init()
         {
-            _boss = GetComponent<Boss>();
+            Boss = GetComponent<Boss>();
         }
         internal abstract void UpdateStatForBoss(int level);
 
@@ -38,23 +38,24 @@ namespace PataRoad.Core.Character.Bosses
             StopIgnoringStatusEffect();
         }
         public void Attack(BossAttackComponent component, GameObject target, Vector2 position,
-            Equipments.Weapons.AttackType attackType, Equipments.Weapons.ElementalAttackType elementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral,
+            Equipments.Weapons.AttackType attackType,
+            Equipments.Weapons.ElementalAttackType elementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral,
             bool allowZero = false)
         {
             MinLastDamageOffset = component.DamageOffsetMin;
             MaxLastDamageOffset = component.DamageOffsetMax;
-            _boss.AttackType = attackType;
-            _boss.ElementalAttackType = elementalAttackType;
-            Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat + component.AdditionalStat, target, position, allowZero);
+            Boss.AttackType = attackType;
+            Boss.ElementalAttackType = elementalAttackType;
+            Equipments.Logic.DamageCalculator.DealDamage(Boss, _stat + component.AdditionalStat, target, position, allowZero);
         }
         public virtual void SetCustomPosition() { }
         public void IgnoreStatusEffect()
         {
-            _boss.StatusEffectManager.IgnoreStatusEffect = true;
+            Boss.StatusEffectManager.IgnoreStatusEffect = true;
         }
         public void StopIgnoringStatusEffect()
         {
-            _boss.StatusEffectManager.IgnoreStatusEffect = false;
+            Boss.StatusEffectManager.IgnoreStatusEffect = false;
         }
     }
 }

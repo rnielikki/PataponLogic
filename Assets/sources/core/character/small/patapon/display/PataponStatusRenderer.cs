@@ -18,16 +18,16 @@ namespace PataRoad.Core.Character.Patapons.Display
 
         void OnPreCull()
         {
-            if (!_pon.IsDead) _rendererInfo.StartRenderMode(_renderingLayer);
+            if (!_pon.IsReallyDead) _rendererInfo.StartRenderMode(_renderingLayer);
         }
 
         void OnPostRender()
         {
-            if (!_pon.IsDead) _rendererInfo.EndRenderMode();
+            if (!_pon.IsReallyDead) _rendererInfo.EndRenderMode();
         }
         private void Update()
         {
-            if (_pon.IsDead) return;
+            if (_pon.IsReallyDead) return;
             Vector3 pos = _rendererInfo.Center;
             pos.z = _zOffset;
             transform.position = pos;

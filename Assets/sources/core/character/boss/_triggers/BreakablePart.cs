@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PataRoad.Core.Character.Bosses
 {
-    public class BreakablePart : MonoBehaviour
+    public class BreakablePart : MonoBehaviour, IBossPart
     {
         [SerializeField]
         Sprite _imageOnBroken;

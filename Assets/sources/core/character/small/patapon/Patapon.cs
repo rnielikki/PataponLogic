@@ -41,27 +41,62 @@ namespace PataRoad.Core.Character.Patapons
         private int _attackTypeIndex;
         public override int AttackTypeIndex => _attackTypeIndex;
 
+        /// <summary>
+        /// for RENDERER purpose to DISPLAY HOW MANY LEFT. may not suitable for other place.
+        /// </summary>
+        public bool IsReallyDead { get; private set; }
+
         public void BeEaten()
         {
             Eaten = true;
-            Die(true, false, 0);
+            IsReallyDead = true;
+            Die(true, false);
         }
 
         public void BeTaken()
         {
             Eaten = true;
-            Die(true, false, 1.5f);
+            MarkAsDead();
+            if (IsFlyingUnit)
+            {
+                CharAnimator.Animate("tori-fly-stop");
+            }
+            StatusEffectManager.RecoverAndIgnoreEffect();
         }
 
         protected override void BeforeDie()
         {
-            Group.RemovePon(this);
             if (!Eaten) base.BeforeDie();
         }
         protected override void AfterDie()
         {
+            IsReallyDead = true;
+            Group.RemovePon(this);
             Group.RemoveIfEmpty();
             if (!Eaten) Items.DeadPataponItemDrop.Create(transform.position, IsGeneral);
+        }
+        /// <summary>
+        /// Ensure death, after being marked as dead
+        /// </summary>
+        public void EnsureDeath()
+        {
+            if (gameObject == null || !Eaten) return;
+            IsReallyDead = true;
+            Destroy(gameObject);
+            AfterDie();
+            _onAfterDeath?.Invoke();
+        }
+        //Cancels boss taking attack. Use with BeTaken. DON'T call if it's really DEAD.
+        public void CancelDeath()
+        {
+            if (gameObject == null || !IsDead) return; //If dead and destroyed it won't do anything
+            IsDead = false;
+            Eaten = false;
+            CancelInvoke(nameof(DestroyThis));
+            transform.SetParent(Group.transform, true);
+            transform.rotation = Quaternion.identity;
+            StatusEffectManager.IgnoreStatusEffect = false;
+            StatusEffectManager.SetKnockback();
         }
         private void Awake()
         {

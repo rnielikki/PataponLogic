@@ -1,6 +1,6 @@
 ﻿namespace PataRoad.Core.Character.Bosses
 {
-    class DarantulaEnemy : EnemyBossBehaviour
+    class DarantulaEnemy : EnemyBossBehaviour, IAbsorbableBossBehaviour
     {
         protected override string[][] _predefinedCombos { get; set; } = new string[][]
         {
@@ -10,15 +10,17 @@
         };
         protected override void Init()
         {
-            _boss.UseWalkingBackAnimation();
+            Boss.UseWalkingBackAnimation();
         }
         public void SetAbsorbHit()
         {
-            _boss.CharAnimator.Animate("absorbing");
+            Boss.CharAnimator.Animate("absorbing");
         }
 
         protected override BossAttackMoveSegment GetNextBehaviour()
         {
+            return new BossAttackMoveSegment("absorb", 0, 10);
+
             if (_pataponsManager.ContainsClassOnly(Class.ClassType.Toripon))
             {
                 return new BossAttackMoveSegment("tailwhip", 0);
@@ -61,6 +63,6 @@
             //It doesn't attk with feet
             return GetNextBehaviour().Action;
         }
-        internal void Heal(int amount) => _boss.Heal(amount);
+        public void Heal(int amount) => Boss.Heal(amount);
     }
 }

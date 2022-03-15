@@ -57,7 +57,7 @@ namespace PataRoad.Core.Character
         public void WeaponAttack(AttackCommandType type) => Weapon.Attack(type);
 
         public virtual CharacterSoundsCollection Sounds { get; protected set; }
-        public bool IsDead { get; private set; }
+        public bool IsDead { get; protected set; }
         public bool IsMeleeUnit => ClassData.IsMeleeUnit;
 
         public UnityEvent<float> OnDamageTaken { get; set; } = null;
@@ -124,7 +124,7 @@ namespace PataRoad.Core.Character
         public void TumbleStatusAttack() => StatusEffectManager.TumbleAttack();
         public virtual void Die() => Die(true);
         public void DieWithoutInvoking() => Die(false);
-        protected void Die(bool invokeAfterDeath, bool animate = true, float delay = 1)
+        protected void Die(bool invokeAfterDeath, bool animate = true)
         {
             if (IsDead) return;
             MarkAsDead();
@@ -133,25 +133,33 @@ namespace PataRoad.Core.Character
                 CharAnimator.Animate("tori-fly-stop");
             }
             StatusEffectManager.RecoverAndIgnoreEffect();
-            if (animate) CharAnimator.PlayDyingAnimation();
-            Destroy(gameObject, delay);
-
+            if (animate)
+            {
+                CharAnimator.PlayDyingAnimation();
+                Destroy(gameObject, 1);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
             AfterDie();
             if (invokeAfterDeath) _onAfterDeath?.Invoke();
         }
+        protected void DestroyThis() => Destroy(gameObject);
         protected virtual void BeforeDie()
         {
             GameSound.SpeakManager.Current.Play(Sounds.OnDead);
         }
-        protected virtual void AfterDie() { }
+        protected virtual void AfterDie()
+        {
+            CurrentHitPoint = 0;
+        }
         protected void MarkAsDead()
         {
             IsDead = true;
-            CurrentHitPoint = 0;
             BeforeDie();
             StopAttacking(false);
         }
-
         protected virtual void StopWeaponAttacking() => Weapon.StopAttacking();
         public abstract float GetAttackValueOffset();
         public abstract float GetDefenceValueOffset();

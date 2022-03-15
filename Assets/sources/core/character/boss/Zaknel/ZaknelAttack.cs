@@ -18,18 +18,18 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void EarthquakeAttack()
         {
-            _boss.AttackType = Equipments.Weapons.AttackType.Crush;
-            _boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
-            _boss.StatusEffectManager.TumbleAttack(true);
+            Boss.AttackType = Equipments.Weapons.AttackType.Crush;
+            Boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
+            Boss.StatusEffectManager.TumbleAttack(true);
         }
         public void GrowlAttack()
         {
             StopIgnoringStatusEffect();
-            _boss.AttackType = Equipments.Weapons.AttackType.Magic;
-            _boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
-            foreach (var target in _boss.DistanceCalculator.GetAllAbsoluteTargetsOnFront())
+            Boss.AttackType = Equipments.Weapons.AttackType.Magic;
+            Boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
+            foreach (var target in Boss.DistanceCalculator.GetAllAbsoluteTargetsOnFront())
             {
-                Equipments.Logic.DamageCalculator.DealDamage(_boss, _stat, target.gameObject, target.transform.position);
+                Equipments.Logic.DamageCalculator.DealDamage(Boss, _stat, target.gameObject, target.transform.position);
             }
         }
         internal override void UpdateStatForBoss(int level)
@@ -38,7 +38,7 @@ namespace PataRoad.Core.Character.Bosses
             _stat.MultipleDamage(value);
             _stat.DefenceMin += (level - 1) * 0.005f;
             _stat.DefenceMax += (level - 1) * 0.01f;
-            _boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * value));
+            Boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * value));
             _stat.CriticalResistance += level * 0.05f;
             _stat.StaggerResistance += level * 0.05f;
             _stat.KnockbackResistance += level * 0.05f;

@@ -4,7 +4,7 @@
     {
         protected override void Init()
         {
-            _boss.UseWalkingBackAnimation();
+            Boss.UseWalkingBackAnimation();
         }
         //Example
         protected override BossAttackMoveSegment GetNextBehaviour()
@@ -58,7 +58,7 @@
         {
             if (type == StatusEffectType.Stagger)
             {
-                _boss.BossTurnManager.DefineNextAction("fart");
+                Boss.BossTurnManager.DefineNextAction("fart");
             }
             else base.OnStatusEffect(type);
         }
