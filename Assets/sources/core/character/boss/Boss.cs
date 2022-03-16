@@ -47,6 +47,7 @@ namespace PataRoad.Core.Character.Bosses
 
         public virtual bool IsAttacking { get; protected set; }
 
+        public abstract int GetLevel();
         public virtual void Init()
         {
             BossAttackData = GetComponent<BossAttackData>();
@@ -68,8 +69,7 @@ namespace PataRoad.Core.Character.Bosses
                 OnDamageTaken = new UnityEvent<float>();
                 OnDamageTaken.AddListener(health.UpdateBar);
             }
-
-            CharAnimator.Animate("Idle");
+            BossAttackData.OnIdle();
         }
         public virtual void Die()
         {
@@ -113,12 +113,13 @@ namespace PataRoad.Core.Character.Bosses
         public virtual void StopAttacking(bool pause)
         {
             BossAttackData.StopAllAttacking();
-            CharAnimator.Animate("Idle");
+            BossAttackData.OnIdle();
         }
 
-        public virtual void TakeDamage(int damage)
+        public virtual bool TakeDamage(int damage)
         {
             CurrentHitPoint -= damage;
+            return true;
         }
         public float GetBrokenPartMultiplier(GameObject part, int damage)
         {

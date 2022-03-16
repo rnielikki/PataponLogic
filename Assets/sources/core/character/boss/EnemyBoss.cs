@@ -26,6 +26,7 @@ namespace PataRoad.Core.Character.Bosses
         public override bool IsAttacking => BossTurnManager.Attacking;
 
         private float MaxAttackDistance = -1;
+        public override int GetLevel() => Level;
 
         void Awake()
         {
@@ -56,7 +57,7 @@ namespace PataRoad.Core.Character.Bosses
                 Map.MissionPoint.Current.EndMission();
             }
         }
-        public override void TakeDamage(int damage)
+        public override bool TakeDamage(int damage)
         {
             base.TakeDamage(damage);
             if (!_movingBackQueued)
@@ -69,6 +70,7 @@ namespace PataRoad.Core.Character.Bosses
                     BossTurnManager.OnAttackEnd.AddListener(StartMovingBack);
                 }
             }
+            return true;
             bool changedPhase(float hp)
             {
                 int phase = _phase;
@@ -124,10 +126,10 @@ namespace PataRoad.Core.Character.Bosses
             //phase -1 : On Ice. No moving, just ATTACK
             if (StatusEffectManager.CurrentStatusEffect == StatusEffectType.Ice)
             {
-                CharAnimator.Animate("Idle");
+                BossAttackData.OnIdle();
                 BossTurnManager.End();
                 CalculateAttackOnIce();
-                BossTurnManager.StartAttack();
+                BossTurnManager.StartAttack(0);
             }
             //phase 0: moving back.
             if (_movingBack)
@@ -190,9 +192,9 @@ namespace PataRoad.Core.Character.Bosses
         protected void StartAttackingMode()
         {
             _moving = false;
-            CharAnimator.Animate("Idle");
+            BossAttackData.OnIdle();
             if (BossTurnManager.IsEmpty) CalculateAttack();
-            BossTurnManager.StartAttack();
+            BossTurnManager.StartAttack(1);
             _zoom.enabled = false;
         }
         private void OnDestroy()

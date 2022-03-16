@@ -306,7 +306,7 @@ namespace PataRoad.Core.Character.Patapons
         {
             return LastPerfectionRate;
         }
-        public override void TakeDamage(int damage)
+        public override bool TakeDamage(int damage)
         {
             if (damage < 0)
             {
@@ -315,6 +315,7 @@ namespace PataRoad.Core.Character.Patapons
             }
             base.TakeDamage(damage);
             Group.UpdateHitPoint(this);
+            return true;
         }
         /// <summary>
         /// DON'T CALL THIS METHOD SEPARATELY WITHOUT <see cref="Display.PataponsHitPointDisplay.Refresh"/>. CALL ONLY IN <see cref="PataponGroup"/>. Otherwise heal status won't displayed!

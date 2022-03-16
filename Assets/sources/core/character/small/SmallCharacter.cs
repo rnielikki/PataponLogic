@@ -174,7 +174,11 @@ namespace PataRoad.Core.Character
         {
             Stat.HitPoint = CurrentHitPoint = point;
         }
-        public virtual void TakeDamage(int damage) => CurrentHitPoint -= damage;
+        public virtual bool TakeDamage(int damage)
+        {
+            CurrentHitPoint -= damage;
+            return true;
+        }
 
         public void ReceiveWeather(Map.Weather.WeatherType weatherType)
         {

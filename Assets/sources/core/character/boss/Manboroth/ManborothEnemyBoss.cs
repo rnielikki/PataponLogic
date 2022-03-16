@@ -55,9 +55,9 @@ namespace PataRoad.Core.Character.Bosses
             _changingPhase = true;
             BossTurnManager.DefineNextAction("freeze");
         }
-        public override void TakeDamage(int damage)
+        public override bool TakeDamage(int damage)
         {
-            if (_changingPhase) return;
+            if (_changingPhase) return true;
             if (_status == ManborothStatus.NotFrozen) base.TakeDamage(damage);
             else
             {
@@ -81,6 +81,7 @@ namespace PataRoad.Core.Character.Bosses
                     }
                 }
             }
+            return true; //always displays damage.
         }
     }
 }

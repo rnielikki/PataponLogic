@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _arm: {fileID: 8534278761566377201}
-  _fullHitPoint: 2500
+  _fullHitPoint: 100
 --- !u!1 &281592240594187135
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +58,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5532152643693297790}
   - component: {fileID: 4437029845856760525}
+  - component: {fileID: 3194658904330083699}
   m_Layer: 20
   m_Name: bone_5
   m_TagString: Untagged
@@ -107,6 +108,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3194658904330083699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281592240594187135}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a91a1ca035c0404fb5c7c324b460fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &890227344567728355
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2435113421888992927}
   - component: {fileID: 2972557415203720046}
+  - component: {fileID: 6233852621588865835}
   m_Layer: 20
   m_Name: bone_3
   m_TagString: Untagged
@@ -166,6 +180,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6233852621588865835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890227344567728355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a91a1ca035c0404fb5c7c324b460fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1328066907067195497
 GameObject:
   m_ObjectHideFlags: 0
@@ -292,6 +318,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6478769477142447608}
   - component: {fileID: 4673649079311753437}
+  - component: {fileID: 5824998060797107763}
   m_Layer: 20
   m_Name: bone_7
   m_TagString: Untagged
@@ -341,6 +368,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5824998060797107763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1948176707932100868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a91a1ca035c0404fb5c7c324b460fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2585522498103185437
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +423,7 @@ GameObject:
   - component: {fileID: 3790351163304398051}
   - component: {fileID: 1268456652151899390}
   - component: {fileID: 9146730459938683616}
+  - component: {fileID: 3666531421735749593}
   m_Layer: 20
   m_Name: bone_8
   m_TagString: Untagged
@@ -481,6 +521,18 @@ MonoBehaviour:
   _onDeadSound: {fileID: 0}
   _pataponOffset: {x: 2, y: 0, z: 0}
   _playDyingSoundBeforeDeath: 0
+--- !u!114 &3666531421735749593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2586176399267557242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a91a1ca035c0404fb5c7c324b460fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4193406697504179689
 GameObject:
   m_ObjectHideFlags: 0
@@ -5533,6 +5585,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3718277786772353071}
   - component: {fileID: 8966884867863310668}
+  - component: {fileID: 5242999236850842610}
   m_Layer: 20
   m_Name: bone_1
   m_TagString: Untagged
@@ -5582,3 +5635,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5242999236850842610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8806573560921015145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a91a1ca035c0404fb5c7c324b460fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

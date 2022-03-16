@@ -8,10 +8,13 @@ namespace PataRoad.Core.Character.Bosses
         private BossAttackParticle _spore;
         [SerializeField]
         private AbsorbComponent[] _absorbers;
+        private ShooshookleArm[] _arms;
+        private int _lostArms;
         protected override void Init()
         {
             CharacterSize = 5;
             _absorbers = GetComponentsInChildren<AbsorbComponent>();
+            _arms = GetComponentsInChildren<ShooshookleArm>();
             base.Init();
         }
         public void SporeAttack()
@@ -39,6 +42,21 @@ namespace PataRoad.Core.Character.Bosses
             StopEating();
             base.StopAllAttacking();
         }
+        internal override void OnIdle()
+        {
+            base.OnIdle();
+            if (_lostArms > 0
+                && Boss.StatusEffectManager.CurrentStatusEffect != StatusEffectType.Ice
+                && Common.Utils.RandomByProbability(Mathf.Sqrt(Boss.GetLevel()) * _lostArms / 5))
+            {
+                foreach (var arm in _arms)
+                {
+                    arm.RestoreArm();
+                }
+                _lostArms = 0;
+            }
+        }
+        internal void LoseArm() => _lostArms++;
         internal override void UpdateStatForBoss(int level)
         {
             var value = 0.8f + (level * 0.2f);

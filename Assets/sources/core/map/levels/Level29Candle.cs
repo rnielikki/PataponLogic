@@ -45,7 +45,7 @@ namespace PataRoad.Core.Map.Levels
             _particles.Stop();
             base.Die();
         }
-        public override void TakeDamage(int damage)
+        public override bool TakeDamage(int damage)
         {
             CurrentHitPoint -= damage;
             if (CurrentHitPoint > 0)
@@ -53,6 +53,7 @@ namespace PataRoad.Core.Map.Levels
                 var main = _particles.main;
                 main.startSizeMultiplier = (float)CurrentHitPoint / _stat.HitPoint;
             }
+            return true;
         }
         public void ReceiveWeather(WeatherType weatherType)
         {

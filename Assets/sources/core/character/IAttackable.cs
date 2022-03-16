@@ -30,7 +30,8 @@
         /// <summary>
         /// The DIRECT damage the object will get. Expected to be calculated through <see cref="Equipment.Logic.DamageCalculator"/>.
         /// </summary>
-        public void TakeDamage(int damage);
+        /// <returns><c>true</c> if damage should be displayed (mostly "is received"), otherwise <c>false</c>.</returns>
+        public bool TakeDamage(int damage);
 
         /// <summary>
         /// Calls when health is 0. This should contain destroying action; like destroying animation -> destroy

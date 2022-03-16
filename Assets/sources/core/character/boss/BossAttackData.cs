@@ -57,5 +57,9 @@ namespace PataRoad.Core.Character.Bosses
         {
             Boss.StatusEffectManager.IgnoreStatusEffect = false;
         }
+        internal virtual void OnIdle()
+        {
+            CharAnimator.Animate("Idle");
+        }
     }
 }

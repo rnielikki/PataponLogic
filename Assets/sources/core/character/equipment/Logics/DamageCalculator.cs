@@ -36,7 +36,6 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     if (damage != 0)
                     {
                         SendDamage(receiver, damage);
-                        _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon, false);
                     }
                 }
             }
@@ -49,8 +48,10 @@ namespace PataRoad.Core.Character.Equipments.Logic
                     damage = (int)(damage * boss.GetBrokenPartMultiplier(target, damage));
                 }
 
-                SendDamage(receiver, damage);
-                _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon, isCritical);
+                if (SendDamage(receiver, damage))
+                {
+                    _damageDisplay.DisplayDamage(damage, point, attacker is Patapons.Patapon, isCritical);
+                }
 
                 if (!CheckIfDie(receiver, target))
                 {
@@ -128,8 +129,8 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 * (1 - attackable.Stat.FireResistance)
                 * attackable.AttackTypeResistance.FireMultiplier
                 ));
-            SendDamage(attackable, damage);
-            if (displayDamage) _damageDisplay.DisplayDamage(damage, objectTransform.position, false, false);
+            var receivedDamage = SendDamage(attackable, damage);
+            if (displayDamage && receivedDamage) _damageDisplay.DisplayDamage(damage, objectTransform.position, false, false);
             return CheckIfDie(attackable, targetObject, false);
         }
         private static bool CheckIfDie(IAttackable target, GameObject targetObject, bool instantKill = true)
@@ -143,10 +144,11 @@ namespace PataRoad.Core.Character.Equipments.Logic
             }
             else return false;
         }
-        private static void SendDamage(IAttackable target, int damage)
+        private static bool SendDamage(IAttackable target, int damage)
         {
-            target.TakeDamage(damage);
+            var received = target.TakeDamage(damage);
             target.OnDamageTaken?.Invoke((float)target.CurrentHitPoint / target.Stat.HitPoint);
+            return received;
         }
         private static (int damage, bool isCritical) GetFinalDamage(
             IAttacker attacker,

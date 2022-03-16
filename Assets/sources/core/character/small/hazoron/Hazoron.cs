@@ -109,9 +109,10 @@ namespace PataRoad.Core.Character.Hazorons
                 Attack();
             }
         }
-        public override void TakeDamage(int damage)
+        public override bool TakeDamage(int damage)
         {
             if (!_manualDeath) base.TakeDamage(damage);
+            return !_manualDeath;
         }
         public override float GetAttackValueOffset()
         {

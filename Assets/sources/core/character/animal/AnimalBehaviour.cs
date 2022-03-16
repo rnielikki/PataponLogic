@@ -122,10 +122,11 @@ namespace PataRoad.Core.Character.Animal
             CharAnimator.Animate("Idle");
         }
 
-        public virtual void TakeDamage(int damage)
+        public virtual bool TakeDamage(int damage)
         {
             CurrentHitPoint -= damage;
             _animalData.OnDamaged();
+            return true;
         }
         private void Update()
         {

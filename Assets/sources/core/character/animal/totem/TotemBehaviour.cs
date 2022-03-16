@@ -152,9 +152,10 @@ namespace PataRoad.Core.Character.Animal
             //do you even attk lol.
         }
 
-        public void TakeDamage(int damage)
+        public bool TakeDamage(int damage)
         {
             CurrentHitPoint -= damage;
+            return true;
         }
         private void Update()
         {

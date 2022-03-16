@@ -18,13 +18,16 @@ namespace PataRoad.Core.Character.Bosses
         private float _lastPerfectionRate;
         private bool _charged;
         private SpriteRenderer[] _renderers;
+        private int _level;
+        public override int GetLevel() => _level;
 
         public override void Init() => Init(false);
         public void Init(bool reborn)
         {
             base.Init();
             var map = Global.GlobalData.CurrentSlot.MapInfo.GetMapByIndex(_connectedMapIndex);
-            BossAttackData.UpdateStatForBoss(map.Level);
+            _level = map.Level;
+            BossAttackData.UpdateStatForBoss(_level);
             _pataponManagerTransform = FindObjectOfType<Patapons.PataponsManager>().transform;
             DistanceCalculator = DistanceCalculator.GetBossDistanceCalculator(this);
             _renderers = GetComponentsInChildren<SpriteRenderer>();
@@ -76,7 +79,7 @@ namespace PataRoad.Core.Character.Bosses
             }
             _animatingWalking = false;
             _animatingIdle = true;
-            CharAnimator.Animate("Idle");
+            BossAttackData.OnIdle();
 
             return false;
         }
@@ -108,9 +111,12 @@ namespace PataRoad.Core.Character.Bosses
                 }
                 else
                 {
-                    if (!_animatingIdle) CharAnimator.Animate("Idle");
+                    if (!_animatingIdle)
+                    {
+                        BossAttackData.OnIdle();
+                        _animatingIdle = true;
+                    }
                     _animatingWalking = false;
-                    _animatingIdle = true;
                 }
             }
             else if (IsDead)

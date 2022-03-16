@@ -15,6 +15,8 @@ namespace PataRoad.Core.Character
         int _index;
         private int _level;
         private int _maxLevel;
+
+        bool _lockFromDestroying;
         protected override void Start()
         {
             base.Start();
@@ -28,6 +30,8 @@ namespace PataRoad.Core.Character
                 while (_currentCount < _spawnAmount)
                 {
                     yield return new WaitForSeconds(_spawnInterval);
+
+                    _lockFromDestroying = true;
                     var spawnedObject = Instantiate(_spawnTarget[_index], transform.parent);
                     spawnedObject.transform.position = transform.position;
 
@@ -44,6 +48,7 @@ namespace PataRoad.Core.Character
                         }
                     }
                     _index = (_index + 1) % _spawnTarget.Length;
+                    _lockFromDestroying = false;
                 }
             }
         }
@@ -55,8 +60,13 @@ namespace PataRoad.Core.Character
         }
         public override void Die()
         {
-            StopAllCoroutines();
-            base.Die();
+            StartCoroutine(WaitUntilEnd());
+            System.Collections.IEnumerator WaitUntilEnd()
+            {
+                yield return new WaitUntil(() => !_lockFromDestroying);
+                base.Die();
+                StopAllCoroutines();
+            }
         }
     }
 }

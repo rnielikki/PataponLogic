@@ -44,11 +44,12 @@ namespace PataRoad.Core.Character
             _renderer.color = Color.black;
         }
 
-        public void TakeDamage(int damage)
+        public bool TakeDamage(int damage)
         {
             CurrentHitPoint -= damage;
             var percent = Mathf.Clamp01((float)CurrentHitPoint / Stat.HitPoint);
             _renderer.color = _colorOverHealth.Evaluate(percent);
+            return false; //I don't wanna show grass taking damage
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {

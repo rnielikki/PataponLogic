@@ -2,7 +2,7 @@
 
 namespace PataRoad.Core.Character.Bosses
 {
-    public class ShooshookleArm : MonoBehaviour, IBossPart
+    public class ShooshookleArm : MonoBehaviour
     {
         private ParticleSystem _particle;
         [SerializeField]
@@ -10,19 +10,22 @@ namespace PataRoad.Core.Character.Bosses
         [SerializeField]
         private int _fullHitPoint;
         private int _currentHitPoint;
+        private ShooshookleAttack _parent;
         // Use this for initialization
         void Start()
         {
             _particle = GetComponentInChildren<ParticleSystem>();
             _currentHitPoint = _fullHitPoint;
+            _parent = GetComponentInParent<ShooshookleAttack>();
         }
         void BreakArm()
         {
             if (!_arm.activeSelf) return;
             _arm.SetActive(false);
             _particle.Play();
+            _parent.LoseArm();
         }
-        void RestoreArm()
+        internal void RestoreArm()
         {
             if (_arm.activeSelf) return;
             _currentHitPoint = _fullHitPoint;
@@ -30,7 +33,7 @@ namespace PataRoad.Core.Character.Bosses
             _particle.Play();
         }
 
-        public float TakeDamage(int damage)
+        internal void TakeDamage(int damage)
         {
             _currentHitPoint -= damage;
             if (_currentHitPoint <= 0)
@@ -38,7 +41,6 @@ namespace PataRoad.Core.Character.Bosses
                 _currentHitPoint = 0;
                 BreakArm();
             }
-            return 0.8f;
         }
     }
 }

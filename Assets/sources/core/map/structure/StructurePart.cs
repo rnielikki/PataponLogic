@@ -32,10 +32,11 @@ namespace PataRoad.Core.Map.Levels
             }
             Destroy(gameObject);
         }
-        public override void TakeDamage(int damage)
+        public override bool TakeDamage(int damage)
         {
             base.TakeDamage(damage);
             _parent.TakeDamage(damage);
+            return true;
         }
     }
 }

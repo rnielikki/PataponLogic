@@ -69,7 +69,7 @@ namespace PataRoad.Core.Character
             _onDestroy.Invoke();
             if (_animator != null) _animator.Play("die");
         }
-        public virtual void TakeDamage(int damage)
+        public virtual bool TakeDamage(int damage)
         {
             //Can attach health status or change sprite etc.
             CurrentHitPoint -= damage;
@@ -81,6 +81,7 @@ namespace PataRoad.Core.Character
                     sprite.color = _colorOverHealth.Evaluate(percent);
                 }
             }
+            return true;
         }
         private void SetSprites(Transform tr)
         {

@@ -58,9 +58,10 @@ namespace PataRoad.Core.Map.Levels
             return 1;
         }
 
-        public void TakeDamage(int damage)
+        public bool TakeDamage(int damage)
         {
             CurrentHitPoint -= damage;
+            return true;
         }
     }
 }

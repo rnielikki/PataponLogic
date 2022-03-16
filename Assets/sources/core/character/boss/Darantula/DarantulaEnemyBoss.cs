@@ -40,9 +40,10 @@ namespace PataRoad.Core.Character.Bosses
             _renderers = GetComponentsInChildren<UnityEngine.SpriteRenderer>();
             ShowIfRain(WeatherInfo.Current.CurrentWeather);
         }
-        public override void TakeDamage(int damage)
+        public override bool TakeDamage(int damage)
         {
-            if (_isVisible) base.TakeDamage(damage);
+            if (_isVisible) return base.TakeDamage(damage);
+            else return false;
         }
         private void SetRendererOpacity(float opacity)
         {

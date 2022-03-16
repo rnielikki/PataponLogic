@@ -1,5 +1,6 @@
 ﻿
 using PataRoad.Core.Rhythm;
+using PataRoad.Core.Rhythm.Command;
 using System.Collections.Generic;
 
 namespace PataRoad.Core.Character.Bosses
@@ -18,6 +19,7 @@ namespace PataRoad.Core.Character.Bosses
         private string _current;
         private bool _willAttackEnd;
         private readonly BossAttackData _data;
+        private int _delay;
         internal BossTurnManager(BossAttackData data)
         {
             _data = data;
@@ -27,18 +29,19 @@ namespace PataRoad.Core.Character.Bosses
         /// <summary>
         /// Starts the boss attack from queue. This ends when queue ends.
         /// </summary>
-        public void StartAttack()
+        public void StartAttack(int turnDelay)
         {
             if (Attacking) return;
             Attacking = true;
             _turnCount = 0;
-            if (_actionQueue.Count > 1)
+            if (turnDelay == 0)
             {
-                Rhythm.Command.TurnCounter.OnNonPlayerTurn.AddListener(WillStartComboAttack);
+                Launch();
             }
             else
             {
-                Rhythm.Command.TurnCounter.OnNonPlayerTurn.AddListener(CountSingleAttack);
+                _delay = turnDelay * 4 - 1;
+                RhythmTimer.Current.OnTime.AddListener(WaitForDelay);
             }
         }
         public void End(bool stopAllAttacking = true)
@@ -46,6 +49,7 @@ namespace PataRoad.Core.Character.Bosses
             _actionQueue.Clear();
             if (RhythmTimer.Current != null)
             {
+                RhythmTimer.Current.OnTime.RemoveListener(WaitForDelay);
                 RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
                 RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
             }
@@ -67,7 +71,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             End();
             _actionQueue.Enqueue(actionName);
-            StartAttack();
+            StartAttack(0);
         }
         //-- combo
         public void SetComboAttack(IEnumerable<string> actions)
@@ -146,6 +150,26 @@ namespace PataRoad.Core.Character.Bosses
             Attacking = false;
             OnAttackEnd.Invoke();
             OnAttackEnd.RemoveAllListeners();
+        }
+        private void WaitForDelay()
+        {
+            if (_delay == 0)
+            {
+                Launch();
+                RhythmTimer.Current.OnTime.RemoveListener(WaitForDelay);
+            }
+            _delay--;
+        }
+        private void Launch()
+        {
+            if (_actionQueue.Count > 1)
+            {
+                TurnCounter.OnNonPlayerTurn.AddListener(WillStartComboAttack);
+            }
+            else
+            {
+                TurnCounter.OnNonPlayerTurn.AddListener(CountSingleAttack);
+            }
         }
     }
 }
