@@ -12,19 +12,19 @@ namespace PataRoad.Common.GameDisplay
         private UnityEngine.Events.UnityAction _callback;
         private float _speed;
         private static GameObject _fadingResource { get; set; }
-        public static void Create(bool fadingIn, float speed = 2, UnityEngine.Events.UnityAction callback = null)
+        public static void Create(bool fadingIn, float speed, Color color, UnityEngine.Events.UnityAction callback = null)
         {
             if (_fadingResource == null)
             {
                 _fadingResource = Resources.Load<GameObject>("Common/Display/FadeScreen");
             }
-
+            if (speed < 1) speed = 2;
             Core.Global.GlobalData.GlobalInputActions.EnableAllInputs();
             Instantiate(_fadingResource)
                 .GetComponent<ScreenFading>()
-                .Set(fadingIn, speed, callback);
+                .Set(fadingIn, speed, color, callback);
         }
-        public void Set(bool fadingIn, float speed = 1, UnityEngine.Events.UnityAction callback = null)
+        public ScreenFading Set(bool fadingIn, float speed, Color color, UnityEngine.Events.UnityAction callback = null)
         {
             DontDestroyOnLoad(gameObject);
             _image = GetComponentInChildren<Image>();
@@ -34,12 +34,13 @@ namespace PataRoad.Common.GameDisplay
             _speed = speed;
             if (fadingIn)
             {
-                _image.color = new Color(0, 0, 0, 1);
+                _image.color = new Color(color.r, color.g, color.b, 1);
             }
             else
             {
-                _image.color = new Color(0, 0, 0, 0);
+                _image.color = new Color(color.r, color.g, color.b, 0);
             }
+            return this;
         }
         // Update is called once per frame
         void Update()

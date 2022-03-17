@@ -116,7 +116,10 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private string GetSafeFloatValue(float value)
         {
-            if (value != UnityEngine.Mathf.Infinity) return value.ToString(_format);
+            if (value != UnityEngine.Mathf.Infinity)
+            {
+                return value.ToString(_format);
+            }
             else return "∞";
         }
     }

@@ -33,12 +33,12 @@ namespace PataRoad.Story
             {
                 throw new MissingReferenceException("The story data " + dataName + " doesn't exist!");
             }
-            _current.StartStory(data);
+            _current.StartStory(data, Color.black);
         }
-        internal void StartStory(StoryData data)
+        internal void StartStory(StoryData data, Color color)
         {
             _noDestroy = true;
-            SceneLoadingAction.Create(data.SceneName).ChangeScene();
+            SceneLoadingAction.Create(data.SceneName).ChangeScene(color);
             SceneManager.sceneLoaded += OnStorySceneLoaded;
             void OnStorySceneLoaded(Scene scene, LoadSceneMode mode)
             {
@@ -96,7 +96,7 @@ namespace PataRoad.Story
         private void MoveToNext()
         {
             //-- Move to the next map
-            SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene();
+            SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene(Color.black);
             //-- Story done, you don't need this anymore!
             Destroy(gameObject);
         }

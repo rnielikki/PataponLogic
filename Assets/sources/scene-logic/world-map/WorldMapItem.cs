@@ -55,7 +55,7 @@ namespace PataRoad.SceneLogic.WorldMap
         private void StartMission()
         {
             Core.Global.GlobalData.CurrentSlot.MapInfo.Select(_map);
-            SceneLoadingAction.Create("EquipmentScreen").ChangeScene();
+            SceneLoadingAction.Create("EquipmentScreen").ChangeScene(Color.black);
         }
         public bool HideIfCleared()
         {

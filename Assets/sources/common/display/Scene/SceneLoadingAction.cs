@@ -25,10 +25,10 @@ namespace PataRoad.Common.GameDisplay
             return this;
         }
 
-        public void ChangeScene()
+        public void ChangeScene(Color color)
         {
             DontDestroyOnLoad(gameObject);
-            ScreenFading.Create(false, 3, () =>
+            ScreenFading.Create(false, 2, color, () =>
             {
                 if (_useTip)
                 {
@@ -37,7 +37,7 @@ namespace PataRoad.Common.GameDisplay
                 }
                 else
                 {
-                    ScreenFading.Create(true, 2);
+                    ScreenFading.Create(true, 2, color);
                     SceneManager.LoadScene(_sceneName);
                 }
                 SceneManager.sceneLoaded += DestroyThis;

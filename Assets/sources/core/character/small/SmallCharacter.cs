@@ -112,7 +112,7 @@ namespace PataRoad.Core.Character
         protected void InitDistanceFromHead()
         {
             CharacterSize = transform.Find(BodyName + "/Face")
-                .GetComponent<CircleCollider2D>().radius + 0.1f;
+                .GetComponent<Collider2D>().bounds.size.x / 2 + 0.1f;
         }
 
         public virtual void StopAttacking(bool pause)

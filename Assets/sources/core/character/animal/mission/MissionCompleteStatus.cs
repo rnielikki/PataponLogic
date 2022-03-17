@@ -70,7 +70,7 @@ namespace PataRoad.Core.Map
         }
         void LoadPatapolis(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
-            Common.GameDisplay.SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene();
+            Common.GameDisplay.SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene(Color.black);
             _submitAction.performed -= LoadPatapolis;
         }
         void LoadStory(UnityEngine.InputSystem.InputAction.CallbackContext context)

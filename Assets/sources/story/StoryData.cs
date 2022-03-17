@@ -50,6 +50,9 @@ namespace PataRoad.Story
         StoryData _nextStory;
         internal StoryData NextStory => _nextStory;
         [SerializeField]
+        Color _sceneChangingColor = Color.black;
+        public Color SceneChangingColor => _sceneChangingColor;
+        [SerializeField]
         [Header("This is called before skipping is possible, which makes sure to be called at least once")]
         UnityEngine.Events.UnityEvent _onStoryStarted;
 

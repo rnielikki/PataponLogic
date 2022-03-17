@@ -74,7 +74,7 @@ namespace PataRoad.Story
             {
                 _display.Close();
                 var storyLoader = FindObjectOfType<StoryLoader>();
-                storyLoader.StartStory(nextStory);
+                storyLoader.StartStory(nextStory, nextStory.SceneChangingColor);
             }
 
             IEnumerator WaitForSeconds(float seconds)

@@ -24,6 +24,8 @@ namespace PataRoad.Common
                 {
                     rigidBody.constraints = RigidbodyConstraints2D.None;
                     rigidBody.gravityScale = 1;
+                    //hello, yumi...?
+                    rigidBody.velocity = Vector2.zero;
                     rigidBody.WakeUp();
                 }
             }

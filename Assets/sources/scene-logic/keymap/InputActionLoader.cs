@@ -110,7 +110,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
         public void Save()
         {
             GlobalData.GlobalInputActions.Save();
-            Common.GameDisplay.SceneLoadingAction.Create("Main").ChangeScene();
+            Common.GameDisplay.SceneLoadingAction.Create("Main").ChangeScene(Color.black);
         }
         internal string ConvertToBindingPath(string ControlPath)
         {

@@ -24,11 +24,11 @@ namespace PataRoad.Core.Character.Class
                     _character.ElementalAttackType = ElementalAttackType.Fire;
                     break;
                 case 2:
-                    realStat.IceRate += 0.25f;
+                    realStat.IceRate += 0.3f;
                     _character.ElementalAttackType = ElementalAttackType.Ice;
                     break;
                 case 3:
-                    realStat.FireRate += 0.1f;
+                    realStat.FireRate += 0.15f;
                     _character.ElementalAttackType = ElementalAttackType.Thunder;
                     break;
             }

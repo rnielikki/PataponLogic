@@ -90,7 +90,7 @@ namespace PataRoad.Story.Actions
             StopAllCoroutines();
             _inturrupted = true;
             _walking = true;
-            _targetPosition = position * Vector2.right;
+            _targetPosition = new Vector3(position, transform.position.y, transform.position.z);
         }
 
         public void Flip()

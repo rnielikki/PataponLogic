@@ -55,7 +55,7 @@ namespace PataRoad.SceneLogic.Main
         public void LoadGameIntro()
         {
             Core.Global.GlobalData.SlotManager.LoadSlot(Slot.CreateNewGame());
-            Common.GameDisplay.SceneLoadingAction.Create("GameIntro").ChangeScene();
+            Common.GameDisplay.SceneLoadingAction.Create("GameIntro").ChangeScene(Color.black);
         }
         public void LoadFromSaved(CommonSceneLogic.SlotDataItem item)
         {
@@ -66,7 +66,7 @@ namespace PataRoad.SceneLogic.Main
             }
             item.MarkAsProcessing();
             Core.Global.GlobalData.SlotManager.LoadSlot(Slot.LoadSlot(item.Index));
-            Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene();
+            Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene(Color.black);
             item.MarkAsDone();
         }
         public void Exit()

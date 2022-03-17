@@ -85,7 +85,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 .SetOkAction(() =>
                 {
                     StopAllCoroutines();
-                    Common.GameDisplay.SceneLoadingAction.Create("Battle").UseTip().ChangeScene();
+                    Common.GameDisplay.SceneLoadingAction.Create("Battle").UseTip().ChangeScene(Color.black);
                     Exit(_onEnter);
                 })
                 .SelectOk();
@@ -139,7 +139,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 .SetTargetToResume(_groupNav)
                     .SetOkAction(() =>
                     {
-                        Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene();
+                        Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene(Color.black);
                         Exit(_onCancel);
                     })
                     .SelectOk();
