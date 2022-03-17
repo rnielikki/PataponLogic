@@ -247,7 +247,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6647991442899897385}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2839999, z: -0.3}
+  m_LocalPosition: {x: 0, y: 0, z: -0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1013,10 +1013,17 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+  _ignoreTumble: 0
+  _onBeforeDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _inverseDirection: 0
+  _attackTypeIndex: 0
   _isOnTower: 0
   _charged: 0
-  _defineCommandAction: 0
-  _commandAction: 0
+  _defend: 0
+  _isDarkOne: 0
+  _manualDeath: 0
 --- !u!114 &8813460397387343034
 MonoBehaviour:
   m_ObjectHideFlags: 0

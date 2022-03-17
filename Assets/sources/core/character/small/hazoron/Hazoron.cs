@@ -188,6 +188,7 @@ namespace PataRoad.Core.Character.Hazorons
                     if (transform.position.x == DefaultWorldPosition)
                     {
                         CharAnimator.Animate("Idle");
+                        StopAttacking(false); //Curiously Idle status doesn't stop attacking.
                         _animatingWalk = false;
                     }
                 }
