@@ -43,13 +43,15 @@ namespace PataRoad.Core.Character.Bosses
             Init();
         }
         protected virtual void Init() { }
+        //from level9 it will do combo attk (if mincombo is less than 2)
         public virtual (float distance, float maxDistance) CalculateAttack()
         {
             if (_maxCombo < 0)
             {
-                _maxCombo = UnityEngine.Mathf.Max(UnityEngine.Mathf.RoundToInt(UnityEngine.Mathf.Sqrt(_level)), _minCombo) + 1;
+                _maxCombo = UnityEngine.Mathf.Max(
+                    (int)UnityEngine.Mathf.Sqrt(_level) - 1,
+                    _minCombo) + 1;
             }
-            //from level3 it will do combo attk
             var comboCount = UnityEngine.Random.Range(1, _maxCombo);
 
             return SetComboAttack(comboCount);
