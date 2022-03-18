@@ -37,6 +37,21 @@ namespace PataRoad.Core.Items
                 }
             }
         }
+        /// <summary>
+        /// If has one, it drops another. If have all, it doesn't drop at all.
+        /// </summary>
+        public void DropWithAlternativeChoice()
+        {
+            foreach (var data in _dropData)
+            {
+                if (data is ObtainableItemDropData obtainable
+                    && !Global.GlobalData.CurrentSlot.Inventory.HasItem(obtainable.Item))
+                {
+                    ItemDrop.DropItem(data, transform.position, data.DoNotDestroy);
+                    return;
+                }
+            }
+        }
         private void DropItem(bool random)
         {
             var startPoint = transform.position;

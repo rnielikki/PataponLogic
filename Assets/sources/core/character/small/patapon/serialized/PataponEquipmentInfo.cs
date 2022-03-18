@@ -18,6 +18,7 @@ namespace PataRoad.Core.Character.Patapons.Data
         [SerializeField]
         private string _protectorType;
 
+        //---------------------------- USE FOR ONLY SERIALIZATION
         [SerializeField]
         private int _weaponIndex = -1;
         [SerializeField]
@@ -28,6 +29,8 @@ namespace PataRoad.Core.Character.Patapons.Data
         private int _rareponIndex = -1;
         [SerializeField]
         private int _gemIndex = -1;
+        //---------------------------- END OF ONLY SERIALIZATION
+
         [SerializeField]
         private bool _isGeneral;
         [System.NonSerialized]
@@ -54,16 +57,20 @@ namespace PataRoad.Core.Character.Patapons.Data
         }
         internal void RefreshRarepon(RareponDataContainer container)
         {
-            if (_rareponIndex == container.RareponIndex)
+            if (_map.TryGetValue(EquipmentType.Rarepon, out EquipmentData rare)
+                && rare.Index == container.RareponIndex)
             {
                 Equip(container.Data);
-                _rareponIndex = container.RareponIndex;
             }
         }
         public IEnumerable<EquipmentData> GetAllEquipments() => _map.Values;
         public bool HasEquipment(EquipmentData data) => _map.ContainsKey(data.Type) && _map[data.Type] == data;
         public int GetEquipmentLevel(EquipmentType equipmentType) => _map.ContainsKey(equipmentType) ? _map[equipmentType].LevelGroup : -1;
 
+        /// <summary>
+        /// INITIALISATION of <see cref="RareponInfo"/> reference.
+        /// </summary>
+        /// <param name="rareponInfo">The loaded Rarepon data.</param>
         internal void SetRareponInfo(RareponInfo rareponInfo)
         {
             _rareponInfo = rareponInfo;

@@ -87,7 +87,11 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
             var index = data.Index;
             StartCoroutine(
                 Core.Global.GlobalData.GlobalInputActions
-                    .WaitForNextInput(() => _rareponSelections.SingleOrDefault(s => s.Index == index)?.Select())
+                    .WaitForNextInput(() =>
+                    {
+                        var selection = _rareponSelections.SingleOrDefault(s => s.Index == index);
+                        if (selection != null) selection.Select();
+                    })
                 );
         }
         public void Apply(RareponSelection selection)

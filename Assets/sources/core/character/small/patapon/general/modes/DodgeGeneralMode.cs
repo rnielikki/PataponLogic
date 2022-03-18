@@ -20,6 +20,7 @@ namespace PataRoad.Core.Character.Patapons.General
 
         public override void Activate(PataponGroup group)
         {
+            if (_isOn) return;
             _isOn = true;
             _wall.gameObject.SetActive(true);
             TurnCounter.OnTurn.AddListener(StopGeneralMode);
