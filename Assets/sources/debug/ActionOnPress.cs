@@ -106,7 +106,7 @@ namespace PataRoad.AppDebug
         }
         public void AddAllGems()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 1; i < 4; i++)
             {
                 AddItemBy(Core.Items.ItemType.Equipment, "Gem", i, 99);
             }
@@ -123,7 +123,7 @@ namespace PataRoad.AppDebug
 
             void AddEquipment(string name)
             {
-                for (int i = 0; i < 15; i++)
+                for (int i = 1; i < 16; i++)
                 {
                     AddItemBy(Core.Items.ItemType.Equipment, name, i, 50);
                 }

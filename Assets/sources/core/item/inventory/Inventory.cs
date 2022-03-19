@@ -67,11 +67,16 @@ namespace PataRoad.Core.Items
         public bool AddMultiple(IItem item, int amount)
         {
             if (amount < 0) throw new System.ArgumentException("amount cannot be less than zero.");
-            _recentData.Enqueue(item);
             if (HasItem(item))
             {
+                //don't add index 0 equipment(default)
+                if (item.ItemType == ItemType.Equipment && item.Index == 0)
+                {
+                    return false;
+                }
                 if (!item.IsUniqueItem)
                 {
+                    _recentData.Enqueue(item);
                     UpdateItemIndex(item, amount);
                 }
                 return false;
@@ -79,6 +84,7 @@ namespace PataRoad.Core.Items
             else
             {
                 if (item.IsUniqueItem) amount = 1;
+                _recentData.Enqueue(item);
                 UpdateItemIndex(item, amount);
                 return true;
             }
@@ -119,52 +125,9 @@ namespace PataRoad.Core.Items
             AddItem(ItemLoader.GetItem(ItemType.Key, "Drum", 0));
             AddItem(ItemLoader.GetItem(ItemType.Key, "Drum", 1));
 
-            //SONGS
-            //AddItem(ItemLoader.GetItem(ItemType.Key, "Song", 0));
 
             //MEMORIES
             AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 0));
-
-            //Test
-            /*
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 0), 10);
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 1), 1);
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 2), 3);
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 3), 1);
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Liquid", 4), 9);
-
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Mineral", 0), 10);
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Mineral", 1), 1);
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Mineral", 2), 3);
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Mineral", 3), 1);
-            AddMultiple(ItemLoader.GetItem(ItemType.Material, "Mineral", 4), 1);
-
-            for (int i = 1; i < 11; i++) AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Spear", i), 1);
-            for (int i = 1; i < 11; i++) AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Helm", i), 1);
-
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Gem", 1), 10);
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Gem", 2), 10);
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Gem", 3), 10);
-
-            AddMultiple(ItemLoader.GetItem(ItemType.Equipment, "Bow", 1), 3);
-            AddMultiple(ItemLoader.GetItem(ItemType.Key, "Boss", 0), 1);
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 1));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 2));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 3));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 4));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 5));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 6));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 7));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Class", 8));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "GeneralMode", 0));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "GeneralMode", 1));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "GeneralMode", 2));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 2));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 4));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 12));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 20));
-            AddItem(ItemLoader.GetItem(ItemType.Key, "Music", 22));
-            */
         }
         public int GetAmount(IItem item) =>
            _existingData.ContainsKey(item) ? _existingData[item].Amount : 0;
