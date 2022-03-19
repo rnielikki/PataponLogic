@@ -8,7 +8,12 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// <summary>
         /// An arrow "transform" with animation, before shooting.
         /// </summary>
+        [SerializeField]
         private Transform _arrowTransform;
+        [SerializeField]
+        private Transform _stringBone1;
+        [SerializeField]
+        private Transform _stringBone2;
 
         private SpriteRenderer _bowRenderer;
         private SpriteRenderer _arrowRenderer;
@@ -21,7 +26,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
 
         private void Start()
         {
-            _arrowTransform = transform.Find("Arrow");
             Init();
         }
         protected override Sprite GetThrowableWeaponSprite() => _arrowTransform.GetComponent<SpriteRenderer>().sprite;
@@ -46,7 +50,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             if (_bowRenderer != null) return;
             _bowRenderer = transform.Find("Bow").GetComponent<SpriteRenderer>();
-            _arrowRenderer = transform.Find("Arrow").GetComponent<SpriteRenderer>();
+            _arrowRenderer = _arrowTransform.GetComponent<SpriteRenderer>();
             _spriteRenderers = new SpriteRenderer[] { _bowRenderer, _arrowRenderer };
             _material = _spriteRenderers[0].material;
         }
@@ -55,6 +59,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (_bowRenderer == null) LoadRenderersAndImage();
             _bowRenderer.sprite = equipmentData.Image;
             _arrowRenderer.sprite = (equipmentData as BowData).ArrowImage;
+
+            float stringBoneX = _bowRenderer.sprite.pivot.x - _bowRenderer.sprite.border.x;
+            _stringBone1.transform.localPosition = new Vector2(stringBoneX,
+                _bowRenderer.sprite.rect.size.y / 2 - _bowRenderer.sprite.border.w
+                ) / _bowRenderer.sprite.pixelsPerUnit;
+            _stringBone2.transform.localPosition = new Vector2(stringBoneX,
+                _bowRenderer.sprite.border.y - _bowRenderer.sprite.rect.size.y / 2
+                ) / _bowRenderer.sprite.pixelsPerUnit;
         }
         public override float AdjustAttackDistanceByYPosition(float attackDistance, float yDistance) =>
             AdjustThrowingAttackDistanceByYPosition(attackDistance, yDistance);
