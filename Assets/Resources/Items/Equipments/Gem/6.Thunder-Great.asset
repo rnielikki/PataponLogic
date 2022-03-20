@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c474f411243f8b94299aac626b4dd4b6, type: 3}
+  m_Name: 6.Thunder-Great
+  m_EditorClassIdentifier: 
+  _isUniqueItem: 0
+  _group: Gem
+  _index: 6
+  _name: Great Thunder gem
+  _description: Grants thunder elemental attack, great stagger rate, and resistances.
+    Equipment only.
+  _levelGroup: 1
+  _stat:
+    rid: 0
+  _image: {fileID: 21300000, guid: 1ffbd03e01c839f43a727486dd74c54f, type: 3}
+  _mass: 0.4
+  _type: 4
+  _elementalAttackType: 3
+  _weaponMaterial: {fileID: 2100000, guid: 945a033165430af4ab75bd55564ecac3, type: 2}
+  references:
+    version: 2
+    RefIds:
+    - rid: 0
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _isCharacterStat: 0
+        _hitPoint: 0
+        _defenceMin: 0
+        _defenceMax: 0
+        _damageMin: 0
+        _damageMax: 0
+        _attackSeconds: 0
+        _movementSpeed: 0
+        _critical: 0
+        _stagger: 0.6
+        _knockback: 0
+        _infiniteCriticalResistance: 0
+        _criticalResistance: 0
+        _infiniteStaggerResistance: 0
+        _staggerResistance: 0.1
+        _infiniteKnockbackResistance: 0
+        _knockbackResistance: 0
+        _fireRate: 0.4
+        _iceRate: 0
+        _sleepRate: 0
+        _infiniteFireResistance: 0
+        _fireResistance: 0.4
+        _infiniteIceResistance: 0
+        _iceResistance: 0.4
+        _infiniteSleepResistance: 0
+        _sleepResistance: 0.25
