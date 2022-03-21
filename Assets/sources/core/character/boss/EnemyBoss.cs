@@ -17,7 +17,6 @@ namespace PataRoad.Core.Character.Bosses
         private int _phase;
 
         private Vector3 _targetPosition;
-        protected bool _useWalkWhenMovingBack;
         private bool _movingBackAnimating;
 
         public int Level { get; private set; }
@@ -27,6 +26,8 @@ namespace PataRoad.Core.Character.Bosses
 
         private float MaxAttackDistance = -1;
         public override int GetLevel() => Level;
+
+        private string _movingBackAnimation = "nothing";
 
         void Awake()
         {
@@ -41,10 +42,8 @@ namespace PataRoad.Core.Character.Bosses
             _behaviour = GetComponent<EnemyBossBehaviour>();
             _behaviour.Init(this, _pataponsManager);
         }
-        internal void UseWalkingBackAnimation()
-        {
-            _useWalkWhenMovingBack = true;
-        }
+        internal void UseWalkingBackAnimation() => SetWalkingBackAnimationName("walk");
+        internal void SetWalkingBackAnimationName(string name) => _movingBackAnimation = name;
         public override void Die()
         {
             base.Die();
@@ -138,7 +137,7 @@ namespace PataRoad.Core.Character.Bosses
                 transform.position = Vector2.MoveTowards(transform.position, _targetPosition, backOffset);
                 if (!_movingBackAnimating)
                 {
-                    CharAnimator.Animate(_useWalkWhenMovingBack ? "walk" : "nothing");
+                    CharAnimator.Animate(_movingBackAnimation);
                     _movingBackAnimating = true;
                 }
                 if (transform.position.x >= _targetPosition.x - backOffset)

@@ -49,7 +49,7 @@ namespace PataRoad.Core.Character.Patapons
         private AudioClip[] _pataponSpeakingOnMiss;
         int _onMissSpeakingIndex;
 
-        private CameraController.PataponCameraMover _cameraMover;
+        private CameraController.CameraMover _cameraMover;
         private CameraController.CameraZoom _cameraZoom;
         private DistanceCalculator _distanceCalculator;
         public const float MinimumPosition = -10;
@@ -69,8 +69,8 @@ namespace PataRoad.Core.Character.Patapons
             _patapons = new System.Collections.Generic.List<Patapon>(GetComponentsInChildren<Patapon>());
             _groups = GetComponentsInChildren<PataponGroup>().ToList();
 
-            _cameraMover = Camera.main.GetComponent<CameraController.PataponCameraMover>();
-            _cameraMover.Manager = this;
+            _cameraMover = Camera.main.GetComponent<CameraController.CameraMover>();
+            _cameraMover.SetTarget(transform);
             _cameraZoom = Camera.main.GetComponent<CameraController.CameraZoom>();
             _distanceCalculator = DistanceCalculator.GetPataponManagerDistanceCalculator(this);
 
@@ -284,6 +284,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         private void LateUpdate()
         {
+            //pushback
             var closest = FirstPatapon == null ? null : FirstPatapon.DistanceCalculator?.GetClosest();
             var forward = closest?.x;
             if (forward < transform.position.x)
@@ -292,14 +293,15 @@ namespace PataRoad.Core.Character.Patapons
                 if (newPosition < MinimumPosition) return;
                 var pos = transform.position;
                 var offset = transform.position.x - newPosition; //+
-                foreach (var group in _groups)
+                foreach (var pon in _patapons)
                 {
-                    foreach (var pon in _patapons)
+                    if (pon == null || !pon.StatusEffectManager.CanContinue)
                     {
-                        var ponPos = pon.transform.position;
-                        ponPos.x += offset;
-                        pon.transform.position = ponPos;
+                        continue;
                     }
+                    var ponPos = pon.transform.position;
+                    ponPos.x += offset;
+                    pon.transform.position = ponPos;
                 }
                 pos.x = newPosition;
                 transform.position = pos;
@@ -311,13 +313,14 @@ namespace PataRoad.Core.Character.Patapons
             if (!_hasEnemyOnSight && hasEnemyOnSight) //has enemy on sight
             {
                 _cameraZoom.ZoomOut();
-
+                _cameraMover.SetCameraOffset(5);
                 _hasEnemyOnSight = true;
             }
             else if (_hasEnemyOnSight && !hasEnemyOnSight) //no enemy on sight
             {
                 var target = _groups[0].FirstPon.gameObject;
                 _cameraZoom.ZoomIn(target.transform);
+                _cameraMover.SetToDefaultCameraOffset();
                 _hasEnemyOnSight = false;
             }
         }

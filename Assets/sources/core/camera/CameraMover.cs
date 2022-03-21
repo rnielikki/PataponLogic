@@ -37,6 +37,10 @@ namespace PataRoad.Core.CameraController
         /// </summary>
         public bool SmoothMoving { get; set; }
 
+        [SerializeField]
+        protected float _offset;
+        protected float _currentOffset;
+
         void Awake()
         {
             var input = Global.GlobalData.Input.actions;
@@ -44,6 +48,15 @@ namespace PataRoad.Core.CameraController
             _action.started += SetInputCameraMove;
             _action.canceled += ReleaseInputCameraMove;
             _action.Enable();
+            _currentOffset = _offset;
+        }
+        public void SetCameraOffset(float offset)
+        {
+            _currentOffset = offset;
+        }
+        public void SetToDefaultCameraOffset()
+        {
+            _currentOffset = _offset;
         }
 
         void LateUpdate()
@@ -51,7 +64,7 @@ namespace PataRoad.Core.CameraController
             if (!_moving || Target == null) return;
 
             var pos = transform.position;
-            pos.x = Target.position.x + _inputMoveOffset;
+            pos.x = Target.position.x + _currentOffset + _inputMoveOffset;
 
             if (!SmoothMoving)
             {

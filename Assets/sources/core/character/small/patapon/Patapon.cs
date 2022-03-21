@@ -341,7 +341,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         private void Update()
         {
-            if (PataponsManager.IsMovingForward &&
+            if (!IsDead && PataponsManager.IsMovingForward &&
                 !(StatusEffectManager.CanContinue || StatusEffectManager.CurrentStatusEffect == StatusEffectType.Fire))
             {
                 transform.position -= Group.Manager.Steps * Time.deltaTime * Vector3.right;

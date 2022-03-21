@@ -26,7 +26,7 @@ namespace PataRoad.Core.Character.Bosses
             int collisionCount = _particleSystem.GetCollisionEvents(other, _collisionEvents);
             for (int i = 0; i < collisionCount; i++)
             {
-                _boss.Attack(this, other, _collisionEvents[i].intersection, _attackType, _elementalAttackType, false);
+                _boss.Attack(this, other, _collisionEvents[i].intersection, _attackType, _elementalAttackType, true);
             }
         }
     }

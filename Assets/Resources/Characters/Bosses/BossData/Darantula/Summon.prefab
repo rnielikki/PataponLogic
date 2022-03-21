@@ -412,7 +412,7 @@ MonoBehaviour:
     rid: 3406254390363553792
   _attackTypeResistance:
     rid: 3406254390363553793
-  _poison: {fileID: 0}
+  _poison: {fileID: 6465251338826845758}
   references:
     version: 2
     RefIds:
@@ -423,8 +423,8 @@ MonoBehaviour:
         _hitPoint: 1200
         _defenceMin: 0.9
         _defenceMax: 1.1
-        _damageMin: 10
-        _damageMax: 15
+        _damageMin: 1
+        _damageMax: 3
         _attackSeconds: 2
         _movementSpeed: 8
         _critical: 0
@@ -1104,8 +1104,8 @@ MonoBehaviour:
     _hitPoint: 0
     _defenceMin: 0
     _defenceMax: 0
-    _damageMin: 50
-    _damageMax: 60
+    _damageMin: 60
+    _damageMax: 70
     _attackSeconds: 0
     _movementSpeed: 0
     _critical: 0
@@ -1285,7 +1285,7 @@ GameObject:
   - component: {fileID: 6868564560119394942}
   - component: {fileID: 1154537325839998477}
   - component: {fileID: 6465251338826845758}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: poision
   m_TagString: Attack
   m_Icon: {fileID: 0}
@@ -5063,8 +5063,8 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
-    collidesWithDynamic: 0
+    collisionMessages: 1
+    collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
     enabled: 0
@@ -6098,7 +6098,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5c559e742707b94999654fb63a0ec66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enabled: 0
+  _enabled: 1
   _additionalStat:
     _isCharacterStat: 0
     _hitPoint: 0
@@ -6119,14 +6119,14 @@ MonoBehaviour:
     _knockbackResistance: 0
     _fireRate: 0
     _iceRate: 0
-    _sleepRate: 0.8
+    _sleepRate: 0.5
     _infiniteFireResistance: 0
     _fireResistance: 0
     _infiniteIceResistance: 0
     _iceResistance: 0
     _infiniteSleepResistance: 0
     _sleepResistance: 0
-  _damageOffsetMin: 0.5
+  _damageOffsetMin: 0
   _damageOffsetMax: 1
   _attackType: 4
   _elementalAttackType: 0
@@ -8303,8 +8303,8 @@ MonoBehaviour:
     _hitPoint: 0
     _defenceMin: 0
     _defenceMax: 0
-    _damageMin: 40
-    _damageMax: 50
+    _damageMin: 50
+    _damageMax: 60
     _attackSeconds: 0
     _movementSpeed: 0
     _critical: 0.3
