@@ -125,7 +125,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
         {
             //--- add fire resistance to fire damage taking!
             var damage = Mathf.Max(1, (int)(
-                Mathf.Min(attackable.Stat.HitPoint * 0.06f, 200)
+                Mathf.Min(attackable.Stat.HitPoint * 0.02f, 200)
                 * (1 - attackable.Stat.FireResistance)
                 * attackable.AttackTypeResistance.FireMultiplier
                 ));

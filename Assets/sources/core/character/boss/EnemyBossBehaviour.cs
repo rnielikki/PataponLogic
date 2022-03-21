@@ -107,7 +107,8 @@ namespace PataRoad.Core.Character.Bosses
                         i--;
                     }
                     var allChoices = _predefinedCombosIndexed[_predefinedComboLengthIndexed[i]];
-                    int selectedAttackIndex = UnityEngine.Random.Range(0, allChoices.Count - 1);
+                    //it's MAX EXCLUSIVE
+                    int selectedAttackIndex = UnityEngine.Random.Range(0, allChoices.Count);
                     foreach (var attack in allChoices[selectedAttackIndex])
                     {
                         _attackCombos.Add(attack);

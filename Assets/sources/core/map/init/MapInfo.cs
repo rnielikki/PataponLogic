@@ -46,6 +46,11 @@ namespace PataRoad.Core.Global
         /// Should be opened late when called <see cref="OpenInIndex(int)"/>
         /// </summary>
         private MapDataContainer _reservedNextMap;
+        /// <summary>
+        /// When opens <see cref="_reservedNextMap"/>, set it as <see cref="NextMap"/> or not.
+        /// This will affect to the NEXT SELECTION on the map (for small UX adjustment).
+        /// </summary>
+        private bool _setReservedAsNextMap;
 
         public MapInfo()
         {
@@ -67,7 +72,12 @@ namespace PataRoad.Core.Global
             return mapInfo;
         }
         public IEnumerable<MapDataContainer> GetAllAvailableMaps() => _openMaps.Values.OrderBy(map => map.Index);
-
+        /// <summary>
+        /// Tells that has the map ever opened, including closed map.
+        /// </summary>
+        /// <param name="index">the index number of the map.</param>
+        /// <returns><c>true</c> if map is opened ever (even if closed now), otherwise <c>false</c></returns>
+        public bool HasMapOpenedYet(int index) => _openMaps.ContainsKey(index) || _closedMaps.Contains(index);
         public MapDataContainer GetMapByIndex(int index)
         {
             if (_openMaps.TryGetValue(index, out MapDataContainer map)) return map;
@@ -81,13 +91,26 @@ namespace PataRoad.Core.Global
                 _progress = Mathf.Max(_progress, NextMap.Index);
             }
         }
-        public void OpenInIndex(int index)
+        public void OpenAndSetAsNext(int index)
+        {
+            var openedMap = OpenInIndex(index, false);
+            if (openedMap != null)
+            {
+                NextMap = openedMap;
+                _reservedNextMap = null;
+                _setReservedAsNextMap = false;
+            }
+        }
+        public MapDataContainer OpenInIndex(int index, bool setAsNextMap = true)
         {
             if (!_openMaps.ContainsKey(index) && !_closedMaps.Contains(index))
             {
                 _reservedNextMap = LoadResource(index);
+                _setReservedAsNextMap = setAsNextMap;
                 _progress = Mathf.Max(_progress, index);
+                return _reservedNextMap;
             }
+            else return null;
         }
         public void Select(MapDataContainer data)
         {
@@ -110,7 +133,11 @@ namespace PataRoad.Core.Global
             OpenNext();
             if (_reservedNextMap != null)
             {
-                NextMap = _reservedNextMap;
+                if (_setReservedAsNextMap)
+                {
+                    NextMap = _reservedNextMap;
+                    _setReservedAsNextMap = false;
+                }
                 _reservedNextMap = null;
             }
 

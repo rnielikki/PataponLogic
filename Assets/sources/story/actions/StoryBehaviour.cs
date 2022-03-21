@@ -56,7 +56,12 @@ namespace PataRoad.Story.Actions
                 {
                     _inturrupted = false;
                     yield return new WaitForSeconds(clip.length);
-                    if (!_inturrupted) _animator.Play("Idle");
+                    if (!_inturrupted)
+                    {
+                        _animator.Play("Idle");
+                        _animatingWalking = false;
+                        _animator.SetBool("walking", false);
+                    }
                 }
             }
         }

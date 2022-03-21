@@ -14,6 +14,7 @@ namespace PataRoad.Core.Character.Bosses
         private int _turnCount;
         public bool Attacking { get; private set; }
         public bool IsEmpty => _actionQueue.Count == 0;
+        public int LeftActionCount => _actionQueue.Count;
         public UnityEngine.Events.UnityEvent OnAttackEnd { get; } = new UnityEngine.Events.UnityEvent();
         private readonly CharacterAnimator _charAnimator;
         private string _current;

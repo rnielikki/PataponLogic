@@ -6,6 +6,8 @@ namespace PataRoad.Core.Map.Levels
     {
         [SerializeField]
         int _mapIndex;
+        [SerializeField]
+        bool _setAsNextMapSelection = true;
         private void Start()
         {
             if (!Global.GlobalData.CurrentSlot.MapInfo.NextMap.Cleared)
@@ -14,7 +16,8 @@ namespace PataRoad.Core.Map.Levels
                 {
                     if (success)
                     {
-                        Global.GlobalData.CurrentSlot.MapInfo.OpenInIndex(_mapIndex);
+                        Global.GlobalData.CurrentSlot.MapInfo.OpenInIndex(_mapIndex
+                            , _setAsNextMapSelection);
                     }
                 });
             }
