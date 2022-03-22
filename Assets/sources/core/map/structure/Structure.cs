@@ -30,6 +30,8 @@ namespace PataRoad.Core.Character
 
         [SerializeField]
         bool _noLevelUp;
+        [SerializeField]
+        bool _noAnimation;
 
         [SerializeField]
         private Gradient _colorOverHealth;
@@ -42,7 +44,11 @@ namespace PataRoad.Core.Character
             CurrentHitPoint = _hitPoint;
             StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
             StatusEffectManager.IsBigTarget = true;
-            _animator = GetComponent<Animator>();
+            if (!_noAnimation)
+            {
+                _animator = GetComponent<Animator>();
+                if (_animator == null) _noAnimation = true;
+            }
         }
         protected virtual void InitStat()
         {
@@ -67,7 +73,7 @@ namespace PataRoad.Core.Character
         {
             IsDead = true;
             _onDestroy.Invoke();
-            if (_animator != null) _animator.Play("die");
+            if (!_noAnimation) _animator.Play("die");
         }
         public virtual bool TakeDamage(int damage)
         {
