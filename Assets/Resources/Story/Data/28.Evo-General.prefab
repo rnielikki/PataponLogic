@@ -544,6 +544,7 @@ MonoBehaviour:
       but Demons are different. It's our Hazorons' very basic rule.
   _choiceSelector: {fileID: 8616263742438005636}
   _nextStory: {fileID: 0}
+  _sceneChangingColor: {r: 0, g: 0, b: 0, a: 1}
   _onStoryStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -1524,7 +1525,7 @@ PrefabInstance:
       objectReference: {fileID: 1430611967286908971}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[0]._name
@@ -1536,7 +1537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[2]._name
-      value: Pan Pakapon
+      value: Evo
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[3]._name
@@ -1561,7 +1562,7 @@ PrefabInstance:
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[2]._image
       value: 
-      objectReference: {fileID: 21300000, guid: d9d4a8f6180684b4893173d54e153d75, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[3]._image
       value: 
@@ -1585,8 +1586,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[1]._content
-      value: May? She born to be Hazoron, but she is not Hazoron anymore. Of course
-        her gift is not worth as Hazorons'.
+      value: May? ...Did you say May?
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[1]._useLine
@@ -1594,7 +1594,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[2]._content
-      value: ...Of course I'm happy!
+      value: No way. Just if, if this is her gift, it's gift from your side, not
+        Hazoron's side. Her all assets are now Patapons'.
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[2]._useLine
@@ -1664,7 +1665,7 @@ PrefabInstance:
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[2]._events.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7496247167546624999}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[3]._events.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -1695,7 +1696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[2]._events.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Animate
+      value: AnimateOnce
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[3]._events.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
@@ -1723,7 +1724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[2]._events.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
-      value: party
+      value: sad
       objectReference: {fileID: 0}
     - target: {fileID: 5258865089649858361, guid: d832a334d7b785b498a3ee9e66007800, type: 3}
       propertyPath: _storyActions.Array.data[3]._events.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
