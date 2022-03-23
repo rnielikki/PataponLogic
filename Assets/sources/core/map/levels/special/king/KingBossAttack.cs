@@ -9,7 +9,10 @@ namespace PataRoad.Core.Map.Levels.King
         private BossParticleCollision _meteor;
         [SerializeField]
         private KingRushComponent _rush;
+        [SerializeField]
+        private KingShield _shield;
         public void MeteorAttack() => _meteor.Attack();
+        public void EnableShield() => _shield.gameObject.SetActive(true);
         protected override void Init()
         {
             CharacterSize = 1;

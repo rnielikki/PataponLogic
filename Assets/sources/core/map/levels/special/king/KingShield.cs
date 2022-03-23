@@ -7,12 +7,12 @@ namespace PataRoad.Core.Map.Levels.King
     {
         [SerializeField]
         bool _enabled;
-        private void OnCollisionEnter2D(Collision2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (_enabled && collision.collider.CompareTag("SmallCharacter"))
+            if (_enabled && collision.CompareTag("SmallCharacter"))
             {
                 var character =
-                    collision.collider.GetComponentInParent<SmallCharacter>();
+                    collision.GetComponentInParent<SmallCharacter>();
                 if (character != null)
                 {
                     character.Die();

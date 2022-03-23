@@ -2,12 +2,10 @@
 
 namespace PataRoad.Core.Map.Levels.King
 {
-    public class KingRushComponent : MonoBehaviour
+    public class KingRushComponent : Character.Bosses.BossAttackTrigger
     {
         [SerializeField]
         Transform _parent;
-        [SerializeField]
-        bool _enabled;
         [SerializeField]
         private float _rushSpeed;
         [SerializeField]

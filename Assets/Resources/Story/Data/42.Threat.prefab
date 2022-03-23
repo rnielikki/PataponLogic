@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -2731587640728505089}
   - component: {fileID: 2967304811666973360}
   m_Layer: 0
-  m_Name: 42
+  m_Name: 42.Threat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,13 +114,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1176882548520034209}
   - {fileID: 2230776257968415409}
-  - {fileID: 1353350261766671136}
   - {fileID: 1973947363873612326}
   - {fileID: 8570080981118416765}
-  - {fileID: 5588444490884348402}
-  - {fileID: 4640212883299015798}
+  - {fileID: 3811947610162193863}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -142,7 +139,7 @@ MonoBehaviour:
   _windType: 0
   _usePatapolis: 0
   _background: Ruins
-  _music: {fileID: 8300000, guid: 1b271859aec049d4c80f04689fb46d0a, type: 3}
+  _music: {fileID: 8300000, guid: ef6e937edbbe9564b96ce7f48f7217b1, type: 3}
   _xCameraPosition: 5
   _time: 20
   StoryActions:
@@ -152,16 +149,8 @@ MonoBehaviour:
     _waitingSeconds: 0
     _useLine: 1
     _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: Now, no excuses for you. So can we talk now?
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Vill
-    _content: Talk? It's kinda weird to hear it from Demons.
+    _name: Evo
+    _content: Eww, Honestly, I'm regreting...
   - _events:
       m_PersistentCalls:
         m_Calls: []
@@ -169,15 +158,7 @@ MonoBehaviour:
     _useLine: 1
     _image: {fileID: 0}
     _name: Luca
-    _content: Sir, if it's their reward for winning, we can let them say something.
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: You cannot control every single Hazoron, right?
+    _content: It's the end...
   - _events:
       m_PersistentCalls:
         m_Calls: []
@@ -185,61 +166,7 @@ MonoBehaviour:
     _useLine: 1
     _image: {fileID: 0}
     _name: Vill
-    _content: You're bragging that you have a betrayer from us?
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: So do us. Some Patapons are out of our reach and may turn into the
-      Demon's servant. But they don't represent all of us.
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: So, I beg that you to stop your misunderstanding, and befriend us...
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Evo
-    _content: Wow it's... the next level! You make me feel awkward!
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2967304811666973360}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryMusicChanger, Assembly-CSharp
-          m_MethodName: StopMusic
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Vill
-    _content: No, they're fooling us. The Patapons who opened the chest are now with
-      Patapons.
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Evo
-    _content: No wonder... Sir, you're the best!
+    _content: We are enemies of all Hazorons now. Or are we?
   - _events:
       m_PersistentCalls:
         m_Calls: []
@@ -247,599 +174,10 @@ MonoBehaviour:
     _useLine: 1
     _image: {fileID: 0}
     _name: Vill
-    _content: Bring them to us and we'll consider the peaceful operation.
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 2
-    _useLine: 0
-    _image: {fileID: 0}
-    _name: 
-    _content: 
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5116621374930800519}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Vill
-    _content: No one? Without doubt, you're true evil to hide the fact.
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5018512472104589018}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Animate
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: angry
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 5120918223987895794}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: SetWalkingStep
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 4
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6232531474866174056}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: SetWalkingStep
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 4
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 6232531474866174056}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: -7.5
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 5120918223987895794}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: -10
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 4
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: Where did you hear of that?
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 156352949094934819}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: SetWalkingStep
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 12
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 156352949094934819}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 2967304811666973360}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryMusicChanger, Assembly-CSharp
-          m_MethodName: ChangeMusic
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: ef6e937edbbe9564b96ce7f48f7217b1, type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 5116621374930800519}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 2
-    _useLine: 1
-    _image: {fileID: 21300000, guid: 152f3a2a926e94d45896c6705cea16d8, type: 3}
-    _name: Meden
-    _content: It's my fault! I'm responsible from all of that accident. I opened
-      the chest, so please stop it.
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5018512472104589018}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Animate
-          m_Mode: 5
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: Idle
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Vill
-    _content: So you're claiming that the Patapon priestess opened the chest. Which
-      means, all Patapons are basically Demon's servant.
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5018512472104589018}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 2
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: Of course she didn't. But listen, everyone knows it's accident, and
-      nobody knew what's inside.
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: The whole Patapons are in panic and are living in the trauma, even
-      without you. So I beg you to stop this...
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Vill
-    _content: What a beautiful scene. How's possible to cover each other's fault,
-      as a Demon?
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5116621374930800519}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 5116621374930800519}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 35
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 2967304811666973360}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryMusicChanger, Assembly-CSharp
-          m_MethodName: StopMusic
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Vill
-    _content: I'm done today. Maybe tommorw, or another day, I'll see you. Until
-      then.
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Evo
-    _content: Wow, I feel really weird with our belief! Hey Luca, but don't tell
-      to our Sir.
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2960961021097755223}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 2960961021097755223}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 35
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Luca
-    _content: I won't. That's worthless gossip to tell to our Sir. Say whatever you
-      want, I don't care.
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2967304811666973360}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryMusicChanger, Assembly-CSharp
-          m_MethodName: ChangeMusic
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 8300000, guid: 8105da149a3c2754896c47793a4a5b84, type: 3}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kon Kimpon
-    _content: Seed! No seed here!
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7496247167546624999}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: SetWalkingStep
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 15
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7496247167546624999}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 7496247167546624999}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 35
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 1
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Evo
-    _content: In fact, I have your seed! Thx bye!
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5018512472104589018}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: SetWalkingStep
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 15
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 5018512472104589018}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 35
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 1
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: Stop there!
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 2
-    _useLine: 0
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: 
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 5018512472104589018}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 6
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 5018512472104589018}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 5018512472104589018}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: WalkTowards
-          m_Mode: 4
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 4
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 1
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: I missed him! Damn.
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 156352949094934819}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Meden
-    _content: Kon Kimpon, what happend? Why do you have the seed?
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: I have question, Meden, how and why did you come here?
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 156352949094934819}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Meden
-    _content: That's...
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 156352949094934819}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kon Kimpon
-    _content: Seed. Flying Hatapon dropped, I catched!
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 21300000, guid: d48e0424867210a40a56e388cad1f354, type: 3}
-    _name: Meden
-    _content: And you lost the last seed from the Evo...
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: Currently it'll be faster to get one from Shooshookle than chasing
-      Evo.
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kiba-Hatapon
-    _content: But Meden, how do you explain the reckless move on the battlefield?
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 156352949094934819}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Meden
-    _content: I'll bring the magical army soon, as our Great %Almighty%'s servant,
-      so I need to learn about this battlefield.
-  - _events:
-      m_PersistentCalls:
-        m_Calls: []
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 0}
-    _name: Kon Kimpon
-    _content: And being kidnapped again!
-  - _events:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 156352949094934819}
-          m_TargetAssemblyTypeName: PataRoad.Story.Actions.StoryBehaviour, Assembly-CSharp
-          m_MethodName: Flip
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    _waitingSeconds: 0
-    _useLine: 1
-    _image: {fileID: 21300000, guid: a02552d984695674b9dd6478411d6248, type: 3}
-    _name: Meden
-    _content: Ha... haha, it won't happen, because I'm not alone anymore.
+    _content: We are enemies of all Hazorons now. Or are we?
   _choiceSelector: {fileID: 0}
   _nextStory: {fileID: 0}
+  _sceneChangingColor: {r: 0, g: 0, b: 0, a: 1}
   _onStoryStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -960,15 +298,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2031253672270326859, guid: 905bde8a14b66ff44b755f950797b886, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2031253672270326859, guid: 905bde8a14b66ff44b755f950797b886, type: 3}
       propertyPath: m_LocalScale.x
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2031253672270326859, guid: 905bde8a14b66ff44b755f950797b886, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.37
+      value: -2.04
       objectReference: {fileID: 0}
     - target: {fileID: 2031253672270326859, guid: 905bde8a14b66ff44b755f950797b886, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1066,15 +404,15 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 7c376c8dfd715764b9013c4bca743894, type: 3}
     - target: {fileID: 967673654963967969, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 967673654963967969, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
       propertyPath: m_LocalScale.x
-      value: -1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 967673654963967969, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.099998
+      value: 3.6899986
       objectReference: {fileID: 0}
     - target: {fileID: 967673654963967969, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1220,11 +558,15 @@ PrefabInstance:
       objectReference: {fileID: 22100000, guid: b1e7305128e6c0c47b732656b00fcb55, type: 2}
     - target: {fileID: 6919078306599530068, guid: faabe9984822d8240be6bb0fd3a9f616, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6919078306599530068, guid: faabe9984822d8240be6bb0fd3a9f616, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6919078306599530068, guid: faabe9984822d8240be6bb0fd3a9f616, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.71
+      value: -8.44
       objectReference: {fileID: 0}
     - target: {fileID: 6919078306599530068, guid: faabe9984822d8240be6bb0fd3a9f616, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1315,449 +657,169 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _uniqueSeed: 12
---- !u!1001 &3643557519614220292
+--- !u!1001 &3110969176473239608
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 6503063704793924880}
     m_Modifications:
-    - target: {fileID: 8283770400395330673, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_Name
-      value: Kibapon
+    - target: {fileID: 329312773294320084, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330673, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
+    - target: {fileID: 1066869504226915115, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_TagString
+      value: Shield
+      objectReference: {fileID: 0}
+    - target: {fileID: 1247667869709358267, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2279223004850315909, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_Layer
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _attackers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _attackers.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _attackers.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _attackers.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _animatorsIndexed.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _animatorsIndexed.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _animatorsIndexed.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _animatorsIndexed.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4024601085653710163, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4024601085653710163, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.2588191
+      objectReference: {fileID: 0}
+    - target: {fileID: 4024601085653710163, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.9659258
+      objectReference: {fileID: 0}
+    - target: {fileID: 4024601085653710163, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4199493038068185781, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4973201368665688405, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4973201368665688405, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 4973201368665688405, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.2588191
+      objectReference: {fileID: 0}
+    - target: {fileID: 4973201368665688405, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4973201368665688405, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4973201368665688405, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.9659258
+      objectReference: {fileID: 0}
+    - target: {fileID: 4973201368665688405, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995849537764349209, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301400473978192611, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: m_Name
+      value: King
+      objectReference: {fileID: 0}
+    - target: {fileID: 8301400473978192611, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -4.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8283770400395330676, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: 42bf3794b07ae7b46af464806bf18c20, type: 2}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
---- !u!1 &4640212883299015797 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8283770400395330673, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-  m_PrefabInstance: {fileID: 3643557519614220292}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5018512472104589018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4640212883299015797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb32174318e3d804b9fcc362f47f9813, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uniqueSeed: 6
---- !u!4 &4640212883299015798 stripped
+  m_SourcePrefab: {fileID: 100100000, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+--- !u!4 &3811947610162193863 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 8283770400395330674, guid: b2b02acb08f4eab49b354c05f05dbb8e, type: 3}
-  m_PrefabInstance: {fileID: 3643557519614220292}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &3770330109503569890
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 6503063704793924880}
-    m_Modifications:
-    - target: {fileID: 2781808015003858113, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_Name
-      value: Megapon
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -15.240002
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2781808015003858116, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: ae2984f94e8e1454694f6bb2c223101b, type: 2}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 87870a2488de51145931080cabd5f00e, type: 3}
---- !u!4 &1353350261766671136 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2781808015003858114, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-  m_PrefabInstance: {fileID: 3770330109503569890}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1353350261766671139 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2781808015003858113, guid: 87870a2488de51145931080cabd5f00e, type: 3}
-  m_PrefabInstance: {fileID: 3770330109503569890}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6232531474866174056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353350261766671139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb32174318e3d804b9fcc362f47f9813, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uniqueSeed: 3
---- !u!1001 &6677210853804003019
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 6503063704793924880}
-    m_Modifications:
-    - target: {fileID: 5548179197374648681, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_Name
-      value: Robopon
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -18.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5548179197374648684, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: 9d2c39b3e469b1f449fc1a3d26523206, type: 2}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
---- !u!4 &1176882548520034209 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5548179197374648682, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-  m_PrefabInstance: {fileID: 6677210853804003019}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1176882548520034210 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5548179197374648681, guid: 426752afe3f8c004c915d69977457cdb, type: 3}
-  m_PrefabInstance: {fileID: 6677210853804003019}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5120918223987895794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1176882548520034210}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb32174318e3d804b9fcc362f47f9813, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uniqueSeed: 5
---- !u!1001 &8073546939219818425
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 6503063704793924880}
-    m_Modifications:
-    - target: {fileID: 4432989599371218504, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_Name
-      value: Mahopon
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_RootOrder
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -41.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4432989599371218509, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 22100000, guid: 1b6dfe08bef5c1f4694f99e18cedc0c5, type: 2}
-    - target: {fileID: 7030943501934584052, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.059000403
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943501934584052, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.36299077
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943501934584052, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7058292
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943501934584052, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943501934584052, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943501934584052, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.70838207
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943501934584052, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943502176459338, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9999918
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943502176459338, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943502176459338, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943502176459338, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.004074189
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943502176459338, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503647021402, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503647021402, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.00033551452
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503647021402, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -0.038
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503810205796, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.035008997
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503810205796, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.33899996
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503810205796, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7058292
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503810205796, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503810205796, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503810205796, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.70838207
-      objectReference: {fileID: 0}
-    - target: {fileID: 7030943503810205796, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6481942468693021321, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-    - {fileID: 8268780955548443508, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-  m_SourcePrefab: {fileID: 100100000, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
---- !u!1 &5588444490884348401 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4432989599371218504, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-  m_PrefabInstance: {fileID: 8073546939219818425}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &156352949094934819
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5588444490884348401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb32174318e3d804b9fcc362f47f9813, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uniqueSeed: 1
---- !u!4 &5588444490884348402 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4432989599371218507, guid: da5cc7d1c792c0e40b790e9ad77515cf, type: 3}
-  m_PrefabInstance: {fileID: 8073546939219818425}
+  m_CorrespondingSourceObject: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+  m_PrefabInstance: {fileID: 3110969176473239608}
   m_PrefabAsset: {fileID: 0}

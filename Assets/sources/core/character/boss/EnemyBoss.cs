@@ -109,8 +109,6 @@ namespace PataRoad.Core.Character.Bosses
         }
         protected (float distance, float maxDistance) CalculateAttack() =>
             _behaviour.CalculateAttack();
-        protected (float distance, float maxDistance) CalculateAttackOnIce() =>
-            _behaviour.CalculateAttack();
         protected virtual bool CanContinue() => !BossTurnManager.Attacking && !IsDead && StatusEffectManager.CanContinue;
         protected void Update()
         {
@@ -127,7 +125,7 @@ namespace PataRoad.Core.Character.Bosses
             {
                 BossAttackData.OnIdle();
                 BossTurnManager.End();
-                CalculateAttackOnIce();
+                _behaviour.CalculateAttackOnIce();
                 BossTurnManager.StartAttack(0);
             }
             //phase 0: moving back.

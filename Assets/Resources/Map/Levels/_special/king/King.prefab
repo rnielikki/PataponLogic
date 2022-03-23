@@ -96,7 +96,7 @@ BoxCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 6.88}
@@ -135,7 +135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8050464207003128508}
   - component: {fileID: 1329840704637469162}
-  m_Layer: 16
+  m_Layer: 18
   m_Name: king.bg1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4024601085653710163}
-  - component: {fileID: 2531770524491324237}
   m_Layer: 16
   m_Name: body
   m_TagString: Untagged
@@ -245,21 +244,6 @@ Transform:
   m_Father: {fileID: 2290823526178711039}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2531770524491324237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013219199093973431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bcf87ea7702aca42ae3eee9be14c7a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enabled: 0
-  _rushSpeed: 18
-  _rushScale: 30
 --- !u!1 &2184964022257712684
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +373,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8510208477431021693}
   - component: {fileID: 8725460868663361923}
-  m_Layer: 16
+  m_Layer: 18
   m_Name: king.bg2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +541,8 @@ GameObject:
   m_Component:
   - component: {fileID: 205127795711121930}
   - component: {fileID: 6995849537764349209}
-  m_Layer: 16
+  - component: {fileID: 5085070592291169568}
+  m_Layer: 19
   m_Name: bg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -591,7 +576,7 @@ PolygonCollider2D:
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -612,6 +597,54 @@ PolygonCollider2D:
       - {x: 0, y: -3.6}
       - {x: -3.2, y: -1.8}
       - {x: -3.2, y: 1.8}
+--- !u!114 &5085070592291169568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2778846105904424534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bcf87ea7702aca42ae3eee9be14c7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enabled: 0
+  _additionalStat:
+    _isCharacterStat: 0
+    _hitPoint: 0
+    _defenceMin: 0
+    _defenceMax: 0
+    _damageMin: 120
+    _damageMax: 160
+    _attackSeconds: 0
+    _movementSpeed: 0
+    _critical: 1
+    _stagger: 0
+    _knockback: 1
+    _infiniteCriticalResistance: 0
+    _criticalResistance: 0
+    _infiniteStaggerResistance: 0
+    _staggerResistance: 0
+    _infiniteKnockbackResistance: 0
+    _knockbackResistance: 0
+    _fireRate: 0
+    _iceRate: 0
+    _sleepRate: 0
+    _infiniteFireResistance: 0
+    _fireResistance: 0
+    _infiniteIceResistance: 0
+    _iceResistance: 0
+    _infiniteSleepResistance: 0
+    _sleepResistance: 0
+  _damageOffsetMin: 0
+  _damageOffsetMax: 1
+  _attackType: 1
+  _elementalAttackType: 0
+  _allowZeroDamage: 0
+  _parent: {fileID: 2290823526178711039}
+  _rushSpeed: 24
+  _rushScale: 50
 --- !u!1 &3967808832893877778
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,7 +868,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4983488794747964289}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 0.5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -963,7 +996,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 60
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -1661,7 +1694,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 20
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4418,7 +4451,7 @@ ParticleSystem:
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4524,7 +4557,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4574,8 +4607,8 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    minKillSpeed: 0
-    maxKillSpeed: 10000
+    minKillSpeed: 1
+    maxKillSpeed: 1
     radiusScale: 1.5
     collidesWith:
       serializedVersion: 2
@@ -5624,8 +5657,8 @@ MonoBehaviour:
     _hitPoint: 0
     _defenceMin: 0
     _defenceMax: 0
-    _damageMin: 1
-    _damageMax: 1
+    _damageMin: 50
+    _damageMax: 100
     _attackSeconds: 0
     _movementSpeed: 0
     _critical: 0.5
@@ -5948,6 +5981,7 @@ GameObject:
   - component: {fileID: 2649884101265988238}
   - component: {fileID: 6898393342071390381}
   - component: {fileID: 278444622439675713}
+  - component: {fileID: 8795699906202384361}
   m_Layer: 16
   m_Name: King
   m_TagString: Untagged
@@ -6009,6 +6043,7 @@ MonoBehaviour:
   _onAfterDeath:
     m_PersistentCalls:
       m_Calls: []
+  _attackers: []
 --- !u!114 &6898393342071390381
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6025,8 +6060,9 @@ MonoBehaviour:
     rid: 5776632312001200128
   _attackTypeResistance:
     rid: 5776632312001200129
-  _meteor: {fileID: 0}
-  _rush: {fileID: 0}
+  _meteor: {fileID: 4676659056247094156}
+  _rush: {fileID: 5085070592291169568}
+  _shield: {fileID: 3473180980599299187}
   references:
     version: 2
     RefIds:
@@ -6034,30 +6070,30 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 1
-        _hitPoint: 200
+        _hitPoint: 20000
         _defenceMin: 0.9
         _defenceMax: 1.1
-        _damageMin: 4
-        _damageMax: 8
+        _damageMin: 0
+        _damageMax: 0
         _attackSeconds: 2
         _movementSpeed: 8
         _critical: 0
         _stagger: 0
         _knockback: 0
         _infiniteCriticalResistance: 0
-        _criticalResistance: 0
-        _infiniteStaggerResistance: 0
+        _criticalResistance: 0.1
+        _infiniteStaggerResistance: 1
         _staggerResistance: 0
-        _infiniteKnockbackResistance: 0
+        _infiniteKnockbackResistance: 1
         _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
-        _infiniteFireResistance: 0
+        _infiniteFireResistance: 1
         _fireResistance: 0
-        _infiniteIceResistance: 0
+        _infiniteIceResistance: 1
         _iceResistance: 0
-        _infiniteSleepResistance: 0
+        _infiniteSleepResistance: 1
         _sleepResistance: 0
     - rid: 5776632312001200129
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
@@ -6082,6 +6118,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a8551d690370fc4888a23a7887cd85d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &8795699906202384361
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8301400473978192611}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1001 &2476150858961459494
 PrefabInstance:
   m_ObjectHideFlags: 0

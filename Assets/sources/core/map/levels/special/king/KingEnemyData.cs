@@ -23,7 +23,7 @@ namespace PataRoad.Core.Map.Levels.King
 
         protected override string GetNextBehaviourOnIce()
         {
-            throw new System.NotImplementedException();
+            return "nothing";
         }
     }
 }
