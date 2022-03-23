@@ -60,6 +60,7 @@ namespace PataRoad.Core.Character.Patapons
         //--- Adjusted By Level
         public static float DodgeSpeedMinimumMultiplier { get; private set; } = 1;
         public static PataponsManager Current { get; private set; }
+        private bool _fixedZoom;
 
         private void Awake()
         {
@@ -309,6 +310,7 @@ namespace PataRoad.Core.Character.Patapons
         }
         public void CheckIfZoom()
         {
+            if (_fixedZoom) return;
             bool hasEnemyOnSight = HasEnemyOnSight();
             if (!_hasEnemyOnSight && hasEnemyOnSight) //has enemy on sight
             {
@@ -324,6 +326,13 @@ namespace PataRoad.Core.Character.Patapons
                 _hasEnemyOnSight = false;
             }
         }
+        public void ForceZoomOut()
+        {
+            _fixedZoom = true;
+            _cameraZoom.ZoomOut();
+            _cameraMover.SetCameraOffset(5);
+        }
+        public void EndForceZooming() => _fixedZoom = false;
         public void HealAll(int amount)
         {
             foreach (var group in _groups)
