@@ -37,7 +37,7 @@ namespace PataRoad.Core.Character.Bosses
 
         public float Sight => CharacterEnvironment.Sight;
 
-        public float CharacterSize { get; protected set; }
+        public float CharacterSize => BossAttackData.CharacterSize;
 
         public bool UseCenterAsAttackTarget => true;
 
@@ -51,7 +51,6 @@ namespace PataRoad.Core.Character.Bosses
         public virtual void Init()
         {
             BossAttackData = GetComponent<BossAttackData>();
-            CharacterSize = BossAttackData.CharacterSize;
             foreach (var part in GetComponentsInChildren<IBossPart>())
             {
                 _breakableParts.Add((part as MonoBehaviour).gameObject, part);

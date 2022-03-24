@@ -8,9 +8,9 @@ namespace PataRoad.Core.Character.Bosses
         protected Stat _stat = Stat.GetAnyDefaultStatForCharacter();
 
         [SerializeReference]
-        private AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
-        public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
-        public Stat Stat => _stat;
+        protected AttackTypeResistance _attackTypeResistance = new AttackTypeResistance();
+        public virtual AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
+        public virtual Stat Stat => _stat;
         public float MinLastDamageOffset { get; protected set; } = 0;
         public float MaxLastDamageOffset { get; protected set; } = 0;
         public CharacterAnimator CharAnimator { get; set; }

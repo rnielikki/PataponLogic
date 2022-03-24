@@ -28,6 +28,7 @@ namespace PataRoad.Core.Character.Bosses
         public override int GetLevel() => Level;
 
         private string _movingBackAnimation = "nothing";
+        protected string _stopAnimation = "stop";
 
         void Awake()
         {
@@ -142,7 +143,7 @@ namespace PataRoad.Core.Character.Bosses
                 {
                     _movingBack = false;
                     _sleeping = true;
-                    CharAnimator.Animate("stop");
+                    CharAnimator.Animate(_stopAnimation);
                     _movingBackQueued = false;
                     _movingBackAnimating = false;
                 }
