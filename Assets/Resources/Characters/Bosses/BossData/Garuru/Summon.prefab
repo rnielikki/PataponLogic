@@ -95,6 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5566324880898104367}
   - component: {fileID: 8580588363643125285}
+  - component: {fileID: 3825956492639226377}
   m_Layer: 20
   m_Name: arm1
   m_TagString: Untagged
@@ -170,6 +171,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!61 &3825956492639226377
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272263737193214530}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.73019, y: -0.16820002}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.1469, y: 0.645}
+    oldSize: {x: 4.9, y: 1.16}
+    newSize: {x: 1.63, y: 1.23}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.9, y: 1.16}
+  m_EdgeRadius: 0
 --- !u!1 &442595064193811104
 GameObject:
   m_ObjectHideFlags: 0
@@ -576,8 +603,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 862637040152977414}
-  m_LocalRotation: {x: -0, y: 0, z: -0.09606306, w: 0.9953753}
-  m_LocalPosition: {x: -3.09, y: 0.3900001, z: 2}
+  m_LocalRotation: {x: -0, y: -0, z: -0.23422611, w: 0.9721822}
+  m_LocalPosition: {x: -8.524433, y: 1.9149213, z: -0.4000001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -647,6 +674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4492161247351874413}
   - component: {fileID: 4408196876659529318}
+  - component: {fileID: 1781965685410778850}
   m_Layer: 20
   m_Name: arm1
   m_TagString: Untagged
@@ -722,6 +750,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!61 &1781965685410778850
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1140974771984577563}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.73019, y: -0.16820002}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.1469, y: 0.645}
+    oldSize: {x: 4.9, y: 1.16}
+    newSize: {x: 1.63, y: 1.23}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 4.9, y: 1.16}
+  m_EdgeRadius: 0
 --- !u!1 &1192754705565620437
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +908,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6367234084652929862}
   - component: {fileID: 867511370627933316}
-  m_Layer: 8
+  - component: {fileID: 2717161559647443866}
+  m_Layer: 20
   m_Name: garuru-wing-4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -928,6 +983,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &2717161559647443866
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442322343143166003}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.595, y: -4.9303007}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 1, y: 0.97}
+    oldSize: {x: 3.19, y: 10.49}
+    newSize: {x: 3.19, y: 10.49}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 3.19, y: 10.49}
+  m_EdgeRadius: 0
 --- !u!1 &1476714831755256480
 GameObject:
   m_ObjectHideFlags: 0
@@ -1485,7 +1566,7 @@ Animator:
   m_GameObject: {fileID: 1922682132329042878}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 51fddb480f966b24d94bd3f98233e559, type: 2}
+  m_Controller: {fileID: 9100000, guid: 09f69571bf7f8b644a3d99e5b0268fa5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1710,7 +1791,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8813048267485988855}
   - component: {fileID: 2593384499448324380}
-  m_Layer: 8
+  m_Layer: 20
   m_Name: wings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2027,7 +2108,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1235735652461043828}
   - component: {fileID: 8877759625046961928}
-  m_Layer: 8
+  - component: {fileID: 2640051354487197186}
+  m_Layer: 20
   m_Name: garuru-wing-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2101,6 +2183,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &2640051354487197186
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2724959126509755003}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.885, y: -3.705}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 1, y: 1}
+    oldSize: {x: 1.77, y: 7.41}
+    newSize: {x: 1.77, y: 7.41}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.77, y: 7.41}
+  m_EdgeRadius: 0
 --- !u!1 &3238012441534478737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,7 +2731,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3185515391013966810}
   - component: {fileID: 6804051028610740323}
-  m_Layer: 8
+  - component: {fileID: 379603283895754288}
+  m_Layer: 20
   m_Name: garuru-wing-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2697,6 +2806,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &379603283895754288
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4208592340529791467}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.65, y: -4.485}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 1, y: 1}
+    oldSize: {x: 1.3, y: 8.97}
+    newSize: {x: 1.3, y: 8.97}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.3, y: 8.97}
+  m_EdgeRadius: 0
 --- !u!1 &4316765559885523574
 GameObject:
   m_ObjectHideFlags: 0
@@ -3743,7 +3878,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8277249886241533855}
   - component: {fileID: 1668532819152421074}
-  m_Layer: 8
+  - component: {fileID: 8665461182556399348}
+  m_Layer: 20
   m_Name: wing0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3821,6 +3957,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &8665461182556399348
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7190238100585066435}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 1.28, y: 3.87}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 2.56, y: 7.74}
+    newSize: {x: 2.56, y: 7.74}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.56, y: 7.74}
+  m_EdgeRadius: 0
 --- !u!1 &7250448962567095604
 GameObject:
   m_ObjectHideFlags: 0
@@ -4337,7 +4499,8 @@ GameObject:
   m_Component:
   - component: {fileID: 9031750036330329455}
   - component: {fileID: 3007393304808864325}
-  m_Layer: 8
+  - component: {fileID: 1991537826574834396}
+  m_Layer: 20
   m_Name: garuru-wing-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4411,6 +4574,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1991537826574834396
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8359605373363140114}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.595, y: -3.565}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 1, y: 1}
+    oldSize: {x: 1.19, y: 7.13}
+    newSize: {x: 1.19, y: 7.13}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.19, y: 7.13}
+  m_EdgeRadius: 0
 --- !u!1 &8402789636636433727
 GameObject:
   m_ObjectHideFlags: 0
@@ -4505,7 +4694,7 @@ GameObject:
   m_Component:
   - component: {fileID: 701755469810581542}
   - component: {fileID: 2039708863196489703}
-  - component: {fileID: 399265871767985632}
+  - component: {fileID: 6323128060235422285}
   m_Layer: 20
   m_Name: head
   m_TagString: Untagged
@@ -4583,8 +4772,8 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!60 &399265871767985632
-PolygonCollider2D:
+--- !u!61 &6323128060235422285
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4596,7 +4785,7 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 1.5, y: 0.5}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.30261725, y: 0.1395116}
@@ -4606,15 +4795,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 5.4056687, y: 4.6471815}
-      - {x: 2.9536622, y: 1.4705719}
-      - {x: 4.357702, y: 1.3242049}
-      - {x: 2.998528, y: -2.6863117}
-      - {x: -0.9626601, y: -1.1564212}
-      - {x: -2.1253817, y: 1.2790532}
-      - {x: 4.576303, y: 6.2425365}
+  serializedVersion: 2
+  m_Size: {x: 6, y: 5}
+  m_EdgeRadius: 0
 --- !u!1 &8703617668425244109
 GameObject:
   m_ObjectHideFlags: 0
