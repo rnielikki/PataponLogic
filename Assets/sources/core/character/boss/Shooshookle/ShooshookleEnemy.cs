@@ -66,10 +66,12 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void SetAbsorbHit()
         {
+            UseCustomDataPosition = true;
             _absorbHit = true;
         }
         public void StopAbsorbing()
         {
+            UseCustomDataPosition = false;
             _absorbHit = false;
         }
     }

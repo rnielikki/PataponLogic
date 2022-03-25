@@ -80,12 +80,13 @@ namespace PataRoad.Core.Character.Bosses
 
         public void SetAbsorbHit()
         {
+            UseCustomDataPosition = true;
             Boss.CharAnimator.Animate("throw");
         }
 
         public void StopAbsorbing()
         {
-            //sorry for boilerplate, but it's warm
+            UseCustomDataPosition = false;
         }
     }
 }

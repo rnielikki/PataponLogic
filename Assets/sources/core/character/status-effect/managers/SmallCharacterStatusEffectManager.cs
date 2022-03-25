@@ -14,6 +14,7 @@ namespace PataRoad.Core.Character
         private bool _onKnockback;
         private float _xDirection;
         private bool _isRigidbodyActive;
+        private Vector2 _force = new Vector2(2400, 2200);
         private void Awake()
         {
             Init();
@@ -89,11 +90,19 @@ namespace PataRoad.Core.Character
         }
         protected override void OnKnockback()
         {
+            AddForce(_force);
+        }
+        /// <summary>
+        /// Throw with power. Warning: You will want to manually manage this as status effect or... for example, it'll attack on sky.
+        /// </summary>
+        /// <param name="force">Force to push.</param>
+        public void AddForce(Vector2 force)
+        {
             if (_smallCharacter.IsFixedPosition || _defaultYPosition > 0) return;
             _smallCharacter.CharAnimator.Animate("walk");
             ActivateRigidbody();
             transform.position = new Vector3(transform.position.x, Time.deltaTime * 2, transform.position.z);
-            _rigidbody.AddForce(new Vector2(-_xDirection * 2400, 2200));
+            _rigidbody.AddForce(new Vector2(-_xDirection * force.x, force.y));
             _onKnockback = true;
         }
         private void ActivateRigidbody()

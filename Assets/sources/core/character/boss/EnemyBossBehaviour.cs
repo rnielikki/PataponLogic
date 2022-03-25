@@ -136,8 +136,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         protected virtual void OnStatusEffect(StatusEffectType type)
         {
-            if (type == StatusEffectType.Stagger || type == StatusEffectType.Knockback
-                || type == StatusEffectType.Sleep || type == StatusEffectType.Ice)
+            if (type != StatusEffectType.Fire && type != StatusEffectType.Tumble)
             {
                 Boss.BossTurnManager.End();
             }

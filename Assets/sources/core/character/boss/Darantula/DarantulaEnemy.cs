@@ -14,6 +14,7 @@
         }
         public void SetAbsorbHit()
         {
+            UseCustomDataPosition = true;
             Boss.CharAnimator.Animate("absorbing");
         }
 
@@ -64,7 +65,7 @@
         }
         public void StopAbsorbing()
         {
-            //sorry for boilerplate, but it's warm
+            UseCustomDataPosition = false;
         }
         public void Heal(int amount) => Boss.Heal(amount);
     }
