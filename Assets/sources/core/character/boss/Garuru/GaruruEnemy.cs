@@ -19,7 +19,7 @@
 
         protected override BossAttackMoveSegment GetNextBehaviour()
         {
-            throw new System.NotImplementedException();
+            return new BossAttackMoveSegment("-rush", 0);
         }
         protected override string GetNextBehaviourOnIce()
         {

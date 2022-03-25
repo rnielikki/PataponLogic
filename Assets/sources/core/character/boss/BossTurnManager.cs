@@ -54,7 +54,7 @@ namespace PataRoad.Core.Character.Bosses
                 RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
                 RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
             }
-            Rhythm.Command.TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
+            TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
             if (stopAllAttacking) _data.StopAllAttacking();
             Attacking = false;
         }
@@ -88,7 +88,10 @@ namespace PataRoad.Core.Character.Bosses
         private void CountSingleAttack()
         {
             _current = _actionQueue.Dequeue();
-            if (_current != "nothing" && _current != "Idle") _charAnimator.Animate(_current + "-before");
+            if (HasBeforeAnimation(_current))
+            {
+                _charAnimator.Animate(_current + "-before");
+            }
             RhythmTimer.Current.OnTime.AddListener(CountSingleTurn);
             _turnCount++;
         }
@@ -118,7 +121,7 @@ namespace PataRoad.Core.Character.Bosses
                     if (_actionQueue.Count != 0)
                     {
                         _current = _actionQueue.Dequeue();
-                        if (_current != "nothing" && _current != "Idle") _charAnimator.Animate(_current + "-before");
+                        if (HasBeforeAnimation(_current)) _charAnimator.Animate(_current + "-before");
                         _data.StopAllAttacking();
                     }
                     else
@@ -172,5 +175,7 @@ namespace PataRoad.Core.Character.Bosses
                 TurnCounter.OnNonPlayerTurn.AddListener(CountSingleAttack);
             }
         }
+        private bool HasBeforeAnimation(string animationName) =>
+            animationName != "nothing" && animationName != "Idle" && animationName[0] != '-';
     }
 }
