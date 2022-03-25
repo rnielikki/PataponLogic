@@ -40,6 +40,9 @@ namespace PataRoad.Core.Character.Bosses
 
         private Collider2D[] _allColliders;
         private float _altMoveSpeed;
+        private bool _rushAttacking;
+        private float _restorePosition =>
+            Patapons.PataponsManager.Current.transform.position.x + CharacterSize + 1;
 
         //--Common
         bool _moving;
@@ -72,6 +75,7 @@ namespace PataRoad.Core.Character.Bosses
             _animator.runtimeAnimatorController =
                 (_isMonsterForm) ? _monsterAniamtor : _dragonAnimator;
             StopIgnoringStatusEffect();
+            CharAnimator.Animate("Idle");
         }
         //----------------- form dragon
         public void ShowBall() => _ball.Show();
@@ -101,6 +105,7 @@ namespace PataRoad.Core.Character.Bosses
         public void PoisonAttack() => _poison.Attack();
         public void SetRushTarget()
         {
+            _rushAttacking = true;
             UseCustomDataPosition = true;
             _rushTarget = Patapons.PataponsManager.Current.transform.position.x - _rushOffset;
             _cameraMover.SetTarget(transform, false);
@@ -124,8 +129,7 @@ namespace PataRoad.Core.Character.Bosses
         private void MoveToDefault()
         {
             _movementSpeed = _rushOffset * 20;
-            MoveAbsolutePosition(
-                Patapons.PataponsManager.Current.transform.position.x + CharacterSize + 1);
+            MoveAbsolutePosition(_restorePosition);
         }
         public void BackToNormalPosition()
         {
@@ -136,11 +140,22 @@ namespace PataRoad.Core.Character.Bosses
             }
             UseCustomDataPosition = false;
             _moving = false;
+            _rushAttacking = false;
+        }
+        private void RestorePosition() //patapon position system is somewhat annoying w this...
+        {
+            transform.position = new Vector3(_restorePosition,
+                transform.position.y, transform.position.z);
+            BackToNormalPosition();
         }
 
         //----------------- form common
         public override void StopAllAttacking()
         {
+            if (_rushAttacking)
+            {
+                RestorePosition();
+            }
             _ball.StopAttacking();
             _pickingHand.StopAttacking();
             _poison.StopAttacking();
