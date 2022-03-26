@@ -1827,7 +1827,7 @@ Animator:
   m_GameObject: {fileID: 1922682132329042878}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 51fddb480f966b24d94bd3f98233e559, type: 2}
+  m_Controller: {fileID: 9100000, guid: 09f69571bf7f8b644a3d99e5b0268fa5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1889,7 +1889,6 @@ MonoBehaviour:
   _poison: {fileID: 2992685913888760508}
   _rushOffset: 3
   _moveOffset: 15
-  _headbutt: {fileID: 6099702539937195567}
   references:
     version: 2
     RefIds:
@@ -1897,7 +1896,7 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 1
-        _hitPoint: 200
+        _hitPoint: 6666
         _defenceMin: 0.9
         _defenceMax: 1.1
         _damageMin: 4
@@ -1908,19 +1907,19 @@ MonoBehaviour:
         _stagger: 0
         _knockback: 0
         _infiniteCriticalResistance: 0
-        _criticalResistance: 0
+        _criticalResistance: 0.8
         _infiniteStaggerResistance: 0
-        _staggerResistance: 0
+        _staggerResistance: 0.5
         _infiniteKnockbackResistance: 0
-        _knockbackResistance: 0
+        _knockbackResistance: 0.5
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
         _infiniteFireResistance: 0
-        _fireResistance: 0
-        _infiniteIceResistance: 0
+        _fireResistance: 0.6
+        _infiniteIceResistance: 1
         _iceResistance: 0
-        _infiniteSleepResistance: 0
+        _infiniteSleepResistance: 1
         _sleepResistance: 0
     - rid: 5776632335533080579
       type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
@@ -1937,7 +1936,7 @@ MonoBehaviour:
       type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
       data:
         _isCharacterStat: 1
-        _hitPoint: 20000
+        _hitPoint: 6666
         _defenceMin: 0.9
         _defenceMax: 1.1
         _damageMin: 0
@@ -1948,19 +1947,19 @@ MonoBehaviour:
         _stagger: 0
         _knockback: 0
         _infiniteCriticalResistance: 0
-        _criticalResistance: 0
+        _criticalResistance: 0.5
         _infiniteStaggerResistance: 0
-        _staggerResistance: 0
-        _infiniteKnockbackResistance: 0
+        _staggerResistance: 0.75
+        _infiniteKnockbackResistance: 1
         _knockbackResistance: 0
         _fireRate: 0
         _iceRate: 0
         _sleepRate: 0
         _infiniteFireResistance: 0
-        _fireResistance: 0
-        _infiniteIceResistance: 0
+        _fireResistance: 0.6
+        _infiniteIceResistance: 1
         _iceResistance: 0
-        _infiniteSleepResistance: 0
+        _infiniteSleepResistance: 1
         _sleepResistance: 0
 --- !u!1 &2018696949691448210
 GameObject:

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Bosses
 {
@@ -25,8 +26,6 @@ namespace PataRoad.Core.Character.Bosses
         [SerializeField]
         private float _moveOffset;
         private float _movementSpeed;
-        [SerializeField]
-        private Collider2D _headbutt;
 
         Vector2 _pushForce = new Vector2(500, 1500);
 
@@ -38,11 +37,17 @@ namespace PataRoad.Core.Character.Bosses
         float _rushTarget;
         CameraController.CameraMover _cameraMover;
 
-        private Collider2D[] _allColliders;
+        private Collider2D[] _raycastColliders;
+        private Collider2D[] _nonTriggerColliders;
+
         private float _altMoveSpeed;
         private bool _rushAttacking;
+        private bool _movingToNormal;
         private float _restorePosition =>
             Patapons.PataponsManager.Current.transform.position.x + CharacterSize + 1;
+
+        private int _nonRaycastLayer;
+        private int _raycastLayer;
 
         //--Common
         bool _moving;
@@ -57,10 +62,26 @@ namespace PataRoad.Core.Character.Bosses
             _pickingHand = GetComponentInChildren<AbsorbComponent>();
             _cameraMover = Camera.main.GetComponent<CameraController.CameraMover>();
             _movementSpeed = Boss.Stat.MovementSpeed;
-            _allColliders = GetComponentsInChildren<Collider2D>(true);
-            _altMoveSpeed = (_rushOffset + _moveOffset) / 2;
 
+            if (Boss is EnemyBoss) //rushing is annoying
+            {
+                //only works with boss. not used for summons
+                var layers = CharacterTypeDataCollection.GetCharacterData(CharacterType.Others);
 
+                var allColliders = GetComponentsInChildren<Collider2D>(true);
+
+                _raycastLayer = layers.SelfLayerMaskRayCast;
+                _nonRaycastLayer = layers.SelfLayerMaskNoRayCast;
+
+                _raycastColliders = allColliders.Where(col =>
+                col.gameObject.layer == _raycastLayer).ToArray();
+
+                _nonTriggerColliders = allColliders.Where(col => !col.isTrigger).ToArray();
+
+                _altMoveSpeed = (_rushOffset + _moveOffset) / 2;
+            }
+
+            //.................... temp.
             _isMonsterForm = true;
         }
         //----------------- form change
@@ -105,7 +126,6 @@ namespace PataRoad.Core.Character.Bosses
         public void PoisonAttack() => _poison.Attack();
         public void SetRushTarget()
         {
-            _rushAttacking = true;
             UseCustomDataPosition = true;
             _rushTarget = Patapons.PataponsManager.Current.transform.position.x - _rushOffset;
             _cameraMover.SetTarget(transform, false);
@@ -114,11 +134,16 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void Rush()
         {
+            _rushAttacking = true;
             MoveAbsolutePosition(_rushTarget);
             _movementSpeed = _altMoveSpeed + _rushOffset;
-            foreach (var collider in _allColliders)
+            foreach (var collider in _raycastColliders)
             {
-                if (collider != _headbutt) collider.enabled = false;
+                collider.gameObject.layer = _nonRaycastLayer;
+            }
+            foreach (var collider in _nonTriggerColliders)
+            {
+                collider.isTrigger = true;
             }
         }
         public void AfterRush()
@@ -128,16 +153,23 @@ namespace PataRoad.Core.Character.Bosses
         }
         private void MoveToDefault()
         {
-            _movementSpeed = _rushOffset * 20;
+            _movingToNormal = true;
+            _movementSpeed = Boss.Stat.MovementSpeed;
             MoveAbsolutePosition(_restorePosition);
         }
         public void BackToNormalPosition()
         {
             _movementSpeed = Boss.Stat.MovementSpeed;
-            foreach (var collider in _allColliders)
+            foreach (var collider in _raycastColliders)
             {
-                if (collider != _headbutt) collider.enabled = true;
+                collider.gameObject.layer = _raycastLayer;
             }
+            foreach (var collider in _nonTriggerColliders)
+            {
+                collider.isTrigger = false;
+            }
+
+            _movingToNormal = false;
             UseCustomDataPosition = false;
             _moving = false;
             _rushAttacking = false;
@@ -161,6 +193,7 @@ namespace PataRoad.Core.Character.Bosses
             _poison.StopAttacking();
             base.StopAllAttacking();
             _moving = false;
+            _movingToNormal = false;
         }
         public void MovePosition(float pos)
         {
@@ -200,6 +233,7 @@ namespace PataRoad.Core.Character.Bosses
                 if (transform.position.x == _targetPosition.x)
                 {
                     _moving = false;
+                    if (_movingToNormal) BackToNormalPosition();
                 }
             }
         }
