@@ -93,7 +93,8 @@ namespace PataRoad.Core.Character.Equipments
             if (_spriteRenderers == null) LoadRenderersAndImage();
             foreach (var renderer in _spriteRenderers)
             {
-                renderer.sprite = equipmentData?.Image;
+                if (equipmentData != null) renderer.sprite = equipmentData.Image;
+                else renderer.sprite = null;
             }
         }
         private void OnValidate()

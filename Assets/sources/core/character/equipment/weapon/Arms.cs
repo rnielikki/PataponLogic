@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PataRoad.Core.Items;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
 {
@@ -11,6 +12,10 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             _stoneTransform = transform.Find("Stone");
             Init();
+        }
+        protected override void LoadRenderersAndImage()
+        {
+            base.LoadRenderersAndImage();
             _armTriggers = GetComponentsInChildren<ArmTrigger>();
         }
         protected override Sprite GetThrowableWeaponSprite() => _stoneTransform.GetComponent<SpriteRenderer>().sprite;
@@ -29,6 +34,14 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                 {
                     arm.EnableAttacking(Holder.Stat);
                 }
+            }
+        }
+        protected override void ReplaceImage(EquipmentData equipmentData)
+        {
+            base.ReplaceImage(equipmentData);
+            foreach (var trigger in _armTriggers)
+            {
+                trigger.SetColliderSize(equipmentData.Image);
             }
         }
         public override void StopAttacking()

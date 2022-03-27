@@ -7,18 +7,30 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     /// </summary>
     internal class ArmTrigger : MonoBehaviour
     {
-        private Collider2D _collider;
+        private BoxCollider2D _collider;
+        private SpriteRenderer _renderer;
         private ICharacter _holder;
         private Stat _stat;
         private void Start()
         {
-            _collider = GetComponent<Collider2D>();
+            Init();
             _holder = GetComponentInParent<ICharacter>();
+        }
+        private void Init()
+        {
+            if (_renderer != null) return;
+            _renderer = GetComponent<SpriteRenderer>();
+            _collider = GetComponent<BoxCollider2D>();
         }
         public void EnableAttacking(Stat stat)
         {
             _stat = stat;
             _collider.enabled = true;
+        }
+        internal void SetColliderSize(Sprite sprite)
+        {
+            if (_collider == null) Init();
+            Weapon.SetColliderBoundingBox(_collider, sprite, _renderer.flipX, _renderer.flipY);
         }
         public void DisableAttacking() => _collider.enabled = false;
 

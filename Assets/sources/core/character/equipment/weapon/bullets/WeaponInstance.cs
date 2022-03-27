@@ -9,6 +9,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     internal class WeaponInstance : MonoBehaviour
     {
         Rigidbody2D _rigidbody;
+        BoxCollider2D _collider;
         IAttacker _holder;
         Stat _stat;
         private static GameObject _resource;
@@ -16,6 +17,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void Awake()
         {
             _rigidbody = gameObject.GetComponent<Rigidbody2D>();
+            _collider = gameObject.GetComponent<BoxCollider2D>();
         }
         /// <summary>
         /// Gets resource of the weapon instance. Note that it's NOT INSTANTIATED yet.
@@ -49,12 +51,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// <param name="mass">Mass of the object. This will affect to Tailwind.</param>
         /// <param name="transformOriginal">Transform of the object. If not set, default value is transform of <paramref name="original"/>.</param>
         /// <returns>Self, as initialized.</returns>
-        public WeaponInstance Initialize(IAttacker holder, Sprite sprite, Material material, int layer, float mass, Transform transformOriginal)
+        public WeaponInstance Initialize(IAttacker holder, Sprite sprite, Material material,
+            int layer, float mass, Transform transformOriginal)
         {
             _rigidbody.mass = mass;
             _holder = holder;
             var renderer = GetComponent<SpriteRenderer>();
+
             renderer.sprite = sprite;
+            Weapon.SetColliderBoundingBox(_collider, sprite);
             renderer.material = material;
 
             transform.SetPositionAndRotation(transformOriginal.position, transformOriginal.rotation);

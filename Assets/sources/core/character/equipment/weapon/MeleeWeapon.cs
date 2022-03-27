@@ -1,3 +1,4 @@
+using PataRoad.Core.Items;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
@@ -8,15 +9,20 @@ namespace PataRoad.Core.Character.Equipments.Weapons
     /// <remarks>Melee weapons do Slash, Stab or Crush, depends on weapon or user selection.</remarks>
     public abstract class MeleeWeapon : Weapon
     {
-        protected Collider2D _collider { get; private set; }
-        protected override void Init()
+        protected BoxCollider2D _collider { get; private set; }
+        protected override void LoadRenderersAndImage()
         {
-            base.Init();
-            _collider = GetComponent<Collider2D>();
+            base.LoadRenderersAndImage();
+            _collider = GetComponent<BoxCollider2D>();
         }
         public override void Attack(AttackCommandType attackCommandType)
         {
             _collider.enabled = true;
+        }
+        protected override void ReplaceImage(EquipmentData equipmentData)
+        {
+            base.ReplaceImage(equipmentData);
+            SetColliderBoundingBox(_collider, equipmentData.Image);
         }
 
         public override void StopAttacking()

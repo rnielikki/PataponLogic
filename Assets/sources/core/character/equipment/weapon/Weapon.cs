@@ -120,5 +120,18 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             }
             _material = weaponMaterial;
         }
+        public static void SetColliderBoundingBox(BoxCollider2D collider, Sprite sprite,
+            bool xFlip = false, bool yFlip = false)
+        {
+            var rectSize = sprite.rect.size;
+            var spritePivotNormalized = new Vector2(
+                sprite.pivot.x / rectSize.x, sprite.pivot.y / rectSize.y);
+            var offset = 0.5f * Vector2.one - spritePivotNormalized;
+            collider.offset = new Vector2(
+                offset.x * rectSize.x * (xFlip ? -1 : 1),
+                offset.y * rectSize.y * (yFlip ? -1 : 1))
+                / sprite.pixelsPerUnit;
+            collider.size = rectSize / sprite.pixelsPerUnit;
+        }
     }
 }
