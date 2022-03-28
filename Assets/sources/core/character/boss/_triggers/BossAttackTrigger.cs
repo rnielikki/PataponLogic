@@ -22,7 +22,10 @@ namespace PataRoad.Core.Character.Bosses
         public override void StopAttacking()
         {
             _enabled = false;
-            if (!_isAlreadyTrigger) _collider.isTrigger = false;
+            if (_collider != null && !_isAlreadyTrigger)
+            {
+                _collider.isTrigger = false;
+            }
         }
 
         protected virtual void OnTriggerEnter2D(Collider2D collision)

@@ -12,7 +12,7 @@ namespace PataRoad.Core.Character.Bosses
 
         private bool _moving;
         private bool _movingBack;
-        private bool _movingBackQueued;
+        protected bool _movingBackQueued;
         private static int _movingBackPosition = (int)CharacterEnvironment.Sight + 15;
         private int _phase;
 
@@ -89,9 +89,10 @@ namespace PataRoad.Core.Character.Bosses
                 return phase != _phase;
             }
         }
+        internal void ManualEndTurn() => BossTurnManager.EndAttack();
         protected virtual void StartMovingBack()
         {
-            if (BossAttackData.UseCustomDataPosition) return;
+            if (BossAttackData.UseCustomDataPosition || BossAttackData.AttackPaused) return;
             _targetPosition = Vector3.right * (DefaultWorldPosition + _movingBackPosition);
             DefaultWorldPosition = _targetPosition.x;
             _movingBack = true;
@@ -114,7 +115,7 @@ namespace PataRoad.Core.Character.Bosses
         protected void Update()
         {
             //phase 0: attacking or dead
-            if (!CanContinue()) return;
+            if (!CanContinue() || BossAttackData.AttackPaused) return;
             //phase 0.12345: don't disturb, now it's doing after-attacking gesture
             if (BossAttackData.UseCustomDataPosition)
             {

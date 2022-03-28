@@ -52,16 +52,16 @@ namespace PataRoad.Core.Character.Bosses
 
                     if (_playDyingSoundBeforeDeath) PlayDyingSound(patapon);
 
-                    _boss.UseCustomDataPosition = true;
+                    _boss.AttackPaused = true;
                     (_boss.Boss as EnemyBoss).BossTurnManager.End(false);
                     _absorber.SetAbsorbHit();
                 }
             }
         }
-        internal void StartAbsorbing()
+        internal void StartAbsorbing(bool releasePauseAttack = true)
         {
             if (_absorber == null || _pataponToEat == null) return;
-            _boss.UseCustomDataPosition = false;
+            if (releasePauseAttack) _boss.AttackPaused = false;
             if (!_playDyingSoundBeforeDeath) PlayDyingSound(_pataponToEat);
             _pataponToEat.EnsureDeath();
             _absorber.Heal(_pataponToEat.CurrentHitPoint);
@@ -73,7 +73,7 @@ namespace PataRoad.Core.Character.Bosses
             _absorber.StopAbsorbing();
             _pataponToEat.CancelDeath();
             _pataponToEat = null;
-            _boss.UseCustomDataPosition = false;
+            _boss.AttackPaused = false;
         }
         private void PlayDyingSound(Patapon patapon) =>
             GameSound.SpeakManager.Current.Play(

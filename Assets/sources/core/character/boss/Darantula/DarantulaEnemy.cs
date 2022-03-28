@@ -20,7 +20,6 @@
 
         protected override BossAttackMoveSegment GetNextBehaviour()
         {
-            return new BossAttackMoveSegment("poison", 0);
             if (_pataponsManager.ContainsClassOnly(Class.ClassType.Toripon))
             {
                 return new BossAttackMoveSegment("tailwhip", 0);

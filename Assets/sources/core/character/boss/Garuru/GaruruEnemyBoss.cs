@@ -11,5 +11,9 @@
         {
             _garuruAttack.ChangeForm();
         }
+        internal void ChangedForm()
+        {
+            _movingBackQueued = false;
+        }
     }
 }

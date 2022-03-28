@@ -15,7 +15,11 @@ namespace PataRoad.Core.Character.Bosses
         public float MaxLastDamageOffset { get; protected set; } = 0;
         public CharacterAnimator CharAnimator { get; set; }
 
-        public bool UseCustomDataPosition { get; internal set; }
+        internal bool UseCustomDataPosition { get; set; }
+        /// <summary>
+        /// Unlike <see cref="UseCustomDataPosition"/>, it doesn't call <see cref="SetCustomPosition"/>.
+        /// </summary>
+        internal bool AttackPaused { get; set; }
 
         public Boss Boss { get; protected set; }
         public float CharacterSize { get; protected set; }
@@ -36,6 +40,8 @@ namespace PataRoad.Core.Character.Bosses
         public virtual void StopAllAttacking()
         {
             StopIgnoringStatusEffect();
+            UseCustomDataPosition = false;
+            AttackPaused = false;
         }
         public void Attack(BossAttackComponent component, GameObject target, Vector2 position,
             Equipments.Weapons.AttackType attackType,

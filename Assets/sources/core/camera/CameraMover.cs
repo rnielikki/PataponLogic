@@ -12,6 +12,7 @@ namespace PataRoad.Core.CameraController
         /// </summary>
         [SerializeField]
         private float _cameraMoveSensitivity;
+        private float _currentMovingSensitivity;
 
         /// <summary>
         /// Adds speed when it's input move.
@@ -45,6 +46,7 @@ namespace PataRoad.Core.CameraController
         {
             var input = Global.GlobalData.Input.actions;
             _action = input.FindAction("Player/Camera");
+            _currentMovingSensitivity = _currentMovingSensitivity;
             _action.started += SetInputCameraMove;
             _action.canceled += ReleaseInputCameraMove;
             _action.Enable();
@@ -75,14 +77,20 @@ namespace PataRoad.Core.CameraController
                 transform.position = Vector3.MoveTowards(
                     transform.position,
                     pos,
-                    (_cameraMoveSensitivity + (Mathf.Abs(_inputMoveOffset) * _inputTurnSpeed)) * Time.deltaTime);
-                if (pos.x == transform.position.x && _inputMoveOffset == 0) SmoothMoving = false;
+                    (_currentMovingSensitivity + (Mathf.Abs(_inputMoveOffset) * _inputTurnSpeed)) * Time.deltaTime);
+                if (pos.x == transform.position.x && _inputMoveOffset == 0)
+                {
+                    SmoothMoving = false;
+                    _currentMovingSensitivity = _cameraMoveSensitivity;
+                }
             }
         }
-        public virtual void SetTarget(Transform targetTransform, bool smooth = true)
+        public virtual void SetTarget(Transform targetTransform, bool smooth = true,
+            float movingSpeedMultiplier = 1)
         {
             SmoothMoving = smooth;
             Target = targetTransform;
+            _currentMovingSensitivity = _cameraMoveSensitivity * movingSpeedMultiplier;
         }
         /// <summary>
         /// Stops moving completely and put to initial place.

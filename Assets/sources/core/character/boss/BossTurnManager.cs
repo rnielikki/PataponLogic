@@ -91,9 +91,14 @@ namespace PataRoad.Core.Character.Bosses
             if (HasBeforeAnimation(_current))
             {
                 _charAnimator.Animate(_current + "-before");
+                RhythmTimer.Current.OnTime.AddListener(CountSingleTurn);
+                _turnCount++;
             }
-            RhythmTimer.Current.OnTime.AddListener(CountSingleTurn);
-            _turnCount++;
+            //manual end
+            else if (_current[0] == '-')
+            {
+                _charAnimator.Animate(_current);
+            }
         }
         private void CountSingleTurn()
         {
@@ -103,9 +108,10 @@ namespace PataRoad.Core.Character.Bosses
                     _charAnimator.Animate(_current);
                     break;
                 case 12:
-                    EndAttack();
                     _data.StopAllAttacking();
                     RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
+                    EndAttack();
+
                     break;
             }
             _turnCount++;
@@ -123,6 +129,13 @@ namespace PataRoad.Core.Character.Bosses
                         _current = _actionQueue.Dequeue();
                         if (HasBeforeAnimation(_current)) _charAnimator.Animate(_current + "-before");
                         _data.StopAllAttacking();
+                        //manual end
+                        if (_current[0] == '-')
+                        {
+                            _willAttackEnd = false;
+                            RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
+                            _data.AttackPaused = true;
+                        }
                     }
                     else
                     {
@@ -132,10 +145,10 @@ namespace PataRoad.Core.Character.Bosses
                 case 3:
                     if (_willAttackEnd)
                     {
-                        EndAttack();
                         _data.StopAllAttacking();
                         RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
                         _willAttackEnd = false;
+                        EndAttack();
                     }
                     break;
                 case 7:
@@ -149,7 +162,7 @@ namespace PataRoad.Core.Character.Bosses
             End();
             OnAttackEnd.RemoveAllListeners();
         }
-        private void EndAttack()
+        internal void EndAttack()
         {
             Attacking = false;
             OnAttackEnd.Invoke();

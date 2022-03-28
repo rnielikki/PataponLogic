@@ -6,7 +6,9 @@ namespace PataRoad.Core.Character.Bosses
     public class GaruruAttack : BossAttackData
     {
         private Animator _animator;
+        [SerializeField]
         private bool _isMonsterForm;
+        public bool IsMonsterForm => _isMonsterForm;
         [Header("Monster form")]
         [SerializeField]
         private RuntimeAnimatorController _monsterAniamtor;
@@ -40,7 +42,6 @@ namespace PataRoad.Core.Character.Bosses
         private Collider2D[] _raycastColliders;
         private Collider2D[] _nonTriggerColliders;
 
-        private float _altMoveSpeed;
         private bool _rushAttacking;
         private bool _movingToNormal;
         private float _restorePosition =>
@@ -52,19 +53,24 @@ namespace PataRoad.Core.Character.Bosses
         //--Common
         bool _moving;
         private Vector2 _targetPosition;
+        bool _isEnemyBoss;
+        GaruruEnemyBoss _enemy;
 
         private void Start()
         {
             CharacterSize = 6;
             _animator = CharAnimator.Animator;
             _dragonAnimator = _animator.runtimeAnimatorController;
-            _ball = GetComponentInChildren<GaruruBall>();
-            _pickingHand = GetComponentInChildren<AbsorbComponent>();
+            _ball = GetComponentInChildren<GaruruBall>(true);
+            _pickingHand = GetComponentInChildren<AbsorbComponent>(true);
             _cameraMover = Camera.main.GetComponent<CameraController.CameraMover>();
             _movementSpeed = Boss.Stat.MovementSpeed;
 
-            if (Boss is EnemyBoss) //rushing is annoying
+            if (Boss is GaruruEnemyBoss enemy) //rushing is annoying
             {
+                _isEnemyBoss = true;
+                _enemy = enemy;
+
                 //only works with boss. not used for summons
                 var layers = CharacterTypeDataCollection.GetCharacterData(CharacterType.Others);
 
@@ -77,25 +83,30 @@ namespace PataRoad.Core.Character.Bosses
                 col.gameObject.layer == _raycastLayer).ToArray();
 
                 _nonTriggerColliders = allColliders.Where(col => !col.isTrigger).ToArray();
-
-                _altMoveSpeed = (_rushOffset + _moveOffset) / 2;
             }
 
             //.................... temp.
-            _isMonsterForm = true;
+            //_isMonsterForm = true;
         }
         //----------------- form change
         public void ChangeForm()
         {
             IgnoreStatusEffect();
+            AttackPaused = true;
             CharAnimator.Animate("change");
         }
         public void ChangeAnimator()
         {
+            AttackPaused = false;
             _isMonsterForm = !_isMonsterForm;
             _animator.runtimeAnimatorController =
                 (_isMonsterForm) ? _monsterAniamtor : _dragonAnimator;
             StopIgnoringStatusEffect();
+
+            if (_isEnemyBoss)
+            {
+                _enemy.ChangedForm();
+            }
             CharAnimator.Animate("Idle");
         }
         //----------------- form dragon
@@ -106,7 +117,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             foreach (var target in Boss.DistanceCalculator.GetAllAbsoluteTargetsOnFront())
             {
-                var character = target.GetComponent<ICharacter>();
+                var character = target.GetComponentInParent<ICharacter>();
                 if (character != null)
                 {
                     Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(
@@ -120,23 +131,25 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void Pick() => _pickingHand.Attack();
         public void StopPicking() => _pickingHand.StopAttacking();
-        public void Burn() => _pickingHand.StartAbsorbing();
+        public void Burn() => _pickingHand.StartAbsorbing(false);
+        public void ReleasePausingAttack() => AttackPaused = false;
 
         //----------------- form beast
         public void PoisonAttack() => _poison.Attack();
         public void SetRushTarget()
         {
-            UseCustomDataPosition = true;
+            AttackPaused = true;
             _rushTarget = Patapons.PataponsManager.Current.transform.position.x - _rushOffset;
             _cameraMover.SetTarget(transform, false);
-            _movementSpeed = _altMoveSpeed;
+            _cameraMover.SetCameraOffset(0);
+            _movementSpeed = _moveOffset / 2;
             MovePosition(-999);
         }
         public void Rush()
         {
             _rushAttacking = true;
             MoveAbsolutePosition(_rushTarget);
-            _movementSpeed = _altMoveSpeed + _rushOffset;
+            _movementSpeed = (_rushOffset + _moveOffset) / 2.25f;
             foreach (var collider in _raycastColliders)
             {
                 collider.gameObject.layer = _nonRaycastLayer;
@@ -149,7 +162,8 @@ namespace PataRoad.Core.Character.Bosses
         public void AfterRush()
         {
             _moving = false;
-            _cameraMover.SetTarget(Patapons.PataponsManager.Current.transform, true);
+            _cameraMover.SetTarget(Patapons.PataponsManager.Current.transform, true, 3);
+            _cameraMover.SetCameraOffset(Patapons.PataponsManager.CameraOffsetOnNonZoom);
         }
         private void MoveToDefault()
         {
@@ -168,9 +182,9 @@ namespace PataRoad.Core.Character.Bosses
             {
                 collider.isTrigger = false;
             }
-
+            _enemy.BossTurnManager.EndAttack();
             _movingToNormal = false;
-            UseCustomDataPosition = false;
+            AttackPaused = false;
             _moving = false;
             _rushAttacking = false;
         }

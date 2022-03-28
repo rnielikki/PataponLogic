@@ -98,7 +98,7 @@ namespace PataRoad.Core.Character
         /// <param name="force">Force to push.</param>
         public void AddForce(Vector2 force)
         {
-            if (_smallCharacter.IsFixedPosition || _defaultYPosition > 0) return;
+            if (_smallCharacter.IsFixedPosition || _defaultYPosition > 0 || _onKnockback) return;
             _smallCharacter.CharAnimator.Animate("walk");
             ActivateRigidbody();
             transform.position = new Vector3(transform.position.x, Time.deltaTime * 2, transform.position.z);

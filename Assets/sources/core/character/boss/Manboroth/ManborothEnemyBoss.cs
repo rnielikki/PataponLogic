@@ -37,6 +37,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             _frozen = true;
             _changingPhase = false;
+            _movingBackQueued = false;
             CharAnimator.Animate("frozen");
             _status = ManborothStatus.Frozen;
             _currentIceHitPoint = _iceHitPointInZero + _iceHitPointInOne;
