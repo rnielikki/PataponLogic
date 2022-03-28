@@ -16,9 +16,12 @@ namespace PataRoad.Story.Actions
             }
             _audioSource.Stop();
         }
-        public void ChangeMusic(AudioClip clip)
+        public void ChangeMusic(AudioClip clip) => SetMusic(clip, true);
+        public void ChangeMusicAndPlayOnce(AudioClip clip) => SetMusic(clip, false);
+        public void SetMusic(AudioClip clip, bool repeat)
         {
             StopMusic();
+            _audioSource.loop = repeat;
             _audioSource.clip = clip;
             _audioSource.Play();
         }
