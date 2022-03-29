@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.Patapolis.Minigame
 {
-    class MaterialLoader : MonoBehaviour
+    public class MaterialLoader : MonoBehaviour
     {
         [SerializeField]
         Text _titleField;
@@ -24,12 +24,12 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         private ItemDisplay[] _allDisplays;
         public IEnumerable<ItemDisplay> AllDisplays => _allDisplays;
         private System.Guid[] _itemIds;
-        public IItem Item => _current?.Item;
-        private MinigameMaterialWindow _parent;
+        public IItem Item => _current == null ? null : _current.Item;
+        private MaterialWindow _parent;
         public string Group { get; private set; }
         private bool _lateInitDone;
 
-        public void Init(string materialGroup, MinigameMaterialWindow parent)
+        public void Init(string materialGroup, MaterialWindow parent)
         {
             var allData = Core.Global.GlobalData.CurrentSlot.Inventory.GetItemsByType(ItemType.Material, materialGroup)
                 .OrderBy(d => d.Item.Index);

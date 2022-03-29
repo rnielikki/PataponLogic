@@ -10,6 +10,9 @@
         public void LoadSlot(Slot slot)
         {
             CurrentSlot = slot;
+            //-------------------------------------TEMP
+            slot.Progress.IsExchangeOpen = true;
+            //-------------------------------------TEMP END
         }
         public SlotMeta SaveSlot(int index) => CurrentSlot.Save(index);
         public void UnloadSlot()

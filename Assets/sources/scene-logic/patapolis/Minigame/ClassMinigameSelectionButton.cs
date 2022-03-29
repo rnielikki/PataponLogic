@@ -44,7 +44,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         public override (IItem item, int amount) GetReward(int levelSum, int minMaxDifference)
         {
             if (_itemGroupName == null) return (null, 0);
-            return (ItemLoader.GetItem(ItemType.Equipment, _itemGroupName, GetItemIndex(levelSum + 2, minMaxDifference)), 1);
+            return (ItemLoader.GetItem(ItemType.Equipment, _itemGroupName, GetItemIndex(levelSum, minMaxDifference)), 1);
         }
         private int GetItemIndex(int levelSum, int minMaxDifference)
         {

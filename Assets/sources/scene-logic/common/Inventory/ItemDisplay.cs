@@ -31,7 +31,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         private void Awake()
         {
             _parent = GetComponentInParent<InventoryDisplay>();
-            _scrollList = _parent?.ScrollList;
+            if (_parent != null) _scrollList = _parent.ScrollList;
         }
         public void Init(IItem item, int amount)
         {
@@ -76,8 +76,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void OnSelect(BaseEventData eventData)
         {
-            _parent?.SelectItem(this);
-            _scrollList?.Scroll(this);
+            if (_parent != null) _parent.SelectItem(this);
+            if (_scrollList != null) _scrollList.Scroll(this);
         }
     }
 }

@@ -10,6 +10,7 @@
         EquipmentMinigame,
         Rarepon,
         Summon,
-        Music
+        Music,
+        Exchange
     }
 }

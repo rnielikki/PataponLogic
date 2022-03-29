@@ -47,6 +47,14 @@ namespace PataRoad.Core.Global.Slots
             get => _isMusicOpen;
             set => _isMusicOpen = value;
         }
+        [SerializeField]
+        private bool _isExchangeOpen;
+        public bool IsExchangeOpen
+        {
+            get => _isExchangeOpen;
+            set => _isExchangeOpen = value;
+        }
+
         public bool IsOpen(GameProgressType type) => type switch
         {
             GameProgressType.Gong => _isGongOpen,
@@ -55,6 +63,7 @@ namespace PataRoad.Core.Global.Slots
             GameProgressType.Rarepon => _isRareponOpen,
             GameProgressType.Summon => _isSummonOpen,
             GameProgressType.Music => _isMusicOpen,
+            GameProgressType.Exchange => _isExchangeOpen,
             _ => throw new System.NotImplementedException()
         };
     }

@@ -39,7 +39,14 @@ namespace PataRoad.Core.Map.Levels
             }
             else
             {
-                Global.GlobalData.CurrentSlot.Progress.IsEquipmentMinigameOpen = true;
+                MissionPoint.Current.AddMissionEndAction((success) =>
+                {
+                    if (success)
+                    {
+                        Global.GlobalData.CurrentSlot.Progress.IsEquipmentMinigameOpen = true;
+                        Global.GlobalData.CurrentSlot.Progress.IsExchangeOpen = true;
+                    }
+                });
             }
         }
         public void FailMission()

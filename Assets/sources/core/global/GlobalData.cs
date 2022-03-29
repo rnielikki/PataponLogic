@@ -25,6 +25,10 @@ namespace PataRoad.Core.Global
         [SerializeField]
         InputActionAsset _rightInputs;
 
+        [Header("Debug")]
+        [SerializeField]
+        bool _doNotLoadMain;
+
 
         /// <summary>
         /// Loads System data.
@@ -45,7 +49,7 @@ namespace PataRoad.Core.Global
                 Sound = GetComponentInChildren<GlobalSoundSystem>();
 
                 SlotManager = new SlotManager();
-                UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+                if (!_doNotLoadMain) UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
             }
             catch (System.Exception e)
             {

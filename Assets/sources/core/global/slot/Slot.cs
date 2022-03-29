@@ -61,6 +61,21 @@ namespace PataRoad.Core.Global.Slots
         public GameProgress Progress => _progress;
 
         /// <summary>
+        /// Saves exchange rate data, which rises every time when exchange items.
+        /// </summary>
+        /// <returns>The data that contains exchange rate map.</returns>
+        [SerializeReference]
+        private ExchangeRateData _exchangeRates;
+        public ExchangeRateData ExchangeRates
+        {
+            get
+            {
+                return _exchangeRates = _exchangeRates != null ?
+                    _exchangeRates : new ExchangeRateData();
+            }
+        }
+
+        /// <summary>
         /// Loads slot with initial game status.
         /// </summary>
         public static Slot CreateNewGame()
@@ -75,6 +90,7 @@ namespace PataRoad.Core.Global.Slots
             slot._startTime = (int)Time.realtimeSinceStartup;
             slot._almightyName = "";
             slot._progress = new GameProgress();
+            slot._exchangeRates = new ExchangeRateData();
 
             return slot;
         }
