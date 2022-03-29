@@ -20,15 +20,14 @@ namespace PataRoad.SceneLogic.Patapolis.ItemExchange
         [SerializeField]
         private Button _button;
         [SerializeField]
-        Text _status;
+        ExchangeSelectionUpdater _statusUpdater;
         private bool _isGem;
         public bool IsGem => _isGem;
-        private bool _initDone;
         public float AmountRatio { get; private set; }
         public int AmountRequirement { get; private set; }
+
         internal void Init(ItemExchangeToggleMenu menu, int index)
         {
-            _initDone = true;
             _button.onClick.RemoveAllListeners();
             _isGem = menu.IsGem;
             if (!IsGem)
@@ -71,12 +70,12 @@ namespace PataRoad.SceneLogic.Patapolis.ItemExchange
 
         public void OnDeselect(BaseEventData eventData)
         {
-            _status.text = "";
+            _statusUpdater.Hide();
         }
 
         public void OnSelect(BaseEventData eventData)
         {
-            _status.text = $"{AmountRequirement} required for 1 {_outputItem.Name} (Exchange rate {AmountRatio:P2})";
+            _statusUpdater.UpdateDescription(this);
         }
     }
 }

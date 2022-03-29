@@ -6,6 +6,7 @@ namespace PataRoad.Core.Global
     [System.Serializable]
     public class ExchangeRateData
     {
+        private const float _maxRate = 20;
         [SerializeField]
         float _alloyRate = _alloyRatio;
         const float _alloyRatio = 0.1f;
@@ -26,19 +27,34 @@ namespace PataRoad.Core.Global
             switch (materialType)
             {
                 case FromMaterialType.Mineral:
-                    _alloyRate += _alloyRatio * (level + 1);
+                    if (_alloyRate < _maxRate)
+                    {
+                        _alloyRate += _alloyRatio * (level + 1);
+                    }
                     return;
                 case FromMaterialType.Bone:
-                    _meatRate += _meatRatio * (level + 1);
+                    if (_meatRate < _maxRate)
+                    {
+                        _meatRate += _meatRatio * (level + 1);
+                    }
                     return;
                 case FromMaterialType.Tree:
-                    _liquidRate += _liquidRatio * (level + 1);
+                    if (_liquidRate < _maxRate)
+                    {
+                        _liquidRate += _liquidRatio * (level + 1);
+                    }
                     return;
                 case FromMaterialType.Fang:
-                    _hideRate += _hideRatio * (level + 1);
+                    if (_hideRate < _maxRate)
+                    {
+                        _hideRate += _hideRatio * (level + 1);
+                    }
                     return;
                 case FromMaterialType.Vegetable:
-                    _seedRate += _seedRatio * (level + 1);
+                    if (_seedRate < _maxRate)
+                    {
+                        _seedRate += _seedRatio * (level + 1);
+                    }
                     return;
                 default:
                     throw new System.NotImplementedException("material type not supported");
