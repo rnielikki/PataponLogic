@@ -22,7 +22,9 @@ namespace PataRoad.Story.Actions
         {
             if (!_preloaded)
             {
-                _image.color = new Color(1, 1, 1, 0);
+                var clr = _image.color;
+                clr.a = 0;
+                _image.color = clr;
                 _image.enabled = false;
             }
         }

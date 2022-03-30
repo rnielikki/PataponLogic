@@ -23,10 +23,6 @@ namespace PataRoad.SceneLogic.EquipmentScene
         [SerializeField]
         Text _damageMax;
         [SerializeField]
-        Text _defenceMin;
-        [SerializeField]
-        Text _defenceMax;
-        [SerializeField]
         Text _attackSeconds;
         [SerializeField]
         Text _movementSpeed;
@@ -95,10 +91,9 @@ namespace PataRoad.SceneLogic.EquipmentScene
                 new StatDisplayMap(_stamina, _format).SetValueGetter((stat) => stat.HitPoint),
                 new StatDisplayMap(_damageMin, _format).SetValueGetter((stat) => stat.DamageMin),
                 new StatDisplayMap(_damageMax, _format).SetValueGetter((stat) => stat.DamageMax),
-                new StatDisplayMap(_defenceMin, _format).SetValueGetter((stat) => stat.DefenceMin),
-                new StatDisplayMap(_defenceMax, _format).SetValueGetter((stat) => stat.DefenceMax),
                 new StatDisplayMap(_attackSeconds, _format).SetValueGetter((stat) => stat.AttackSeconds)
-                    .SetFormatGetter((stat)=> $"{stat.AttackSeconds.ToString(_format)}s ({Core.Rhythm.RhythmEnvironment.TurnSeconds / stat.AttackSeconds:G2}/cmd)")
+                    .SetFormatGetter((stat)=> $"{stat.AttackSeconds.ToString(_format)}s "+
+                    $"({Core.Rhythm.RhythmEnvironment.TurnSeconds / stat.AttackSeconds:G2}/cmd)")
                     .SetNegativeIsBetter(),
                 new StatDisplayMap(_movementSpeed, _format).SetValueGetter((stat) => stat.MovementSpeed)
                     .SetFormatGetter(
@@ -167,7 +162,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         public void UpdateIndividual(SpriteSelectable selectable)
         {
             var pataponData = selectable.GetComponent<PataponData>();
-            _header.text = $"{pataponData.Type}, {(pataponData.IsGeneral ? pataponData.GeneralName + " (General)" : pataponData.IndexInGroup.ToString())}";
+            _header.text = $"{pataponData.Type}, "
+                + $"{(pataponData.IsGeneral ? pataponData.GeneralName + " (General)" : pataponData.IndexInGroup.ToString())}";
             if (_onGroup)
             {
                 OnChangedToIndividual();

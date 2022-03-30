@@ -32,16 +32,27 @@ namespace PataRoad.SceneLogic.Patapolis.ItemExchange
                     .HideOkButton()
                     .SetTargetToResume(this)
                     .SelectCancel();
-                return;
             }
-            Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(data.InputItem, data.AmountRequirement);
-            Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(data.OutputItem);
-            Core.Global.GlobalData.CurrentSlot.ExchangeRates.RaiseRate(data.Material, data.InputItem.Index);
-            Core.Global.GlobalData.Sound.PlayInScene(_kaChingSound);
-            data.UpdateText();
-            _inventoryStatus.Refresh();
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(data.gameObject);
+            else
+            {
+                Common.GameDisplay.ConfirmDialog.Create("Do you want to exchange "
+                    + $"from {data.InputItem.Name} x{data.AmountRequirement} to {data.OutputItem.Name}?")
+                .SetTargetToResume(this)
+                .SetOkAction(StartExchanging)
+                .SelectOk();
+            }
+            void StartExchanging()
+            {
+                Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(data.InputItem, data.AmountRequirement);
+                Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(data.OutputItem);
+                Core.Global.GlobalData.CurrentSlot.ExchangeRates.RaiseRate(data.Material, data.InputItem.Index);
+                Core.Global.GlobalData.Sound.PlayInScene(_kaChingSound);
+                data.UpdateText();
+                _inventoryStatus.Refresh();
+                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(data.gameObject);
+            }
         }
+
         internal void UnToggleOthers()
         {
             foreach (var menu in _menu)

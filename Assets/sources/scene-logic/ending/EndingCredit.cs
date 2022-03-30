@@ -79,6 +79,10 @@ namespace PataRoad.SceneLogic.Ending
         private void EndDisplaying()
         {
             _started = false;
+            //-- Move to the next map
+            Common.GameDisplay.SceneLoadingAction.Create("Patapolis")
+                .UseTip().ChangeScene(Color.black);
+            //-- Story done, you don't need this anymore!
         }
         // coroutine is enemy of sync.
         void Update()
