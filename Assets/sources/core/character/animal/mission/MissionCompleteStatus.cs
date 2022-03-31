@@ -12,6 +12,8 @@ namespace PataRoad.Core.Map
         [SerializeField]
         Text _spoilsField;
         [SerializeField]
+        TMPro.TextMeshProUGUI _missionName;
+        [SerializeField]
         int _waitTimeUntilChangeBackground;
         [SerializeField]
         Material _spriteMaterial;
@@ -22,6 +24,8 @@ namespace PataRoad.Core.Map
         {
             _nextStory = MissionPoint.Current.NextStory;
             if (_nextStory != null) Story.StoryLoader.Init();
+
+            _missionName.text = "~~ " + Global.GlobalData.CurrentSlot.MapInfo.LastMapName + " ~~";
 
             var allItemStatus = Items.ItemManager.Current.LoadItemStatus();
             var spoils = allItemStatus

@@ -15,6 +15,18 @@ namespace PataRoad.Common
                 return pool;
             }
 
+            void OnGet(GameObject obj)
+            {
+                var rigidBody = obj.GetComponent<Rigidbody2D>();
+                if (rigidBody != null)
+                {
+                    rigidBody.gravityScale = 1;
+                    //hello, yumi...?
+                    rigidBody.velocity = Vector2.zero;
+                    rigidBody.WakeUp();
+                }
+                obj.SetActive(true);
+            }
             void OnRelease(GameObject obj)
             {
                 obj.SetActive(false);
@@ -23,18 +35,14 @@ namespace PataRoad.Common
                 if (rigidBody != null)
                 {
                     rigidBody.constraints = RigidbodyConstraints2D.None;
-                    rigidBody.gravityScale = 1;
-                    //hello, yumi...?
-                    rigidBody.velocity = Vector2.zero;
-                    rigidBody.WakeUp();
+                    rigidBody.Sleep();
                 }
             }
-
             var gObject = Resources.Load<GameObject>(resourcePath);
             ObjectPool<GameObject> newPool = null;
             newPool = new ObjectPool<GameObject>(
                 () => InstantiateObjectWithReleaseToPool(gObject, newPool),
-                (obj) => obj.SetActive(true),
+                OnGet,
                 OnRelease,
                 (obj) => Destroy(obj),
                 false,

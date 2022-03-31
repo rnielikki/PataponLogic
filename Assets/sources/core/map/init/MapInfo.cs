@@ -38,7 +38,8 @@ namespace PataRoad.Core.Global
         [SerializeField]
         private string _lastMapName;
         /// <summary>
-        /// Useful only for slot meta. Shows last played map, even if it's 'only once mission' and not available anymore.
+        /// Useful for slot meta. Shows last played map, even if it's 'only once mission' and not available anymore.
+        /// Or you can use somewhere else too...
         /// </summary>
         public string LastMapName => _lastMapName;
 
@@ -127,9 +128,9 @@ namespace PataRoad.Core.Global
             {
                 NextMap.LevelUp();
             }
-            NextMap.Cleared = true;
             LastMap = NextMap;
             _lastMapName = LastMap.Name;
+            NextMap.Cleared = true;
             OpenNext();
             if (_reservedNextMap != null)
             {
