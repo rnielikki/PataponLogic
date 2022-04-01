@@ -19,9 +19,6 @@ namespace PataRoad.Core.Items
         [SerializeReference]
         [Tooltip("This is only meaningful when item drop is random.")]
         int _maxItemIndex;
-        [SerializeField] //Hey do not change to serializereference
-        private ItemDropChances[] _itemDropChances;
-        public System.Collections.Generic.IEnumerable<ItemDropChances> ItemDropChances => _itemDropChances;
         public IItem Item => (_dropRandomItem)
             ? ItemLoader.GetRandomItem(_itemType, _itemIndex, _maxItemIndex)
             : ItemLoader.GetItem(_itemType, ItemGroup, _itemIndex);

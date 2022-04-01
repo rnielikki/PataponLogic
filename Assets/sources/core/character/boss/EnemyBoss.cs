@@ -163,7 +163,7 @@ namespace PataRoad.Core.Character.Bosses
             //phase 3.???: attack if out of max distance. WELL DONE KIBAPONS!!!
             var closest = DistanceCalculator.GetClosest() ?? _pataponsManager.transform.position;
             if (MaxAttackDistance > 0 && _pataponsManager.transform.position.x + MaxAttackDistance <= transform.position.x - CharacterSize
-            && closest.x > transform.position.x - CharacterSize + AttackDistance)
+            && closest.x > transform.position.x - CharacterSize - AttackDistance)
             {
                 StartAttackingMode();
                 return;

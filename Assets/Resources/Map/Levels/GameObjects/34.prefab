@@ -102,10 +102,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
@@ -113,7 +117,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8293893280805926595}
     - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 5662785782832920935}
+    - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
@@ -121,11 +133,23 @@ PrefabInstance:
       value: Drop
       objectReference: {fileID: 0}
     - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.LeveledItemDropBehvaiour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043300597867700766, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7761315865342104283, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}
@@ -153,6 +177,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dropData:
   - {fileID: 11400000, guid: bd6aef039f3d5ee42b884b25d19cceba, type: 2}
+--- !u!114 &5662785782832920935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2381172379914704591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777d1d1899173cd439607046c3c81dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: 105ada0547ddf884f85e3c264c61c328, type: 2}
+  _type: 0
+  _minItemLevel: 1
+  _maxItemLevel: 4
+  _itemGroupName: Seed
 --- !u!4 &5875590350246299070 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1960313003039293866, guid: ae079a95b89025a499c5d441ba4e99af, type: 3}

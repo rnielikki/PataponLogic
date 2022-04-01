@@ -36,8 +36,6 @@ namespace PataRoad.Core.Items
         }
         private void Init(ItemDropData data, bool obtainable)
         {
-            //Should do same thing but simply doesn't work. Weird.
-            //_sound = sound ?? ItemManager.Current.ObtainingSound
             if (data.Sound == null) _sound = ItemManager.Current.ObtainingSound;
             else _sound = data.Sound;
 
@@ -118,7 +116,11 @@ namespace PataRoad.Core.Items
             _moving = true;
             _doNotDestroy = false;
         }
-        protected virtual void DoAction(Collider2D collision) => _events.Invoke();
+        protected virtual void DoAction(Collider2D collision)
+        {
+            _events.Invoke();
+            _events.RemoveAllListeners();
+        }
         private void AddToScreen() => ItemManager.AddToScreen(_item);
     }
 }

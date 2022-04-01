@@ -35,6 +35,8 @@ namespace PataRoad.Core.Map.Levels
 
         [SerializeField]
         private AttackTypeResistance _attackTypeResistance;
+        [SerializeField]
+        private UnityEvent _onDead;
         public AttackTypeResistance AttackTypeResistance => _attackTypeResistance;
 
         public int CurrentHitPoint { get; private set; }
@@ -154,6 +156,7 @@ namespace PataRoad.Core.Map.Levels
         {
             IsDead = true;
             GameSound.SpeakManager.Current.Play(_dyingSound);
+            _onDead.Invoke();
             Destroy(gameObject);
         }
     }

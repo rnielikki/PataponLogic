@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 380310087e12c514c80832984c107a0b, type: 3}
-  m_Name: 4.Dodonga
+  m_Name: _StandardEquipmentDrop
   m_EditorClassIdentifier: 
   _timeToExist: 30
   _infiniteExistingTime: 0
-  _chanceToDrop: 1
+  _chanceToDrop: 0.15
   _events:
     m_PersistentCalls:
       m_Calls: []
@@ -24,19 +24,3 @@ MonoBehaviour:
   _itemGroup: Mineral
   _itemIndex: 0
   _maxItemIndex: 2
-  _itemDropChances:
-  - _itemData:
-      _type: 1
-      _group: Mineral
-      _index: 0
-    _chance: 0.5
-  - _itemData:
-      _type: 1
-      _group: Mineral
-      _index: 1
-    _chance: 0.25
-  - _itemData:
-      _type: 1
-      _group: Mineral
-      _index: 2
-    _chance: 0.25

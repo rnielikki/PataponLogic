@@ -41,10 +41,9 @@ namespace PataRoad.Core.Character
                         spawned.OnAfterDeath.AddListener(() => _currentCount--);
                         _currentCount++;
 
-                        var statModifier = spawned.GetComponent<Map.IHavingLevel>();
-                        if (statModifier != null)
+                        foreach (var havingLevel in spawned.GetComponents<Map.IHavingLevel>())
                         {
-                            statModifier.SetLevel(_level, _maxLevel);
+                            havingLevel.SetLevel(_level, _maxLevel);
                         }
                     }
                     _index = (_index + 1) % _spawnTarget.Length;

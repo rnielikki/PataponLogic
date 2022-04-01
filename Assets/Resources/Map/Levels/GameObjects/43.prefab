@@ -59,10 +59,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
@@ -70,7 +74,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1927357257454534266}
     - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
@@ -78,11 +90,23 @@ PrefabInstance:
       value: DropWithAlternativeChoice
       objectReference: {fileID: 0}
     - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.LeveledItemDropBehvaiour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1936197455281191417, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6868671624762757147, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}
@@ -159,6 +183,24 @@ MonoBehaviour:
   _dropData:
   - {fileID: 11400000, guid: c351a2a48edd11d41b0554c51c7caeb5, type: 2}
   - {fileID: 11400000, guid: ba0edc83a85415d44adfe924cae10399, type: 2}
+--- !u!114 &6805452051464882921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4372913467126296862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777d1d1899173cd439607046c3c81dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: 105ada0547ddf884f85e3c264c61c328, type: 2}
+  _type: 0
+  _minItemLevel: 1
+  _maxItemLevel: 4
+  _itemGroupName: Hide
 --- !u!4 &5489430840791851631 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9069223886284015903, guid: 069317f7f1e62e24686de2b3ca4adfd7, type: 3}

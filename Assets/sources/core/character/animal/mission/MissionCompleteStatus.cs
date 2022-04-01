@@ -17,6 +17,8 @@ namespace PataRoad.Core.Map
         int _waitTimeUntilChangeBackground;
         [SerializeField]
         Material _spriteMaterial;
+        [SerializeField]
+        RectTransform _fieldToRefresh;
         private UnityEngine.InputSystem.InputAction _submitAction;
         private string _nextStory;
 
@@ -40,6 +42,7 @@ namespace PataRoad.Core.Map
 
             var seconds = System.TimeSpan.FromSeconds(MissionPoint.MissionCompleteTime);
             _timeField.text = seconds.ToString(@"hh\:mm\:ss");
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_fieldToRefresh);
 
             _spriteMaterial.color = Color.black;
             FindObjectOfType<Background.BackgroundLoader>().gameObject.SetActive(false);

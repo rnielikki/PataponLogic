@@ -9,14 +9,22 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: -4827260535024305690}
+    - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 4842388087279213930}
     - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
@@ -24,15 +32,31 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Drop
       objectReference: {fileID: 0}
     - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.LeveledItemDropBehvaiour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 2026038547624880204, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4369085887535418521, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
@@ -110,6 +134,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4369085887535418522, guid: d8fed935f161ec84cac64e4d950458c9, type: 3}
   m_PrefabInstance: {fileID: 8800004769486608870}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &-4827260535024305690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5097504964826535292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777d1d1899173cd439607046c3c81dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: d4ca689a9ee61ef418ad6e27b8454be6, type: 2}
+  _type: 1
+  _minItemLevel: 5
+  _maxItemLevel: 6
+  _itemGroupName: 
 --- !u!114 &4842388087279213930
 MonoBehaviour:
   m_ObjectHideFlags: 0

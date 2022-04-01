@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 6133376510291467819}
   - component: {fileID: 7041243421748112848}
   - component: {fileID: 7611737969989757450}
+  - component: {fileID: 3397127997191314970}
   m_Layer: 8
   m_Name: 3.Gong
   m_TagString: SmallCharacter
@@ -289,7 +290,7 @@ MonoBehaviour:
   _attackSound: {fileID: 8300000, guid: 6283967eead6bde43970be39683a29da, type: 3}
   _dyingSound: {fileID: 8300000, guid: 33991968cf4e44c479ce18f1d8f47e27, type: 3}
   _weaponBulletTemplate: {fileID: 6010398589893282663, guid: 3fdcbc8a4c84464449ae61d5f4ccd63c, type: 3}
-  _attackType: 0
+  _attackType: 2
   _attackTypeResistance:
     _crushMultiplier: 1
     _slashMultiplier: 1
@@ -299,6 +300,35 @@ MonoBehaviour:
     _fireMultiplier: 1
     _iceMultiplier: 1
     _thunderMultiplier: 1
+  _onDead:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3397127997191314970}
+        m_TargetAssemblyTypeName: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
+        m_MethodName: Drop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3397127997191314970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8337157762206049445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: 4405d2ccc626f4f408b70ad96434bad4, type: 2}
 --- !u!1 &8337157762296476027
 GameObject:
   m_ObjectHideFlags: 0

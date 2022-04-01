@@ -318,10 +318,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
@@ -329,7 +333,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5082529170830287229}
     - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1300657813896039157}
+    - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
@@ -337,11 +349,23 @@ PrefabInstance:
       value: Drop
       objectReference: {fileID: 0}
     - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.LeveledItemDropBehvaiour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8809381796253418083, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -356,6 +380,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4375781916072512071, guid: d8ec99d213417c2498a2aa71029dcbfc, type: 3}
   m_PrefabInstance: {fileID: 5392794126035950797}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1300657813896039157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8534017654564525706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777d1d1899173cd439607046c3c81dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: 105ada0547ddf884f85e3c264c61c328, type: 2}
+  _type: 0
+  _minItemLevel: 1
+  _maxItemLevel: 4
+  _itemGroupName: Meat
 --- !u!114 &5082529170830287229
 MonoBehaviour:
   m_ObjectHideFlags: 0

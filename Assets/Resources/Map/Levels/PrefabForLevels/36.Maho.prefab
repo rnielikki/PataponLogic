@@ -248,6 +248,24 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6919078306599530071, guid: faabe9984822d8240be6bb0fd3a9f616, type: 3}
   m_PrefabInstance: {fileID: 7323544501826197872}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &-443846774724082826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 407564649524131623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 777d1d1899173cd439607046c3c81dba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: d4ca689a9ee61ef418ad6e27b8454be6, type: 2}
+  _type: 1
+  _minItemLevel: 10
+  _maxItemLevel: 11
+  _itemGroupName: 
 --- !u!114 &3522580937972553521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,7 +280,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _onAfterDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -443846774724082826}
+        m_TargetAssemblyTypeName: PataRoad.Core.Items.LeveledItemDropBehvaiour, Assembly-CSharp
+        m_MethodName: Drop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _ignoreTumble: 0
   _onBeforeDeath:
     m_PersistentCalls:

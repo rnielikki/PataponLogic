@@ -392,7 +392,7 @@ PrefabInstance:
     - target: {fileID: 3162887390936434895, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 4339391943322162260}
+      objectReference: {fileID: 0}
     - target: {fileID: 3162887390936434895, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
@@ -513,6 +513,58 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -74.909
       objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 797075965089893799}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1393014486270049803}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.LeveledItemDropBehvaiour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6538036850698346347, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7453083112819232877, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -586,7 +638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dropData:
   - {fileID: 11400000, guid: de0cb8fe78986334bb00f6c9acc44524, type: 2}
---- !u!114 &4339391943322162260
+--- !u!114 &1393014486270049803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -595,11 +647,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2808885545457597262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Script: {fileID: 11500000, guid: 777d1d1899173cd439607046c3c81dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _dropData:
   - {fileID: 11400000, guid: 105ada0547ddf884f85e3c264c61c328, type: 2}
+  _type: 0
+  _minItemLevel: 0
+  _maxItemLevel: 4
+  _itemGroupName: Mineral
 --- !u!4 &6231573855393540159 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 672225142396861180, guid: 1fa13934146f3e94cb7cd0a52a383851, type: 3}

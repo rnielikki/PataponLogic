@@ -761,6 +761,18 @@ PrefabInstance:
       propertyPath: _fixedEquipment
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8799958579530359939, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799958579530359939, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799958579530359939, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.94
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 8328313416993216064, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
     - {fileID: 2205422233487134330, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
@@ -1079,6 +1091,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6858637343499713800}
     m_Modifications:
+    - target: {fileID: 2175377750477479591, guid: 68938f59ac257f44491797e9f51026cb, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 2175377750477479591, guid: 68938f59ac257f44491797e9f51026cb, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 0.72
@@ -2504,6 +2520,34 @@ PrefabInstance:
       propertyPath: _animatorsIndexed.Array.data[2]
       value: 
       objectReference: {fileID: 313995140324309423}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4896056116462177879}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: DropWithAlternativeChoice
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2649884101265988238, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6995849537764349209, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -2518,6 +2562,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+--- !u!1 &749971294910633133 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8301400473978192611, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
+  m_PrefabInstance: {fileID: 8744883632232568398}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4896056116462177879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749971294910633133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: c131b22f767106440b6789f07123fb33, type: 2}
+  - {fileID: 11400000, guid: deb218ed944305e458dc79f8bca7de3d, type: 2}
+  - {fileID: 11400000, guid: e1267d36210a1a04b8ba26cf60758e9d, type: 2}
 --- !u!4 &7392292139279119281 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2290823526178711039, guid: c5fd12d7e68c33144bbffa89b94d2989, type: 3}
