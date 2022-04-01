@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8713039168551288893}
   - component: {fileID: 1450193305063100319}
   - component: {fileID: 4407356391967337896}
+  - component: {fileID: 4511882530488920851}
   m_Layer: 16
   m_Name: sheep
   m_TagString: Untagged
@@ -136,7 +137,19 @@ MonoBehaviour:
     rid: 3406254678544482304
   _onAfterDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4511882530488920851}
+        m_TargetAssemblyTypeName: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
+        m_MethodName: Drop
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _characterSize: 6
   _soundOnStaggered: {fileID: 0}
   _soundOnDead: {fileID: 0}
@@ -175,6 +188,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4511882530488920851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148447472639979686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: 19ab48da9ca185041b5ee3b58097904a, type: 2}
 --- !u!1 &836246398453236287
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,7 +8,9 @@ namespace PataRoad.Core.Items
         // ------- by item
         [Header("Item Info")]
         [SerializeField]
-        private bool _dropRandomItem;
+        private bool _dropInRandomGroupAndIndex;
+        [SerializeField]
+        private bool _dropRandomIndex;
         [SerializeReference]
         protected ItemType _itemType;
         [SerializeReference]
@@ -19,8 +21,22 @@ namespace PataRoad.Core.Items
         [SerializeReference]
         [Tooltip("This is only meaningful when item drop is random.")]
         int _maxItemIndex;
-        public IItem Item => (_dropRandomItem)
-            ? ItemLoader.GetRandomItem(_itemType, _itemIndex, _maxItemIndex)
-            : ItemLoader.GetItem(_itemType, ItemGroup, _itemIndex);
+        public IItem Item => GetItem();
+
+        private IItem GetItem()
+        {
+            if (_dropInRandomGroupAndIndex)
+            {
+                return ItemLoader.GetRandomItem(_itemType, _itemIndex, _maxItemIndex);
+            }
+            else if (_dropRandomIndex)
+            {
+                return ItemLoader.GetItemFromRandomIndex(_itemType, _itemGroup, _itemIndex, _maxItemIndex);
+            }
+            else
+            {
+                return ItemLoader.GetItem(_itemType, ItemGroup, _itemIndex);
+            }
+        }
     }
 }
