@@ -14,7 +14,7 @@ namespace PataRoad.Common
         }
         public void LoadSceneSmoothly()
         {
-            GameDisplay.SceneLoadingAction.Create(_sceneName).ChangeScene(Color.black);
+            GameDisplay.SceneLoadingAction.ChangeScene(_sceneName, false, Color.black);
         }
     }
 }

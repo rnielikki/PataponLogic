@@ -4,34 +4,42 @@ using UnityEngine.UI;
 
 namespace PataRoad.Common.GameDisplay
 {
+
     public class ScreenFading : MonoBehaviour
     {
         private Image _image;
         private bool _activated;
         private int _direction;
-        private UnityEngine.Events.UnityAction _callback;
         private float _speed;
-        private static GameObject _fadingResource { get; set; }
-        public static void Create(bool fadingIn, float speed, Color color, UnityEngine.Events.UnityAction callback = null)
+        private static ScreenFading _current { get; set; }
+
+        private ScreenFadingType _fadingType;
+        private string _newSceneName;
+
+        private void Start()
         {
-            if (_fadingResource == null)
-            {
-                _fadingResource = Resources.Load<GameObject>("Common/Display/FadeScreen");
-            }
-            if (speed < 1) speed = 2;
-            Core.Global.GlobalData.GlobalInputActions.EnableAllInputs();
-            Instantiate(_fadingResource)
-                .GetComponent<ScreenFading>()
-                .Set(fadingIn, speed, color, callback);
-        }
-        public ScreenFading Set(bool fadingIn, float speed, Color color, UnityEngine.Events.UnityAction callback = null)
-        {
-            DontDestroyOnLoad(gameObject);
+            _current = this;
             _image = GetComponentInChildren<Image>();
+            gameObject.SetActive(false);
+        }
+        public static void Create(
+            ScreenFadingType fadingType, float speed, Color color, string sceneToChange)
+        {
+            if (_current._activated) return;
+            if (speed < 1) speed = 2;
+            Core.Global.GlobalData.GlobalInputActions.DisableAllInputs();
+            _current.Set(fadingType, speed, color, sceneToChange);
+        }
+        private void Set(
+            ScreenFadingType fadingType, float speed, Color color,
+            string sceneToChange)
+        {
+            _fadingType = fadingType;
+            var fadingIn = _fadingType == ScreenFadingType.FadeIn;
             _direction = fadingIn ? -1 : 1;
             _activated = true;
-            _callback = callback;
             _speed = speed;
+            _newSceneName = sceneToChange;
             if (fadingIn)
             {
                 _image.color = new Color(color.r, color.g, color.b, 1);
@@ -40,7 +48,7 @@ namespace PataRoad.Common.GameDisplay
             {
                 _image.color = new Color(color.r, color.g, color.b, 0);
             }
-            return this;
+            gameObject.SetActive(true);
         }
         // Update is called once per frame
         void Update()
@@ -50,20 +58,46 @@ namespace PataRoad.Common.GameDisplay
                 var clr = _image.color;
                 clr.a = Mathf.Clamp01(clr.a + (_speed * _direction * Time.deltaTime));
                 _image.color = clr;
-                if ((clr.a == 0 && _direction < 0) || (clr.a == 1 && _direction > 0))
+
+                if (clr.a == 0 && _direction < 0) //fading in ready
                 {
-                    _callback?.Invoke();
+                    End();
+                }
+                else if (clr.a == 1 && _direction > 0) //fading out ready
+                {
+                    if (_fadingType == ScreenFadingType.FadeOut)
+                    {
+                        SceneManager.sceneUnloaded += DestroyThis;
+                    }
+                    else
+                    {
+                        SceneManager.sceneUnloaded += ChangeToFadingIn;
+                    }
                     _activated = false;
-                    if (_direction < 0) Destroy(gameObject);
-                    else SceneManager.sceneUnloaded += DestroyThis;
+                    SceneManager.LoadScene(_newSceneName);
                 }
             }
         }
-        void DestroyThis(Scene scene)
+        private void ChangeToFadingIn(Scene scene)
+        {
+            SceneManager.sceneUnloaded -= ChangeToFadingIn;
+            _direction = -1;
+            _activated = true;
+        }
+        private void End()
         {
             Core.Global.GlobalData.GlobalInputActions.EnableAllInputs();
+            _activated = false;
+            gameObject.SetActive(false);
+        }
+        void DestroyThis(Scene scene)
+        {
             SceneManager.sceneUnloaded -= DestroyThis;
-            Destroy(gameObject);
+            End();
+        }
+        private void OnDestroy()
+        {
+            _current = null;
         }
     }
 }

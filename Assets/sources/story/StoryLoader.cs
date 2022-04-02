@@ -38,7 +38,7 @@ namespace PataRoad.Story
         internal void StartStory(StoryData data, Color color)
         {
             _noDestroy = true;
-            SceneLoadingAction.Create(data.SceneName).ChangeScene(color);
+            SceneLoadingAction.ChangeScene(data.SceneName, false, color);
             SceneManager.sceneLoaded += OnStorySceneLoaded;
             void OnStorySceneLoaded(Scene scene, LoadSceneMode mode)
             {
@@ -97,7 +97,7 @@ namespace PataRoad.Story
         private void MoveToNext()
         {
             //-- Move to the next map
-            SceneLoadingAction.Create("Patapolis").UseTip().ChangeScene(Color.black);
+            SceneLoadingAction.ChangeScene("Patapolis", true);
             //-- Story done, you don't need this anymore!
             Destroy(gameObject);
         }

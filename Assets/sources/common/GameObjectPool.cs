@@ -20,10 +20,10 @@ namespace PataRoad.Common
                 var rigidBody = obj.GetComponent<Rigidbody2D>();
                 if (rigidBody != null)
                 {
-                    rigidBody.gravityScale = 1;
                     //hello, yumi...?
-                    rigidBody.velocity = Vector2.zero;
                     rigidBody.WakeUp();
+                    rigidBody.gravityScale = 1;
+                    rigidBody.velocity = Vector2.zero;
                 }
                 obj.SetActive(true);
             }

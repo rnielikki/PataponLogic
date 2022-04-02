@@ -53,6 +53,7 @@ namespace PataRoad.Common.GameDisplay
                 LoadTip(_allTips[Random.Range(0, _allTips.Length - 1)]);
             }
             Core.Global.GlobalData.TipIndex = -1;
+            LoadNextScene(SceneLoadingAction.SceneName);
         }
         private void LoadTip(TipDisplayData data)
         {
@@ -92,7 +93,6 @@ namespace PataRoad.Common.GameDisplay
                 }
             }
         }
-
         private void OnLoadingCompleted()
         {
             _loadingStatus.text = "Press submit to continue";
@@ -109,7 +109,7 @@ namespace PataRoad.Common.GameDisplay
             _op.allowSceneActivation = true;
             if (!_fadingCreated)
             {
-                ScreenFading.Create(true, 2, Color.black);
+                ScreenFading.Create(ScreenFadingType.FadeIn, 2, Color.black, "");
                 _fadingCreated = true;
             }
         }

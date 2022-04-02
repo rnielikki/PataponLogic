@@ -62,7 +62,7 @@ namespace PataRoad.SceneLogic.WorldMap
         }
         public void GoToPatapolis()
         {
-            Common.GameDisplay.SceneLoadingAction.Create("Patapolis").ChangeScene(Color.black);
+            Common.GameDisplay.SceneLoadingAction.ChangeScene("Patapolis");
         }
     }
 }

@@ -55,12 +55,12 @@ namespace PataRoad.SceneLogic.Patapolis
             {
                 Common.GameDisplay.ConfirmDialog.Create("Are you sure to go to the main menu?\nThe play data won't saved.")
                 .SetTargetToResume(_parentSelectorOnMain)
-                .SetOkAction(() => Common.GameDisplay.SceneLoadingAction.Create("Main").ChangeScene(Color.black))
+                .SetOkAction(() => Common.GameDisplay.SceneLoadingAction.ChangeScene("Main"))
                 .SelectCancel();
             }
             else
             {
-                Common.GameDisplay.SceneLoadingAction.Create("Main").ChangeScene(Color.black);
+                Common.GameDisplay.SceneLoadingAction.ChangeScene("Main");
             }
         }
     }
