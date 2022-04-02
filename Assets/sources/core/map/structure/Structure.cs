@@ -56,14 +56,11 @@ namespace PataRoad.Core.Character
             {
                 HitPoint = _hitPoint,
                 DefenceMin = 1,
-                DefenceMax = 1,
-                CriticalResistance = Mathf.Infinity,
-                StaggerResistance = Mathf.Infinity,
-                KnockbackResistance = Mathf.Infinity,
-                FireResistance = _fireResistance,
-                IceResistance = Mathf.Infinity,
-                SleepResistance = Mathf.Infinity
+                DefenceMax = 1
             };
+            Stat.BoostResistance(Mathf.Infinity);
+            Stat.AddFireResistance(Mathf.Infinity, true);
+            Stat.AddFireResistance(_fireResistance);
         }
         protected virtual void Start()
         {
@@ -113,7 +110,7 @@ namespace PataRoad.Core.Character
         {
             if (_noLevelUp) return;
             Stat.HitPoint = CurrentHitPoint = Mathf.RoundToInt(Stat.HitPoint * (0.8f + (0.2f * level)));
-            Stat.FireResistance += (level - 1) * 0.02f;
+            Stat.AddFireResistance((level - 1) * 0.02f);
         }
         public void DestroyThis() => Destroy(gameObject);
     }

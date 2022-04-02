@@ -26,8 +26,8 @@ namespace PataRoad.Core.Character.Patapons.General
         public override Stat CalculateStat(Stat stat)
         {
             stat.Critical += _adder;
-            stat.CriticalResistance = UnityEngine.Mathf.Infinity;
-            stat.KnockbackResistance += _adder * 0.5f;
+            stat.AddCriticalResistance(UnityEngine.Mathf.Infinity);
+            stat.AddKnockbackResistance(_adder * 0.5f);
             return stat;
         }
     }

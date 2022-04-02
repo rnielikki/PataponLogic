@@ -2,7 +2,7 @@
 {
     class KonKimponEffect : IGeneralEffect
     {
-        private KonKimponGroupStatOperation _operation = new KonKimponGroupStatOperation();
+        private readonly KonKimponGroupStatOperation _operation = new KonKimponGroupStatOperation();
         public void StartSelfEffect(Patapon patapon)
         {
             //See Robopon OnAttackHit.
@@ -15,11 +15,11 @@
         {
             foreach (var patapon in patapons) patapon.StatOperator.Remove(_operation);
         }
-        private class KonKimponGroupStatOperation : IStatOperation
+        private sealed class KonKimponGroupStatOperation : IStatOperation
         {
             public Stat Calculate(Rhythm.Command.CommandSong song, bool charged, Stat input)
             {
-                input.CriticalResistance *= 2;
+                input.AddCriticalResistance(input.CriticalResistance);
                 input.DefenceMin *= 1.2f;
                 input.DefenceMax *= 1.4f;
                 return input;

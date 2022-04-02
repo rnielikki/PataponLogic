@@ -15,15 +15,15 @@ namespace PataRoad.Core.Character.Patapons.General
         {
             foreach (var patapon in patapons) patapon.StatOperator.Remove(_operation);
         }
-        private class TonKamponSelfStatOperation : IStatOperation
+        private sealed class TonKamponSelfStatOperation : IStatOperation
         {
             public Stat Calculate(Rhythm.Command.CommandSong song, bool charged, Stat input)
             {
-                input.KnockbackResistance = UnityEngine.Mathf.Infinity;
+                input.AddKnockbackResistance(UnityEngine.Mathf.Infinity);
                 return input;
             }
         }
-        private class TonKamponGroupStatOperation : IStatOperation
+        private sealed class TonKamponGroupStatOperation : IStatOperation
         {
             public Stat Calculate(Rhythm.Command.CommandSong song, bool charged, Stat input)
             {

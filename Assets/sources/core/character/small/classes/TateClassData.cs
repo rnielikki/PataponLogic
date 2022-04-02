@@ -73,8 +73,8 @@ namespace PataRoad.Core.Character.Class
                 {
                     _character.Stat.DefenceMax *= 1.5f;
                 }
-                _character.Stat.CriticalResistance = UnityEngine.Mathf.Infinity;
-                _character.Stat.KnockbackResistance = UnityEngine.Mathf.Infinity;
+                _character.Stat.AddCriticalResistance(UnityEngine.Mathf.Infinity);
+                _character.Stat.AddKnockbackResistance(UnityEngine.Mathf.Infinity);
             }
             if (song == CommandSong.Patapata && _character.OnFever)
             {

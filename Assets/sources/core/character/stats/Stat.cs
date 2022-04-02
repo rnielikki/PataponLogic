@@ -45,71 +45,71 @@ namespace PataRoad.Core.Character
             set => _defenceMax = value;
         }
 
+        [UnityEngine.SerializeField]
+        private int _damageMin;
         /// <summary>
         /// Minimum damage value.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private int _damageMin;
         public int DamageMin
         {
             get => _damageMin;
             set => _damageMin = value;
         }
+        [UnityEngine.SerializeField]
+        private int _damageMax;
         /// <summary>
         /// Maximum damage value.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private int _damageMax;
         public int DamageMax
         {
             get => _damageMax;
             set => _damageMax = value;
         }
+        [UnityEngine.SerializeField]
+        private float _attackSeconds;
         /// <summary>
         /// Second(s) for one attack. Default for ordinary pons are 2 seconds (Mahopon 3s).
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _attackSeconds;
         public float AttackSeconds
         {
             get => _attackSeconds;
             set => _attackSeconds = GetSafeValue(value, 0.01f);
         }
+        [UnityEngine.SerializeField]
+        private float _movementSpeed;
         /// <summary>
         /// Movement speed (for attack, dodge etc) of a Patapon. Default for a normal patapon is usually expected as 8.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _movementSpeed;
         public float MovementSpeed
         {
             get => _movementSpeed;
             set => _movementSpeed = GetSafeValue(value, 0.1f);
         }
+        [UnityEngine.SerializeField]
+        private float _critical;
         /// <summary>
         /// Chance to inflict critical damage. e.g. If critical chance is 100% it's 1 and if it's 150% this value is 1.5.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _critical;
         public float Critical
         {
             get => _critical;
             set => _critical = value;
         }
+        [UnityEngine.SerializeField]
+        private float _stagger;
         /// <summary>
         /// Chance to stagger others. e.g. If stagger chance is 100% it's 1 and if it's 150% this value is 1.5.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _stagger;
         public float Stagger
         {
             get => _stagger;
             set => _stagger = value;
         }
+        [UnityEngine.SerializeField]
+        private float _knockback;
         /// <summary>
         /// Chance to knockback others. e.g. If knockback chance is 100% it's 1 and if it's 150% this value is 1.5.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _knockback;
         public float Knockback
         {
             get => _knockback;
@@ -117,65 +117,68 @@ namespace PataRoad.Core.Character
         }
         [UnityEngine.SerializeField]
         private bool _infiniteCriticalResistance;
+        private int _infiniteCriticalResistanceCount;
+        [UnityEngine.SerializeField]
+        private float _criticalResistance;
         /// <summary>
         /// How much can resist from <see cref="Critical"/> damage.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _criticalResistance;
         public float CriticalResistance
         {
             get => _infiniteCriticalResistance ? UnityEngine.Mathf.Infinity : _criticalResistance;
-            set => _criticalResistance = value;
+            private set => _criticalResistance = value;
         }
         [UnityEngine.SerializeField]
         private bool _infiniteStaggerResistance;
+        private int _infiniteStaggerResistanceCount;
+        [UnityEngine.SerializeField]
+        private float _staggerResistance;
         /// <summary>
         /// How much can resist from <see cref="Stagger"/> status.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _staggerResistance;
         public float StaggerResistance
         {
             get => _infiniteStaggerResistance ? UnityEngine.Mathf.Infinity : _staggerResistance;
-            set => _staggerResistance = value;
+            private set => _staggerResistance = value;
         }
         [UnityEngine.SerializeField]
         private bool _infiniteKnockbackResistance;
+        private int _infiniteKnockbackResistanceCount;
+        [UnityEngine.SerializeField]
+        private float _knockbackResistance;
         /// <summary>
         /// How much can resist from <see cref="Knockback"/> status.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _knockbackResistance;
         public float KnockbackResistance
         {
             get => _infiniteKnockbackResistance ? UnityEngine.Mathf.Infinity : _knockbackResistance;
-            set => _knockbackResistance = value;
+            private set => _knockbackResistance = value;
         }
+        [UnityEngine.SerializeField]
+        private float _fireRate;
         /// <summary>
         /// How much one can cause fire status effect. 1 means 100%.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _fireRate;
         public float FireRate
         {
             get => _fireRate;
             set => _fireRate = value;
         }
+        [UnityEngine.SerializeField]
+        private float _iceRate;
         /// <summary>
         /// How much one can cause ice status effect. 1 means 100%.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _iceRate;
         public float IceRate
         {
             get => _iceRate;
             set => _iceRate = value;
         }
+        [UnityEngine.SerializeField]
+        private float _sleepRate;
         /// <summary>
         /// How much one can cause sleep status effect. 1 means 100%.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _sleepRate;
         public float SleepRate
         {
             get => _sleepRate;
@@ -184,40 +187,46 @@ namespace PataRoad.Core.Character
 
         [UnityEngine.SerializeField]
         private bool _infiniteFireResistance;
+        private int _infiniteFireResistanceCount;
+        [UnityEngine.SerializeField]
+        private float _fireResistance;
         /// <summary>
         /// How much can resist from fire status effect. Counterpart of enemy's <see cref="FireRate"/>.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _fireResistance;
         public float FireResistance
         {
             get => _infiniteFireResistance ? UnityEngine.Mathf.Infinity : _fireResistance;
-            set => _fireResistance = value;
+            private set => _fireResistance = value;
         }
         [UnityEngine.SerializeField]
         private bool _infiniteIceResistance;
+        private int _infiniteIceResistanceCount;
+        [UnityEngine.SerializeField]
+        private float _iceResistance;
         /// <summary>
         /// How much can resist from ice status effect. Counterpart of enemy's <see cref="IceRate"/>.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _iceResistance;
         public float IceResistance
         {
             get => _infiniteIceResistance ? UnityEngine.Mathf.Infinity : _iceResistance;
-            set => _iceResistance = value;
+            private set => _iceResistance = value;
         }
         [UnityEngine.SerializeField]
         private bool _infiniteSleepResistance;
+        private int _infiniteSleepResistanceCount;
+        [UnityEngine.SerializeField]
+        private float _sleepResistance;
         /// <summary>
         /// How much can resist from sleep status effect. Counterpart of enemy's <see cref="SleepRate"/>.
         /// </summary>
-        [UnityEngine.SerializeField]
-        private float _sleepResistance;
-
         public float SleepResistance
         {
             get => _infiniteSleepResistance ? UnityEngine.Mathf.Infinity : _sleepResistance;
-            set => _sleepResistance = value;
+            private set => _sleepResistance = value;
+        }
+        public Stat()
+        {
+            _infiniteCriticalResistanceCount = _infiniteCriticalResistance ? 1 : 0;
         }
 
         public void AddDamage(int amount)
@@ -259,7 +268,7 @@ namespace PataRoad.Core.Character
         }
         public static Stat operator +(Stat stat1, Stat stat2)
         {
-            return new Stat
+            var newStat = new Stat
             {
                 HitPoint = stat1.HitPoint + stat2.HitPoint,
                 DefenceMin = stat1.DefenceMin + stat2.DefenceMin,
@@ -269,18 +278,22 @@ namespace PataRoad.Core.Character
                 AttackSeconds = stat1.AttackSeconds + stat2.AttackSeconds,
                 MovementSpeed = stat1.MovementSpeed + stat2.MovementSpeed,
                 Critical = stat1.Critical + stat2.Critical,
-                CriticalResistance = stat1.CriticalResistance + stat2.CriticalResistance,
                 Knockback = stat1.Knockback + stat2.Knockback,
-                KnockbackResistance = stat1.KnockbackResistance + stat2.KnockbackResistance,
                 Stagger = stat1.Stagger + stat2.Stagger,
-                StaggerResistance = stat1.StaggerResistance + stat2.StaggerResistance,
                 FireRate = stat1.FireRate + stat2.FireRate,
-                FireResistance = stat1.FireResistance + stat2.FireResistance,
                 IceRate = stat1.IceRate + stat2.IceResistance,
-                IceResistance = stat1.IceResistance + stat2.IceResistance,
                 SleepRate = stat1.SleepRate + stat2.SleepRate,
-                SleepResistance = stat1.SleepResistance + stat2.SleepResistance
+
+                CriticalResistance = stat1.CriticalResistance,
+                KnockbackResistance = stat1.KnockbackResistance,
+                StaggerResistance = stat1.StaggerResistance,
+                FireResistance = stat1.FireResistance,
+                IceResistance = stat1.IceResistance,
+                SleepResistance = stat1.SleepResistance
             };
+
+            newStat.AddResistancesFromStat(stat2);
+            return newStat;
         }
         public Stat Add(Stat other) => Add(other, 1);
         /// <summary>
@@ -299,17 +312,13 @@ namespace PataRoad.Core.Character
             AttackSeconds += other.AttackSeconds;
             MovementSpeed += other.MovementSpeed;
             Critical += other.Critical;
-            CriticalResistance += other.CriticalResistance;
             Knockback += other.Knockback;
-            KnockbackResistance += other.KnockbackResistance;
             Stagger += other.Stagger;
-            StaggerResistance += other.StaggerResistance;
             FireRate += other.FireRate;
-            FireResistance += other.FireResistance;
             IceRate += other.IceRate;
-            IceResistance += other.IceResistance;
             SleepRate += other.SleepRate;
-            SleepResistance += other.SleepResistance;
+
+            AddResistancesFromStat(other);
             return this;
         }
         /// <summary>
@@ -327,17 +336,14 @@ namespace PataRoad.Core.Character
             AttackSeconds -= other.AttackSeconds;
             MovementSpeed -= other.MovementSpeed;
             Critical -= other.Critical;
-            CriticalResistance -= other.CriticalResistance;
             Knockback -= other.Knockback;
-            KnockbackResistance -= other.KnockbackResistance;
             Stagger -= other.Stagger;
-            StaggerResistance -= other.StaggerResistance;
             FireRate -= other.FireRate;
-            FireResistance -= other.FireResistance;
             IceRate -= other.IceRate;
-            IceResistance -= other.IceResistance;
             SleepRate -= other.SleepRate;
-            SleepResistance -= other.SleepResistance;
+
+            AddResistancesFromStat(other, true);
+
             return this;
         }
 
@@ -369,14 +375,63 @@ namespace PataRoad.Core.Character
         public Stat Copy() => (Stat)MemberwiseClone();
         public Stat BoostResistance(float amount)
         {
-            CriticalResistance += amount;
-            StaggerResistance += amount;
-            KnockbackResistance += amount;
-            FireResistance += amount;
-            IceResistance += amount;
-            SleepResistance += amount;
+            AddCriticalResistance(amount, false);
+            AddStaggerResistance(amount, false);
+            AddKnockbackResistance(amount, false);
+            AddFireResistance(amount, false);
+            AddIceResistance(amount, false);
+            AddSleepResistance(amount, false);
+
             return this;
         }
+        //I don't want to do this but existing data will be removed if I move to other file.
         private float GetSafeValue(float value, float min) => _isCharacterStat ? UnityEngine.Mathf.Max(min, value) : value;
+        public void AddCriticalResistance(float value, bool negative = false) =>
+            InfinitySafeResistanceAdd(value,
+                ref _infiniteCriticalResistanceCount, ref _infiniteCriticalResistance, ref _criticalResistance, negative);
+        public void AddStaggerResistance(float value, bool negative = false) =>
+            InfinitySafeResistanceAdd(value,
+                ref _infiniteStaggerResistanceCount, ref _infiniteStaggerResistance, ref _staggerResistance, negative);
+        public void AddKnockbackResistance(float value, bool negative = false) =>
+            InfinitySafeResistanceAdd(value,
+                ref _infiniteKnockbackResistanceCount, ref _infiniteKnockbackResistance, ref _knockbackResistance, negative);
+        public void AddFireResistance(float value, bool negative = false) =>
+            InfinitySafeResistanceAdd(value,
+                ref _infiniteFireResistanceCount, ref _infiniteFireResistance, ref _fireResistance, negative);
+        public void AddIceResistance(float value, bool negative = false) =>
+            InfinitySafeResistanceAdd(value,
+                ref _infiniteIceResistanceCount, ref _infiniteIceResistance, ref _iceResistance, negative);
+        public void AddSleepResistance(float value, bool negative = false) =>
+            InfinitySafeResistanceAdd(value,
+                ref _infiniteSleepResistanceCount, ref _infiniteSleepResistance, ref _sleepResistance, negative);
+
+        private void AddResistancesFromStat(Stat otherStat, bool negative = false)
+        {
+            AddCriticalResistance(otherStat.CriticalResistance, negative);
+            AddStaggerResistance(otherStat.StaggerResistance, negative);
+            AddKnockbackResistance(otherStat.KnockbackResistance, negative);
+            AddFireResistance(otherStat.FireResistance, negative);
+            AddIceResistance(otherStat.IceResistance, negative);
+            AddSleepResistance(otherStat.SleepResistance, negative);
+        }
+        private void InfinitySafeResistanceAdd(float valueToAdd, ref int resistCount,
+            ref bool infinityResist, ref float realValue, bool negative)
+        {
+            if (negative) valueToAdd = -valueToAdd;
+            if (valueToAdd == UnityEngine.Mathf.Infinity)
+            {
+                infinityResist = true;
+                resistCount++;
+            }
+            else if (valueToAdd == UnityEngine.Mathf.NegativeInfinity)
+            {
+                if (resistCount > 0) resistCount--;
+                infinityResist = resistCount > 0;
+            }
+            else
+            {
+                realValue += valueToAdd;
+            }
+        }
     }
 }

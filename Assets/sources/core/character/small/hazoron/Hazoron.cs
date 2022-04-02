@@ -55,7 +55,7 @@ namespace PataRoad.Core.Character.Hazorons
                 : DistanceCalculator.GetHazoronDistanceCalculator(this);
             DistanceManager = gameObject.AddComponent<DistanceManager>();
             DistanceManager.DistanceCalculator = DistanceCalculator;
-            if (_isOnTower) Stat.KnockbackResistance = Mathf.Infinity;
+            if (_isOnTower) Stat.AddKnockbackResistance(Mathf.Infinity);
 
             StatusEffectManager.AddRecoverAction(() =>
             {

@@ -63,11 +63,10 @@ namespace PataRoad.Core.Character.Bosses
             _stat.DefenceMin += (level - 1) * 0.005f;
             _stat.DefenceMax += (level - 1) * 0.01f;
             Boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * value));
-            _stat.CriticalResistance += level * 0.06f;
-            _stat.StaggerResistance += level * 0.08f;
-            _stat.FireResistance += level * 0.05f;
-            _stat.IceResistance += level * 0.05f;
+            _stat.AddCriticalResistance(level * 0.06f);
+            _stat.AddStaggerResistance(level * 0.08f);
+            _stat.AddFireResistance(level * 0.05f);
+            _stat.AddIceResistance(level * 0.05f);
         }
-
     }
 }

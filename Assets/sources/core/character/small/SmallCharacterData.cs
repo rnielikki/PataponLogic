@@ -50,9 +50,14 @@ namespace PataRoad.Core.Character
             InitStat();
 
             InitEquipment(GetEquipmentData());
-            AttackTypeResistance = EquipmentManager.Rarepon?.CurrentData == null ?
-            _defaultAttackTypeResistance :
-            _defaultAttackTypeResistance.Apply((EquipmentManager.Rarepon.CurrentData as Equipments.RareponData).AttackTypeResistance);
+            if (EquipmentManager.Rarepon != null && EquipmentManager.Rarepon.CurrentData != null)
+            {
+                _defaultAttackTypeResistance.Apply((EquipmentManager.Rarepon.CurrentData as Equipments.RareponData).AttackTypeResistance);
+            }
+            else
+            {
+                AttackTypeResistance = _defaultAttackTypeResistance;
+            }
         }
         protected abstract IEnumerable<EquipmentData> GetEquipmentData();
 

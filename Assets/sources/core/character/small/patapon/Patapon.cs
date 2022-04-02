@@ -175,6 +175,7 @@ namespace PataRoad.Core.Character.Patapons
         public void DoMissionCompleteGesture()
         {
             StopAttacking(false);
+            StatusEffectManager.RecoverAndIgnoreEffect();
             StartCoroutine(PartyOnComplete());
             System.Collections.IEnumerator PartyOnComplete()
             {

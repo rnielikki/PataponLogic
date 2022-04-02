@@ -72,12 +72,11 @@ namespace PataRoad.Core.Map.Levels
             _stat = _pataponData.Stat;
 
             //without making them infinity it'll throw null exception
-            _stat.StaggerResistance = Mathf.Infinity;
-            _stat.KnockbackResistance = Mathf.Infinity;
-            _stat.FireResistance = Mathf.Infinity;
-            _stat.IceResistance = Mathf.Infinity;
-            _stat.SleepResistance = Mathf.Infinity;
+            Stat.BoostResistance(Mathf.Infinity);
+            Stat.AddCriticalResistance(-Mathf.Infinity);
+
             StatusEffectManager = null;
+
 
             _pataponsManager = FindObjectOfType<Character.Patapons.PataponsManager>();
             transform.position = _pataponsManager.transform.position + (25 * Vector3.left);
