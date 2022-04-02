@@ -18250,6 +18250,7 @@ GameObject:
   - component: {fileID: 2108095003}
   - component: {fileID: 2108095005}
   - component: {fileID: 2108095004}
+  - component: {fileID: 2108095006}
   m_Layer: 0
   m_Name: Selector
   m_TagString: Untagged
@@ -18445,6 +18446,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2108095006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2108095002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c20a18c0110bb164eb17cabcdec9dec9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputActions:
+  - Drum/Chaka
+  - Drum/Chaka
+  - Drum/Don
+  - Drum/Don
+  - Drum/Pata
+  - Drum/Pon
+  - Drum/Pata
+  - Drum/Pon
 --- !u!1001 &2115127306
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20001,7 +20023,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -75
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7931418823345059730, guid: 1c28c97d12a3a2c4687dac4857286766, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1c28c97d12a3a2c4687dac4857286766, type: 3}
 --- !u!1 &5762451716609387433 stripped
 GameObject:
