@@ -76,19 +76,5 @@ namespace PataRoad.Core.Items
         /// <returns>Pivot offset from center.</returns>
         public Vector2 GetPivotOffset()
             => new Vector2((Image.pivot.x / Image.rect.width) - 0.5f, (Image.pivot.y / Image.rect.height) - 0.5f);
-
-        /// <summary>
-        /// Level group-image match check. remove if all done.
-        /// </summary>
-        /*
-        private void OnValidate()
-        {
-            //Level Group Max is 9
-            if (int.Parse(Image.name[0].ToString()) != LevelGroup)
-            {
-                throw new System.ArgumentException($"Image/Level Group doesn't match! Image: {Image.name[0]}, LevelGroup: {LevelGroup}");
-            }
-        }
-        */
     }
 }

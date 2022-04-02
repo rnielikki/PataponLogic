@@ -44,20 +44,13 @@ namespace PataRoad.Core.Character
 
         public virtual void Init()
         {
+            AttackTypeResistance = _defaultAttackTypeResistance;
             ElementalAttackType = _elementalAttackType;
             Animator = GetComponent<Animator>();
             if (Stat != null) return;
             InitStat();
 
             InitEquipment(GetEquipmentData());
-            if (EquipmentManager.Rarepon != null && EquipmentManager.Rarepon.CurrentData != null)
-            {
-                _defaultAttackTypeResistance.Apply((EquipmentManager.Rarepon.CurrentData as Equipments.RareponData).AttackTypeResistance);
-            }
-            else
-            {
-                AttackTypeResistance = _defaultAttackTypeResistance;
-            }
         }
         protected abstract IEnumerable<EquipmentData> GetEquipmentData();
 
@@ -72,7 +65,15 @@ namespace PataRoad.Core.Character
             EquipmentManager = new EquipmentManager(this);
             EquipmentManager.Init(equipmentData);
         }
-        public void Equip(EquipmentData data) => EquipmentManager.Equip(data);
+        public void Equip(EquipmentData data)
+        {
+            EquipmentManager.Equip(data);
+            if (data is RareponData rareponData)
+            {
+                AttackTypeResistance =
+                    _defaultAttackTypeResistance.Apply(rareponData.AttackTypeResistance);
+            }
+        }
         public void AddMass(float mass) => Rigidbody.mass += mass;
     }
 }

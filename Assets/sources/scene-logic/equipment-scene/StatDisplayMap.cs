@@ -66,26 +66,24 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             _text.color = _neutralColor;
         }
-        internal void CompareValue(float current, float oldValue, float newValue)
+        internal void CompareValue(float beforeApply, float afterApply)
         {
-            _text.text = GetSafeFloatValue(current - oldValue + newValue);
-            CompareAndUpdate(oldValue, newValue);
+            _text.text = GetSafeFloatValue(afterApply);
+            CompareAndUpdate(beforeApply, afterApply);
         }
-        internal void CompareOneByOne(Stat currentStat, Stat oldStat, Stat newStat)
+        internal void CompareOneByOne(Stat beforeApply, Stat afterApply)
         {
             if (_isFloat)
             {
-                var oldValue = _floatValueGetter(oldStat);
-                var newValue = _floatValueGetter(newStat);
-                var currentValue = _floatValueGetter(currentStat);
-                CompareValue(currentValue, oldValue, newValue);
+                var oldValue = _floatValueGetter(beforeApply);
+                var newValue = _floatValueGetter(afterApply);
+                CompareValue(oldValue, newValue);
             }
             else
             {
-                var oldValue = _intValueGetter(oldStat);
-                var newValue = _intValueGetter(newStat);
-                var currentValue = _intValueGetter(currentStat);
-                _text.text = (currentValue - oldValue + newValue).ToString(_format);
+                var oldValue = _intValueGetter(beforeApply);
+                var newValue = _intValueGetter(afterApply);
+                _text.text = newValue.ToString(_format);
                 CompareAndUpdate(oldValue, newValue);
             }
         }

@@ -13,6 +13,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         protected float _forceMultiplier = 1;
         protected float _feverPonponForceMultiplier = 1;
         private float _savedWindValue;
+        private readonly Stat _stat = Stat.GetAnyDefaultStatForCharacter();
 
         private bool _ifFire;
 
@@ -38,6 +39,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (Holder != null)
             {
                 _ifFire = Holder.AttackTypeIndex == 0;
+                _stat.SetValuesTo(Holder.Stat);
             }
         }
 
@@ -71,7 +73,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         private void AttackFever()
         {
-            var newStat = Holder.Stat.Copy();
+            var newStat = _stat.SetValuesTo(Holder.Stat);
             if (_ifFire)
             {
                 newStat.FireRate += 0.15f;
@@ -87,7 +89,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         private void ChargeDefend()
         {
-            var newStat = Holder.Stat.Copy();
+            var newStat = _stat.SetValuesTo(Holder.Stat);
             newStat.Knockback = 0; //Knockback independent.
             CreateBulletInstance(_chargeDefencePool, StopBulletOnGround, PushBack, newStat, default)
                 .AddForce(_forceMultiplier * 1000 * Holder.MovingDirection);

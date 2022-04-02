@@ -84,6 +84,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
         private StatDisplayMap[] _displayMaps;
         private StatDisplayMap _massDisplay;
 
+        private Stat _statForComparison;
+        private Stat _emptyStat = new Stat();
         private void Start()
         {
             _displayMaps = new StatDisplayMap[]
@@ -123,6 +125,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
             _massDisplay.AssignColors(_positiveColor, _neutralColor, _negativeColor);
 
             _hasSelectButton = Core.Global.GlobalData.GlobalInputActions.TryGetActionBindingName("UI/Select", out _selectButtonName);
+            _statForComparison = Stat.GetAnyDefaultStatForCharacter();
             OnChangedToGroup();
         }
         /// <summary>
@@ -201,17 +204,24 @@ namespace PataRoad.SceneLogic.EquipmentScene
         {
             if (_lastData == null || item == null || item.ItemType != Core.Items.ItemType.Equipment) return;
             var equipmentData = item as Core.Items.EquipmentData;
+
             if (equipmentData != null && equipmentData.Type != Core.Character.Equipments.EquipmentType.Rarepon)
             {
+                _statForComparison.SetValuesTo(_lastData.Stat);
                 var oldEquipment = _lastData.EquipmentManager.GetEquipmentData(equipmentData.Type);
-                var oldEquipmentStat = oldEquipment == null ? new Stat() : oldEquipment.Stat;
+                var oldEquipmentStat = oldEquipment == null ? _emptyStat : oldEquipment.Stat;
                 var newEquipmentStat = equipmentData.Stat;
+
+                _statForComparison.Subtract(oldEquipmentStat).Add(newEquipmentStat);
+
                 foreach (var display in _displayMaps)
                 {
-                    display.CompareOneByOne(_lastData.Stat, oldEquipmentStat, newEquipmentStat);
+                    display.CompareOneByOne(
+                        _lastData.Stat, _statForComparison);
                 }
                 var mass = oldEquipment == null ? 0 : oldEquipment.Mass;
-                _massDisplay.CompareValue(_lastData.Rigidbody.mass, mass, equipmentData.Mass);
+                _massDisplay.CompareValue(
+                    _lastData.Rigidbody.mass, _lastData.Rigidbody.mass - mass + equipmentData.Mass);
             }
             LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
         }
@@ -245,6 +255,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
         }
         private void UpdateStat(Stat stat, float mass)
         {
+            _statForComparison.SetValuesTo(stat);
             foreach (var statDisplay in _displayMaps)
             {
                 statDisplay.UpdateText(stat);

@@ -373,6 +373,53 @@ namespace PataRoad.Core.Character
             };
         }
         public Stat Copy() => (Stat)MemberwiseClone();
+        /// <summary>
+        /// Sets stat to specific stat value. Useful for resetting value without instantiating.
+        /// </summary>
+        /// <param name="stat">Te reference stat to make values identical.</param>
+        /// <returns>The same instance, having identical value to input stat.</returns>
+        public Stat SetValuesTo(Stat stat)
+        {
+            HitPoint = stat.HitPoint;
+            DefenceMin = stat.DefenceMin;
+            DefenceMax = stat.DefenceMax;
+            DamageMin = stat.DamageMin;
+            DamageMax = stat.DamageMax;
+            AttackSeconds = stat.AttackSeconds;
+            MovementSpeed = stat.MovementSpeed;
+            Critical = stat.Critical;
+            Knockback = stat.Knockback;
+            Stagger = stat.Stagger;
+            FireRate = stat.FireRate;
+            IceRate = stat.IceRate;
+            SleepRate = stat.SleepRate;
+
+            _criticalResistance = stat._criticalResistance;
+            _infiniteCriticalResistance = stat._infiniteCriticalResistance;
+            _infiniteCriticalResistanceCount = stat._infiniteCriticalResistanceCount;
+
+            _staggerResistance = stat._staggerResistance;
+            _infiniteStaggerResistance = stat._infiniteStaggerResistance;
+            _infiniteStaggerResistanceCount = stat._infiniteStaggerResistanceCount;
+
+            _knockbackResistance = stat._knockbackResistance;
+            _infiniteKnockbackResistance = stat._infiniteKnockbackResistance;
+            _infiniteKnockbackResistanceCount = stat._infiniteKnockbackResistanceCount;
+
+            _fireResistance = stat._fireResistance;
+            _infiniteFireResistance = stat._infiniteFireResistance;
+            _infiniteFireResistanceCount = stat._infiniteFireResistanceCount;
+
+            _iceResistance = stat._iceResistance;
+            _infiniteIceResistance = stat._infiniteIceResistance;
+            _infiniteIceResistanceCount = stat._infiniteIceResistanceCount;
+
+            _sleepResistance = stat._sleepResistance;
+            _infiniteSleepResistance = stat._infiniteSleepResistance;
+            _infiniteSleepResistanceCount = stat._infiniteSleepResistanceCount;
+
+            return this;
+        }
         public Stat BoostResistance(float amount)
         {
             AddCriticalResistance(amount, false);
