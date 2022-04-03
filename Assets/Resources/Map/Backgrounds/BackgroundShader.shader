@@ -10,6 +10,8 @@ Shader "Unlit/BackgroundShader"
 		{
 			Tags { "RenderType" = "TrnasparentCutout" }
 			LOD 100
+			AlphaToMask On
+			Blend SrcAlpha OneMinusSrcAlpha
 
 			Pass
 			{
@@ -53,11 +55,9 @@ Shader "Unlit/BackgroundShader"
 				{
 					// sample the texture
 					fixed4 col = tex2D(_MainTex, i.uv);
-				//transparency
-				clip(col.a - _Cutoff);
-				return col;
+					return col;
+				}
+			ENDCG
 			}
-ENDCG
-}
 		}
 }

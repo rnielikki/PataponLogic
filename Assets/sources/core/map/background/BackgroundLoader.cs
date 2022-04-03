@@ -57,7 +57,8 @@ namespace PataRoad.Core.Map.Background
             }
             catch (System.Exception)
             {
-                throw new System.ArgumentException("colour.txt in backgorund: Format is invalid. Make sure that it contains 6-digit HEX without any space!");
+                throw new System.ArgumentException(
+                    "colour.txt in backgorund: Format is invalid. Make sure that it contains 6-digit HEX without any space!");
             }
         }
         private void OnDestroy()
