@@ -3,8 +3,9 @@ Shader "Unlit/BackgroundShader"
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
-		_Cutoff("Cutoff", Float) = 0.5
 		_MoveSensitivity("Move Sensitivity", Float) = 0.1
+		_FullHeight("Use full height (0 if false)", Integer) = 0
+		_BgHeight("Background Height", Integer) = 640
 	}
 		SubShader
 		{
@@ -39,7 +40,6 @@ Shader "Unlit/BackgroundShader"
 				sampler2D _MainTex;
 				float4 _MainTex_ST;
 				float4 _MainTex_TexelSize;
-				float _Cutoff;
 				float _MoveSensitivity;
 
 				v2f vert(appdata v)

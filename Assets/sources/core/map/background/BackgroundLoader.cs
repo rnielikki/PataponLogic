@@ -19,26 +19,26 @@ namespace PataRoad.Core.Map.Background
         public const string DesertName = "Desert";
         const string _path = "Map/Backgrounds/";
         public static string CurrentTheme { get; private set; }
+        private const int BgAmount = 4;
         public void Init(string theme)
         {
             CurrentTheme = theme;
             var txt = Resources.Load<TextAsset>(_path + theme + "/colour");
             Camera.main.backgroundColor = ParseColor(txt.text);
 
-            foreach (var bg in Resources.LoadAll<GameObject>(_path + theme))
+            BackgroundRenderer[] children = GetComponentsInChildren<BackgroundRenderer>();
+            Material[] materials = Resources.LoadAll<Material>(_path + theme);
+
+            if (children.Length != materials.Length || materials.Length != BgAmount)
             {
-                SetTexture(Instantiate(bg, transform));
+                throw new MissingComponentException(
+                    $"The material ({materials.Length}) and bg ({children.Length}) amount must be {BgAmount}");
             }
-        }
 
-        private void SetTexture(GameObject obj)
-        {
-            var image = obj.GetComponent<UnityEngine.UI.Image>();
-            if (image == null) return;
-
-            var mainTex = image.material.mainTexture;
-            var rect = obj.GetComponent<RectTransform>().rect;
-            image.material.SetTextureScale("_MainTex", new Vector2(mainTex.height * rect.width / (mainTex.width * rect.height), 1));
+            for (int i = 0; i < BgAmount; i++)
+            {
+                children[i].SetMaterial(materials[i]);
+            }
         }
         private Color ParseColor(string colourHex)
         {
@@ -58,7 +58,7 @@ namespace PataRoad.Core.Map.Background
             catch (System.Exception)
             {
                 throw new System.ArgumentException(
-                    "colour.txt in backgorund: Format is invalid. Make sure that it contains 6-digit HEX without any space!");
+                    "colour.txt in background: Format is invalid. Make sure that it contains 6-digit HEX without any space!");
             }
         }
         private void OnDestroy()
