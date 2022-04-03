@@ -7,6 +7,8 @@ namespace PataRoad.Core.Map.Weather
         public WeatherType Type => WeatherType.Rain;
         [SerializeField]
         public AudioClip _sound;
+        [SerializeField]
+        private GameObject _darkBg;
 
         public void OnWeatherStarted(bool firstInit)
         {
@@ -16,6 +18,7 @@ namespace PataRoad.Core.Map.Weather
             WeatherInfo.Current.FireRateMultiplier = 0.5f;
 
             Character.CharacterEnvironment.AnimalSightMultiplier = 0.6f;
+            if (_darkBg != null) _darkBg.SetActive(true);
         }
 
         public void OnWeatherStopped(WeatherType newType)
@@ -25,6 +28,7 @@ namespace PataRoad.Core.Map.Weather
             Character.CharacterEnvironment.AnimalSightMultiplier = 1;
 
             gameObject.SetActive(false);
+            if (_darkBg != null) _darkBg.SetActive(false);
         }
         public void StartListen(LayerMask layerMask)
         {

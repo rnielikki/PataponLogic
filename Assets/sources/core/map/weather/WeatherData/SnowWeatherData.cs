@@ -5,6 +5,8 @@ namespace PataRoad.Core.Map.Weather
     class SnowWeatherData : MonoBehaviour, IWeatherData
     {
         public WeatherType Type => WeatherType.Snow;
+        [SerializeField]
+        private GameObject _darkBg;
 
         public void OnWeatherStarted(bool firstInit)
         {
@@ -12,12 +14,14 @@ namespace PataRoad.Core.Map.Weather
             WeatherInfo.Current.StopWeatherSound();
             WeatherInfo.Current.FireRateMultiplier = 0.25f;
             WeatherInfo.Current.IceRateMultiplier = 1.5f;
+            if (_darkBg != null) _darkBg.SetActive(true);
         }
 
         public void OnWeatherStopped(WeatherType newType)
         {
             WeatherInfo.Current.FireRateMultiplier = 1;
             WeatherInfo.Current.IceRateMultiplier = 1;
+            if (_darkBg != null) _darkBg.SetActive(false);
             gameObject.SetActive(false);
         }
         private void OnParticleCollision(GameObject other)

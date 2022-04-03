@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 938049651388931419}
   - component: {fileID: 938049651388931416}
   - component: {fileID: 938049651388931413}
+  - component: {fileID: 8631103433295391988}
   m_Layer: 17
   m_Name: Fog
   m_TagString: Untagged
@@ -212,6 +213,19 @@ MonoBehaviour:
   _image: {fileID: 938049652746553273}
   _sandStormColor: {r: 0.7924528, g: 0.6256877, b: 0.22801706, a: 1}
   _sands: {fileID: 8952064360431056831}
+--- !u!114 &8631103433295391988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 938049651388931422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0a58edf13d251e498b97a77de47f435, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sortingLayerName: fog
 --- !u!1 &938049651978824972
 GameObject:
   m_ObjectHideFlags: 0
@@ -5038,6 +5052,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sound: {fileID: 8300000, guid: 12a4a5abeb71d9e49a891aff4699855a, type: 3}
+  _darkBg: {fileID: 0}
 --- !u!1 &938049652001469739
 GameObject:
   m_ObjectHideFlags: 0
@@ -10341,6 +10356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fea3796fa31e1c446a294eebbf189d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _darkBg: {fileID: 0}
 --- !u!1 &938049652284579722
 GameObject:
   m_ObjectHideFlags: 0
