@@ -25,7 +25,7 @@ namespace PataRoad.Common.GameDisplay
         public static void Create(
             ScreenFadingType fadingType, float speed, Color color, string sceneToChange)
         {
-            if (_current._activated) return;
+            if (_current._activated && _current._direction > 0) return;
             if (speed < 1) speed = 2;
             Core.Global.GlobalData.GlobalInputActions.DisableAllInputs();
             _current.Set(fadingType, speed, color, sceneToChange);

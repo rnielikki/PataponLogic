@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 
 namespace PataRoad.SceneLogic.Patapolis
 {
+    /// <summary>
+    /// Currently not working.
+    /// </summary>
     public class SequenceInput : MonoBehaviour
     {
         [SerializeField]
@@ -18,28 +21,46 @@ namespace PataRoad.SceneLogic.Patapolis
                 _sequence[i] = GlobalData.Input.actions
                     .FindAction(_inputActions[i]);
             }
+            ResetListening();
+        }
+        void ResetListening()
+        {
+            _sequenceIndex = 0;
             _sequence[0].performed += StartListening;
+            GlobalData.Input.onActionTriggered -= ListenInput;
         }
         void StartListening(InputAction.CallbackContext context)
         {
-            var action = context.action;
-            action.performed -= StartListening;
-
-            if (action == _sequence[_sequenceIndex])
+            _sequence[0].performed -= StartListening;
+            GlobalData.Input.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
+            GlobalData.Input.onActionTriggered += ListenInput;
+        }
+        void ListenInput(InputAction.CallbackContext context)
+        {
+            if (!context.started) return;
+            if (FindFromArray())
             {
                 _sequenceIndex++;
                 if (_sequenceIndex >= _sequence.Length)
                 {
                     CallInputAction();
-                }
-                else
-                {
-                    _sequence[_sequenceIndex].performed += StartListening;
+                    GlobalData.Input.onActionTriggered -= ListenInput;
                 }
             }
             else
             {
-                _sequenceIndex = 0;
+                ResetListening();
+            }
+            bool FindFromArray()
+            {
+                foreach (var ctrl in _sequence[_sequenceIndex].controls)
+                {
+                    if (ctrl == context.action.activeControl)
+                    {
+                        return true;
+                    }
+                }
+                return false;
             }
         }
         private void CallInputAction()
@@ -50,6 +71,7 @@ namespace PataRoad.SceneLogic.Patapolis
         private void OnDestroy()
         {
             _sequence[_sequenceIndex].performed -= StartListening;
+            GlobalData.Input.onActionTriggered -= ListenInput;
         }
     }
 }
