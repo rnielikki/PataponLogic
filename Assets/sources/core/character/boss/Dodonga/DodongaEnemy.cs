@@ -14,9 +14,12 @@
                 return new BossAttackMoveSegment("Idle", 5);
             }
             var firstPon = _pataponsManager.FirstPatapon;
-            if (firstPon?.Type != Class.ClassType.Toripon &&
-                firstPon?.transform.position.x < _pataponsManager.transform.position.x) return new BossAttackMoveSegment("fire", 20);
-            if ((firstPon?.IsMeleeUnit == true || firstPon?.Type == Class.ClassType.Toripon)
+            if (firstPon == null || (firstPon.Type != Class.ClassType.Toripon &&
+                firstPon.transform.position.x < _pataponsManager.transform.position.x))
+            {
+                return new BossAttackMoveSegment("fire", 5);
+            }
+            if ((firstPon.IsMeleeUnit || firstPon.Type == Class.ClassType.Toripon)
                 && Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 20))
             {
                 if (_level >= 3 && Common.Utils.RandomByProbability((float)_pataponsManager.PataponCount / 18))

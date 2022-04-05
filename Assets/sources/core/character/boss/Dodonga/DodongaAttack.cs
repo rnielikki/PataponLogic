@@ -10,6 +10,13 @@ namespace PataRoad.Core.Character.Bosses
         private BossAttackCollision Headbutt;
         [SerializeField]
         private DodongaEatingComponent EatingMouth;
+        [SerializeField]
+        private Equipments.Weapons.ElementalAttackType _growlType;
+        [SerializeField]
+        private int _growlMinDamage;
+        [SerializeField]
+        private int _growlMaxDamage;
+        private Stat _growlStat;
 
         protected override void Init()
         {
@@ -30,12 +37,17 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void GrowlAttack()
         {
-            StopIgnoringStatusEffect();
+            if (_growlStat == null)
+            {
+                _growlStat = new Stat();
+                _growlStat.DamageMin = _growlMinDamage;
+                _growlStat.DamageMax = _growlMaxDamage;
+            }
             Boss.AttackType = Equipments.Weapons.AttackType.Magic;
-            Boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
+            Boss.ElementalAttackType = _growlType;
             foreach (var target in Boss.DistanceCalculator.GetAllAbsoluteTargetsOnFront())
             {
-                Equipments.Logic.DamageCalculator.DealDamage(Boss, _stat, target.gameObject, target.transform.position);
+                Equipments.Logic.DamageCalculator.DealDamage(Boss, _growlStat, target.gameObject, target.transform.position);
             }
         }
         public override void StopAllAttacking()

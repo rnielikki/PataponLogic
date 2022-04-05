@@ -71,6 +71,30 @@ PrefabInstance:
       propertyPath: _additionalStat._fireRate
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3618771868197904909, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._damageMax
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3618771868197904909, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._damageMin
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _growlType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _growlMaxDamage
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _growlMinDamage
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: managedReferences[0]._hitPoint
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 4052185348077061767, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -150,6 +174,14 @@ PrefabInstance:
     - target: {fileID: 6868564560119394942, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: ColorModule.enabled
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022250740197461398, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._damageMax
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 7022250740197461398, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._damageMin
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7443993834971100618, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
@@ -255,5 +287,126 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 80033a35406dffc4dbad670600fde032, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8854638042480719555, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+    - {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+--- !u!114 &1107261995194959921 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3618771868197904909, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+  m_PrefabInstance: {fileID: 4424150275564907068}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628f23eefab27b84b9e860fca6b21d6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2356076759838572797 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2150409896095738561, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+  m_PrefabInstance: {fileID: 4424150275564907068}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d5c0934495c81a48b1843178cdd230e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2867385631481837954 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1922682132329042878, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+  m_PrefabInstance: {fileID: 4424150275564907068}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5061051132797225257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2867385631481837954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 189d399b65a8a4a4db1c45d5acdf0255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stat:
+    rid: 186027602312429572
+  _attackTypeResistance:
+    rid: 186027602312429573
+  Fire: {fileID: 1107261995194959921}
+  Headbutt: {fileID: 6634284850734933930}
+  EatingMouth: {fileID: 2356076759838572797}
+  _growlType: 2
+  _growlMinDamage: 60
+  _growlMaxDamage: 80
+  references:
+    version: 2
+    RefIds:
+    - rid: 186027602312429572
+      type: {class: Stat, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _isCharacterStat: 1
+        _hitPoint: 5000
+        _defenceMin: 0.9
+        _defenceMax: 1.1
+        _damageMin: 3
+        _damageMax: 5
+        _attackSeconds: 2
+        _movementSpeed: 4
+        _critical: 0
+        _stagger: 0
+        _knockback: 0
+        _infiniteCriticalResistance: 0
+        _criticalResistance: 0.6
+        _infiniteStaggerResistance: 0
+        _staggerResistance: 0.8
+        _infiniteKnockbackResistance: 0
+        _knockbackResistance: 0.6
+        _fireRate: 0
+        _iceRate: 0
+        _sleepRate: 0
+        _infiniteFireResistance: 0
+        _fireResistance: 0.4
+        _infiniteIceResistance: 1
+        _iceResistance: 0
+        _infiniteSleepResistance: 0
+        _sleepResistance: 0.8
+    - rid: 186027602312429573
+      type: {class: AttackTypeResistance, ns: PataRoad.Core.Character, asm: Assembly-CSharp}
+      data:
+        _crushMultiplier: 1.1
+        _slashMultiplier: 1.2
+        _stabMultiplier: 1.2
+        _soundMultiplier: 1.1
+        _magicMultiplier: 1
+        _fireMultiplier: 1.5
+        _iceMultiplier: 0.4
+        _thunderMultiplier: 1.2
+--- !u!114 &8012662020941638088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2867385631481837954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc1fcd8f357c3847958a90b55932183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _onAfterDeath:
+    m_PersistentCalls:
+      m_Calls: []
+  _connectedMapIndex: 6
+--- !u!114 &6634284850734933930 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7022250740197461398, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+  m_PrefabInstance: {fileID: 4424150275564907068}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2ae4c383e5c5f74e9f5ed83614e449f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

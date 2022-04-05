@@ -24,7 +24,11 @@
         }
         protected override void OnDead()
         {
-            Map.Weather.WeatherInfo.Current?.Wind?.StopWind(Map.Weather.WindType.TailWind);
+
+            if (Map.Weather.WeatherInfo.Current != null && Map.Weather.WeatherInfo.Current.Wind != null)
+            {
+                Map.Weather.WeatherInfo.Current.Wind.StopWind(Map.Weather.WindType.TailWind);
+            }
         }
     }
 }
