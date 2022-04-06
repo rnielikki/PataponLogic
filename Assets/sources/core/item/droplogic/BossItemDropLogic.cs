@@ -7,25 +7,45 @@ namespace PataRoad.Core.Items
         private string _itemGroup;
         public void SetItemGroup(string group) => _itemGroup = group;
         public int GetAmount() => (int)Rhythm.RhythmEnvironment.Difficulty + 1;
-        readonly float[] _levelSlopeMap = new float[]
-        {
-            0.5f,
-            0.5f,
-            0.4f,
-            0.35f
-        };
+        readonly float[] _levelSlopeMap;
+        private int _levelGroup;
         public BossItemDropLogic(int levelGroup)
         {
-            if (levelGroup < 0 || levelGroup > 2)
+            switch (levelGroup)
             {
-                throw new System.ArgumentException(
-                    $"For boss, the level group ('MinLevel' in {nameof(LeveledItemDropBehvaiour)}) must be range of 0-2."
-                );
+                case 0:
+                    _levelSlopeMap = new float[]
+                    {
+                        0.5f,
+                        0.4f,
+                        0.2f,
+                        0
+                    };
+                    break;
+                case 1:
+                    _levelSlopeMap = new float[]
+                    {
+                        1,
+                        1,
+                        0.8f,
+                        0.7f
+                    };
+                    break;
+                case 2:
+                    _levelSlopeMap = new float[]
+                    {
+                        0.2f,
+                        0.4f,
+                        0f,
+                        0
+                    };
+                    break;
+                default:
+                    throw new System.ArgumentException(
+                        $"For boss, the level group ('MinLevel' in {nameof(LeveledItemDropBehvaiour)}) must be range of 0-2."
+                    );
             }
-            for (int i = 0; i < _levelSlopeMap.Length; i++)
-            {
-                _levelSlopeMap[i] *= (levelGroup + 1);
-            }
+            _levelGroup = levelGroup;
         }
         public IItem GetItem(float levelRatio)
         {
@@ -39,8 +59,8 @@ namespace PataRoad.Core.Items
                 itemIndex = 1;
             }
             else if (RandomByProbability(
-                (levelRatio <= 0.5f) ? GetProbability(levelRatio, 1, _levelSlopeMap[2], true) :
-                GetProbability(levelRatio - 0.5f, 0.6f, 0.8f, false)
+                (levelRatio <= 0.5f || _levelGroup != 1) ? GetProbability(levelRatio, 1, _levelSlopeMap[2], true) :
+                GetProbability(levelRatio - 0.5f, 0.6f, _levelSlopeMap[2], false)
                 ))
             {
                 itemIndex = 2;
@@ -51,6 +71,7 @@ namespace PataRoad.Core.Items
             {
                 itemIndex = 3;
             }
+            if (_levelGroup == 2) itemIndex += 2;
             return ItemLoader.GetItem(ItemType.Material, _itemGroup, itemIndex);
         }
         private float GetProbability(float levelRatio, float firstValue, float slope, bool ascending)

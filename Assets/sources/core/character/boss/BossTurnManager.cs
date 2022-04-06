@@ -49,7 +49,10 @@ namespace PataRoad.Core.Character.Bosses
         {
             _actionQueue.Clear();
             //RhythmTimer shouldn't be stopped here! except waiting delay...
-            RhythmTimer.Current.OnTime.RemoveListener(WaitForDelay);
+            if (RhythmTimer.Current != null)
+            {
+                RhythmTimer.Current.OnTime.RemoveListener(WaitForDelay);
+            }
             if (stopAllAttacking) _data.StopAllAttacking();
             Attacking = false;
         }
