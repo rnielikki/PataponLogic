@@ -93,6 +93,7 @@ namespace PataRoad.Core.Character.Bosses
         protected virtual void StartMovingBack()
         {
             if (BossAttackData.UseCustomDataPosition || BossAttackData.AttackPaused) return;
+            BossAttackData.IgnoreStatusEffect();
             _targetPosition = Vector3.right * (DefaultWorldPosition + _movingBackPosition);
             DefaultWorldPosition = _targetPosition.x;
             _movingBack = true;
@@ -123,10 +124,8 @@ namespace PataRoad.Core.Character.Bosses
                 return;
             }
             //phase -1 : On Ice. No moving, just ATTACK
-            if (StatusEffectManager.CurrentStatusEffect == StatusEffectType.Ice)
+            if (!BossTurnManager.Attacking && StatusEffectManager.CurrentStatusEffect == StatusEffectType.Ice)
             {
-                BossAttackData.OnIdle();
-                BossTurnManager.End();
                 _behaviour.CalculateAttackOnIce();
                 BossTurnManager.StartAttack(0);
             }
@@ -145,6 +144,7 @@ namespace PataRoad.Core.Character.Bosses
                     _movingBack = false;
                     _sleeping = true;
                     CharAnimator.Animate(_stopAnimation);
+                    BossAttackData.StopIgnoringStatusEffect();
                     _movingBackQueued = false;
                     _movingBackAnimating = false;
                 }

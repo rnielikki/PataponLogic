@@ -62,6 +62,27 @@ namespace PataRoad.Core.Character.Bosses
             }
             return new BossAttackMoveSegment("laser", 3);
         }
+
+        protected override BossAttackMoveSegment GetNextBehaviourForCombo(int index, int comboCount)
+        {
+            var next = base.GetNextBehaviourForCombo(index, comboCount);
+            if (index == comboCount - 1)
+            {
+                return next;
+            }
+            else if (next.Action == "-rush")
+            {
+                if (RandomByProbability(
+                    _pataponsManager.GetMeleeCount() * 0.02f
+                    + (50 - _level) * 0.002f
+                    ))
+                {
+                    return new BossAttackMoveSegment("poison", 0);
+                }
+                return new BossAttackMoveSegment("laser", 3);
+            }
+            else return next;
+        }
         protected override string GetNextBehaviourOnIce()
         {
             //ice attack is impossible but...

@@ -37,7 +37,7 @@ namespace PataRoad.Core.Map.Levels
             {
                 if (effect == StatusEffectType.Fire) _animator.Play("fire");
             });
-            StatusEffectManager.AddRecoverAction(() =>
+            StatusEffectManager.AddRecoverAction((_) =>
             {
                 if (!IsDead) _animator.Play("Idle");
             });

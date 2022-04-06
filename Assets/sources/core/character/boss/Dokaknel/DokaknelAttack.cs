@@ -1,21 +1,21 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace Assets.sources.core.character.boss.Dokaknel
+﻿namespace PataRoad.Core.Character.Bosses
 {
-    public class DokaknelAttack : MonoBehaviour
+    class DokaknelAttack : ZaknelAttack
     {
-
-        // Use this for initialization
-        void Start()
+        internal override void UpdateStatForBoss(int level)
         {
+            var value = 0.8f + (level * 0.4f);
+            _stat.MultipleDamage(value);
+            _stat.DefenceMin += (level - 1) * 0.01f;
+            _stat.DefenceMax += (level - 1) * 0.01f;
+            Boss.SetMaximumHitPoint(UnityEngine.Mathf.RoundToInt(_stat.HitPoint * value));
 
-        }
+            Stat.AddCriticalResistance(level * 0.08f);
+            Stat.AddStaggerResistance(level * 0.1f);
 
-        // Update is called once per frame
-        void Update()
-        {
-
+            Stat.AddFireResistance(level * 0.05f);
+            Stat.AddIceResistance(level * 0.05f);
+            Stat.AddSleepResistance(level * 0.08f);
         }
     }
 }

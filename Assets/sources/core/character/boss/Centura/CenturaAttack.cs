@@ -1,21 +1,21 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.sources.core.character.boss.Centura
+namespace PataRoad.Core.Character.Bosses
 {
-    public class CenturaAttack : MonoBehaviour
+    class CenturaAttack : DarantulaAttack
     {
-
-        // Use this for initialization
-        void Start()
+        internal override void UpdateStatForBoss(int level)
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            var value = 0.8f + (level * 0.4f);
+            _stat.MultipleDamage(value);
+            _stat.DefenceMin += (level - 1) * 0.01f;
+            _stat.DefenceMax += (level - 1) * 0.02f;
+            Boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * value));
+            _stat.AddCriticalResistance(level * 0.08f);
+            _stat.AddStaggerResistance(level * 0.1f);
+            _stat.AddFireResistance(level * 0.1f);
+            _stat.AddIceResistance(level * 0.08f);
+            _stat.AddSleepResistance(level * 0.08f);
         }
     }
 }

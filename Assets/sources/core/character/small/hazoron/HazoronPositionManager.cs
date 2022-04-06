@@ -24,7 +24,7 @@ namespace PataRoad.Core.Character.Hazorons
         public static float GetClosestHazoronPosition()
         {
             if (Current == null || Current._hazorons.Count == 0) return Mathf.Infinity;
-            return Current._hazorons.Min(h => h.DefaultWorldPosition);
+            return Current._hazorons.Min(h => h.transform.position.x - h.CharacterSize);
         }
         private void TrackClosestHazoron()
         {

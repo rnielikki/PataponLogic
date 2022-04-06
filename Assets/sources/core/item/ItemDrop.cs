@@ -16,6 +16,7 @@ namespace PataRoad.Core.Items
 
         private AudioClip _sound;
         protected UnityEngine.Events.UnityEvent _events;
+        private
 
         protected void SetItem(ObtainableItemDropData data, IItem item = null)
         {
@@ -54,7 +55,8 @@ namespace PataRoad.Core.Items
             {
                 case ObtainableItemDropData obtainableItemData:
                     var item = replacedItem ?? obtainableItemData.Item;
-                    if (item == null || (item.IsUniqueItem && GlobalData.CurrentSlot.Inventory.HasItem(item)))
+                    if (item == null || (item.IsUniqueItem && GlobalData.CurrentSlot.Inventory.HasItem(item))
+                        || ItemManager.HasUniqueItem(item))
                     {
                         return false;
                     }

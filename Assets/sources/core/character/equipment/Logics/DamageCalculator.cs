@@ -232,13 +232,19 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 switch (type)
                 {
                     case StatusEffectType.Fire:
-                        receiver.StatusEffectManager.SetFire(2 + (probability * 10 * Map.Weather.WeatherInfo.Current.FireRateMultiplier));
+                        receiver.StatusEffectManager.SetFire(
+                            Mathf.Min(2 + (probability * 5 * Map.Weather.WeatherInfo.Current.FireRateMultiplier), 10)
+                            );
                         break;
                     case StatusEffectType.Ice:
-                        receiver.StatusEffectManager.SetIce(2 + (probability * 10 * Map.Weather.WeatherInfo.Current.IceRateMultiplier));
+                        receiver.StatusEffectManager.SetIce(
+                            Mathf.Min(2 + (probability * 5 * Map.Weather.WeatherInfo.Current.IceRateMultiplier), 8)
+                            );
                         break;
                     case StatusEffectType.Sleep:
-                        receiver.StatusEffectManager.SetSleep(4 + (probability * 25));
+                        receiver.StatusEffectManager.SetSleep(
+                            Mathf.Min(4 + (probability * 20), 8)
+                            );
                         break;
                     case StatusEffectType.Stagger:
                         receiver.StatusEffectManager.SetStagger();

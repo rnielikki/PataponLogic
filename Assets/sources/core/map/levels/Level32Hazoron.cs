@@ -21,7 +21,7 @@ namespace PataRoad.Core.Map.Levels
             DistanceManager = gameObject.AddComponent<DistanceManager>();
             DistanceManager.DistanceCalculator = DistanceCalculator;
 
-            StatusEffectManager.AddRecoverAction(() =>
+            StatusEffectManager.AddRecoverAction((_) =>
             {
                 _walking = false;
                 IsAttacking = false;

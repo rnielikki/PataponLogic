@@ -1,21 +1,32 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace Assets.sources.core.character.boss.Dokaknel
+﻿namespace PataRoad.Core.Character.Bosses
 {
-    public class DokaknelSummon : MonoBehaviour
+    public class DokaknelSummon : SummonedBoss
     {
-
-        // Use this for initialization
-        void Start()
+        protected override void Chakachaka()
         {
-
+            CharAnimator.Animate("fire");
+        }
+        protected override void ChargedChakachaka()
+        {
+            CharAnimator.Animate("earthquake");
+        }
+        protected override void Ponpon()
+        {
+            CharAnimator.Animate("slam");
+        }
+        protected override void ChargedPonpon()
+        {
+            CharAnimator.Animate("slam");
         }
 
-        // Update is called once per frame
-        void Update()
+        protected override void OnDead()
         {
+            //boiler
+        }
 
+        protected override void OnStarted()
+        {
+            //plate
         }
     }
 }

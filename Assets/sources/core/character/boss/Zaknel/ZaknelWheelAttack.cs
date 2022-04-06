@@ -5,7 +5,8 @@ namespace PataRoad.Core.Character.Bosses
     class ZaknelWheelAttack : BossAttackComponent
     {
         Transform _pataponsTransform;
-        Vector3 _wheelTargetPosition => _pataponsTransform.position + (_boss.CharacterSize * Vector3.right);
+        Vector3 _wheelTargetPosition => _pataponsTransform.position +
+            (_boss.CharacterSize * -(Vector3)_boss.Boss.MovingDirection);
 
         private void Start()
         {

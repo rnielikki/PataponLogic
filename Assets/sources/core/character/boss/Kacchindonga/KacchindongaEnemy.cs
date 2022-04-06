@@ -38,7 +38,19 @@
                 }
             }
         }
-
+        protected override BossAttackMoveSegment GetNextBehaviourForCombo(int index, int comboCount)
+        {
+            var next = base.GetNextBehaviourForCombo(index, comboCount);
+            if (index == comboCount - 1)
+            {
+                return next;
+            }
+            else if (next.Action == "growl")
+            {
+                return new BossAttackMoveSegment("fire", 3);
+            }
+            else return next;
+        }
         protected override string GetNextBehaviourOnIce()
         {
             return Common.Utils.RandomByProbability(0.5f + _level * 0.01f) ? "growl" : "fire";

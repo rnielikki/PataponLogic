@@ -42,11 +42,10 @@ namespace PataRoad.Core.Character.Bosses
 
             Stat.AddCriticalResistance(level * 0.05f);
             Stat.AddStaggerResistance(level * 0.05f);
-            Stat.AddKnockbackResistance(level * 0.05f);
 
             Stat.AddFireResistance(level * 0.03f);
             Stat.AddIceResistance(level * 0.03f);
-            Stat.AddSleepResistance(level * 0.35f);
+            Stat.AddSleepResistance(level * 0.035f);
         }
     }
 }

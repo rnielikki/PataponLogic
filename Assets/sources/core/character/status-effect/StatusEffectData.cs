@@ -16,33 +16,32 @@ namespace PataRoad.Core.Character
         [SerializeField]
         GameObject _bossIceEffect;
 
-        private Dictionary<StatusEffectType, GameObject> _statusEffectMap;
-        private Dictionary<StatusEffectType, GameObject> _bossStatusEffectMap;
-
-        private void Awake()
+        public Dictionary<StatusEffectType, GameObject> GetStatusEffectMap(Transform body)
         {
-            _statusEffectMap = new Dictionary<StatusEffectType, GameObject>()
+            return new Dictionary<StatusEffectType, GameObject>()
             {
-                { StatusEffectType.Fire, _fireEffect },
-                { StatusEffectType.Ice, _iceEffect },
-                { StatusEffectType.Sleep, _sleepEffect }
-            };
-            _bossStatusEffectMap = new Dictionary<StatusEffectType, GameObject>()
-            {
-                { StatusEffectType.Fire, _bossFireEffect },
-                { StatusEffectType.Ice, _bossIceEffect },
-                { StatusEffectType.Sleep, _sleepEffect }
+                { StatusEffectType.Fire, LoadEffect(_fireEffect, body) },
+                { StatusEffectType.Ice, LoadEffect(_iceEffect, body) },
+                { StatusEffectType.Sleep, LoadEffect(_sleepEffect, body) }
             };
         }
-        public GameObject AttachEffect(StatusEffectType type, Transform body, bool isBigTarget)
+        public Dictionary<StatusEffectType, GameObject> GetBossStatusEffectMap(Transform body)
         {
-            var obj = Instantiate(
-                (isBigTarget) ? _bossStatusEffectMap[type] : _statusEffectMap[type]
-                , body);
+            return new Dictionary<StatusEffectType, GameObject>()
+            {
+                { StatusEffectType.Fire, LoadEffect(_bossFireEffect, body) },
+                { StatusEffectType.Ice, LoadEffect(_bossIceEffect, body) },
+                { StatusEffectType.Sleep, LoadEffect(_sleepEffect, body) }
+            };
+        }
+        private GameObject LoadEffect(GameObject effect, Transform body)
+        {
+            var obj = Instantiate(effect, body);
             var renderer = obj.GetComponent<Renderer>();
             var targetObjectRenderer = body.GetComponentInChildren<SpriteRenderer>();
             renderer.sortingOrder = targetObjectRenderer.sortingOrder;
             renderer.sortingLayerID = targetObjectRenderer.sortingLayerID;
+            obj.SetActive(false);
             return obj;
         }
     }

@@ -93,7 +93,7 @@ namespace PataRoad.Core.Character.Animal
 
             _animator.SetMoving(true);
         }
-        protected virtual void DoRecoverAction() => SetToIdle(true);
+        protected virtual void DoRecoverAction(StatusEffectType type) => SetToIdle(true);
         private void SetToIdle(bool endActionWhenMoved)
         {
             _moving = false;

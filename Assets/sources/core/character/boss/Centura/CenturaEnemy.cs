@@ -1,21 +1,52 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace Assets.sources.core.character.boss.Centura
+﻿namespace PataRoad.Core.Character.Bosses
 {
-    public class CenturaEnemy : MonoBehaviour
+    class CenturaEnemy : DarantulaEnemy
     {
-
-        // Use this for initialization
-        void Start()
+        protected override void Init()
+        {
+            _minCombo = 2;
+            base.Init();
+        }
+        protected override BossAttackMoveSegment GetNextBehaviour()
+        {
+            if (_pataponsManager.ContainsClassOnly(Class.ClassType.Toripon))
+            {
+                return new BossAttackMoveSegment("tailwhip", 0);
+            }
+            if (_pataponsManager.IsAllMelee())
+            {
+                return new BossAttackMoveSegment(WhipOrSlide(), 0);
+            }
+            if (Common.Utils.RandomByProbability(0.2f + (_level * 0.01f)))
+            {
+                return new BossAttackMoveSegment("absorb", 0, 10);
+            }
+            if (Common.Utils.RandomByProbability(0.1f - (_level * 0.01f)))
+            {
+                return new BossAttackMoveSegment("poison", 0);
+            }
+            else
+            {
+                return new BossAttackMoveSegment(WhipOrSlide(), 0);
+            }
+        }
+        private string WhipOrSlide()
         {
 
+            if (Common.Utils.RandomByProbability(_level * 0.05f))
+            {
+                return "tailslide";
+            }
+            else
+            {
+                return "tailwhip";
+            }
         }
 
-        // Update is called once per frame
-        void Update()
+        protected override string GetNextBehaviourOnIce()
         {
-
+            //It doesn't attk with feet
+            return GetNextBehaviour().Action;
         }
     }
 }

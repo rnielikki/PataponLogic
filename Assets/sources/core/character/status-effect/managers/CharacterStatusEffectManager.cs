@@ -34,7 +34,7 @@ namespace PataRoad.Core.Character
 
             OnIce();
 
-            _character.CharAnimator.Stop();
+            if (!IsBigTarget) _character.CharAnimator.Stop();
             StartCoroutine(WaitForRecovery(time));
             CurrentStatusEffect = StatusEffectType.Ice;
         }

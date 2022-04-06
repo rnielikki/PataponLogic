@@ -5,8 +5,8 @@
         public override bool CanContinue => base.CanContinue || _isOnFire || CurrentStatusEffect == StatusEffectType.Ice;
         void Awake()
         {
-            Init();
             IsBigTarget = true;
+            Init();
         }
         protected override void StopEverythingBeforeStatusEffect(StatusEffectType type)
         {

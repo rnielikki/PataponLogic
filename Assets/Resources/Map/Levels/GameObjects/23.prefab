@@ -256,20 +256,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8982340649640055537, guid: fc7b01478a022b042a550dbd5d2678b9, type: 3}
   m_PrefabInstance: {fileID: 6886944857966625071}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8034215041999139527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2536926160862122974}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dropData:
-  - {fileID: 11400000, guid: c3c47d9a1e1b8c64db805e5a2b21c5b7, type: 2}
 --- !u!114 &2982512441133065521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -287,7 +273,21 @@ MonoBehaviour:
   _type: 0
   _minItemLevel: 2
   _maxItemLevel: 4
-  _itemGroupName: 
+  _itemGroupName: Vegetable
+--- !u!114 &8034215041999139527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2536926160862122974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: c3c47d9a1e1b8c64db805e5a2b21c5b7, type: 2}
 --- !u!4 &6031776771848290479 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 875522246720192896, guid: fc7b01478a022b042a550dbd5d2678b9, type: 3}

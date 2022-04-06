@@ -28,6 +28,7 @@ namespace PataRoad.Core.Items
         [Tooltip("Parent of every dropped item.")]
         private Transform _itemDropPoint;
         public Transform ItemDropPoint => _itemDropPoint;
+        private readonly HashSet<IItem> _currentItems = new HashSet<IItem>();
 
 
         private void Awake()
@@ -46,6 +47,7 @@ namespace PataRoad.Core.Items
             {
                 var obj = Instantiate(Current._itemInScreenTemplate, Current.transform);
                 var itemStatusUpdater = obj.GetComponent<ItemStatusUpdater>();
+                Current._currentItems.Add(item);
                 itemStatusUpdater.SetItem(item);
                 Current._itemMap.Add(item.Id, itemStatusUpdater);
             }
@@ -54,6 +56,11 @@ namespace PataRoad.Core.Items
                 //increase count
                 updater.IncreaseCount();
             }
+        }
+        internal static bool HasUniqueItem(IItem item)
+        {
+            if (!item.IsUniqueItem || Current == null) return false;
+            else return Current._currentItems.Contains(item);
         }
         public IEnumerable<ItemStatusUpdater> LoadItemStatus() => _itemMap.Values;
     }

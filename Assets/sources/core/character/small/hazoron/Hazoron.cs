@@ -57,7 +57,7 @@ namespace PataRoad.Core.Character.Hazorons
             DistanceManager.DistanceCalculator = DistanceCalculator;
             if (_isOnTower) Stat.AddKnockbackResistance(Mathf.Infinity);
 
-            StatusEffectManager.AddRecoverAction(() =>
+            StatusEffectManager.AddRecoverAction((_) =>
             {
                 IsAttacking = false;
                 if (IsFlyingUnit)

@@ -1,21 +1,41 @@
-﻿using System.Collections;
-using UnityEngine;
-
-namespace Assets.sources.core.character.boss.Centura
+﻿namespace PataRoad.Core.Character.Bosses
 {
-    public class CenturaSummon : MonoBehaviour
+    public class CenturaSummon : SummonedBoss
     {
-
-        // Use this for initialization
-        void Start()
+        protected override void Chakachaka()
         {
-
+            CharAnimator.Animate("poison");
         }
 
-        // Update is called once per frame
-        void Update()
+        protected override void ChargedChakachaka()
         {
+            CharAnimator.Animate("poison");
+        }
 
+        protected override void ChargedPonpon()
+        {
+            CharAnimator.Animate("tailslide");
+        }
+
+        protected override void Ponpon()
+        {
+            CharAnimator.Animate("tailwhip");
+        }
+        protected override void OnStarted()
+        {
+            Map.Weather.WeatherInfo.Current.ChangeWeather(Map.Weather.WeatherType.Fog);
+            Map.Weather.WeatherInfo.Current.Wind.StartWind(Map.Weather.WindType.TailWind);
+        }
+        protected override void OnDead()
+        {
+            if (Map.Weather.WeatherInfo.Current != null)
+            {
+                Map.Weather.WeatherInfo.Current.EndChangingWeather();
+                if (Map.Weather.WeatherInfo.Current.Wind != null)
+                {
+                    Map.Weather.WeatherInfo.Current.Wind.StopWind(Map.Weather.WindType.TailWind);
+                }
+            }
         }
     }
 }

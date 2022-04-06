@@ -13,11 +13,12 @@ namespace PataRoad.Core.Character
 
         protected Transform _transform;
 
-        private GameObject _effectObject;
+        private System.Collections.Generic.Dictionary<StatusEffectType, GameObject> _effectObjects;
         private StatusEffectData _effectInstantiator;
         public virtual bool CanContinue => !IsOnStatusEffect && !_target.IsDead;
 
-        private readonly UnityEngine.Events.UnityEvent _onRecover = new UnityEngine.Events.UnityEvent();
+        private readonly UnityEngine.Events.UnityEvent<StatusEffectType> _onRecover
+            = new UnityEngine.Events.UnityEvent<StatusEffectType>();
         internal bool IsBigTarget { get; set; }
 
         private UnityEngine.Events.UnityEvent<StatusEffectType> _onStatusEffect;
@@ -41,8 +42,13 @@ namespace PataRoad.Core.Character
             _target = GetComponent<IAttackable>();
             _effectInstantiator = FindObjectOfType<StatusEffectData>();
             _transform = transform;
+            if (_effectInstantiator != null)
+            {
+                _effectObjects = IsBigTarget ? _effectInstantiator.GetBossStatusEffectMap(_transform)
+                    : _effectInstantiator.GetStatusEffectMap(_transform);
+            }
         }
-        public void AddRecoverAction(UnityEngine.Events.UnityAction action)
+        public void AddRecoverAction(UnityEngine.Events.UnityAction<StatusEffectType> action)
         {
             _onRecover.AddListener(action);
         }
@@ -100,15 +106,16 @@ namespace PataRoad.Core.Character
         protected void Recover(bool invokeOnRecover)
         {
             if (!IsOnStatusEffect || IgnoreStatusEffect) return;
+            var effect = CurrentStatusEffect;
             StopAllCoroutines();
-            if (_effectObject != null)
+            if (_effectObjects != null && _effectObjects.ContainsKey(effect))
             {
-                Destroy(_effectObject);
+                _effectObjects[effect].gameObject.SetActive(false);
             }
             CurrentStatusEffect = StatusEffectType.None;
             OnRecover();
 
-            if (invokeOnRecover && _onRecover != null) _onRecover.Invoke();
+            if (invokeOnRecover && _onRecover != null) _onRecover.Invoke(effect);
         }
 
         /// <summary>
@@ -117,8 +124,10 @@ namespace PataRoad.Core.Character
         protected virtual void OnRecover() { }
         protected void LoadEffectObject(StatusEffectType type)
         {
-            //can be resized if big, I guess
-            _effectObject = _effectInstantiator.AttachEffect(type, _transform, IsBigTarget);
+            if (_effectObjects != null)
+            {
+                _effectObjects[type].gameObject.SetActive(true);
+            }
         }
         protected virtual void StopEverythingBeforeStatusEffect(StatusEffectType type)
         {

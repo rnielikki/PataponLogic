@@ -32,7 +32,7 @@ namespace PataRoad.Core.Character.Animal
                 _useFixedTargetPosition = true;
             }
         }
-        protected override void DoRecoverAction()
+        protected override void DoRecoverAction(StatusEffectType type)
         {
             //actually nothing!
         }

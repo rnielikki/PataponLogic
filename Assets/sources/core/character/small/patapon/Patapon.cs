@@ -112,7 +112,7 @@ namespace PataRoad.Core.Character.Patapons
             DistanceManager = gameObject.AddComponent<PataponDistanceManager>();
             DistanceManager.DistanceCalculator = DistanceCalculator;
 
-            StatusEffectManager.AddRecoverAction(() =>
+            StatusEffectManager.AddRecoverAction((_) =>
             {
                 if (Map.MissionPoint.IsMissionEnd && Map.MissionPoint.IsMissionSuccess) DoMissionCompleteGesture();
                 else if (!TurnCounter.IsPlayerTurn) PerformCommandAction(LastSong);
