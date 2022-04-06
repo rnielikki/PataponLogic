@@ -14,7 +14,7 @@ namespace PataRoad.Core.Items
         /// <summary>
         /// Recent data after saved. This won't be serialized.
         /// </summary>
-        private Queue<IItem> _recentData = new Queue<IItem>();
+        private List<IItem> _recentData = new List<IItem>();
 
         [SerializeReference]
         private InventoryData[] _serializableData;
@@ -47,10 +47,15 @@ namespace PataRoad.Core.Items
         /// <returns>The inventory data of all items from the inventory.</returns>
         public IEnumerable<InventoryData> GetAllItems() => _existingData.Values;
         /// <summary>
-        /// Gets Inventory data of most lately added item.
+        /// Checks if the item is recently added item.
         /// </summary>
-        /// <returns>The inventory data of last added item.</returns>
-        public InventoryData GetLastItem() => _existingData[_recentData.Peek()];
+        /// <remarks>The recent added item list is cleaned every time after a mission.</remarks>
+        /// <returns><c>true</c> if it's recently added, otherwise <c>false</c>.</returns>
+        public bool IsRecentItem(IItem item) => _recentData.Contains(item);
+        /// <summary>
+        /// Clear the recent item. Expected to be called after mission success or minigame success.
+        /// </summary>
+        public void ClearRecent() => _recentData.Clear();
         /// <summary>
         /// Adds an item to the inventory.
         /// </summary>
@@ -76,7 +81,7 @@ namespace PataRoad.Core.Items
                 }
                 if (!item.IsUniqueItem)
                 {
-                    _recentData.Enqueue(item);
+                    _recentData.Add(item);
                     UpdateItemIndex(item, amount);
                 }
                 return false;
@@ -84,7 +89,7 @@ namespace PataRoad.Core.Items
             else
             {
                 if (item.IsUniqueItem) amount = 1;
-                _recentData.Enqueue(item);
+                _recentData.Add(item);
                 UpdateItemIndex(item, amount);
                 return true;
             }

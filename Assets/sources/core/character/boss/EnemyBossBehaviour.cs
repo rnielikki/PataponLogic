@@ -22,7 +22,6 @@ namespace PataRoad.Core.Character.Bosses
         private int _maxCombo = -1;
 
         public bool UseCustomDataPosition { get; protected set; }
-        private bool _lastAttackWasOnIce;
 
         internal void Init(EnemyBoss boss, Patapons.PataponsManager pataponsManager)
         {
@@ -60,7 +59,6 @@ namespace PataRoad.Core.Character.Bosses
         public virtual void CalculateAttackOnIce()
         {
             _turnManager.SetOneAction(GetNextBehaviourOnIce());
-            _lastAttackWasOnIce = true;
         }
         public void MarkAsPartBroken()
         {
@@ -69,7 +67,6 @@ namespace PataRoad.Core.Character.Bosses
 
         protected (float distance, float maxDistance) SetComboAttack(int count)
         {
-            _lastAttackWasOnIce = false;
             if (count <= 0)
             {
                 _turnManager.SetOneAction("nothing");
@@ -139,8 +136,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         protected virtual void OnStatusEffect(StatusEffectType type)
         {
-            if (type != StatusEffectType.Fire && type != StatusEffectType.Tumble
-                && !(type == StatusEffectType.Ice && _lastAttackWasOnIce))
+            if (type != StatusEffectType.Fire && type != StatusEffectType.Tumble)
             {
                 Boss.BossTurnManager.End();
             }

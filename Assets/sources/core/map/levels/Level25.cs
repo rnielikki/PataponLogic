@@ -50,7 +50,6 @@ namespace PataRoad.Core.Map.Levels
                 Global.GlobalData.CurrentSlot.Progress.IsEquipmentMinigameOpen = true;
             }
             _animator.SetBool("moving", true);
-            _hatapon.SetBool("walking", true);
             _carriageStructure.OnDestroy.AddListener(() =>
             {
                 if (!_cannon.IsDead)

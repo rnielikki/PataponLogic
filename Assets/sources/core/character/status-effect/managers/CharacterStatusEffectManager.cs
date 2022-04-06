@@ -85,7 +85,7 @@ namespace PataRoad.Core.Character
         /// Called when knockback effect starts, before setting <see cref="OnStatusEffect"/> to <c>true</c>.
         /// </summary>
         protected virtual void OnKnockback() { }
-        protected override void OnRecover()
+        protected override void OnRecover(StatusEffectType type)
         {
             _character.CharAnimator.Resume();
             if (!_character.IsDead) _character.CharAnimator.Animate("Idle");

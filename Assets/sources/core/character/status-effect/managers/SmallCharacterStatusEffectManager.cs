@@ -72,9 +72,9 @@ namespace PataRoad.Core.Character
 
             StartCoroutine(WaitForRecovery(2));
         }
-        protected override void OnRecover()
+        protected override void OnRecover(StatusEffectType type)
         {
-            base.OnRecover();
+            base.OnRecover(type);
             _onKnockback = false;
             if (_isPatapon && _smallCharacter.IsFlyingUnit)
             {

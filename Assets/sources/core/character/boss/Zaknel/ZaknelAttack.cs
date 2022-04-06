@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace PataRoad.Core.Character.Bosses
 {
@@ -6,11 +7,24 @@ namespace PataRoad.Core.Character.Bosses
     {
         [SerializeField]
         private BossAttackParticle Fire;
+        private readonly System.Collections.Generic.List<GameObject> _raycastColliders
+            = new System.Collections.Generic.List<GameObject>();
+        private LayerMask _noRayLayer;
+        private LayerMask _rayLayer;
 
         protected override void Init()
         {
             CharacterSize = 5;
             base.Init();
+        }
+        private void Start()
+        {
+            var layers = CharacterTypeDataCollection.GetCharacterDataByType(Boss);
+            _rayLayer = layers.SelfLayerMaskRayCast;
+            _noRayLayer = layers.SelfLayerMaskNoRayCast;
+            _raycastColliders.AddRange(from cl in GetComponentsInChildren<Collider2D>(true)
+                                       where cl.gameObject.layer == _rayLayer
+                                       select cl.gameObject);
         }
         public void FireAttack()
         {
@@ -22,14 +36,22 @@ namespace PataRoad.Core.Character.Bosses
             Boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
             Boss.StatusEffectManager.TumbleAttack(true);
         }
-        public void GrowlAttack()
+        //preventing pushback
+        public void StartWheelAttackMode()
         {
-            StopIgnoringStatusEffect();
-            Boss.AttackType = Equipments.Weapons.AttackType.Magic;
-            Boss.ElementalAttackType = Equipments.Weapons.ElementalAttackType.Neutral;
-            foreach (var target in Boss.DistanceCalculator.GetAllAbsoluteTargetsOnFront())
+            foreach (var ray in _raycastColliders)
             {
-                Equipments.Logic.DamageCalculator.DealDamage(Boss, _stat, target.gameObject, target.transform.position);
+                ray.layer = _noRayLayer;
+            }
+        }
+        public void ToDefaultPosition()
+        {
+            var pos = transform.position;
+            pos.x = Boss.DefaultWorldPosition;
+            transform.position = pos;
+            foreach (var ray in _raycastColliders)
+            {
+                ray.layer = _rayLayer;
             }
         }
         internal override void UpdateStatForBoss(int level)

@@ -1,6 +1,7 @@
 using PataRoad.Common.Navigator;
 using PataRoad.Core.Items;
 using PataRoad.SceneLogic.CommonSceneLogic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -102,7 +103,8 @@ namespace PataRoad.SceneLogic.EquipmentScene
             Core.Global.GlobalData.Sound.PlayInScene(_soundOpen);
             _inventoryDisplay.SelectLast(
                 _inventoryDisplay.LoadData(
-                    Core.Global.GlobalData.CurrentSlot.Inventory.GetItemsByType(type, itemGroup),
+                    Core.Global.GlobalData.CurrentSlot.Inventory.GetItemsByType(type, itemGroup)
+                    .OrderBy(item => item.Item.Index),
                     currentItem,
                     isEquipments)
             );

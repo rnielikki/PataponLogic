@@ -50,6 +50,7 @@ namespace PataRoad.SceneLogic.Minigame
                 _itemName.text = model.Reward.Name;
                 _itemImage.sprite = model.Reward.Image;
                 _itemAmountField.text = "x " + model.RewardAmount.ToString();
+                Core.Global.GlobalData.CurrentSlot.Inventory.ClearRecent();
                 Core.Global.GlobalData.CurrentSlot.Inventory.AddMultiple(model.Reward, model.RewardAmount);
                 Core.Global.GlobalData.Sound.PlayGlobal(_onSuccess);
             }

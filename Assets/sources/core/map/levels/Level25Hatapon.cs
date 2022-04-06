@@ -35,7 +35,7 @@ namespace PataRoad.Core.Map.Levels
             StatusEffectManager = gameObject.AddComponent<StatusEffectManager>();
             StatusEffectManager.OnStatusEffect.AddListener((effect) =>
             {
-                if (effect == StatusEffectType.Fire) _animator.Play("fire");
+                if (effect == StatusEffectType.Fire) _animator.Play("Fire");
             });
             StatusEffectManager.AddRecoverAction((_) =>
             {

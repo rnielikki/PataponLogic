@@ -20,6 +20,7 @@
             }
 
             //Toripon. Any other attacks just don't work. Don't even troll the birb with birb.
+            //Note: dondon now cannot evade peck!
             var firstPon = _pataponsManager.FirstPatapon;
             bool isMeleeUnit = false;
             if (firstPon != null)
@@ -27,7 +28,11 @@
                 isMeleeUnit = firstPon.IsMeleeUnit;
                 if (firstPon.Type == Class.ClassType.Toripon)
                 {
-                    return new BossAttackMoveSegment("tornado", 1);
+                    if (_level < 10 || Common.Utils.RandomByProbability(0.5f + 0.01f * _level))
+                    {
+                        return new BossAttackMoveSegment("peck", 1);
+                    }
+                    else return new BossAttackMoveSegment("tornado", 1);
                 }
             }
 

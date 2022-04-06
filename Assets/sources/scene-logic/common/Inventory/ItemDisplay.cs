@@ -14,6 +14,8 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         [SerializeField]
         private Image _background;
         public Image Background => _background;
+        [SerializeField]
+        private Sprite _backgroundOnNew;
 
         private IItem _item;
         public IItem Item => _item;
@@ -36,6 +38,10 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         public void Init(IItem item, int amount)
         {
             _item = item;
+            if (Core.Global.GlobalData.CurrentSlot.Inventory.IsRecentItem(item))
+            {
+                _background.sprite = _backgroundOnNew;
+            }
             _image.sprite = item.Image;
             Amount = amount;
             _text.text = amount.ToString();

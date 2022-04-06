@@ -18,7 +18,11 @@
                 isMeleeUnit = firstPon.IsMeleeUnit;
                 if (firstPon.Type == Class.ClassType.Toripon)
                 {
-                    return new BossAttackMoveSegment("tornado", 1);
+                    if (Common.Utils.RandomByProbability(0.5f + 0.01f * _level))
+                    {
+                        return new BossAttackMoveSegment("peck", 1);
+                    }
+                    else return new BossAttackMoveSegment("tornado", 1);
                 }
             }
 

@@ -16,7 +16,7 @@
         }
         protected override void ChargedPonpon()
         {
-            CharAnimator.Animate("slam");
+            CharAnimator.Animate("wheel");
         }
 
         protected override void OnDead()

@@ -127,7 +127,8 @@ namespace PataRoad.Core.Character.Bosses
             if (!BossTurnManager.Attacking && StatusEffectManager.CurrentStatusEffect == StatusEffectType.Ice)
             {
                 _behaviour.CalculateAttackOnIce();
-                BossTurnManager.StartAttack(0);
+                BossTurnManager.StartAttack(1);
+                return;
             }
             //phase 0: moving back.
             if (_movingBack)

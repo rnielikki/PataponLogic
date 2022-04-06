@@ -48,13 +48,8 @@ namespace PataRoad.Core.Character.Bosses
         public void End(bool stopAllAttacking = true)
         {
             _actionQueue.Clear();
-            if (RhythmTimer.Current != null)
-            {
-                RhythmTimer.Current.OnTime.RemoveListener(WaitForDelay);
-                RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
-                RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
-            }
-            TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
+            //RhythmTimer shouldn't be stopped here! except waiting delay...
+            RhythmTimer.Current.OnTime.RemoveListener(WaitForDelay);
             if (stopAllAttacking) _data.StopAllAttacking();
             Attacking = false;
         }
@@ -87,6 +82,11 @@ namespace PataRoad.Core.Character.Bosses
 
         private void CountSingleAttack()
         {
+            if (_actionQueue.Count == 0)
+            {
+                TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
+                return;
+            }
             _current = _actionQueue.Dequeue();
             if (HasBeforeAnimation(_current))
             {
@@ -111,7 +111,6 @@ namespace PataRoad.Core.Character.Bosses
                     _data.StopAllAttacking();
                     RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
                     EndAttack();
-
                     break;
             }
             _turnCount++;
@@ -147,7 +146,6 @@ namespace PataRoad.Core.Character.Bosses
                     {
                         _data.StopAllAttacking();
                         RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
-                        _willAttackEnd = false;
                         EndAttack();
                     }
                     break;
@@ -165,6 +163,7 @@ namespace PataRoad.Core.Character.Bosses
         internal void EndAttack()
         {
             Attacking = false;
+            _willAttackEnd = false;
             OnAttackEnd.Invoke();
             OnAttackEnd.RemoveAllListeners();
         }

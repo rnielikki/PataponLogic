@@ -14,7 +14,6 @@ namespace PataRoad.Core.Character
         protected Transform _transform;
 
         private System.Collections.Generic.Dictionary<StatusEffectType, GameObject> _effectObjects;
-        private StatusEffectData _effectInstantiator;
         public virtual bool CanContinue => !IsOnStatusEffect && !_target.IsDead;
 
         private readonly UnityEngine.Events.UnityEvent<StatusEffectType> _onRecover
@@ -40,12 +39,12 @@ namespace PataRoad.Core.Character
         protected virtual void Init()
         {
             _target = GetComponent<IAttackable>();
-            _effectInstantiator = FindObjectOfType<StatusEffectData>();
+            var effectInstantiator = FindObjectOfType<StatusEffectData>();
             _transform = transform;
-            if (_effectInstantiator != null)
+            if (effectInstantiator != null)
             {
-                _effectObjects = IsBigTarget ? _effectInstantiator.GetBossStatusEffectMap(_transform)
-                    : _effectInstantiator.GetStatusEffectMap(_transform);
+                _effectObjects = IsBigTarget ? effectInstantiator.GetBossStatusEffectMap(_transform)
+                    : effectInstantiator.GetStatusEffectMap(_transform);
             }
         }
         public void AddRecoverAction(UnityEngine.Events.UnityAction<StatusEffectType> action)
@@ -113,7 +112,7 @@ namespace PataRoad.Core.Character
                 _effectObjects[effect].gameObject.SetActive(false);
             }
             CurrentStatusEffect = StatusEffectType.None;
-            OnRecover();
+            OnRecover(effect);
 
             if (invokeOnRecover && _onRecover != null) _onRecover.Invoke(effect);
         }
@@ -121,7 +120,7 @@ namespace PataRoad.Core.Character
         /// <summary>
         /// Called when being recovered, before setting <see cref="IsOnStatusEffect"/> to <c>false</c>.
         /// </summary>
-        protected virtual void OnRecover() { }
+        protected virtual void OnRecover(StatusEffectType type) { }
         protected void LoadEffectObject(StatusEffectType type)
         {
             if (_effectObjects != null)

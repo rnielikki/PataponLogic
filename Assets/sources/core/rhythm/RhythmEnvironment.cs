@@ -30,16 +30,16 @@
             switch (difficulty)
             {
                 case Difficulty.Easy:
-                    PerfectRange = 0.15f;
+                    PerfectRange = 0.05f;
                     GoodRange = 0.15f;
                     BadRange = 0.25f;
                     MiracleRange = 0.125f;
                     MinEffectThreshold = 0.17f;
-                    FeverMaximum = 8;
+                    FeverMaximum = 6;
                     break;
                 case Difficulty.Normal:
                     PerfectRange = 0.02f;
-                    GoodRange = 0.075f;
+                    GoodRange = 0.06f;
                     BadRange = 0.25f;
                     MiracleRange = 0.12f;
                     MinEffectThreshold = 0.05f;

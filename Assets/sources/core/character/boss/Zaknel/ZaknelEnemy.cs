@@ -57,6 +57,20 @@
                 }
             }
         }
+        protected override BossAttackMoveSegment GetNextBehaviourForCombo(int index, int comboCount)
+        {
+            var next = GetNextBehaviour();
+            if (index == comboCount - 1 && next.Action == "fire")
+            {
+                return (_level >= 10) ? new BossAttackMoveSegment("wheel", 15, 15)
+                    : new BossAttackMoveSegment("earthquake", 0, 5);
+            }
+            else if (_level >= 10 && next.Action == "wheel")
+            {
+                return new BossAttackMoveSegment("fire", 2, 5);
+            }
+            return next;
+        }
         protected override string GetNextBehaviourOnIce()
         {
             return "fire";

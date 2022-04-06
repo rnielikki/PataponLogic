@@ -39,7 +39,7 @@ namespace PataRoad.Core.Character
             var obj = Instantiate(effect, body);
             var renderer = obj.GetComponent<Renderer>();
             var targetObjectRenderer = body.GetComponentInChildren<SpriteRenderer>();
-            renderer.sortingOrder = targetObjectRenderer.sortingOrder;
+            renderer.sortingOrder = 80;
             renderer.sortingLayerID = targetObjectRenderer.sortingLayerID;
             obj.SetActive(false);
             return obj;

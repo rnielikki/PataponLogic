@@ -34,10 +34,13 @@
             StartCoroutine(WaitForRecovery(8));
         }
 
-        protected override void OnRecover()
+        protected override void OnRecover(StatusEffectType type)
         {
             _character.CharAnimator.Resume();
-            if (!_character.IsDead) _character.CharAnimator.AnimateFrom("Idle");
+            if (!_character.IsDead && type != StatusEffectType.Fire && type != StatusEffectType.Ice)
+            {
+                _character.CharAnimator.Animate("Idle");
+            }
         }
     }
 }

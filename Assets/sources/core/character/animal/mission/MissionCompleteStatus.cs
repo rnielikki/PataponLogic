@@ -34,6 +34,7 @@ namespace PataRoad.Core.Map
                     (item.Amount > 1) ? $"{item.Item.Name} ({item.Amount})" : $"{item.Item.Name}"
                 );
             _spoilsField.text = spoils.Any() ? string.Join("\n", spoils) : "None";
+            Global.GlobalData.CurrentSlot.Inventory.ClearRecent();
             foreach (var itemStatus in allItemStatus)
             {
                 Global.GlobalData.CurrentSlot.Inventory.AddMultiple(itemStatus.Item, itemStatus.Amount);
