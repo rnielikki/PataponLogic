@@ -14,6 +14,7 @@ namespace PataRoad.Core.Items
         /// <summary>
         /// Recent data after saved. This won't be serialized.
         /// </summary>
+        [System.NonSerialized]
         private List<IItem> _recentData = new List<IItem>();
 
         [SerializeReference]

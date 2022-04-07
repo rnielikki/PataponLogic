@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace PataRoad.Common
+namespace PataRoad.Core.Character.Equipments
 {
     /// <summary>
     /// Returns attached object back to ObjectPool

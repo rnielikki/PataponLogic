@@ -43,16 +43,7 @@ namespace PataRoad.Common.GameDisplay
                 }
             }
 
-            var tipindex = Core.Global.GlobalData.TipIndex;
-            if (tipindex > -1 && _allTipsIndex.TryGetValue(tipindex, out TipDisplayData data))
-            {
-                LoadTip(data);
-            }
-            else
-            {
-                LoadTip(_allTips[Random.Range(0, _allTips.Length - 1)]);
-            }
-            Core.Global.GlobalData.TipIndex = -1;
+            LoadTip(Core.Global.GlobalData.CurrentSlot.Tips.ReleaseTip());
             LoadNextScene(SceneLoadingAction.SceneName);
         }
         private void LoadTip(TipDisplayData data)

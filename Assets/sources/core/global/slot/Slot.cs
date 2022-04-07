@@ -1,4 +1,5 @@
-﻿using PataRoad.Core.Character.Patapons.Data;
+﻿using PataRoad.Common.GameDisplay;
+using PataRoad.Core.Character.Patapons.Data;
 using PataRoad.Core.Items;
 using UnityEngine;
 
@@ -72,6 +73,17 @@ namespace PataRoad.Core.Global.Slots
             {
                 return _exchangeRates = _exchangeRates != null ?
                     _exchangeRates : new ExchangeRateData();
+            }
+        }
+
+        [SerializeReference]
+        private TipsCollection _tips;
+        public TipsCollection Tips
+        {
+            get
+            {
+                return _tips = _tips != null ?
+                    _tips : new TipsCollection();
             }
         }
 

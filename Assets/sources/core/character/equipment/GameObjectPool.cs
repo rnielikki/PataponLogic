@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace PataRoad.Common
+namespace PataRoad.Core.Character.Equipments
 {
     public class GameObjectPool : MonoBehaviour
     {

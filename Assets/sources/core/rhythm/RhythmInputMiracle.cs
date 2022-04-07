@@ -67,18 +67,34 @@ namespace PataRoad.Core.Rhythm
                         break;
                     case 2:
                     case 3:
-                        current = RhythmTimer.GetTimingWithDirection((RhythmTimer.GetDrumCount() + RhythmTimer.HalfFrequency) % RhythmTimer.Frequency);
+                        current = RhythmTimer.GetTimingWithDirection(
+                            (RhythmTimer.GetDrumCount() + RhythmTimer.HalfFrequency) % RhythmTimer.Frequency);
                         break;
                     default:
                         throw new InvalidOperationException($"The {MiracleDrumCount}th miracle drum count isn't valid");
                 }
-                if (current >= _minTimerIndexes[MiracleDrumCount - 1] && current <= _maxTimerIndexes[MiracleDrumCount - 1])
+                var minTimer = _minTimerIndexes[MiracleDrumCount - 1];
+                var maxTimer = _maxTimerIndexes[MiracleDrumCount - 1];
+                if (current >= minTimer && current <= maxTimer)
                 {
-                    //When the drum hit is miracle, it doesn't matter how perfect it is, really
+                    var perfectionRate = Mathf.Abs(Mathf.InverseLerp(minTimer, maxTimer, current) - 0.5f);
+                    DrumHitStatus status;
+                    if (perfectionRate <= RhythmEnvironment.PerfectRange * 1.4f / RhythmEnvironment.HalfInputInterval)
+                    {
+                        status = DrumHitStatus.Perfect;
+                    }
+                    else if (perfectionRate <= RhythmEnvironment.GoodRange * 1.4f / RhythmEnvironment.HalfInputInterval)
+                    {
+                        status = DrumHitStatus.Good;
+                    }
+                    else
+                    {
+                        status = DrumHitStatus.Bad;
+                    }
                     return new RhythmInputModel(
                         DrumType.Don,
                         RhythmTimer.Count,
-                        DrumHitStatus.Perfect
+                        status
                     );
                 }
                 else

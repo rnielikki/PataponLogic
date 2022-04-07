@@ -14,7 +14,6 @@ namespace PataRoad.Core.Global
         public static PlayerInput Input { get; private set; }
         public static GlobalInputSystem GlobalInputActions { get; private set; }
 
-        public static int TipIndex { get; set; }
         public static SlotManager SlotManager { get; set; }
         public static Slot CurrentSlot => SlotManager.CurrentSlot;
 
@@ -42,8 +41,8 @@ namespace PataRoad.Core.Global
                 Settings = Global.Settings.SettingModel.Load();
                 ItemLoader.LoadAll();
                 Character.Patapons.Data.RareponInfo.LoadAll();
+                Common.GameDisplay.TipsCollection.LoadAllTips();
 
-                TipIndex = -1;
                 Input = GetComponent<PlayerInput>();
                 GlobalInputActions = new GlobalInputSystem(Input, _leftInputs, _rightInputs);
                 Sound = GetComponentInChildren<GlobalSoundSystem>();
@@ -57,6 +56,7 @@ namespace PataRoad.Core.Global
                 textField.text = "Failed to load System data with error:"
                     + $"\n{e.Message}"
                     + "\nPress Alt+F4 to close window.";
+                throw;
             }
         }
     }

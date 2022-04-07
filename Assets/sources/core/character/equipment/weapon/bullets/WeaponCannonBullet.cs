@@ -1,4 +1,3 @@
-using PataRoad.Common;
 using UnityEngine;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
