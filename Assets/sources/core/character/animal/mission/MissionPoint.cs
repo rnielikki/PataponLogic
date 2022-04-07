@@ -121,10 +121,17 @@ namespace PataRoad.Core.Map
         {
             MissionCompleteTime = (int)Time.timeSinceLevelLoad;
             IsMissionSuccess = true;
-            OnMissionEnd.Invoke(true); //must be called before mapinfo changes next map data
+            //must be called before mapinfo changes next map data
+            OnMissionEnd.Invoke(true);
+
+            if (!Global.GlobalData.CurrentSlot.MapInfo.NextMap.Cleared)
+            {
+                Global.GlobalData.CurrentSlot.Tips.SaveTipIndex(
+                    Global.GlobalData.CurrentSlot.MapInfo.NextMap.MapData.TipIndexOnSuccess);
+            }
+
+            //-- now you can change the "nextmap" data
             Global.GlobalData.CurrentSlot.MapInfo.OnMissionSucceeded();
-            Global.GlobalData.CurrentSlot.Tips.SaveTipIndex(
-                Global.GlobalData.CurrentSlot.MapInfo.NextMap.MapData.TipIndexOnSuccess);
 
             if (_animator != null)
             {

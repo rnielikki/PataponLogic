@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8dcfc9073db9ed469389caec75d6625, type: 3}
+  m_Name: 11.StatusEffect
+  m_EditorClassIdentifier: 
+  _index: 11
+  _title: Status Effect
+  _content: 'There are 6 status effects: "Stagger/Knockback/Tumble/Fire/Ice/Sleep".
+
+    Stagger
+    works for every character. Knockback throws small characters back. When a boss
+    gets knockback, it cannot do anything. Some bosses are immune to knockback. Some
+    knockbacking moves that targeting small characters ignore knockback resistance/immunity.
+    Tumble is earthquake effect, which makes small characters cannot attack in very
+    short time. Bosses are not affected to tumble attacks.
+
+    When on status effect,
+    some characters cannot attack at all, like Patapons or Hazorons. Boss with fire
+    or ice status still can attack, but attack on ice status is very limited.
+
+    Structures
+    ignore every effect except fire. Some bosses are naturally immune to specific
+    status effects. Patapons and Hazorons are basically not immune to anything, but
+    can boost the resistance or make immune with equipments or Rarepons. Status effect
+    can stop the outragious boss combo attacks! But remember, when a boss level rises,
+    they are also stronger against status effects.'
+  _image: {fileID: 21300000, guid: 8b303557b7421c44db342048d0eb4c18, type: 3}

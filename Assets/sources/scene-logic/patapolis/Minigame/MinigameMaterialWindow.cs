@@ -51,7 +51,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 _estimationText.text = "-";
                 return;
             }
-            _estimation = _estimationCurve.Evaluate((float)_materialLoaders.Average(value => value.Item.Index) / 8);
+            _estimation = _estimationCurve.Evaluate((float)_materialLoaders.Average(value => value.Item.Index) / 4);
             _estimationText.text = _estimation.ToString("p2");
         }
 

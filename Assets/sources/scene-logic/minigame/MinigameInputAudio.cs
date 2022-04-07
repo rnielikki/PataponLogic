@@ -22,18 +22,14 @@ namespace PataRoad.SceneLogic.Minigame
         [SerializeField]
         AudioClip _goodSound;
         [SerializeField]
-        float _notGoodRange;
-        int _notGoodFrequency;
-        [SerializeField]
-        AudioClip _notGoodSound;
-        [SerializeField]
         AudioClip _badSound;
+        [SerializeField]
+        AudioClip _missSound;
 
         private void Start()
         {
             _perfectFrequency = (int)_perfectRange * RhythmTimer.HalfFrequency;
             _goodFrequency = (int)_goodRange * RhythmTimer.HalfFrequency;
-            _notGoodFrequency = (int)_notGoodRange * RhythmTimer.HalfFrequency;
 
             _rhythmInput.OnDrumHit.AddListener(PlayAudio);
         }
@@ -42,14 +38,13 @@ namespace PataRoad.SceneLogic.Minigame
         {
             if (!_manager.ListeningInput)
             {
-                _audioSource.PlayOneShot(_badSound);
+                _audioSource.PlayOneShot(_missSound);
                 return;
             }
 
             float timing = model.Timing;
             if (timing <= _perfectFrequency) _audioSource.PlayOneShot(_perfectSound);
             else if (timing <= _goodFrequency) _audioSource.PlayOneShot(_goodSound);
-            else if (timing <= _notGoodFrequency) _audioSource.PlayOneShot(_notGoodSound);
             else _audioSource.PlayOneShot(_badSound);
         }
     }

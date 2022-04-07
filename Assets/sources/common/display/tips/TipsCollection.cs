@@ -44,12 +44,17 @@ namespace PataRoad.Common.GameDisplay
             }
         }
         /// <summary>
+        /// Checks if a tip index is open.
+        /// </summary>
+        /// <param name="index">tip index to check if the corresponding tip is open.</param>
+        public void HasTipIndex(int index) => _openedTipIndexes.Contains(index);
+        /// <summary>
         /// Save tip index to use Tip display scene, expected to be called from before tip display scene.
         /// </summary>
         /// <param name="index">the index ot release.</param>
         public void SaveTipIndex(int index)
         {
-            _savedTipIndex = -1;
+            _savedTipIndex = index;
         }
         /// <summary>
         /// Open tip index to use Tip display scene, expected to be called from tip display scene.

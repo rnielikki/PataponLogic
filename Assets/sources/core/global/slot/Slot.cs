@@ -103,6 +103,7 @@ namespace PataRoad.Core.Global.Slots
             slot._almightyName = "";
             slot._progress = new GameProgress();
             slot._exchangeRates = new ExchangeRateData();
+            slot._tips = new TipsCollection();
 
             return slot;
         }

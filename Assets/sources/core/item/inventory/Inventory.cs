@@ -145,8 +145,6 @@ namespace PataRoad.Core.Items
             if (!allEquipments.ContainsKey(group)) return 0;
             return allEquipments[group].Max(eq => eq.Key);
         }
-
-
         private void UpdateAllItemIndexes()
         {
             foreach (var item in _existingData.Values)

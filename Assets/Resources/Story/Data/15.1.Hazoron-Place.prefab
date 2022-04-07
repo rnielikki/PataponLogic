@@ -105,9 +105,8 @@ MonoBehaviour:
     _useLine: 1
     _image: {fileID: 0}
     _name: Kiba-Hatapon
-    _content: His conscious is not fully recovered, so he probably can't lie, but
-      you're right. We cannot ignore that small chance. But let's see first what's
-      there.
+    _content: He is unconscious, so he probably can't lie, but you're right. We cannot
+      ignore that small chance. But let's see first what's there.
   - _events:
       m_PersistentCalls:
         m_Calls: []
@@ -144,6 +143,10 @@ MonoBehaviour:
     _content: My ear already hurts.
   _choiceSelector: {fileID: 0}
   _nextStory: {fileID: 0}
+  _sceneChangingColor: {r: 0, g: 0, b: 0, a: 1}
+  _onStoryStarted:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2967304811666973360
 MonoBehaviour:
   m_ObjectHideFlags: 0

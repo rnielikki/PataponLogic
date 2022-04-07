@@ -3,7 +3,7 @@
     /// <summary>
     /// Model for sending event in Rhythm drum hit event.
     /// </summary>
-    public class RhythmInputModel
+    public struct RhythmInputModel
     {
         /// <summary>
         /// The <see cref="DrumHitStatus"/>, which represents that if it's perfect, good, bad or miss.
@@ -32,6 +32,25 @@
             Count = count;
             Timing = RhythmTimer.GetTiming(count);
             Status = GetHitStatus(Timing);
+            DrumHitStatus GetHitStatus(int timing)
+            {
+                if (timing <= RhythmTimer.PerfectFrequency)
+                {
+                    return DrumHitStatus.Perfect;
+                }
+                else if (timing <= RhythmTimer.GoodFrequency)
+                {
+                    return DrumHitStatus.Good;
+                }
+                else if (timing <= RhythmTimer.BadFrequency)
+                {
+                    return DrumHitStatus.Bad;
+                }
+                else
+                {
+                    return DrumHitStatus.Miss;
+                }
+            }
         }
         /// <summary>
         /// Generates model with defined drum status.
@@ -53,6 +72,8 @@
         private RhythmInputModel(DrumType drum)
         {
             Drum = drum;
+            Count = 0;
+            Timing = 0;
             Status = DrumHitStatus.Miss;
         }
         /// <summary>
@@ -61,24 +82,5 @@
         /// <param name="drum">The <see cref="DrumType"/> that represents Miss status.</param>
         /// <returns>Miss hit status of the drum.</returns>
         internal static RhythmInputModel Miss(DrumType drum) => new RhythmInputModel(drum);
-        private DrumHitStatus GetHitStatus(int timing)
-        {
-            if (timing <= RhythmTimer.PerfectFrequency)
-            {
-                return DrumHitStatus.Perfect;
-            }
-            else if (timing <= RhythmTimer.GoodFrequency)
-            {
-                return DrumHitStatus.Good;
-            }
-            else if (timing <= RhythmTimer.BadFrequency)
-            {
-                return DrumHitStatus.Bad;
-            }
-            else
-            {
-                return DrumHitStatus.Miss;
-            }
-        }
     }
 }
