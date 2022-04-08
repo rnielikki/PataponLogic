@@ -80,7 +80,9 @@ namespace PataRoad.Common.GameDisplay
             }
             if (!_openedTipIndexes.Contains(index))
             {
-                AddToOpenedTips(index);
+                LoadOpenedTips();
+                _openedTipIndexes.Add(index);
+                _openedTips.Add(_allTips[index]);
             }
             return _allTips[index];
         }
@@ -93,12 +95,6 @@ namespace PataRoad.Common.GameDisplay
         {
             LoadOpenedTips();
             return _openedTips;
-        }
-        private void AddToOpenedTips(int index)
-        {
-            LoadOpenedTips();
-            _openedTipIndexes.Add(index);
-            _openedTips.Add(_allTips[index]);
         }
         /// <summary>
         /// Loads all opened tips. Can be used for initialisation, or for just listing open tip indexes.

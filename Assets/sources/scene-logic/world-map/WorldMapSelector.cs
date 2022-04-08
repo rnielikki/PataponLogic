@@ -59,7 +59,8 @@ namespace PataRoad.SceneLogic.WorldMap
                 }
                 mapItem.Index = ++index;
             }
-            var lastItem = selectedItem ?? _items[_items.Count - 1];
+            var lastItem = selectedItem;
+            if (selectedItem == null) lastItem = _items[_items.Count - 1];
             _scrollList.Init(lastItem);
             _scrollList.SetMaximumScrollLength(index, lastItem);
             lastItem.Select();

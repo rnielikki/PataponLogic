@@ -38,7 +38,7 @@ namespace PataRoad.Common.GameDisplay
             _scroll.gameObject.SetActive(isScrollActive);
 
             ForceRebuildLayout();
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject((firstSelect as MonoBehaviour)?.gameObject);
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject((firstSelect as MonoBehaviour).gameObject);
 
             if (firstSelect == null)
             {

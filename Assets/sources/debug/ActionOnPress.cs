@@ -1,3 +1,5 @@
+using PataRoad.Common.GameDisplay;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -138,6 +140,21 @@ namespace PataRoad.AppDebug
                 {
                     AddItemBy(Core.Items.ItemType.Material, material, i, 99);
                 }
+            }
+        }
+        public void OpenAllTips()
+        {
+            var tips = Core.Global.GlobalData.CurrentSlot.Tips;
+            //STFU THIS IS NOT PROD CODE
+#pragma warning disable S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
+            var allTips = typeof(TipsCollection)
+                .GetField("_allTips", BindingFlags.NonPublic | BindingFlags.Static)
+                .GetValue(tips) as TipDisplayData[];
+#pragma warning restore S3011 // Reflection should not be used to increase accessibility of classes, methods, or fields
+            foreach (var tip in allTips)
+            {
+                tips.SaveTipIndex(tip.Index);
+                tips.ReleaseTip();
             }
         }
     }

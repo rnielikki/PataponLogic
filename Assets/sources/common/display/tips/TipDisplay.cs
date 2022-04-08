@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +5,8 @@ namespace PataRoad.Common.GameDisplay
 {
     public class TipDisplay : MonoBehaviour
     {
+        [SerializeField]
+        private bool _autoStart;
         [SerializeField]
         private TMPro.TextMeshProUGUI _titleText;
         [SerializeField]
@@ -16,37 +17,26 @@ namespace PataRoad.Common.GameDisplay
         private UnityEngine.UI.Text _loadingStatus;
         [SerializeField]
         private AudioClip _tipSound;
-        private static Dictionary<int, TipDisplayData> _allTipsIndex { get; set; }
-        private static TipDisplayData[] _allTips { get; set; }
         private InputAction _action;
         private AsyncOperation _op;
         private bool _fadingCreated;
 
         private bool _loadingCompleteCalled;
 
-        // Start is called before the first frame update
         void Start()
         {
-            _action = Core.Global.GlobalData.Input.actions.FindAction("UI/Submit");
-
-            _action.Enable();
-            if (_allTipsIndex == null)
+            if (!_autoStart)
             {
-                _allTips = Resources.LoadAll<TipDisplayData>("Tips/Content");
-                _allTipsIndex = new Dictionary<int, TipDisplayData>();
-                foreach (var tip in _allTips)
-                {
-                    if (int.TryParse(tip.name, out int index))
-                    {
-                        _allTipsIndex.Add(index, tip);
-                    }
-                }
+                _loadingStatus.gameObject.SetActive(false);
+                return;
             }
+            _action = Core.Global.GlobalData.Input.actions.FindAction("UI/Submit");
+            _action.Enable();
 
             LoadTip(Core.Global.GlobalData.CurrentSlot.Tips.ReleaseTip());
             LoadNextScene(SceneLoadingAction.SceneName);
         }
-        private void LoadTip(TipDisplayData data)
+        public void LoadTip(TipDisplayData data)
         {
             _titleText.text = data.Title;
             _contentText.text = data.Content;
