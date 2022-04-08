@@ -60,7 +60,8 @@ namespace PataRoad.Core.Character.Bosses
                 return new BossAttackMoveSegment("slash", 0);
             }
             //Without special case like combo, it's actually uncommon
-            if (RandomByProbability(
+            if (_pataponsManager.GetMeleeCount() == 0
+                || RandomByProbability(
                 Mathf.Sqrt(_level) * 0.01f
                 + (_pataponsManager.ContainsClass(Class.ClassType.Tatepon) ? 0.1f : 0.025f)
                 ))

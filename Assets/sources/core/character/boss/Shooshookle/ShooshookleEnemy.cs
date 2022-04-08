@@ -38,13 +38,14 @@ namespace PataRoad.Core.Character.Bosses
         }
         private BossAttackMoveSegment GetAnythingButEating()
         {
-            if (RandomByProbability(((float)_pataponsManager.GetMeleeCount() / 15)
+            int meleeCount = _pataponsManager.GetMeleeCount();
+            if (RandomByProbability(((float)meleeCount / 15)
                 + (_usedSpore ? 0.15f : 0)))
             {
                 _usedSpore = false;
                 return new BossAttackMoveSegment("slam", 0);
             }
-            else if (_usedSpore || RandomByProbability(UnityEngine.Mathf.Sqrt(_level) / 10))
+            else if (meleeCount == 0 || _usedSpore || RandomByProbability(UnityEngine.Mathf.Sqrt(_level) / 10))
             {
                 _usedSpore = false;
                 return new BossAttackMoveSegment("sprout", 2);

@@ -13,7 +13,8 @@ namespace PataRoad.Core.Character.Patapons
                 case CommandSong.Ponpon:
                     if (charged)
                     {
-                        input.MultipleDamage(3);
+                        input.MultipleDamage(2.5f);
+                        input.Critical += 0.25f;
                     }
                     break;
                 case CommandSong.Chakachaka:
@@ -34,7 +35,7 @@ namespace PataRoad.Core.Character.Patapons
                     break;
                 case CommandSong.Ponpata:
                     input.MovementSpeed *= (PataponsManager.DodgeSpeedMinimumMultiplier + _patapon.LastPerfectionRate);
-                    break;
+                    return input;
                 default:
                     return input;
             }

@@ -53,7 +53,7 @@ namespace PataRoad.Core.Character.Bosses
                     if (_playDyingSoundBeforeDeath) PlayDyingSound(patapon);
 
                     _boss.AttackPaused = true;
-                    (_boss.Boss as EnemyBoss).BossTurnManager.End(false);
+                    (_boss.Boss as EnemyBoss).BossTurnManager.EndWithoutStopAttacking();
                     _absorber.SetAbsorbHit();
                 }
             }

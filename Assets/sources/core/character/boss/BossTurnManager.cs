@@ -45,15 +45,29 @@ namespace PataRoad.Core.Character.Bosses
                 RhythmTimer.Current.OnTime.AddListener(WaitForDelay);
             }
         }
-        public void End(bool stopAllAttacking = true)
+        /// <summary>
+        /// Clears all attack, including reserved attack.
+        /// </summary>
+        public void End()
+        {
+            EndWithoutStopAttacking();
+            _data.StopAllAttacking();
+        }
+        /// <summary>
+        /// Clears all attack, but doesn't call <see cref="BossAttackData.StopAllAttacking"/>.
+        /// </summary>
+        public void EndWithoutStopAttacking()
         {
             _actionQueue.Clear();
-            //RhythmTimer shouldn't be stopped here! except waiting delay...
             if (RhythmTimer.Current != null)
             {
                 RhythmTimer.Current.OnTime.RemoveListener(WaitForDelay);
+                TurnCounter.OnNonPlayerTurn.RemoveListener(WillStartComboAttack);
+
+                RhythmTimer.Current.OnTime.RemoveListener(CountComboTurn);
+                TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
+                RhythmTimer.Current.OnTime.RemoveListener(CountSingleTurn);
             }
-            if (stopAllAttacking) _data.StopAllAttacking();
             Attacking = false;
         }
         // -- normal actions

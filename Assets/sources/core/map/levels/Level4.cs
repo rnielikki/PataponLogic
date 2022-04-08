@@ -6,9 +6,22 @@ namespace PataRoad.Core.Map.Levels
     {
         [SerializeField]
         Level2 _nobodyDieScript;
+        [SerializeField]
+        int _altTipIndex;
         void Start()
         {
-            _nobodyDieScript.enabled = !Global.GlobalData.CurrentSlot.MapInfo.NextMap.Cleared;
+            var cleared = Global.GlobalData.CurrentSlot.MapInfo.NextMap.Cleared;
+            _nobodyDieScript.enabled = !cleared;
+            if (cleared)
+            {
+                MissionPoint.Current.AddMissionEndAction(success =>
+                {
+                    if (success && !Global.GlobalData.CurrentSlot.Tips.HasTipIndex(_altTipIndex))
+                    {
+                        Global.GlobalData.CurrentSlot.Tips.SaveTipIndex(_altTipIndex);
+                    }
+                });
+            }
         }
     }
 }
