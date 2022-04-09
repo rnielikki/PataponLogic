@@ -12,10 +12,21 @@ namespace PataRoad.Common.GameDisplay
         TipListItem _itemTemplate;
         [SerializeField]
         Navigator.ActionEventMap _eventMap;
+        [Header("progress")]
+        [SerializeField]
+        RectTransform _progressBar;
+        [SerializeField]
+        TMPro.TextMeshProUGUI _progressText;
         // Use this for initialization
         void Start()
         {
+            //progress bar
+            var openedTipsCount = Core.Global.GlobalData.CurrentSlot.Tips.OpenTipsCount;
+            var allTipsCount = TipsCollection.AllTipsCount;
+            _progressBar.anchorMax = new Vector2(openedTipsCount / allTipsCount, 1);
+            _progressText.text = $"{openedTipsCount}/{allTipsCount}";
 
+            //list
             TipListItem firstItem = null;
             int len = -1;
             foreach (var tip in Core.Global.GlobalData.CurrentSlot.Tips.GetAllOpenedTips())

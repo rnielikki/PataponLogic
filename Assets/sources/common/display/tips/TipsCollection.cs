@@ -17,6 +17,9 @@ namespace PataRoad.Common.GameDisplay
         [System.NonSerialized]
         int _savedTipIndex = -1;
 
+        public int OpenTipsCount => _openedTipIndexes.Count;
+        public static int AllTipsCount => _allTips.Length;
+
         public TipsCollection()
         {
             //default
@@ -100,7 +103,17 @@ namespace PataRoad.Common.GameDisplay
         /// Loads all opened tips. Can be used for initialisation, or for just listing open tip indexes.
         /// </summary>
         /// <returns>Currently opened tips in the game save, in the index order.</returns>
-        public IEnumerable<TipDisplayData> LoadOpenedTips()
+        public IEnumerable<TipDisplayData> GetOpenedTips()
+        {
+            if (_openedTips == null)
+            {
+                LoadOpenedTips();
+            }
+            return _openedTips.OrderBy(tip => tip.Index);
+
+        }
+
+        private void LoadOpenedTips()
         {
             if (_openedTips == null)
             {
@@ -109,8 +122,8 @@ namespace PataRoad.Common.GameDisplay
                 {
                     _openedTips.Add(_allTips[index]);
                 }
+
             }
-            return _openedTips.OrderBy(tip => tip.Index);
         }
     }
 }

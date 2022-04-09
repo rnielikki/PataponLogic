@@ -19,6 +19,11 @@ namespace PataRoad.Common.GameDisplay
         private Text _text;
         private ScrollList _scrollList;
 
+        [SerializeField]
+        private AudioClip _selectedSound;
+        [SerializeField]
+        private AudioClip _openSound;
+
         internal void Init(TipDisplayData data, int indexInList, ScrollList scrollList,
             TipDisplay tipDisplay, Navigator.ActionEventMap eventMap)
         {
@@ -27,6 +32,7 @@ namespace PataRoad.Common.GameDisplay
             _scrollList = scrollList;
             _selectable.onClick.AddListener(() =>
             {
+                Core.Global.GlobalData.Sound.PlayInScene(_openSound);
                 tipDisplay.gameObject.SetActive(true);
                 tipDisplay.LoadTip(data);
                 eventMap.enabled = false;
@@ -36,6 +42,7 @@ namespace PataRoad.Common.GameDisplay
         public void OnSelect(BaseEventData eventData)
         {
             _scrollList.Scroll(this);
+            Core.Global.GlobalData.Sound.PlayInScene(_selectedSound);
         }
     }
 }
