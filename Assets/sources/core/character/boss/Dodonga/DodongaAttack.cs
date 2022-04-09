@@ -42,6 +42,15 @@ namespace PataRoad.Core.Character.Bosses
                 _growlStat = new Stat();
                 _growlStat.DamageMin = _growlMinDamage;
                 _growlStat.DamageMax = _growlMaxDamage;
+                switch (_growlType)
+                {
+                    case Equipments.Weapons.ElementalAttackType.Fire:
+                        _growlStat.FireRate += 0.1f;
+                        break;
+                    case Equipments.Weapons.ElementalAttackType.Ice:
+                        _growlStat.IceRate += 0.25f;
+                        break;
+                }
             }
             Boss.AttackType = Equipments.Weapons.AttackType.Magic;
             Boss.ElementalAttackType = _growlType;

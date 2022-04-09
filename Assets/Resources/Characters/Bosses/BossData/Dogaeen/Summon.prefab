@@ -126,16 +126,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ae4c383e5c5f74e9f5ed83614e449f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 0
   _additionalStat:
     _isCharacterStat: 0
     _hitPoint: 0
     _defenceMin: 0
     _defenceMax: 0
-    _damageMin: 50
-    _damageMax: 60
+    _damageMin: 40
+    _damageMax: 50
     _attackSeconds: 0
     _movementSpeed: 0
-    _critical: 0
+    _critical: 0.75
     _stagger: 0
     _knockback: 0
     _infiniteCriticalResistance: 0
@@ -157,7 +158,6 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 1
   _elementalAttackType: 0
-  _enabled: 0
   _allowZeroDamage: 0
 --- !u!114 &562074172084748774
 MonoBehaviour:
@@ -667,16 +667,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ae4c383e5c5f74e9f5ed83614e449f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 0
   _additionalStat:
     _isCharacterStat: 0
     _hitPoint: 0
     _defenceMin: 0
     _defenceMax: 0
-    _damageMin: 35
-    _damageMax: 45
+    _damageMin: 30
+    _damageMax: 40
     _attackSeconds: 0
     _movementSpeed: 0
-    _critical: 0
+    _critical: 0.25
     _stagger: 0
     _knockback: 0
     _infiniteCriticalResistance: 0
@@ -698,7 +699,6 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 1
   _elementalAttackType: 0
-  _enabled: 0
   _allowZeroDamage: 0
 --- !u!114 &2687276901017933380
 MonoBehaviour:
@@ -1152,6 +1152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48dbee604eaf0ca4d94f1b96e3bc7402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 0
   _additionalStat:
     _isCharacterStat: 0
     _hitPoint: 0
@@ -1393,6 +1394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ae4c383e5c5f74e9f5ed83614e449f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 0
   _additionalStat:
     _isCharacterStat: 0
     _hitPoint: 0
@@ -1424,7 +1426,6 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 1
   _elementalAttackType: 0
-  _enabled: 0
   _allowZeroDamage: 0
 --- !u!1 &4904364466337531977
 GameObject:
@@ -2225,6 +2226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dc3428043545ff4784c8fb811f8d778, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 1
   _additionalStat:
     _isCharacterStat: 0
     _hitPoint: 0
@@ -2256,7 +2258,6 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 4
   _elementalAttackType: 0
-  _enabled: 1
   _allowZeroDamage: 1
 --- !u!1 &7999129058773281025
 GameObject:
@@ -2692,6 +2693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ae4c383e5c5f74e9f5ed83614e449f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 0
   _additionalStat:
     _isCharacterStat: 0
     _hitPoint: 0
@@ -2701,7 +2703,7 @@ MonoBehaviour:
     _damageMax: 55
     _attackSeconds: 0
     _movementSpeed: 0
-    _critical: 0
+    _critical: 1
     _stagger: 0
     _knockback: 0
     _infiniteCriticalResistance: 0
@@ -2723,7 +2725,6 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 1
   _elementalAttackType: 0
-  _enabled: 0
   _allowZeroDamage: 0
 --- !u!1 &8703617668425244109
 GameObject:
@@ -2858,16 +2859,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ae4c383e5c5f74e9f5ed83614e449f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enabled: 0
   _additionalStat:
     _isCharacterStat: 0
     _hitPoint: 0
     _defenceMin: 0
     _defenceMax: 0
-    _damageMin: 50
+    _damageMin: 40
     _damageMax: 60
     _attackSeconds: 0
     _movementSpeed: 0
-    _critical: 0.2
+    _critical: 1
     _stagger: 0
     _knockback: 0
     _infiniteCriticalResistance: 0
@@ -2889,7 +2891,6 @@ MonoBehaviour:
   _damageOffsetMax: 1
   _attackType: 1
   _elementalAttackType: 0
-  _enabled: 0
   _allowZeroDamage: 0
 --- !u!1 &8735794701329598873
 GameObject:
