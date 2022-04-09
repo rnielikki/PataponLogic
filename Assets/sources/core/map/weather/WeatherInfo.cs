@@ -9,6 +9,9 @@ namespace PataRoad.Core.Map.Weather
         [SerializeField]
         private Wind _wind;
         public Wind Wind => _wind;
+        [SerializeField]
+        Clouds _clouds;
+        public Clouds Clouds => _clouds;
 
         private IWeatherData _currentWeather;
         public WeatherType CurrentWeather => _currentWeather?.Type ?? WeatherType.Clear;

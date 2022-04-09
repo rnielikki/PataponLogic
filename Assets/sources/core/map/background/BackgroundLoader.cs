@@ -9,7 +9,7 @@ using UnityEngine;
 /// Each game object contains image, texture on *rect transform*. (See 'Ruins' directory for example)
 /// Works even if theme game object is zero, but *colour.txt* SHOULD EXIST AT LEAST!
 /// * --------------------------------------------------------------------------------
-/// [Colour.txt] contains 6-digit HEX (NO ALPHA) WITHOUT #
+/// save <see cref="BackgroundData"/>as [data] on the theme directory.
 /// *---------------------------------------------------------------------------------
 /// </remarks>
 namespace PataRoad.Core.Map.Background
@@ -20,12 +20,23 @@ namespace PataRoad.Core.Map.Background
         const string _path = "Map/Backgrounds/";
         public static string CurrentTheme { get; private set; }
         private const int BgAmount = 4;
+        [SerializeField]
+        UnityEngine.UI.Image _topSkyImage;
+        [SerializeField]
+        UnityEngine.UI.Image _mudImage;
         public void Init(string theme)
         {
             CurrentTheme = theme;
-            var txt = Resources.Load<TextAsset>(_path + theme + "/colour");
-            Camera.main.backgroundColor = ParseColor(txt.text);
+            var bgData = Resources.Load<BackgroundData>(_path + theme + "/data");
+            //color set
+            Camera.main.backgroundColor = bgData.ColorGround;
+            _topSkyImage.color = bgData.ColorTop;
 
+            //ground set
+            _mudImage.gameObject.SetActive(bgData.UseMud);
+            if (bgData.UseMud) _mudImage.color = bgData.MudColor;
+
+            //image set
             BackgroundRenderer[] children = GetComponentsInChildren<BackgroundRenderer>();
             Material[] materials = Resources.LoadAll<Material>(_path + theme);
 
@@ -38,27 +49,6 @@ namespace PataRoad.Core.Map.Background
             for (int i = 0; i < BgAmount; i++)
             {
                 children[i].SetMaterial(materials[i]);
-            }
-        }
-        private Color ParseColor(string colourHex)
-        {
-            try
-            {
-                if (colourHex.Length != 6)
-                {
-                    throw new System.ArgumentException("Length of the file is invalid.");
-                }
-                int[] colors = new int[3];
-                for (int i = 0; i < 3; i++)
-                {
-                    colors[i] = System.Convert.ToInt32(colourHex.Substring(i * 2, 2), 16);
-                }
-                return new Color((float)colors[0] / 255, (float)colors[1] / 255, (float)colors[2] / 255);
-            }
-            catch (System.Exception)
-            {
-                throw new System.ArgumentException(
-                    "colour.txt in background: Format is invalid. Make sure that it contains 6-digit HEX without any space!");
             }
         }
         private void OnDestroy()

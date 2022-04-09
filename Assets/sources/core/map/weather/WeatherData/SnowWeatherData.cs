@@ -15,6 +15,8 @@ namespace PataRoad.Core.Map.Weather
             WeatherInfo.Current.FireRateMultiplier = 0.25f;
             WeatherInfo.Current.IceRateMultiplier = 1.5f;
             if (_darkBg != null) _darkBg.SetActive(true);
+
+            WeatherInfo.Current.Clouds.Show();
         }
 
         public void OnWeatherStopped(WeatherType newType)
@@ -23,6 +25,8 @@ namespace PataRoad.Core.Map.Weather
             WeatherInfo.Current.IceRateMultiplier = 1;
             if (_darkBg != null) _darkBg.SetActive(false);
             gameObject.SetActive(false);
+
+            WeatherInfo.Current.Clouds.StartHiding();
         }
         private void OnParticleCollision(GameObject other)
         {

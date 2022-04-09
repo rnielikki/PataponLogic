@@ -19,6 +19,8 @@ namespace PataRoad.Core.Map.Weather
 
             Character.CharacterEnvironment.AnimalSightMultiplier = 0.6f;
             if (_darkBg != null) _darkBg.SetActive(true);
+
+            WeatherInfo.Current.Clouds.Show();
         }
 
         public void OnWeatherStopped(WeatherType newType)
@@ -29,6 +31,8 @@ namespace PataRoad.Core.Map.Weather
 
             gameObject.SetActive(false);
             if (_darkBg != null) _darkBg.SetActive(false);
+
+            WeatherInfo.Current.Clouds.StartHiding();
         }
         public void StartListen(LayerMask layerMask)
         {
