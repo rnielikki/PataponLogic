@@ -27,7 +27,7 @@ namespace PataRoad.Core.Map.Background
             if (useFullHeight)
             {
                 _rectTransform.anchorMax = Vector2.one;
-                _rectTransform.offsetMax = new Vector2(0, bgHeight);
+                _rectTransform.offsetMax = new Vector2(0, -bgHeight);
             }
             else
             {
