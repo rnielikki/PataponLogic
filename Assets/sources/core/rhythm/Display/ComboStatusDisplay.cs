@@ -54,12 +54,14 @@ namespace PataRoad.Core.Rhythm.Display
         bool _wormAnimationCounting;
 
         int _comboAnimHash, _feverAnimHash, _enterAnimHash;
+        Vector3 _startPoint = new Vector3(-50, 0, 0);
         void Awake()
         {
             _wormBody = transform.Find("Image").GetComponent<LineRenderer>();
             //Trick here: The thickness of line is world space, but position isn't!
             _wormBody.useWorldSpace = false;
-            _wormMaxLength = (int)transform.Find("Image").GetComponent<RectTransform>().rect.width;
+            _wormMaxLength = (int)transform.Find("Image").GetComponent<RectTransform>().rect.width
+                - (int)_startPoint.x;
 
             var eyes = transform.Find("Image/Face");
             _eyesImage = eyes.GetComponent<Image>();
@@ -159,8 +161,8 @@ namespace PataRoad.Core.Rhythm.Display
             _eyesPos.localPosition = _eyesInitialPosition;
             _wormBody.positionCount = 2;
             if (resetColor) SetColor(Color.black, Color.black, 0);
-            _wormBody.SetPosition(0, new Vector3(0, 0, 0));
-            _wormBody.SetPosition(1, new Vector3(_wormMaxLength, 0, 0));
+            _wormBody.SetPosition(0, _startPoint);
+            _wormBody.SetPosition(1, new Vector3(_wormMaxLength, 0, 0) + _startPoint);
         }
 
         private void SetBounceAnimation()
@@ -201,10 +203,10 @@ namespace PataRoad.Core.Rhythm.Display
             {
                 const int wormHeight = 100;
                 float t = startOffset;
-                Vector3 point0 = Vector3.zero;
-                Vector3 point1 = new Vector3(_wormMaxLength, -wormHeight / 2, 0) + Vector3.zero;
-                Vector3 point2 = new Vector3(0, -wormHeight, 0);
-                Vector3 B = Vector3.zero;
+                Vector3 point0 = _startPoint;
+                Vector3 point1 = new Vector3(_wormMaxLength, -wormHeight / 2, 0) + _startPoint;
+                Vector3 point2 = new Vector3(_startPoint.x, -wormHeight, 0);
+                Vector3 B = _startPoint;
                 for (int i = 0; i < animationParts; i++)
                 {
                     B = (1 - t) * (1 - t) * point0 + 2 * (1 - t) * t * point1 + t * t * point2;
@@ -220,13 +222,16 @@ namespace PataRoad.Core.Rhythm.Display
             float yOffset = maxOffset;
             float interval = 0.5f;
             bool rising = true;
-            Vector3 vectorInterval = Vector3.up * interval * 0.5f;
+            Vector3 vectorInterval = 0.5f * interval * Vector3.up;
             StartAnimationCounter();
             while (gameObject.activeSelf)
             {
                 for (int i = 0; i < animationParts; i++)
                 {
-                    _wormBody.SetPosition(i, new Vector3(i * _wormMaxLength / animationParts, Mathf.Sin(((float)i / animationParts) * Mathf.PI * 5) * yOffset, 0));
+                    _wormBody.SetPosition(i,
+                        new Vector3(
+                            i * _wormMaxLength / animationParts, Mathf.Sin(((float)i / animationParts) * Mathf.PI * 5) * yOffset, 0
+                            ) + _startPoint);
                 }
                 if (yOffset >= maxOffset)
                 {
