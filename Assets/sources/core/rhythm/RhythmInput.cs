@@ -63,12 +63,18 @@ namespace PataRoad.Core.Rhythm
         private void OnDestroy() => Destroy();
         protected void Enable()
         {
-            RhythmTimer.Current?.OnHalfTime?.AddListener(SetEnable);
+            if (RhythmTimer.Current != null)
+            {
+                RhythmTimer.Current.OnHalfTime?.AddListener(SetEnable);
+            }
             _action.started += DrumHit;
         }
         protected void Disable()
         {
-            RhythmTimer.Current?.OnHalfTime?.RemoveListener(SetEnable);
+            if (RhythmTimer.Current != null)
+            {
+                RhythmTimer.Current.OnHalfTime?.RemoveListener(SetEnable);
+            }
             _action.started -= DrumHit;
         }
         protected void Destroy()

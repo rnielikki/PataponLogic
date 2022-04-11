@@ -83,6 +83,7 @@ namespace PataRoad.SceneLogic.Minigame
         }
         private void PerformTurn()
         {
+            ListeningInput = false;
             var turn = _currentTurn;
             if (!_data.UseDonChakaGameSound) _audioSource.PlayOneShot(turn.Sound);
             int i = 0;
