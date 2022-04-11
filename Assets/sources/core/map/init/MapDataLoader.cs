@@ -15,6 +15,9 @@ namespace PataRoad.Core.Map
         [SerializeField]
         MissionPoint _missionPoint;
         private MapDataContainer _mapDataContainer;
+        [SerializeField]
+        MapMusicThemeLabel _musicLabel;
+
 
         [SerializeField]
         Transform _attachTarget;
@@ -45,6 +48,7 @@ namespace PataRoad.Core.Map
                 : Global.GlobalData.CurrentSlot.PataponInfo.CustomMusic.Data;
             if (musicName == null) musicName = mapData.DefaultMusic;
             _bgmPlayer.MusicTheme = musicName;
+            _musicLabel.Init(musicName);
 
             //-- background.
             _backgroundLoader.Init(mapData.BackgroundName ?? "Ruins");
