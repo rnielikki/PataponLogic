@@ -256,20 +256,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8715630370606093051, guid: 5b50737897bcdcd42810fd597c66f3bf, type: 3}
   m_PrefabInstance: {fileID: 7647241962885520754}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7934893048808980317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1356803573909131145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dropData:
-  - {fileID: 11400000, guid: 5b6cd73af12a07f4db045e98c0335be9, type: 2}
 --- !u!114 &7580010718975142685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +274,35 @@ MonoBehaviour:
   _minItemLevel: 1
   _maxItemLevel: 4
   _itemGroupName: Liquid
+--- !u!114 &7934893048808980317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356803573909131145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: 5b6cd73af12a07f4db045e98c0335be9, type: 2}
+--- !u!114 &1328793616253467670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356803573909131145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123d0470333489d4d8cdb1758da30a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _template: {fileID: 11400000, guid: 915c9418ee8db434ba435b044a0782a1, type: 2}
+  _musicIndex: 13
+  _levelToDrop: 5
 --- !u!4 &7085710651187322104 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 609664112812114314, guid: 5b50737897bcdcd42810fd597c66f3bf, type: 3}

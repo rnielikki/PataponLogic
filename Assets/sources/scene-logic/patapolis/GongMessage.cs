@@ -43,7 +43,12 @@ namespace PataRoad.SceneLogic.Patapolis
 
         private StoryAction[] LoadStoryActions()
         {
-            var progress = Core.Global.GlobalData.CurrentSlot.MapInfo.Progress - _minProgress;
+            int progress;
+            if (Core.Global.GlobalData.CurrentSlot.Progress.IsMusicOpen)
+            {
+                progress = 37;
+            }
+            else progress = Core.Global.GlobalData.CurrentSlot.MapInfo.Progress - _minProgress;
             if (progress < 0)
             {
                 var action1 = DefaultStoryActionTemplate.Copy();

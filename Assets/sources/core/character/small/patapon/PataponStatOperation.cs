@@ -13,8 +13,8 @@ namespace PataRoad.Core.Character.Patapons
                 case CommandSong.Ponpon:
                     if (charged)
                     {
-                        input.MultipleDamage(2.5f);
-                        input.Critical += 0.25f;
+                        input.MultipleDamage(2.1f);
+                        input.Critical += 0.25f + _patapon.LastPerfectionRate * 0.4f;
                     }
                     break;
                 case CommandSong.Chakachaka:

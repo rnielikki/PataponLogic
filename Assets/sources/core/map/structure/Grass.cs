@@ -21,6 +21,15 @@ namespace PataRoad.Core.Character
         public Collider2D Collider { get; private set; }
 
         public bool IsDead { get; private set; }
+        private UnityEvent _onDeadEvent;
+        public UnityEvent OnDeadEvent
+        {
+            get
+            {
+                if (_onDeadEvent == null) _onDeadEvent = new UnityEvent();
+                return _onDeadEvent;
+            }
+        }
 
         public UnityEvent<float> OnDamageTaken => null;
 
@@ -42,6 +51,7 @@ namespace PataRoad.Core.Character
             Collider.enabled = false;
             _renderer.sprite = _deadImage;
             _renderer.color = Color.black;
+            if (_onDeadEvent != null) _onDeadEvent.Invoke();
         }
 
         public bool TakeDamage(int damage)
@@ -63,7 +73,6 @@ namespace PataRoad.Core.Character
                         .FireRateMultiplier);
             }
         }
-
         public float GetDefenceValueOffset() => 1;
     }
 }

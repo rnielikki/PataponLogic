@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 860760564439554695}
   - component: {fileID: 6676460161496972948}
+  - component: {fileID: 5898551775320383804}
   m_Layer: 0
   m_Name: 18
   m_TagString: Untagged
@@ -48,6 +49,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapIndex: 20
   _setAsNextMapSelection: 1
+--- !u!114 &5898551775320383804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860760564439554697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ff663c22b277e41bf6f26c2c3c0100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _template: {fileID: 11400000, guid: 915c9418ee8db434ba435b044a0782a1, type: 2}
+  _musicIndex: 7
+  _song: 8
 --- !u!1001 &2700091065818282252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -194,6 +210,21 @@ MonoBehaviour:
   _minItemLevel: 0
   _maxItemLevel: 4
   _itemGroupName: Fang
+--- !u!114 &4711932508424927766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003406984003008692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 123d0470333489d4d8cdb1758da30a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _template: {fileID: 11400000, guid: 915c9418ee8db434ba435b044a0782a1, type: 2}
+  _musicIndex: 8
+  _levelToDrop: 8
 --- !u!4 &7731657925594475461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5635405490401415881, guid: e72e791ae01b1634eb3679f7da2ce8d5, type: 3}

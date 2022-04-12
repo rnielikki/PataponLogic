@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 860760564439554696}
   - component: {fileID: 6345759473477308036}
   - component: {fileID: 5875288208929191900}
+  - component: {fileID: 8031296766595654957}
   m_Layer: 0
   m_Name: 25
   m_TagString: Untagged
@@ -91,6 +92,21 @@ MonoBehaviour:
   _destroySound: {fileID: 8300000, guid: 610b85fef5751f3409e1d4101b9d8c10, type: 3}
   _cannon: {fileID: 1926125892771949224}
   _missionController: {fileID: 3563391726594200676}
+--- !u!114 &8031296766595654957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860760564439554697}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1ff663c22b277e41bf6f26c2c3c0100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _template: {fileID: 11400000, guid: 915c9418ee8db434ba435b044a0782a1, type: 2}
+  _musicIndex: 18
+  _song: 6
 --- !u!1 &5293837704163668007
 GameObject:
   m_ObjectHideFlags: 0
@@ -548,7 +564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 674789646062629772, guid: 0806ea2144ebf814f91e6803d99172e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 112.3
+      value: 124.5
       objectReference: {fileID: 0}
     - target: {fileID: 674789646062629772, guid: 0806ea2144ebf814f91e6803d99172e4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -727,7 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 674789646062629772, guid: 0806ea2144ebf814f91e6803d99172e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 52.7
+      value: 74.9
       objectReference: {fileID: 0}
     - target: {fileID: 674789646062629772, guid: 0806ea2144ebf814f91e6803d99172e4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -907,3 +923,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3447187853558931609, guid: 119ea8a038505cb4a8a28c3241a3a158, type: 3}
   m_PrefabInstance: {fileID: 8879462939432290635}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &9097557973918976385 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 394967364785733834, guid: 119ea8a038505cb4a8a28c3241a3a158, type: 3}
+  m_PrefabInstance: {fileID: 8879462939432290635}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3740188768298778279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097557973918976385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a828ba42e7d8d8b47a96a6250de422ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hitPoint: 5000
+  _onAfterDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2882448379615858205}
+        m_TargetAssemblyTypeName: PataRoad.Core.Map.Levels.MusicDrops.AutoMusicDrop,
+          Assembly-CSharp
+        m_MethodName: DropMusic
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2882448379615858205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9097557973918976385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d34913762e27f8b459d135e3bcd9e873, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _template: {fileID: 11400000, guid: 915c9418ee8db434ba435b044a0782a1, type: 2}
+  _musicIndex: 19

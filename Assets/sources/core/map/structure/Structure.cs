@@ -59,6 +59,7 @@ namespace PataRoad.Core.Character
                 DefenceMax = 1
             };
             Stat.BoostResistance(Mathf.Infinity);
+            //remove infinity first and add real resistance
             Stat.AddFireResistance(Mathf.Infinity, true);
             Stat.AddFireResistance(_fireResistance);
         }
