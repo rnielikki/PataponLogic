@@ -6,13 +6,21 @@ Shader "Unlit/FeverShader"
     }
     SubShader
     {
-		Tags { "RenderType" = "TrnasparentCutout" }
+		Tags
+		{ 
+			"Queue"="Transparent" 
+		}
+		Cull Off
+		Lighting Off
+		ZWrite Off
+		Blend One OneMinusSrcAlpha
         LOD 100
 		AlphaToMask On
 
         Pass
         {
 		    ZTest Off
+			Blend SrcAlpha OneMinusSrcAlpha
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
