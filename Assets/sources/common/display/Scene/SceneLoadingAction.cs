@@ -9,19 +9,21 @@ namespace PataRoad.Common.GameDisplay
     {
         public static string SceneName { get; private set; }
 
-        public static void ChangeScene(string sceneName, bool useTip = false)
-            => ChangeScene(sceneName, useTip, Color.black);
-        public static void ChangeScene(string sceneName, bool useTip, Color color)
+        public static void ChangeScene(string sceneName, bool useTip = false, bool loading = false)
+        {
+            ChangeScene(sceneName, useTip, Color.black, loading);
+        }
+        public static void ChangeScene(string sceneName, bool useTip, Color color, bool loading = false)
         {
             SceneName = sceneName;
             if (useTip)
             {
-                ScreenFading.Create(ScreenFadingType.FadeOut, 2, color, "Tips");
+                ScreenFading.Create(ScreenFadingType.FadeOut, 1, color, "Tips");
                 //SetTipsDisplay
             }
             else
             {
-                ScreenFading.Create(ScreenFadingType.Bidirectional, 2, color, sceneName);
+                ScreenFading.Create(ScreenFadingType.Bidirectional, 1, color, sceneName, loading);
                 //DestroyThis
             }
         }

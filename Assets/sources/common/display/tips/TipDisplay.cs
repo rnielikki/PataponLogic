@@ -90,7 +90,7 @@ namespace PataRoad.Common.GameDisplay
             _op.allowSceneActivation = true;
             if (!_fadingCreated)
             {
-                ScreenFading.Create(ScreenFadingType.FadeIn, 2, Color.black, "");
+                ScreenFading.Create(ScreenFadingType.FadeIn, 2, Color.black, "", true);
                 _fadingCreated = true;
             }
         }
