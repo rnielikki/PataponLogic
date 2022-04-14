@@ -138,7 +138,7 @@ MonoBehaviour:
   _randomWind: 0
   _windType: 0
   _usePatapolis: 0
-  _background: Ruins
+  _background: SnowTrees
   _music: {fileID: 8300000, guid: ef6e937edbbe9564b96ce7f48f7217b1, type: 3}
   _xCameraPosition: 5
   _time: 20
@@ -402,6 +402,7 @@ MonoBehaviour:
     _content: Stop nonsense and go back to the Patapolis! It's my order!
   _choiceSelector: {fileID: 0}
   _nextStory: {fileID: -2731587640728505089, guid: d076406a8c8d2f046b7366f3e814e554, type: 3}
+  _sceneChangingColor: {r: 0, g: 0, b: 0, a: 1}
   _onStoryStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -619,6 +620,18 @@ PrefabInstance:
     - target: {fileID: 5892754085882703528, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
       propertyPath: _fixedEquipment
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799958579530359939, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799958579530359939, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799958579530359939, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.94
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 967673654963967971, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}

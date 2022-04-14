@@ -141,7 +141,7 @@ MonoBehaviour:
   _randomWind: 0
   _windType: 0
   _usePatapolis: 0
-  _background: Ruins
+  _background: Oasis
   _music: {fileID: 8300000, guid: 1b271859aec049d4c80f04689fb46d0a, type: 3}
   _xCameraPosition: 5
   _time: 20
@@ -840,6 +840,7 @@ MonoBehaviour:
     _content: Ha... haha, it won't happen, because I'm not alone anymore.
   _choiceSelector: {fileID: 0}
   _nextStory: {fileID: 0}
+  _sceneChangingColor: {r: 0, g: 0, b: 0, a: 1}
   _onStoryStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -1019,6 +1020,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: aa37c99b07c7cff48bfc7d856c6e7c4b, type: 2}
     - target: {fileID: 8794522850952439664, guid: 905bde8a14b66ff44b755f950797b886, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8794522850952439664, guid: 905bde8a14b66ff44b755f950797b886, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 0.72
       objectReference: {fileID: 0}
@@ -1163,6 +1168,18 @@ PrefabInstance:
     - target: {fileID: 5892754085882703528, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
       propertyPath: _fixedEquipment
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799958579530359939, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799958579530359939, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 8799958579530359939, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2.94
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 967673654963967971, guid: 432f4dd15eece6e49b7a0978d9374b2a, type: 3}
