@@ -18,12 +18,12 @@ namespace PataRoad.Common.GameDisplay
             SceneName = sceneName;
             if (useTip)
             {
-                ScreenFading.Create(ScreenFadingType.FadeOut, 1, color, "Tips");
+                ScreenFading.Create(ScreenFadingType.FadeOut, -1, color, "Tips");
                 //SetTipsDisplay
             }
             else
             {
-                ScreenFading.Create(ScreenFadingType.Bidirectional, 1, color, sceneName, loading);
+                ScreenFading.Create(ScreenFadingType.Bidirectional, -1, color, sceneName, loading);
                 //DestroyThis
             }
         }

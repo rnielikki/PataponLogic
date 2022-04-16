@@ -36,7 +36,12 @@ namespace PataRoad.Core.Character
         [SerializeField]
         private Gradient _colorOverHealth;
 
-        System.Collections.Generic.List<SpriteRenderer> _sprites = new System.Collections.Generic.List<SpriteRenderer>();
+        private StructureImages _phaseImageManager;
+
+        private readonly System.Collections.Generic.List<SpriteRenderer> _sprites
+            = new System.Collections.Generic.List<SpriteRenderer>();
+
+        //Sprite library
 
         protected virtual void Awake()
         {
@@ -48,6 +53,11 @@ namespace PataRoad.Core.Character
             {
                 _animator = GetComponent<Animator>();
                 if (_animator == null) _noAnimation = true;
+            }
+            _phaseImageManager = GetComponentInChildren<StructureImages>(true);
+            if (_phaseImageManager != null)
+            {
+                _colorOverHealth = _phaseImageManager.Reference.ColorOverHealth;
             }
         }
         protected virtual void InitStat()
@@ -66,6 +76,7 @@ namespace PataRoad.Core.Character
         protected virtual void Start()
         {
             SetSprites(transform);
+            SetColor(1);
         }
         public virtual void Die()
         {
@@ -78,6 +89,13 @@ namespace PataRoad.Core.Character
             //Can attach health status or change sprite etc.
             CurrentHitPoint -= damage;
             var percent = Mathf.Clamp01((float)CurrentHitPoint / Stat.HitPoint);
+            SetColor(percent);
+            if (_phaseImageManager != null) _phaseImageManager.Evaluate(percent);
+
+            return true;
+        }
+        private void SetColor(float percent)
+        {
             foreach (var sprite in _sprites)
             {
                 if (sprite != null)
@@ -85,7 +103,6 @@ namespace PataRoad.Core.Character
                     sprite.color = _colorOverHealth.Evaluate(percent);
                 }
             }
-            return true;
         }
         private void SetSprites(Transform tr)
         {

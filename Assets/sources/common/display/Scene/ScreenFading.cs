@@ -29,7 +29,7 @@ namespace PataRoad.Common.GameDisplay
         /// Creates a smooth scene change.
         /// </summary>
         /// <param name="fadingType">determines if it's fade in/out/both.</param>
-        /// <param name="speed">Speed to change. Default is 1. if the speed is less than 1, It turns to default value.</param>
+        /// <param name="speed">Speed to change. Default is 2,5. if the speed is less than 1, It turns to default value.</param>
         /// <param name="color">Color for fading. Usually it's black.</param>
         /// <param name="sceneToChange">Scene to change smoothly.</param>
         /// <param name="useLoadingImage">Use Loading image. Activated only once. Doesn't work with fading out.</param>
@@ -38,7 +38,7 @@ namespace PataRoad.Common.GameDisplay
             bool useLoadingImage = false)
         {
             if (_current._activated && _current._direction > 0) return;
-            if (speed < 1) speed = 1;
+            if (speed < 1) speed = 2.5f;
             Core.Global.GlobalData.GlobalInputActions.DisableAllInputs();
             _current.Set(fadingType, speed, color, sceneToChange, useLoadingImage);
         }
@@ -57,7 +57,7 @@ namespace PataRoad.Common.GameDisplay
             _newSceneName = sceneToChange;
             if (fadingIn)
             {
-                SceneManager.sceneUnloaded += ActivateFadeIn;
+                SceneManager.sceneLoaded += ActivateFadeIn;
                 _loadingImage.SetActive(useLoadingImage);
                 _image.color = new Color(color.r, color.g, color.b, 1);
             }
@@ -69,9 +69,9 @@ namespace PataRoad.Common.GameDisplay
             }
             gameObject.SetActive(true);
         }
-        private void ActivateFadeIn(Scene scene)
+        private void ActivateFadeIn(Scene scene, LoadSceneMode mode)
         {
-            SceneManager.sceneUnloaded -= ActivateFadeIn;
+            SceneManager.sceneLoaded -= ActivateFadeIn;
             if (_usingLoadingImage) _loadingImage.SetActive(false);
             _activated = true;
         }
@@ -89,26 +89,26 @@ namespace PataRoad.Common.GameDisplay
                 }
                 else if (clr.a == 1 && _direction > 0) //fading out ready
                 {
+                    if (_usingLoadingImage)
+                    {
+                        _loadingImage.SetActive(true);
+                    }
                     if (_fadingType == ScreenFadingType.FadeOut)
                     {
-                        SceneManager.sceneUnloaded += DestroyThis;
+                        SceneManager.sceneLoaded += DestroyThis;
                     }
                     else
                     {
-                        if (_usingLoadingImage)
-                        {
-                            _loadingImage.SetActive(true);
-                        }
-                        SceneManager.sceneUnloaded += ChangeToFadingIn;
+                        SceneManager.sceneLoaded += ChangeToFadingIn;
                     }
                     _activated = false;
                     SceneManager.LoadScene(_newSceneName);
                 }
             }
         }
-        private void ChangeToFadingIn(Scene scene)
+        private void ChangeToFadingIn(Scene scene, LoadSceneMode mode)
         {
-            SceneManager.sceneUnloaded -= ChangeToFadingIn;
+            SceneManager.sceneLoaded -= ChangeToFadingIn;
             _usingLoadingImage = false;
             _loadingImage.SetActive(false);
             _direction = -1;
@@ -117,19 +117,23 @@ namespace PataRoad.Common.GameDisplay
 
         private void End()
         {
+            SceneManager.sceneLoaded -= DestroyThis;
+            SceneManager.sceneLoaded -= ChangeToFadingIn;
+            SceneManager.sceneLoaded -= ActivateFadeIn;
             Core.Global.GlobalData.GlobalInputActions.EnableAllInputs();
             _activated = false;
             _usingLoadingImage = false;
             _loadingImage.SetActive(false);
             gameObject.SetActive(false);
         }
-        void DestroyThis(Scene scene)
+        void DestroyThis(Scene scene, LoadSceneMode mode)
         {
-            SceneManager.sceneUnloaded -= DestroyThis;
+            SceneManager.sceneLoaded -= DestroyThis;
             End();
         }
         private void OnDestroy()
         {
+            End();
             _current = null;
         }
     }

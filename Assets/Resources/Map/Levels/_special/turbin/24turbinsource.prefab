@@ -203,6 +203,7 @@ MonoBehaviour:
   _attackTypeResistance:
     rid: 3406254550400892930
   _noLevelUp: 0
+  _noAnimation: 0
   _colorOverHealth:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -389,6 +390,7 @@ MonoBehaviour:
   _attackTypeResistance:
     rid: 3406254565956780036
   _noLevelUp: 0
+  _noAnimation: 0
   _colorOverHealth:
     serializedVersion: 2
     key0: {r: 1, g: 0.25, b: 0.25, a: 1}
@@ -444,6 +446,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5911969437579681789}
   - component: {fileID: 824198659229782750}
+  - component: {fileID: 353852057175546092}
   m_Layer: 6
   m_Name: Image
   m_TagString: Untagged
@@ -519,6 +522,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &353852057175546092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9152031897712267800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 146beea7ef6637e4cb48b0b9e565e668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _phaseImageReference: {fileID: 11400000, guid: 921a699627de65446b7f3e211e90c4f0, type: 2}
 --- !u!1001 &3137668327832990524
 PrefabInstance:
   m_ObjectHideFlags: 0
