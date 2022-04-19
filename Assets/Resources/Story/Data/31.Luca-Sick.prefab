@@ -105,7 +105,7 @@ MonoBehaviour:
         m_Calls: []
     _waitingSeconds: 0
     _useLine: 1
-    _image: {fileID: 0}
+    _image: {fileID: 21300000, guid: 5d6971f55bf76a845867af5f78908dcc, type: 3}
     _name: Kon Kimpon
     _content: She'll gonna die? Hooray!
   - _events:
@@ -129,7 +129,7 @@ MonoBehaviour:
         m_Calls: []
     _waitingSeconds: 0
     _useLine: 1
-    _image: {fileID: 0}
+    _image: {fileID: 21300000, guid: 5d6971f55bf76a845867af5f78908dcc, type: 3}
     _name: Kon Kimpon
     _content: But we have Mater tree!
   - _events:
@@ -167,7 +167,7 @@ MonoBehaviour:
         m_Calls: []
     _waitingSeconds: 0
     _useLine: 1
-    _image: {fileID: 0}
+    _image: {fileID: 21300000, guid: 5d6971f55bf76a845867af5f78908dcc, type: 3}
     _name: Kon Kimpon
     _content: Huh? Hazorons have Mater Tree?
   - _events:
@@ -222,6 +222,7 @@ MonoBehaviour:
     _content: It's just like you almost baked me with fire, when I was kidnapped.
   _choiceSelector: {fileID: 0}
   _nextStory: {fileID: 0}
+  _sceneChangingColor: {r: 0, g: 0, b: 0, a: 1}
   _onStoryStarted:
     m_PersistentCalls:
       m_Calls: []
@@ -528,6 +529,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 6df7abee9844bf44d9bad0dcae3b657e, type: 2}
+    - target: {fileID: 8794522850952439664, guid: 905bde8a14b66ff44b755f950797b886, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8794522850952439664, guid: 905bde8a14b66ff44b755f950797b886, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 0.72

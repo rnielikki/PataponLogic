@@ -68,5 +68,53 @@ namespace PataRoad.Story
         }
         internal void InvokeBeforeStart() => _onStoryStarted?.Invoke();
         public void SkipNextStory() => _nextStory = null;
+
+        //IMAGE VALIDATION SCRIPT
+        //WHENEVER YOU NEED CHECK VALIDATION REMOVE THIS COMMENT
+        /*
+        private void OnValidate()
+        {
+            foreach (var st in StoryActions)
+            {
+                if (!st.UseLine || st.Image == null || st.Name.IndexOf(",") >= 0
+                    || st.Name == "???") continue;
+                var name = st.Name.ToLower();
+                var imgName = st.Image.name;
+                if (imgName.StartsWith("pata"))
+                {
+                    return;
+                }
+                else if (imgName != "may")
+                {
+                    var index = st.Image.name.IndexOf('.');
+                    if (index >= 0)
+                    {
+                        imgName = imgName.Substring(0, index).ToLower();
+                    }
+                    switch (imgName)
+                    {
+                        case "rahgashapon":
+                            imgName = "rah";
+                            break;
+                        case "suko":
+                            imgName = "sukopon";
+                            break;
+                        case "tonkampon":
+                            imgName = "ton";
+                            break;
+                    }
+                }
+                var index1 = name.IndexOf(" ");
+                var index2 = name.IndexOf("-");
+                if (index1 != -1) name = name.Substring(0, index1);
+                else if (index2 != -1) name = name.Substring(0, index2);
+                if (name != imgName)
+                {
+                    Debug.Log("Unmatched sprite in index" + System.Array.IndexOf(StoryActions, st)
+                        + ", Check " + name + " and " + imgName + " from " + transform.root.name, gameObject);
+                }
+            }
+        }
+        */
     }
 }
