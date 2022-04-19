@@ -219,10 +219,18 @@ namespace PataRoad.Core.Character.Hazorons
                     CharAnimator.Animate("walk");
                     _animatingWalk = true;
                 }
+                var oldpos = transform.position.x;
                 transform.position =
                     DistanceCalculator.GetSafeForwardPosition(
                         transform.position.x + (Stat.MovementSpeed * Time.deltaTime * MovingDirection.x))
                     * Vector3.right;
+                //can't go forward
+                if (oldpos == transform.position.x)
+                {
+                    Attack();
+                    _gotPosition = true;
+                    if (IsInPataponsSight(transform.position.x)) Register();
+                }
             }
         }
     }

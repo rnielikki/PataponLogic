@@ -14,11 +14,6 @@
             {
                 return new BossAttackMoveSegment("nothing", 1);
             }
-            if (Common.Utils.RandomByProbability(1f / (_level + 8)))
-            {
-                return new BossAttackMoveSegment("Idle", 1);
-            }
-
             //Toripon. Any other attacks just don't work. Don't even troll the birb with birb.
             //Note: dondon now cannot evade peck!
             var firstPon = _pataponsManager.FirstPatapon;

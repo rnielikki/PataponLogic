@@ -53,9 +53,10 @@ namespace PataRoad.Core.Rhythm
         protected virtual RhythmInputModel GetInputModel()
         {
             Disabled = true;
+            var timing = RhythmTimer.GetTiming();
             return new RhythmInputModel(
                             _drumType,
-                            RhythmTimer.GetTiming()
+                            timing
                             );
         }
         private void OnEnable() => Enable();

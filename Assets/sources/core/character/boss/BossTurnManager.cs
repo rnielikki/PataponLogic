@@ -34,6 +34,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             if (Attacking) return;
             Attacking = true;
+            _willAttackEnd = false;
             _turnCount = 0;
             if (turnDelay == 0)
             {
@@ -52,6 +53,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             EndWithoutStopAttacking();
             _data.StopAllAttacking();
+            _willAttackEnd = false;
         }
         /// <summary>
         /// Clears all attack, but doesn't call <see cref="BossAttackData.StopAllAttacking"/>.
@@ -90,6 +92,7 @@ namespace PataRoad.Core.Character.Bosses
         public void SetComboAttack(IEnumerable<string> actions)
         {
             if (Attacking) return;
+            Attacking = true;
             foreach (var action in actions) _actionQueue.Enqueue(action);
         }
         private void WillStartComboAttack()
@@ -102,6 +105,8 @@ namespace PataRoad.Core.Character.Bosses
             if (_actionQueue.Count == 0)
             {
                 TurnCounter.OnNonPlayerTurn.RemoveListener(CountSingleAttack);
+                Attacking = false;
+                _willAttackEnd = false;
                 return;
             }
             _current = _actionQueue.Dequeue();
@@ -111,10 +116,19 @@ namespace PataRoad.Core.Character.Bosses
                 RhythmTimer.Current.OnTime.AddListener(CountSingleTurn);
                 _turnCount++;
             }
-            //manual end
-            else if (_current[0] == '-')
+            else
             {
-                _charAnimator.Animate(_current);
+                //idle move
+                if (_current[0] != '-')
+                {
+                    Attacking = false;
+                    _willAttackEnd = false;
+                }
+                else
+                {
+                    //manual end
+                    _charAnimator.Animate(_current);
+                }
             }
         }
         private void CountSingleTurn()

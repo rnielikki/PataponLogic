@@ -124,7 +124,7 @@ namespace PataRoad.Core.Character.Bosses
                 return;
             }
             //phase -1 : On Ice. No moving, just ATTACK
-            if (!BossTurnManager.Attacking && StatusEffectManager.CurrentStatusEffect == StatusEffectType.Ice)
+            if (StatusEffectManager.CurrentStatusEffect == StatusEffectType.Ice)
             {
                 _behaviour.CalculateAttackOnIce();
                 BossTurnManager.StartAttack(1);

@@ -49,6 +49,10 @@ namespace PataRoad.Core.Global
 
                 SlotManager = new SlotManager();
                 if (!_doNotLoadMain) UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+                else
+                {
+                    SlotManager.LoadSlot(Slot.CreateNewGame());
+                }
             }
             catch (System.Exception e)
             {

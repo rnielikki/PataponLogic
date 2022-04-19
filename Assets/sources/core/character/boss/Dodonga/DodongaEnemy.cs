@@ -9,10 +9,6 @@
             {
                 return new BossAttackMoveSegment("nothing", 5);
             }
-            if (Common.Utils.RandomByProbability(1f / (_level + 7)))
-            {
-                return new BossAttackMoveSegment("Idle", 5);
-            }
             var firstPon = _pataponsManager.FirstPatapon;
             if (firstPon == null || (firstPon.Type != Class.ClassType.Toripon &&
                 firstPon.transform.position.x < _pataponsManager.transform.position.x))

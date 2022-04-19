@@ -129,8 +129,8 @@ namespace PataRoad.Core.Rhythm
                 BadFrequency /= 2;
                 MinEffectThresholdFrequency /= 2;
             }
-            Count = Frequency / 2;
-            OnNext.AddListener(OnStart.Invoke);
+            Count = 0;
+            OnNextHalfTime.AddListener(() => OnNext.AddListener(OnStart.Invoke));
         }
 
         private void FixedUpdate()
