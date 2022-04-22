@@ -24,6 +24,7 @@ namespace PataRoad.Core.Character.Class
                             { AttackCommandType.ChargeAttack, GetAttackMoveModel("attack-charge") }
                         }
                         );
+                    realStat.MultipleDamage(0.6f); //attacks twice.
                     break;
                 case 1:
                     SetAttackMoveController()
@@ -34,8 +35,7 @@ namespace PataRoad.Core.Character.Class
                             { AttackCommandType.Defend, GetAttackMoveModel("defend") }
                         }
                         );
-                    realStat.DamageMax = Mathf.Max(1, realStat.DamageMax - 20);
-                    realStat.DamageMin = Mathf.Max(1, realStat.DamageMax - 20);
+                    realStat.MultipleDamage(0.85f);
                     break;
             }
         }
@@ -59,6 +59,10 @@ namespace PataRoad.Core.Character.Class
         public override void PerformCommandAction(CommandSong song)
         {
             _shield.SetActive(song == CommandSong.Chakachaka);
+            if (_character.Charged && song == CommandSong.Ponpon)
+            {
+                _character.Stat.MultipleDamage(1.5f);
+            }
         }
         public override void OnCanceled()
         {

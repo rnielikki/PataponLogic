@@ -40,7 +40,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         protected override void PerformActionEach(Patapon patapon)
         {
-            //sorry you don't need
+            if (patapon.Charged) patapon.StatusEffectManager.RecoverAndIgnoreEffect();
         }
     }
 }

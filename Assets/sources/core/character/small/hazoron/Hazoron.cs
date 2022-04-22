@@ -42,6 +42,7 @@ namespace PataRoad.Core.Character.Hazorons
         public override CharacterSoundsCollection Sounds => _isDarkOne ?
             CharacterSoundLoader.Current.DarkOneSounds : CharacterSoundLoader.Current.HazoronSounds;
         private float _maxAttackSight;
+        private Stat _realStat;
 
         private void Awake()
         {
@@ -49,13 +50,14 @@ namespace PataRoad.Core.Character.Hazorons
             OnFever = true;
             DefaultWorldPosition = transform.position.x;
             Init();
-            Stat = _data.Stat;
+            _realStat = _data.Stat;
+            Stat = _realStat;
             DistanceCalculator = _isDarkOne
                 ? DistanceCalculator.GetNonPataHazoDistanceCalculator(this)
                 : DistanceCalculator.GetHazoronDistanceCalculator(this);
             DistanceManager = gameObject.AddComponent<DistanceManager>();
             DistanceManager.DistanceCalculator = DistanceCalculator;
-            if (_isOnTower) Stat.AddKnockbackResistance(Mathf.Infinity);
+            if (_isOnTower) _realStat.AddKnockbackResistance(Mathf.Infinity);
 
             StatusEffectManager.AddRecoverAction((_) =>
             {
@@ -72,14 +74,14 @@ namespace PataRoad.Core.Character.Hazorons
             _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
             foreach (var modifier in GetComponents<Levels.IHazoronStatModifier>())
             {
-                modifier.SetModifyTarget(Stat);
+                modifier.SetModifyTarget(_realStat);
             }
         }
 
         private void Start()
         {
-            CurrentHitPoint = Stat.HitPoint;
-            ClassData.InitLate(Stat);
+            CurrentHitPoint = _realStat.HitPoint;
+            ClassData.InitLate(_realStat);
             _maxAttackSight = IsMeleeUnit ? CharacterEnvironment.MaxAttackDistance : Sight;
 
             _isReady = true;
@@ -87,6 +89,8 @@ namespace PataRoad.Core.Character.Hazorons
         protected void Attack()
         {
             if (!_isReady || IsAttacking) return;
+            //reset stat that can be modified by performcommandaciton()
+            Stat.SetValuesTo(_realStat);
             _animatingWalk = false;
             IsAttacking = true;
             if (_defend)

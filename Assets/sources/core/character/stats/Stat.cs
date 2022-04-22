@@ -376,7 +376,7 @@ namespace PataRoad.Core.Character
         /// <summary>
         /// Sets stat to specific stat value. Useful for resetting value without instantiating.
         /// </summary>
-        /// <param name="stat">Te reference stat to make values identical.</param>
+        /// <param name="stat">The reference stat to make values identical.</param>
         /// <returns>The same instance, having identical value to input stat.</returns>
         public Stat SetValuesTo(Stat stat)
         {

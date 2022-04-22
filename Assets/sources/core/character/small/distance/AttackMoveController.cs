@@ -156,12 +156,15 @@ namespace PataRoad.Core.Character
                 {
                     _animator.Animate("walk");
                     _moving = true;
-                    MoveTowards(_character.DefaultWorldPosition);
                 }
                 else if (_moving && onDefaultPosition)
                 {
                     _animator.Animate("Idle");
                     _moving = false;
+                }
+                if (_moving)
+                {
+                    MoveTowards(_character.DefaultWorldPosition);
                 }
             }
             else if (!isInDistance) //2. Found target.
