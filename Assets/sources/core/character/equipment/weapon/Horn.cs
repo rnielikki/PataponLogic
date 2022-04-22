@@ -1,5 +1,4 @@
-﻿using PataRoad.Common;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Pool;
 
 namespace PataRoad.Core.Character.Equipments.Weapons
@@ -116,7 +115,9 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             bulletScript.GroundAction = groundAction;
             instance.SetActive(true);
 
-            return instance.GetComponent<Rigidbody2D>();
+            var rigidbody = instance.GetComponent<Rigidbody2D>();
+            rigidbody.velocity = Vector2.zero;
+            return rigidbody;
         }
         //Fever Attack bullet
         private static void MoveBulletOnGround(Collider2D self, Vector2 direction)

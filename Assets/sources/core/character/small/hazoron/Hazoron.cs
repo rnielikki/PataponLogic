@@ -87,6 +87,7 @@ namespace PataRoad.Core.Character.Hazorons
         protected void Attack()
         {
             if (!_isReady || IsAttacking) return;
+            _animatingWalk = false;
             IsAttacking = true;
             if (_defend)
             {
@@ -225,7 +226,7 @@ namespace PataRoad.Core.Character.Hazorons
                         transform.position.x + (Stat.MovementSpeed * Time.deltaTime * MovingDirection.x))
                     * Vector3.right;
                 //can't go forward
-                if (oldpos == transform.position.x)
+                if (DistanceCalculator.IsInTargetRange(oldpos, 0.01f))
                 {
                     Attack();
                     _gotPosition = true;

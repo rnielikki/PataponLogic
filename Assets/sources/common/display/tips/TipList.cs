@@ -17,7 +17,6 @@ namespace PataRoad.Common.GameDisplay
         RectTransform _progressBar;
         [SerializeField]
         TMPro.TextMeshProUGUI _progressText;
-        // Use this for initialization
         void Start()
         {
             //progress bar
@@ -35,7 +34,7 @@ namespace PataRoad.Common.GameDisplay
                 listItem.Init(tip, ++len, _scrollList, _tipDisplay, _eventMap);
                 if (firstItem == null) firstItem = listItem;
             }
-            if (firstItem == null) throw new System.ArgumentException("Opened tip amount must be at least 0");
+            if (firstItem == null) throw new System.ArgumentException("Opened tip amount must be at least 1");
             _scrollList.Init(firstItem);
             _scrollList.SetMaximumScrollLength(len, firstItem);
             firstItem.Selectable.Select();

@@ -67,25 +67,11 @@ namespace PataRoad.Core.Global.Slots
         /// <returns>The data that contains exchange rate map.</returns>
         [SerializeReference]
         private ExchangeRateData _exchangeRates;
-        public ExchangeRateData ExchangeRates
-        {
-            get
-            {
-                return _exchangeRates = _exchangeRates != null ?
-                    _exchangeRates : new ExchangeRateData();
-            }
-        }
+        public ExchangeRateData ExchangeRates => _exchangeRates;
 
         [SerializeReference]
         private TipsCollection _tips;
-        public TipsCollection Tips
-        {
-            get
-            {
-                return _tips = _tips != null ?
-                    _tips : new TipsCollection();
-            }
-        }
+        public TipsCollection Tips => _tips;
 
         /// <summary>
         /// Loads slot with initial game status.
@@ -103,7 +89,7 @@ namespace PataRoad.Core.Global.Slots
             slot._almightyName = "";
             slot._progress = new GameProgress();
             slot._exchangeRates = new ExchangeRateData();
-            slot._tips = new TipsCollection();
+            slot._tips = TipsCollection.Create();
 
             return slot;
         }

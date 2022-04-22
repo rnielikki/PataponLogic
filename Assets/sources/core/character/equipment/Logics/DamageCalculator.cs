@@ -73,20 +73,29 @@ namespace PataRoad.Core.Character.Equipments.Logic
                         var iceProbability = CalculateStatusEffect(stat.IceRate, receiverStat.IceResistance, 0.5f * iceRateMultiplier);
                         var sleepProbability = CalculateStatusEffect(stat.SleepRate, receiverStat.SleepResistance, 0.5f);
 
-                        var random = Random.Range(0, fireProbability + iceProbability + sleepProbability);
+                        bool hasFire = Common.Utils.RandomByProbability(fireProbability);
+                        bool hasIce = Common.Utils.RandomByProbability(iceProbability);
+                        bool hasSleep = Common.Utils.RandomByProbability(sleepProbability);
 
-                        if (random < fireProbability)
+                        StatusEffectType statusEffectType = StatusEffectType.None;
+                        float finalProbability = 0;
+
+                        if (hasFire)
                         {
-                            SetStatusEffect(receiver, StatusEffectType.Fire, fireProbability);
+                            statusEffectType = StatusEffectType.Fire;
+                            finalProbability = fireProbability;
                         }
-                        else if (random < fireProbability + iceProbability)
+                        if (hasIce && finalProbability < iceProbability)
                         {
-                            SetStatusEffect(receiver, StatusEffectType.Ice, iceProbability);
+                            statusEffectType = StatusEffectType.Ice;
+                            finalProbability = iceProbability;
                         }
-                        else
+                        if (hasSleep && finalProbability < sleepProbability)
                         {
-                            SetStatusEffect(receiver, StatusEffectType.Sleep, sleepProbability);
+                            statusEffectType = StatusEffectType.Sleep;
+                            finalProbability = sleepProbability;
                         }
+                        SetStatusEffect(receiver, statusEffectType, finalProbability);
                     }
                     //--- status effect end
                 }
@@ -261,7 +270,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
         }
         private static float CalculateStatusEffect(float attackRatio, float resistance, float additionalMultiplier = 1)
         {
-            if (attackRatio == 0 || resistance == Mathf.Infinity) return 0;
+            if (attackRatio <= 0 || resistance == Mathf.Infinity) return 0;
             else return Mathf.Clamp01(attackRatio - resistance) * additionalMultiplier;
         }
         private static int GetAttackDamage(Stat stat, IAttacker character)

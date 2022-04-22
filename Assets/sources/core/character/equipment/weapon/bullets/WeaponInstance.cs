@@ -75,12 +75,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         {
             _stat = _holder.Stat;
             var force = Random.Range(forceMultiplierMin, forceMultiplierMax);
+            //..... still sometimes not initialized. why.
+            _rigidbody.velocity = Vector2.zero;
             _rigidbody.AddForce(_rigidbody.mass * force * transform.up);
         }
         private void Update()
         {
             var velo = _rigidbody.velocity;
             transform.eulerAngles = Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg * Vector3.back;
+            if (transform.position.y < -1) DestroyThis();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -88,15 +91,19 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             Logic.DamageCalculator.DealDamage(_holder, _stat, collision.gameObject, collision.ClosestPoint(transform.position));
             if (!collision.CompareTag("Grass"))
             {
-                var rel = gameObject.GetComponent<ReleaseToPool>();
-                if (rel != null)
-                {
-                    rel.ReleaseThisObject();
-                }
-                else
-                {
-                    Destroy(gameObject);
-                }
+                DestroyThis();
+            }
+        }
+        private void DestroyThis()
+        {
+            var rel = gameObject.GetComponent<ReleaseToPool>();
+            if (rel != null)
+            {
+                rel.ReleaseThisObject();
+            }
+            else
+            {
+                Destroy(gameObject);
             }
         }
     }

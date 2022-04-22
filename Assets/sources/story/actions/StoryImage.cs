@@ -7,6 +7,7 @@ namespace PataRoad.Story.Actions
     {
         [SerializeField]
         private Image _image;
+        private AspectRatioFitter _imageFitter;
         [SerializeField]
         private float _fadeSpeed;
         [SerializeField]
@@ -27,12 +28,14 @@ namespace PataRoad.Story.Actions
                 _image.color = clr;
                 _image.enabled = false;
             }
+            _imageFitter = _image.GetComponent<AspectRatioFitter>();
         }
         public void LoadImage(Sprite image)
         {
             if (!_image.enabled)
             {
                 _image.sprite = image;
+                _image.preserveAspect = true; //need to do manually when image is loaded
                 _image.enabled = true;
                 Core.Global.GlobalData.GlobalInputActions.DisableOkCancelInputs();
                 _fading = true;
@@ -44,6 +47,7 @@ namespace PataRoad.Story.Actions
                 _fadingBlack = true;
                 _fadingBlackIn = false;
             }
+            if (image != null) _imageFitter.aspectRatio = image.rect.width / image.rect.height;
         }
         public void LoadAsColor() => LoadImage(null);
         public void UnloadImage()

@@ -41,9 +41,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             {
                 if (other.CompareTag("Ground"))
                 {
-                    _grounded = true;
-                    GroundAction(_collider, _direction);
-                    StartCoroutine(DestroyAfterTime());
+                    OnGround();
                 }
                 else
                 {
@@ -51,10 +49,15 @@ namespace PataRoad.Core.Character.Equipments.Weapons
                     Logic.DamageCalculator.DealDamage(Holder, Stat, other.gameObject, other.ClosestPoint(transform.position));
                 }
             }
+        }
+        private void OnGround()
+        {
+            _grounded = true;
+            GroundAction(_collider, _direction);
+            StartCoroutine(DestroyAfterTime());
             System.Collections.IEnumerator DestroyAfterTime()
             {
                 yield return new WaitForSeconds(_destroyTime);
-
                 var rel = gameObject.GetComponent<ReleaseToPool>();
                 if (rel != null)
                 {
@@ -71,6 +74,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (!_rotateOverTime || _grounded) return;
             var velo = _rigidbody.velocity;
             transform.eulerAngles = Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg * Vector3.back;
+            if (transform.position.y < -1) OnGround();
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PataRoad.Common.GameDisplay
 {
     [System.Serializable]
-    public class TipsCollection
+    public class TipsCollection : ISerializationCallbackReceiver
     {
         static TipDisplayData[] _allTips;
         const string _tipsPath = "Tips/Content";
@@ -20,10 +20,14 @@ namespace PataRoad.Common.GameDisplay
         public int OpenTipsCount => _openedTipIndexes.Count;
         public static int AllTipsCount => _allTips.Length;
 
-        public TipsCollection()
+        private TipsCollection()
         {
-            //default
-            GetTipInIndex(_defaultIndex);
+        }
+        public static TipsCollection Create()
+        {
+            var tips = new TipsCollection();
+            tips.GetTipInIndex(_defaultIndex);
+            return tips;
         }
         /// <summary>
         /// Load all tips in very first (expected to be called in <see cref="Core.Global.GlobalData"/>).
@@ -83,7 +87,6 @@ namespace PataRoad.Common.GameDisplay
             }
             if (!_openedTipIndexes.Contains(index))
             {
-                LoadOpenedTips();
                 _openedTipIndexes.Add(index);
                 _openedTips.Add(_allTips[index]);
             }
@@ -91,39 +94,31 @@ namespace PataRoad.Common.GameDisplay
         }
         private TipDisplayData GetRandomTip()
         {
-            LoadOpenedTips();
             return _openedTips[Random.Range(0, _openedTips.Count)];
-        }
-        public IEnumerable<TipDisplayData> GetAllOpenedTips()
-        {
-            LoadOpenedTips();
-            return _openedTips;
         }
         /// <summary>
         /// Loads all opened tips. Can be used for initialisation, or for just listing open tip indexes.
         /// </summary>
         /// <returns>Currently opened tips in the game save, in the index order.</returns>
-        public IEnumerable<TipDisplayData> GetOpenedTips()
-        {
-            if (_openedTips == null)
-            {
-                LoadOpenedTips();
-            }
-            return _openedTips.OrderBy(tip => tip.Index);
-
-        }
-
+        public IEnumerable<TipDisplayData> GetAllOpenedTips()
+            => _openedTips.OrderBy(tip => tip.Index);
         private void LoadOpenedTips()
         {
-            if (_openedTips == null)
+            _openedTips = new List<TipDisplayData>();
+            foreach (var index in _openedTipIndexes)
             {
-                _openedTips = new List<TipDisplayData>();
-                foreach (var index in _openedTipIndexes)
-                {
-                    _openedTips.Add(_allTips[index]);
-                }
-
+                _openedTips.Add(_allTips[index]);
             }
+        }
+
+        public void OnBeforeSerialize()
+        {
+            //eeh...
+        }
+
+        public void OnAfterDeserialize()
+        {
+            LoadOpenedTips();
         }
     }
 }
