@@ -26,6 +26,7 @@ namespace PataRoad.Common.GameDisplay
         public static TipsCollection Create()
         {
             var tips = new TipsCollection();
+            tips._openedTips = new List<TipDisplayData>();
             tips.GetTipInIndex(_defaultIndex);
             return tips;
         }
