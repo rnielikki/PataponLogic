@@ -139,6 +139,7 @@ namespace PataRoad.Core.Character.Bosses
             if (type != StatusEffectType.Fire && type != StatusEffectType.Tumble)
             {
                 Boss.BossTurnManager.End();
+                UseCustomDataPosition = false;
             }
         }
     }

@@ -76,6 +76,12 @@ namespace PataRoad.AppDebug
         {
             var current = Core.Map.MissionPoint.Current;
             if (current == null) return;
+            var map = Core.Global.GlobalData.CurrentSlot.MapInfo.NextMap.MapData;
+            if (map.Type == Core.Map.MapType.Boss)
+            {
+                var boss = FindObjectOfType<Core.Character.Bosses.EnemyBoss>();
+                if (boss != null) boss.Die();
+            }
             current.FilledMissionCondition = true;
             current.EndMission();
         }

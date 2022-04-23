@@ -67,6 +67,7 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
                 _button.enabled = false;
             }
             _totalRequirements = ((ItemRequirement[])_materialRequirements).Concat(_gemRequirements).ToArray();
+            if (_available) UpdateRequirements();
         }
         public void EnableIfAvailable()
         {

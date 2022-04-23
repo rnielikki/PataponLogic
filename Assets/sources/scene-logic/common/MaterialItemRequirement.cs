@@ -25,6 +25,7 @@
         public override void SetRequirementByLevel(int level)
         {
             base.SetRequirementByLevel(level);
+            _amount++;
             if (_item.Index >= 4) return;
             _item = Core.Items.ItemLoader.GetItem<Core.Items.MaterialData>(
                 Core.Items.ItemType.Material, _item.Group, GetItemIndex(level));

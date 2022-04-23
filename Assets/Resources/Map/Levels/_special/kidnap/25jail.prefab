@@ -603,6 +603,7 @@ MonoBehaviour:
   _attackTypeResistance:
     rid: 3406254590991007744
   _noLevelUp: 0
+  _noAnimation: 0
   _colorOverHealth:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1125,8 +1126,12 @@ PrefabInstance:
       value: 99
       objectReference: {fileID: 0}
     - target: {fileID: 4319609192642461194, guid: 30d2f14d3d73c2a47af7f061c747f095, type: 3}
+      propertyPath: _damage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319609192642461194, guid: 30d2f14d3d73c2a47af7f061c747f095, type: 3}
       propertyPath: _hitPoint
-      value: 25000
+      value: 18000
       objectReference: {fileID: 0}
     - target: {fileID: 4319609192642461194, guid: 30d2f14d3d73c2a47af7f061c747f095, type: 3}
       propertyPath: _maxAngle
@@ -1141,12 +1146,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4319609192642461194, guid: 30d2f14d3d73c2a47af7f061c747f095, type: 3}
+      propertyPath: managedReferences[3406254250948296704]._iceMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4319609192642461194, guid: 30d2f14d3d73c2a47af7f061c747f095, type: 3}
       propertyPath: managedReferences[3406254250948296704]._fireMultiplier
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4319609192642461194, guid: 30d2f14d3d73c2a47af7f061c747f095, type: 3}
       propertyPath: managedReferences[3406254250948296704]._stabMultiplier
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 4319609192642461194, guid: 30d2f14d3d73c2a47af7f061c747f095, type: 3}
       propertyPath: managedReferences[3406254250948296704]._crushMultiplier
@@ -1158,7 +1167,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4319609192642461194, guid: 30d2f14d3d73c2a47af7f061c747f095, type: 3}
       propertyPath: managedReferences[3406254250948296704]._soundMultiplier
-      value: 0.4
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4499755376496052637, guid: 30d2f14d3d73c2a47af7f061c747f095, type: 3}
       propertyPath: m_SortingOrder

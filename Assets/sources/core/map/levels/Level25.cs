@@ -61,6 +61,7 @@ namespace PataRoad.Core.Map.Levels
 
             //weather-
             Weather.WeatherInfo.Current.OnWeatherChanged.AddListener(ChangeStepsOnWeather);
+            PataponsManager.Current.SetMinMaxStepRatio(0.2f, 0.5f);
         }
         public void ChangeStepsOnWeather(Weather.WeatherType weatherType)
         {

@@ -59,6 +59,7 @@
             if (type == StatusEffectType.Stagger)
             {
                 Boss.BossTurnManager.DefineNextAction("fart");
+                UseCustomDataPosition = true;
             }
             else base.OnStatusEffect(type);
         }
