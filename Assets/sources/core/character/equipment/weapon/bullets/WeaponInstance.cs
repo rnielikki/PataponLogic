@@ -81,9 +81,13 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         private void Update()
         {
+            if (transform.position.y < -1)
+            {
+                DestroyThis();
+                return;
+            }
             var velo = _rigidbody.velocity;
             transform.eulerAngles = Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg * Vector3.back;
-            if (transform.position.y < -1) DestroyThis();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

@@ -40,7 +40,7 @@ namespace PataRoad.Core.Character.Bosses
             _movingBackQueued = false;
             CharAnimator.Animate("frozen");
             _status = ManborothStatus.Frozen;
-            _currentIceHitPoint = _iceHitPointInZero + _iceHitPointInOne;
+            _currentIceHitPoint = _iceHitPointInZero;
             if (!first)
             {
                 foreach (var patapon in _pataponsManager.Patapons)
@@ -48,12 +48,12 @@ namespace PataRoad.Core.Character.Bosses
                     patapon.StatusEffectManager.SetIce(2);
                 }
             }
-            BossAttackData.IgnoreStatusEffect();
         }
         protected override bool CanContinue() => base.CanContinue() && !_frozen && !_changingPhase;
         protected override void StartMovingBack()
         {
             _changingPhase = true;
+            BossAttackData.IgnoreStatusEffect();
             BossTurnManager.DefineNextAction("freeze");
         }
         public override bool TakeDamage(int damage)
@@ -65,15 +65,12 @@ namespace PataRoad.Core.Character.Bosses
                 _currentIceHitPoint -= damage;
                 if (_currentIceHitPoint <= _iceHitPointInOne)
                 {
-                    if (_frozen)
-                    {
-                        BossAttackData.StopIgnoringStatusEffect();
-                        _frozen = false;
-                    }
                     if (_currentIceHitPoint <= 0)
                     {
                         _status = ManborothStatus.NotFrozen;
                         _ice.sprite = _notFrozenImage;
+                        _frozen = false;
+                        BossAttackData.StopIgnoringStatusEffect();
                     }
                     else if (_status == ManborothStatus.Frozen)
                     {

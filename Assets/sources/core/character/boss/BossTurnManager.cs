@@ -92,7 +92,6 @@ namespace PataRoad.Core.Character.Bosses
         public void SetComboAttack(IEnumerable<string> actions)
         {
             if (Attacking) return;
-            Attacking = true;
             foreach (var action in actions) _actionQueue.Enqueue(action);
         }
         private void WillStartComboAttack()

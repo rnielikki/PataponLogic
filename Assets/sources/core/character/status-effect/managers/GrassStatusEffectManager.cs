@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Linq;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace PataRoad.Core.Character
 {
@@ -66,11 +66,15 @@ namespace PataRoad.Core.Character
                 .ToArray();
             foreach (var neighbour in neighbours)
             {
-                if (!neighbour.StatusEffectManager.IsOnStatusEffect)
+                if (!neighbour.StatusEffectManager.IsOnStatusEffect && (neighbour is Grass || neighbour is Structure))
                 {
-                    neighbour.StatusEffectManager.SetFire(
-                        Equipments.Logic.DamageCalculator.GetFireDuration(_target.Stat, neighbour.Stat, time)
-                    );
+                    Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(
+                        neighbour,
+                        StatusEffectType.Fire,
+                        0.5f,
+                        neighbour.Stat.FireResistance,
+                        Map.Weather.WeatherInfo.Current.FireRateMultiplier
+                        );
                 }
             }
         }

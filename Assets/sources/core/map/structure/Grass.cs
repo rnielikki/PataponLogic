@@ -66,11 +66,13 @@ namespace PataRoad.Core.Character
             if (!StatusEffectManager.IsOnStatusEffect || collision.CompareTag("Attack")) return;
             var attackable = collision.GetComponentInParent<IAttackable>();
             if (attackable != null &&
-                !attackable.StatusEffectManager.IsOnStatusEffect)
+                !attackable.StatusEffectManager.IsOnStatusEffect
+                && attackable.Stat.FireResistance != Mathf.Infinity)
             {
                 Equipments.Logic.DamageCalculator.CalculateAndSetStatusEffect(
-                    attackable, StatusEffectType.Fire, Stat.FireRate, Stat.FireResistance, Map.Weather.WeatherInfo.Current
-                        .FireRateMultiplier);
+                    attackable, StatusEffectType.Fire, 0.3f,
+                    Stat.FireResistance,
+                    Map.Weather.WeatherInfo.Current.FireRateMultiplier);
             }
         }
         public float GetDefenceValueOffset() => 1;

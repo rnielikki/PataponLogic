@@ -25,6 +25,7 @@ namespace PataRoad.SceneLogic.Patapolis.ItemExchange
         public bool IsGem => _isGem;
         public float AmountRatio { get; private set; }
         public int AmountRequirement { get; private set; }
+        private bool _ready;
 
         internal void Init(ItemExchangeToggleMenu menu, int index)
         {
@@ -55,6 +56,11 @@ namespace PataRoad.SceneLogic.Patapolis.ItemExchange
             _image.sprite = _inputItem.Image;
             UpdateText();
             _button.onClick.AddListener(() => menu.Window.Exchange(this));
+            _ready = true;
+        }
+        private void OnEnable()
+        {
+            if (_ready) UpdateText();
         }
         internal void UpdateText()
         {

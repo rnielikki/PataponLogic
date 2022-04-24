@@ -49,10 +49,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
@@ -60,7 +64,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3573879862058799532}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 8745907643688257527}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
@@ -68,11 +80,23 @@ PrefabInstance:
       value: Drop
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Drop
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PataRoad.Core.Items.LeveledItemDropBehvaiour, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PataRoad.Core.Items.ItemDropBehaviour, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
       propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7869386983148126797, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
+      propertyPath: _onAfterDeath.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7869386983148126799, guid: bad2431951f592d4ea6272e4344ff441, type: 3}
@@ -144,3 +168,17 @@ MonoBehaviour:
   _minItemLevel: 7
   _maxItemLevel: 9
   _itemGroupName: 
+--- !u!114 &8745907643688257527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967673654963967970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c665c1a42ac9af945ad5704e49281f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dropData:
+  - {fileID: 11400000, guid: 19b5cb144108e6c41b5a8272933adca4, type: 2}

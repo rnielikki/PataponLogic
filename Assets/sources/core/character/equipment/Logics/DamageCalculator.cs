@@ -26,9 +26,9 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 var fireRateMultiplier = Map.Weather.WeatherInfo.Current.FireRateMultiplier;
                 var probability = CalculateStatusEffect(
                     stat.FireRate,
-                    (1 - ((float)receiver.CurrentHitPoint / receiver.Stat.HitPoint)),
+                    ((float)receiver.CurrentHitPoint / receiver.Stat.HitPoint) * receiver.Stat.FireResistance,
                     fireRateMultiplier);
-                if (Common.Utils.RandomByProbability(probability))
+                if (probability > 0 && Common.Utils.RandomByProbability(probability))
                 {
                     receiver.StatusEffectManager.SetFire(2 + Mathf.RoundToInt(probability * 10 * fireRateMultiplier));
 
@@ -95,7 +95,10 @@ namespace PataRoad.Core.Character.Equipments.Logic
                             statusEffectType = StatusEffectType.Sleep;
                             finalProbability = sleepProbability;
                         }
-                        SetStatusEffect(receiver, statusEffectType, finalProbability);
+                        if (statusEffectType != StatusEffectType.None)
+                        {
+                            SetStatusEffect(receiver, statusEffectType, finalProbability);
+                        }
                     }
                     //--- status effect end
                 }
@@ -236,7 +239,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
 
         private static bool SetStatusEffect(IAttackable receiver, StatusEffectType type, float probability)
         {
-            if (Common.Utils.RandomByProbability(probability))
+            if (probability > 0 && Common.Utils.RandomByProbability(probability))
             {
                 switch (type)
                 {

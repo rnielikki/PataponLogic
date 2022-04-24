@@ -72,9 +72,13 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private void Update()
         {
             if (!_rotateOverTime || _grounded) return;
+            else if (transform.position.y < -1)
+            {
+                OnGround();
+                return;
+            }
             var velo = _rigidbody.velocity;
             transform.eulerAngles = Mathf.Atan2(velo.x, velo.y) * Mathf.Rad2Deg * Vector3.back;
-            if (transform.position.y < -1) OnGround();
         }
     }
 }
