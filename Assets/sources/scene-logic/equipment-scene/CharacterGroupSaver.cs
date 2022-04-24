@@ -19,9 +19,7 @@ namespace PataRoad.SceneLogic.EquipmentScene
 
         void Start()
         {
-            AvailableClasses = Core.Global.GlobalData.CurrentSlot.Inventory
-                .GetKeyItems<Core.Items.ClassMemoryData>("Class")
-                .Select(item => item.Class).ToArray();
+            AvailableClasses = Core.Global.Slots.SlotStatusReader.GetAvailableClasses().ToArray();
             _groupObjects = Core.Character.Patapons.PataponGroupGenerator.Generate(transform, AvailableClasses);
             _pataponDataMap = _groupObjects.ToDictionary(
                 kv => kv.Value,

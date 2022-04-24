@@ -46,17 +46,7 @@ namespace PataRoad.Core.Character.Hazorons
 
         private void Awake()
         {
-            Charged = _charged;
-            OnFever = true;
-            DefaultWorldPosition = transform.position.x;
             Init();
-            _realStat = _data.Stat;
-            Stat = _realStat;
-            DistanceCalculator = _isDarkOne
-                ? DistanceCalculator.GetNonPataHazoDistanceCalculator(this)
-                : DistanceCalculator.GetHazoronDistanceCalculator(this);
-            DistanceManager = gameObject.AddComponent<DistanceManager>();
-            DistanceManager.DistanceCalculator = DistanceCalculator;
             if (_isOnTower) _realStat.AddKnockbackResistance(Mathf.Infinity);
 
             StatusEffectManager.AddRecoverAction((_) =>
@@ -71,7 +61,6 @@ namespace PataRoad.Core.Character.Hazorons
                     Attack();
                 }
             });
-            _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
             foreach (var modifier in GetComponents<Levels.IHazoronStatModifier>())
             {
                 modifier.SetModifyTarget(_realStat);
@@ -85,6 +74,25 @@ namespace PataRoad.Core.Character.Hazorons
             _maxAttackSight = IsMeleeUnit ? CharacterEnvironment.MaxAttackDistance : Sight;
 
             _isReady = true;
+        }
+        protected override void Init()
+        {
+            Charged = _charged;
+            OnFever = true;
+            DefaultWorldPosition = transform.position.x;
+
+            base.Init();
+
+            _realStat = _data.Stat;
+            Stat = _realStat;
+
+            DistanceCalculator = _isDarkOne
+                ? DistanceCalculator.GetNonPataHazoDistanceCalculator(this)
+                : DistanceCalculator.GetHazoronDistanceCalculator(this);
+
+            DistanceManager = gameObject.AddComponent<DistanceManager>();
+            DistanceManager.DistanceCalculator = DistanceCalculator;
+            _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
         }
         protected void Attack()
         {

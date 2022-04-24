@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using PataRoad.Core.Items;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace PataRoad.SceneLogic.Patapolis.ItemExchange
 {
@@ -9,6 +11,7 @@ namespace PataRoad.SceneLogic.Patapolis.ItemExchange
         [SerializeField]
         InventoryRefresher _inventoryStatus;
         ItemExchangeToggleMenu[] _menu;
+        private IEnumerable<Core.Character.Class.ClassType> _availableClasses;
         private void Awake()
         {
             _menu = GetComponentsInChildren<ItemExchangeToggleMenu>(true);
@@ -43,9 +46,30 @@ namespace PataRoad.SceneLogic.Patapolis.ItemExchange
             }
             void StartExchanging()
             {
-                Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(data.InputItem, data.AmountRequirement);
-                Core.Global.GlobalData.CurrentSlot.Inventory.AddItem(data.OutputItem);
-                Core.Global.GlobalData.CurrentSlot.ExchangeRates.RaiseRate(data.Material, data.InputItem.Index);
+                var currentSlot = Core.Global.GlobalData.CurrentSlot;
+                var inventory = currentSlot.Inventory;
+
+                inventory.RemoveItem(data.InputItem, data.AmountRequirement);
+                inventory.AddItem(data.OutputItem);
+                currentSlot.ExchangeRates.RaiseRate(data.Material, data.InputItem.Index);
+                //gem
+                if (data.InputItem.ItemType == ItemType.Equipment && data.InputItem is EquipmentData eq)
+                {
+                    var diff = inventory.GetAmount(data.InputItem)
+                        - currentSlot.PataponInfo.GetEquippedCount(eq);
+                    if (diff < 0)
+                    {
+                        if (_availableClasses == null)
+                        {
+                            _availableClasses = Core.Global.Slots.SlotStatusReader.GetAvailableClasses();
+                        }
+                        while (diff < 0)
+                        {
+                            currentSlot.PataponInfo.RemoveEquipment(_availableClasses, eq);
+                            diff++;
+                        }
+                    }
+                }
                 Core.Global.GlobalData.Sound.PlayInScene(_kaChingSound);
                 data.UpdateText();
                 _inventoryStatus.Refresh();

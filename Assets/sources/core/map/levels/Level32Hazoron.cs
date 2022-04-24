@@ -10,20 +10,11 @@ namespace PataRoad.Core.Map.Levels
         bool _walking;
         private void Awake()
         {
-            Charged = _charged;
-            OnFever = true;
-            DefaultWorldPosition = transform.position.x;
             Init();
-            Stat = _data.Stat;
-            DistanceCalculator = _isDarkOne
-                ? DistanceCalculator.GetNonPataHazoDistanceCalculator(this)
-                : DistanceCalculator.GetHazoronDistanceCalculator(this);
-            DistanceManager = gameObject.AddComponent<DistanceManager>();
-            DistanceManager.DistanceCalculator = DistanceCalculator;
 
             StatusEffectManager.AddRecoverAction((_) =>
             {
-                _walking = false;
+                _walking = true;
                 IsAttacking = false;
                 ClassData.AttackMoveData.WasHitLastTime = false;
                 if (IsFlyingUnit)
@@ -35,26 +26,28 @@ namespace PataRoad.Core.Map.Levels
                     Attack();
                 }
             });
-            _attackTypeIndex = (_data as HazoronData).AttackTypeIndex;
         }
         private void Update()
         {
             if (StatusEffectManager.IsOnStatusEffect) return;
-            var pos = transform.position;
-            pos.x = DistanceCalculator.GetSafeForwardPosition(pos.x + 0.1f * Time.deltaTime);
-            transform.position = pos;
-            DefaultWorldPosition = transform.position.x;
             var hasTarget = DistanceCalculator.GetClosestForAttack() != null;
             if ((!IsAttacking && hasTarget) || ClassData.AttackMoveData.WasHitLastTime)
             {
                 _walking = false;
                 Attack();
             }
-            else if (!hasTarget && !_walking)
+            else if (!hasTarget && IsAttacking)
             {
                 StopAttacking(false);
                 _walking = true;
                 CharAnimator.Animate("walk");
+            }
+            if (_walking)
+            {
+                var pos = transform.position;
+                pos.x = DistanceCalculator.GetSafeForwardPosition(pos.x + 0.5f * Time.deltaTime);
+                transform.position = pos;
+                DefaultWorldPosition = transform.position.x;
             }
         }
     }

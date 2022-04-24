@@ -84,7 +84,7 @@ namespace PataRoad.Core.Character
         [SerializeField]
         private bool _ignoreTumble;
         public bool IgnoreTumble => _ignoreTumble;
-        protected void Init()
+        protected virtual void Init()
         {
             _data = GetComponent<SmallCharacterData>();
             _data.Init();

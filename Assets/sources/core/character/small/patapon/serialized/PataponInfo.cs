@@ -123,18 +123,44 @@ namespace PataRoad.Core.Character.Patapons.Data
             PataponData currentPataponData, EquipmentData data)
         {
             //1. not in squad
-            var resultnPataponMeta = GetPataponMetaFrom(allAvailableClasses.Except(_currentClasses), data);
-            if (resultnPataponMeta != null) return resultnPataponMeta.Value;
+            var resultPataponMeta = GetPataponMetaFrom(allAvailableClasses.Except(_currentClasses), data);
+            if (resultPataponMeta != null) return resultPataponMeta.Value;
 
             var currentClassWrap = new Class.ClassType[] { currentPataponData.Type };
 
             //2. in squad but not current 
-            resultnPataponMeta = GetPataponMetaFrom(_currentClasses.Except(currentClassWrap), data);
-            if (resultnPataponMeta != null) return resultnPataponMeta.Value;
+            resultPataponMeta = GetPataponMetaFrom(_currentClasses.Except(currentClassWrap), data);
+            if (resultPataponMeta != null) return resultPataponMeta.Value;
 
             //3. Finally from self. final result shouldn't be null
-            resultnPataponMeta = GetPataponMetaFrom(currentClassWrap, data, currentPataponData);
-            return resultnPataponMeta.Value;
+            resultPataponMeta = GetPataponMetaFrom(currentClassWrap, data, currentPataponData);
+            return resultPataponMeta.Value;
+        }
+        public void RemoveEquipment(IEnumerable<Class.ClassType> allAvailableClasses,
+            EquipmentData equipmentData)
+        {
+            Class.ClassType type = Class.ClassType.Yaripon;
+            int index = -1;
+
+            //1. not in squad
+            var resultPataponMeta = GetPataponMetaFrom(allAvailableClasses.Except(_currentClasses), equipmentData);
+            if (resultPataponMeta != null)
+            {
+                (type, index) = resultPataponMeta.Value;
+            }
+            else
+            {
+                resultPataponMeta = GetPataponMetaFrom(_currentClasses, equipmentData);
+                if (resultPataponMeta != null)
+                {
+                    (type, index) = resultPataponMeta.Value;
+                }
+            }
+            if (index > -1)
+            {
+                var defaultEquipment = ItemLoader.GetItem<EquipmentData>(ItemType.Equipment, equipmentData.Group, 0);
+                _classInfoMap[type].SetEquipmentInIndex(index, defaultEquipment);
+            }
         }
         public bool IsEquippedOutside(
             IEnumerable<Class.ClassType> allAvailableClasses,
