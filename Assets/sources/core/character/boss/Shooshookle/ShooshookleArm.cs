@@ -20,7 +20,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         void BreakArm()
         {
-            if (!_arm.activeSelf) return;
+            if (!_arm.activeSelf || _parent == null) return;
             _arm.SetActive(false);
             _particle.Play();
             _parent.LoseArm();

@@ -11,6 +11,7 @@ namespace PataRoad.Core.Character.Bosses
         }
         public float TakeDamage(int damage)
         {
+            if (_parent == null) return 0;
             _parent.TakeDamage(damage);
             return 0.8f;
         }

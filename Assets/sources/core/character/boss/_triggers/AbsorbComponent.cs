@@ -22,6 +22,10 @@ namespace PataRoad.Core.Character.Bosses
             _absorber = GetComponentInParent<IAbsorbableBossBehaviour>();
             if (!(_absorber is EnemyBossBehaviour)) _absorber = null;
         }
+        private void OnDisable()
+        {
+            StopAttacking();
+        }
         internal void Attack()
         {
             if (_absorber == null) return; //won't activate if it isn't enemy boss
