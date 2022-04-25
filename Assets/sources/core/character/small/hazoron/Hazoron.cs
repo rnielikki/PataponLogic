@@ -51,6 +51,7 @@ namespace PataRoad.Core.Character.Hazorons
 
             StatusEffectManager.AddRecoverAction((_) =>
             {
+                if (IsDead) return;
                 IsAttacking = false;
                 if (IsFlyingUnit)
                 {
@@ -96,7 +97,7 @@ namespace PataRoad.Core.Character.Hazorons
         }
         protected void Attack()
         {
-            if (!_isReady || IsAttacking) return;
+            if (!_isReady || IsAttacking || IsDead) return;
             //reset stat that can be modified by performcommandaciton()
             Stat.SetValuesTo(_realStat);
             _animatingWalk = false;

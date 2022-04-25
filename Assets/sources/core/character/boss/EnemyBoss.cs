@@ -110,8 +110,10 @@ namespace PataRoad.Core.Character.Bosses
             Level = level;
             BossAttackData.UpdateStatForBoss(level);
         }
-        protected (float distance, float maxDistance) CalculateAttack() =>
-            _behaviour.CalculateAttack();
+        protected void CalculateAttack()
+        {
+            (AttackDistance, MaxAttackDistance) = _behaviour.CalculateAttack();
+        }
         protected virtual bool CanContinue() => !BossTurnManager.Attacking && !IsDead && StatusEffectManager.CanContinue;
         protected void Update()
         {
@@ -157,9 +159,13 @@ namespace PataRoad.Core.Character.Bosses
                 if (DistanceCalculator.GetTargetOnSight(Sight) != null)
                 {
                     _sleeping = false;
-                    (AttackDistance, MaxAttackDistance) = CalculateAttack();
+                    CalculateAttack();
                 }
                 else return;
+            }
+            else if (BossTurnManager.IsEmpty)
+            {
+                CalculateAttack();
             }
             //phase 3.???: attack if out of max distance. WELL DONE KIBAPONS!!!
             var closest = DistanceCalculator.GetClosest() ?? _pataponsManager.transform.position;
@@ -175,7 +181,7 @@ namespace PataRoad.Core.Character.Bosses
                 closest.x + CharacterSize + AttackDistance), 0);
             var offset = Stat.MovementSpeed * Time.deltaTime;
 
-            if (Mathf.Abs(transform.position.x - targetPos.x) > offset)
+            if (!DistanceCalculator.IsInTargetRange(targetPos.x, offset))
             {
                 if (!_moving)
                 {
@@ -193,7 +199,6 @@ namespace PataRoad.Core.Character.Bosses
         {
             _moving = false;
             BossAttackData.OnIdle();
-            if (BossTurnManager.IsEmpty) CalculateAttack();
             BossTurnManager.StartAttack(1);
             _zoom.enabled = false;
         }

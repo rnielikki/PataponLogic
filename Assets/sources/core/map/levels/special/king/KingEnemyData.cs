@@ -13,7 +13,7 @@ namespace PataRoad.Core.Map.Levels.King
                 case 0:
                     return new BossAttackMoveSegment("wall", 15, 15);
                 case 1:
-                    return new BossAttackMoveSegment("meteor", 15, 15);
+                    return new BossAttackMoveSegment("meteor", 0, 0);
                 case 2:
                     return new BossAttackMoveSegment("rush", 15, 15);
                 default:

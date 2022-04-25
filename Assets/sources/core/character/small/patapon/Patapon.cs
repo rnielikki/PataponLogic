@@ -258,6 +258,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         protected void Attack()
         {
+            if (IsDead) return;
             IsAttacking = true;
             ClassData.Attack();
         }
@@ -266,6 +267,7 @@ namespace PataRoad.Core.Character.Patapons
         /// </summary>
         protected void Defend()
         {
+            if (IsDead) return;
             IsAttacking = true;
             ClassData.Defend();
         }

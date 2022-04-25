@@ -44,7 +44,7 @@ namespace PataRoad.Core.Character.Equipments
                 () => InstantiateObjectWithReleaseToPool(gObject, newPool),
                 OnGet,
                 OnRelease,
-                (obj) => Destroy(obj),
+                null,//(obj) => Destroy(obj),
                 false,
                 initialSize,
                 maxSize
