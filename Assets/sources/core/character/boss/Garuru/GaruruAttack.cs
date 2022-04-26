@@ -41,6 +41,8 @@ namespace PataRoad.Core.Character.Bosses
 
         private Collider2D[] _raycastColliders;
         private Collider2D[] _nonTriggerColliders;
+        [SerializeField]
+        Collider2D _rushPushbackCollider;
 
         private bool _rushAttacking;
         private bool _movingToNormal;
@@ -80,13 +82,11 @@ namespace PataRoad.Core.Character.Bosses
                 _nonRaycastLayer = layers.SelfLayerMaskNoRayCast;
 
                 _raycastColliders = allColliders.Where(col =>
-                col.gameObject.layer == _raycastLayer).ToArray();
+                col.gameObject.layer == _raycastLayer && col != _rushPushbackCollider).ToArray();
 
-                _nonTriggerColliders = allColliders.Where(col => !col.isTrigger).ToArray();
+                _nonTriggerColliders = allColliders
+                    .Where(col => !col.isTrigger && col != _rushPushbackCollider).ToArray();
             }
-
-            //.................... temp.
-            //_isMonsterForm = true;
         }
         //----------------- form change
         public void ChangeForm()
@@ -150,6 +150,7 @@ namespace PataRoad.Core.Character.Bosses
             _rushAttacking = true;
             MoveAbsolutePosition(_rushTarget);
             _movementSpeed = (_rushOffset + _moveOffset) / 2.25f;
+            _rushPushbackCollider.enabled = true;
             foreach (var collider in _raycastColliders)
             {
                 collider.gameObject.layer = _nonRaycastLayer;
@@ -182,6 +183,7 @@ namespace PataRoad.Core.Character.Bosses
             {
                 collider.isTrigger = false;
             }
+            _rushPushbackCollider.enabled = false;
             _enemy.BossTurnManager.EndAttack();
             _movingToNormal = false;
             AttackPaused = false;
@@ -227,16 +229,22 @@ namespace PataRoad.Core.Character.Bosses
 
         internal override void UpdateStatForBoss(int level)
         {
+            UpdateStatForBoss(level, _stat);
+            UpdateStatForBoss(level, _monsterStat);
+            Boss.SetMaximumHitPoint(_stat.HitPoint);
+        }
+        private void UpdateStatForBoss(int level, Stat stat)
+        {
             var value = 0.8f + (level * 0.25f);
-            _stat.MultipleDamage(value);
-            _stat.DefenceMin += (level - 1) * 0.005f;
-            _stat.DefenceMax += (level - 1) * 0.01f;
-            Boss.SetMaximumHitPoint(Mathf.RoundToInt(_stat.HitPoint * value));
-            _stat.AddCriticalResistance(level * 0.05f);
-            _stat.AddStaggerResistance(level * 0.05f);
-            _stat.AddFireResistance(level * 0.03f);
-            _stat.AddIceResistance(level * 0.03f);
-            _stat.AddSleepResistance(level * 0.03f);
+            stat.MultipleDamage(value);
+            stat.DefenceMin += (level - 1) * 0.005f;
+            stat.DefenceMax += (level - 1) * 0.01f;
+            stat.HitPoint = Mathf.RoundToInt(stat.HitPoint * value);
+            stat.AddCriticalResistance(level * 0.05f);
+            stat.AddStaggerResistance(level * 0.05f);
+            stat.AddFireResistance(level * 0.03f);
+            stat.AddIceResistance(level * 0.03f);
+            stat.AddSleepResistance(level * 0.03f);
         }
         private void Update()
         {

@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e332b66898ca34a824f313e75ba480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weather: 1
+  _weather: 0
   _randomWeather: 0
   _randomWind: 0
   _windType: 0
@@ -308,8 +308,43 @@ MonoBehaviour:
     _useLine: 1
     _image: {fileID: 21300000, guid: fe460a2bb7906c347b7b6e8cc9440d75, type: 3}
     _name: Kiba-Hatapon
-    _content: Let me see. "In this contract, Hazoron is Contract provider and Patapons
-      are..." Are you kidding?
+    _content: Let me see...
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 21300000, guid: ba0dbcfbd5c97d647a176467ab2f1cdd, type: 3}
+    _name: Kiba-Hatapon
+    _content: '"Hazoron, as a provider of contract, can change the articles below,
+      on emergency." Which emergency? If you can change the content without agreement,
+      you can abuse this part.'
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 21300000, guid: 8557ca722e575754cac8d868689bf1e8, type: 3}
+    _name: Vill
+    _content: You still don't trust us?
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 21300000, guid: ba0dbcfbd5c97d647a176467ab2f1cdd, type: 3}
+    _name: Kiba-Hatapon
+    _content: Come on, this is a contract. The content of contract shouldn't start
+      from the trusts. If trust can solve, the contract is useless.
+  - _events:
+      m_PersistentCalls:
+        m_Calls: []
+    _waitingSeconds: 0
+    _useLine: 1
+    _image: {fileID: 21300000, guid: aba532ad1baf437478e05c29037ffba1, type: 3}
+    _name: Vill
+    _content: Well... okay, I'll fix that part. Without agreement, nobody can change
+      it, okay?
   - _events:
       m_PersistentCalls:
         m_Calls: []
@@ -1795,6 +1830,18 @@ PrefabInstance:
     - target: {fileID: 3426145244282982141, guid: af6ed9406e5be6542a65d84422bfd63d, type: 3}
       propertyPath: m_Name
       value: ImageDisplay
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451396777878399947, guid: af6ed9406e5be6542a65d84422bfd63d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451396777878399947, guid: af6ed9406e5be6542a65d84422bfd63d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451396777878399947, guid: af6ed9406e5be6542a65d84422bfd63d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4643926546812989856, guid: af6ed9406e5be6542a65d84422bfd63d, type: 3}
       propertyPath: m_Color.b

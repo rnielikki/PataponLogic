@@ -33,8 +33,12 @@ namespace PataRoad.SceneLogic.Ending
         private EndingCreditData _currentData => _currentIndex < 0 ? null : _data[_currentIndex];
         float _currentShowingSeconds;
 
+        private Story.StoryLoader _storyLoader;
+
         private void Start()
         {
+            _storyLoader = FindObjectOfType<Story.StoryLoader>();
+
             _creditTitle1.gameObject.SetActive(false);
             _creditTitle2.gameObject.SetActive(false);
             _credit1.gameObject.SetActive(false);
@@ -136,6 +140,10 @@ namespace PataRoad.SceneLogic.Ending
             {
                 target.gameObject.SetActive(false);
             }
+        }
+        private void OnDestroy()
+        {
+            if (_storyLoader != null) _storyLoader.ForceDestroy();
         }
     }
 }

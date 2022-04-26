@@ -101,6 +101,10 @@ namespace PataRoad.Story
             //-- Story done, you don't need this anymore!
             Destroy(gameObject);
         }
+        public void ForceDestroy()
+        {
+            Destroy(gameObject);
+        }
         private void OnDestroy()
         {
             _current = null;
