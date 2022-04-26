@@ -15,6 +15,9 @@ namespace PataRoad.Core.Character
         private float _xDirection;
         private bool _isRigidbodyActive;
         private Vector2 _force = new Vector2(2400, 2200);
+
+        protected override Transform _transform => _smallCharacter.RootTransform;
+
         private void Awake()
         {
             Init();
@@ -23,10 +26,12 @@ namespace PataRoad.Core.Character
         }
         protected override void Init()
         {
-            base.Init();
+            _target = GetComponent<IAttackable>();
+            _character = _target as ICharacter;
             _smallCharacter = _target as SmallCharacter;
+            InitEffects();
+
             _xDirection = _smallCharacter.MovingDirection.x;
-            if (!string.IsNullOrEmpty(_smallCharacter.RootName)) _transform = transform.Find(_smallCharacter.RootName);
             _soundCollection = _smallCharacter.Sounds;
             _isPatapon = _smallCharacter is Patapons.Patapon;
             _rigidbody = GetComponent<Rigidbody2D>();

@@ -154,7 +154,10 @@ namespace PataRoad.Core.Character
         }
         public void PauseAttack()
         {
-            if (_lateAnimating) _currentOffset += _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            if (_lateAnimating && _target.IsAttacking)
+            {
+                _currentOffset += _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            }
         }
 
         private void InitLateAnimation(float attackSeconds)

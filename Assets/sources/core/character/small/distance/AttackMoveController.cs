@@ -95,6 +95,7 @@ namespace PataRoad.Core.Character
             else _character.CharAnimator.ClearLateAnimation();
             StopAllCoroutines();
             _attacking = false;
+            _movingRight = _character.MovingDirection.x < 0;
 
             _onAttackCommand = keepAttackCommand;
 
@@ -114,9 +115,9 @@ namespace PataRoad.Core.Character
             {
                 _moving = false;
                 _attacking = true;
-                _data.WasHitLastTime = true;
                 do
                 {
+                    _data.WasHitLastTime = false;
                     yield return _animator.AnimateAttack(_currentModel.AnimationType, _attackSeconds, _currentModel.AttackSpeedMultiplier);
                 } while (_data.WasHitLastTime);
                 _attacking = false;

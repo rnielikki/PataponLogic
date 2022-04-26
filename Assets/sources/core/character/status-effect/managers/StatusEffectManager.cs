@@ -11,7 +11,7 @@ namespace PataRoad.Core.Character
         public bool IgnoreStatusEffect { get; set; }
         protected bool _isOnFire => CurrentStatusEffect == StatusEffectType.Fire;
 
-        protected Transform _transform;
+        protected virtual Transform _transform => transform;
 
         private System.Collections.Generic.Dictionary<StatusEffectType, GameObject> _effectObjects;
         public virtual bool CanContinue => !IsOnStatusEffect && !_target.IsDead;
@@ -39,8 +39,11 @@ namespace PataRoad.Core.Character
         protected virtual void Init()
         {
             _target = GetComponent<IAttackable>();
+            InitEffects();
+        }
+        protected void InitEffects()
+        {
             var effectInstantiator = FindObjectOfType<StatusEffectData>();
-            _transform = transform;
             if (effectInstantiator != null)
             {
                 _effectObjects = IsBigTarget ? effectInstantiator.GetBossStatusEffectMap(_transform)

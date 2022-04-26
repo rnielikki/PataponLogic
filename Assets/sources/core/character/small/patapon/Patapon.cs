@@ -240,10 +240,6 @@ namespace PataRoad.Core.Character.Patapons
                     DistanceManager.MoveToInitialPlace(Stat.MovementSpeed * 2);
                     break;
             }
-            if (song != CommandSong.Ponpon || song != CommandSong.Chakachaka)
-            {
-                ClassData.AttackMoveData.WasHitLastTime = false;
-            }
         }
         /// <summary>
         /// PATAPATA Input
