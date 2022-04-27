@@ -13,8 +13,6 @@ namespace PataRoad.SceneLogic.Intro
         InputAction _navAction;
         [SerializeField]
         Story.StoryLineLoader _nextStory;
-        [SerializeField]
-        Image _content;
 
         private void Awake()
         {
@@ -80,7 +78,7 @@ namespace PataRoad.SceneLogic.Intro
         private void SetName(string text)
         {
             Core.Global.GlobalData.CurrentSlot.SetAlmightyName(text);
-            _content.gameObject.SetActive(false);
+            gameObject.SetActive(false);
             _nextStory.ReadLines();
         }
         private void OnDestroy()

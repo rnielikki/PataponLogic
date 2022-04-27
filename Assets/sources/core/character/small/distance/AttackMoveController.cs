@@ -28,6 +28,7 @@ namespace PataRoad.Core.Character
 
         private DistanceCalculator _distanceCalculator;
         private bool _movingRight;
+        private bool _firstMovingInThisTurn;
 
         private bool _onAttackCommand;
         public bool IsAttacking => _attacking;
@@ -39,6 +40,7 @@ namespace PataRoad.Core.Character
             _animator = _character.CharAnimator;
             _distanceCalculator = _character.DistanceCalculator;
             _movingRight = _character.MovingDirection.x < 0;
+            _firstMovingInThisTurn = false;
         }
         /// <summary>
         /// Adds model instructions for any type of future attacking command.
@@ -95,7 +97,7 @@ namespace PataRoad.Core.Character
             else _character.CharAnimator.ClearLateAnimation();
             StopAllCoroutines();
             _attacking = false;
-            _movingRight = _character.MovingDirection.x < 0;
+            _firstMovingInThisTurn = false;
 
             _onAttackCommand = keepAttackCommand;
 
@@ -191,8 +193,12 @@ namespace PataRoad.Core.Character
             transform.position = Vector2.MoveTowards(transform.position, pos * Vector2.right, _movingSpeed * Time.deltaTime);
             var movingRight = transform.position.x < savedPosition.x;
 
-            if (_movingRight != movingRight || transform.position.x == pos) AnimateAttack();
-            _movingRight = movingRight;
+            if (!_firstMovingInThisTurn)
+            {
+                _firstMovingInThisTurn = true;
+                _movingRight = movingRight;
+            }
+            else if (_movingRight != movingRight || transform.position.x == pos) AnimateAttack();
         }
     }
 }

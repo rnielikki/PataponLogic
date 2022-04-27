@@ -30,6 +30,9 @@ namespace PataRoad.Core.Character.Bosses
         private string _movingBackAnimation = "nothing";
         protected string _stopAnimation = "stop";
 
+        private float _minStaggerResistance;
+        private float _maxStaggerResistance;
+
         void Awake()
         {
             Init();
@@ -60,9 +63,10 @@ namespace PataRoad.Core.Character.Bosses
         public override bool TakeDamage(int damage)
         {
             base.TakeDamage(damage);
+            float current = (float)CurrentHitPoint / Stat.HitPoint;
+            Stat.SetStaggerResistance(Mathf.Lerp(_minStaggerResistance, _maxStaggerResistance, current));
             if (!_movingBackQueued)
             {
-                float current = (float)CurrentHitPoint / Stat.HitPoint;
                 if (changedPhase(current))
                 {
                     _movingBackQueued = true;
@@ -109,6 +113,8 @@ namespace PataRoad.Core.Character.Bosses
         {
             Level = level;
             BossAttackData.UpdateStatForBoss(level);
+            _minStaggerResistance = Stat.StaggerResistance - 0.2f;
+            _maxStaggerResistance = Stat.StaggerResistance + 0.3f;
         }
         protected void CalculateAttack()
         {

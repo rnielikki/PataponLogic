@@ -452,6 +452,12 @@ namespace PataRoad.Core.Character
             InfinitySafeResistanceAdd(value,
                 ref _infiniteSleepResistanceCount, ref _infiniteSleepResistance, ref _sleepResistance, negative);
 
+        public void SetStaggerResistance(float value)
+        {
+            InfinitySafeResistanceAdd(value, ref _infiniteStaggerResistanceCount, ref _infiniteStaggerResistance,
+                ref _staggerResistance, false, true);
+        }
+
         private void AddResistancesFromStat(Stat otherStat, bool negative = false)
         {
             AddCriticalResistance(otherStat.CriticalResistance, negative);
@@ -462,7 +468,7 @@ namespace PataRoad.Core.Character
             AddSleepResistance(otherStat.SleepResistance, negative);
         }
         private void InfinitySafeResistanceAdd(float valueToAdd, ref int resistCount,
-            ref bool infinityResist, ref float realValue, bool negative)
+            ref bool infinityResist, ref float realValue, bool negative, bool directSet = false)
         {
             if (negative) valueToAdd = -valueToAdd;
             if (valueToAdd == UnityEngine.Mathf.Infinity)
@@ -477,7 +483,8 @@ namespace PataRoad.Core.Character
             }
             else
             {
-                realValue += valueToAdd;
+                if (!directSet) realValue += valueToAdd;
+                else realValue = valueToAdd;
             }
         }
     }

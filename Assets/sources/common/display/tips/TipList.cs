@@ -17,6 +17,8 @@ namespace PataRoad.Common.GameDisplay
         RectTransform _progressBar;
         [SerializeField]
         TMPro.TextMeshProUGUI _progressText;
+        bool _started;
+        private TipListItem _currentItem;
         void Start()
         {
             //progress bar
@@ -37,7 +39,23 @@ namespace PataRoad.Common.GameDisplay
             if (firstItem == null) throw new System.ArgumentException("Opened tip amount must be at least 1");
             _scrollList.Init(firstItem);
             _scrollList.SetMaximumScrollLength(len, firstItem);
-            firstItem.Selectable.Select();
+            _currentItem = firstItem;
+            _currentItem.Selectable.Select();
+            _started = true;
+        }
+        private void OnEnable()
+        {
+            if (!_started) return;
+            _currentItem.Selectable.Select();
+        }
+        private void OnDisable()
+        {
+            var lastSelect = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            if (lastSelect != null)
+            {
+                var tipItem = lastSelect.GetComponent<TipListItem>();
+                if (tipItem != null) _currentItem = tipItem;
+            }
         }
     }
 }

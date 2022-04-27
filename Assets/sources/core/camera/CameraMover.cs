@@ -46,7 +46,6 @@ namespace PataRoad.Core.CameraController
         {
             var input = Global.GlobalData.Input.actions;
             _action = input.FindAction("Player/Camera");
-            _currentMovingSensitivity = _currentMovingSensitivity;
             _action.started += SetInputCameraMove;
             _action.canceled += ReleaseInputCameraMove;
             _action.Enable();

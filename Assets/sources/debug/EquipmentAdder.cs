@@ -1,4 +1,5 @@
-﻿using PataRoad.Core.Items;
+﻿/*
+using PataRoad.Core.Items;
 using UnityEngine;
 
 namespace PataRoad.AppDebug
@@ -39,3 +40,4 @@ namespace PataRoad.AppDebug
         }
     }
 }
+*/

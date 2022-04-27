@@ -11,6 +11,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
 
         private const int initialCount = 30;
         private const int maxCount = 100;
+        private static Color _gradientColor = new Color(0.63f, 0, 0);
 
         internal void DisplayDamage(int damage, Vector2 position, bool isPatapon, bool isCritical)
         {
@@ -28,7 +29,20 @@ namespace PataRoad.Core.Character.Equipments.Logic
             txt.transform.position = position;
             if (isCritical)
             {
+                SetGradient(_gradientColor);
                 txtPro.fontWeight = TMPro.FontWeight.Heavy;
+            }
+            else
+            {
+                SetGradient(Color.white);
+                txtPro.fontWeight = TMPro.FontWeight.SemiBold;
+            }
+            void SetGradient(Color color)
+            {
+                var gra = txtPro.colorGradient;
+                gra.topLeft = color;
+                gra.topRight = color;
+                txtPro.colorGradient = gra;
             }
         }
     }

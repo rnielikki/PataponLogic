@@ -1,3 +1,4 @@
+/*
 using PataRoad.Common.GameDisplay;
 using System.Reflection;
 using UnityEngine;
@@ -64,13 +65,11 @@ namespace PataRoad.AppDebug
         }
         public void OpenAllMaps()
         {
-            /*
-            var mapInfo = Core.Global.GlobalData.CurrentSlot.MapInfo;
-            for (int i = 0; i < mapInfo.Progress; i++)
-            {
-                mapInfo.OpenInIndex(i);
-            }
-            */
+            //var mapInfo = Core.Global.GlobalData.CurrentSlot.MapInfo;
+            //for (int i = 0; i < mapInfo.Progress; i++)
+            //{
+            //    mapInfo.OpenInIndex(i);
+            //}
         }
         public void SuccessMission()
         {
@@ -165,3 +164,4 @@ namespace PataRoad.AppDebug
         }
     }
 }
+*/

@@ -156,7 +156,8 @@ namespace PataRoad.Core.Character
         {
             if (_lateAnimating && _target.IsAttacking)
             {
-                _currentOffset += _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                var state = _animator.GetCurrentAnimatorStateInfo(0);
+                _currentOffset += state.normalizedTime * state.length;
             }
         }
 

@@ -2634,7 +2634,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1038555262}
-  - component: {fileID: 1038555263}
   m_Layer: 0
   m_Name: Map
   m_TagString: Map
@@ -2660,51 +2659,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1038555263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1038555261}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f83958cf6d945dd42a51a5286b64decd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _testData: {fileID: 0}
-  _input:
-    m_Name: Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 5bd031de-b992-42a7-89e3-f3c41cf5f1c4
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 820d0cef-5455-4629-a3e0-f2afeb651c91
-      m_Path: <Keyboard>/x
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input
-      m_Flags: 0
-    m_Flags: 0
-  _action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1038555263}
-        m_TargetAssemblyTypeName: PataRoad.AppDebug.ActionOnPress, Assembly-CSharp
-        m_MethodName: SuccessMission
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &1100223970
 GameObject:
   m_ObjectHideFlags: 0
