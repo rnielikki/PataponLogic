@@ -1,6 +1,7 @@
 ﻿using PataRoad.SceneLogic.Minigame;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PataRoad.SceneLogic.Patapolis.Minigame
 {
@@ -14,6 +15,14 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
         private float _estimation;
         [SerializeField]
         AudioClip _startSound;
+        [Header("Preview status")]
+        [SerializeField]
+        private Image _previewImage;
+        [SerializeField]
+        private Text _previewText;
+        [SerializeField]
+        private Text _previewAmountText;
+
 
         public MinigameData GameData => _lastMinigameSelection.MinigameData;
 
@@ -36,9 +45,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                         Core.Global.GlobalData.CurrentSlot.Inventory.RemoveItem(materialLoader.Item);
                     }
                     //Load scene!
-                    var (item, amount) = _lastMinigameSelection.GetReward(
-                        _materialLoaders.Sum(lo => lo.Item.Index),
-                        _materialLoaders.Max(lo => lo.Item.Index) - _materialLoaders.Min(lo => lo.Item.Index));
+                    var (item, amount) = GetReward();
                     LoadMinigameScene(new MinigameModel(GameData, _estimation, item, amount));
                 })
                 .SelectCancel();
@@ -53,6 +60,8 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             }
             _estimation = _estimationCurve.Evaluate((float)_materialLoaders.Average(value => value.Item.Index) / 4);
             _estimationText.text = _estimation.ToString("p2");
+            var (item, amount) = GetReward();
+            UpdateDescription(item, amount);
         }
 
         public void LoadPracticeGame()
@@ -65,6 +74,18 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                     LoadMinigameScene(new MinigameModel(GameData));
                 })
                 .SelectOk();
+        }
+        public void UpdateDescription(Core.Items.IItem item, int amount)
+        {
+            _previewImage.sprite = item.Image;
+            _previewText.text = item.Name;
+            _previewAmountText.text = amount.ToString();
+        }
+        private (Core.Items.IItem, int) GetReward()
+        {
+            return _lastMinigameSelection.GetReward(
+                _materialLoaders.Sum(lo => lo.Item.Index),
+                _materialLoaders.Max(lo => lo.Item.Index) - _materialLoaders.Min(lo => lo.Item.Index));
         }
         private void LoadMinigameScene(MinigameModel model)
         {

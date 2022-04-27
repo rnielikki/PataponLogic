@@ -93,6 +93,7 @@ namespace PataRoad.Core.Map.Levels
         }
         private void Update()
         {
+            if (MissionPoint.IsMissionEnd && !_walking) return;
             var targetPosition = _pataponsManager.transform.position + (_offsetX * Vector3.left);
             if (transform.position.x != targetPosition.x && !_walking)
             {
@@ -109,7 +110,7 @@ namespace PataRoad.Core.Map.Levels
                     IsAttacking = true;
                     GameSound.SpeakManager.Current.Play(_startSound);
                 }
-                _animator.Play("attack");
+                if (!MissionPoint.IsMissionEnd) _animator.Play("attack");
             }
             if (_walking)
             {
@@ -123,11 +124,8 @@ namespace PataRoad.Core.Map.Levels
             if (!Rhythm.Command.TurnCounter.IsOn) return 0;
             return _pataponsManager.FirstPatapon.LastPerfectionRate;
         }
-        public float GetDefenceValueOffset()
-        {
-            if (!Rhythm.Command.TurnCounter.IsOn) return 0;
-            return _pataponsManager.FirstPatapon.LastPerfectionRate;
-        }
+        public float GetDefenceValueOffset() => GetAttackValueOffset();
+
         public void PlayAttackSound() => GameSound.SpeakManager.Current.Play(_attackSound);
 
         public void OnAttackHit(Vector2 point, int damage)

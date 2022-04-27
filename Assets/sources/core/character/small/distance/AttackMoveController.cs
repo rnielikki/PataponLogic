@@ -122,8 +122,8 @@ namespace PataRoad.Core.Character
                     _data.WasHitLastTime = false;
                     yield return _animator.AnimateAttack(_currentModel.AnimationType, _attackSeconds, _currentModel.AttackSpeedMultiplier);
                 } while (_data.WasHitLastTime);
-                _attacking = false;
                 _currentStatusFlag = 0;
+                StopAttack(true, true);
             }
         }
         private void Update()

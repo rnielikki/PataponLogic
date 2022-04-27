@@ -1,6 +1,6 @@
 ﻿using PataRoad.SceneLogic.CommonSceneLogic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 namespace PataRoad.SceneLogic.Patapolis
 {
@@ -85,7 +85,8 @@ namespace PataRoad.SceneLogic.Patapolis
         }
         private void Scroll(ItemDisplay scrollTarget)
         {
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(scrollTarget?.gameObject);
+            if (scrollTarget == null) return;
+            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(scrollTarget.gameObject);
             _inventoryDisplay.ScrollList.ForceRebuildLayout();
             _inventoryDisplay.ScrollList.Scroll(scrollTarget);
         }

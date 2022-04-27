@@ -82,18 +82,27 @@ namespace PataRoad.SceneLogic.CommonSceneLogic
         }
         public void SelectFirst(IEnumerable<ItemDisplay> allItemDisplays)
         {
-            _scrollList.SetMaximumScrollLength(0, null);
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
-                    allItemDisplays.FirstOrDefault(item => item.GetComponent<Selectable>().interactable)?.gameObject
-                );
+            var firstSelectable = allItemDisplays.FirstOrDefault(item => item.GetComponent<Selectable>().interactable);
+            _scrollList.SetMaximumScrollLength(0, firstSelectable);
+            if (firstSelectable != null)
+            {
+                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
+                        firstSelectable.gameObject
+                    );
+            }
+            SelectItem(firstSelectable);
         }
         public void SelectLast(IEnumerable<ItemDisplay> allItemDisplays)
         {
             var lastSelectable = allItemDisplays.LastOrDefault(item => item.GetComponent<Selectable>().interactable);
-            UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
-                    lastSelectable?.gameObject
-                );
+            if (lastSelectable != null)
+            {
+                UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(
+                        lastSelectable.gameObject
+                    );
+            }
             _scrollList.SetMaximumScrollLength(0, lastSelectable);
+            SelectItem(lastSelectable);
         }
         public void AddItem(IItem item)
         {

@@ -123,18 +123,23 @@ namespace PataRoad.SceneLogic.EquipmentScene
             {
                 Destroy(item.gameObject);
             }
-            if (wasFromEquipmentSummary) (_nav as CharacterNavigator)?.EquipmentSummary?.ResumeToActive();
-            else (_nav as CharacterGroupNavigator)?.HeadquarterMenu?.ResumeToActive();
+            if (wasFromEquipmentSummary && _nav is CharacterNavigator charNav && charNav.EquipmentSummary != null)
+            {
+                charNav.EquipmentSummary.ResumeToActive();
+            }
+            else if (_nav is CharacterGroupNavigator groupNav && groupNav.HeadquarterMenu != null)
+            {
+                groupNav.HeadquarterMenu.ResumeToActive();
+            }
             _currentPataponData = null;
             _summaryElem = null;
         }
         public void Equip()
         {
             bool wasFromEquipmentSummary = false;
-
-            var itemDisplay = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject
-                ?.GetComponent<ItemDisplay>();
-            var item = itemDisplay?.Item;
+            var currentSelect = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject;
+            var itemDisplay = currentSelect == null ? null : currentSelect.GetComponent<ItemDisplay>();
+            var item = itemDisplay != null ? itemDisplay.Item : null;
 
             if (_currentPataponData != null)
             {

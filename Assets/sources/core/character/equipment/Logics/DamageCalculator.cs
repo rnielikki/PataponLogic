@@ -219,7 +219,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
         private static float GetCritical(Stat attackerStat, IAttackable reciever)
         {
             var critChance = Mathf.Max(0, attackerStat.Critical - reciever.Stat.CriticalResistance);
-            if (Common.Utils.RandomByProbability(critChance))
+            if (critChance > 0 && Common.Utils.RandomByProbability(critChance))
             {
                 return critChance;
             }
