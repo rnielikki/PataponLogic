@@ -84,16 +84,16 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             newStat.DamageMin *= 3;
             newStat.DamageMax *= 3;
             CreateBulletInstance(_feverAttackPool, MoveBulletOnGround, null, newStat, (_ifFire) ? Color.red : Color.blue)
-                .AddForce(_feverPonponForceMultiplier * 50 * Holder.MovingDirection);
+                .Throw(_feverPonponForceMultiplier * 50 * Holder.MovingDirection);
         }
         private void ChargeDefend()
         {
             var newStat = _stat.SetValuesTo(Holder.Stat);
             newStat.Knockback = 0; //Knockback independent.
             CreateBulletInstance(_chargeDefencePool, StopBulletOnGround, PushBack, newStat, default)
-                .AddForce(_forceMultiplier * 1000 * Holder.MovingDirection);
+                .Throw(_forceMultiplier * 1000 * Holder.MovingDirection);
         }
-        private Rigidbody2D CreateBulletInstance(IObjectPool<GameObject> targetObjectPool,
+        private WeaponBullet CreateBulletInstance(IObjectPool<GameObject> targetObjectPool,
             UnityEngine.Events.UnityAction<Collider2D, Vector2> groundAction,
             UnityEngine.Events.UnityAction<Collider2D> collidingAction,
             Stat stat, Color color)
@@ -103,28 +103,20 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             instance.layer = gameObject.layer;
 
             instance.transform.rotation = _targetTransform.rotation;
-            if (color != default)
-            {
-                instance.GetComponent<SpriteRenderer>().color = color;
-            }
+
+            instance.GetComponent<SpriteRenderer>().color = (color == default) ? Color.white : color;
 
             var bulletScript = instance.GetComponent<WeaponBullet>();
-            bulletScript.Holder = Holder;
-            bulletScript.Stat = stat;
-            bulletScript.CollidingAction = collidingAction;
-            bulletScript.GroundAction = groundAction;
-            instance.SetActive(true);
+            bulletScript.SetHolder(Holder, stat, collidingAction, groundAction);
 
-            var rigidbody = instance.GetComponent<Rigidbody2D>();
-            rigidbody.velocity = Vector2.zero;
-            return rigidbody;
+            return bulletScript;
         }
         //Fever Attack bullet
         private static void MoveBulletOnGround(Collider2D self, Vector2 direction)
         {
             self.attachedRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY;
             self.attachedRigidbody.gravityScale = 0;
-            self.attachedRigidbody.AddForce(direction * 1000);
+            self.attachedRigidbody.AddForce(direction * 100);
 
             self.transform.SetPositionAndRotation(Vector3.up * -0.5f + self.transform.position, Quaternion.identity);
         }
@@ -132,7 +124,6 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private static void StopBulletOnGround(Collider2D self, Vector2 direction)
         {
             self.attachedRigidbody.gravityScale = 0;
-            self.attachedRigidbody.AddForce(direction * 100);
             self.attachedRigidbody.Sleep();
         }
         private static void PushBack(Collider2D other)

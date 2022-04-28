@@ -5,7 +5,7 @@ namespace PataRoad.Core.Items
 {
     public class ItemDrop : MonoBehaviour
     {
-        private IItem _item;
+        public IItem Item { get; private set; }
         private float _timeToExist;
         private float _fullTimeToExist;
         private SpriteRenderer _backgroundRenderer;
@@ -16,16 +16,17 @@ namespace PataRoad.Core.Items
 
         private AudioClip _sound;
         protected UnityEngine.Events.UnityEvent _events;
-        private
+        private static int _currentDropId { get; set; }
+        public int DropId { get; private set; }
 
         protected void SetItem(ObtainableItemDropData data, IItem item = null)
         {
             Init(data, true);
 
-            _item = item ?? data.Item;
-            _renderer.sprite = _item.Image;
+            Item = item ?? data.Item;
+            _renderer.sprite = Item.Image;
 
-            if (_item.ItemType == ItemType.Equipment && _item is EquipmentData eq)
+            if (Item.ItemType == ItemType.Equipment && Item is EquipmentData eq)
             {
                 _renderer.transform.position += (Vector3)eq.GetPivotOffset();
             }
@@ -48,6 +49,7 @@ namespace PataRoad.Core.Items
             _doNotDestroy = data.DoNotDestroy;
 
             _fullTimeToExist = _timeToExist = data.TimeToExist;
+            DropId = _currentDropId++;
         }
         public static bool DropItem(ItemDropData data, Vector2 position, bool noDestroy = false, IItem replacedItem = null)
         {
@@ -123,6 +125,6 @@ namespace PataRoad.Core.Items
             _events.Invoke();
             _events.RemoveAllListeners();
         }
-        private void AddToScreen() => ItemManager.AddToScreen(_item);
+        private void AddToScreen() => ItemManager.AddToScreen(this);
     }
 }

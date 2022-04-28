@@ -45,6 +45,7 @@ namespace PataRoad.Core.Rhythm.Bgm
 
         private float _defaultVolume;
         private bool _hadFeverChance = false; //for fever chance intro
+        private bool _willPlayBaseMusic;
 
         private void Awake()
         {
@@ -112,7 +113,17 @@ namespace PataRoad.Core.Rhythm.Bgm
             }
             _hadFeverChance = feverChance;
         }
-        public void PlayBaseMusic() => RhythmTimer.Current.OnNext.AddListener(() => ChangeMusic(RhythmBgmIndex.Base));
+        public void PlayBaseMusic()
+        {
+            if (_willPlayBaseMusic) return;
+            RhythmTimer.Current.OnNext.AddListener(ChangeToBaseMusic);
+            _willPlayBaseMusic = true;
+            void ChangeToBaseMusic()
+            {
+                ChangeMusic(RhythmBgmIndex.Base);
+                _willPlayBaseMusic = false;
+            }
+        }
         public void PlayFever()
         {
             _bgmSource.Stop();

@@ -39,6 +39,7 @@ namespace PataRoad.Core.Rhythm.Command
         /// <summary>
         /// Invokes when command is canceled.
         /// </summary>
+        [Header("Note: This called IMMEDIATELY when canceled.")]
         public UnityEvent OnCommandCanceled;
 
         /// <summary>

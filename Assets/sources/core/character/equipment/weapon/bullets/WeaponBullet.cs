@@ -20,8 +20,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         /// Defines behaviour when the bullet is grounded. Don't define any destroy instruction, it's on <see cref="_destroyTime"/>
         /// </summary>
         /// <remarks>Collider2D represents the bullet's own collider - ground collider shouldn't affect anything.</remarks>
-        public UnityAction<Collider2D, Vector2> GroundAction { get; set; }
-        public UnityAction<Collider2D> CollidingAction { get; internal set; }
+        public UnityAction<Collider2D, Vector2> GroundAction { get; private set; }
+        public UnityAction<Collider2D> CollidingAction { get; private set; }
         private Vector2 _direction;
 
         private void Awake()
@@ -29,12 +29,23 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             _rigidbody = GetComponent<Rigidbody2D>();
             _collider = GetComponent<Collider2D>();
         }
-        private void SetHolder(SmallCharacter holder)
+        internal void SetHolder(SmallCharacter holder, Stat stat,
+            UnityAction<Collider2D> collidingAction, UnityAction<Collider2D, Vector2> groundAction)
         {
             Holder = holder;
             _direction = holder.MovingDirection;
-        }
 
+            Stat = stat;
+            CollidingAction = collidingAction;
+            GroundAction = groundAction;
+        }
+        internal void Throw(Vector2 force)
+        {
+            _rigidbody.WakeUp();
+            _rigidbody.gravityScale = 1;
+            _rigidbody.velocity = Vector2.zero;
+            _rigidbody.AddForce(force);
+        }
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (_collider.attachedRigidbody != null)
@@ -58,6 +69,11 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             System.Collections.IEnumerator DestroyAfterTime()
             {
                 yield return new WaitForSeconds(_destroyTime);
+                _rigidbody.velocity = Vector2.zero;
+                _rigidbody.gravityScale = 1;
+                _rigidbody.constraints = RigidbodyConstraints2D.None;
+                _rigidbody.Sleep();
+
                 var rel = gameObject.GetComponent<ReleaseToPool>();
                 if (rel != null)
                 {

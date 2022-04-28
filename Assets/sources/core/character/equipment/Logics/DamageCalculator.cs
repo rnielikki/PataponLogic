@@ -19,7 +19,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
             var receiver = target.GetComponentInParent<IAttackable>(false);
             if (receiver == null || receiver.CurrentHitPoint <= 0 || receiver.IsDead)
             {
-                attacker.OnAttackMiss(point);
+                if (attacker != null) attacker.OnAttackMiss(point);
             }
             else if (target.CompareTag("Grass"))
             {
@@ -55,7 +55,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
 
                 if (!CheckIfDie(receiver, target))
                 {
-                    attacker.OnAttackHit(point, damage);
+                    if (attacker != null) attacker.OnAttackHit(point, damage);
 
                     //------ status effect
                     if (!receiver.StatusEffectManager.IsOnStatusEffect)
@@ -105,7 +105,7 @@ namespace PataRoad.Core.Character.Equipments.Logic
                 else
                 {
                     //Dead, no target to attack there anymore, which means considered as "attack miss"
-                    attacker.OnAttackMiss(point);
+                    if (attacker != null) attacker.OnAttackMiss(point);
                 }
             }
         }

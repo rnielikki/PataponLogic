@@ -1,7 +1,7 @@
-using UnityEngine;
+using PataRoad.Core.Rhythm;
 using PataRoad.Core.Rhythm.Command;
 using TMPro;
-using PataRoad.Core.Rhythm;
+using UnityEngine;
 
 namespace PataRoad.Common.GameDisplay
 {
@@ -64,17 +64,10 @@ namespace PataRoad.Common.GameDisplay
             if (!_speaking)
             {
                 SpeakTeaching();
-                _speaking = true;
-                StartCoroutine(WaitUntilNextSpeak());
             }
             _instruction.text = "Keep calm and press";
             _instruction.color = Color.red;
             _command.ResetHit();
-            System.Collections.IEnumerator WaitUntilNextSpeak()
-            {
-                yield return new WaitForSeconds(4);
-                _speaking = false;
-            }
         }
         public void EndInstruction()
         {
@@ -98,9 +91,32 @@ namespace PataRoad.Common.GameDisplay
             _commandListData?.OnHit.RemoveAllListeners();
             _commandListData?.OnCommand.RemoveAllListeners();
             _commandListData?.OnPracticeEnd.RemoveAllListeners();
-            _rhythmCommand?.OnCommandCanceled.RemoveListener(UpdateInstructionOnMiss);
+            if (_rhythmCommand != null)
+            {
+                _rhythmCommand.OnCommandCanceled.RemoveListener(UpdateInstructionOnMiss);
+            }
         }
-        private void SpeakTeaching() => GameSound.SpeakManager.Current.Play(_data.TeachingSound);
+        private void SpeakTeaching()
+        {
+            if (_speaking) return;
+            _speaking = true;
+            int counter = 0;
+            RhythmTimer.Current.OnNext.AddListener(PlaySpeech);
+            void PlaySpeech()
+            {
+                GameSound.SpeakManager.Current.Play(_data.TeachingSound);
+                RhythmTimer.Current.OnTime.AddListener(WaitUntilNextSpeak);
+            }
+            void WaitUntilNextSpeak()
+            {
+                counter++;
+                if (counter == 4)
+                {
+                    _speaking = false;
+                    RhythmTimer.Current.OnTime.RemoveListener(WaitUntilNextSpeak);
+                }
+            }
+        }
         private void OnDestroy()
         {
             RemoveListeners();

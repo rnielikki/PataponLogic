@@ -218,6 +218,6 @@ namespace PataRoad.Core.Character
         public bool HasAttackTarget() => GetClosestForAttack() != null;
         public bool HasAttackTargetOnForward() => GetClosestForAttack(0) != null;
         protected float MaxEnemyDistanceInSight(float attackDistance)
-            => _character.DefaultWorldPosition + (_xDirection * (_character.Sight + attackDistance));
+            => _character.DefaultWorldPosition + (_xDirection * (CharacterEnvironment.MaxAttackDistance + attackDistance));
     }
 }

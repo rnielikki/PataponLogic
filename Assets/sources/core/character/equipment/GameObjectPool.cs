@@ -17,26 +17,11 @@ namespace PataRoad.Core.Character.Equipments
 
             void OnGet(GameObject obj)
             {
-                var rigidBody = obj.GetComponent<Rigidbody2D>();
-                if (rigidBody != null)
-                {
-                    //hello, yumi...?
-                    rigidBody.WakeUp();
-                    rigidBody.gravityScale = 1;
-                    rigidBody.velocity = Vector2.zero;
-                }
                 obj.SetActive(true);
             }
             void OnRelease(GameObject obj)
             {
                 obj.SetActive(false);
-                var rigidBody = obj.GetComponent<Rigidbody2D>();
-                // Megapon attacks
-                if (rigidBody != null)
-                {
-                    rigidBody.constraints = RigidbodyConstraints2D.None;
-                    rigidBody.Sleep();
-                }
             }
             var gObject = Resources.Load<GameObject>(resourcePath);
             ObjectPool<GameObject> newPool = null;

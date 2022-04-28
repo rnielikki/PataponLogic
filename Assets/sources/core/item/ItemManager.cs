@@ -29,6 +29,7 @@ namespace PataRoad.Core.Items
         private Transform _itemDropPoint;
         public Transform ItemDropPoint => _itemDropPoint;
         private readonly HashSet<IItem> _currentItems = new HashSet<IItem>();
+        private readonly HashSet<int> _dropIds = new HashSet<int>();
 
 
         private void Awake()
@@ -41,8 +42,14 @@ namespace PataRoad.Core.Items
             Current = null;
         }
 
-        internal static void AddToScreen(IItem item)
+        internal static void AddToScreen(ItemDrop itemDrop)
         {
+            if (itemDrop == null || Current._dropIds.Contains(itemDrop.DropId))
+            {
+                if (itemDrop != null) Destroy(itemDrop.gameObject);
+                return;
+            }
+            IItem item = itemDrop.Item;
             if (!Current._itemMap.TryGetValue(item.Id, out ItemStatusUpdater updater))
             {
                 var obj = Instantiate(Current._itemInScreenTemplate, Current.transform);
