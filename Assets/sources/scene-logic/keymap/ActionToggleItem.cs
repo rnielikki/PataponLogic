@@ -21,6 +21,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
         [SerializeField]
         private Color _toggleOnColor;
         private Color _toggleOffColor;
+
         private void Start()
         {
             _toggleOffColor = _image.color;
@@ -32,8 +33,9 @@ namespace PataRoad.SceneLogic.KeymapSettings
             {
                 _relatedActions[i] = FindAction(_relatedActionNames[i - 1]);
             }
+            if (_loader.FirstSelect == _toggle) Load(true);
         }
-        private void Load(bool on)
+        internal void Load(bool on)
         {
             if (on)
             {

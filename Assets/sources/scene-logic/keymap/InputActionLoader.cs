@@ -29,6 +29,7 @@ namespace PataRoad.SceneLogic.KeymapSettings
 
         [SerializeField]
         private UnityEngine.UI.Selectable _firstSelect;
+        internal UnityEngine.UI.Selectable FirstSelect => _firstSelect;
         [SerializeField]
         private AudioClip _soundOnLoaded;
 

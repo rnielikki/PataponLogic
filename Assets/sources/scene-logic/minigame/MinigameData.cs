@@ -17,5 +17,8 @@ namespace PataRoad.SceneLogic.Minigame
         [SerializeField]
         private MinigameTurn[] MinigameTurns; //for preserving data it's pascal case
         public MinigameTurn[] Turns => MinigameTurns;
+        [SerializeField]
+        private Color _backgroundColor;
+        public Color BackgroundColor => _backgroundColor;
     }
 }

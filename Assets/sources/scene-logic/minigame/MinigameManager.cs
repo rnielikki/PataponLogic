@@ -28,6 +28,13 @@ namespace PataRoad.SceneLogic.Minigame
         [SerializeField]
         private AudioSource _music;
 
+        [SerializeField]
+        private UnityEngine.UI.Image _bg;
+        [SerializeField]
+        private Material _bgMaterialNoDonchaka;
+        [SerializeField]
+        private Material _bgMaterialDonchaka;
+
         //--- on hit
         private MinigameDrumType _lastRequiredDrum;
         private bool _gotAnyInput;
@@ -45,6 +52,15 @@ namespace PataRoad.SceneLogic.Minigame
         {
             _model = model;
             _data = model.MinigameData;
+        }
+        private void Start()
+        {
+            _bg.color = _data.BackgroundColor;
+        }
+        internal void LoadBackground()
+        {
+            _bg.material = _model.MinigameData.UseDonChakaGameSound ?
+                _bgMaterialDonchaka : _bgMaterialNoDonchaka;
         }
         public void LoadGame()
         {

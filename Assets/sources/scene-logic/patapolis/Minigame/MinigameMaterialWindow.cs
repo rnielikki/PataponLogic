@@ -56,6 +56,7 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
             if (_materialLoaders.Any(loader => loader.Item == null))
             {
                 _estimationText.text = "-";
+                ResetDescription();
                 return;
             }
             _estimation = _estimationCurve.Evaluate((float)_materialLoaders.Average(value => value.Item.Index) / 4);
@@ -75,11 +76,17 @@ namespace PataRoad.SceneLogic.Patapolis.Minigame
                 })
                 .SelectOk();
         }
-        public void UpdateDescription(Core.Items.IItem item, int amount)
+        private void UpdateDescription(Core.Items.IItem item, int amount)
         {
             _previewImage.sprite = item.Image;
             _previewText.text = item.Name;
             _previewAmountText.text = amount.ToString();
+        }
+        private void ResetDescription()
+        {
+            _previewImage.sprite = null;
+            _previewText.text = "-";
+            _previewAmountText.text = "-";
         }
         private (Core.Items.IItem, int) GetReward()
         {
