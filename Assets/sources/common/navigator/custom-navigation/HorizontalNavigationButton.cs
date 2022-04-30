@@ -15,24 +15,5 @@ namespace PataRoad.Common.Navigator
             _group = group;
             _selfIndex = selfIndex;
         }
-#if UNITY_EDITOR
-#else
-        public override Selectable FindSelectableOnLeft()
-        {
-            return _left;
-        }
-        public override Selectable FindSelectableOnRight()
-        {
-            return _right;
-        }
-        public override Selectable FindSelectableOnDown()
-        {
-            return _group.GetButtonOnNext(_selfIndex);
-        }
-        public override Selectable FindSelectableOnUp()
-        {
-            return _group.GetButtonOnPrevious(_selfIndex);
-        }
-#endif
     }
 }
