@@ -1,4 +1,3 @@
-/*
 using PataRoad.Common.GameDisplay;
 using System.Reflection;
 using UnityEngine;
@@ -164,4 +163,3 @@ namespace PataRoad.AppDebug
         }
     }
 }
-*/

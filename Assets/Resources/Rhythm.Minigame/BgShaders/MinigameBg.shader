@@ -1,13 +1,10 @@
 Shader "Unlit/MinigameBg"
 {
-    Properties
-    {
-        _MainTex ("Texture", 2D) = "white" {}
-    }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
         LOD 100
+        ZWrite Off
 
         Pass
         {
@@ -33,21 +30,17 @@ Shader "Unlit/MinigameBg"
                 fixed4 color : COLOR;
             };
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-
             v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.color = v.color;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv) * i.color;
+                fixed4 col = i.color;
                 //v.vertex.x += sin(_Time.y * _Speed + v.vertex.y * _Amplitude) * _Distance * _Amount;
                 /*
                 col *= clamp(

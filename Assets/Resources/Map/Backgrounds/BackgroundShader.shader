@@ -13,6 +13,7 @@ Shader "Unlit/BackgroundShader"
 			LOD 100
 			AlphaToMask On
 			Blend SrcAlpha OneMinusSrcAlpha
+			ZWrite Off
 
 			Pass
 			{

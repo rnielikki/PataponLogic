@@ -21,7 +21,7 @@ namespace PataRoad.Core.Map.Environment
         private LayerMask _layerMask;
 
         [SerializeField]
-        private string[] _layerMaskNames = { "patapons", "hazorons", "bosses" };
+        protected string[] _layerMaskNames = { "patapons", "hazorons", "bosses" };
 
         protected void Init()
         {
@@ -61,7 +61,7 @@ namespace PataRoad.Core.Map.Environment
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!_enabled || (_layerMask & (1 << collision.gameObject.layer)) != 0) return;
+            if (!_enabled || _layerMask != (_layerMask | (1 << collision.gameObject.layer))) return;
             if (collision.gameObject.CompareTag("SmallCharacter"))
             {
                 var receiver = collision.gameObject.GetComponentInParent<Character.ICharacter>();

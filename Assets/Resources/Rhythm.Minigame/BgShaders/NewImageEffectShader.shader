@@ -1,12 +1,11 @@
 Shader "Hidden/NewImageEffectShader"
 {
-    Properties
-    {
-        _MainTex ("Texture", 2D) = "white" {}
-    }
     SubShader
     {
         Tags { "RenderType"="Opaque" }
+        LOD 100
+        ZWrite Off
+
         Pass
         {
             CGPROGRAM
@@ -37,11 +36,9 @@ Shader "Hidden/NewImageEffectShader"
                 return o;
             }
 
-            sampler2D _MainTex;
-
             fixed4 frag (v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv) * i.color;
+                fixed4 col = i.color;
                 //v.vertex.x += sin(_Time.y * _Speed + v.vertex.y * _Amplitude) * _Distance * _Amount;
                 /*
                 col *= clamp(

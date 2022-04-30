@@ -44,7 +44,7 @@ namespace PataRoad.Core.Map.Environment
                 if (!receiver.StatusEffectManager.IsOnStatusEffect)
                 {
                     Character.Equipments.Logic.DamageCalculator
-                        .CalculateAndSetStatusEffect(receiver, Character.StatusEffectType.Fire, 0.2f, receiver.Stat.FireResistance);
+                        .CalculateAndSetStatusEffect(receiver, Character.StatusEffectType.Fire, 0.4f, receiver.Stat.FireResistance);
                     if (receiver is MonoBehaviour mono)
                     {
                         if (Character.Equipments.Logic.DamageCalculator.DealDamageFromFireEffect(receiver, mono.gameObject, mono.transform))

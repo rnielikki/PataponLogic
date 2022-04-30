@@ -49,7 +49,9 @@ namespace PataRoad.Core.Map.Background
             for (int i = 0; i < BgAmount; i++)
             {
                 children[i].SetMaterial(materials[i]);
+                materials[i].renderQueue = 1000 - i;
             }
+            _topSkyImage.material.renderQueue = 1000 - BgAmount;
         }
         private void OnDestroy()
         {
