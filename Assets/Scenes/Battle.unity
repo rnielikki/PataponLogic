@@ -2478,7 +2478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4a36932740a05948b1ac8c01ef9b35e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionName: UI/Select
+  _actionName: UI/Start
 --- !u!1 &1034227884
 GameObject:
   m_ObjectHideFlags: 0
@@ -8804,7 +8804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d1e91dec84b3c46a4840a6f12d33a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _actionName: UI/Start
+  _actionName: UI/Select
   _guideDisplayManager: {fileID: 1427290192}
   _commandDisplay: {fileID: 1427290191}
   _nonCommandDisplay: {fileID: 1433525812}
@@ -8819,56 +8819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54d4eb48695c4b44faf728dcd6e7e724, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1626405949 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8759543197087646971, guid: 54ee2497546a8064e9229daa7cb7a676, type: 3}
-  m_PrefabInstance: {fileID: 1427290187}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1626405950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626405949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f83958cf6d945dd42a51a5286b64decd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _testData: {fileID: 0}
-  _input:
-    m_Name: Input
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: f47a912d-e286-44b8-ab8e-d96d2f347712
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: bb9de733-074e-4fc7-80e9-82bc5430ae13
-      m_Path: <Keyboard>/x
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Input
-      m_Flags: 0
-    m_Flags: 0
-  _action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1626405950}
-        m_TargetAssemblyTypeName: PataRoad.AppDebug.ActionOnPress, Assembly-CSharp
-        m_MethodName: SuccessMission
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!224 &1723298215 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1697299095350777507, guid: 7124086ed3dd2af418899c17e53fa81b, type: 3}
