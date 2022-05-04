@@ -161,16 +161,23 @@ namespace PataRoad.Core.Character
             var raycast = GetRaycastHitOnForward(sight);
             return raycast.transform != null ? raycast.transform.position : null;
         }
+        public bool HasMeleeSightFromWorldDefault(float sight)
+        {
+            return GetRaycastHitOnForward(sight, _character.DefaultWorldPosition).transform != null;
+        }
         /// <summary>
         /// For Hazorons, if enemies are too far away, they must stop attacking and go to the world position
         /// </summary>
         /// <param name="sight">the sight of the character.</param>
         /// <returns><c>true</c> if the enemy is in sight, otherwise <c>false</c>.</returns>
-        public bool HasSightFromWorldDefault(float sight)
+        public bool HasSightFromWorldDefault(float sight, bool melee)
         {
-            float start;
-            if (_xDirection < 0) start = Mathf.Min(_character.DefaultWorldPosition, _target.transform.position.x);
-            else start = Mathf.Max(_character.DefaultWorldPosition, _target.transform.position.x);
+            float start = _character.DefaultWorldPosition;
+            if (!melee)
+            {
+                if (_xDirection < 0) start = Mathf.Min(start, _target.transform.position.x);
+                else start = Mathf.Max(start, _target.transform.position.x);
+            }
             return GetRaycastHitOnForward(sight, start).transform != null;
         }
         private RaycastHit2D GetRaycastHitOnForward(float sight) => GetRaycastHitOnForward(sight, _target.transform.position.x);

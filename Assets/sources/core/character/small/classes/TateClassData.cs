@@ -6,6 +6,7 @@ namespace PataRoad.Core.Character.Class
     internal class TateClassData : ClassData
     {
         private readonly UnityEngine.GameObject _shield;
+        private bool _isPatapon;
         internal TateClassData(SmallCharacter character) : base(character)
         {
             IsMeleeUnit = true;
@@ -26,7 +27,24 @@ namespace PataRoad.Core.Character.Class
                         );
                     break;
                 case 1:
-                    SetAttackMoveController();
+                    if (_character is Patapons.Patapon)
+                    {
+                        _isPatapon = true;
+                        SetAttackMoveController()
+                            .AddModels(
+                                new System.Collections.Generic.Dictionary<AttackCommandType, AttackMoveModel>()
+                                {
+                                    { AttackCommandType.Attack,
+                                        GetAttackMoveModel("defend", AttackMoveType.Rush, movingSpeed:0.6f) },
+                                    { AttackCommandType.FeverAttack,
+                                        GetAttackMoveModel("defend-fever", AttackMoveType.Rush, movingSpeed:0.8f) }
+                                }
+                            );
+                    }
+                    else
+                    {
+                        SetAttackMoveController();
+                    }
                     _character.Stat.DefenceMin *= 1.8f;
                     _character.Stat.DefenceMax *= 2.2f;
                     break;
@@ -36,10 +54,20 @@ namespace PataRoad.Core.Character.Class
         {
             if (_attackType == 1)
             {
-                Defend();
-                return;
+                if (_isPatapon) base.Attack();
+                else
+                {
+                    if (!_character.OnFever && !_character.Charged)
+                    {
+                        _attackController.StartAttack(AttackCommandType.Attack);
+                    }
+                    else
+                    {
+                        _attackController.StartAttack(AttackCommandType.FeverAttack);
+                    }
+                }
             }
-            if (_character.Charged)
+            else if (_character.Charged)
             {
                 _attackController.StartAttack(AttackCommandType.ChargeAttack);
             }
@@ -60,7 +88,8 @@ namespace PataRoad.Core.Character.Class
         }
         public override void PerformCommandAction(CommandSong song)
         {
-            _shield.SetActive(song == CommandSong.Chakachaka);
+            _shield.SetActive(song == CommandSong.Chakachaka
+                || (_attackType == 1 && song == CommandSong.Ponpon));
             //"Only works with command"
             if (song == CommandSong.Chakachaka)
             {

@@ -61,8 +61,8 @@ namespace PataRoad.Story
             }
 
             //-- Audio
-            storySceneInfo.AudioSource.clip = data.Music;
-            storySceneInfo.AudioSource.Play();
+            storySceneInfo.MusicSource.clip = data.Music;
+            storySceneInfo.MusicSource.Play();
 
             //-- Weather and other environments
             if (data.UsePatapolis)

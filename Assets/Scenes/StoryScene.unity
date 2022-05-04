@@ -349,7 +349,7 @@ GameObject:
   - component: {fileID: 1679341840983005158}
   - component: {fileID: 527982011}
   m_Layer: 0
-  m_Name: Info
+  m_Name: MusicSource
   m_TagString: Music
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -367,7 +367,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -914,6 +914,10 @@ PrefabInstance:
       propertyPath: _background
       value: 
       objectReference: {fileID: 1465088764}
+    - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
+      propertyPath: _musicSource
+      value: 
+      objectReference: {fileID: 527982011}
     - target: {fileID: 1047773987816118366, guid: 7ce0bd71c2c5541448af50e70e2c7d03, type: 3}
       propertyPath: _weatherInfo
       value: 

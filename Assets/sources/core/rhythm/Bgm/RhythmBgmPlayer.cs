@@ -57,7 +57,6 @@ namespace PataRoad.Core.Rhythm.Bgm
             _bgmShotSource = sources[0];
             _bgmSource = sources[1];
             _feverSource = sources[2];
-            _defaultVolume = _feverSource.volume;
 
             //All sources should work on Fixed Update
             foreach (var src in sources) src.velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
@@ -68,6 +67,7 @@ namespace PataRoad.Core.Rhythm.Bgm
         }
         private void Start()
         {
+            _defaultVolume = _feverSource.volume;
             RhythmTimer.Current.OnStart.AddListener(() => ChangeMusicWithIntro(RhythmBgmIndex.Intro, RhythmBgmIndex.Base, _bgmSource));
         }
         private void SetClips()

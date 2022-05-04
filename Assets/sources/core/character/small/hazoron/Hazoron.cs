@@ -12,6 +12,7 @@ namespace PataRoad.Core.Character.Hazorons
         UnityEngine.Events.UnityEvent _onBeforeDeath;
         [SerializeField]
         bool _inverseDirection;
+        private bool _melee;
         public override Vector2 MovingDirection => _inverseDirection ? Vector2.right : Vector2.left;
         private bool _gotPosition;
         private bool _fullyGotPosition;
@@ -48,6 +49,7 @@ namespace PataRoad.Core.Character.Hazorons
         {
             Init();
             if (_isOnTower) _realStat.AddKnockbackResistance(Mathf.Infinity);
+            _melee = ClassData.IsMeleeUnit;
 
             StatusEffectManager.AddRecoverAction((_) =>
             {
@@ -56,6 +58,7 @@ namespace PataRoad.Core.Character.Hazorons
                 if (IsFlyingUnit)
                 {
                     (ClassData as ToriClassData)?.FlyUp();
+                    _melee = true;
                 }
                 if (_gotPosition)
                 {
@@ -179,7 +182,7 @@ namespace PataRoad.Core.Character.Hazorons
             }
             else if (_fullyGotPosition)
             {
-                var hasEnemyOnSight = DistanceCalculator.HasSightFromWorldDefault(_maxAttackSight);
+                var hasEnemyOnSight = DistanceCalculator.HasSightFromWorldDefault(_maxAttackSight, _melee);
                 if (IsAttacking && !hasEnemyOnSight)
                 {
                     StopAttacking(false);
@@ -202,7 +205,7 @@ namespace PataRoad.Core.Character.Hazorons
                     if (transform.position.x == DefaultWorldPosition)
                     {
                         CharAnimator.Animate("Idle");
-                        StopAttacking(false); //Curiously Idle status doesn't stop attacking.
+                        StopAttacking(false); //Idle status doesn't stop attacking.
                         _animatingWalk = false;
                     }
                 }
@@ -226,7 +229,7 @@ namespace PataRoad.Core.Character.Hazorons
                 if (IsInPataponsSight(transform.position.x)) Register();
             }
             else if (!StatusEffectManager.IsOnStatusEffect
-                && DistanceCalculator.GetTargetOnSight(Sight) != null)
+                && DistanceCalculator.HasSightFromWorldDefault(_maxAttackSight, _melee))
             {
                 if (!_animatingWalk)
                 {

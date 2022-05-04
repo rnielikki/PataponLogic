@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 1047773987816118367}
   m_Layer: 0
   m_Name: StorySceneInfo
-  m_TagString: Music
+  m_TagString: Sound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weatherInfo: {fileID: 0}
   _wind: {fileID: 0}
+  _musicSource: {fileID: 0}
   _audioSource: {fileID: 1047773987816118367}
   _patapolisWeather: {fileID: 0}
   _background: {fileID: 0}
@@ -183,7 +184,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -46,10 +46,14 @@ namespace PataRoad.Core.Global
                 Input = GetComponent<PlayerInput>();
                 GlobalInputActions = new GlobalInputSystem(Input, _leftInputs, _rightInputs);
                 Sound = GetComponentInChildren<GlobalSoundSystem>();
+                Sound.Init();
 
                 SlotManager = new SlotManager();
-                if (!_doNotLoadMain) UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
-                else
+                if (!_doNotLoadMain)
+                {
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+                }
+                else //DEBUG
                 {
                     SlotManager.LoadSlot(Slot.CreateNewGame());
                 }

@@ -13,6 +13,9 @@ namespace PataRoad.Story
         Wind _wind;
         internal Wind Wind => _wind;
         [SerializeField]
+        AudioSource _musicSource;
+        internal AudioSource MusicSource => _musicSource;
+        [SerializeField]
         AudioSource _audioSource;
         internal AudioSource AudioSource => _audioSource;
         [SerializeField]

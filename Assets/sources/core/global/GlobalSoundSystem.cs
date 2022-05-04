@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace PataRoad.Core.Global
@@ -17,25 +16,32 @@ namespace PataRoad.Core.Global
         private AudioClip _selectedSound;
         [SerializeField]
         private AudioClip _beepSound;
+        bool _ready;
 
-        private void Start()
+        internal void Init()
         {
+            if (_ready) return;
+            _ready = true;
             SceneManager.sceneLoaded += SetVolume;
         }
-
         private void SetVolume(Scene scene, LoadSceneMode mode)
         {
-            SetVolumeEach("Music", GlobalData.Settings.MusicVolume);
-            SetVolumeEach("Sound", GlobalData.Settings.SoundVolume);
-
-            void SetVolumeEach(string tag, float volume)
+            foreach (var audioObj in Resources.FindObjectsOfTypeAll<AudioSource>())
             {
-                foreach (var audioObj in GameObject.FindGameObjectsWithTag(tag))
+                var tag = audioObj.tag;
+                float vol = 0;
+                switch (tag)
                 {
-                    foreach (var audio in audioObj.GetComponents<AudioSource>())
-                    {
-                        audio.volume = volume;
-                    }
+                    case "Music":
+                        vol = GlobalData.Settings.MusicVolume;
+                        break;
+                    case "Sound":
+                        vol = GlobalData.Settings.SoundVolume;
+                        break;
+                }
+                foreach (var audio in audioObj.GetComponents<AudioSource>())
+                {
+                    audio.volume = vol;
                 }
             }
         }

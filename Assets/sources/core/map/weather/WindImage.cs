@@ -14,10 +14,15 @@ namespace PataRoad.Core.Map.Weather
         private Color _color = new Color(1, 1, 1);
         [SerializeField]
         private AudioSource _windSound;
+        private float _environmentVolume;
         public void Init()
         {
             _color = new Color(1, 1, 1);
             PlayAnimation();
+        }
+        private void Start()
+        {
+            _environmentVolume = Global.GlobalData.Settings.SoundVolume;
         }
         public void ClearTrail()
         {
@@ -81,7 +86,7 @@ namespace PataRoad.Core.Map.Weather
                 _windSound.Play();
             }
             _windSound.panStereo = percentage;
-            _windSound.volume = Mathf.Abs(percentage);
+            _windSound.volume = Mathf.Abs(percentage) * _environmentVolume;
         }
         private void ResetTrail()
         {
