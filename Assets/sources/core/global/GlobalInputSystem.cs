@@ -23,10 +23,13 @@ namespace PataRoad.Core.Global
 
         private readonly InputActionAsset _leftInputs;
         private readonly InputActionAsset _rightInputs;
+        private readonly UnityEngine.InputSystem.UI.InputSystemUIInputModule _inputModule;
 
         internal GlobalInputSystem(PlayerInput input, InputActionAsset leftPresets, InputActionAsset rightPresets)
         {
             _input = input;
+            _inputModule = UnityEngine.EventSystems.EventSystem.current
+                .GetComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
             _leftInputs = leftPresets;
             _rightInputs = rightPresets;
             Load();
@@ -181,6 +184,8 @@ namespace PataRoad.Core.Global
         public void LoadRightPreset() => LoadPreset(_rightInputs, true);
         private void LoadPreset(InputActionAsset asset, bool right)
         {
+            _inputModule.actionsAsset = asset;
+            _inputModule.AssignDefaultActions();
             _input.actions = asset;
             KeyMapModel.UseLeftPreset = !right;
         }
