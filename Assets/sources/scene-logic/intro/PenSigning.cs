@@ -58,6 +58,8 @@ namespace PataRoad.SceneLogic.Intro
                 RenderSettings.skybox = _skyboxOnNextScene;
                 DynamicGI.UpdateEnvironment();
                 _onSigned.Invoke();
+                _onSigned.RemoveAllListeners();
+                EndInputs();
                 gameObject.SetActive(false);
             }
         }
@@ -89,11 +91,15 @@ namespace PataRoad.SceneLogic.Intro
                 _signField.MarkAsNotSelected();
             }
         }
-        private void OnDestroy()
+        private void EndInputs()
         {
             _navigatingAction.performed -= Move;
             _navigatingAction.canceled -= StopMoving;
             _signAction.performed -= Sign;
+        }
+        private void OnDestroy()
+        {
+            EndInputs();
         }
     }
 }
