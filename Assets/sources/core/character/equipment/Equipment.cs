@@ -37,7 +37,7 @@ namespace PataRoad.Core.Character.Equipments
         {
             Load();
         }
-        internal void Load()
+        internal virtual void Load()
         {
             if (_spriteRenderers == null) LoadRenderersAndImage();
             if (HolderData != null && _defaultEquipmentData != null) return;
@@ -72,7 +72,7 @@ namespace PataRoad.Core.Character.Equipments
             if (HolderData == null) Load();
             ReplaceEqupiment(_defaultEquipmentData, stat);
         }
-        protected void RemoveDataFromStat(Stat stat)
+        protected virtual void RemoveDataFromStat(Stat stat)
         {
             if (CurrentData == null) return;
             stat.Subtract(Stat);

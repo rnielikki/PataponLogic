@@ -142,7 +142,6 @@ namespace PataRoad.Core.Character.Patapons.Data
             Class.ClassType type = Class.ClassType.Yaripon;
             int index = -1;
 
-            //1. not in squad
             var resultPataponMeta = GetPataponMetaFrom(allAvailableClasses.Except(_currentClasses), equipmentData);
             if (resultPataponMeta != null)
             {

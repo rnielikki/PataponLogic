@@ -326,13 +326,20 @@ namespace PataRoad.Core.Character
         /// </summary>
         /// <param name="other">Other stat to add. Also this won't be changed.</param>
         /// <returns>Self, after operation.</returns>
-        public Stat Subtract(Stat other)
+        public Stat Subtract(Stat other) => Subtract(other, 1);
+        /// <summary>
+        /// Adds stat. This CHANGES value.
+        /// </summary>
+        /// <param name="other">Other stat to add. Also this won't be changed.</param>
+        /// <returns>Self, after operation.</returns>
+        /// <note>+ operator won't change existing Stat class but will return new class.</note>
+        public Stat Subtract(Stat other, float damageMultiplier)
         {
             HitPoint -= other.HitPoint;
             DefenceMin -= other.DefenceMin;
             DefenceMax -= other.DefenceMax;
-            DamageMin -= other.DamageMin;
-            DamageMax -= other.DamageMax;
+            DamageMin -= (int)(other.DamageMin * damageMultiplier);
+            DamageMax -= (int)(other.DamageMax * damageMultiplier);
             AttackSeconds -= other.AttackSeconds;
             MovementSpeed -= other.MovementSpeed;
             Critical -= other.Critical;
