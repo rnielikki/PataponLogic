@@ -8,6 +8,7 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         private IStaffActions _staffAction;
         protected override float _throwMass => 0.1f;
         public override bool IsTargetingCenter => true;
+        private bool _isColorInitialised;
 
         [SerializeField]
         Color _fireColor;
@@ -26,13 +27,17 @@ namespace PataRoad.Core.Character.Equipments.Weapons
             if (Holder != null)
             {
                 _staffAction.Initialize(Holder);
-                _staffAction.SetElementalColor(LoadElementalColor(Holder.ElementalAttackType));
             }
             (_staffAction as MonoBehaviour).gameObject.layer
                 = CharacterTypeDataCollection.GetCharacterDataByType(Holder).AttackLayer;
         }
         public override void Attack(AttackCommandType attackCommandType)
         {
+            if (!_isColorInitialised) //late color init. otherwise won't work
+            {
+                _staffAction.SetElementalColor(LoadElementalColor(Holder.ElementalAttackType));
+                _isColorInitialised = true;
+            }
             switch (attackCommandType)
             {
                 case AttackCommandType.Attack:

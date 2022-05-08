@@ -47,7 +47,8 @@ namespace PataRoad.Core.Character.Equipments.Weapons
         }
         protected virtual void PerformAttack()
         {
-            var pos = _holder?.DistanceCalculator?.GetClosestForAttack();
+            if (_holder == null) return;
+            var pos = _holder.DistanceCalculator?.GetClosestForAttack();
             if (pos == null) return;
             var position = pos.Value;
 

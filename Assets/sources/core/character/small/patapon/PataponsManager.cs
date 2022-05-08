@@ -61,7 +61,7 @@ namespace PataRoad.Core.Character.Patapons
         public static float DodgeSpeedMinimumMultiplier { get; private set; } = 1;
         public static PataponsManager Current { get; private set; }
         private bool _fixedZoom;
-        public const float CameraOffsetOnNonZoom = 5;
+        public const float CameraOffsetOnNonZoom = 0;
 
         private void Awake()
         {
@@ -254,7 +254,8 @@ namespace PataRoad.Core.Character.Patapons
             if (_patapons.Count == 0) return true;
             else
             {
-                if (FirstPatapon != null && FirstPatapon.DistanceCalculator != null && FirstPatapon.DistanceCalculator.GetClosest() != null)
+                if (FirstPatapon != null && FirstPatapon.DistanceCalculator != null
+                    && FirstPatapon.DistanceCalculator.GetClosestForAttack() != null)
                 {
                     return true;
                 }
