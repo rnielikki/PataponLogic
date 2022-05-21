@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PataRoad.Editor
+namespace PataRoad.EditMode
 {
     public class LayerAttribute : PropertyAttribute
     {

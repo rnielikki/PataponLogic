@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace PataRoad.Editor
+namespace PataRoad.EditMode
 {
     [CustomPropertyDrawer(typeof(LayerAttribute))]
     public class LayerAttributeEditor : PropertyDrawer
