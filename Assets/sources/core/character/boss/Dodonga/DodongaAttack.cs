@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character.Bosses
     public class DodongaAttack : BossAttackData
     {
         [SerializeField]
-        private BossAttackParticle Fire;
+        private TriggerParticleEmitter Fire;
         [SerializeField]
         private BossAttackCollision Headbutt;
         [SerializeField]

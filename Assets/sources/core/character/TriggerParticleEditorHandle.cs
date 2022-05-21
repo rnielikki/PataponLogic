@@ -14,12 +14,18 @@ namespace PataRoad.EditMode
             var emitter = target as TriggerParticleEmitter;
             var pos = emitter.transform.position;
 
-            var rad = emitter.AngleMin * Mathf.Deg2Rad;
+            var radMin = emitter.AngleMin * Mathf.Deg2Rad;
+            var minRadPos = new Vector3(Mathf.Cos(radMin), Mathf.Sin(radMin), 0).normalized;
+
+            //range
+            Handles.color = Color.yellow;
             Handles.DrawLine(pos - (Vector3)emitter.PositionOffset,
                 pos + (Vector3)emitter.PositionOffset);
-            Handles.DrawWireArc(pos, Vector3.forward,
-                new Vector3(Mathf.Cos(rad), Mathf.Sin(rad), 0).normalized,
-                emitter.AngleMax - emitter.AngleMin, 1);
+
+            //speed
+            Handles.color = Color.cyan;
+            Handles.DrawWireArc(pos, Vector3.forward, minRadPos, emitter.AngleMax - emitter.AngleMin, emitter.MinSpeed * emitter.Duration);
+            Handles.DrawWireArc(pos, Vector3.forward, minRadPos, emitter.AngleMax - emitter.AngleMin, emitter.MaxSpeed * emitter.Duration);
         }
     }
 }

@@ -108,7 +108,6 @@ namespace PataRoad.Core.Rhythm.Bgm
             _bgmSource.clip = _audioClips[bgmType];
             _bgmSource.Play();
         }
-
         public void PlayComboMusic(RhythmComboModel comboInfo)
         {
             bool feverChance = comboInfo.hasFeverChance;

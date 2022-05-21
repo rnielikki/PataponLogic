@@ -1,5 +1,4 @@
-﻿using PataRoad.Core.Character.Bosses;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace PataRoad.Core.Character
 {
@@ -10,7 +9,7 @@ namespace PataRoad.Core.Character
         private bool _enabled;
         private float _time;
         private float _mass;
-        private Boss _attacker;
+        private TriggerParticleEmitter _sender;
         // Use this for initialization
         internal void Init(bool useWindForce, float particleMass, TriggerParticleEmitter sender)
         {
@@ -18,11 +17,8 @@ namespace PataRoad.Core.Character
             _mass = particleMass;
             gameObject.layer = sender.gameObject.layer;
             gameObject.tag = sender.gameObject.tag;
-            _attacker = sender.GetComponentInParent<Boss>();
-            if (_attacker == null)
-            {
-                throw new MissingReferenceException("The trigger particle is used only for bosses");
-            }
+
+            _sender = sender;
         }
         internal void Throw(Vector2 position, Vector2 speed, float time)
         {
@@ -30,6 +26,7 @@ namespace PataRoad.Core.Character
             _currentSpeed = speed;
             _enabled = true;
             _time = time;
+            gameObject.SetActive(true);
         }
         private void Update()
         {
@@ -52,6 +49,7 @@ namespace PataRoad.Core.Character
         }
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (!_enabled) return;
             if (collision.CompareTag("Ground"))
             {
                 _currentSpeed.y = 0;
@@ -61,9 +59,7 @@ namespace PataRoad.Core.Character
                 _enabled = false;
                 gameObject.SetActive(false);
             }
-            _boss.Attack(this, GetComponent<Collider>().gameObject, GetComponent<Collider>().ClosestPoint(particle.position),
-                                        _attackType, _elementalAttackType, true);
-
+            else _sender.SetDamage(collision, collision.ClosestPoint(transform.position));
         }
     }
 }
