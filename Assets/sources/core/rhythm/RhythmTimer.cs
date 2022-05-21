@@ -132,10 +132,29 @@ namespace PataRoad.Core.Rhythm
             Count = 0;
             OnNextHalfTime.AddListener(() => OnNext.AddListener(OnStart.Invoke));
         }
-
+        private void OnApplicationFocus(bool focus)
+        {
+            if (focus)
+            {
+                ResumeApplication();
+            }
+            else
+            {
+                PauseApplication();
+            }
+        }
+        public static void PauseApplication()
+        {
+            Time.timeScale = 0;
+            AudioListener.pause = true;
+        }
+        public static void ResumeApplication()
+        {
+            Time.timeScale = 1;
+            AudioListener.pause = false;
+        }
         private void FixedUpdate()
         {
-            if (!Application.isFocused) return;
             if (Count == 0)
             {
                 OnTime.Invoke();
