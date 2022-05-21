@@ -46,6 +46,7 @@ namespace PataRoad.Core.Rhythm.Bgm
         private float _defaultVolume;
         private bool _hadFeverChance = false; //for fever chance intro
         private bool _willPlayBaseMusic;
+        private bool _playingFever;
 
         private void Awake()
         {
@@ -74,13 +75,20 @@ namespace PataRoad.Core.Rhythm.Bgm
         {
             _audioClips = new Dictionary<RhythmBgmIndex, AudioClip>()
             {
-                { RhythmBgmIndex.Intro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/intro") as AudioClip },
-                { RhythmBgmIndex.Base, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/base") as AudioClip },
-                { RhythmBgmIndex.Command, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/command") as AudioClip },
-                { RhythmBgmIndex.BeforeFeverIntro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever-intro") as AudioClip },
-                { RhythmBgmIndex.BeforeFever, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever") as AudioClip },
-                { RhythmBgmIndex.FeverIntro, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever-intro") as AudioClip },
-                { RhythmBgmIndex.Fever, Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever") as AudioClip }
+                { RhythmBgmIndex.Intro,
+                    Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/intro") as AudioClip },
+                { RhythmBgmIndex.Base,
+                    Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/base") as AudioClip },
+                { RhythmBgmIndex.Command,
+                    Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/command") as AudioClip },
+                { RhythmBgmIndex.BeforeFeverIntro,
+                    Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever-intro") as AudioClip },
+                { RhythmBgmIndex.BeforeFever,
+                    Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/before-fever") as AudioClip },
+                { RhythmBgmIndex.FeverIntro,
+                    Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever-intro") as AudioClip },
+                { RhythmBgmIndex.Fever,
+                    Resources.Load(RhythmEnvironment.ThemePath + MusicTheme + "/fever") as AudioClip }
             };
             if (_audioClips[0] == null)
             {
@@ -91,7 +99,8 @@ namespace PataRoad.Core.Rhythm.Bgm
         {
             var introMusic = _audioClips[introMusicIndex];
             source.clip = _audioClips[musicIndex];
-            _bgmShotSource.PlayOneShot(introMusic);
+            _bgmShotSource.clip = introMusic;
+            _bgmShotSource.Play();
             source.PlayDelayed(4);
         }
         private void ChangeMusic(RhythmBgmIndex bgmType)
@@ -128,14 +137,18 @@ namespace PataRoad.Core.Rhythm.Bgm
         {
             _bgmSource.Stop();
             _feverSource.volume = _defaultVolume;
+            _playingFever = true;
             ChangeMusicWithIntro(RhythmBgmIndex.FeverIntro, RhythmBgmIndex.Fever, _feverSource);
         }
+
         public void StopPlayingFever()
         {
-            if (_feverSource.isPlaying)
+            if (_playingFever)
             {
+                _playingFever = false;
                 ChangeMusic(RhythmBgmIndex.Base);
-                _bgmShotSource.PlayOneShot(_feverEndSound);
+                _bgmShotSource.clip = _feverEndSound;
+                _bgmShotSource.Play();
                 StartCoroutine(FeverFadeOut());
             }
         }
@@ -156,6 +169,21 @@ namespace PataRoad.Core.Rhythm.Bgm
                 yield return new WaitForFixedUpdate();
             }
             _feverSource.Stop();
+        }
+        private void OnApplicationFocus(bool focus)
+        {
+            if (focus)
+            {
+                if (_bgmShotSource != null) _bgmSource.UnPause();
+                if (_feverSource != null) _feverSource.UnPause();
+                if (_bgmShotSource != null) _bgmShotSource.UnPause();
+            }
+            else
+            {
+                if (_bgmSource != null) _bgmSource.Pause();
+                if (_feverSource != null) _feverSource.Pause();
+                if (_bgmShotSource != null) _bgmShotSource.Pause();
+            }
         }
     }
 }

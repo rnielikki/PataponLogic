@@ -135,6 +135,7 @@ namespace PataRoad.Core.Rhythm
 
         private void FixedUpdate()
         {
+            if (!Application.isFocused) return;
             if (Count == 0)
             {
                 OnTime.Invoke();

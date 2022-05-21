@@ -84,7 +84,11 @@ namespace PataRoad.Core.Rhythm.Bgm
             _audioSource.clip = clip;
             _audioSource.Play();
         }
-        public void SingMiracle() => _audioSource.PlayOneShot(_singingMiracle);
+        public void SingMiracle()
+        {
+            _audioSource.clip = _singingMiracle;
+            _audioSource.Play();
+        }
         public void ShoutFever()
         {
             //A bit delay needed to add listener in right time
@@ -92,7 +96,6 @@ namespace PataRoad.Core.Rhythm.Bgm
                 TurnCounter.OnNextTurn.AddListener(() => _audioSource.PlayOneShot(_feverShout))
             );
         }
-
         public void End()
         {
             _audioSource.Stop();
@@ -113,9 +116,12 @@ namespace PataRoad.Core.Rhythm.Bgm
             };
             _audioClipsMayFever = new Dictionary<CommandSong, AudioClip>()
             {
-                { CommandSong.Patapata, Resources.Load(RhythmEnvironment.ThemePath + _themeName + "/song/before_fever/patapata") as AudioClip },
-                { CommandSong.Ponpon, Resources.Load(RhythmEnvironment.ThemePath + _themeName + "/song/before_fever/ponpon") as AudioClip },
-                { CommandSong.Chakachaka, Resources.Load(RhythmEnvironment.ThemePath + _themeName + "/song/before_fever/chakachaka") as AudioClip },
+                { CommandSong.Patapata,
+                    Resources.Load(RhythmEnvironment.ThemePath + _themeName + "/song/before_fever/patapata") as AudioClip },
+                { CommandSong.Ponpon,
+                    Resources.Load(RhythmEnvironment.ThemePath + _themeName + "/song/before_fever/ponpon") as AudioClip },
+                { CommandSong.Chakachaka,
+                    Resources.Load(RhythmEnvironment.ThemePath + _themeName + "/song/before_fever/chakachaka") as AudioClip },
             };
             _audioClipsFever = new Dictionary<CommandSong, AudioClip[]>()
             {
@@ -146,5 +152,17 @@ namespace PataRoad.Core.Rhythm.Bgm
             };
             _feverShout = Resources.Load(RhythmEnvironment.ThemePath + "common/fever") as AudioClip;
         }
+        private void OnApplicationFocus(bool focus)
+        {
+            if (focus)
+            {
+                if (_audioSource != null) _audioSource.UnPause();
+            }
+            else
+            {
+                if (_audioSource != null) _audioSource.Pause();
+            }
+        }
+
     }
 }

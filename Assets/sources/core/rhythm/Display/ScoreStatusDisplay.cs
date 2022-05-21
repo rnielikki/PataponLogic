@@ -26,6 +26,7 @@ namespace PataRoad.Core.Rhythm.Display
         {
             _audioSource = GetComponent<AudioSource>();
             _audioSource.velocityUpdateMode = AudioVelocityUpdateMode.Fixed;
+            _audioSource.clip = _warningSound;
 
             _perfectParticles = transform.Find("Perfect").GetComponent<ParticleSystem>();
 
@@ -37,9 +38,10 @@ namespace PataRoad.Core.Rhythm.Display
         public void ShowFeverWarning()
         {
             _warningImage.enabled = true;
-            _audioSource.PlayOneShot(_warningSound);
+            _audioSource.Play();
             _animator.Play(_warningAnimationHash);
-            RhythmTimer.Current.OnNextHalfTime.AddListener(() => Command.TurnCounter.OnNextTurn.AddListener(() => _warningImage.enabled = false));
+            RhythmTimer.Current.OnNextHalfTime.AddListener(() =>
+            Command.TurnCounter.OnNextTurn.AddListener(() => _warningImage.enabled = false));
         }
         public void ShowPerfect(Command.RhythmCommandModel model)
         {
@@ -47,6 +49,17 @@ namespace PataRoad.Core.Rhythm.Display
             {
                 _perfectParticles.Play();
                 //Sound play moved to combo status display, because it should be played right after the last command
+            }
+        }
+        private void OnApplicationFocus(bool focus)
+        {
+            if (focus)
+            {
+                if (_audioSource != null) _audioSource.UnPause();
+            }
+            else
+            {
+                if (_audioSource != null) _audioSource.Pause();
             }
         }
     }
