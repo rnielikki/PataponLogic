@@ -1,4 +1,5 @@
-﻿using PataRoad.Core.Character;
+﻿#if UNITY_EDITOR
+using PataRoad.Core.Character;
 using UnityEditor;
 using UnityEngine;
 
@@ -38,3 +39,4 @@ namespace PataRoad.EditMode
         }
     }
 }
+#endif

@@ -120,10 +120,8 @@ namespace PataRoad.Core.Character.Bosses
                 return;
             }
             _current = _actionQueue.Dequeue();
-            UnityEngine.Debug.Log("---current animation is " + _current);
             if (HasBeforeAnimation(_current))
             {
-                UnityEngine.Debug.Log("+++++play before");
                 _charAnimator.Animate(_current + "-before");
                 RhythmTimer.Current.OnTime.AddListener(CountSingleTurn);
                 _turnCount++;
@@ -148,7 +146,6 @@ namespace PataRoad.Core.Character.Bosses
             switch (_turnCount)
             {
                 case 8:
-                    UnityEngine.Debug.Log("+++++ play attk");
                     if (_data.Boss.StatusEffectManager.CanContinue)
                     {
                         _charAnimator.Animate(_current);

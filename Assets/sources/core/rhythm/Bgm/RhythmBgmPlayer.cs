@@ -142,7 +142,7 @@ namespace PataRoad.Core.Rhythm.Bgm
 
         public void StopPlayingFever()
         {
-            if (_playingFever)
+            if (_playingFever && gameObject.activeSelf && gameObject.activeInHierarchy)
             {
                 _playingFever = false;
                 ChangeMusic(RhythmBgmIndex.Base);

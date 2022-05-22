@@ -45,10 +45,6 @@ namespace PataRoad.Core.Character
         {
             if (!_target.IsDead && _target.StatusEffectManager.CanContinue)
             {
-                if (_animator.gameObject.CompareTag("Respawn"))
-                {
-                    Debug.Log(animationType);
-                }
                 _animator.Play(animationType, -1, 0f);
             }
         }

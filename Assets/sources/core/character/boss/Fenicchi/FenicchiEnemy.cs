@@ -51,19 +51,18 @@
         protected override string GetNextBehaviourOnIce() => "peck";
         protected override void OnStatusEffect(StatusEffectType type)
         {
+            Boss.StatusEffectManager.RemoveRecoverAction(ReserveFart);
             if (type == StatusEffectType.Stagger)
             {
-                Rhythm.Command.TurnCounter.OnNonPlayerTurn.AddListener(() =>
-                {
-                    if (Boss.StatusEffectManager.CurrentStatusEffect == StatusEffectType.Stagger)
-                    {
-                        Boss.StatusEffectManager.Recover();
-                    }
-                    Boss.BossTurnManager.DefineNextActionNow("fart");
-                });
+                Boss.StatusEffectManager.AddRecoverAction(ReserveFart);
                 UseCustomDataPosition = true;
             }
             else base.OnStatusEffect(type);
+        }
+        private void ReserveFart(StatusEffectType effectType)
+        {
+            if (!Boss.IsDead) Boss.BossTurnManager.DefineNextAction("fart");
+            Boss.StatusEffectManager.RemoveRecoverAction(ReserveFart);
         }
     }
 }

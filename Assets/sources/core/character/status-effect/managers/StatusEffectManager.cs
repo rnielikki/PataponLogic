@@ -54,6 +54,10 @@ namespace PataRoad.Core.Character
         {
             _onRecover.AddListener(action);
         }
+        public void RemoveRecoverAction(UnityEngine.Events.UnityAction<StatusEffectType> action)
+        {
+            _onRecover.RemoveListener(action);
+        }
         public virtual void SetFire(float time)
         {
             if (IsOnStatusEffect || time < 1 || IgnoreStatusEffect) return;
