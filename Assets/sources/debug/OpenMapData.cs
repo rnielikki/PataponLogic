@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using PataRoad.Core.Global;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace PataRoad.AppDebug
 {
@@ -9,7 +11,6 @@ namespace PataRoad.AppDebug
         // Use this for initialization
         void Start()
         {
-            /*
             var mapInfo = GlobalData.CurrentSlot.MapInfo;
             var closedList = typeof(MapInfo).GetField("_closedMaps",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
@@ -17,6 +18,7 @@ namespace PataRoad.AppDebug
             closedList.Remove(_mapIndexToOpen);
             mapInfo.OpenInIndex(_mapIndexToOpen);
 
+            /*
             //--------
             for (int i = 0; i < 9; i++)
             {

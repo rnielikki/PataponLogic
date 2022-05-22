@@ -1,4 +1,3 @@
-/*
 using PataRoad.Common.GameDisplay;
 using System.Reflection;
 using UnityEngine;
@@ -18,7 +17,9 @@ namespace PataRoad.AppDebug
         [SerializeField]
         private UnityEvent _action;
         private Core.Character.Patapons.Patapon FirstPon => FindObjectOfType<Core.Character.Patapons.PataponsManager>().FirstPatapon;
-        private Core.Character.ICharacter Enemy => FindObjectOfType<Core.Character.Hazorons.Hazoron>();
+        private Core.Character.ICharacter Hazoron => FindObjectOfType<Core.Character.Hazorons.Hazoron>();
+        private Core.Character.ICharacter Boss => FindObjectOfType<Core.Character.Bosses.EnemyBoss>();
+        private Core.Character.ICharacter Enemy => Hazoron == null ? Boss : Hazoron;
         // Start is called before the first frame update
         void Awake()
         {
@@ -164,4 +165,3 @@ namespace PataRoad.AppDebug
         }
     }
 }
-*/

@@ -32,10 +32,7 @@ namespace PataRoad.Core.Character.Bosses
         /// </summary>
         public void StartAttack(int turnDelay)
         {
-            if (Attacking) return;
-            Attacking = true;
-            _willAttackEnd = false;
-            _turnCount = 0;
+            StartWithoutLaunching();
             if (turnDelay == 0)
             {
                 Launch();
@@ -45,6 +42,13 @@ namespace PataRoad.Core.Character.Bosses
                 _delay = turnDelay * 4 - 1;
                 RhythmTimer.Current.OnTime.AddListener(WaitForDelay);
             }
+        }
+        private void StartWithoutLaunching()
+        {
+            if (Attacking) return;
+            Attacking = true;
+            _willAttackEnd = false;
+            _turnCount = 0;
         }
         /// <summary>
         /// Clears all attack, including reserved attack.
@@ -88,6 +92,13 @@ namespace PataRoad.Core.Character.Bosses
             _actionQueue.Enqueue(actionName);
             StartAttack(0);
         }
+        public void DefineNextActionNow(string actionName)
+        {
+            End();
+            _actionQueue.Enqueue(actionName);
+            StartWithoutLaunching();
+            CountSingleAttack();
+        }
         //-- combo
         public void SetComboAttack(IEnumerable<string> actions)
         {
@@ -109,8 +120,10 @@ namespace PataRoad.Core.Character.Bosses
                 return;
             }
             _current = _actionQueue.Dequeue();
+            UnityEngine.Debug.Log("---current animation is " + _current);
             if (HasBeforeAnimation(_current))
             {
+                UnityEngine.Debug.Log("+++++play before");
                 _charAnimator.Animate(_current + "-before");
                 RhythmTimer.Current.OnTime.AddListener(CountSingleTurn);
                 _turnCount++;
@@ -135,7 +148,15 @@ namespace PataRoad.Core.Character.Bosses
             switch (_turnCount)
             {
                 case 8:
-                    _charAnimator.Animate(_current);
+                    UnityEngine.Debug.Log("+++++ play attk");
+                    if (_data.Boss.StatusEffectManager.CanContinue)
+                    {
+                        _charAnimator.Animate(_current);
+                    }
+                    else if (!_data.Boss.IsDead)
+                    {
+                        End();
+                    }
                     break;
                 case 12:
                     _data.StopAllAttacking();
@@ -180,7 +201,14 @@ namespace PataRoad.Core.Character.Bosses
                     }
                     break;
                 case 7:
-                    _charAnimator.Animate(_current);
+                    if (_data.Boss.StatusEffectManager.CanContinue)
+                    {
+                        _charAnimator.Animate(_current);
+                    }
+                    else if (!_data.Boss.IsDead)
+                    {
+                        End();
+                    }
                     break;
             }
             _turnCount = (_turnCount + 1) % 8;
@@ -194,6 +222,7 @@ namespace PataRoad.Core.Character.Bosses
         {
             Attacking = false;
             _willAttackEnd = false;
+            _turnCount = 0;
             OnAttackEnd.Invoke();
             OnAttackEnd.RemoveAllListeners();
         }

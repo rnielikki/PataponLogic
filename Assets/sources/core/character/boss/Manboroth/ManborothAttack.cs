@@ -7,7 +7,7 @@ namespace PataRoad.Core.Character.Bosses
         [SerializeField]
         ParticleSystem _iceInhaleParticles;
         [SerializeField]
-        BossAttackParticle _attackParticles;
+        TriggerParticleEmitter _attackParticles;
         protected override void Init()
         {
             CharacterSize = 7;

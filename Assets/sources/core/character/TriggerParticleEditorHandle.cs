@@ -24,8 +24,17 @@ namespace PataRoad.EditMode
 
             //speed
             Handles.color = Color.cyan;
-            Handles.DrawWireArc(pos, Vector3.forward, minRadPos, emitter.AngleMax - emitter.AngleMin, emitter.MinSpeed * emitter.Duration);
-            Handles.DrawWireArc(pos, Vector3.forward, minRadPos, emitter.AngleMax - emitter.AngleMin, emitter.MaxSpeed * emitter.Duration);
+            Handles.DrawWireArc(pos, Vector3.forward, minRadPos,
+                emitter.AngleMax - emitter.AngleMin, emitter.MinSpeed * emitter.Duration);
+            Handles.DrawWireArc(pos, Vector3.forward, minRadPos,
+                emitter.AngleMax - emitter.AngleMin, emitter.MaxSpeed * emitter.Duration);
+            if (emitter.TwoSided)
+            {
+                Handles.DrawWireArc(pos, Vector3.forward, -minRadPos,
+                    emitter.AngleMax - emitter.AngleMin, emitter.MinSpeed * emitter.Duration);
+                Handles.DrawWireArc(pos, Vector3.forward, -minRadPos,
+                    emitter.AngleMax - emitter.AngleMin, emitter.MaxSpeed * emitter.Duration);
+            }
         }
     }
 }

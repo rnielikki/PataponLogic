@@ -6,7 +6,7 @@ namespace PataRoad.Core.Character.Bosses
     class ZaknelAttack : BossAttackData
     {
         [SerializeField]
-        private BossAttackParticle Fire;
+        private TriggerParticleEmitter Fire;
         private readonly System.Collections.Generic.List<GameObject> _raycastColliders
             = new System.Collections.Generic.List<GameObject>();
         private LayerMask _noRayLayer;

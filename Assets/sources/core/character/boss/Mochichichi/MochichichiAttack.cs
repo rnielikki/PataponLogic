@@ -5,16 +5,21 @@ namespace PataRoad.Core.Character.Bosses
     class MochichichiAttack : BossAttackData
     {
         [SerializeField]
-        private BossAttackParticle _fart;
+        private TriggerParticleEmitter _fart;
         [SerializeField]
         private ParticleSystem _tornadoEffect;
         private Vector3 _targetPosition;
+        private EnemyBoss _enemyBoss;
+        private bool _moving;
 
         protected override void Init()
         {
             CharacterSize = 4.3f;
             base.Init();
+            _enemyBoss = Boss as EnemyBoss;
+
         }
+
         internal override void UpdateStatForBoss(int level)
         {
             var value = 0.8f + (level * 0.2f);
@@ -32,6 +37,7 @@ namespace PataRoad.Core.Character.Bosses
         public void FartAttack()
         {
             _fart.Attack();
+            _targetPosition = transform.position + 40 * Vector3.right;
         }
         public void TornadoAttack()
         {
@@ -40,16 +46,19 @@ namespace PataRoad.Core.Character.Bosses
         }
         public void StartMoving()
         {
-            _targetPosition = (Boss.DefaultWorldPosition + (20 * -Boss.MovingDirection.x)) * Vector3.right;
-            UseCustomDataPosition = true;
+            if (_enemyBoss == null) return;
+            _targetPosition = transform.position + 40 * Vector3.right;
+            _moving = true;
         }
         public override void SetCustomPosition()
         {
-            transform.position = Vector3.MoveTowards(transform.position, _targetPosition, Time.deltaTime * _stat.MovementSpeed * 2);
-            if (_targetPosition.x == transform.position.x)
+            if (!_moving) return;
+            transform.position += Time.deltaTime * _stat.MovementSpeed * 2 * Vector3.right;
+            if (_targetPosition.x <= transform.position.x)
             {
-                UseCustomDataPosition = false;
                 Boss.CharAnimator.Animate("Idle");
+                UseCustomDataPosition = false;
+                _moving = false;
             }
         }
     }

@@ -105,6 +105,7 @@ namespace PataRoad.Core.Character
             IgnoreStatusEffect = true;
         }
         public void Recover() => Recover(true);
+        public void RecoverWithoutInvoking() => Recover(false);
         protected void Recover(bool invokeOnRecover)
         {
             if (!IsOnStatusEffect || IgnoreStatusEffect) return;

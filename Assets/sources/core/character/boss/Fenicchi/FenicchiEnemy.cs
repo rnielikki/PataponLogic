@@ -53,7 +53,15 @@
         {
             if (type == StatusEffectType.Stagger)
             {
-                Boss.BossTurnManager.DefineNextAction("fart");
+                Rhythm.Command.TurnCounter.OnNonPlayerTurn.AddListener(() =>
+                {
+                    if (Boss.StatusEffectManager.CurrentStatusEffect == StatusEffectType.Stagger)
+                    {
+                        Boss.StatusEffectManager.Recover();
+                    }
+                    Boss.BossTurnManager.DefineNextActionNow("fart");
+                });
+                UseCustomDataPosition = true;
             }
             else base.OnStatusEffect(type);
         }

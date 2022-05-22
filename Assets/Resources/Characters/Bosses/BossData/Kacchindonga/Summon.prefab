@@ -99,6 +99,22 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 78981a4e58b3b6c45a0506c03b08e385, type: 3}
+    - target: {fileID: 4182272045651686862, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: b6d398bca88eef642b250ce1bede687a, type: 3}
+    - target: {fileID: 4182272045651686862, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _elementalAttackType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182272045651686862, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._iceRate
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4182272045651686862, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+      propertyPath: _additionalStat._fireRate
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4850269597082295279, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
       value: 0.18024273
@@ -291,15 +307,15 @@ PrefabInstance:
     - {fileID: 8854638042480719555, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
     - {fileID: 3881779553308735375, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
---- !u!114 &1107261995194959921 stripped
+--- !u!114 &535883791426871282 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3618771868197904909, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4182272045651686862, guid: 15b0e151dbba5ea45b94e30997f9d47a, type: 3}
   m_PrefabInstance: {fileID: 4424150275564907068}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 628f23eefab27b84b9e860fca6b21d6d, type: 3}
+  m_Script: {fileID: 11500000, guid: 33529445de1f5d24e8bf7adf2e31318d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2356076759838572797 stripped
@@ -334,7 +350,7 @@ MonoBehaviour:
     rid: 186027602312429572
   _attackTypeResistance:
     rid: 186027602312429573
-  Fire: {fileID: 1107261995194959921}
+  Fire: {fileID: 535883791426871282}
   Headbutt: {fileID: 6634284850734933930}
   EatingMouth: {fileID: 2356076759838572797}
   _growlType: 2
@@ -350,8 +366,8 @@ MonoBehaviour:
         _hitPoint: 10000
         _defenceMin: 0.9
         _defenceMax: 1.1
-        _damageMin: 3
-        _damageMax: 5
+        _damageMin: 8
+        _damageMax: 12
         _attackSeconds: 2
         _movementSpeed: 4
         _critical: 0

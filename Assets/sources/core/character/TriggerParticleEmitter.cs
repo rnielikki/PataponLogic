@@ -20,6 +20,12 @@ namespace PataRoad.Core.Character
         [SerializeField]
         float _angleMax;
         public float AngleMax => _angleMax;
+        [SerializeField]
+        private bool _twoSided;
+        public bool TwoSided => _twoSided;
+        [SerializeField]
+        private bool _ignoreShield;
+        public bool IgnoreShield => _ignoreShield;
 
         [Header("Time and force info")]
         [SerializeField]
@@ -38,6 +44,31 @@ namespace PataRoad.Core.Character
 
         [SerializeField]
         Sprite _sprite;
+        [Header("Graphic info")]
+        [SerializeField]
+        bool _sizeOverLifetime;
+        public bool SizeOverLifetime => _sizeOverLifetime;
+        [SerializeField]
+        float _sizeMin;
+        public float SizeMin => _sizeMin;
+        [SerializeField]
+        float _sizeMax;
+        public float SizeMax => _sizeMax;
+        [SerializeField]
+        float _alphaMin;
+        public float AlphaMin => _alphaMin;
+        [SerializeField]
+        float _alphaMax;
+        public float AlphaMax => _alphaMax;
+        [SerializeField]
+        bool _rotationOverLifeTime;
+        public bool RotationOverLifeTime => _rotationOverLifeTime;
+        [SerializeField]
+        float _minRotationAngle;
+        public float MinRotationAngle => _minRotationAngle;
+        [SerializeField]
+        float _maxRotationAngle;
+        public float MaxRotationAngle => _maxRotationAngle;
         void Awake()
         {
             Init();
@@ -61,13 +92,16 @@ namespace PataRoad.Core.Character
         public void Attack()
         {
             var pos = transform.position;
-            foreach (var particle in _particlePool)
+            var halfLength = _particlePool.Length / 2;
+            for (int i = 0; i < _particlePool.Length; i++)
             {
+                var particle = _particlePool[i];
                 var angle = Random.Range(_angleMin, _angleMax) * Mathf.Deg2Rad;
+                var speed = Random.Range(_minSpeed, _maxSpeed);
+                if (_twoSided && i > halfLength) speed = -speed;
                 particle.Throw(
                     GetRandomVectorRange(pos, _positionOffset),
-                    new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * Random.Range(_minSpeed, _maxSpeed),
-                    _duration
+                    new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed
                     );
             }
         }

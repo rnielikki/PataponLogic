@@ -5,7 +5,7 @@ namespace PataRoad.Core.Character.Bosses
     public class ShooshookleAttack : BossAttackData
     {
         [SerializeField]
-        private BossAttackParticle _spore;
+        private TriggerParticleEmitter _spore;
         [SerializeField]
         private AbsorbComponent[] _absorbers;
         private ShooshookleArm[] _arms;
